@@ -642,9 +642,68 @@ li { margin-bottom: 10px; }
             </div>
         </div>
 
-        <!-- === section 5 — Practice === -->
+        <!-- === section 5 — Visualizer === -->
         <div class="section-header">
             <div class="section-number">5</div>
+            <h2>Visualize It: Two Lines, One Point</h2>
+        </div>
+
+        <div class="card">
+            <p>Every 2&times;2 system <em>is</em> a picture: each equation is a line, and the solution is where they cross. Pick a system from the dropdown — the examples above are all in there, plus the special cases. Then drag the sliders to reshape <strong>Equation&nbsp;2</strong> ($a_2 x + b_2 y = c_2$) and watch the intersection slide around, vanish (parallel), or dissolve into a whole line of solutions (coincident).</p>
+        </div>
+
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group" style="min-width: 250px;">
+                    <label>System</label>
+                    <select id="sys2-preset" onchange="sys2Preset()">
+                        <option value="0">Substitution ex. — y = 3x − 5 &amp; 2x + y = 10</option>
+                        <option value="1">Elimination ex. — 3x + 4y = 25 &amp; 5x − 2y = 7</option>
+                        <option value="2">Opposite coefficients — x + y = 10 &amp; x − y = 4</option>
+                        <option value="3">Special case — parallel lines</option>
+                        <option value="4">Special case — same line</option>
+                    </select>
+                </div>
+                <div class="slider-group">
+                    <label>a&#8322; (Eq. 2)</label>
+                    <div class="slider-row">
+                        <input type="range" id="sys2-a2" min="-6" max="6" step="0.5" value="2" oninput="sys2Update()">
+                        <span class="n-display" id="sys2-da2">2</span>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label>b&#8322; (Eq. 2)</label>
+                    <div class="slider-row">
+                        <input type="range" id="sys2-b2" min="-6" max="6" step="0.5" value="1" oninput="sys2Update()">
+                        <span class="n-display" id="sys2-db2">1</span>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label>c&#8322; (Eq. 2)</label>
+                    <div class="slider-row">
+                        <input type="range" id="sys2-c2" min="-30" max="30" step="0.5" value="10" oninput="sys2Update()">
+                        <span class="n-display" id="sys2-dc2">10</span>
+                    </div>
+                </div>
+            </div>
+            <div class="viz-canvas-wrap">
+                <canvas id="sys2Canvas" width="640" height="430"></canvas>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Equation 1 (fixed)</div><div class="readout-value exact-val" id="sys2-ro-e1">—</div></div>
+                <div class="readout-item"><div class="readout-label">Equation 2 (sliders)</div><div class="readout-value" id="sys2-ro-e2">—</div></div>
+                <div class="readout-item"><div class="readout-label">System type</div><div class="readout-value exact-val" id="sys2-ro-class">—</div></div>
+                <div class="readout-item"><div class="readout-label">Solution</div><div class="readout-value" id="sys2-ro-sol">—</div></div>
+            </div>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin-bottom:0;"><strong>Try this:</strong> load the parallel-lines preset, then nudge $c_2$ — the lines stay parallel forever, because $c_2$ only slides a line without tilting it. Now nudge $a_2$ instead: the slightest tilt and an intersection point snaps into existence (possibly far off-screen). "No solution" is a knife-edge condition on the <em>slopes</em>.</p>
+        </div>
+
+        <!-- === section 6 — Practice === -->
+        <div class="section-header">
+            <div class="section-number">6</div>
             <h2>Practice: 2&times;2 Procedure Drills</h2>
         </div>
         <p>Solve each system on paper. Use whichever method fits — but make sure you've used <em>each</em> method at least three times across the set.</p>
@@ -918,9 +977,61 @@ li { margin-bottom: 10px; }
             <p style="margin-bottom:0;"><strong>The classic 3&times;3 error:</strong> eliminating $z$ from one pair and then eliminating a <em>different</em> variable from another pair. You end up with two equations in <em>three</em> leftover unknowns — no progress. Both eliminations must target the <strong>same</strong> variable so the surviving 2&times;2 involves the same two unknowns.</p>
         </div>
 
-        <!-- === section 4 — Practice === -->
+        <!-- === section 4 — Visualizer === -->
         <div class="section-header">
             <div class="section-number">4</div>
+            <h2>See the Planes: 3D Visualizer</h2>
+        </div>
+
+        <div class="card">
+            <p>In three unknowns, each equation is a <em>plane</em>. Two planes meet in a <strong>line</strong> (the dashed lines below); the third plane cuts each of those lines down to a single <strong>point</strong> — the solution. Pick a system, then drag the rotate and tilt sliders to fly around the picture. The last preset shows what "no solution" looks like: two of the planes are parallel and never touch.</p>
+        </div>
+
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group" style="min-width: 260px;">
+                    <label>System</label>
+                    <select id="sys3-preset" onchange="sys3Update()">
+                        <option value="0">Worked example — meets at (1, 2, 3)</option>
+                        <option value="1">Practice #3 — meets at (1, 3, 4)</option>
+                        <option value="2">Practice #6 — meets at (2, 3, 1)</option>
+                        <option value="3">Special case — two parallel planes</option>
+                    </select>
+                </div>
+                <div class="slider-group">
+                    <label>Rotate</label>
+                    <div class="slider-row">
+                        <input type="range" id="sys3-az" min="0" max="360" step="1" value="35" oninput="sys3Update()">
+                        <span class="n-display" id="sys3-daz">35&deg;</span>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label>Tilt</label>
+                    <div class="slider-row">
+                        <input type="range" id="sys3-el" min="8" max="80" step="1" value="26" oninput="sys3Update()">
+                        <span class="n-display" id="sys3-del">26&deg;</span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-bottom: 12px;">
+                <span id="sys3-eqs" style="font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--green-dark);"></span>
+            </div>
+            <div class="viz-canvas-wrap">
+                <canvas id="sys3Canvas" width="640" height="460"></canvas>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Solution (x, y, z)</div><div class="readout-value" id="sys3-ro-sol">—</div></div>
+                <div class="readout-item" style="grid-column: span 2;"><div class="readout-label">What you're seeing</div><div class="readout-value exact-val" style="font-size: 13.5px;" id="sys3-ro-note">—</div></div>
+            </div>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin-bottom:0;"><strong>Connect it to the algebra:</strong> when you eliminate $z$ from two pairs of equations, each new 2-variable equation is one of those dashed plane-intersection lines, viewed from above. The 2&times;2 system you solve next is literally "where do two of the dashed lines cross?" — the picture and the procedure are the same thing.</p>
+        </div>
+
+        <!-- === section 5 — Practice === -->
+        <div class="section-header">
+            <div class="section-number">5</div>
             <h2>Practice: 3&times;3 Procedure Drills</h2>
         </div>
         <p>These ramp up gradually — the first two have shortcuts built in; the rest need the full reduction strategy.</p>
@@ -1295,6 +1406,39 @@ li { margin-bottom: 10px; }
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- === section 3 — Visualizer === -->
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Graph the Stories</h2>
+        </div>
+
+        <div class="card">
+            <p>The stories above are pictures too — with <em>units</em> on the axes now. Pick a problem and see its two conditions as lines: the count line and the value line cross at the answer. Notice how differently scaled each picture is — tickets live on a 0&ndash;300 grid, investments on a 0&ndash;\$11,000 grid — but the geometry is always the same: two lines, one meaningful point.</p>
+        </div>
+
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group" style="min-width: 300px;">
+                    <label>Word problem</label>
+                    <select id="sysw-preset" onchange="syswUpdate()">
+                        <option value="0">#1 Tickets — a + s = 250, 12a + 8s = 2560</option>
+                        <option value="1">#3 Coffee blend — x + y = 20, 9x + 14y = 220</option>
+                        <option value="2">#4 River current — b + c = 18, b − c = 12</option>
+                        <option value="3">#5 Gym memberships — C = 60 + 25m vs C = 40m</option>
+                        <option value="4">#6 Investments — x + y = 10000, 0.03x + 0.05y = 380</option>
+                    </select>
+                </div>
+            </div>
+            <div class="viz-canvas-wrap">
+                <canvas id="syswCanvas" width="640" height="430"></canvas>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Condition 1</div><div class="readout-value exact-val" id="sysw-ro-e1">—</div></div>
+                <div class="readout-item"><div class="readout-label">Condition 2</div><div class="readout-value" id="sysw-ro-e2">—</div></div>
+                <div class="readout-item"><div class="readout-label">Answer</div><div class="readout-value" id="sysw-ro-sol">—</div></div>
             </div>
         </div>
 
@@ -1912,9 +2056,48 @@ li { margin-bottom: 10px; }
             <p style="margin-bottom:0;"><strong>Underpaid and overpaid problems:</strong> two points alone (2 units for 3 parameters) leave a whole <em>family</em> of parabolas — infinitely many answers, just like a 3&times;3 system with only two equations. Four points (4 units) generally can't be fit at all — the system is overdetermined, just like four equations in three unknowns. The scoreboard never lies.</p>
         </div>
 
-        <!-- === section 5 — Practice === -->
+        <!-- === section 5 — Visualizer === -->
         <div class="section-header">
             <div class="section-number">5</div>
+            <h2>Watch the Fit</h2>
+        </div>
+
+        <div class="card">
+            <p>Each preset below hands you a set of givens — gold dots for points, a green dot for a vertex, copper dots for roots — and draws the parabola they pin down. The last preset is the important one: with only <em>two</em> points, the parabola isn't determined, and you get a slider for the leftover degree of freedom. Drag $a$ and watch a whole family of parabolas swing through the same two points.</p>
+        </div>
+
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group" style="min-width: 280px;">
+                    <label>Givens</label>
+                    <select id="fit-preset" onchange="fitPreset()">
+                        <option value="0">Three points — (1,2), (2,3), (3,6)</option>
+                        <option value="1">Vertex (2,−1) + point (4,7)</option>
+                        <option value="2">Roots x = −1, 3 + point (1,8)</option>
+                        <option value="3">Collinear trap — (1,3), (2,5), (3,7)</option>
+                        <option value="4">Underdetermined — only (0,1) and (2,5)</option>
+                    </select>
+                </div>
+                <div class="slider-group" id="fit-a-wrap" style="display: none;">
+                    <label>a (the unspent degree of freedom)</label>
+                    <div class="slider-row">
+                        <input type="range" id="fit-a" min="-3" max="3" step="0.25" value="1" oninput="fitUpdate()">
+                        <span class="n-display" id="fit-da">1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="viz-canvas-wrap">
+                <canvas id="fitCanvas" width="640" height="430"></canvas>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Fitted equation</div><div class="readout-value" id="fit-ro-eq">—</div></div>
+                <div class="readout-item" style="grid-column: span 2;"><div class="readout-label">What happened</div><div class="readout-value exact-val" style="font-size: 13.5px;" id="fit-ro-note">—</div></div>
+            </div>
+        </div>
+
+        <!-- === section 6 — Practice === -->
+        <div class="section-header">
+            <div class="section-number">6</div>
             <h2>Practice: Recover the Parabola</h2>
         </div>
         <p>Before solving, write the information budget: which givens are you spending, and do they total 3?</p>
@@ -2137,9 +2320,55 @@ li { margin-bottom: 10px; }
             </div>
         </div>
 
-        <!-- === section 3 — Practice === -->
+        <!-- === section 3 — Visualizer === -->
         <div class="section-header">
             <div class="section-number">3</div>
+            <h2>Flight Simulator: Dial In $v_0$ and $h_0$</h2>
+        </div>
+
+        <div class="card">
+            <p>Gravity has already paid for $a = -16$, so a flight has just <strong>two</strong> free parameters left — and here they are as sliders. Load a scenario from the problems below, or invent your own launch, and watch the whole flight respond: the launch point rides $h_0$, and $v_0$ stretches the arc up and out. The max-height and landing readouts update live — check your practice answers against them.</p>
+        </div>
+
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group" style="min-width: 250px;">
+                    <label>Scenario</label>
+                    <select id="proj-preset" onchange="projPreset()">
+                        <option value="0">Ball — v&#8320; = 32 ft/s from 6 ft</option>
+                        <option value="1">Rocket (#1) — v&#8320; = 96 ft/s from 112 ft</option>
+                        <option value="2">Dropped (#2) — v&#8320; = 0 from 144 ft</option>
+                        <option value="3">Ground launch (#5) — v&#8320; = 64 ft/s from 0 ft</option>
+                    </select>
+                </div>
+                <div class="slider-group">
+                    <label>v&#8320; — launch velocity (ft/s)</label>
+                    <div class="slider-row">
+                        <input type="range" id="proj-v0" min="0" max="100" step="2" value="32" oninput="projUpdate()">
+                        <span class="n-display" id="proj-dv0">32</span>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label>h&#8320; — launch height (ft)</label>
+                    <div class="slider-row">
+                        <input type="range" id="proj-h0" min="0" max="150" step="2" value="6" oninput="projUpdate()">
+                        <span class="n-display" id="proj-dh0">6</span>
+                    </div>
+                </div>
+            </div>
+            <div class="viz-canvas-wrap">
+                <canvas id="projCanvas" width="640" height="430"></canvas>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Height function</div><div class="readout-value exact-val" id="proj-ro-eq">—</div></div>
+                <div class="readout-item"><div class="readout-label">Maximum height</div><div class="readout-value" id="proj-ro-max">—</div></div>
+                <div class="readout-item"><div class="readout-label">Lands at</div><div class="readout-value" id="proj-ro-land">—</div></div>
+            </div>
+        </div>
+
+        <!-- === section 4 — Practice === -->
+        <div class="section-header">
+            <div class="section-number">4</div>
             <h2>Practice: Initial-Value &amp; Applied Problems</h2>
         </div>
 
@@ -2483,7 +2712,9 @@ function leadCoefStr(a) {
 }
 
 function standardStr(a, b, c) {
-    var s = coefTerm(a, 'x²', true) + coefTerm(b, 'x', false) + coefTerm(c, '', false);
+    var s = coefTerm(a, 'x²', true);
+    s += coefTerm(b, 'x', s === '');
+    s += coefTerm(c, '', s === '');
     return 'y = ' + (s === '' ? '0' : s);
 }
 function vertexStr(a, h, k) {
@@ -2621,8 +2852,477 @@ function drawParabola(a, b, c, h, k, r1, r2, hasRoots) {
     dot(h, k, '#DDA25E', 'vertex (' + fmt2(h) + ', ' + fmt2(k) + ')', (a > 0 ? 24 : -14));
 }
 
-/* initialize lab once the page loads */
-window.addEventListener('load', function() { vizUpdate(); });
+/* ─── Shared 2D graph helpers ─── */
+function mkView(canvas, x0, x1, y0, y1) {
+    var W = canvas.width, H = canvas.height;
+    var padL = 48, padR = 14, padT = 14, padB = 40;
+    return {
+        x0: x0, x1: x1, y0: y0, y1: y1, W: W, H: H,
+        padL: padL, padR: padR, padT: padT, padB: padB,
+        px: function(x) { return padL + (x - x0) / (x1 - x0) * (W - padL - padR); },
+        py: function(y) { return H - padB - (y - y0) / (y1 - y0) * (H - padT - padB); }
+    };
+}
+function niceStep(range) {
+    var raw = range / 10;
+    var pow = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10));
+    var cands = [1, 2, 2.5, 5, 10];
+    for (var i = 0; i < cands.length; i++) {
+        if (cands[i] * pow >= raw - 1e-12) return cands[i] * pow;
+    }
+    return 10 * pow;
+}
+function fmtTick(v, step) {
+    if (step >= 500 && Math.abs(v) >= 1000) return fmtNum(v / 1000) + 'k';
+    if (step >= 1) return String(Math.round(v));
+    return v.toFixed(step >= 0.5 ? 1 : 2);
+}
+function fmtNum(n) {
+    var r = Math.round(n * 100) / 100;
+    if (Object.is(r, -0)) r = 0;
+    return (Math.abs(r % 1) < 1e-9) ? String(Math.round(r)) : String(r);
+}
+function drawGridAxes(ctx, v, xlab, ylab) {
+    ctx.clearRect(0, 0, v.W, v.H);
+    ctx.fillStyle = '#FCFCFA'; ctx.fillRect(0, 0, v.W, v.H);
+    var sx = niceStep(v.x1 - v.x0), sy = niceStep(v.y1 - v.y0);
+    ctx.lineWidth = 1;
+    ctx.font = '10px Inter, sans-serif';
+    for (var x = Math.ceil(v.x0 / sx) * sx; x <= v.x1 + 1e-9; x += sx) {
+        ctx.strokeStyle = 'rgba(0,0,0,0.07)';
+        ctx.beginPath(); ctx.moveTo(v.px(x), v.padT); ctx.lineTo(v.px(x), v.H - v.padB); ctx.stroke();
+        ctx.fillStyle = 'rgba(45,45,45,0.65)'; ctx.textAlign = 'center';
+        ctx.fillText(fmtTick(x, sx), v.px(x), v.H - v.padB + 14);
+    }
+    for (var y = Math.ceil(v.y0 / sy) * sy; y <= v.y1 + 1e-9; y += sy) {
+        ctx.strokeStyle = 'rgba(0,0,0,0.07)';
+        ctx.beginPath(); ctx.moveTo(v.padL, v.py(y)); ctx.lineTo(v.W - v.padR, v.py(y)); ctx.stroke();
+        ctx.fillStyle = 'rgba(45,45,45,0.65)'; ctx.textAlign = 'right';
+        ctx.fillText(fmtTick(y, sy), v.padL - 5, v.py(y) + 3);
+    }
+    ctx.strokeStyle = 'rgba(45,45,45,0.55)'; ctx.lineWidth = 1.5;
+    if (v.x0 <= 0 && v.x1 >= 0) { ctx.beginPath(); ctx.moveTo(v.px(0), v.padT); ctx.lineTo(v.px(0), v.H - v.padB); ctx.stroke(); }
+    if (v.y0 <= 0 && v.y1 >= 0) { ctx.beginPath(); ctx.moveTo(v.padL, v.py(0)); ctx.lineTo(v.W - v.padR, v.py(0)); ctx.stroke(); }
+    ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 1;
+    ctx.strokeRect(v.padL, v.padT, v.W - v.padL - v.padR, v.H - v.padT - v.padB);
+    if (xlab) {
+        ctx.fillStyle = '#21442B'; ctx.font = '600 12px Inter, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(xlab, (v.padL + v.W - v.padR) / 2, v.H - 6);
+    }
+    if (ylab) {
+        ctx.save(); ctx.translate(11, (v.padT + v.H - v.padB) / 2); ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = '#21442B'; ctx.font = '600 12px Inter, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(ylab, 0, 0); ctx.restore();
+    }
+}
+function clipDrawLine(ctx, v, e, color) {
+    var a = e[0], b = e[1], c = e[2];
+    if (Math.abs(a) < 1e-9 && Math.abs(b) < 1e-9) return;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(v.padL, v.padT, v.W - v.padL - v.padR, v.H - v.padT - v.padB); ctx.clip();
+    ctx.strokeStyle = color; ctx.lineWidth = 3;
+    ctx.beginPath();
+    if (Math.abs(b) >= Math.abs(a)) {
+        ctx.moveTo(v.px(v.x0), v.py((c - a * v.x0) / b));
+        ctx.lineTo(v.px(v.x1), v.py((c - a * v.x1) / b));
+    } else {
+        ctx.moveTo(v.px((c - b * v.y0) / a), v.py(v.y0));
+        ctx.lineTo(v.px((c - b * v.y1) / a), v.py(v.y1));
+    }
+    ctx.stroke();
+    ctx.restore();
+}
+function clipDrawCurve(ctx, v, f, color, width) {
+    ctx.save();
+    ctx.beginPath(); ctx.rect(v.padL, v.padT, v.W - v.padL - v.padR, v.H - v.padT - v.padB); ctx.clip();
+    ctx.strokeStyle = color; ctx.lineWidth = width || 3;
+    ctx.beginPath();
+    for (var i = 0; i <= 600; i++) {
+        var x = v.x0 + (v.x1 - v.x0) * i / 600;
+        var X = v.px(x), Y = v.py(f(x));
+        if (i === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+    ctx.restore();
+}
+function drawDotV(ctx, v, x, y, color, label, dy) {
+    if (x < v.x0 || x > v.x1 || y < v.y0 || y > v.y1) return;
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(v.px(x), v.py(y), 6, 0, 2 * Math.PI); ctx.fill();
+    ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(v.px(x), v.py(y), 6, 0, 2 * Math.PI); ctx.stroke();
+    if (label) {
+        ctx.fillStyle = color; ctx.font = '600 12px Inter, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(label, v.px(x), v.py(y) + (dy || -12));
+    }
+}
+function classify2x2(e1, e2) {
+    var det = e1[0] * e2[1] - e2[0] * e1[1];
+    if (Math.abs(det) > 1e-9) {
+        return {
+            type: 'unique',
+            x: (e1[2] * e2[1] - e2[2] * e1[1]) / det,
+            y: (e1[0] * e2[2] - e2[0] * e1[2]) / det
+        };
+    }
+    var k1 = e1[0] * e2[2] - e2[0] * e1[2];
+    var k2 = e1[1] * e2[2] - e2[1] * e1[2];
+    return { type: (Math.abs(k1) < 1e-9 && Math.abs(k2) < 1e-9) ? 'coincident' : 'parallel' };
+}
+function eqString(a, b, c, xn, yn) {
+    xn = xn || 'x'; yn = yn || 'y';
+    function term(coef, sym, first) {
+        if (Math.abs(coef) < 1e-9) return '';
+        var mag = Math.abs(coef);
+        var ms = (Math.abs(mag - 1) < 1e-9) ? '' : fmtNum(mag);
+        var s = ms + sym;
+        if (first) return (coef < 0 ? '−' : '') + s;
+        return (coef < 0 ? ' − ' : ' + ') + s;
+    }
+    var lhs = term(a, xn, true);
+    lhs += term(b, yn, lhs === '');
+    if (lhs === '') lhs = '0';
+    return lhs + ' = ' + fmtNum(c);
+}
+
+/* ─── 2×2 line visualizer ─── */
+var SYS2_PRESETS = [
+    { e1: [3, -1, 5], e2: [2, 1, 10] },
+    { e1: [3, 4, 25], e2: [5, -2, 7] },
+    { e1: [1, 1, 10], e2: [1, -1, 4] },
+    { e1: [2, -1, 5], e2: [4, -2, 7] },
+    { e1: [1, 2, 3], e2: [3, 6, 9] }
+];
+function sys2Preset() {
+    var p = SYS2_PRESETS[parseInt(document.getElementById('sys2-preset').value, 10)];
+    document.getElementById('sys2-a2').value = p.e2[0];
+    document.getElementById('sys2-b2').value = p.e2[1];
+    document.getElementById('sys2-c2').value = p.e2[2];
+    sys2Update();
+}
+function sys2Update() {
+    var p = SYS2_PRESETS[parseInt(document.getElementById('sys2-preset').value, 10)];
+    var e1 = p.e1;
+    var e2 = [
+        parseFloat(document.getElementById('sys2-a2').value),
+        parseFloat(document.getElementById('sys2-b2').value),
+        parseFloat(document.getElementById('sys2-c2').value)
+    ];
+    document.getElementById('sys2-da2').textContent = fmtNum(e2[0]);
+    document.getElementById('sys2-db2').textContent = fmtNum(e2[1]);
+    document.getElementById('sys2-dc2').textContent = fmtNum(e2[2]);
+
+    var res = classify2x2(e1, e2);
+    var cls, sol;
+    if (Math.abs(e2[0]) < 1e-9 && Math.abs(e2[1]) < 1e-9) {
+        res = { type: 'degenerate' };
+        cls = Math.abs(e2[2]) < 1e-9 ? 'Eq. 2 vanished (0 = 0)' : 'Impossible: 0 = ' + fmtNum(e2[2]);
+        sol = '—';
+    } else if (res.type === 'unique') {
+        cls = 'Lines cross — one solution';
+        sol = '(' + fmtNum(res.x) + ', ' + fmtNum(res.y) + ')';
+    } else if (res.type === 'parallel') {
+        cls = 'Parallel — no solution';
+        sol = 'none';
+    } else {
+        cls = 'Same line — infinitely many';
+        sol = 'every point on the line';
+    }
+    document.getElementById('sys2-ro-e1').textContent = eqString(e1[0], e1[1], e1[2]);
+    document.getElementById('sys2-ro-e2').textContent = eqString(e2[0], e2[1], e2[2]);
+    document.getElementById('sys2-ro-class').textContent = cls;
+    document.getElementById('sys2-ro-sol').textContent = sol;
+
+    var canvas = document.getElementById('sys2Canvas');
+    var ctx = canvas.getContext('2d');
+    var v = mkView(canvas, -10, 10, -10, 10);
+    drawGridAxes(ctx, v, 'x', 'y');
+    clipDrawLine(ctx, v, e1, '#21442B');
+    clipDrawLine(ctx, v, e2, '#BC6C26');
+    ctx.font = '600 12px Inter, sans-serif'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#21442B'; ctx.fillText('Eq 1: ' + eqString(e1[0], e1[1], e1[2]), v.padL + 8, v.padT + 16);
+    ctx.fillStyle = '#BC6C26'; ctx.fillText('Eq 2: ' + eqString(e2[0], e2[1], e2[2]), v.padL + 8, v.padT + 32);
+    if (res.type === 'unique') drawDotV(ctx, v, res.x, res.y, '#DDA25E', '(' + fmtNum(res.x) + ', ' + fmtNum(res.y) + ')');
+}
+
+/* ─── Word-problem line visualizer ─── */
+var SYSW_PRESETS = [
+    { e1: [1, 1, 250], e2: [12, 8, 2560], x1: 280, y1: 340, xl: 'adult tickets a', yl: 'student tickets s', xn: 'a', yn: 's' },
+    { e1: [1, 1, 20], e2: [9, 14, 220], x1: 26, y1: 26, xl: 'lb of $9 beans (x)', yl: 'lb of $14 beans (y)', xn: 'x', yn: 'y' },
+    { e1: [1, 1, 18], e2: [1, -1, 12], x1: 22, y1: 22, xl: 'still-water speed b (mph)', yl: 'current c (mph)', xn: 'b', yn: 'c' },
+    { e1: [25, -1, -60], e2: [40, -1, 0], x1: 8, y1: 340, xl: 'months m', yl: 'total cost C ($)', xn: 'm', yn: 'C', d1: 'C = 60 + 25m', d2: 'C = 40m' },
+    { e1: [1, 1, 10000], e2: [0.03, 0.05, 380], x1: 11000, y1: 11000, xl: 'dollars at 3% (x)', yl: 'dollars at 5% (y)', xn: 'x', yn: 'y' }
+];
+function syswUpdate() {
+    var p = SYSW_PRESETS[parseInt(document.getElementById('sysw-preset').value, 10)];
+    var res = classify2x2(p.e1, p.e2);
+    var d1 = p.d1 || eqString(p.e1[0], p.e1[1], p.e1[2], p.xn, p.yn);
+    var d2 = p.d2 || eqString(p.e2[0], p.e2[1], p.e2[2], p.xn, p.yn);
+    document.getElementById('sysw-ro-e1').textContent = d1;
+    document.getElementById('sysw-ro-e2').textContent = d2;
+    document.getElementById('sysw-ro-sol').textContent = res.type === 'unique'
+        ? (p.xn + ' = ' + fmtNum(res.x) + ',  ' + p.yn + ' = ' + fmtNum(res.y)) : '—';
+
+    var canvas = document.getElementById('syswCanvas');
+    var ctx = canvas.getContext('2d');
+    var v = mkView(canvas, 0, p.x1, 0, p.y1);
+    drawGridAxes(ctx, v, p.xl, p.yl);
+    clipDrawLine(ctx, v, p.e1, '#21442B');
+    clipDrawLine(ctx, v, p.e2, '#BC6C26');
+    ctx.font = '600 12px Inter, sans-serif'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#21442B'; ctx.fillText(d1, v.padL + 8, v.padT + 16);
+    ctx.fillStyle = '#BC6C26'; ctx.fillText(d2, v.padL + 8, v.padT + 32);
+    if (res.type === 'unique')
+        drawDotV(ctx, v, res.x, res.y, '#DDA25E', '(' + fmtNum(res.x) + ', ' + fmtNum(res.y) + ')');
+}
+
+/* ─── 3×3 plane visualizer ─── */
+var SYS3_PRESETS = [
+    { eqs: [[1, 1, 1, 6], [2, -1, 1, 3], [1, 2, -1, 2]] },
+    { eqs: [[2, 1, 1, 9], [1, -1, 1, 2], [1, 2, -1, 3]] },
+    { eqs: [[3, 2, 1, 13], [1, -1, 2, 1], [2, 1, -1, 6]] },
+    { eqs: [[1, 1, 1, 3], [2, 2, 2, 7], [1, -1, 1, 1]] }
+];
+function det3(m) {
+    return m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
+         - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
+         + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+}
+function solve3(eqs) {
+    var A = eqs.map(function(e) { return [e[0], e[1], e[2]]; });
+    var d = det3(A);
+    if (Math.abs(d) < 1e-9) return null;
+    function repl(col) {
+        var M = A.map(function(r, i) { var rr = r.slice(); rr[col] = eqs[i][3]; return rr; });
+        return det3(M) / d;
+    }
+    return [repl(0), repl(1), repl(2)];
+}
+function cross3(u, w) {
+    return [u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]];
+}
+function hexToRgba(hex, alpha) {
+    var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+function eqString3(e) {
+    function term(coef, sym, first) {
+        if (Math.abs(coef) < 1e-9) return '';
+        var mag = Math.abs(coef);
+        var ms = (Math.abs(mag - 1) < 1e-9) ? '' : fmtNum(mag);
+        var s = ms + sym;
+        if (first) return (coef < 0 ? '−' : '') + s;
+        return (coef < 0 ? ' − ' : ' + ') + s;
+    }
+    var lhs = term(e[0], 'x', true);
+    lhs += term(e[1], 'y', lhs === '');
+    lhs += term(e[2], 'z', lhs === '');
+    return lhs + ' = ' + fmtNum(e[3]);
+}
+function sys3Update() {
+    var p = SYS3_PRESETS[parseInt(document.getElementById('sys3-preset').value, 10)];
+    var azDeg = parseFloat(document.getElementById('sys3-az').value);
+    var elDeg = parseFloat(document.getElementById('sys3-el').value);
+    document.getElementById('sys3-daz').textContent = Math.round(azDeg) + '°';
+    document.getElementById('sys3-del').textContent = Math.round(elDeg) + '°';
+    var A = azDeg * Math.PI / 180, E = elDeg * Math.PI / 180;
+    var sinA = Math.sin(A), cosA = Math.cos(A), sinE = Math.sin(E), cosE = Math.cos(E);
+    var right = [-sinA, cosA, 0];
+    var up = [-cosA * sinE, -sinA * sinE, cosE];
+    var dir = [cosA * cosE, sinA * cosE, sinE];
+    function proj(pt) {
+        return {
+            u: pt[0] * right[0] + pt[1] * right[1] + pt[2] * right[2],
+            v: pt[0] * up[0] + pt[1] * up[1] + pt[2] * up[2],
+            d: pt[0] * dir[0] + pt[1] * dir[1] + pt[2] * dir[2]
+        };
+    }
+    var sol = solve3(p.eqs);
+    var LO = -1, HI = 5;
+    var colors = ['#21442B', '#DDA25E', '#42260D'];
+    var quads = p.eqs.map(function(e, i) {
+        var pts = [[LO, LO], [HI, LO], [HI, HI], [LO, HI]].map(function(xy) {
+            var z = (e[3] - e[0] * xy[0] - e[1] * xy[1]) / e[2];
+            return [xy[0], xy[1], z];
+        });
+        return { pts: pts, color: colors[i] };
+    });
+    var axes = [
+        [[0, 0, 0], [HI + 1.5, 0, 0], 'x'],
+        [[0, 0, 0], [0, HI + 1.5, 0], 'y'],
+        [[0, 0, 0], [0, 0, HI + 1.5], 'z']
+    ];
+    var allPts = [];
+    quads.forEach(function(q) { q.pts.forEach(function(pt) { allPts.push(pt); }); });
+    axes.forEach(function(ax) { allPts.push(ax[0]); allPts.push(ax[1]); });
+    if (sol) allPts.push(sol);
+    var u0 = Infinity, u1 = -Infinity, v0 = Infinity, v1 = -Infinity;
+    allPts.forEach(function(pt) {
+        var pr = proj(pt);
+        u0 = Math.min(u0, pr.u); u1 = Math.max(u1, pr.u);
+        v0 = Math.min(v0, pr.v); v1 = Math.max(v1, pr.v);
+    });
+    var canvas = document.getElementById('sys3Canvas');
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height, M = 36;
+    var sc = Math.min((W - 2 * M) / (u1 - u0), (H - 2 * M) / (v1 - v0));
+    var uc = (u0 + u1) / 2, vc = (v0 + v1) / 2;
+    function S(pt) {
+        var pr = proj(pt);
+        return [W / 2 + (pr.u - uc) * sc, H / 2 - (pr.v - vc) * sc];
+    }
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#FCFCFA'; ctx.fillRect(0, 0, W, H);
+    /* axes */
+    axes.forEach(function(ax) {
+        var a0 = S(ax[0]), a1 = S(ax[1]);
+        ctx.strokeStyle = 'rgba(45,45,45,0.5)'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(a0[0], a0[1]); ctx.lineTo(a1[0], a1[1]); ctx.stroke();
+        ctx.fillStyle = 'rgba(45,45,45,0.75)'; ctx.font = '600 13px Inter, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(ax[2], a1[0], a1[1] - 6);
+    });
+    /* planes, far to near */
+    function avgDepth(q) {
+        var s = 0;
+        q.pts.forEach(function(pt) { s += proj(pt).d; });
+        return s / q.pts.length;
+    }
+    quads.slice().sort(function(qa, qb) { return avgDepth(qa) - avgDepth(qb); }).forEach(function(q) {
+        ctx.beginPath();
+        q.pts.forEach(function(pt, i) {
+            var s = S(pt);
+            if (i === 0) ctx.moveTo(s[0], s[1]); else ctx.lineTo(s[0], s[1]);
+        });
+        ctx.closePath();
+        ctx.fillStyle = hexToRgba(q.color, 0.30);
+        ctx.fill();
+        ctx.strokeStyle = q.color; ctx.lineWidth = 1.5;
+        ctx.stroke();
+    });
+    /* pairwise intersection lines + solution */
+    if (sol) {
+        var pairs = [[0, 1], [0, 2], [1, 2]];
+        ctx.setLineDash([6, 4]);
+        pairs.forEach(function(pr) {
+            var n1 = p.eqs[pr[0]].slice(0, 3), n2 = p.eqs[pr[1]].slice(0, 3);
+            var d = cross3(n1, n2);
+            var len = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+            if (len < 1e-9) return;
+            d = d.map(function(c) { return c / len * 3.5; });
+            var p1 = S([sol[0] - d[0], sol[1] - d[1], sol[2] - d[2]]);
+            var p2 = S([sol[0] + d[0], sol[1] + d[1], sol[2] + d[2]]);
+            ctx.strokeStyle = 'rgba(45,45,45,0.75)'; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
+        });
+        ctx.setLineDash([]);
+        var sp = S(sol);
+        ctx.fillStyle = '#DDA25E';
+        ctx.beginPath(); ctx.arc(sp[0], sp[1], 6.5, 0, 2 * Math.PI); ctx.fill();
+        ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(sp[0], sp[1], 6.5, 0, 2 * Math.PI); ctx.stroke();
+        ctx.fillStyle = '#42260D'; ctx.font = '700 13px Inter, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('(' + sol.map(fmtNum).join(', ') + ')', sp[0], sp[1] - 12);
+    }
+    document.getElementById('sys3-eqs').innerHTML = p.eqs.map(function(e, i) {
+        return '<span style="color:' + colors[i] + ';">' + eqString3(e) + '</span>';
+    }).join(' &nbsp;|&nbsp; ');
+    document.getElementById('sys3-ro-sol').textContent = sol ? '(' + sol.map(fmtNum).join(', ') + ')' : 'none';
+    document.getElementById('sys3-ro-note').textContent = sol
+        ? 'Each pair of planes meets in a dashed line; all three lines (and all three planes) pass through the single gold point.'
+        : 'Two of these planes are parallel — they never meet, so no point can lie on all three. Determinant = 0.';
+}
+
+/* ─── Parabola-fitting visualizer ─── */
+var FIT_PRESETS = [
+    { pts: [[1, 2], [2, 3], [3, 6]], abc: [1, -2, 3], family: false,
+      note: 'Three points → three equations → the 3×3 system pins down a, b, c exactly.' },
+    { pts: [[4, 7]], vertex: [2, -1], abc: [2, -8, 7], family: false,
+      note: 'The vertex spends 2 units (h and k); the point buys a. Vertex form: y = 2(x − 2)² − 1.' },
+    { pts: [[1, 8]], roots: [-1, 3], abc: [-2, 4, 6], family: false,
+      note: 'The roots spend 2 units (p and q); the point buys a. Factored form: y = −2(x + 1)(x − 3).' },
+    { pts: [[1, 3], [2, 5], [3, 7]], abc: [0, 2, 1], family: false,
+      note: 'The system forces a = 0 — collinear points degenerate the parabola into the line y = 2x + 1.' },
+    { pts: [[0, 1], [2, 5]], family: true,
+      note: 'Only 2 units of information for 3 parameters: a one-parameter family. Every curve shown passes through both points.' }
+];
+function fitPreset() {
+    var p = FIT_PRESETS[parseInt(document.getElementById('fit-preset').value, 10)];
+    document.getElementById('fit-a-wrap').style.display = p.family ? '' : 'none';
+    fitUpdate();
+}
+function fitUpdate() {
+    var p = FIT_PRESETS[parseInt(document.getElementById('fit-preset').value, 10)];
+    var abc;
+    if (p.family) {
+        var a = parseFloat(document.getElementById('fit-a').value);
+        document.getElementById('fit-da').textContent = fmtNum(a);
+        abc = [a, 2 - 2 * a, 1];
+    } else {
+        abc = p.abc;
+    }
+    var canvas = document.getElementById('fitCanvas');
+    var ctx = canvas.getContext('2d');
+    var v = mkView(canvas, -6, 8, -6, 12);
+    drawGridAxes(ctx, v, 'x', 'y');
+    if (p.family) {
+        [-2, -1, -0.5, 0.5, 1.5, 2.5].forEach(function(aa) {
+            clipDrawCurve(ctx, v, function(x) { return aa * x * x + (2 - 2 * aa) * x + 1; }, 'rgba(33,68,43,0.18)', 1.5);
+        });
+    }
+    clipDrawCurve(ctx, v, function(x) { return abc[0] * x * x + abc[1] * x + abc[2]; }, '#21442B', 3);
+    if (p.roots) p.roots.forEach(function(r) { drawDotV(ctx, v, r, 0, '#BC6C26', 'root ' + fmtNum(r), 20); });
+    if (p.vertex) drawDotV(ctx, v, p.vertex[0], p.vertex[1], '#39864E', 'vertex (' + fmtNum(p.vertex[0]) + ', ' + fmtNum(p.vertex[1]) + ')', 22);
+    p.pts.forEach(function(pt) { drawDotV(ctx, v, pt[0], pt[1], '#DDA25E', '(' + fmtNum(pt[0]) + ', ' + fmtNum(pt[1]) + ')'); });
+    document.getElementById('fit-ro-eq').textContent = standardStr(abc[0], abc[1], abc[2]);
+    document.getElementById('fit-ro-note').textContent = p.note;
+}
+
+/* ─── Projectile flight simulator ─── */
+var PROJ_PRESETS = [
+    { v0: 32, h0: 6 },
+    { v0: 96, h0: 112 },
+    { v0: 0, h0: 144 },
+    { v0: 64, h0: 0 }
+];
+function projPreset() {
+    var p = PROJ_PRESETS[parseInt(document.getElementById('proj-preset').value, 10)];
+    document.getElementById('proj-v0').value = p.v0;
+    document.getElementById('proj-h0').value = p.h0;
+    projUpdate();
+}
+function projUpdate() {
+    var v0 = parseFloat(document.getElementById('proj-v0').value);
+    var h0 = parseFloat(document.getElementById('proj-h0').value);
+    document.getElementById('proj-dv0').textContent = fmtNum(v0);
+    document.getElementById('proj-dh0').textContent = fmtNum(h0);
+    var T = (v0 + Math.sqrt(v0 * v0 + 64 * h0)) / 32;
+    var tmax = v0 / 32;
+    var hmax = h0 + v0 * v0 / 64;
+    var canvas = document.getElementById('projCanvas');
+    var ctx = canvas.getContext('2d');
+    var v = mkView(canvas, 0, Math.max(1, T * 1.06), 0, Math.max(20, hmax * 1.15));
+    drawGridAxes(ctx, v, 'time t (seconds)', 'height h (feet)');
+    clipDrawCurve(ctx, v, function(t) { return -16 * t * t + v0 * t + h0; }, '#21442B', 3);
+    drawDotV(ctx, v, 0, h0, '#39864E', 'launch (0, ' + fmtNum(h0) + ')', h0 > hmax * 0.85 ? 22 : -12);
+    if (v0 > 0) drawDotV(ctx, v, tmax, hmax, '#DDA25E', 'max ' + fmtNum(hmax) + ' ft at t = ' + fmtNum(tmax));
+    if (T > 0) drawDotV(ctx, v, T, 0, '#BC6C26', 'lands t ≈ ' + (Math.round(T * 100) / 100), -12);
+    var eq = 'h(t) = −16t²';
+    if (Math.abs(v0) > 1e-9) eq += ' + ' + fmtNum(v0) + 't';
+    if (Math.abs(h0) > 1e-9) eq += ' + ' + fmtNum(h0);
+    document.getElementById('proj-ro-eq').textContent = eq;
+    document.getElementById('proj-ro-max').textContent = fmtNum(hmax) + ' ft at t = ' + fmtNum(tmax) + ' s';
+    document.getElementById('proj-ro-land').textContent = 't ≈ ' + (Math.round(T * 100) / 100) + ' s';
+}
+
+/* initialize all visualizers once the page loads */
+window.addEventListener('load', function() {
+    vizUpdate();
+    sys2Preset();
+    syswUpdate();
+    sys3Update();
+    fitPreset();
+    projPreset();
+});
 </script>
 
 </body>
