@@ -232,7 +232,8 @@ li { margin-bottom: 10px; }
             </div>
         </div>
         <div class="idea-box">
-            <p style="margin:0;"><strong>Reading the plot:</strong> a dense clump means &ldquo;many pixels want approximately this color.&rdquo; K-means (tab 3) will drop $k$ centroids into this cloud and let each clump claim one. The grid position of each pixel plays no role &mdash; clustering happens purely in color space.</p>
+            <p><strong>What the cube is, and what $k$ does to it.</strong> The cube is the space of <em>every possible color</em> &mdash; all $256^3 \approx 16.8$ million values a pixel could take. Our image occupies only a tiny, clumpy corner of that vast space, and a dense clump means &ldquo;many pixels want approximately this color.&rdquo;</p>
+            <p style="margin-bottom:0;">$k$ is how many colors we reduce that entire space of possibility down to: K-means (tab 3) drops $k$ representative points into the cloud, and after compression those $k$ points are the <em>only</em> colors that exist &mdash; 16.8 million possibilities collapsed onto 16 chosen ones, placed where the clumps actually are. The grid position of each pixel plays no role &mdash; the whole reduction happens purely in color space.</p>
         </div>
         <div class="card" style="border-left-color: var(--green-dark);">
             <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">Before tab 3: what exactly is a centroid?</h3>
@@ -273,14 +274,23 @@ li { margin-bottom: 10px; }
                     </div>
                 </div>
             </div>
-            <div class="viz-canvas-wrap"><canvas id="cnv-km" width="520" height="520"></canvas></div>
+            <div class="viz-canvas-wrap" style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
+                <div>
+                    <canvas id="cnv-km3d" width="420" height="440" style="cursor:grab; touch-action:none;"></canvas>
+                    <div style="font-size:12px; color:var(--text-medium); margin-top:4px;">Full 3-D RGB cube &mdash; <strong>drag to rotate</strong> (auto-spins)</div>
+                </div>
+                <div>
+                    <canvas id="cnv-km" width="440" height="440"></canvas>
+                    <div style="font-size:12px; color:var(--text-medium); margin-top:4px;">R&ndash;G face (2-D projection)</div>
+                </div>
+            </div>
             <div class="readout-panel">
                 <div class="readout-item"><div class="readout-label">Iteration</div><div class="readout-value" id="km-iter">0</div></div>
                 <div class="readout-item"><div class="readout-label">Next half-step</div><div class="readout-value exact-val" id="km-phase">Initialize</div></div>
                 <div class="readout-item"><div class="readout-label">Distortion J</div><div class="readout-value" id="km-J">&mdash;</div></div>
                 <div class="readout-item"><div class="readout-label">&Delta;J (last step)</div><div class="readout-value exact-val" id="km-dJ">&mdash;</div></div>
             </div>
-            <p style="font-size:13px; color:var(--text-medium); margin-top:10px; margin-bottom:0;">Diamonds = centroids $\mu_j$ (drawn at their true colors, gold-ringed). Dots = pixels, tinted by their current cluster&rsquo;s centroid color once assigned. The scatter uses the R&ndash;G projection; clustering itself runs in full 3-D RGB.</p>
+            <p style="font-size:13px; color:var(--text-medium); margin-top:10px; margin-bottom:0;">Diamonds = centroids $\mu_j$ (drawn at their true colors, gold-ringed). Dots = pixels, tinted by their current cluster&rsquo;s centroid color once assigned. Both panels show the same state after every half-step: the left is the true 3-D color space where the clustering actually happens; the right is its R&ndash;G face &mdash; and clusters that overlap on the right (differing mainly in blue) separate cleanly on the left.</p>
         </div>
         <div class="idea-box">
             <p style="margin:0;"><strong>Two nested minimizations, solved inside-out.</strong> Each half-step is an <em>inner minimization in closed form</em>: Assign is a per-point nearest-centroid argmin (the same closest-point structure as orthogonal projection), and Update uses the fact that the mean is the argmin of summed squared distances (one line of calculus &mdash; derived in tab 5). K-means is coordinate descent that alternates the two. It converges because $J$ decreases every half-step and is bounded below &mdash; but only to a <em>local</em> minimum, which is why re-clicking Initialize can land you a different (sometimes worse!) final palette. Try it.</p>
@@ -726,16 +736,17 @@ function drawScatter() {
 
 /* ═══════════ Tab 2: 3-D cube view ═══════════ */
 var cube = { yaw: 0.7, pitch: 0.42, spin: true, dragging: false, lastX: 0, lastY: 0 };
-function cubeTransform(p) {
+function rot3(p, yaw, pitch) {
     /* center, scale, rotate yaw (about vertical G axis) then pitch (about screen-horizontal axis) */
     var s = 0.62;
     var x = (p[0] - 127.5) * s, y = (p[1] - 127.5) * s, z = (p[2] - 127.5) * s;
-    var cy = Math.cos(cube.yaw), sy = Math.sin(cube.yaw);
+    var cy = Math.cos(yaw), sy = Math.sin(yaw);
     var x1 = cy * x + sy * z, z1 = -sy * x + cy * z;
-    var cp = Math.cos(cube.pitch), sp = Math.sin(cube.pitch);
+    var cp = Math.cos(pitch), sp = Math.sin(pitch);
     var y2 = cp * y - sp * z1, z2 = sp * y + cp * z1;
     return [x1, y2, z2];   /* z2 = depth toward viewer */
 }
+function cubeTransform(p) { return rot3(p, cube.yaw, cube.pitch); }
 function cubeScreen(t, W, H) { return [W/2 + t[0], H/2 + 6 - t[1]]; }
 function drawCube() {
     var cnv = document.getElementById('cnv-cube'); if (!cnv) return;
@@ -944,6 +955,7 @@ function drawKm() {
         }
     }
     projMode = savedMode;
+    drawKm3D();
 }
 
 /* ═══════════ Tab 4: compression demo ═══════════ */
@@ -988,6 +1000,93 @@ function cmpRunAndDraw() {
     var factor = 24 / bpp;
     document.getElementById('cmp-factor').textContent = (Number.isInteger(factor) ? factor : factor.toFixed(1)) + '\u00d7';
     document.getElementById('cmp-J').textContent = Math.round(distortion(cents, assign)).toLocaleString();
+}
+
+/* ═══════════ Tab 3: 3-D stepper companion view ═══════════ */
+var km3 = { yaw: 0.9, pitch: 0.38, spin: true, dragging: false, lastX: 0, lastY: 0 };
+function km3Screen(t, W, H) { return [W/2 + t[0], H/2 + 6 - t[1]]; }
+function drawKm3D() {
+    var cnv = document.getElementById('cnv-km3d'); if (!cnv) return;
+    var ctx = cnv.getContext('2d'), W = cnv.width, H = cnv.height;
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+    var C = [];
+    for (var b = 0; b < 8; b++) C.push([(b&1)*255, ((b>>1)&1)*255, ((b>>2)&1)*255]);
+    var edges = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+    ctx.strokeStyle = 'rgba(45,45,45,0.30)'; ctx.lineWidth = 1;
+    edges.forEach(function(e) {
+        var a = km3Screen(rot3(C[e[0]], km3.yaw, km3.pitch), W, H);
+        var b2 = km3Screen(rot3(C[e[1]], km3.yaw, km3.pitch), W, H);
+        ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b2[0], b2[1]); ctx.stroke();
+    });
+    var axes = [[[255,0,0], '#B03A2E', 'R'], [[0,255,0], '#39864E', 'G'], [[0,0,255], '#2E6DA4', 'B']];
+    var o = km3Screen(rot3([0,0,0], km3.yaw, km3.pitch), W, H);
+    axes.forEach(function(ax) {
+        var tip = km3Screen(rot3(ax[0], km3.yaw, km3.pitch), W, H);
+        ctx.strokeStyle = ax[1]; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(o[0], o[1]); ctx.lineTo(tip[0], tip[1]); ctx.stroke();
+        ctx.fillStyle = ax[1]; ctx.font = '700 14px Inter'; ctx.textAlign = 'center';
+        ctx.fillText(ax[2], tip[0] + (tip[0]-o[0])*0.055, tip[1] + (tip[1]-o[1])*0.055 + 5);
+    });
+    /* points: depth-sorted, tinted by current cluster */
+    var pts = [];
+    for (var i = 0; i < N_PIX; i++) {
+        var t = rot3(pixels[i], km3.yaw, km3.pitch);
+        pts.push([t[2], t[0], t[1], i]);
+    }
+    pts.sort(function(a, b2) { return a[0] - b2[0]; });
+    for (var q = 0; q < pts.length; q++) {
+        var dn = (pts[q][0] + 140) / 280;
+        var sxy = km3Screen([pts[q][1], pts[q][2], 0], W, H);
+        var a2 = km.assign ? km.assign[pts[q][3]] : -1;
+        ctx.globalAlpha = 0.45 + 0.55 * dn;
+        ctx.fillStyle = (a2 >= 0 && km.cents) ? rgbStr(km.cents[a2]) : 'rgba(74,74,74,0.6)';
+        ctx.beginPath(); ctx.arc(sxy[0], sxy[1], 2.0 + 1.6 * dn, 0, 2*Math.PI); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    /* centroid diamonds on top */
+    if (km.cents) {
+        for (var j = 0; j < km.cents.length; j++) {
+            var ct = rot3(km.cents[j], km3.yaw, km3.pitch);
+            var cxy = km3Screen(ct, W, H);
+            ctx.fillStyle = rgbStr(km.cents[j]);
+            ctx.strokeStyle = '#DDA25E'; ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(cxy[0], cxy[1] - 8); ctx.lineTo(cxy[0] + 8, cxy[1]);
+            ctx.lineTo(cxy[0], cxy[1] + 8); ctx.lineTo(cxy[0] - 8, cxy[1]);
+            ctx.closePath(); ctx.fill(); ctx.stroke();
+        }
+    }
+}
+function km3Frame() {
+    if (km3.spin && !km3.dragging) { km3.yaw += 0.004; drawKm3D(); }
+    requestAnimationFrame(km3Frame);
+}
+function initKm3D() {
+    var cnv = document.getElementById('cnv-km3d'); if (!cnv) return;
+    var W = cnv.width, H = cnv.height;
+    function pos(ev) {
+        var r = cnv.getBoundingClientRect();
+        var cx = ev.touches ? ev.touches[0].clientX : ev.clientX;
+        var cy = ev.touches ? ev.touches[0].clientY : ev.clientY;
+        return [(cx - r.left) * W / r.width, (cy - r.top) * H / r.height];
+    }
+    function down(ev) { var p = pos(ev); km3.dragging = true; km3.lastX = p[0]; km3.lastY = p[1]; cnv.style.cursor = 'grabbing'; ev.preventDefault(); }
+    function move(ev) {
+        if (!km3.dragging) return;
+        var p = pos(ev);
+        km3.yaw += (p[0] - km3.lastX) * 0.011;
+        km3.pitch = Math.max(-1.35, Math.min(1.35, km3.pitch + (p[1] - km3.lastY) * 0.011));
+        km3.lastX = p[0]; km3.lastY = p[1]; drawKm3D(); ev.preventDefault();
+    }
+    function up() { km3.dragging = false; cnv.style.cursor = 'grab'; }
+    cnv.addEventListener('mousedown', down);
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+    cnv.addEventListener('touchstart', down, {passive:false});
+    cnv.addEventListener('touchmove', move, {passive:false});
+    cnv.addEventListener('touchend', up);
+    drawKm3D();
+    requestAnimationFrame(km3Frame);
 }
 
 /* ═══════════ Tab 3: Voronoi territory widget ═══════════ */
@@ -1064,6 +1163,7 @@ window.addEventListener('DOMContentLoaded', function() {
     initCube();
     initVor();
     kmInit();
+    initKm3D();
     cmpRunAndDraw();
 });
 </script>
