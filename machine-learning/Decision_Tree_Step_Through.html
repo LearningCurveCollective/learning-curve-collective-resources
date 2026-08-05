@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growing a Decision Tree — Learning Curve Collective</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+.tab-buttons { display: flex; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.12); color: var(--brown-dark); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); color: white; }
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #39864E); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.10); color: var(--green-dark); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #39864E); color: white; }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #42260D, #8B5E3C); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.10); color: var(--brown-dark); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #42260D, #8B5E3C); color: white; }
+
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-header { display: flex; align-items: center; gap: 14px; margin: 30px 0 16px; }
+.section-number { width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--green-dark); }
+
+.card { background: white; border-radius: 8px; border-left: 5px solid var(--gold); padding: 20px 24px; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+
+.viz-container { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--cream-dark); }
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.control-group select { padding: 8px 12px; border-radius: 8px; border: 2px solid var(--gold-light); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-dark); background: white; }
+.slider-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 4px; }
+.slider-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display { font-weight: 700; font-size: 20px; color: var(--gold); min-width: 56px; text-align: center; }
+
+.readout-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
+.readout-item { background: var(--cream); border-radius: 8px; padding: 12px 16px; text-align: center; border: 1px solid var(--gold-pale); }
+.readout-item .readout-label { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.readout-item .readout-value { font-size: 20px; font-weight: 700; color: var(--gold); }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+.readout-item .readout-value.dim-val { color: #BBB; }
+
+.step-btn { padding: 10px 22px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; transition: all 0.2s; }
+.step-btn.primary { background: var(--green-dark); color: white; }
+.step-btn.primary:hover { background: var(--green-medium); }
+.step-btn.secondary { background: var(--cream-dark); color: var(--text-medium); border: 2px solid #D0C8B8; }
+.step-btn.secondary:hover { border-color: var(--gold); }
+.step-btn:disabled { opacity: 0.4; cursor: default; }
+
+.step-explain { background: var(--cream); border-radius: 10px; padding: 18px 22px; margin-top: 16px; border: 1px solid var(--gold-pale); min-height: 120px; }
+.step-explain h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 17px; margin-bottom: 8px; }
+.step-badge { display: inline-block; background: var(--gold); color: white; padding: 2px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+
+.canvas-pair { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+.canvas-block { flex: 1; min-width: 320px; text-align: center; }
+.canvas-block canvas { background: white; border: 1px solid var(--cream-dark); border-radius: 10px; max-width: 100%; height: auto; }
+.canvas-caption { font-size: 12.5px; color: var(--text-medium); margin-top: 6px; font-style: italic; }
+
+.derivation-step { display: flex; gap: 14px; margin-bottom: 14px; }
+.derivation-step .step-num { width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.derivation-step .step-body { flex: 1; }
+
+.solution-toggle { background: none; border: 2px solid var(--gold); color: var(--brown-dark); padding: 7px 16px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13.5px; margin-top: 10px; transition: all 0.2s; }
+.solution-toggle:hover { background: rgba(221,162,94,0.12); }
+.solution-toggle .arrow { display: inline-block; transition: transform 0.25s; font-size: 11px; margin-right: 6px; }
+.solution-toggle.open .arrow { transform: rotate(90deg); }
+.solution-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.solution-body.open { max-height: 3000px; }
+
+.data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14.5px; }
+.data-table th { background: var(--green-dark); color: white; padding: 8px 12px; text-align: center; font-family: 'Switzer', 'Space Grotesk', sans-serif; letter-spacing: 0.5px; }
+.data-table td { padding: 7px 12px; text-align: center; border-bottom: 1px solid var(--cream-dark); }
+.data-table tr:nth-child(even) { background: rgba(221,162,94,0.06); }
+
+.formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin: 16px 0; }
+.formula-tile { border: 2px solid; border-radius: 10px; padding: 16px 20px; }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); margin-bottom: 6px; }
+.formula-note { font-size: 13px; color: var(--text-medium); font-style: italic; margin-top: 6px; }
+
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; gap: 12px; text-align: center; padding: 16px 20px; }
+    .header-left { flex-direction: column; gap: 10px; }
+    .header-right { text-align: center; }
+    .container { padding: 20px 12px; }
+    .canvas-pair { flex-direction: column; }
+    .step-explain { min-height: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Growing a Decision Tree</h1>
+            <div class="subtitle">INTERACTIVE WORKSHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">CS229 &bull; DECISION TREES &amp; GINI LOSS</div>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="tab-buttons">
+    <button class="tab-button active" data-group="core" onclick="switchTab('step', this)">Step Through</button>
+    <button class="tab-button" data-group="core" onclick="switchTab('splitlab', this)">Split Lab</button>
+    <button class="tab-button" data-group="techniques" onclick="switchTab('proof', this)">The Proof: Splits Never Hurt</button>
+    <button class="tab-button" data-group="techniques" onclick="switchTab('tent', this)">The Tent: Part (c)</button>
+    <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Practice</button>
+    <button class="tab-button" data-group="core" onclick="switchTab('reference', this)">Reference</button>
+</div>
+
+<!-- ============ TAB: STEP THROUGH ============ -->
+<div class="tab-content active" id="tab-step">
+
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Watch the Tree Grow, One Decision at a Time</h2>
+    </div>
+
+    <div class="card">
+        <p>A decision tree classifies by asking <strong>yes/no questions about one feature at a time</strong>: &ldquo;is $x_1 &lt; 5$?&rdquo; Each question slices the feature space with an axis-aligned line, so the finished tree carves the plane into rectangles, and each rectangle predicts the majority class of the training points inside it.</p>
+        <p style="margin-top:8px;"><strong>Growing</strong> the tree means choosing the slices &mdash; greedily, one at a time, always picking the split that most reduces the <em>weighted Gini loss</em> of the children. Step through the algorithm below on a 10-point dataset and watch every number get computed.</p>
+    </div>
+
+    <div class="viz-container">
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+            <button class="step-btn secondary" id="btnPrev" onclick="prevStep()">&#8592; Back</button>
+            <button class="step-btn primary" id="btnNext" onclick="nextStep()">Next step &#8594;</button>
+            <button class="step-btn secondary" onclick="resetSteps()">Reset</button>
+            <div style="font-weight:700; color:var(--green-dark); font-size:15px;" id="stepCounter">Step 0 of 8</div>
+        </div>
+
+        <div class="canvas-pair" style="margin-top:18px;">
+            <div class="canvas-block">
+                <canvas id="fsCanvas" width="440" height="440"></canvas>
+                <div class="canvas-caption">Feature space: each dot is a training point ($+$ green, $-$ brown)</div>
+            </div>
+            <div class="canvas-block">
+                <canvas id="treeCanvas" width="440" height="440"></canvas>
+                <div class="canvas-caption">The tree being built (nodes show counts and Gini)</div>
+            </div>
+        </div>
+
+        <div class="step-explain" id="stepExplain"></div>
+
+        <div class="readout-panel">
+            <div class="readout-item"><div class="readout-label">Parent Gini $G$</div><div class="readout-value" id="roParent">0.500</div></div>
+            <div class="readout-item"><div class="readout-label">$G(R_1)$ left child</div><div class="readout-value dim-val" id="roG1">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">$G(R_2)$ right child</div><div class="readout-value dim-val" id="roG2">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">Weighted children</div><div class="readout-value dim-val" id="roW">&mdash;</div></div>
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:8px;">The dataset</h3>
+        <table class="data-table">
+            <tr><th>Point</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th><th>J</th></tr>
+            <tr><td><strong>$x_1$</strong></td><td>2</td><td>3</td><td>1</td><td>4</td><td>6</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+            <tr><td><strong>$x_2$</strong></td><td>7</td><td>4</td><td>6</td><td>8</td><td>7</td><td>2</td><td>1</td><td>2</td><td>5</td><td>3</td></tr>
+            <tr><td><strong>Class</strong></td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$-$</td></tr>
+        </table>
+        <p style="font-size:13.5px; color:var(--text-medium);">Five positives, five negatives &mdash; a perfectly balanced parent region, which is where Gini is at its maximum.</p>
+    </div>
+</div>
+
+<!-- ============ TAB: SPLIT LAB ============ -->
+<div class="tab-content" id="tab-splitlab">
+
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Split Lab: Move the Threshold Yourself</h2>
+    </div>
+
+    <div class="card">
+        <p>The algorithm's $\min_{j,t}$ is a brute-force search: try every feature $j$ and every threshold $t$, score each candidate by the weighted children's Gini, keep the best. Here you <em>are</em> the search. Pick a feature, drag the threshold, and watch two things at once:</p>
+        <p style="margin-top:8px;"><strong>Left:</strong> the data being partitioned. <strong>Right:</strong> the picture behind Problem 1(a) &mdash; the Gini dome $G(p)=2p(1-p)$, with the parent sitting <em>on the curve</em> and the children's weighted loss sitting <em>on the chord</em> directly below it. The vertical gap is exactly how much the split helps. The chord can touch the dome, but it can never rise above it &mdash; that is the whole proof.</p>
+    </div>
+
+    <div class="viz-container">
+        <div class="viz-controls">
+            <div class="control-group">
+                <label>Split feature $j$</label>
+                <select id="labFeature" onchange="drawLab()">
+                    <option value="x">$x_1$ (vertical line)</option>
+                    <option value="y">$x_2$ (horizontal line)</option>
+                </select>
+            </div>
+            <div class="slider-group">
+                <label>Threshold $t$ &mdash; question: is $x_j < t$?</label>
+                <div class="slider-row">
+                    <input type="range" id="labT" min="0.5" max="10" step="0.5" value="5" oninput="drawLab()">
+                    <div class="n-display" id="labTval">5.0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-pair">
+            <div class="canvas-block">
+                <canvas id="labCanvas" width="420" height="420"></canvas>
+                <div class="canvas-caption">$R_1$ (gold tint, $x_j < t$) and $R_2$ (green tint, $x_j \geq t$)</div>
+            </div>
+            <div class="canvas-block">
+                <canvas id="domeCanvas" width="420" height="420"></canvas>
+                <div class="canvas-caption">Dome vs. chord: parent on the curve, children on the chord</div>
+            </div>
+        </div>
+
+        <div class="readout-panel">
+            <div class="readout-item"><div class="readout-label">$n_1$, $p_1$</div><div class="readout-value exact-val" id="labR1">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">$n_2$, $p_2$</div><div class="readout-value exact-val" id="labR2">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">Weighted children Gini</div><div class="readout-value" id="labW">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">Improvement vs. parent (0.500)</div><div class="readout-value" id="labImp">&mdash;</div></div>
+        </div>
+        <div id="labNote" style="margin-top:10px; font-size:13.5px; color:var(--text-medium); font-style:italic;"></div>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>Three experiments to run.</strong> (1) Find the best split of this dataset (weighted Gini $\approx 0.167$ &mdash; there are a few ties). (2) Push the threshold to an extreme so one child is empty: the split is vacuous and the &ldquo;children&rdquo; score exactly the parent's $0.500$. (3) Find a split where $p_1 = p_2$ &mdash; both children inherit the parent's mix. The two dots on the dome collide, the chord collapses to a point, and improvement is exactly zero: that is the equality case of Problem 1(a).</p>
+    </div>
+</div>
+
+<!-- ============ TAB: PROOF ============ -->
+<div class="tab-content" id="tab-proof">
+
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>Problem 1(a): A Split Can Never Increase the Gini Loss</h2>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <p><strong>Givens.</strong> Binary classification ($K = 2$), no degenerate overlap. For any region $R_m$, let $p \in [0,1]$ denote its proportion of positive examples, so $p_{m1} = p$, $p_{m2} = 1-p$, and $\vec{p}_m = [\,p \;\; 1-p\,]$. Instantiating the Gini definition at $K = 2$:</p>
+        <p>$$G(R_m) = \sum_{k=1}^{2} p_{mk}(1-p_{mk}) = p(1-p) + (1-p)p = 2p(1-p)$$</p>
+        <p>A split $s_p(j,t)$ partitions parent $R_p$ into $R_1 = \{X \mid x_j < t,\ X \in R_p\}$ and $R_2 = \{X \mid x_j \geq t,\ X \in R_p\}$, with $n_1 = |R_1|$, $n_2 = |R_2|$ and positive-proportions $p_1, p_2$. Hint (two-point Jensen): for strictly concave $G$,</p>
+        <p>$$\forall\, p_1 \neq p_2,\ \forall\, \lambda \in (0,1): \quad \lambda G(p_1) + (1-\lambda)G(p_2) \;<\; G\bigl(\lambda p_1 + (1-\lambda)p_2\bigr)$$</p>
+        <p><strong>Goal.</strong> $\dfrac{n_1 G(p_1) + n_2 G(p_2)}{n_1 + n_2} \;\leq\; G(P_p)$ for any split.</p>
+    </div>
+
+    <div class="derivation-step">
+        <div class="step-num">P</div>
+        <div class="step-body">
+            <p><strong>Plan.</strong> Divide every split into three exhaustive cases: an empty child; both children nonempty with $p_1 = p_2$; both nonempty with $p_1 \neq p_2$. Dispatch the empty-child case immediately by direct computation (equality). Then establish the shared identity both remaining cases need: counting positive examples shows $P_p$ is exactly the $\lambda$-weighted average of $p_1, p_2$, with $\lambda$ = the left child's share of the data. The $p_1 = p_2$ case follows by direct substitution (equality). For $p_1 \neq p_2$, show $G$ is strictly concave via the second-derivative test and apply Jensen's inequality at the $\lambda$-mixture (strict).</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <p><strong>Case structure.</strong> Every split falls into exactly one of: <strong>Case 0</strong> — a child ($n_1$ or $n_2$) is empty; <strong>Case A</strong> — both children nonempty with $p_1 = p_2$; <strong>Case B</strong> — both children nonempty with $p_1 \neq p_2$. The claim holds in all three, with equality in Cases 0 and A and strict inequality in Case B.</p>
+    </div>
+
+    <div class="derivation-step">
+        <div class="step-num">0</div>
+        <div class="step-body">
+            <p><strong>Case 0 (empty child).</strong> WLOG suppose $n_1 = 0$ (the case $n_2 = 0$ is symmetric). Then every point of $R_p$ lies in $R_2$, so $R_2 = R_p$, hence $p_2 = P_p$. The empty region contributes nothing to the loss:</p>
+            <p>$$\frac{n_1 G(R_1) + n_2 G(R_2)}{n_1 + n_2} = \frac{n_2\, G(p_2)}{n_2} = G(p_2) = G(P_p)$$</p>
+            <p>Equality — claim holds. <strong>For the remainder of the proof, assume $n_1, n_2 \geq 1$.</strong></p>
+        </div>
+    </div>
+
+    <div class="derivation-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+            <p><strong>Counting positives (shared infrastructure).</strong> The parent's proportion is total positives over total count, and positives split across the children:</p>
+            <p>$$P_p = \frac{\text{positives in } R_1 + \text{positives in } R_2}{n_1 + n_2} = \frac{n_1 p_1 + n_2 p_2}{n_1 + n_2}$$</p>
+        </div>
+    </div>
+
+    <div class="derivation-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+            <p><strong>Define the mixing weight.</strong></p>
+            <p>$$\lambda := \frac{n_1}{n_1 + n_2} \quad\Rightarrow\quad 1 - \lambda = \frac{n_2}{n_1 + n_2}, \qquad \lambda \in (0,1) \ \text{ since } n_1, n_2 \geq 1$$</p>
+            <p>Substituting into Step 1:</p>
+            <p>$$P_p = \lambda\, p_1 + (1-\lambda)\, p_2 \tag{$\ast\ast$}$$</p>
+        </div>
+    </div>
+
+    <div class="derivation-step">
+        <div class="step-num">A</div>
+        <div class="step-body">
+            <p><strong>Case A ($n_1, n_2 \geq 1$ and $p_1 = p_2$).</strong> Let $p := p_1 = p_2$. By $(\ast\ast)$: $P_p = \lambda p + (1-\lambda)p = p$. Thus the weighted children's loss:</p>
+            <p>$$\frac{n_1 G(p) + n_2 G(p)}{n_1 + n_2} = \frac{(n_1+n_2)\,G(p)}{n_1 + n_2} = G(p) = G(P_p)$$</p>
+            <p>Claim holds (with equality).</p>
+        </div>
+    </div>
+
+    <div class="derivation-step">
+        <div class="step-num">B</div>
+        <div class="step-body">
+            <p><strong>Case B ($n_1, n_2 \geq 1$ and $p_1 \neq p_2$).</strong> From the Givens, $G(p) = 2p(1-p) = 2p - 2p^2$. Differentiate twice:</p>
+            <p>$$G'(p) = 2 - 4p, \qquad G''(p) = -4 < 0 \quad \forall p \in [0,1]$$</p>
+            <p>A twice-differentiable function with $G'' < 0$ everywhere is strictly concave, so the hint holds. As established: $G$ is strictly concave, $\lambda \in (0,1)$ (Step 2), and $p_1 \neq p_2$ (case assumption) — so Jensen's inequality applies at our $\lambda$:</p>
+            <p>$$\lambda G(p_1) + (1-\lambda)G(p_2) \;<\; G\bigl(\lambda p_1 + (1-\lambda)p_2\bigr) = G(P_p) \qquad \text{(by } \ast\ast\text{)}$$</p>
+            <p>By definition of $\lambda$, the left side is precisely the weighted Gini loss of the children:</p>
+            <p>$$\frac{n_1 G(p_1) + n_2 G(p_2)}{n_1 + n_2} \;<\; G(P_p)$$</p>
+            <p>Claim holds (strictly).</p>
+        </div>
+    </div>
+
+    <div class="highlight-box">
+        <p><strong>Conclusion.</strong> Cases 0, A, B are exhaustive; equality holds in Cases 0 and A, strict inequality in Case B. Hence for any split:</p>
+        <p>$$\boxed{\;\frac{|R_1|\,G(R_1) + |R_2|\,G(R_2)}{|R_1| + |R_2|} \;\leq\; G(R_p)\;}$$</p>
+        <p>with equality if and only if the split is vacuous or $p_1 = p_2$. $\blacksquare$</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>Intuition: dome beats chord.</strong> $G$'s graph is a dome; every chord hangs at or below it. Step 1 chains the parent's proportion to a point on the chord's horizontal span, Step 2 identifies that point as the chord parameter $\lambda$, and Case B reads off &ldquo;curve above chord&rdquo; there. The three cases are the three ways a chord can fail to sit <em>strictly</em> below the curve: no chord at all (Case 0), endpoints coincide (Case A), or neither &mdash; the split genuinely separated something and Gini strictly rewards it (Case B). Deeper echo: $G(p) = 2p(1-p)$ is twice the variance of a Bernoulli$(p)$, so &ldquo;splitting reduces Gini&rdquo; is the law-of-total-variance fact that conditioning can't increase variance.</p>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Precision traps caught in drafting (keep these on the checklist):</strong> (1) The pset uses $t$ for both the split threshold and (in the hint) the mixing weight &mdash; we renamed the weight $\lambda$. (2) &ldquo;Chord below curve&rdquo; is <em>concave</em>, not convex &mdash; and on the diagram, the chord's label is the one with <em>two</em> $G$'s ($\lambda G(p_1) + (1-\lambda)G(p_2)$); the curve's has <em>one</em> ($G$ of the mixture). (3) $\lambda \in (0,1)$ must be <em>cited</em>, not assumed &mdash; it's exactly what the standing assumption $n_1, n_2 \geq 1$ buys, and Jensen's hypothesis check needs it. (4) In Case 0, <em>every point</em> (not just every positive) lies in the surviving child &mdash; that's what forces $R_2 = R_p$. (5) The claim is $\leq$ but strict concavity only delivers $<$ when $p_1 \neq p_2$: the equality cases must be handled explicitly, and they earn their keep in part (b).</p>
+    </div>
+
+    <div class="section-header">
+        <div class="section-number">3b</div>
+        <h2>Problem 1(b): When Gini Stalls &mdash; and Why Purity Still Arrives</h2>
+    </div>
+
+    <div class="card">
+        <p><strong>The cases where Gini stays the same</strong> (by part (a)'s <em>iff</em>): <strong>(i)</strong> a vacuous split ($n_1 = 0$ or $n_2 = 0$); <strong>(ii)</strong> $n_1, n_2 \geq 1$ with $p_1 = p_2$ (whence $p_1 = p_2 = P_p$ by $\ast\ast$).</p>
+    </div>
+
+    <div class="card">
+        <p><strong>No violation of strict concavity.</strong> The strict inequality is conditional on two hypotheses: $\lambda \in (0,1)$ and $p_1 \neq p_2$. Case (i) falsifies the first: an empty child gives $\lambda \in \{0,1\}$. Case (ii) falsifies the second: the two points coincide &mdash; there is no chord for the curve to lie strictly above. $G$ itself remains strictly concave ($G'' = -4$ throughout); only the <em>improvement</em> is zero. A conditional asserts nothing when its hypotheses fail, so equality in these cases does not contradict strict concavity &mdash; indeed, by (a)'s <em>iff</em>, strict concavity is exactly what confines equality to these two cases.</p>
+    </div>
+
+    <div class="card">
+        <p><strong>Zero Gini is still reached.</strong> Any impure leaf ($0 < p_R < 1$) contains a positive and a negative example; by the no-overlap assumption these differ in some feature $j$, so any threshold strictly between their $x_j$ values gives a <strong>non-vacuous</strong> split. Non-vacuous splits &mdash; including those of case (ii) &mdash; strictly shrink region sizes (each child leaves at least one point to the other), and the data is finite, so a fully grown tree halts only when no impure leaf remains. Every leaf pure means $p \in \{0,1\}$ at each leaf, so $G(p) = 0$ everywhere and the tree's total Gini (a weighted average of zeros) is $0$. The equality cases stall progress <em>on a given split</em>, but they never destroy the <em>existence</em> of a further productive split &mdash; and it is existence, not per-split progress, that purity rests on. $\blacksquare$</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The XOR checkerboard &mdash; all of (b) in four points.</strong> $+$ at $(0,0), (1,1)$; $-$ at $(0,1), (1,0)$. Every non-vacuous root split lands in case (ii): each child inherits the 50/50 mix, score frozen at $0.500$. Greedy commits to a non-improving split anyway &mdash; and each child drops from 4 points to 2, where the classes separate cleanly. Depth 2 reaches zero Gini. Stagnation isn't a trap, because <em>splits shrink regions even when they don't improve the score</em>. (Caveat for practice: a &ldquo;stop when no split improves&rdquo; rule <em>does</em> get trapped here at the root &mdash; the pset's &ldquo;fully grown&rdquo; sidesteps this by definition.)</p>
+    </div>
+
+</div>
+
+<!-- ============ TAB: TENT (PART C) ============ -->
+<div class="tab-content" id="tab-tent">
+
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>The Tent: Misclassification Loss and the Additional Stalling Case</h2>
+    </div>
+
+    <div class="card">
+        <p>Part (c) swaps the Gini dome for the misclassification loss $M(p) = 1 - \max(p, 1-p) = \min(p, 1-p)$ &mdash; a <strong>tent</strong>, not a dome. Its two faces are straight lines, and straight lines change everything: a chord between two points on the <em>same face</em> doesn't sag below the curve, it lies <strong>on</strong> it. That geometric fact is the entire additional case: <em>both children nonempty, $p_1 \neq p_2$, but both children share the same majority class</em>. Step through it on a concrete dataset.</p>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Why $M$ is a tent: the derivation</h3>
+        <div class="derivation-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+                <p><strong>Instantiate the definition at $K = 2$.</strong> With $p := p_{m1}$ (fraction positive), so $p_{m2} = 1 - p$:</p>
+                <p>$$M(p) = 1 - \max_k p_{mk} = 1 - \max(p,\, 1-p)$$</p>
+            </div>
+        </div>
+        <div class="derivation-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+                <p><strong>One minus the max of two numbers summing to 1 is the min.</strong> If $p \geq 1-p$: $\;1 - \max(p, 1-p) = 1 - p = \min(p, 1-p)$. If $p < 1-p$: $\;1 - \max = 1 - (1-p) = p = \min$. Either way:</p>
+                <p>$$M(p) = \min(p,\, 1-p)$$</p>
+            </div>
+        </div>
+        <div class="derivation-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+                <p><strong>Split at which argument wins the min.</strong></p>
+                <p>$$M(p) = \begin{cases} p, & p \leq \tfrac12 \quad \text{(region votes } -\text{; the errors are the positives)} \\[3pt] 1-p, & p \geq \tfrac12 \quad \text{(region votes } +\text{; the errors are the negatives)} \end{cases}$$</p>
+                <p>Each branch is a <strong>linear</strong> function of $p$ &mdash; slope $+1$ on the left, $-1$ on the right &mdash; and at $p = \tfrac12$ both branches give $\tfrac12$, so they meet consistently at the peak $(\tfrac12, \tfrac12)$. Two line segments joined at a peak: a tent. On each face $M'' = 0$: <em>weakly</em> concave, never strictly.</p>
+            </div>
+        </div>
+        <div class="derivation-step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+                <p><strong>Count form (the hint's notation).</strong> Since $p = \tfrac{N_{m1}}{N_m}$:</p>
+                <p>$$M(R_m) = \frac{\min(N_{m1},\, N_{m2})}{N_m}$$</p>
+                <p>&mdash; the <em>minority count over the region size</em>: exactly the number of errors made by majority-vote prediction, per point. This is the form the freeze computation runs on in Step 3 of the walkthrough below.</p>
+            </div>
+        </div>
+        <div class="idea-box" style="margin-bottom:0;">
+            <p><strong>Straightness, operationally.</strong> March $p$ up the right face in equal steps: $M(0.6), M(0.7), M(0.8), M(0.9) = 0.40, 0.30, 0.20, 0.10$ &mdash; equal steps out. Every convert removes exactly one error; the exchange rate never changes. Gini on the same march: $0.48, 0.42, 0.32, 0.18$ &mdash; steps of $0.06, 0.10, 0.14$, a <em>changing</em> exchange rate. Constant rate = straight = averaging commutes with the loss (chords lie on faces); changing rate = curved = Jensen bites (chords sag). That single contrast is all of part (c).</p>
+        </div>
+    </div>
+
+    <div class="viz-container">
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+            <button class="step-btn secondary" id="tentPrev" onclick="tentPrevStep()">&#8592; Back</button>
+            <button class="step-btn primary" id="tentNext" onclick="tentNextStep()">Next step &#8594;</button>
+            <button class="step-btn secondary" onclick="tentReset()">Reset</button>
+            <div style="font-weight:700; color:var(--green-dark); font-size:15px;" id="tentCounter">Step 0 of 6</div>
+        </div>
+
+        <div class="canvas-pair" style="margin-top:18px;">
+            <div class="canvas-block">
+                <canvas id="tentDataCanvas" width="440" height="440"></canvas>
+                <div class="canvas-caption">Feature space: the split at $x_1 = 5$, each region’s majority vote, errors ringed in red</div>
+            </div>
+            <div class="canvas-block">
+                <canvas id="tentGraphCanvas" width="440" height="440"></canvas>
+                <div class="canvas-caption">Loss geometry: tent $M(p)$, chords, and (later) the Gini dome</div>
+            </div>
+        </div>
+
+        <div class="step-explain" id="tentExplain"></div>
+
+        <div class="readout-panel">
+            <div class="readout-item"><div class="readout-label">$M$(parent)</div><div class="readout-value dim-val" id="tentROp">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">$M(R_1)$</div><div class="readout-value dim-val" id="tentRO1">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">$M(R_2)$</div><div class="readout-value dim-val" id="tentRO2">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">Weighted children $M$</div><div class="readout-value dim-val" id="tentROw">&mdash;</div></div>
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:8px;">The tournament, scored under both losses</h3>
+        <p>Same dataset as the walkthrough (parent $6{+}/2{-}$: $M = 0.250$, $G = 0.375$), same brute-force enumeration as the Step Through tab: $x_1$ has 6 distinct values (5 gaps), $x_2$ has 5 (4 gaps) &mdash; <strong>9 candidates</strong>, each scored by $\dfrac{N_1 L(R_1) + N_2 L(R_2)}{N_1 + N_2}$ under both $L = M$ and $L = G$:</p>
+<table class="data-table" style="font-size:12.5px;"><tr><th>j</th><th>t gap</th><th>R₁ | R₂</th><th>votes</th><th>weighted M</th><th>weighted G</th></tr><tr style="background:rgba(221,162,94,0.13);"><td>1</td><td>(1,2)</td><td>1+/0− | 5+/2−</td><td>+ / +</td><td>0.250 ❄</td><td>0.357</td></tr><tr style="background:rgba(221,162,94,0.13);"><td>1</td><td>(2,3)</td><td>2+/0− | 4+/2−</td><td>+ / +</td><td>0.250 ❄</td><td>0.333</td></tr><tr style="background:rgba(221,162,94,0.13);"><td>1</td><td>(3,4)</td><td>3+/0− | 3+/2−</td><td>+ / +</td><td>0.250 ❄</td><td>0.300</td></tr><tr style="background:rgba(221,162,94,0.13);"><td>1</td><td>(4,6)</td><td>4+/0− | 2+/2−</td><td>+ / tie</td><td>0.250 ❄</td><td>0.250</td></tr><tr style="background:rgba(221,162,94,0.13);"><td>1</td><td>(6,8)</td><td>5+/1− | 1+/1−</td><td>+ / tie</td><td>0.250 ❄</td><td>0.333</td></tr><tr style="background:rgba(57,134,78,0.18); font-weight:700;"><td>2</td><td>(2,3)</td><td>0+/1− | 6+/1−</td><td>− / +</td><td>0.125 ★</td><td>0.214</td></tr><tr style="background:rgba(57,134,78,0.18); font-weight:700;"><td>2</td><td>(3,4)</td><td>1+/2− | 5+/0−</td><td>− / +</td><td>0.125 ★</td><td>0.167</td></tr><tr style="background:rgba(221,162,94,0.13);"><td>2</td><td>(4,6)</td><td>2+/2− | 4+/0−</td><td>tie / +</td><td>0.250 ❄</td><td>0.250</td></tr><tr style="background:rgba(221,162,94,0.13);"><td>2</td><td>(6,7)</td><td>4+/2− | 2+/0−</td><td>+ / +</td><td>0.250 ❄</td><td>0.333</td></tr></table>
+        <p style="margin-top:10px;">❄ = frozen at the parent's $0.250$ &nbsp;&bull;&nbsp; ★ = strict improvement under $M$. Read the <strong>votes</strong> column against the <strong>M</strong> column: the correspondence is perfect &mdash; $M$ moves on exactly the two candidates where the children vote <em>differently</em> ($-/+$), and freezes on all seven where they don't (ties at $p = \tfrac12$ freeze too: a tied child contributes $M = \tfrac12$ from the peak either way). Meanwhile the $G$ column improves on <strong>all nine</strong> &mdash; every candidate here has $p_1 \neq p_2$, and the dome strictly rewards each one. Seven of nine candidates are invisible to $M$; none are invisible to $G$. If you grew this tree with $M$ and a &ldquo;stop when nothing improves&rdquo; rule after the wrong tie-break&hellip; you'd still be fine <em>here</em> (two improving candidates exist), but the $x_1$-only version of this dataset would freeze completely &mdash; the tent's version of XOR.</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The one-sentence version.</strong> $M$ counts the errors of majority-vote prediction &mdash; so if a split flips no votes (both children inherit the parent's majority), the predictions on every point are unchanged, the errors are unchanged, and the loss is frozen, <em>no matter how much purer one child became</em>. Gini's strict curvature is exactly what lets it see that invisible progress &mdash; which is why trees are <strong>grown</strong> with Gini (or entropy) and <strong>evaluated</strong> with $M$.</p>
+    </div>
+</div>
+
+<!-- ============ TAB: PRACTICE ============ -->
+<div class="tab-content" id="tab-practice">
+
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>Practice</h2>
+    </div>
+
+    <div id="practiceContainer">
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+            <div style="flex: 1;">
+                <p><strong>Warm-up.</strong> A region contains 12 positive and 4 negative points. Compute $p$ and the binary Gini loss $G(p)$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                        <div class="highlight-box">
+                            <p>$p = \dfrac{12}{16} = \dfrac{3}{4}$, so $G\!\left(\tfrac34\right) = 2 \cdot \tfrac34 \cdot \tfrac14 = \dfrac{3}{8} = 0.375$.</p>
+                            <p style="margin-top:6px;">Sanity check against the dome: $0.375 < 0.5 = G\!\left(\tfrac12\right)$, as it must be &mdash; the region has a clear majority, so it's less impure than a 50/50 mix.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+            <div style="flex: 1;">
+                <p><strong>Which split wins?</strong> A parent has 20 points, 10 of each class ($p_{\text{parent}} = \tfrac12$). Two candidate splits:</p>
+                <p style="margin-top:6px;">&bull; Split A: children of sizes $10$ and $10$ with $p_1 = 0.9$, $p_2 = 0.1$.<br>
+                &bull; Split B: children of sizes $4$ and $16$ with $p_1 = 1$, $p_2 = 0.375$.</p>
+                <p style="margin-top:6px;">Verify both are consistent with the parent, compute each weighted Gini, and say which the greedy algorithm picks.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                        <div class="highlight-box">
+                            <p><strong>Consistency (mixture identity):</strong> A: $\tfrac{10(0.9)+10(0.1)}{20} = \tfrac{9+1}{20} = \tfrac12$ &#10003;. &nbsp; B: $\tfrac{4(1)+16(0.375)}{20} = \tfrac{4+6}{20} = \tfrac12$ &#10003;.</p>
+                            <p style="margin-top:8px;"><strong>Split A:</strong> $G(0.9) = G(0.1) = 2(0.9)(0.1) = 0.18$, so weighted $= \tfrac{10(0.18)+10(0.18)}{20} = 0.18$.</p>
+                            <p style="margin-top:8px;"><strong>Split B:</strong> $G(1) = 0$; $G(0.375) = 2(0.375)(0.625) = 0.46875$; weighted $= \tfrac{4(0)+16(0.46875)}{20} = \tfrac{7.5}{20} = 0.375$.</p>
+                            <p style="margin-top:8px;">$0.18 < 0.375$: <strong>greedy picks Split A.</strong> Note the lesson &mdash; B manufactures a small <em>pure</em> child, but purity of a tiny region buys little; Gini weights each child by its share of the data. Both beat the parent's $0.5$, as 1(a) guarantees.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+            <div style="flex: 1;">
+                <p><strong>Dome vs. chord, numerically.</strong> A split produces children $(n_1, p_1) = (6, \tfrac23)$ and $(n_2, p_2) = (9, \tfrac13)$. Compute $p_{\text{parent}}$, then compute both sides of the 1(a) inequality exactly (fractions, not decimals) and confirm the strict inequality.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                        <div class="highlight-box">
+                            <p>$p_{\text{parent}} = \dfrac{6 \cdot \tfrac23 + 9 \cdot \tfrac13}{15} = \dfrac{4+3}{15} = \dfrac{7}{15}$.</p>
+                            <p style="margin-top:8px;"><strong>Dome (parent):</strong> $G\!\left(\tfrac{7}{15}\right) = 2 \cdot \tfrac{7}{15} \cdot \tfrac{8}{15} = \dfrac{112}{225} \approx 0.498$.</p>
+                            <p style="margin-top:8px;"><strong>Chord (children):</strong> $G\!\left(\tfrac23\right) = G\!\left(\tfrac13\right) = 2 \cdot \tfrac23 \cdot \tfrac13 = \tfrac49$, so weighted $= \tfrac{6 \cdot \frac49 + 9 \cdot \frac49}{15} = \tfrac49 = \dfrac{100}{225} \approx 0.444$.</p>
+                            <p style="margin-top:8px;">$\dfrac{100}{225} < \dfrac{112}{225}$ &#10003; &mdash; strict, since $p_1 \neq p_2$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">4</div>
+            <div style="flex: 1;">
+                <p><strong>The equality case.</strong> A parent has 8 positives and 8 negatives. Construct an explicit split (give $n_1, p_1, n_2, p_2$) whose weighted children's Gini <em>equals</em> the parent's, and explain in one sentence why no strict improvement occurs.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                        <div class="highlight-box">
+                            <p>Any split with $p_1 = p_2$ works, e.g. $(n_1, p_1) = (4, \tfrac12)$ and $(n_2, p_2) = (12, \tfrac12)$: each child inherits the parent's 50/50 mix, so weighted Gini $= G\!\left(\tfrac12\right) = 0.5 = G(p_{\text{parent}})$.</p>
+                            <p style="margin-top:6px;">Why no improvement: the split moved points around but didn't change any region's <em>class balance</em> &mdash; the two chord endpoints coincide on the dome, so chord and curve touch. (Case B of the proof.)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+<!-- ============ TAB: REFERENCE ============ -->
+<div class="tab-content" id="tab-reference">
+
+    <div class="section-header">
+        <div class="section-number">5</div>
+        <h2>Notation &amp; Formula Reference</h2>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Cast of characters</h3>
+        <table class="data-table">
+            <tr><th>Symbol</th><th>What it is</th></tr>
+            <tr><td>$R_p$</td><td style="text-align:left;">Parent region: the chunk of feature space (and the training points in it) we're about to split</td></tr>
+            <tr><td>$s_p(j, t)$</td><td style="text-align:left;">A split: pick feature $j$ and threshold $t$; the question &ldquo;is $x_j < t$?&rdquo;</td></tr>
+            <tr><td>$R_1,\; R_2$</td><td style="text-align:left;">The children: $R_1 = \{X \mid x_j < t\}$ (yes-points), $R_2 = \{X \mid x_j \geq t\}$ (no-points, boundary included)</td></tr>
+            <tr><td>$|R_m|$</td><td style="text-align:left;">Number of training points in region $R_m$</td></tr>
+            <tr><td>$p_{mk}$</td><td style="text-align:left;">Fraction of $R_m$'s points belonging to class $k$; the vector $\vec{p}_m$ stacks these over all $K$ classes and sums to 1</td></tr>
+            <tr><td>$G(R_m)$</td><td style="text-align:left;">Gini loss of the region: $\sum_k p_{mk}(1 - p_{mk})$; in the binary case, one scalar $p$ suffices and $G(p) = 2p(1-p)$</td></tr>
+            <tr><td>$M(R_m)$</td><td style="text-align:left;">Misclassification loss: $1 - \max_k p_{mk}$, the error rate of predicting the majority class</td></tr>
+        </table>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Binary Gini loss</h4>
+            <p>$$G(p) = 2p(1-p)$$</p>
+            <p class="formula-note">Zero at $p \in \{0, 1\}$ (pure), max $0.5$ at $p = \tfrac12$. Equals the chance two draws from the region disagree; also $2 \times$ Bernoulli variance.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Split objective</h4>
+            <p>$$\min_{j,t}\; \frac{|R_1|L(R_1) + |R_2|L(R_2)}{|R_1| + |R_2|}$$</p>
+            <p class="formula-note">Greedy search over all features and thresholds; each child's loss weighted by its share of the data.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Mixture identity</h4>
+            <p>$$p_{\text{parent}} = w\,p_1 + (1-w)\,p_2,\;\; w = \tfrac{n_1}{n_1+n_2}$$</p>
+            <p class="formula-note">Pure counting: positives in the parent = positives in $R_1$ + positives in $R_2$. The hinge of the 1(a) proof.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Strict concavity (two-point Jensen)</h4>
+            <p>$$G(wp_1 + (1{-}w)p_2) > wG(p_1) + (1{-}w)G(p_2)$$</p>
+            <p class="formula-note">For $p_1 \neq p_2$, $w \in (0,1)$. Certified by $G''(p) = -4 < 0$. Geometrically: dome beats chord.</p>
+        </div>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The algorithm in one breath.</strong> Start with all data in one region. Search every (feature, threshold) pair; score each by weighted children's Gini; make the best split. Recurse into each child. Stop when a region is pure (or a depth/size limit hits). Predict with each leaf's majority class. Part (a) guarantees the score never gets worse as you grow &mdash; the interesting question the later parts probe is what &ldquo;never worse&rdquo; does and doesn't buy you for the loss you actually care about, $M$.</p>
+    </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Growing a Decision Tree</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<script>
+// ================= Shared data =================
+var PTS = [
+    {n:'A', x:2, y:7, c:1}, {n:'B', x:3, y:4, c:1}, {n:'C', x:1, y:6, c:1},
+    {n:'D', x:4, y:8, c:1}, {n:'E', x:6, y:7, c:1},
+    {n:'F', x:5, y:2, c:0}, {n:'G', x:6, y:1, c:0}, {n:'H', x:7, y:2, c:0},
+    {n:'I', x:8, y:5, c:0}, {n:'J', x:9, y:3, c:0}
+];
+var GREEN = '#21442B', GOLD = '#DDA25E', COPPER = '#BC6C26', BROWN = '#42260D',
+    GLIGHT = '#39864E', CREAM = '#F0F0F0';
+
+function gini(p) { return 2 * p * (1 - p); }
+function f3(v) { return v.toFixed(3); }
+
+// ================= Tab switching =================
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (name === 'splitlab') drawLab();
+    if (name === 'tent') renderTentStep();
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+
+// ================= Coordinate helpers =================
+function makeMapper(canvas, pad) {
+    var W = canvas.width, H = canvas.height;
+    return {
+        px: function(x) { return pad + (x / 10) * (W - 2 * pad); },
+        py: function(y) { return H - pad - (y / 10) * (H - 2 * pad); },
+        W: W, H: H, pad: pad
+    };
+}
+function drawGrid(ctx, m) {
+    ctx.clearRect(0, 0, m.W, m.H);
+    ctx.strokeStyle = '#EAE4D6'; ctx.lineWidth = 1;
+    for (var i = 0; i <= 10; i++) {
+        ctx.beginPath(); ctx.moveTo(m.px(i), m.py(0)); ctx.lineTo(m.px(i), m.py(10)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(m.px(0), m.py(i)); ctx.lineTo(m.px(10), m.py(i)); ctx.stroke();
+    }
+    ctx.strokeStyle = '#B8AE98'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(m.px(0), m.py(0)); ctx.lineTo(m.px(10), m.py(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(m.px(0), m.py(0)); ctx.lineTo(m.px(0), m.py(10)); ctx.stroke();
+    ctx.fillStyle = '#7A705C'; ctx.font = '11px Inter';
+    ctx.textAlign = 'center';
+    for (var i = 0; i <= 10; i += 2) {
+        ctx.fillText(i, m.px(i), m.py(0) + 16);
+        ctx.textAlign = 'right';
+        ctx.fillText(i, m.px(0) - 8, m.py(i) + 4);
+        ctx.textAlign = 'center';
+    }
+    ctx.font = 'bold 13px Inter'; ctx.fillStyle = '#4A4A4A';
+    ctx.fillText('x\u2081', m.px(10) + 2, m.py(0) + 17);
+    ctx.fillText('x\u2082', m.px(0) - 10, m.py(10) - 8);
+}
+function drawPts(ctx, m, highlightRegion) {
+    // highlightRegion: null, or function(pt) -> 'R1'|'R2'|'dim'
+    PTS.forEach(function(p) {
+        var cx = m.px(p.x), cy = m.py(p.y);
+        var dim = false;
+        if (highlightRegion) { dim = (highlightRegion(p) === 'dim'); }
+        ctx.globalAlpha = dim ? 0.25 : 1;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 9, 0, 2 * Math.PI);
+        ctx.fillStyle = p.c ? GLIGHT : COPPER;
+        ctx.fill();
+        ctx.strokeStyle = p.c ? GREEN : BROWN;
+        ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = 'white'; ctx.font = 'bold 10px Inter'; ctx.textAlign = 'center';
+        ctx.fillText(p.c ? '+' : '\u2212', cx, cy + 3.5);
+        ctx.fillStyle = '#4A4A4A'; ctx.font = 'bold 10px Inter';
+        ctx.fillText(p.n, cx, cy - 13);
+        ctx.globalAlpha = 1;
+    });
+}
+function shadeRect(ctx, m, x0, x1, y0, y1, color, alpha) {
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    var X0 = m.px(x0), X1 = m.px(x1), Y0 = m.py(y0), Y1 = m.py(y1);
+    ctx.fillRect(Math.min(X0, X1), Math.min(Y0, Y1), Math.abs(X1 - X0), Math.abs(Y1 - Y0));
+    ctx.globalAlpha = 1;
+}
+function splitLine(ctx, m, feature, t, x0, x1, y0, y1, color, dashed) {
+    ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+    ctx.setLineDash(dashed ? [7, 5] : []);
+    ctx.beginPath();
+    if (feature === 'x') { ctx.moveTo(m.px(t), m.py(y0)); ctx.lineTo(m.px(t), m.py(y1)); }
+    else { ctx.moveTo(m.px(x0), m.py(t)); ctx.lineTo(m.px(x1), m.py(t)); }
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+// ================= STEP THROUGH =================
+var curStep = 0, MAXSTEP = 8;
+
+var STEP_HTML = [
+  // 0
+  '<span class="step-badge">Step 0 &mdash; Meet the data</span>' +
+  '<h4>One region, total disorder</h4>' +
+  '<p>Before any splitting, the whole plane is a single region: the root, our first parent $R_p$. It holds all 10 points &mdash; 5 positive, 5 negative &mdash; so its positive-fraction is $p = \\tfrac{5}{10} = 0.5$ and its Gini loss is $G(0.5) = 2(0.5)(0.5) = \\mathbf{0.5}$: the worst possible value. A 50/50 region is maximally impure &mdash; majority-vote prediction here is a coin flip. The tree\u2019s job: ask questions that sort this mess into purer regions.</p>',
+  // 1
+  '<span class="step-badge">Step 1 &mdash; A split is a question</span>' +
+  '<h4>Propose $s_p(j{=}1,\\; t{=}5)$: &ldquo;is $x_1 < 5$?&rdquo;</h4>' +
+  '<p>A split names a feature $j$ and a threshold $t$. Geometrically it\u2019s one axis-aligned line &mdash; here the dashed vertical line $x_1 = 5$. It partitions the parent into $R_1 = \\{X \\mid x_1 < 5\\}$ (everything left of the line) and $R_2 = \\{X \\mid x_1 \\geq 5\\}$ (the line and everything right of it). Nothing is computed yet &mdash; this is just the question being posed. Note it\u2019s one candidate among many: the algorithm will ultimately try <em>every</em> feature and threshold.</p>',
+  // 2
+  '<span class="step-badge">Step 2 &mdash; Sort the points</span>' +
+  '<h4>Every point answers yes or no</h4>' +
+  '<p>Each point checks its own $x_1$ against $t = 5$. Points A, B, C, D have $x_1 \\in \\{2, 3, 1, 4\\}$, all $< 5$: they go to $R_1$ (gold tint). Points E, F, G, H, I, J have $x_1 \\in \\{6, 5, 6, 7, 8, 9\\}$, all $\\geq 5$: they go to $R_2$ (green tint). Boundary care: F sits <em>exactly</em> at $x_1 = 5$, and the convention $x_j \\geq t$ sends the boundary to $R_2$. And notice E &mdash; a positive stranded on the negative-heavy side. Remember E; it drives the recursion later.</p>',
+  // 3
+  '<span class="step-badge">Step 3 &mdash; Tally the children</span>' +
+  '<h4>Each region gets its own $p$</h4>' +
+  '<p>$R_1$: $n_1 = 4$ points, all positive $\\Rightarrow p_1 = \\tfrac{4}{4} = 1$. $R_2$: $n_2 = 6$ points, one positive (E) and five negatives $\\Rightarrow p_2 = \\tfrac{1}{6}$. Quick consistency check &mdash; the mixture identity: $\\tfrac{n_1 p_1 + n_2 p_2}{n_1+n_2} = \\tfrac{4(1) + 6(\\frac16)}{10} = \\tfrac{4+1}{10} = 0.5 = p_{\\text{parent}}$ \u2713. The numerator is just counting positives: 4 on the left plus 1 on the right is the parent\u2019s 5. The parent is <em>chained</em> to the size-weighted average of its children.</p>',
+  // 4
+  '<span class="step-badge">Step 4 &mdash; Score each child</span>' +
+  '<h4>Gini of each region</h4>' +
+  '<p>$G(R_1) = G(1) = 2(1)(0) = \\mathbf{0}$ &mdash; a pure region, Gini\u2019s minimum. Majority vote in $R_1$ is never wrong. $G(R_2) = G\\!\\left(\\tfrac16\\right) = 2 \\cdot \\tfrac16 \\cdot \\tfrac56 = \\tfrac{10}{36} \\approx \\mathbf{0.278}$ &mdash; mostly negative, but E keeps it impure. Interpretation of $G$: the probability that two points drawn (with replacement) from the region carry different labels. In $R_1$ that\u2019s impossible; in $R_2$ it happens $\\approx 28\\%$ of the time.</p>',
+  // 5
+  '<span class="step-badge">Step 5 &mdash; The weighted average</span>' +
+  '<h4>The number the algorithm actually minimizes</h4>' +
+  '<p>$$\\frac{n_1 G(R_1) + n_2 G(R_2)}{n_1 + n_2} = \\frac{4(0) + 6 \\cdot \\frac{10}{36}}{10} = \\frac{5/3}{10} = \\frac{1}{6} \\approx \\mathbf{0.167}$$' +
+  '<p>Each child\u2019s Gini is weighted by its share of the data &mdash; purifying a big region counts for more than purifying a small one. This split drove the loss from $0.500$ to $0.167$, and Problem 1(a) says that\u2019s no accident: the weighted children can <em>never</em> score worse than the parent. The parent sits on the Gini dome; the children sit on a chord below it (see the Split Lab tab for this drawn live).</p>',
+  // 6
+  '<span class="step-badge">Step 6 &mdash; The tournament: min over j, t</span>' +
+  '<h4>Every candidate, scored by the same pipeline</h4>' +
+  '<p>The tree doesn\u2019t propose-and-check &mdash; it enumerates. Sliding $t$ only changes the score when the line crosses a data point; between crossings the partition is frozen, so the score is a <em>step function</em> of $t$ and only one representative per gap between consecutive sorted feature values matters. Here: 8 gaps for $x_1$, 7 for $x_2$ &mdash; the whole tournament is <strong>15 candidates</strong>, each run through the identical pipeline (sort \u2192 tally \u2192 Gini each child \u2192 size-weighted average):</p>' +
+  '<div class="highlight-box" style="margin:10px 0;"><p>$$\\text{score}(j,t) \\;=\\; \\frac{n_1\\,G(p_1) + n_2\\,G(p_2)}{n_1 + n_2}, \\qquad G(p) = 2p(1-p)$$</p><p style="font-size:13px;">Worked row &mdash; $j{=}1$, gap $(1,2)$: tallies $1{+}/0{-} \\;\\vert\\; 4{+}/5{-}$, so $p_1 = 1$, $p_2 = \\tfrac49$, and score $= \\dfrac{1 \\cdot G(1) + 9 \\cdot G(\\frac49)}{10} = \\dfrac{1 \\cdot 0 + 9 \\cdot \\frac{40}{81}}{10} = \\dfrac{40/9}{10} = \\dfrac{4}{9} \\approx 0.444$.</p></div>' +
+  '<div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:10px;"><table class="data-table" style="flex:1; min-width:235px; font-size:12.5px; margin:0;"><tr><th colspan="3">j = 1 (vertical lines)</th></tr><tr><th>t gap</th><th>R₁ | R₂</th><th>score</th></tr><tr><td>(1,2)</td><td>1+/0− | 4+/5−</td><td>0.444</td></tr><tr><td>(2,3)</td><td>2+/0− | 3+/5−</td><td>0.375</td></tr><tr><td>(3,4)</td><td>3+/0− | 2+/5−</td><td>0.286</td></tr><tr style="background:rgba(57,134,78,0.18); font-weight:700;"><td>(4,5]</td><td>4+/0− | 1+/5−</td><td>0.167 ★</td></tr><tr><td>(5,6)</td><td>4+/1− | 1+/4−</td><td>0.320</td></tr><tr><td>(6,7)</td><td>5+/2− | 0+/3−</td><td>0.286</td></tr><tr><td>(7,8)</td><td>5+/3− | 0+/2−</td><td>0.375</td></tr><tr><td>(8,9)</td><td>5+/4− | 0+/1−</td><td>0.444</td></tr></table><table class="data-table" style="flex:1; min-width:235px; font-size:12.5px; margin:0;"><tr><th colspan="3">j = 2 (horizontal lines)</th></tr><tr><th>t gap</th><th>R₁ | R₂</th><th>score</th></tr><tr><td>(1,2)</td><td>0+/1− | 5+/4−</td><td>0.444</td></tr><tr><td>(2,3)</td><td>0+/3− | 5+/2−</td><td>0.286</td></tr><tr style="background:rgba(57,134,78,0.18); font-weight:700;"><td>(3,4)</td><td>0+/4− | 5+/1−</td><td>0.167 ★</td></tr><tr><td>(4,5)</td><td>1+/4− | 4+/1−</td><td>0.320</td></tr><tr style="background:rgba(57,134,78,0.18); font-weight:700;"><td>(5,6)</td><td>1+/5− | 4+/0−</td><td>0.167 ★</td></tr><tr><td>(6,7)</td><td>2+/5− | 3+/0−</td><td>0.286</td></tr><tr><td>(7,8)</td><td>4+/5− | 1+/0−</td><td>0.444</td></tr></table></div>' +
+  '<p style="margin-top:10px;">A genuine <strong>three-way tie</strong> at $\\tfrac16 \\approx 0.167$ (\u2605): each winner isolates a pure 4-block and tolerates one stray in a 6-block &mdash; the same tally pattern up to relabeling, hence identical scores. Ties break arbitrarily (first-found in scan order); we commit to $x_1 < 5$. On the canvas: faint gold lines are the losing candidates, dashed green the tied co-winners. And check every row: all 15 scores are $\\leq 0.500$ &mdash; part (a) holding for <em>every</em> split, not just the best one.</p>',
+  // 7
+  '<span class="step-badge">Step 7 &mdash; Recurse</span>' +
+  '<h4>Each impure child becomes a new parent, with its own tournament</h4>' +
+  '<p>$R_1$ is pure ($G = 0$): nothing to gain &mdash; it becomes a <strong>leaf</strong> predicting $+$. $R_2$ (E, F, G, H, I, J; $G \\approx 0.278$) becomes a new parent and runs $\\min_{j,t}$ again <em>using only its 6 points</em>. Its $x_1$ values $\\{5,6,6,7,8,9\\}$ have 5 distinct levels (4 gaps); its $x_2$ values $\\{7,2,1,2,5,3\\}$ also 5 distinct levels (4 gaps): an <strong>8-candidate tournament</strong>.</p>' +
+  '<p style="font-size:13px; margin-top:6px;">Same score formula, denominator now $n_1 + n_2 = 6$. E.g. the runner-up, $j{=}2$ gap $(3,5)$: $\\dfrac{4 \\cdot G(0) + 2 \\cdot G(\\frac12)}{6} = \\dfrac{4 \\cdot 0 + 2 \\cdot 0.5}{6} = \\dfrac16 \\approx 0.167$.</p>' +
+  '<table class="data-table" style="font-size:12.5px; margin:8px 0 0 0;"><tr><th>j</th><th>t gap</th><th>R₁ | R₂</th><th>score</th></tr><tr><td>1</td><td>(5,6)</td><td>0+/1− | 1+/4−</td><td>0.267</td></tr><tr><td>1</td><td>(6,7)</td><td>1+/2− | 0+/3−</td><td>0.222</td></tr><tr><td>1</td><td>(7,8)</td><td>1+/3− | 0+/2−</td><td>0.250</td></tr><tr><td>1</td><td>(8,9)</td><td>1+/4− | 0+/1−</td><td>0.267</td></tr><tr><td>2</td><td>(1,2)</td><td>0+/1− | 1+/4−</td><td>0.267</td></tr><tr><td>2</td><td>(2,3)</td><td>0+/3− | 1+/2−</td><td>0.222</td></tr><tr><td>2</td><td>(3,5)</td><td>0+/4− | 1+/1−</td><td>0.167</td></tr><tr style="background:rgba(57,134,78,0.18); font-weight:700;"><td>2</td><td>(5,7)</td><td>0+/5− | 1+/0−</td><td>0.000 ★</td></tr></table>' +
+  '<p style="margin-top:10px;">A unique winner this time: &ldquo;is $x_2 < 6$?&rdquo; (any $t$ in the gap $(5,7)$) separates E from the five negatives &mdash; both children pure, weighted Gini $\\mathbf{0}$. The cut is drawn only <em>inside</em> $R_2$: the left region never hears this question. Notice also how the runner-up $(3,5)$ at $0.167$ nearly gets there but strands I with E.</p>',
+  // 8
+  '<span class="step-badge">Step 8 &mdash; Done</span>' +
+  '<h4>Three leaves, zero Gini, and the finished classifier</h4>' +
+  '<p>Every leaf is pure, so growth stops. The classifier is the tree read top-down: $x_1 < 5$? \u2192 predict $+$. Else $x_2 < 6$? \u2192 predict $-$. Else \u2192 predict $+$. The plane is carved into three rectangles (shaded by predicted class). Total questions asked of any point: at most 2. Worth noticing: no single line could separate this data (E blocks it) &mdash; the tree bought a genuinely non-linear boundary with two axis-aligned cuts. That, plus 1(a)\u2019s guarantee that each cut never hurts the Gini score, is the whole story of tree growing.</p>'
+];
+
+function fsRegionFn(step) {
+    if (step < 2) return null;
+    if (step < 7) {
+        return function(p) { return p.x < 5 ? 'R1' : 'R2'; };
+    }
+    return null;
+}
+
+function drawFS(step) {
+    var cv = document.getElementById('fsCanvas');
+    var ctx = cv.getContext('2d');
+    var m = makeMapper(cv, 38);
+    drawGrid(ctx, m);
+
+    // shading
+    if (step >= 2 && step <= 6) {
+        shadeRect(ctx, m, 0, 5, 0, 10, GOLD, 0.14);
+        shadeRect(ctx, m, 5, 10, 0, 10, GLIGHT, 0.10);
+    }
+    if (step === 7) {
+        shadeRect(ctx, m, 0, 5, 0, 10, GOLD, 0.14);
+        shadeRect(ctx, m, 5, 10, 0, 6, GLIGHT, 0.10);
+        shadeRect(ctx, m, 5, 10, 6, 10, COPPER, 0.12);
+    }
+    if (step === 8) {
+        shadeRect(ctx, m, 0, 5, 0, 10, GLIGHT, 0.16);   // predict +
+        shadeRect(ctx, m, 5, 10, 0, 6, COPPER, 0.14);   // predict -
+        shadeRect(ctx, m, 5, 10, 6, 10, GLIGHT, 0.16);  // predict +
+    }
+
+    // split lines
+    if (step === 1) splitLine(ctx, m, 'x', 5, 0, 10, 0, 10, GREEN, true);
+    if (step >= 2) splitLine(ctx, m, 'x', 5, 0, 10, 0, 10, GREEN, false);
+    if (step === 6) {
+        // losing candidates, faint gold
+        ctx.globalAlpha = 0.30;
+        [1.5, 2.5, 3.5, 5.5, 6.5, 7.5, 8.5].forEach(function(t) {
+            splitLine(ctx, m, 'x', t, 0, 10, 0, 10, GOLD, true);
+        });
+        [1.5, 2.5, 4.5, 6.5, 7.5].forEach(function(t) {
+            splitLine(ctx, m, 'y', t, 0, 10, 0, 10, GOLD, true);
+        });
+        ctx.globalAlpha = 1;
+        // tied co-winners, dashed green
+        splitLine(ctx, m, 'y', 3.5, 0, 10, 0, 10, GLIGHT, true);
+        splitLine(ctx, m, 'y', 5.5, 0, 10, 0, 10, GLIGHT, true);
+    }
+    if (step >= 7) {
+        // horizontal cut only within R2 (x1 >= 5)
+        ctx.strokeStyle = GREEN; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(m.px(5), m.py(6)); ctx.lineTo(m.px(10), m.py(6)); ctx.stroke();
+    }
+
+    // labels
+    ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+    if (step >= 2 && step <= 6) {
+        ctx.fillStyle = COPPER; ctx.fillText('R\u2081', m.px(2.5), m.py(9.5));
+        ctx.fillStyle = GREEN; ctx.fillText('R\u2082', m.px(7.5), m.py(9.5));
+    }
+    if (step === 7) {
+        ctx.fillStyle = COPPER; ctx.fillText('R\u2081 (leaf: +)', m.px(2.5), m.py(9.5));
+        ctx.fillStyle = GREEN; ctx.fillText('R\u2082\u2032 top', m.px(8.6), m.py(9.5));
+        ctx.fillText('R\u2082\u2032 bottom', m.px(8.4), m.py(0.6));
+    }
+    if (step === 8) {
+        ctx.fillStyle = GREEN;
+        ctx.fillText('predict +', m.px(2.5), m.py(9.5));
+        ctx.fillText('predict +', m.px(8.5), m.py(9.5));
+        ctx.fillStyle = BROWN;
+        ctx.fillText('predict \u2212', m.px(8.5), m.py(0.6));
+    }
+    if (step === 6) {
+        ctx.textAlign = 'left'; ctx.font = 'bold 11px Inter'; ctx.fillStyle = GLIGHT;
+        ctx.fillText('tied 0.167', m.px(0.15), m.py(3.5) - 6);
+        ctx.fillText('tied 0.167', m.px(0.15), m.py(5.5) - 6);
+        ctx.fillStyle = '#A8935F'; ctx.font = 'italic 11px Inter';
+        ctx.fillText('faint = losing candidates', m.px(0.15), m.py(10) - 8);
+        ctx.textAlign = 'center';
+    }
+
+    drawPts(ctx, m, fsRegionFn(step));
+}
+
+// --- tree diagram ---
+function treeNode(ctx, x, y, w, h, lines, opts) {
+    opts = opts || {};
+    ctx.fillStyle = opts.fill || 'white';
+    ctx.strokeStyle = opts.stroke || GREEN;
+    ctx.lineWidth = 2;
+    var r = 8;
+    ctx.beginPath();
+    ctx.moveTo(x - w/2 + r, y - h/2);
+    ctx.arcTo(x + w/2, y - h/2, x + w/2, y + h/2, r);
+    ctx.arcTo(x + w/2, y + h/2, x - w/2, y + h/2, r);
+    ctx.arcTo(x - w/2, y + h/2, x - w/2, y - h/2, r);
+    ctx.arcTo(x - w/2, y - h/2, x + w/2, y - h/2, r);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = opts.text || '#2D2D2D';
+    ctx.textAlign = 'center';
+    var lh = 15, y0 = y - ((lines.length - 1) * lh) / 2;
+    lines.forEach(function(ln, i) {
+        ctx.font = (i === 0 ? 'bold 12.5px Inter' : '11.5px Inter');
+        ctx.fillText(ln, x, y0 + i * lh + 4);
+    });
+}
+function treeEdge(ctx, x1, y1, x2, y2, label) {
+    ctx.strokeStyle = '#9A8F78'; ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    if (label) {
+        ctx.fillStyle = '#7A705C'; ctx.font = 'italic 11px Inter'; ctx.textAlign = 'center';
+        ctx.fillText(label, (x1 + x2) / 2 + (x2 < x1 ? -16 : 16), (y1 + y2) / 2);
+    }
+}
+function drawTree(step) {
+    var cv = document.getElementById('treeCanvas');
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    var W = cv.width;
+
+    if (step === 0) {
+        treeNode(ctx, W/2, 80, 190, 64,
+            ['Root region', '5+ / 5\u2212,  p = 0.5', 'G = 0.500'],
+            {stroke: GOLD, fill: '#FDF6EC'});
+        ctx.fillStyle = '#7A705C'; ctx.font = 'italic 12px Inter'; ctx.textAlign = 'center';
+        ctx.fillText('no questions asked yet', W/2, 150);
+        return;
+    }
+    // root as a question (proposed from step 1, committed from step 6)
+    var rootLines = (step < 6)
+        ? ['proposed: x\u2081 < 5 ?', '5+ / 5\u2212,  G = 0.500']
+        : ['x\u2081 < 5 ?', '5+ / 5\u2212,  G = 0.500'];
+    treeNode(ctx, W/2, 60, 200, 52, rootLines,
+        {stroke: (step < 6 ? GOLD : GREEN), fill: (step < 6 ? '#FDF6EC' : '#EDF3EE')});
+
+    if (step >= 2) {
+        var Lx = W/2 - 110, Rx = W/2 + 110, cy = 175;
+        treeEdge(ctx, W/2 - 40, 86, Lx, cy - 30, 'yes');
+        treeEdge(ctx, W/2 + 40, 86, Rx, cy - 30, 'no');
+        var l1 = ['R\u2081: 4+ / 0\u2212'], l2 = ['R\u2082: 1+ / 5\u2212'];
+        if (step >= 3) { l1.push('p\u2081 = 1'); l2.push('p\u2082 = 1/6'); }
+        if (step >= 4) { l1.push('G = 0  (pure)'); l2.push('G \u2248 0.278'); }
+        treeNode(ctx, Lx, cy, 150, (step >= 4 ? 66 : (step >= 3 ? 52 : 40)), l1,
+            {stroke: GLIGHT, fill: '#EDF3EE'});
+        treeNode(ctx, Rx, cy, 150, (step >= 4 ? 66 : (step >= 3 ? 52 : 40)), l2,
+            {stroke: COPPER, fill: '#F9F1E7'});
+    }
+    if (step === 5 || step === 6) {
+        ctx.fillStyle = GREEN; ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+        ctx.fillText('weighted children: (4\u00B70 + 6\u00B70.278)/10 \u2248 0.167', W/2, 265);
+        ctx.fillStyle = '#7A705C'; ctx.font = 'italic 12px Inter';
+        ctx.fillText('vs. parent 0.500 \u2014 split helps', W/2, 285);
+        if (step === 6) {
+            ctx.fillStyle = BROWN;
+            ctx.fillText('15 candidates scored \u2014 3-way tie at 0.167, x\u2081 < 5 chosen', W/2, 310);
+        }
+    }
+    if (step >= 7) {
+        // left leaf marker
+        ctx.fillStyle = GLIGHT; ctx.font = 'bold 12px Inter'; ctx.textAlign = 'center';
+        ctx.fillText('LEAF \u2192 predict +', W/2 - 110, 225);
+        // R2 becomes a question node
+        var Rx = W/2 + 110;
+        treeEdge(ctx, Rx, 208, Rx, 250);
+        treeNode(ctx, Rx, 275, 150, 44, ['x\u2082 < 6 ?', 'search inside R\u2082'],
+            {stroke: GREEN, fill: '#EDF3EE'});
+        var LLx = Rx - 85, RRx = Rx + 85, cy2 = 370;
+        // keep within canvas
+        if (RRx > W - 60) { RRx = W - 60; }
+        treeEdge(ctx, Rx - 30, 297, LLx, cy2 - 26, 'yes');
+        treeEdge(ctx, Rx + 30, 297, RRx, cy2 - 26, 'no');
+        treeNode(ctx, LLx, cy2, 128, 52, ['0+ / 5\u2212', 'pure \u2192 predict \u2212'],
+            {stroke: COPPER, fill: '#F9F1E7'});
+        treeNode(ctx, RRx, cy2, 118, 52, ['1+ / 0\u2212 (E)', 'pure \u2192 predict +'],
+            {stroke: GLIGHT, fill: '#EDF3EE'});
+    }
+    if (step === 8) {
+        ctx.fillStyle = GREEN; ctx.font = 'bold 12.5px Inter'; ctx.textAlign = 'center';
+        ctx.fillText('all leaves pure \u2014 growth stops', W/2, 425);
+    }
+}
+
+function setRO(id, val, dim) {
+    var el = document.getElementById(id);
+    el.textContent = val;
+    el.classList.toggle('dim-val', !!dim);
+}
+function updateReadouts(step) {
+    setRO('roParent', '0.500', false);
+    if (step >= 4) { setRO('roG1', '0.000', false); setRO('roG2', '0.278', false); }
+    else { setRO('roG1', '\u2014', true); setRO('roG2', '\u2014', true); }
+    if (step >= 5) setRO('roW', '0.167', false);
+    else setRO('roW', '\u2014', true);
+}
+
+function renderStep() {
+    document.getElementById('stepCounter').textContent = 'Step ' + curStep + ' of ' + MAXSTEP;
+    document.getElementById('stepExplain').innerHTML = STEP_HTML[curStep];
+    document.getElementById('btnPrev').disabled = (curStep === 0);
+    document.getElementById('btnNext').disabled = (curStep === MAXSTEP);
+    drawFS(curStep);
+    drawTree(curStep);
+    updateReadouts(curStep);
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 60);
+}
+function nextStep() { if (curStep < MAXSTEP) { curStep++; renderStep(); } }
+function prevStep() { if (curStep > 0) { curStep--; renderStep(); } }
+function resetSteps() { curStep = 0; renderStep(); }
+
+// ================= SPLIT LAB =================
+function labSplit(feature, t) {
+    var R1 = [], R2 = [];
+    PTS.forEach(function(p) {
+        var v = (feature === 'x') ? p.x : p.y;
+        if (v < t) R1.push(p); else R2.push(p);
+    });
+    return {R1: R1, R2: R2};
+}
+function propPos(arr) {
+    if (arr.length === 0) return null;
+    var pos = arr.filter(function(p){ return p.c === 1; }).length;
+    return pos / arr.length;
+}
+function drawLab() {
+    var feature = document.getElementById('labFeature').value;
+    var t = parseFloat(document.getElementById('labT').value);
+    document.getElementById('labTval').textContent = t.toFixed(1);
+
+    var s = labSplit(feature, t);
+    var n1 = s.R1.length, n2 = s.R2.length;
+    var p1 = propPos(s.R1), p2 = propPos(s.R2);
+
+    // --- feature-space canvas ---
+    var cv = document.getElementById('labCanvas');
+    var ctx = cv.getContext('2d');
+    var m = makeMapper(cv, 36);
+    drawGrid(ctx, m);
+    if (feature === 'x') {
+        shadeRect(ctx, m, 0, Math.min(t, 10), 0, 10, GOLD, 0.14);
+        shadeRect(ctx, m, Math.min(t, 10), 10, 0, 10, GLIGHT, 0.10);
+    } else {
+        shadeRect(ctx, m, 0, 10, 0, Math.min(t, 10), GOLD, 0.14);
+        shadeRect(ctx, m, 0, 10, Math.min(t, 10), 10, GLIGHT, 0.10);
+    }
+    splitLine(ctx, m, feature, t, 0, 10, 0, 10, GREEN, false);
+    drawPts(ctx, m, null);
+
+    // --- dome canvas ---
+    var dv = document.getElementById('domeCanvas');
+    var dctx = dv.getContext('2d');
+    var DW = dv.width, DH = dv.height, pad = 46;
+    dctx.clearRect(0, 0, DW, DH);
+    function dx(p) { return pad + p * (DW - 2 * pad); }
+    function dy(g) { return DH - pad - (g / 0.55) * (DH - 2 * pad); }
+    // axes
+    dctx.strokeStyle = '#B8AE98'; dctx.lineWidth = 1.5;
+    dctx.beginPath(); dctx.moveTo(dx(0), dy(0)); dctx.lineTo(dx(1), dy(0)); dctx.stroke();
+    dctx.beginPath(); dctx.moveTo(dx(0), dy(0)); dctx.lineTo(dx(0), dy(0.55)); dctx.stroke();
+    dctx.fillStyle = '#7A705C'; dctx.font = '11px Inter'; dctx.textAlign = 'center';
+    [0, 0.25, 0.5, 0.75, 1].forEach(function(p) { dctx.fillText(p, dx(p), dy(0) + 16); });
+    dctx.textAlign = 'right';
+    [0, 0.25, 0.5].forEach(function(g) { dctx.fillText(g, dx(0) - 8, dy(g) + 4); });
+    dctx.textAlign = 'center'; dctx.font = 'bold 12px Inter'; dctx.fillStyle = '#4A4A4A';
+    dctx.fillText('p (fraction positive)', DW / 2, DH - 8);
+    dctx.save(); dctx.translate(13, DH / 2); dctx.rotate(-Math.PI / 2);
+    dctx.fillText('G(p) = 2p(1\u2212p)', 0, 0); dctx.restore();
+    // dome
+    dctx.strokeStyle = GREEN; dctx.lineWidth = 2.5;
+    dctx.beginPath();
+    for (var i = 0; i <= 100; i++) {
+        var p = i / 100;
+        var X = dx(p), Y = dy(gini(p));
+        if (i === 0) dctx.moveTo(X, Y); else dctx.lineTo(X, Y);
+    }
+    dctx.stroke();
+
+    var note = '';
+    if (p1 === null || p2 === null) {
+        note = 'One child is empty \u2014 a vacuous split. The surviving child is a copy of the parent, so the weighted loss is exactly the parent\u2019s 0.500. No chord to draw.';
+        // parent point only
+        dctx.fillStyle = GOLD;
+        dctx.beginPath(); dctx.arc(dx(0.5), dy(0.5), 7, 0, 2 * Math.PI); dctx.fill();
+        dctx.strokeStyle = BROWN; dctx.lineWidth = 2; dctx.stroke();
+        dctx.fillStyle = BROWN; dctx.font = 'bold 12px Inter';
+        dctx.fillText('parent', dx(0.5), dy(0.5) - 14);
+        setLabRO(n1, p1, n2, p2, 0.5, 0);
+    } else {
+        var g1 = gini(p1), g2 = gini(p2);
+        var w = (n1 * g1 + n2 * g2) / (n1 + n2);
+        var pp = (n1 * p1 + n2 * p2) / (n1 + n2); // = 0.5 always, but compute honestly
+        // chord
+        dctx.strokeStyle = GOLD; dctx.lineWidth = 2.5;
+        dctx.setLineDash([6, 4]);
+        dctx.beginPath(); dctx.moveTo(dx(p1), dy(g1)); dctx.lineTo(dx(p2), dy(g2)); dctx.stroke();
+        dctx.setLineDash([]);
+        // gap segment at pp
+        dctx.strokeStyle = COPPER; dctx.lineWidth = 2;
+        dctx.beginPath(); dctx.moveTo(dx(pp), dy(w)); dctx.lineTo(dx(pp), dy(gini(pp))); dctx.stroke();
+        // child points
+        [[p1, g1, 'R\u2081'], [p2, g2, 'R\u2082']].forEach(function(pt) {
+            dctx.fillStyle = 'white';
+            dctx.beginPath(); dctx.arc(dx(pt[0]), dy(pt[1]), 6, 0, 2 * Math.PI); dctx.fill();
+            dctx.strokeStyle = GOLD; dctx.lineWidth = 2.5; dctx.stroke();
+            dctx.fillStyle = '#4A4A4A'; dctx.font = 'bold 11.5px Inter';
+            dctx.fillText(pt[2], dx(pt[0]), dy(pt[1]) - 12);
+        });
+        // parent on curve
+        dctx.fillStyle = GREEN;
+        dctx.beginPath(); dctx.arc(dx(pp), dy(gini(pp)), 7, 0, 2 * Math.PI); dctx.fill();
+        dctx.fillStyle = GREEN; dctx.font = 'bold 12px Inter';
+        dctx.fillText('parent (dome)', dx(pp), dy(gini(pp)) - 14);
+        // children weighted on chord
+        dctx.fillStyle = GOLD;
+        dctx.beginPath(); dctx.arc(dx(pp), dy(w), 7, 0, 2 * Math.PI); dctx.fill();
+        dctx.strokeStyle = BROWN; dctx.lineWidth = 1.5; dctx.stroke();
+        dctx.fillStyle = COPPER; dctx.font = 'bold 12px Inter';
+        dctx.fillText('children (chord)', dx(pp), dy(w) + 24);
+
+        if (Math.abs(p1 - p2) < 1e-9) {
+            note = 'p\u2081 = p\u2082: the equality case! Both children inherit the parent\u2019s class mix, the chord endpoints coincide on the dome, and improvement is exactly zero \u2014 Case B of the proof.';
+        } else {
+            note = 'The copper segment is the improvement: G(parent) \u2212 weighted children = ' + f3(gini(pp) - w) + '. Strict concavity guarantees it\u2019s positive whenever p\u2081 \u2260 p\u2082.';
+        }
+        setLabRO(n1, p1, n2, p2, w, gini(pp) - w);
+    }
+    document.getElementById('labNote').textContent = note;
+}
+function fracStr(p, n) {
+    if (p === null) return 'empty';
+    var pos = Math.round(p * n);
+    return n + ' pts, p = ' + pos + '/' + n;
+}
+function setLabRO(n1, p1, n2, p2, w, imp) {
+    document.getElementById('labR1').textContent = fracStr(p1, n1);
+    document.getElementById('labR2').textContent = fracStr(p2, n2);
+    document.getElementById('labW').textContent = f3(w);
+    document.getElementById('labImp').textContent = f3(imp);
+}
+
+
+// ================= TENT (PART C) =================
+var tentStep = 0, TENTMAX = 6;
+
+var TENT_STEPS = [
+  // 0
+  '<span class="step-badge">Step 0 &mdash; Meet the tent</span>' +
+  '<h4>$M(p) = \\min(p,\\, 1-p)$: two straight faces, one peak</h4>' +
+  '<p>Height = the minority share = the error rate of predicting the majority class. Left face ($p < \\tfrac12$): majority negative, the region <strong>votes $-$</strong>, and $M(p) = p$ (the positives are the errors). Right face ($p > \\tfrac12$): the region <strong>votes $+$</strong>, and $M(p) = 1-p$. Peak at $(\\tfrac12, \\tfrac12)$: a coin-flip region, maximal error. Crucially, each face is a <em>straight line</em>: $M\'\' = 0$ there &mdash; weakly concave, not strictly. Hold that thought.</p>',
+  // 1
+  '<span class="step-badge">Step 1 &mdash; A parent that votes +</span>' +
+  '<h4>8 points, $6{+}/2{-}$</h4>' +
+  '<p>$P_p = \\tfrac68 = \\tfrac34$, on the right face: the parent votes $+$, and its two negatives are the errors: $M(R_p) = \\tfrac{2}{8} = 0.25$. In the hint\'s notation: $N_p = 8$, $N_{p,+} = 6$, $N_{p,-} = 2$, and $M = \\min(N_{p,+}, N_{p,-})/N_p$ &mdash; minority count over total.</p>',
+  // 2
+  '<span class="step-badge">Step 2 &mdash; A split where both children vote +</span>' +
+  '<h4>$p_1 \\neq p_2$, same majority</h4>' +
+  '<p>Split into $R_1$: $4{+}/0{-}$ ($p_1 = 1$, pure! $M = 0$) and $R_2$: $2{+}/2{-}$ ($p_2 = \\tfrac12$, $M = \\tfrac12$). Note $p_1 \\neq p_2$ &mdash; this is <em>not</em> one of Gini\'s equality cases. But both proportions sit on the same face (taking the boundary $p = \\tfrac12$ with the $+$ side; $M = \\tfrac12$ either way): <strong>both children vote $+$</strong>. Watch the graph: the chord from $(\\tfrac12, \\tfrac12)$ to $(1, 0)$ lies exactly <em>on</em> the right face. No sag.</p>',
+  // 3
+  '<span class="step-badge">Step 3 &mdash; The frozen arithmetic</span>' +
+  '<h4>Weighted children = parent, exactly</h4>' +
+  '<p>$$\\frac{N_1 M(R_1) + N_2 M(R_2)}{N_1 + N_2} = \\frac{4 \\cdot 0 + 4 \\cdot \\tfrac12}{8} = \\frac{2}{8} = 0.25 = M(R_p)$$' +
+  '<p>Why it telescopes: on a shared face, each region\'s $M$ is its minority count over its size, so the size-weights cancel and the numerator becomes the <em>total</em> minority count: $N_{1,-} + N_{2,-} = 0 + 2 = 2 = N_{p,-}$ &mdash; minority examples are conserved by the partition. This is the additional case: $p_1 \\neq p_2$, yet equality.</p>',
+  // 4
+  '<span class="step-badge">Step 4 &mdash; Why: no vote flipped</span>' +
+  '<h4>Same predictions &#8658; same errors &#8658; same loss</h4>' +
+  '<p>Before the split, the parent predicts $+$ for everyone: 2 errors (the two negatives). After the split, $R_1$ predicts $+$ and $R_2$ predicts $+$ &mdash; <em>every point receives the identical prediction it did before</em>. The same two points are wrong. $M$ counts errors of majority vote, so it cannot register progress that doesn\'t flip a vote &mdash; even though the split manufactured a <strong>pure region</strong> $R_1$. The purity gain is real; $M$ just can\'t see it.</p>',
+  // 5
+  '<span class="step-badge">Step 5 &mdash; Gini sees what M can\'t</span>' +
+  '<h4>Same split, dome vs. tent</h4>' +
+  '<p>Overlay the Gini dome (dashed). Parent: $G(\\tfrac34) = 2 \\cdot \\tfrac34 \\cdot \\tfrac14 = 0.375$. Weighted children: $\\tfrac{4 \\cdot G(1) + 4 \\cdot G(\\frac12)}{8} = \\tfrac{4 \\cdot 0 + 4 \\cdot 0.5}{8} = 0.25 < 0.375$ &mdash; <strong>strict</strong> progress, on the very split that froze $M$. The chord sags below the dome ($G\'\' = -4$ everywhere) but lies flush on the tent\'s flat face ($M\'\' = 0$). Same data, same split, different curvature &mdash; different verdict. Hence: grow with Gini, evaluate with $M$.</p>',
+  // 6
+  '<span class="step-badge">Step 6 &mdash; When M does improve: votes differ</span>' +
+  '<h4>The chord must straddle the peak</h4>' +
+  '<p>New dataset: parent $5{+}/5{-}$, $M = 0.5$. Split into $R_1$: $1{+}/4{-}$ (votes $-$, $M = \\tfrac15$) and $R_2$: $4{+}/1{-}$ (votes $+$, $M = \\tfrac15$). The children vote <em>differently</em>, so the chord runs from one face to the other, passing <em>under</em> the peak: weighted $M = \\tfrac{5 \\cdot 0.2 + 5 \\cdot 0.2}{10} = 0.2 < 0.5$. A straddling chord is the <strong>only</strong> geometry where the tent strictly beats it. Full inventory of $M$\'s stalls: vacuous split, or both children on one face (which subsumes $p_1 = p_2$) &mdash; equivalently, $M$ moves iff the split flips somebody\'s vote.</p>'
+];
+
+function tentAxes(ctx, W, H, pad) {
+    ctx.clearRect(0, 0, W, H);
+    function dx(p) { return pad + p * (W - 2*pad); }
+    function dy(v) { return H - pad - (v / 0.6) * (H - 2*pad); }
+    ctx.strokeStyle = '#B8AE98'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(dx(0), dy(0)); ctx.lineTo(dx(1), dy(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(dx(0), dy(0)); ctx.lineTo(dx(0), dy(0.6)); ctx.stroke();
+    ctx.fillStyle = '#7A705C'; ctx.font = '11px Inter'; ctx.textAlign = 'center';
+    [0, 0.25, 0.5, 0.75, 1].forEach(function(p){ ctx.fillText(p, dx(p), dy(0) + 16); });
+    ctx.textAlign = 'right';
+    [0, 0.25, 0.5].forEach(function(v){ ctx.fillText(v, dx(0) - 8, dy(v) + 4); });
+    ctx.textAlign = 'center'; ctx.font = 'bold 12px Inter'; ctx.fillStyle = '#4A4A4A';
+    ctx.fillText('p (fraction positive in the region)', W/2, H - 8);
+    ctx.save(); ctx.translate(13, H/2); ctx.rotate(-Math.PI/2);
+    ctx.fillText('M(p) = min(p, 1\u2212p)  (loss)', 0, 0); ctx.restore();
+    return {dx: dx, dy: dy};
+}
+function tentDot(ctx, x, y, r, fill, stroke) {
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 2*Math.PI);
+    ctx.fillStyle = fill; ctx.fill();
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 2; ctx.stroke(); }
+}
+function tentM(p) { return Math.min(p, 1 - p); }
+
+function drawTentGraph(step) {
+    var cv = document.getElementById('tentGraphCanvas');
+    var ctx = cv.getContext('2d');
+    var a = tentAxes(ctx, cv.width, cv.height, 46);
+    var dx = a.dx, dy = a.dy;
+
+    // tent
+    ctx.strokeStyle = GREEN; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(dx(0), dy(0)); ctx.lineTo(dx(0.5), dy(0.5)); ctx.lineTo(dx(1), dy(0)); ctx.stroke();
+    ctx.fillStyle = GREEN; ctx.font = 'bold 11.5px Inter'; ctx.textAlign = 'center';
+    ctx.fillText('vote \u2212 face', dx(0.16), dy(0.28));
+    ctx.fillText('slope +1', dx(0.16), dy(0.28) + 15);
+    ctx.fillText('vote + face', dx(0.68), dy(0.42));
+    ctx.fillText('slope \u22121', dx(0.68), dy(0.42) + 15);
+    ctx.fillStyle = '#7A705C'; ctx.font = 'italic 11px Inter';
+    ctx.fillText('peak (\u00BD, \u00BD)', dx(0.5), dy(0.5) - 12);
+
+    if (step >= 5 && step < 6) {
+        // dome overlay
+        ctx.strokeStyle = COPPER; ctx.lineWidth = 2; ctx.setLineDash([6,4]);
+        ctx.beginPath();
+        for (var i = 0; i <= 100; i++) { var p = i/100, X = dx(p), Y = dy(2*p*(1-p));
+            if (i===0) ctx.moveTo(X,Y); else ctx.lineTo(X,Y); }
+        ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = COPPER; ctx.font = 'italic 11px Inter';
+        ctx.fillText('Gini dome G(p)', dx(0.5), dy(0.52) - 24);
+    }
+
+    if (step >= 1 && step < 6) {
+        // Example A: parent at 0.75
+        if (step >= 2) {
+            // chord on right face from (0.5,0.5) to (1,0)
+            ctx.strokeStyle = GOLD; ctx.lineWidth = 2.5; ctx.setLineDash([7,5]);
+            ctx.beginPath(); ctx.moveTo(dx(0.5), dy(0.5)); ctx.lineTo(dx(1), dy(0)); ctx.stroke();
+            ctx.setLineDash([]);
+            tentDot(ctx, dx(1), dy(0), 6, 'white', GOLD);
+            tentDot(ctx, dx(0.5), dy(0.5), 6, 'white', GOLD);
+            ctx.fillStyle = '#4A4A4A'; ctx.font = 'bold 11.5px Inter';
+            ctx.fillText('R\u2081 (p=1)', dx(0.94), dy(0) - 14);
+            ctx.fillText('R\u2082 (p=\u00BD)', dx(0.5) + 44, dy(0.5) + 2);
+        }
+        if (step === 5) {
+            // Gini points at same split
+            tentDot(ctx, dx(0.75), dy(0.375), 6, COPPER, BROWN);
+            ctx.strokeStyle = COPPER; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(dx(0.75), dy(0.25)); ctx.lineTo(dx(0.75), dy(0.375)); ctx.stroke();
+            ctx.fillStyle = COPPER; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'left';
+            ctx.fillText('G: 0.375 \u2192 0.25 (strict)', dx(0.75) + 12, dy(0.31));
+            ctx.textAlign = 'center';
+        }
+        tentDot(ctx, dx(0.75), dy(0.25), 7, GREEN, null);
+        ctx.fillStyle = GREEN; ctx.font = 'bold 12px Inter';
+        ctx.fillText('parent', dx(0.75), dy(0.25) + 22);
+        if (step >= 3) {
+            tentDot(ctx, dx(0.75), dy(0.25), 11, 'rgba(221,162,94,0)', GOLD);
+            ctx.fillStyle = COPPER; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'left';
+            ctx.fillText('children (chord) = parent: 0.25', dx(0.75) - 180, dy(0.25) - 14);
+            ctx.textAlign = 'center';
+        }
+    }
+
+    if (step === 6) {
+        // Example B: straddling chord
+        ctx.strokeStyle = GOLD; ctx.lineWidth = 2.5; ctx.setLineDash([7,5]);
+        ctx.beginPath(); ctx.moveTo(dx(0.2), dy(0.2)); ctx.lineTo(dx(0.8), dy(0.2)); ctx.stroke();
+        ctx.setLineDash([]);
+        tentDot(ctx, dx(0.2), dy(0.2), 6, 'white', GOLD);
+        tentDot(ctx, dx(0.8), dy(0.2), 6, 'white', GOLD);
+        ctx.fillStyle = '#4A4A4A'; ctx.font = 'bold 11.5px Inter';
+        ctx.fillText('R\u2081 (p=0.2)', dx(0.2), dy(0.2) + 20);
+        ctx.fillText('R\u2082 (p=0.8)', dx(0.8), dy(0.2) + 20);
+        tentDot(ctx, dx(0.5), dy(0.5), 7, GREEN, null);
+        ctx.fillStyle = GREEN; ctx.font = 'bold 12px Inter';
+        ctx.fillText('parent (0.5)', dx(0.5) + 58, dy(0.5) + 2);
+        tentDot(ctx, dx(0.5), dy(0.2), 7, GOLD, BROWN);
+        ctx.strokeStyle = COPPER; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(dx(0.5), dy(0.2)); ctx.lineTo(dx(0.5), dy(0.5)); ctx.stroke();
+        ctx.fillStyle = COPPER; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'left';
+        ctx.fillText('improvement 0.3', dx(0.5) + 10, dy(0.35));
+        ctx.textAlign = 'center';
+    }
+}
+
+var TENT_A = [
+    {x:1,y:6,c:1},{x:2,y:3,c:1},{x:3,y:7,c:1},{x:4,y:4,c:1},
+    {x:6,y:6,c:1},{x:8,y:7,c:1},{x:6,y:2,c:0},{x:8,y:3,c:0}
+];
+var TENT_B = [
+    {x:3,y:7,c:1},{x:1,y:2,c:0},{x:2,y:4,c:0},{x:3,y:1,c:0},{x:4,y:5,c:0},
+    {x:6,y:3,c:1},{x:7,y:6,c:1},{x:8,y:2,c:1},{x:9,y:5,c:1},{x:6,y:8,c:0}
+];
+
+function drawTentData(step) {
+    var cv = document.getElementById('tentDataCanvas');
+    var ctx = cv.getContext('2d');
+    var m = makeMapper(cv, 36);
+    drawGrid(ctx, m);
+
+    if (step === 0) {
+        ctx.fillStyle = '#7A705C'; ctx.font = 'italic 13px Inter'; ctx.textAlign = 'center';
+        ctx.fillText('(geometry of the loss first \u2014 data arrives at Step 1)', cv.width/2, cv.height/2);
+        return;
+    }
+
+    var pts = (step === 6) ? TENT_B : TENT_A;
+    var split = (step >= 2);   // split line shown from step 2 on; step 6 has its own
+    var voteL = (step === 6) ? '\u2212' : '+';
+    var voteR = '+';
+    var ring = (step >= 4);    // ring errors from step 4; step 6 rings too
+
+    if (split || step === 6) {
+        shadeRect(ctx, m, 0, 5, 0, 10, GOLD, 0.14);
+        shadeRect(ctx, m, 5, 10, 0, 10, GLIGHT, 0.10);
+        splitLine(ctx, m, 'x', 5, 0, 10, 0, 10, GREEN, false);
+        ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+        ctx.fillStyle = (step === 6) ? BROWN : GREEN;
+        ctx.fillText('R\u2081: votes ' + voteL, m.px(2.5), m.py(9.5));
+        ctx.fillStyle = GREEN;
+        ctx.fillText('R\u2082: votes ' + voteR, m.px(7.5), m.py(9.5));
+    } else {
+        ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center'; ctx.fillStyle = GREEN;
+        ctx.fillText('one region R\u209A: votes +', m.px(5), m.py(9.5));
+    }
+
+    pts.forEach(function(p) {
+        var cx = m.px(p.x), cy = m.py(p.y);
+        ctx.beginPath(); ctx.arc(cx, cy, 9, 0, 2*Math.PI);
+        ctx.fillStyle = p.c ? GLIGHT : COPPER; ctx.fill();
+        ctx.strokeStyle = p.c ? GREEN : BROWN; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = 'white'; ctx.font = 'bold 10px Inter'; ctx.textAlign = 'center';
+        ctx.fillText(p.c ? '+' : '\u2212', cx, cy + 3.5);
+        // error = point whose class disagrees with its region's vote
+        var vote = split ? (p.x < 5 ? voteL : voteR) : '+';
+        var isErr = (vote === '+' && !p.c) || (vote === '\u2212' && p.c);
+        if (ring && isErr) {
+            ctx.strokeStyle = '#D9534F'; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.arc(cx, cy, 14, 0, 2*Math.PI); ctx.stroke();
+        }
+    });
+
+    ctx.textAlign = 'center'; ctx.font = 'bold 12.5px Inter';
+    var msg = '';
+    if (step === 1) { ctx.fillStyle = '#4A4A4A'; msg = 'R\u209A: 6+/2\u2212 \u2014 predicts + for everyone \u2192 2 errors, M = 2/8'; }
+    else if (step === 2) { ctx.fillStyle = '#4A4A4A'; msg = 'split x\u2081 < 5:  R\u2081 = 4+/0\u2212 (p\u2081=1),  R\u2082 = 2+/2\u2212 (p\u2082=\u00BD) \u2014 both vote +'; }
+    else if (step === 3) { ctx.fillStyle = '#4A4A4A'; msg = 'weighted M = (4\u00B70 + 4\u00B7\u00BD)/8 = 2/8 \u2014 frozen'; }
+    else if (step === 4 || step === 5) { ctx.fillStyle = '#D9534F'; msg = 'same 2 errors before and after \u2014 no vote flipped'; }
+    else if (step === 6) { ctx.fillStyle = '#4A4A4A'; msg = 'votes differ: 5 errors \u2192 2 errors, M drops 0.5 \u2192 0.2'; }
+    ctx.fillText(msg, cv.width/2, m.py(0) + 32);
+}
+
+function setTentRO(id, val, dim) {
+    var el = document.getElementById(id);
+    el.textContent = val;
+    el.classList.toggle('dim-val', !!dim);
+}
+function updateTentReadouts(step) {
+    if (step === 6) {
+        setTentRO('tentROp', '0.500', false); setTentRO('tentRO1', '0.200', false);
+        setTentRO('tentRO2', '0.200', false); setTentRO('tentROw', '0.200', false);
+        return;
+    }
+    setTentRO('tentROp', step >= 1 ? '0.250' : '\u2014', step < 1);
+    setTentRO('tentRO1', step >= 2 ? '0.000' : '\u2014', step < 2);
+    setTentRO('tentRO2', step >= 2 ? '0.500' : '\u2014', step < 2);
+    setTentRO('tentROw', step >= 3 ? '0.250' : '\u2014', step < 3);
+}
+function renderTentStep() {
+    document.getElementById('tentCounter').textContent = 'Step ' + tentStep + ' of ' + TENTMAX;
+    document.getElementById('tentExplain').innerHTML = TENT_STEPS[tentStep];
+    document.getElementById('tentPrev').disabled = (tentStep === 0);
+    document.getElementById('tentNext').disabled = (tentStep === TENTMAX);
+    drawTentGraph(tentStep);
+    drawTentData(tentStep);
+    updateTentReadouts(tentStep);
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 60);
+}
+function tentNextStep() { if (tentStep < TENTMAX) { tentStep++; renderTentStep(); } }
+function tentPrevStep() { if (tentStep > 0) { tentStep--; renderTentStep(); } }
+function tentReset() { tentStep = 0; renderTentStep(); }
+
+// ================= Init =================
+renderStep();
+renderTentStep();
+</script>
+</body>
+</html>
