@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Differentiation, Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+.tab-buttons { display: flex; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.concept-list { background-color: var(--cream-dark); border-radius: 8px; padding: 20px; margin: 15px 0; }
+.concept-item { margin-bottom: 12px; padding: 16px 18px; border-radius: 8px; border-bottom: none; display: flex; gap: 16px; align-items: flex-start; }
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) { background-color: rgba(59, 83, 35, 0.08); border-left: 4px solid #21442B; }
+.concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
+.concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
+.concept-visual { flex-shrink: 0; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; }
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin-bottom: 8px; }
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; }
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+.technique-section .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.derivation-step { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+.nested-step { border: 1px solid rgba(33,68,43,0.18); border-radius: 8px; margin-bottom: 10px; overflow: hidden; background: rgba(255,255,255,0.55); }
+.nested-toggle { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: none; background: rgba(33,68,43,0.06); padding: 12px 16px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--green-dark); transition: background 0.2s; }
+.nested-toggle:hover { background: rgba(33,68,43,0.12); }
+.nested-toggle .arrow { transition: transform 0.25s; display: inline-block; color: var(--gold); }
+.nested-toggle.open .arrow { transform: rotate(90deg); }
+.nested-toggle .step-pill { width: 26px; height: 26px; background: var(--green-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+.nested-body { display: none; padding: 14px 18px 4px; }
+.nested-body.open { display: block; }
+.givens-box { background: rgba(221,162,94,0.12); border-left: 3px solid var(--gold); border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 14px; }
+.givens-box .givens-label { display: inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #8B6914; margin-bottom: 4px; }
+.step-num { width: 32px; height: 32px; background: var(--green-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.step-body { flex: 1; }
+.beyond-badge { display: inline-block; font-size: 11px; font-weight: 600; background: rgba(221,162,94,0.18); color: #8B5E3C; padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+.viz-container { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.viz-canvas-wrap { text-align: center; margin-bottom: 16px; }
+.viz-canvas-wrap canvas { border-radius: 8px; border: 1px solid var(--cream-dark); max-width: 100%; height: auto; }
+.slider-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.slider-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display { font-weight: 700; font-size: 18px; color: var(--gold); min-width: 70px; text-align: center; }
+.readout-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
+.readout-item { background: var(--cream); border-radius: 8px; padding: 12px 16px; text-align: center; border: 1px solid var(--gold-pale); }
+.readout-item .readout-label { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.readout-item .readout-value { font-size: 20px; font-weight: 700; color: var(--gold); }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.formula { font-family: 'Inter', sans-serif; margin: 15px 0; }
+.mjx-container { overflow-x: auto; }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Differentiation, Part 2</h1>
+            <div class="subtitle">INTERACTIVE WORKSHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">CALCULUS &bull; TECHNIQUES &amp; APPLICATIONS</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('review', this)">Review &amp; the Big Idea</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('nested', this)">Nested Chain Rule</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('implicit', this)">Implicit Diff.</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('inverse', this)">Inverse Functions</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('log', this)">Log Differentiation</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('related', this)">Related Rates</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('linapprox', this)">Linear Approx.</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Mixed Practice</button>
+    </div>
+
+    <!-- REVIEW -->
+    <div id="tab-review" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Where We Left Off</h2></div>
+        <div class="card">
+            <p>Last session we built every standard differentiation rule from the limit definition. Before we extend them, here's the full toolkit on one card &mdash; everything below is assumed knowledge today.</p>
+        </div>
+        <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin:24px 0 10px;">The Rules</h3>
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Power Rule</h4><p>$$\frac{d}{dx}x^n = nx^{n-1}$$</p></div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Product Rule</h4><p>$$\frac{d}{dx}[fg] = f'g + fg'$$</p></div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>Chain Rule</h4><p>$$\frac{d}{dx}f(g(x)) = f'(g(x))\,g'(x)$$</p><p class="formula-note">Today's launch point &mdash; we push this much further.</p></div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Quotient Rule</h4><p>$$\frac{d}{dx}\!\left[\frac{f}{g}\right]=\frac{f'g-fg'}{g^2}$$</p></div>
+        </div>
+        <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin:24px 0 10px;">The Toolkit Derivatives</h3>
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Trig</h4><p>$$\frac{d}{dx}\sin x=\cos x,\quad \frac{d}{dx}\cos x=-\sin x$$</p><p>$$\frac{d}{dx}\tan x=\sec^2 x$$</p></div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>Exponential</h4><p>$$\frac{d}{dx}e^x=e^x,\quad \frac{d}{dx}a^x=a^x\ln a$$</p></div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Logarithm</h4><p>$$\frac{d}{dx}\ln x=\frac{1}{x}$$</p></div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Applications</h4><p>Tangent &amp; normal lines, linear approximation, particle motion ($v=s'$, $a=v'$).</p></div>
+        </div>
+        <div class="section-header"><div class="section-number">2</div><h2>Today's Big Idea: Differentiate <em>Anything</em></h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p>So far you can differentiate anything written as $y = f(x)$ with $x$ alone on the right. Today we remove that restriction four ways:</p>
+            <div class="concept-list">
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Nested chain rule</div>Functions buried three or four layers deep &mdash; apply the chain rule repeatedly, working outside-in.</div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Implicit differentiation</div>When $y$ is tangled up with $x$ (like $x^2+y^2=25$) and you can't solve for it &mdash; differentiate anyway, treating $y$ as a function of $x$.</div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Inverse functions</div>Derivatives of $\arcsin$ and $\arctan$, recovered from the functions they undo.</div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Logarithmic differentiation</div>A trick using $\ln$ to tame nasty products, quotients, and powers like $x^x$.</div></div>
+            </div>
+            <p>The common thread: every one of these is the chain rule wearing a different hat. Keep that in mind and nothing today is really new &mdash; just the same idea applied with more nerve.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>A Visual Refresher: Concavity &amp; Approximation Error</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p>You'll lean on this in the Linear Approximation tab, so let's make it visual. When you use a tangent line to <em>estimate</em> a function's value, whether you over- or under-shoot depends entirely on the <strong>concavity</strong> of the curve:</p>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Concave ($f'' &lt; 0$, frowns &#8745;)</h4><p style="margin-top:4px;font-size:13.5px;">The curve bends <em>below</em> its tangent line, so the tangent sits <strong>above</strong> &mdash; the linear estimate is an <strong>over-estimate</strong>.</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Convex ($f'' &gt; 0$, smiles &#8746;)</h4><p style="margin-top:4px;font-size:13.5px;">The curve bends <em>above</em> its tangent line, so the tangent sits <strong>below</strong> &mdash; the linear estimate is an <strong>under-estimate</strong>.</p></div>
+            </div>
+            <p>Toggle the curve and drag the estimate point to see it. The green dashed tangent touches at $a$; the orange bar is the error between the true curve value and the tangent estimate.</p>
+            <div class="viz-container">
+                <div class="viz-canvas-wrap"><canvas id="conc-canvas" width="640" height="380"></canvas></div>
+                <div class="slider-group">
+                    <label for="conc-fn">Pick a curve shape</label>
+                    <select id="conc-fn" class="fn-select" style="font-family:'Inter',sans-serif;font-size:14px;padding:8px 12px;border:2px solid var(--gold-light);border-radius:8px;background:var(--cream);color:var(--text-dark);cursor:pointer;">
+                        <option value="concave">Concave: f(x)=√x  (tangent above &rarr; over-estimate)</option>
+                        <option value="convex">Convex: f(x)=x²/6  (tangent below &rarr; under-estimate)</option>
+                        <option value="cubic">Cubic: concavity switches at the inflection (over &rarr; under flip!)</option>
+                        <option value="linear">Linear: f(x)=0.4x+2  (tangent = line &rarr; zero error)</option>
+                    </select>
+                </div>
+                <div class="slider-group">
+                    <label for="conc-x">Estimate point $x$ (the touch point $a$ is fixed)</label>
+                    <div class="slider-row"><span style="font-size:13px;color:var(--text-medium);">near</span>
+                        <input type="range" id="conc-x" min="1" max="24" step="0.2" value="16">
+                        <span style="font-size:13px;color:var(--text-medium);">far</span>
+                        <span class="n-display" id="conc-x-disp">x = 16.0</span></div>
+                </div>
+                <div class="readout-panel">
+                    <div class="readout-item"><div class="readout-label">True $f(x)$</div><div class="readout-value exact-val" id="conc-true">&mdash;</div></div>
+                    <div class="readout-item"><div class="readout-label">Tangent estimate $L(x)$</div><div class="readout-value" id="conc-approx">&mdash;</div></div>
+                    <div class="readout-item"><div class="readout-label">Estimate is...</div><div class="readout-value" id="conc-verdict">&mdash;</div></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-medium);margin:14px 0 0;text-align:center;">Notice: the estimate is exact right at $a$, and the over/under error grows as you move away &mdash; but the <em>direction</em> (over vs. under) never flips for a given concavity.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NESTED CHAIN -->
+    <div id="tab-nested" class="tab-content">
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Nested / Repeated Chain Rule</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>When a function is composed several layers deep, apply the chain rule <em>once per layer</em>, peeling from the outside in. Each layer contributes a factor; you multiply them all together.</p>
+                <div class="highlight-box">$$\frac{d}{dx}f(g(h(x))) = f'(g(h(x)))\cdot g'(h(x))\cdot h'(x)$$</div>
+            </div>
+            <div class="step-example"><span class="step-label">Worked Example</span>
+                <p>Differentiate $y=\sin^2(3x)$, i.e. $\big(\sin(3x)\big)^2$.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Identify the three layers.</strong> Outermost: $(\;\cdot\;)^2$. Middle: $\sin(\;\cdot\;)$. Inner: $3x$.</p></div></div>
+                    <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Outside-in, one factor per layer.</strong> Power layer: $2\sin(3x)$. Sine layer: $\cos(3x)$. Inner: $3$.</p><div class="highlight-box">$$y' = 2\sin(3x)\cdot\cos(3x)\cdot 3 = 6\sin(3x)\cos(3x)$$</div></div></div>
+                </div>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>Differentiate $y=e^{\sin(x^2)}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Layers: $e^{(\cdot)}$, then $\sin(\cdot)$, then $x^2$. Factors: $e^{\sin(x^2)}$, $\cos(x^2)$, $2x$.</p>
+                    <div class="highlight-box">$$y' = e^{\sin(x^2)}\cdot\cos(x^2)\cdot 2x = 2x\cos(x^2)\,e^{\sin(x^2)}$$</div>
+                </div>
+            </div>
+        </div>
+<div class="section-header" style="margin-top:28px;"><div class="section-number">&#9998;</div><h2>More Practice — Nested Chain Rule</h2></div>
+<div class="card" style="border-left-color:var(--green-dark);"><p style="margin:0;"><strong>Work these by hand first</strong>, then check. Each has a full worked solution.</p></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=\cos^3(2x)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Layers: $(\cdot)^3$, then $\cos(\cdot)$, then $2x$.</p><p>$y' = 3\cos^2(2x)\cdot(-\sin(2x))\cdot 2$.</p><div class='highlight-box'>$$y' = -6\sin(2x)\cos^2(2x)$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=\sqrt{x^2+1}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Rewrite $(x^2+1)^{1/2}$. Outside $\tfrac12(x^2+1)^{-1/2}$, inside derivative $2x$.</p><div class='highlight-box'>$$y' = \frac{x}{\sqrt{x^2+1}}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=e^{3x^2}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Outside $e^{(\cdot)}$ stays $e^{3x^2}$; inside $3x^2$ has derivative $6x$.</p><div class='highlight-box'>$$y' = 6x\,e^{3x^2}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">4</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=(2x+1)^5$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Outside $5(2x+1)^4$, inside derivative $2$.</p><div class='highlight-box'>$$y' = 10(2x+1)^4$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">5</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=\sin(\cos x)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Outside $\cos(\cos x)$, inside derivative $-\sin x$.</p><div class='highlight-box'>$$y' = -\sin(x)\cos(\cos x)$$</div></div></div></div></div>
+    
+    </div>
+
+    <!-- IMPLICIT -->
+    <div id="tab-implicit" class="tab-content">
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>Implicit Differentiation</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>Sometimes $y$ can't be isolated &mdash; like on the circle $x^2+y^2=25$. No problem: differentiate <em>both sides</em> with respect to $x$, treating $y$ as a hidden function of $x$. Every time you differentiate a $y$, the chain rule tacks on a $\frac{dy}{dx}$. Then solve for $\frac{dy}{dx}$.</p>
+                <div class="idea-box"><p>The key reflex: $\dfrac{d}{dx}\big[y^n\big] = n y^{n-1}\dfrac{dy}{dx}$. That trailing $\frac{dy}{dx}$ is just the chain rule &mdash; $y$ is the &ldquo;inside&rdquo; function.</p></div>
+            </div>
+            <div class="step-example"><span class="step-label">Worked Example</span>
+                <p>Find $\frac{dy}{dx}$ for $x^2+y^2=25$, then the slope at $(3,4)$.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Differentiate both sides w.r.t. $x$.</strong> The $y^2$ picks up a $\frac{dy}{dx}$.</p><p>$$2x + 2y\frac{dy}{dx} = 0$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Solve for $\frac{dy}{dx}$.</strong></p><div class="highlight-box">$$\frac{dy}{dx} = -\frac{x}{y}$$</div></div></div>
+                    <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Plug in the point $(3,4)$.</strong></p><div class="highlight-box">$$\left.\frac{dy}{dx}\right|_{(3,4)} = -\frac{3}{4}$$</div></div></div>
+                </div>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>Find $\frac{dy}{dx}$ for $x^2 + xy + y^2 = 7$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Differentiate term by term; the $xy$ needs the <em>product rule</em>: $\frac{d}{dx}(xy)=y+x\frac{dy}{dx}$.</p>
+                    <p>$$2x + \left(y + x\frac{dy}{dx}\right) + 2y\frac{dy}{dx} = 0$$</p>
+                    <p>Collect the $\frac{dy}{dx}$ terms: $(x+2y)\frac{dy}{dx} = -(2x+y)$.</p>
+                    <div class="highlight-box">$$\frac{dy}{dx} = -\frac{2x+y}{x+2y}$$</div>
+                </div>
+            </div>
+        </div>
+<div class="section-header" style="margin-top:28px;"><div class="section-number">&#9998;</div><h2>More Practice — Implicit Differentiation</h2></div>
+<div class="card" style="border-left-color:var(--green-dark);"><p style="margin:0;"><strong>Work these by hand first</strong>, then check. Each has a full worked solution.</p></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div><div style="flex:1;"><p style="margin-bottom:6px;">Find $\frac{dy}{dx}$ for $x^3+y^3=6xy$ (folium of Descartes).</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Differentiate; $6xy$ needs the product rule: $3x^2+3y^2\frac{dy}{dx}=6y+6x\frac{dy}{dx}$.</p><p>Collect: $(3y^2-6x)\frac{dy}{dx}=6y-3x^2$.</p><div class='highlight-box'>$$\frac{dy}{dx}=\frac{2y-x^2}{y^2-2x}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div><div style="flex:1;"><p style="margin-bottom:6px;">Find $\frac{dy}{dx}$ for $xy+y^2=4$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Product rule on $xy$: $y+x\frac{dy}{dx}+2y\frac{dy}{dx}=0$.</p><p>$(x+2y)\frac{dy}{dx}=-y$.</p><div class='highlight-box'>$$\frac{dy}{dx}=-\frac{y}{x+2y}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div><div style="flex:1;"><p style="margin-bottom:6px;">Find $\frac{dy}{dx}$ for $x^2y^3=8$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Product rule: $2xy^3 + x^2\cdot 3y^2\frac{dy}{dx}=0$.</p><p>$3x^2y^2\frac{dy}{dx}=-2xy^3$.</p><div class='highlight-box'>$$\frac{dy}{dx}=-\frac{2y}{3x}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">4</div><div style="flex:1;"><p style="margin-bottom:6px;">Find $\frac{dy}{dx}$ for $\sin y + x = y$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Differentiate: $\cos y\,\frac{dy}{dx}+1=\frac{dy}{dx}$.</p><p>$(\cos y-1)\frac{dy}{dx}=-1$.</p><div class='highlight-box'>$$\frac{dy}{dx}=\frac{1}{1-\cos y}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">5</div><div style="flex:1;"><p style="margin-bottom:6px;">Find the slope of $x^2+y^2=25$ at the point $(3,-4)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>From the worked example, $\frac{dy}{dx}=-\frac{x}{y}$. At $(3,-4)$:</p><div class='highlight-box'>$$\frac{dy}{dx}=-\frac{3}{-4}=\frac{3}{4}$$</div></div></div></div></div>
+    
+    </div>
+
+    <!-- INVERSE -->
+    <div id="tab-inverse" class="tab-content">
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>Derivatives of Inverse Functions</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>You don't have to memorize these blindly &mdash; they fall out of implicit differentiation on the function each one undoes. The two you need for AB/BC:</p>
+                <div class="formula-grid">
+                    <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Arcsine</h4><p>$$\frac{d}{dx}\arcsin x = \frac{1}{\sqrt{1-x^2}}$$</p></div>
+                    <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Arctangent</h4><p>$$\frac{d}{dx}\arctan x = \frac{1}{1+x^2}$$</p></div>
+                </div>
+            </div>
+            <div class="step-concept" style="margin-top:14px;"><span class="step-label">The General Rule</span>
+                <p>There's a single rule behind <em>all</em> inverse-function derivatives &mdash; and it comes straight from the chain rule. If $g=f^{-1}$ is the inverse of $f$, then:</p>
+                <div class="highlight-box">$$\frac{d}{dx}f^{-1}(x) = \frac{1}{f'\big(f^{-1}(x)\big)}$$</div>
+                <p>In words: the slope of the inverse at a point is the <strong>reciprocal</strong> of the slope of the original function at the matching point. (Geometrically, the inverse is the graph reflected over $y=x$, which swaps rise and run &mdash; flipping the slope.)</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Derive it from the chain rule</button>
+                <div class="example-body">
+                    <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> By definition, an inverse undoes its function: $f\big(f^{-1}(x)\big)=x$. Differentiate both sides &mdash; the left side needs the chain rule &mdash; and solve for the inverse's derivative.</p></div></div>
+                    <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Start from the defining identity.</strong></p><p>$$f\big(f^{-1}(x)\big) = x$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Differentiate both sides w.r.t. $x$.</strong> The left side is a composition &mdash; chain rule: derivative of the outside $f'$ evaluated at the inside, times the derivative of the inside $f^{-1}$.</p><p>$$f'\big(f^{-1}(x)\big)\cdot \frac{d}{dx}f^{-1}(x) = 1$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Solve for the inverse's derivative.</strong> Just divide.</p><div class="highlight-box">$$\frac{d}{dx}f^{-1}(x) = \frac{1}{f'\big(f^{-1}(x)\big)}$$</div></div></div>
+                    <div class="idea-box"><p><strong>This is the source of the arcsin/arctan formulas.</strong> Take $f=\tan$, so $f^{-1}=\arctan$ and $f'=\sec^2$. The rule gives $\frac{1}{\sec^2(\arctan x)}$; using $\sec^2=1+\tan^2$ and $\tan(\arctan x)=x$, that's $\frac{1}{1+x^2}$ &mdash; exactly the arctangent formula above. The implicit-differentiation method in the next box is really just this rule in disguise.</p></div>
+                </div>
+            </div>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example &mdash; no formula needed</span>
+                <p>Suppose $f$ is invertible with $f(2)=5$ and $f'(2)=3$. If $g=f^{-1}$, find $g'(5)$.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <p>The rule says $g'(b)=\dfrac{1}{f'(a)}$ where $b=f(a)$. Here $f(2)=5$ means $a=2,\ b=5$:</p>
+                    <div class="highlight-box">$$g'(5)=\frac{1}{f'(2)}=\frac{1}{3}$$</div>
+                    <p>No formula for $f$ required &mdash; just the matching point and the reciprocal slope.</p>
+                </div>
+            </div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Where does $\frac{d}{dx}\arctan x$ come from? (derivation)</button>
+            <div class="example-body">
+                <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Let $y=\arctan x$, flip it to $\tan y = x$, differentiate implicitly, then convert back using a right triangle. Same idea works for $\arcsin$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Rewrite without the inverse.</strong> $y=\arctan x \iff \tan y = x$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Differentiate both sides implicitly.</strong> Recall $\frac{d}{dx}\tan y = \sec^2 y\,\frac{dy}{dx}$.</p><p>$$\sec^2 y\,\frac{dy}{dx} = 1 \;\Longrightarrow\; \frac{dy}{dx} = \frac{1}{\sec^2 y}$$</p></div></div>
+                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Convert back to $x$.</strong> Using the identity $\sec^2 y = 1+\tan^2 y$ and $\tan y = x$:</p><div class="highlight-box">$$\frac{dy}{dx} = \frac{1}{1+\tan^2 y} = \frac{1}{1+x^2}$$</div></div></div>
+            </div>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span>
+                <p>Differentiate $y=\arcsin(x^2)$ &mdash; inverse trig <em>plus</em> the chain rule.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <p>Outside $\arcsin(\cdot)$ gives $\frac{1}{\sqrt{1-(\cdot)^2}}$ with inside untouched; multiply by the inside's derivative $2x$.</p>
+                    <div class="highlight-box">$$y' = \frac{1}{\sqrt{1-(x^2)^2}}\cdot 2x = \frac{2x}{\sqrt{1-x^4}}$$</div>
+                </div>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>Differentiate $y=\arctan(3x)$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$\frac{1}{1+(3x)^2}$ times the inside derivative $3$.</p>
+                    <div class="highlight-box">$$y' = \frac{3}{1+9x^2}$$</div>
+                </div>
+            </div>
+        </div>
+<div class="section-header" style="margin-top:28px;"><div class="section-number">&#9998;</div><h2>More Practice &mdash; Inverse Functions</h2></div>
+<div class="card" style="border-left-color:var(--green-dark);"><p style="margin:0;"><strong>Work these by hand first</strong>, then check. The first three use the inverse-trig formulas; the last five use the <em>general inverse rule</em> $\big(f^{-1}\big)'(x)=\dfrac{1}{f'(f^{-1}(x))}$ on non-trig functions.</p></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=\arctan(x^2)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\frac{1}{1+(x^2)^2}$ times the inside derivative $2x$.</p><div class='highlight-box'>$$y'=\frac{2x}{1+x^4}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=\arcsin(2x)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\frac{1}{\sqrt{1-(2x)^2}}$ times the inside derivative $2$.</p><div class='highlight-box'>$$y'=\frac{2}{\sqrt{1-4x^2}}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=x\arctan x$ (product + inverse trig).</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Product rule: $f=x$ ($f'=1$), $g=\arctan x$ ($g'=\frac{1}{1+x^2}$).</p><div class='highlight-box'>$$y'=\arctan x+\frac{x}{1+x^2}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">4</div><div style="flex:1;"><p style="margin-bottom:6px;"><strong>(Table)</strong> $f$ is invertible with $f(3)=7$ and $f'(3)=4$. If $g=f^{-1}$, find $g'(7)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Rule: $g'(b)=\dfrac{1}{f'(a)}$ with $b=f(a)$. Here $a=3,\ b=7$.</p><div class='highlight-box'>$$g'(7)=\frac{1}{f'(3)}=\frac{1}{4}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">5</div><div style="flex:1;"><p style="margin-bottom:6px;"><strong>(Polynomial)</strong> Let $f(x)=x^3+2x+1$, so $f(0)=1$. Find $\big(f^{-1}\big)'(1)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$f'(x)=3x^2+2$, so $f'(0)=2$. Since $f(0)=1$, the matching point is $a=0$:</p><div class='highlight-box'>$$\big(f^{-1}\big)'(1)=\frac{1}{f'(0)}=\frac{1}{2}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">6</div><div style="flex:1;"><p style="margin-bottom:6px;"><strong>(Exponential)</strong> Let $f(x)=e^x+x$, so $f(0)=1$. Find $\big(f^{-1}\big)'(1)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$f'(x)=e^x+1$, so $f'(0)=2$. With $f(0)=1$, $a=0$:</p><div class='highlight-box'>$$\big(f^{-1}\big)'(1)=\frac{1}{f'(0)}=\frac{1}{2}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">7</div><div style="flex:1;"><p style="margin-bottom:6px;"><strong>(Derive $\ln$)</strong> Since $\ln x$ is the inverse of $e^x$, use the inverse rule to show $\dfrac{d}{dx}\ln x=\dfrac{1}{x}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>Take $f(x)=e^x$, so $f^{-1}(x)=\ln x$ and $f'(x)=e^x$. The rule gives $\dfrac{1}{f'(\ln x)}=\dfrac{1}{e^{\ln x}}$. Since $e^{\ln x}=x$:</p><div class='highlight-box'>$$\frac{d}{dx}\ln x=\frac{1}{x}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">8</div><div style="flex:1;"><p style="margin-bottom:6px;"><strong>(Polynomial)</strong> Let $f(x)=x^5+x$, so $f(1)=2$. Find $\big(f^{-1}\big)'(2)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$f'(x)=5x^4+1$, so $f'(1)=6$. With $f(1)=2$, $a=1$:</p><div class='highlight-box'>$$\big(f^{-1}\big)'(2)=\frac{1}{f'(1)}=\frac{1}{6}$$</div></div></div></div></div>
+    
+    </div>
+
+    <!-- LOG DIFF -->
+    <div id="tab-log" class="tab-content">
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Logarithmic Differentiation</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>Two situations defeat the ordinary rules: a <em>variable raised to a variable power</em> like $x^x$ (neither the power rule nor the exponential rule applies), and giant products/quotients that would be brutal by product and quotient rules. The fix: take $\ln$ of both sides first. Logs turn products into sums and powers into multipliers, and then you just differentiate implicitly.</p>
+                <div class="idea-box"><p>Why it's legal: it's implicit differentiation on $\ln y$. Since $\frac{d}{dx}\ln y = \frac{1}{y}\frac{dy}{dx}$, once you've differentiated you simply multiply back by $y$ to isolate $\frac{dy}{dx}$.</p></div>
+            </div>
+            <div class="step-example"><span class="step-label">Worked Example</span>
+                <p>Differentiate $y=x^x$.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Take $\ln$ of both sides.</strong> The power drops down front.</p><p>$$\ln y = \ln(x^x) = x\ln x$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Differentiate both sides w.r.t. $x$.</strong> Left side uses the chain rule; right side uses the product rule.</p><p>$$\frac{1}{y}\frac{dy}{dx} = \ln x + x\cdot\frac{1}{x} = \ln x + 1$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Multiply back by $y=x^x$.</strong></p><div class="highlight-box">$$\frac{dy}{dx} = x^x(\ln x + 1)$$</div></div></div>
+                </div>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>Use logarithmic differentiation on $y=(2x+1)^3(x-4)^2$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$\ln y = 3\ln(2x+1) + 2\ln(x-4)$. Differentiate:</p>
+                    <p>$$\frac{1}{y}\frac{dy}{dx} = \frac{3\cdot 2}{2x+1} + \frac{2}{x-4} = \frac{6}{2x+1} + \frac{2}{x-4}$$</p>
+                    <p>Multiply back by $y=(2x+1)^3(x-4)^2$:</p>
+                    <div class="highlight-box">$$\frac{dy}{dx} = (2x+1)^3(x-4)^2\left[\frac{6}{2x+1}+\frac{2}{x-4}\right] = 2(x-4)(2x+1)^2(5x-11)$$</div>
+                    <p style="font-size:13px;color:var(--text-medium);">(The factored form is what you'd get after simplifying &mdash; either form is correct.)</p>
+                </div>
+            </div>
+        </div>
+<div class="section-header" style="margin-top:28px;"><div class="section-number">&#9998;</div><h2>More Practice — Logarithmic Differentiation</h2></div>
+<div class="card" style="border-left-color:var(--green-dark);"><p style="margin:0;"><strong>Work these by hand first</strong>, then check. Each has a full worked solution.</p></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=x^{2x}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\ln y=2x\ln x$. Differentiate: $\frac1y y'=2\ln x+2x\cdot\frac1x=2\ln x+2$.</p><div class='highlight-box'>$$y'=2x^{2x}(\ln x+1)$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=(\sin x)^x$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\ln y=x\ln(\sin x)$. Differentiate (product rule): $\frac1y y'=\ln(\sin x)+x\cdot\frac{\cos x}{\sin x}$.</p><div class='highlight-box'>$$y'=(\sin x)^x\!\left(\ln(\sin x)+x\cot x\right)$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=x^{\ln x}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\ln y=(\ln x)(\ln x)=(\ln x)^2$. Differentiate: $\frac1y y'=2\ln x\cdot\frac1x$.</p><div class='highlight-box'>$$y'=x^{\ln x}\cdot\frac{2\ln x}{x}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">4</div><div style="flex:1;"><p style="margin-bottom:6px;">Use log differentiation on $y=(x+1)^4(x-2)^3$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\ln y=4\ln(x+1)+3\ln(x-2)$. Differentiate: $\frac1y y'=\frac{4}{x+1}+\frac{3}{x-2}$.</p><div class='highlight-box'>$$y'=(x+1)^4(x-2)^3\!\left[\frac{4}{x+1}+\frac{3}{x-2}\right]=(x+1)^3(x-2)^2(7x-5)$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">5</div><div style="flex:1;"><p style="margin-bottom:6px;">Differentiate $y=(3x)^x$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\ln y=x\ln(3x)$. Differentiate: $\frac1y y'=\ln(3x)+x\cdot\frac{3}{3x}=\ln(3x)+1$.</p><div class='highlight-box'>$$y'=(3x)^x(\ln(3x)+1)$$</div></div></div></div></div>
+    
+    </div>
+
+    <!-- RELATED RATES -->
+    <div id="tab-related" class="tab-content">
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>Related Rates</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>When two or more quantities are linked by an equation and they <em>all change over time</em>, their rates of change are linked too. Related rates problems give you one rate and ask for another. The engine is the <strong>chain rule</strong>: differentiate the equation with respect to time $t$, and every variable picks up a $\frac{d}{dt}$ factor.</p>
+                <div class="idea-box"><p><strong>The reliable recipe:</strong> (1) draw it and name the variables; (2) write an equation relating them; (3) differentiate both sides with respect to $t$; (4) plug in the known values and rates <em>last</em>, and solve for the unknown rate.</p></div>
+                <div class="warning-box"><p><strong>The #1 mistake:</strong> plugging in numbers <em>before</em> differentiating. Keep the variables symbolic until after you've taken $\frac{d}{dt}$ &mdash; otherwise a changing quantity becomes a frozen constant and its rate wrongly disappears.</p></div>
+            </div>
+            <div class="step-example"><span class="step-label">Worked Example &mdash; the sliding ladder</span>
+                <p>A 10&nbsp;ft ladder leans against a wall. The bottom slides away from the wall at $\frac{dx}{dt}=1$ ft/s. How fast is the top sliding down when the bottom is 6&nbsp;ft from the wall?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Relate the variables.</strong> Let $x$ = distance of the bottom from the wall, $y$ = height of the top. By the Pythagorean theorem:</p><p>$$x^2 + y^2 = 10^2 = 100$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Differentiate with respect to $t$.</strong> Each term uses the chain rule:</p><p>$$2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0$$</p></div></div>
+                    <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Find the missing value.</strong> When $x=6$: $y=\sqrt{100-36}=8$.</p></div></div>
+                    <div class="derivation-step"><div class="step-num">4</div><div class="step-body"><p><strong>Plug in and solve for $\frac{dy}{dt}$.</strong> With $x=6,\ y=8,\ \frac{dx}{dt}=1$:</p><p>$$2(6)(1) + 2(8)\frac{dy}{dt}=0 \;\Longrightarrow\; \frac{dy}{dt} = -\frac{12}{16} = -0.75 \text{ ft/s}$$</p><div class="highlight-box">$$\frac{dy}{dt} = -0.75 \text{ ft/s}$$</div><p>The negative sign means the top is moving <em>down</em> &mdash; exactly what we expect.</p></div></div>
+                </div>
+            </div>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example &mdash; the inflating balloon</span>
+                <p>Air is pumped into a spherical balloon at $\frac{dV}{dt}=100$ cm³/s. How fast is the radius growing when $r=5$ cm?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <p>Relate: $V = \frac{4}{3}\pi r^3$. Differentiate w.r.t. $t$ (chain rule on $r^3$): $\frac{dV}{dt} = 4\pi r^2\frac{dr}{dt}$.</p>
+                    <p>Solve for $\frac{dr}{dt}$ and plug in $r=5$, $\frac{dV}{dt}=100$:</p>
+                    <div class="highlight-box">$$\frac{dr}{dt} = \frac{1}{4\pi r^2}\frac{dV}{dt} = \frac{100}{4\pi(25)} = \frac{1}{\pi} \approx 0.318 \text{ cm/s}$$</div>
+                </div>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>A circular oil slick expands so its radius grows at $\frac{dr}{dt}=2$ m/min. How fast is the <em>area</em> growing when $r=3$ m? (Area $A=\pi r^2$.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Differentiate $A=\pi r^2$ w.r.t. $t$: $\frac{dA}{dt} = 2\pi r\frac{dr}{dt}$.</p>
+                    <p>Plug in $r=3$, $\frac{dr}{dt}=2$:</p>
+                    <div class="highlight-box">$$\frac{dA}{dt} = 2\pi(3)(2) = 12\pi \approx 37.7 \text{ m}^2/\text{min}$$</div>
+                </div>
+            </div>
+        </div>
+<div class="section-header" style="margin-top:28px;"><div class="section-number">&#9998;</div><h2>More Practice — Related Rates</h2></div>
+<div class="card" style="border-left-color:var(--green-dark);"><p style="margin:0;"><strong>Work these by hand first</strong>, then check. Each has a full worked solution.</p></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div><div style="flex:1;"><p style="margin-bottom:6px;">A cube's side grows at $\frac{ds}{dt}=2$ cm/s. How fast is its volume growing when $s=4$ cm? ($V=s^3$.)</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\frac{dV}{dt}=3s^2\frac{ds}{dt}=3(16)(2)$.</p><div class='highlight-box'>$$\frac{dV}{dt}=96\text{ cm}^3/\text{s}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div><div style="flex:1;"><p style="margin-bottom:6px;">A 13&nbsp;ft ladder's base slides away at $\frac{dx}{dt}=2$ ft/s. How fast is the top dropping when the base is 5&nbsp;ft out?</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$x^2+y^2=169$; at $x=5$, $y=12$. Differentiate: $2x x'+2y y'=0$, so $y'=-\frac{x x'}{y}=-\frac{5(2)}{12}$.</p><div class='highlight-box'>$$\frac{dy}{dt}=-\frac{5}{6}\approx-0.83\text{ ft/s}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div><div style="flex:1;"><p style="margin-bottom:6px;">A square's side grows at $3$ m/min. How fast is its area growing when $s=5$ m? ($A=s^2$.)</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\frac{dA}{dt}=2s\frac{ds}{dt}=2(5)(3)$.</p><div class='highlight-box'>$$\frac{dA}{dt}=30\text{ m}^2/\text{min}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">4</div><div style="flex:1;"><p style="margin-bottom:6px;">A spherical balloon's radius grows at $1$ cm/s. How fast is its volume growing when $r=3$ cm? ($V=\frac43\pi r^3$.)</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\frac{dV}{dt}=4\pi r^2\frac{dr}{dt}=4\pi(9)(1)$.</p><div class='highlight-box'>$$\frac{dV}{dt}=36\pi\approx113\text{ cm}^3/\text{s}$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">5</div><div style="flex:1;"><p style="margin-bottom:6px;">Oil spreads in a circle with $\frac{dA}{dt}=12\pi$ m²/min. How fast is the radius growing when $r=2$ m? ($A=\pi r^2$.)</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\frac{dA}{dt}=2\pi r\frac{dr}{dt}$, so $\frac{dr}{dt}=\frac{dA/dt}{2\pi r}=\frac{12\pi}{2\pi(2)}$.</p><div class='highlight-box'>$$\frac{dr}{dt}=3\text{ m/min}$$</div></div></div></div></div>
+    
+    </div>
+
+    <!-- LINEAR APPROXIMATIONS -->
+    <div id="tab-linapprox" class="tab-content">
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Linear Approximations &amp; Differentials</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>Near a point, a curve and its tangent line are nearly indistinguishable. So the tangent line is a quick stand-in for the function &mdash; the <strong>linear approximation</strong> (or <em>linearization</em>):</p>
+                <div class="highlight-box">$$L(x) = f(a) + f'(a)(x - a) \quad\approx\quad f(x) \text{ for } x \text{ near } a$$</div>
+                <p>Drag the sliders below: the green tangent line hugs the curve near the touch point and drifts away as you move out. That gap is your approximation error.</p>
+            </div>
+            <div class="viz-container">
+                <div class="viz-canvas-wrap"><canvas id="lin-canvas" width="640" height="380"></canvas></div>
+                <div class="slider-group">
+                    <label for="lin-a">Tangent point $a$ (where the line touches)</label>
+                    <div class="slider-row"><span style="font-size:13px;color:var(--text-medium);">1</span>
+                        <input type="range" id="lin-a" min="1" max="24" step="0.2" value="16">
+                        <span style="font-size:13px;color:var(--text-medium);">24</span>
+                        <span class="n-display" id="lin-a-disp">a = 16.0</span></div>
+                </div>
+                <div class="slider-group">
+                    <label for="lin-x">Estimate point $x$</label>
+                    <div class="slider-row"><span style="font-size:13px;color:var(--text-medium);">1</span>
+                        <input type="range" id="lin-x" min="1" max="24" step="0.2" value="16.5">
+                        <span style="font-size:13px;color:var(--text-medium);">24</span>
+                        <span class="n-display" id="lin-x-disp">x = 16.5</span></div>
+                </div>
+                <div class="readout-panel">
+                    <div class="readout-item"><div class="readout-label">True $f(x)$</div><div class="readout-value exact-val" id="lin-true">&mdash;</div></div>
+                    <div class="readout-item"><div class="readout-label">Estimate $L(x)$</div><div class="readout-value" id="lin-approx">&mdash;</div></div>
+                    <div class="readout-item"><div class="readout-label">Error</div><div class="readout-value" id="lin-err">&mdash;</div></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-medium);margin:14px 0 0;text-align:center;">Curve $f(x)=\sqrt{x}$, tangent $L(x)=f(a)+f'(a)(x-a)$. Error stays tiny near $a$ and grows as $x$ moves away.</p>
+            </div>
+            <div class="step-example"><span class="step-label">Worked Example</span>
+                <p>Use a linear approximation at $a=16$ to estimate $\sqrt{16.5}$.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <p>$f(x)=\sqrt{x}$, $f'(x)=\frac{1}{2\sqrt{x}}$. At $a=16$: $f(16)=4$, $f'(16)=\frac{1}{8}$.</p>
+                    <p>$$L(x)=4+\tfrac18(x-16) \;\Longrightarrow\; L(16.5)=4+\tfrac18(0.5)=4.0625$$</p>
+                    <div class="highlight-box">$$\sqrt{16.5}\approx 4.0625 \quad(\text{actual }\approx 4.0620)$$</div>
+                    <p>Since $\sqrt{x}$ is <em>concave down</em> ($f''<0$), the tangent sits above the curve &mdash; a slight <strong>over-estimate</strong>. The sign of $f''$ tells you the error's direction for free.</p>
+                </div>
+            </div>
+            <div class="step-concept" style="margin-top:14px;"><span class="step-label">Differentials</span>
+                <p>The same idea in &ldquo;differential&rdquo; notation. If $y=f(x)$, a small input change $dx$ produces an approximate output change:</p>
+                <div class="highlight-box">$$dy = f'(x)\,dx \quad\approx\quad \Delta y \text{ (the true change)}$$</div>
+                <p>It's the linear approximation rewritten: $dy$ is the rise <em>along the tangent line</em> for a run of $dx$, a stand-in for the true change $\Delta y$ along the curve.</p>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>Use differentials to estimate the change in $y=x^2$ when $x$ goes from $5$ to $5.1$. Compare to the true change.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$dy=f'(x)\,dx = 2x\,dx$. At $x=5$, $dx=0.1$: $dy = 2(5)(0.1)=1.0$.</p>
+                    <p>True change: $\Delta y = 5.1^2 - 5^2 = 26.01 - 25 = 1.01$. The differential $dy=1.0$ is a close estimate &mdash; off by just $0.01$.</p>
+                    <div class="highlight-box">$$dy = 1.0, \qquad \Delta y = 1.01$$</div>
+                </div>
+            </div>
+        </div>
+<div class="section-header" style="margin-top:28px;"><div class="section-number">&#9998;</div><h2>More Practice — Linear Approximation</h2></div>
+<div class="card" style="border-left-color:var(--green-dark);"><p style="margin:0;"><strong>Work these by hand first</strong>, then check. Each has a full worked solution.</p></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">1</div><div style="flex:1;"><p style="margin-bottom:6px;">Use a linear approximation at $a=25$ to estimate $\sqrt{24}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$f=\sqrt x$, $f'=\frac{1}{2\sqrt x}$; $f(25)=5$, $f'(25)=\frac1{10}$. $L(x)=5+\frac1{10}(x-25)$.</p><div class='highlight-box'>$$\sqrt{24}\approx 5+\tfrac1{10}(-1)=4.9\quad(\text{actual }4.899)$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">2</div><div style="flex:1;"><p style="margin-bottom:6px;">Estimate $\sqrt[3]{8.1}$ using a linear approximation at $a=8$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$f=x^{1/3}$, $f'=\frac13 x^{-2/3}$; $f(8)=2$, $f'(8)=\frac{1}{12}$.</p><div class='highlight-box'>$$\sqrt[3]{8.1}\approx 2+\tfrac1{12}(0.1)\approx 2.0083$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">3</div><div style="flex:1;"><p style="margin-bottom:6px;">Estimate $(2.01)^4$ using a linear approximation at $a=2$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$f=x^4$, $f'=4x^3$; $f(2)=16$, $f'(2)=32$.</p><div class='highlight-box'>$$(2.01)^4\approx 16+32(0.01)=16.32\quad(\text{actual }16.322)$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">4</div><div style="flex:1;"><p style="margin-bottom:6px;">Use differentials to estimate the change in $y=x^3$ as $x$ goes from $2$ to $2.1$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$dy=3x^2\,dx=3(4)(0.1)=1.2$. (True change $\Delta y=2.1^3-2^3=1.261$.)</p><div class='highlight-box'>$$dy=1.2,\qquad \Delta y=1.261$$</div></div></div></div></div>
+<div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0;">5</div><div style="flex:1;"><p style="margin-bottom:6px;">Is the estimate of $\sqrt{24}$ in Problem 1 an over- or under-estimate? Why?</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p>$\sqrt x$ is concave down ($f''=-\frac14 x^{-3/2}<0$), so the tangent line sits above the curve.</p><div class='highlight-box'>$$\text{Over-estimate}\;(4.9 > 4.899).$$</div></div></div></div></div>
+    
+    </div>
+
+    <!-- PRACTICE -->
+    <div id="tab-practice" class="tab-content">
+        <div class="section-header"><div class="section-number">1</div><h2>Quick Drills &mdash; Pick the Right Tool</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p>The hard part now isn't any single rule &mdash; it's <em>recognizing which one a problem calls for</em>. For each, name the technique first, then go. Solutions hidden.</p>
+        </div>
+        <div id="practice-list">
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div><div style="flex:1;"><p><strong>Differentiate</strong> $y=\cos^3(x)$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p><span style="background:var(--gold);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Nested chain</span></p><p>Layers $(\cdot)^3$ then $\cos(\cdot)$: $3\cos^2(x)\cdot(-\sin x)$.</p><div class="highlight-box">$$y' = -3\cos^2(x)\sin(x)$$</div></div></div></div></div>
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div><div style="flex:1;"><p><strong>Find</strong> $\frac{dy}{dx}$ for $\sin(xy)=x$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p><span style="background:var(--gold);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Implicit + chain + product</span></p><p>Differentiate: $\cos(xy)\cdot\frac{d}{dx}(xy)=1$, and $\frac{d}{dx}(xy)=y+x\frac{dy}{dx}$.</p><p>$$\cos(xy)\left(y+x\frac{dy}{dx}\right)=1 \;\Longrightarrow\; \frac{dy}{dx}=\frac{1-y\cos(xy)}{x\cos(xy)}$$</p></div></div></div></div>
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div><div style="flex:1;"><p><strong>Differentiate</strong> $y=x\arctan x$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p><span style="background:var(--gold);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Product + inverse trig</span></p><p>Product rule with $f=x$, $g=\arctan x$ ($g'=\frac{1}{1+x^2}$).</p><div class="highlight-box">$$y' = \arctan x + \frac{x}{1+x^2}$$</div></div></div></div></div>
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div><div style="flex:1;"><p><strong>Differentiate</strong> $y=x^{\sin x}$.</p><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button><div class="solution-body"><p><span style="background:var(--gold);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Logarithmic</span></p><p>$\ln y = \sin x\,\ln x$. Differentiate (product rule on right): $\frac{1}{y}y' = \cos x\,\ln x + \frac{\sin x}{x}$.</p><div class="highlight-box">$$y' = x^{\sin x}\left(\cos x\,\ln x + \frac{\sin x}{x}\right)$$</div></div></div></div></div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>AP-Style &amp; Conceptual</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p>These mirror real AP free-response and multiple-choice items: the differentiation is only step one, and several test whether you <em>understand</em> the technique rather than just execute it. Name what's being asked, then go.</p>
+        </div>
+        <div id="ap-list">
+            <div class="card" style="margin-bottom:16px; border-left-color: var(--green-dark);"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">5</div><div style="flex:1;">
+                <p><strong>Tangent line via implicit differentiation.</strong> Find the equation of the tangent line to the circle $x^2 + y^2 = 25$ at the point $(3, 4)$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span style="background:var(--green-dark);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Implicit + tangent line</span></p>
+                <p>From implicit differentiation, $\frac{dy}{dx} = -\frac{x}{y}$, so at $(3,4)$ the slope is $-\frac{3}{4}$. Point-slope:</p>
+                <div class="highlight-box">$$y = -\tfrac{3}{4}(x - 3) + 4 \;\Longrightarrow\; y = -\tfrac{3}{4}x + \tfrac{25}{4}$$</div></div>
+            </div></div></div>
+            <div class="card" style="margin-bottom:16px; border-left-color: var(--green-dark);"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">6</div><div style="flex:1;">
+                <p><strong>Slope on a curve you can't solve.</strong> The folium of Descartes is $x^3 + y^3 = 6xy$. Find $\frac{dy}{dx}$, and the slope of the tangent at $(3, 3)$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span style="background:var(--green-dark);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Implicit + product rule</span></p>
+                <p>Differentiate both sides; the $6xy$ needs the product rule: $3x^2 + 3y^2\frac{dy}{dx} = 6y + 6x\frac{dy}{dx}$.</p>
+                <p>Collect: $(3y^2 - 6x)\frac{dy}{dx} = 6y - 3x^2$, so</p>
+                <div class="highlight-box">$$\frac{dy}{dx} = \frac{6y - 3x^2}{3y^2 - 6x} = \frac{2y - x^2}{y^2 - 2x}, \qquad \left.\frac{dy}{dx}\right|_{(3,3)} = -1$$</div></div>
+            </div></div></div>
+            <div class="card" style="margin-bottom:16px; border-left-color: var(--green-dark);"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">7</div><div style="flex:1;">
+                <p><strong>Derivative of an inverse function (conceptual).</strong> Let $g$ be the inverse of $f$, where $f$ is differentiable with $f(2) = 5$ and $f'(2) = 3$. Find $g'(5)$. <em>Explain why you don't need a formula for $f$.</em></p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span style="background:var(--green-dark);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Inverse function theorem</span></p>
+                <p>The inverse-function rule says $g'(b) = \dfrac{1}{f'(a)}$ where $b = f(a)$. Here $f(2) = 5$ means $a = 2,\ b = 5$, so:</p>
+                <div class="highlight-box">$$g'(5) = \frac{1}{f'(2)} = \frac{1}{3}$$</div>
+                <p>You never need a formula because an inverse just swaps inputs and outputs &mdash; its graph is $f$'s graph reflected over $y = x$, which <em>flips</em> rise and run, so the slope at the mirrored point is the reciprocal. This is exactly how the $\arcsin$/$\arctan$ derivatives were born.</p></div>
+            </div></div></div>
+            <div class="card" style="margin-bottom:16px; border-left-color: var(--green-dark);"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">8</div><div style="flex:1;">
+                <p><strong>Why log differentiation?</strong> A student tries to differentiate $y = x^x$ using the power rule, getting $x\cdot x^{x-1} = x^x$. Explain why this is wrong, and give the correct derivative.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span style="background:var(--green-dark);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Conceptual: which rule applies</span></p>
+                <p>The power rule $\frac{d}{dx}x^n = nx^{n-1}$ requires the exponent $n$ to be a <em>constant</em>. Here the exponent is $x$ &mdash; it varies &mdash; so the rule simply doesn't apply. (Likewise the exponential rule $\frac{d}{dx}a^x$ needs a constant <em>base</em>.) Since $x^x$ has a variable in both spots, neither shortcut works, and you must take $\ln$ first:</p>
+                <div class="highlight-box">$$y' = x^x(\ln x + 1)$$</div>
+                <p>Sanity check: at $x = 1$ this gives $1\cdot(0 + 1) = 1$, whereas the wrong answer gives $1^1 = 1$ too &mdash; they happen to agree at $x=1$ but disagree everywhere else (e.g. at $x=2$: correct $\approx 6.77$, wrong $= 4$).</p></div>
+            </div></div></div>
+            <div class="card" style="margin-bottom:16px; border-left-color: var(--green-dark);"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">9</div><div style="flex:1;">
+                <p><strong>Triple-nested chain.</strong> Differentiate $y = \sqrt{1 + \tan(2x)}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span style="background:var(--green-dark);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Nested chain (3 layers)</span></p>
+                <p>Layers: $\sqrt{\;\cdot\;}$, then $1 + \tan(\cdot)$, then $2x$. Factors: $\frac{1}{2\sqrt{1+\tan(2x)}}$, then $\sec^2(2x)$, then $2$.</p>
+                <div class="highlight-box">$$y' = \frac{1}{2\sqrt{1+\tan(2x)}}\cdot \sec^2(2x)\cdot 2 = \frac{\sec^2(2x)}{\sqrt{1+\tan(2x)}}$$</div></div>
+            </div></div></div>
+            <div class="card" style="margin-bottom:16px; border-left-color: var(--green-dark);"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--green-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">10</div><div style="flex:1;">
+                <p><strong>Clean surprise.</strong> Show that $y = x\arcsin x + \sqrt{1 - x^2}$ has derivative $y' = \arcsin x$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span style="background:var(--green-dark);color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;text-transform:uppercase;">Product + inverse trig + chain</span></p>
+                <p>First term by product rule: $\frac{d}{dx}[x\arcsin x] = \arcsin x + \dfrac{x}{\sqrt{1-x^2}}$.</p>
+                <p>Second term by chain rule: $\frac{d}{dx}\sqrt{1-x^2} = \dfrac{-x}{\sqrt{1-x^2}}$.</p>
+                <p>Add them &mdash; the two fraction terms cancel exactly:</p>
+                <div class="highlight-box">$$y' = \arcsin x + \frac{x}{\sqrt{1-x^2}} - \frac{x}{\sqrt{1-x^2}} = \arcsin x$$</div></div>
+            </div></div></div>
+        </div>
+        <div class="idea-box"><p><strong>Looking ahead:</strong> the differentiation chapter is now fully closed out &mdash; every technique (chain, implicit, inverse, log) plus its applications (related rates, linear approximation). Next comes <strong>Applications of Differentiation</strong>: maximum &amp; minimum values, the Mean Value Theorem, what derivatives say about the shape of a graph, curve sketching, optimization problems, and Newton's method.</p></div>
+    </div>
+
+</div><!-- /container -->
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Differentiation, Part 2</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){MathJax.typeset();},50);
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){MathJax.typeset();},50);
+}
+
+/* Linear approximation visualizer: f(x)=sqrt(x) */
+(function(){
+    var c=document.getElementById('lin-canvas'); if(!c) return;
+    var ctx=c.getContext('2d'), W=c.width, H=c.height;
+    var xMin=0, xMax=25, yMin=0, yMax=5.2, pad=46;
+    function sx(x){ return pad + (x-xMin)/(xMax-xMin)*(W-pad-20); }
+    function sy(y){ return H-pad - (y-yMin)/(yMax-yMin)*(H-pad-20); }
+    function f(x){ return Math.sqrt(x); }
+    function fp(x){ return 1/(2*Math.sqrt(x)); }
+    function draw(a, xq){
+        ctx.clearRect(0,0,W,H);
+        ctx.strokeStyle='#D8D2C4'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(sx(0),sy(0)); ctx.lineTo(sx(xMax),sy(0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx(0),sy(0)); ctx.lineTo(sx(0),sy(yMax)); ctx.stroke();
+        ctx.fillStyle='#42260D'; ctx.font='13px Inter,sans-serif'; ctx.textAlign='center';
+        ctx.fillText('x', sx(xMax/2), H-12);
+        ctx.save(); ctx.translate(14,sy(yMax/2)); ctx.rotate(-Math.PI/2); ctx.fillText('f(x)',0,0); ctx.restore(); ctx.textAlign='start';
+        // curve
+        ctx.strokeStyle='#21442B'; ctx.lineWidth=2.5; ctx.beginPath();
+        for(var px=0;px<=W;px+=2){ var x=xMin+px/W*(xMax-xMin); if(x<=0)continue; var y=f(x);
+            if(px===0)ctx.moveTo(sx(x),sy(y)); else ctx.lineTo(sx(x),sy(y)); } ctx.stroke();
+        // tangent at a
+        var m=fp(a); function L(x){return f(a)+m*(x-a);}
+        ctx.strokeStyle='#39864E'; ctx.lineWidth=2; ctx.setLineDash([7,5]);
+        ctx.beginPath(); ctx.moveTo(sx(xMin),sy(L(xMin))); ctx.lineTo(sx(xMax),sy(L(xMax))); ctx.stroke(); ctx.setLineDash([]);
+        // error bar at xq
+        var fy=f(xq), ly=L(xq);
+        ctx.strokeStyle='#BC6C26'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(sx(xq),sy(fy)); ctx.lineTo(sx(xq),sy(ly)); ctx.stroke();
+        ctx.fillStyle='#21442B'; ctx.beginPath(); ctx.arc(sx(a),sy(f(a)),6,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle='#BC6C26'; ctx.beginPath(); ctx.arc(sx(xq),sy(ly),5,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle='#21442B'; ctx.beginPath(); ctx.arc(sx(xq),sy(fy),5,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle='#21442B'; ctx.font='600 13px Inter,sans-serif'; ctx.fillText('a', sx(a)-4, sy(0)+16);
+        ctx.fillStyle='#BC6C26'; ctx.fillText('x', sx(xq)-4, sy(0)+16);
+        document.getElementById('lin-a-disp').textContent='a = '+a.toFixed(1);
+        document.getElementById('lin-x-disp').textContent='x = '+xq.toFixed(1);
+        document.getElementById('lin-true').textContent=fy.toFixed(4);
+        document.getElementById('lin-approx').textContent=ly.toFixed(4);
+        document.getElementById('lin-err').textContent=Math.abs(fy-ly).toFixed(4);
+    }
+    var aS=document.getElementById('lin-a'), xS=document.getElementById('lin-x');
+    function up(){ draw(parseFloat(aS.value), parseFloat(xS.value)); }
+    aS.addEventListener('input',up); xS.addEventListener('input',up); up();
+})();
+
+/* Concavity & over/under estimate visualizer (Review tab) */
+(function(){
+    var c=document.getElementById('conc-canvas'); if(!c) return;
+    var ctx=c.getContext('2d'), W=c.width, H=c.height, pad=46;
+    var SHAPES={
+        concave:{ f:function(x){return Math.sqrt(x);}, fp:function(x){return 1/(2*Math.sqrt(x));}, a:9, xMax:25, yMax:5.2, sliderMin:1, sliderMax:24 },
+        convex:{ f:function(x){return x*x/6;}, fp:function(x){return x/3;}, a:6, xMax:10, yMax:18, sliderMin:1, sliderMax:9.6 },
+        cubic:{ f:function(x){return Math.pow(x-4,3)/12+4;}, fp:function(x){return Math.pow(x-4,2)/4;}, a:4, xMax:8, yMax:10, sliderMin:0.6, sliderMax:7.6 },
+        linear:{ f:function(x){return 0.4*x+2;}, fp:function(x){return 0.4;}, a:5, xMax:25, yMax:14, sliderMin:1, sliderMax:24 }
+    };
+    var mode='concave';
+    function draw(xq){
+        var S=SHAPES[mode], xMax=S.xMax, yMax=S.yMax, a=S.a;
+        function sx(x){ return pad + x/xMax*(W-pad-20); }
+        function sy(y){ return H-pad - y/yMax*(H-pad-20); }
+        ctx.clearRect(0,0,W,H);
+        ctx.strokeStyle='#D8D2C4'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(sx(0),sy(0)); ctx.lineTo(sx(xMax),sy(0)); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx(0),sy(0)); ctx.lineTo(sx(0),sy(yMax)); ctx.stroke();
+        ctx.fillStyle='#42260D'; ctx.font='13px Inter,sans-serif'; ctx.textAlign='center';
+        ctx.fillText('x', sx(xMax/2), H-12);
+        ctx.save(); ctx.translate(14,sy(yMax/2)); ctx.rotate(-Math.PI/2); ctx.fillText('f(x)',0,0); ctx.restore(); ctx.textAlign='start';
+        // curve
+        ctx.strokeStyle='#21442B'; ctx.lineWidth=2.5; ctx.beginPath();
+        var started=false;
+        for(var px=0;px<=W;px+=2){ var x=px/W*xMax; if(x<=0)continue; var y=S.f(x);
+            if(y<0||y>yMax){ started=false; continue; }
+            if(!started){ ctx.moveTo(sx(x),sy(y)); started=true; } else ctx.lineTo(sx(x),sy(y)); } ctx.stroke();
+        // tangent at a
+        var m=S.fp(a); function L(x){return S.f(a)+m*(x-a);}
+        ctx.strokeStyle='#39864E'; ctx.lineWidth=2; ctx.setLineDash([7,5]);
+        ctx.beginPath(); ctx.moveTo(sx(0),sy(L(0))); ctx.lineTo(sx(xMax),sy(L(xMax))); ctx.stroke(); ctx.setLineDash([]);
+        // error bar at xq
+        var fy=S.f(xq), ly=L(xq);
+        ctx.strokeStyle='#BC6C26'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(sx(xq),sy(fy)); ctx.lineTo(sx(xq),sy(ly)); ctx.stroke();
+        // points
+        ctx.fillStyle='#21442B'; ctx.beginPath(); ctx.arc(sx(a),sy(S.f(a)),6,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle='#BC6C26'; ctx.beginPath(); ctx.arc(sx(xq),sy(ly),5,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle='#21442B'; ctx.beginPath(); ctx.arc(sx(xq),sy(fy),5,0,2*Math.PI); ctx.fill();
+        ctx.fillStyle='#21442B'; ctx.font='600 13px Inter,sans-serif'; ctx.fillText('a', sx(a)-4, sy(0)+16);
+        ctx.fillStyle='#BC6C26'; ctx.fillText('x', sx(xq)-4, sy(0)+16);
+        // readouts
+        document.getElementById('conc-x-disp').textContent='x = '+xq.toFixed(1);
+        document.getElementById('conc-true').textContent=fy.toFixed(3);
+        document.getElementById('conc-approx').textContent=ly.toFixed(3);
+        var v=document.getElementById('conc-verdict');
+        var diff=ly-fy;
+        if(Math.abs(diff)<0.02){ v.textContent='exact'; v.style.color='#5E6C39'; }
+        else if(diff>0){ v.textContent='OVER'; v.style.color='#BC6C26'; }
+        else { v.textContent='UNDER'; v.style.color='#39864E'; }
+    }
+    var xS2=document.getElementById('conc-x');
+    function up(){ draw(parseFloat(xS2.value)); }
+    document.getElementById('conc-fn').addEventListener('change',function(){
+        mode=this.value;
+        // adapt slider range + reset estimate point near the touch point for the chosen shape
+        xS2.min = SHAPES[mode].sliderMin;
+        xS2.max = SHAPES[mode].sliderMax;
+        xS2.value = (mode==='cubic') ? 6 : SHAPES[mode].a; // for cubic, start off-center so the verdict shows
+        up();
+    });
+    xS2.addEventListener('input',up);
+    up();
+})();
+</script>
+</body>
+</html>
