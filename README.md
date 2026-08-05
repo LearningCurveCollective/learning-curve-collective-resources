@@ -1,52 +1,53 @@
-# Torin Learning Group — Open Learning Resources
+# Learning Curve Collective — Open Learning Resources
 
-Welcome to the open learning resource library from **Torin Learning Group**.
+Welcome to the open learning resource library from **Learning Curve Collective**.
 
-This repository shares free mathematics and STEM learning materials created to support students in developing deep conceptual understanding, strong analytical thinking, and lasting academic confidence.
+This repository contains free mathematics and STEM learning materials designed to help students develop deep conceptual understanding, strong analytical thinking, and lasting academic confidence.
 
-## What you will find here
+## What you'll find here
 
-• Interactive HTML worksheets  
-• Conceptual mathematics guides  
-• Visual explanations that build intuition  
-• Structured practice materials for high school and college topics  
-• Standardized test preparation resources (SAT / ACT / AP)
+- Interactive HTML lessons and worksheets
+- Conceptual mathematics guides
+- Visual explanations that build intuition
+- Structured practice materials for high school and college topics
+- Standardized test preparation resources (SAT / ACT / AP)
 
-These resources are thoughtfully designed by professional educators to make complex ideas more approachable, engaging, and meaningful.
+Every resource is thoughtfully designed by experienced educators to make complex ideas more approachable, engaging, and meaningful.
 
-## Our educational approach
+## Our educational philosophy
 
-At Torin Learning Group, we believe that strong learning happens when students are encouraged to:
+At **Learning Curve Collective**, we believe meaningful learning happens when students are encouraged to:
 
-- understand ideas deeply rather than memorize procedures  
-- develop clear step-by-step reasoning skills  
-- connect visual intuition with formal mathematical thinking  
-- grow confidence through consistent, structured practice
-- explore conceptual connections and structural symmetries across related topics
+- understand ideas deeply rather than memorize procedures
+- develop clear, step-by-step reasoning skills
+- connect visual intuition with formal mathematical thinking
+- build confidence through consistent, structured practice
+- discover connections and patterns across mathematical concepts
 
-Our goal is to help learners feel capable, curious, and empowered in their academic journey.
+Our goal is to help every learner become more curious, capable, and confident—not just in mathematics, but in how they approach learning itself.
 
 ## Using these resources
 
-Students, families, and educators are warmly invited to explore and use these materials to support independent study, classroom enrichment, and academic growth.
+Students, families, educators, and lifelong learners are welcome to explore and use these materials for independent study, classroom enrichment, and academic growth.
 
-Additional information about structured tutoring programs, academic coaching, and future learning initiatives will be shared through Torin Learning Group as this resource library continues to expand.
+This library is freely available as part of Learning Curve Collective's mission to make exceptional educational resources more accessible to everyone.
 
 ## Looking ahead
 
-This open library is an evolving project. Future additions may include:
+This repository is an evolving project. Planned additions include:
 
-- full topic learning pathways  
-- advanced challenge problem sets  
-- interactive mathematical simulations  
-- AI-supported learning tools
-  
+- complete topic learning pathways
+- advanced challenge problem sets
+- interactive mathematical simulations
+- machine learning and data science resources
+- AI-powered educational tools
+
+We hope these resources continue to grow into a valuable collection for students and educators around the world.
 
 ---
 
----
+© Learning Curve Collective
 
-© Torin Learning Group  
+Resources are provided to support education and academic growth.
 
-Resources shared to support learning and academic growth.  
-Commercial redistribution or resale of these resources is not permitted without written permission from Torin Learning Group.
+Commercial redistribution or resale of these materials is not permitted without the written permission of Learning Curve Collective.
