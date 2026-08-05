@@ -365,6 +365,31 @@ li { margin-bottom: 10px; }
         <div class="derivation-step"><div class="step-num">5</div><div class="step-body">
             <p style="margin-bottom:0;"><strong>The coda.</strong> Monotone ascent plus a bounded-above objective (when it is) gives convergence of the objective values &mdash; to a <em>stationary point</em>, not the global maximum. Different initializations flow into different fits: exactly the K-means caveat, and exactly why the labels&rsquo; anchoring in tab 2 earns its keep. Picture the surrogate $F$ as a floor pressed up against the true objective at the current point: maximizing the floor cannot take you below where floor touches ceiling, so every lap rises or stalls. In the running example: each lap refines the benign and malignant profiles, and this theorem is the guarantee that a lap can never make the combined fit &mdash; population evidence plus pathologist &mdash; worse than it was.</p>
         </div></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">The whole proof as one picture: touch, climb the bound, repeat</h3>
+            <p>The picture is a curve and a family of touch-at-a-point bounds. $\ell_{\text{semi-sup}}$ is the intractable curve we want to climb; the surrogate $\mathcal{L}(Q, \cdot) + \alpha\,\ell_{\text{sup}}$ is a tractable floor lying entirely beneath it (Lemma A). The <strong>E-step</strong> chooses the one $Q$ that makes the floor <em>touch</em> the curve at the current position (Lemma B) &mdash; that is the entire job of setting $Q_i$ to the posterior. The <strong>M-step</strong> then walks to the top of the floor. Since the walk started at a touch point and the floor never pokes above the curve, wherever it lands the curve is at least as high as where it began &mdash; the sandwich, drawn.</p>
+            <div class="viz-container" style="margin-top:14px;">
+                <div class="viz-controls">
+                    <div class="control-group">
+                        <label>Controls</label>
+                        <div class="sum-type-buttons">
+                            <button class="sum-type-btn" onclick="floorPress()">E-step: press the floor</button>
+                            <button class="sum-type-btn" onclick="floorClimb()">M-step: climb the floor</button>
+                            <button class="sum-type-btn" onclick="floorRun()">Run to convergence</button>
+                            <button class="sum-type-btn" onclick="floorReset()">&#8635; Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="viz-canvas-wrap"><canvas id="cnv-floor" width="660" height="380" style="cursor:crosshair;"></canvas></div>
+                <div class="readout-panel">
+                    <div class="readout-item"><div class="readout-label">Lap</div><div class="readout-value" id="fl-iter">0</div></div>
+                    <div class="readout-item"><div class="readout-label">Next half-step</div><div class="readout-value exact-val" id="fl-phase">E-step</div></div>
+                    <div class="readout-item"><div class="readout-label">&#8467;(&theta;<sup>(t)</sup>)</div><div class="readout-value" id="fl-ll">&mdash;</div></div>
+                    <div class="readout-item"><div class="readout-label">&Delta;&#8467; (last M)</div><div class="readout-value exact-val" id="fl-dll">&mdash;</div></div>
+                </div>
+                <p style="font-size:13px; color:var(--text-medium); margin-top:10px; margin-bottom:0;"><strong>Click anywhere on the curve to restart from that $\theta$.</strong> Start near the left and the staircase tops out on the <em>small</em> hill &mdash; every step upward, final height lower than the far peak: local optimum, live. The E-step never moves the dot or changes $\ell$ (it only raises the floor to touch); only the M-step moves. Honest cartoon disclaimers: real $\theta$ is high-dimensional and the real floor isn&rsquo;t a parabola &mdash; but touch-below-then-climb is exactly the mechanism, and the monotone staircase is exactly the theorem.</p>
+            </div>
+        </div>
         <div class="idea-box">
             <p><strong>The K-means correspondence, made exact.</strong> K-means is &ldquo;hard EM&rdquo;:</p>
             <p style="margin-bottom:0;">soft posterior $Q_i$ &nbsp;&harr;&nbsp; all-or-nothing nearest-centroid assignment &nbsp;&bull;&nbsp; Gaussian (mean + covariance + weight) &nbsp;&harr;&nbsp; bare centroid &nbsp;&bull;&nbsp; ascend $\ell$ &nbsp;&harr;&nbsp; descend $J$ &nbsp;&bull;&nbsp; ELBO touching at $\theta^{(t)}$ &nbsp;&harr;&nbsp; each half-step exactly minimizing its block. One flip to keep sign discipline about: every inequality in this worksheet points $\ge$; every one in the K-means worksheet pointed $\le$.</p>
@@ -720,6 +745,100 @@ function drawEmState(st, cnvId) {
     }
 }
 
+/* ═══════════ Tab 5: floor-climb (MM) visualization ═══════════ */
+var fl = { th: 1.0, phase: 'e', iter: 0, floorAt: null, ll: null };
+var FL_LAM = 3.0;
+function flLL(th) { return 3.2*Math.exp(-Math.pow((th-2.6)/1.1,2)) + 5.0*Math.exp(-Math.pow((th-7.2)/1.4,2)) - 6.0; }
+function flDLL(th) { var h = 1e-5; return (flLL(th+h) - flLL(th-h)) / (2*h); }
+function flFloor(th, t0) { return flLL(t0) + flDLL(t0)*(th-t0) - FL_LAM*(th-t0)*(th-t0); }
+function flX(th, W) { return 30 + (th/10)*(W-50); }
+function flY(v, H) { return 20 + ((0 - v)/6.8)*(H-60); }
+function drawFloor() {
+    var cnv = document.getElementById('cnv-floor'); if (!cnv) return;
+    var ctx = cnv.getContext('2d'), W = cnv.width, H = cnv.height;
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#E2E2E2'; ctx.strokeRect(0.5, 0.5, W-1, H-1);
+    var th;
+    /* floor (if pressed) */
+    if (fl.floorAt !== null) {
+        ctx.strokeStyle = '#DDA25E'; ctx.lineWidth = 2.5; ctx.setLineDash([6,4]);
+        ctx.beginPath(); var started = false;
+        for (th = 0; th <= 10; th += 0.02) {
+            var v = flFloor(th, fl.floorAt);
+            if (v < -6.8) { started = false; continue; }
+            var x = flX(th, W), y = flY(v, H);
+            if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+        }
+        ctx.stroke(); ctx.setLineDash([]);
+        /* touch point ring */
+        ctx.strokeStyle = '#DDA25E'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(flX(fl.floorAt, W), flY(flLL(fl.floorAt), H), 10, 0, 6.28318); ctx.stroke();
+    }
+    /* objective curve */
+    ctx.strokeStyle = '#21442B'; ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (th = 0; th <= 10; th += 0.02) {
+        var x2 = flX(th, W), y2 = flY(flLL(th), H);
+        if (th === 0) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
+    }
+    ctx.stroke();
+    /* labels */
+    ctx.fillStyle = '#21442B'; ctx.font = '600 13px Inter'; ctx.textAlign = 'left';
+    ctx.fillText('ℓ(θ)  — the curve we want to climb', 40, 34);
+    if (fl.floorAt !== null) { ctx.fillStyle = '#BC6C26'; ctx.fillText('the floor (surrogate), touching at θ⁽ᵗ⁾', 40, 54); }
+    /* current theta dot */
+    ctx.fillStyle = '#BC6C26';
+    ctx.beginPath(); ctx.arc(flX(fl.th, W), flY(flLL(fl.th), H), 7, 0, 6.28318); ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = '#FFFFFF'; ctx.stroke();
+    ctx.fillStyle = '#42260D'; ctx.font = '700 13px Inter'; ctx.textAlign = 'center';
+    ctx.fillText('θ⁽ᵗ⁾', flX(fl.th, W), flY(flLL(fl.th), H) - 14);
+    flReadouts();
+}
+function flReadouts() {
+    document.getElementById('fl-iter').textContent = fl.iter;
+    document.getElementById('fl-phase').textContent = (fl.phase === 'e') ? 'E-step' : 'M-step';
+    document.getElementById('fl-ll').textContent = flLL(fl.th).toFixed(3);
+    document.getElementById('fl-dll').textContent = (fl.ll === null) ? '—' : ((flLL(fl.th)-fl.ll >= 0 ? '+' : '') + (flLL(fl.th)-fl.ll).toFixed(3));
+}
+function floorPress() {
+    if (fl.phase !== 'e') return;
+    fl.floorAt = fl.th; fl.phase = 'm';
+    drawFloor();
+}
+function floorClimb() {
+    if (fl.phase !== 'm' || fl.floorAt === null) return;
+    fl.ll = flLL(fl.th);
+    fl.th = fl.th + flDLL(fl.th) / (2 * FL_LAM);   /* exact argmax of the tangent parabola */
+    fl.phase = 'e'; fl.iter += 1;
+    drawFloor();
+}
+function floorRun() {
+    if (fl.phase === 'm') floorClimb();
+    for (var t = 0; t < 300; t++) {
+        if (Math.abs(flDLL(fl.th)) < 1e-7) break;
+        fl.floorAt = fl.th; fl.ll = flLL(fl.th);
+        fl.th = fl.th + flDLL(fl.th) / (2 * FL_LAM);
+        fl.iter += 1;
+    }
+    fl.phase = 'e';
+    drawFloor();
+}
+function floorReset() {
+    fl.th = 1.0; fl.phase = 'e'; fl.iter = 0; fl.floorAt = null; fl.ll = null;
+    drawFloor();
+}
+function initFloor() {
+    var cnv = document.getElementById('cnv-floor'); if (!cnv) return;
+    cnv.addEventListener('click', function(ev) {
+        var r = cnv.getBoundingClientRect();
+        var th = ((ev.clientX - r.left) * cnv.width / r.width - 30) / (cnv.width - 50) * 10;
+        fl.th = Math.max(0.05, Math.min(9.95, th));
+        fl.phase = 'e'; fl.iter = 0; fl.floorAt = null; fl.ll = null;
+        drawFloor();
+    });
+    drawFloor();
+}
+
 /* ═══════════ Walkthrough: four real snapshots of one seeded run ═══════════ */
 function snap() { return JSON.parse(JSON.stringify({ mu: em.mu, S: em.S, pi: em.pi, R: em.R })); }
 function runWalkthrough() {
@@ -754,6 +873,7 @@ function runWalkthrough() {
 /* ═══════════ Boot ═══════════ */
 window.addEventListener('DOMContentLoaded', function() {
     drawPic();
+    initFloor();
     runWalkthrough();
     em.rnd = mulberry32(1234); em.alpha = 5;
     emInit();
