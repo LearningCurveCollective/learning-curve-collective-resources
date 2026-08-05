@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semi-Supervised EM &amp; Gaussian Mixtures — Interactive Worksheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+    <script>
+    window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+    <style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC;
+    --copper: #BC6C26; --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+.tab-buttons { display: flex; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.viz-container { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--cream-dark); }
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.control-group select, .control-group input[type="number"] { padding: 8px 12px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background: var(--cream); color: var(--text-dark); outline: none; transition: border-color 0.2s; }
+.control-group select:focus { border-color: var(--gold); }
+.slider-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 4px; }
+.slider-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display { font-weight: 700; font-size: 20px; color: var(--gold); min-width: 50px; text-align: center; }
+.sum-type-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+.sum-type-btn { padding: 8px 16px; border: 2px solid var(--gold-light); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; background: var(--cream); color: var(--text-medium); transition: all 0.2s; }
+.sum-type-btn:hover { border-color: var(--gold); color: var(--gold); }
+.sum-type-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+.sum-type-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.viz-canvas-wrap { text-align: center; margin-bottom: 16px; }
+.viz-canvas-wrap canvas { border-radius: 8px; border: 1px solid var(--cream-dark); max-width: 100%; height: auto; }
+.readout-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 16px; }
+.readout-item { background: var(--cream); border-radius: 8px; padding: 12px 16px; text-align: center; border: 1px solid var(--gold-pale); }
+.readout-item .readout-label { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.readout-item .readout-value { font-size: 20px; font-weight: 700; color: var(--gold); }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin-bottom: 8px; }
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; }
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+.derivation-step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+.step-num { width: 32px; height: 32px; background: var(--green-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.step-body { flex: 1; background: white; border-radius: 8px; padding: 14px 18px; border-left: 4px solid var(--gold-light); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.pixel-readout { display:flex; gap:10px; align-items:center; flex-wrap: wrap; justify-content:center; margin-top:10px; }
+.chan-chip { padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 14px; color: white; min-width: 108px; text-align:center; }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.mjx-container { overflow-x: auto; }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid { grid-template-columns: 1fr; }
+}
+@media print {
+    .tab-content { display: block !important; }
+    .tab-buttons { display: none; }
+    .example-body, .solution-body { display: block !important; }
+}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Semi-Supervised EM &amp; Mixtures</h1>
+            <div class="subtitle">INTERACTIVE WORKSHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">MACHINE LEARNING &bull; EM &amp; MIXTURE MODELS</div>
+    </div>
+</div>
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('setup', this)">1 &middot; The Setup</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('picture', this)">2 &middot; Why Labels + Cloud</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('emlive', this)">3 &middot; EM Live</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('objectives', this)">4 &middot; The Objectives</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('theory', this)">5 &middot; Theory</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">6 &middot; Check Yourself</button>
+    </div>
+    <!-- ═══ TAB 1: THE SETUP ═══ -->
+    <div id="tab-setup" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Two Datasets, One Model</h2></div>
+        <div class="card">
+            <p><strong>The economic fact behind semi-supervised learning:</strong> labels are expensive, data is cheap. A hospital holds 50,000 cell scans and a pathologist who can annotate 40 a day. So the realistic dataset is a <em>mountain of unlabeled points</em> and a <em>molehill of labeled ones</em>.</p>
+            <div class="idea-box">
+                <p style="margin:0;"><strong>The running example for this whole worksheet: tumor screening.</strong> Each scan is summarized by two measured features &mdash; say, average nucleus size and cell density &mdash; so every scan is a point in $\mathbb{R}^2$. The hidden variable $z$ is the <em>cell type</em>: benign or malignant. The unlabeled mountain is the 50,000 scans nobody has examined; the labeled molehill is the handful the pathologist has read and tagged. Every plot, formula, and button in the tabs ahead is this one scenario.</p>
+            </div>
+            <p>In symbols:</p>
+            <div class="highlight-box">
+                <p style="margin-bottom:6px;"><strong>Unlabeled</strong> ($n$ large): &nbsp; $\{x^{(1)}, \dots, x^{(n)}\}$ &mdash; we observe $x$, the label $z$ is hidden.</p>
+                <p style="margin-bottom:0;"><strong>Labeled</strong> ($\tilde n$ small): &nbsp; $\{(\tilde x^{(1)}, \tilde z^{(1)}), \dots, (\tilde x^{(\tilde n)}, \tilde z^{(\tilde n)})\}$ &mdash; both observed. The <em>tilde is pure bookkeeping</em>: it marks &ldquo;from the labeled dataset,&rdquo; nothing more.</p>
+            </div>
+            <p>Purely supervised learning uses only the molehill and discards the mountain; purely unsupervised learning uses the mountain but cannot attach meaning to what it finds. Semi-supervised learning is the refusal to waste either.</p>
+        </div>
+        <div class="card">
+            <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">The model&rsquo;s story of how data is born</h3>
+            <p>A <strong>Gaussian mixture model (GMM)</strong> tells a two-stage generative story about every point:</p>
+            <div class="highlight-box">
+                <p style="margin-bottom:6px;"><strong>Stage 1:</strong> nature secretly rolls a weighted die to pick a cluster: $z \sim$ the mixing weights. In the running example: the tissue simply <em>is</em> benign or malignant &mdash; that fact exists before any measurement.</p>
+                <p style="margin-bottom:0;"><strong>Stage 2:</strong> given the roll, $x$ is drawn from that cluster&rsquo;s Gaussian bell &mdash; its typical location (mean), spread and tilt (covariance). In the example: a malignant cell&rsquo;s nucleus size and density scatter around the <em>malignant profile</em>; a benign cell&rsquo;s around the benign one.</p>
+            </div>
+            <p>Fitting the model means recovering the bells and the die&rsquo;s weights &mdash; the parameters $\theta$ &mdash; from data where the roll $z$ was <em>usually not recorded</em>: learning what benign and malignant cells <em>look like in feature space</em>, plus how common each type is, mostly from scans whose diagnosis nobody wrote down. It is the K-means cloud upgraded twice over: each cluster is a full <strong>ellipse</strong> with shape and size instead of a bare centroid, and membership is <strong>graded</strong> &mdash; a point between two bells belongs 70/25/5, not 100/0/0.</p>
+            <p style="margin-bottom:0;">Notation: $p(x, z; \theta)$ is the joint (roll <em>and</em> draw); $p(x;\theta) = \sum_z p(x, z; \theta)$ is the marginal &mdash; if you didn&rsquo;t see the roll, you account for the point by summing over every roll it <em>could</em> have been. That sum-inside is where all the trouble in tab 4 comes from.</p>
+        </div>
+        <div class="warning-box">
+            <p style="margin:0;"><strong>Common misconception: the clusters found are not automatically your categories.</strong> An unsupervised mixture fit finds whatever structure dominates the data &mdash; which might be &ldquo;bright vs. dim lighting&rdquo; rather than &ldquo;healthy vs. malignant.&rdquo; And even a perfect fit returns <em>anonymous</em> clusters: the likelihood is unchanged by permuting cluster names, so the data alone can never say which ellipse is the malignant one. These two failures &mdash; wrong structure, nameless structure &mdash; are precisely what a handful of labels repairs (tab 2).</p>
+        </div>
+    </div>
+    <!-- ═══ TAB 2: WHY LABELS + CLOUD ═══ -->
+    <div id="tab-picture" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>Unlabeled Data Draws the Map; Labels Write the Place Names</h2></div>
+        <div class="card">
+            <p>The puzzle: the pathologist annotated <strong>six scans</strong> &mdash; three benign (green), three malignant (orange). How could six annotations plus 190 <em>unread</em> scans beat a classifier trained on six annotations alone? Because the unread scans, en masse, reveal where the two cell populations actually live in feature space &mdash; their shapes, their extents, and the <strong>low-density valley</strong> between them (few cells are ambiguous between the two profiles). The annotations then do the one job the cloud cannot: say which population is the malignant one.</p>
+            <p style="margin-bottom:0;">Toggle the unread scans below and watch the diagnostic boundary move. The six annotations are identical in both views.</p>
+        </div>
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group">
+                    <label>Unlabeled cloud</label>
+                    <div class="sum-type-buttons">
+                        <button class="sum-type-btn" id="pic-off" onclick="picSetCloud(false, this)">Hidden (labels only)</button>
+                        <button class="sum-type-btn active" id="pic-on" onclick="picSetCloud(true, this)">Shown (labels + cloud)</button>
+                    </div>
+                </div>
+            </div>
+            <div class="viz-canvas-wrap"><canvas id="cnv-pic" width="640" height="420"></canvas></div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Unlabeled points</div><div class="readout-value" id="pic-n">190</div></div>
+                <div class="readout-item"><div class="readout-label">Labeled points</div><div class="readout-value exact-val">6</div></div>
+                <div class="readout-item"><div class="readout-label">Boundary follows</div><div class="readout-value exact-val" id="pic-follow">the density valley</div></div>
+            </div>
+            <p style="font-size:13px; color:var(--text-medium); margin-top:10px; margin-bottom:0;">With the unread scans hidden, the best boundary six annotations support is a shaky line fit to six locations &mdash; and it slices through territory that (as the cloud reveals) belongs to one cell population, misdiagnosing every scan on the wrong side. With the cloud shown, the boundary settles into the empty valley between the populations; the annotations merely name which side is malignant.</p>
+        </div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">What a handful of labels buys</h3>
+            <p><strong>Names.</strong> The ellipse containing the pathologist&rsquo;s malignant examples <em>is</em> the malignant cluster &mdash; the permutation symmetry of the unsupervised fit is broken, and the model&rsquo;s clusters acquire clinical meaning. Without this, a perfect fit still can&rsquo;t answer the only question that matters: <em>which cluster do I biopsy?</em></p>
+            <p><strong>Steering.</strong> Labels pull the fit toward the categorization you care about, rather than whatever structure happens to dominate the data (lighting, background, sensor noise).</p>
+            <p style="margin-bottom:0;"><strong>Anchoring.</strong> Labels penalize local optima in which a labeled point would sit absurdly far from its own named cluster &mdash; steering EM away from valleys that merge or split the true categories.</p>
+        </div>
+        <div class="warning-box">
+            <p style="margin:0;"><strong>The load-bearing assumption.</strong> All of this works only if the model&rsquo;s clusters <em>align with your categories</em> &mdash; equivalently, if the true class boundary runs through low-density territory. When the categories cut through a dense blob, or the dominant structure is the wrong one, the mountain of unlabeled data confidently reinforces the wrong map, and semi-supervised learning can do <em>worse</em> than discarding the unlabeled data. More data only helps if the model&rsquo;s story about the data is roughly true.</p>
+        </div>
+    </div>
+    <!-- ═══ TAB 3: EM LIVE ═══ -->
+    <div id="tab-emlive" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Semi-Supervised EM, One Half-Step at a Time</h2></div>
+        <div class="card">
+            <p>What you are watching below: the model <strong>learning what benign and malignant cells look like</strong> &mdash; each ellipse is one cell type&rsquo;s typical feature profile, refined lap by lap, guided by 190 unread scans and six pathologist annotations. The machinery is the same alternation as K-means, run <em>softly</em> and <em>uphill</em>. The objective being climbed is the semi-supervised log-likelihood</p>
+            <div class="highlight-box">$$\ell_{\text{semi-sup}}(\theta) = \underbrace{\sum_{i=1}^{n} \log \sum_{z^{(i)}} p(x^{(i)}, z^{(i)}; \theta)}_{\ell_{\text{unsup}}:\ \text{fractional voters}} \;+\; \alpha \underbrace{\sum_{i=1}^{\tilde n} \log p(\tilde x^{(i)}, \tilde z^{(i)}; \theta)}_{\ell_{\text{sup}}:\ \text{committed voters}}$$</div>
+            <p><strong>E-step</strong> (soft Assign): for each <em>unlabeled</em> point, compute its posterior responsibilities $Q_i(z) = p(z \mid x^{(i)}; \theta)$ &mdash; graded beliefs, not hard walls. The labeled points need no beliefs: they <em>know</em>. <strong>M-step</strong> (soft Update): refit the ellipses with every point voting &mdash; unlabeled points fractionally by belief, labeled points fully and immovably for their named cluster, at $\alpha\times$ volume. Watch $\ell_{\text{semi-sup}}$ in the readout: it must <em>rise</em> (or stall) with every full step &mdash; monotone ascent, the mirror image of K-means&rsquo; descending $J$.</p>
+        </div>
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group">
+                    <label>&alpha; (label megaphone)</label>
+                    <div class="sum-type-buttons">
+                        <button class="sum-type-btn" onclick="emSetAlpha(0, this)">0</button>
+                        <button class="sum-type-btn active" onclick="emSetAlpha(5, this)">5</button>
+                        <button class="sum-type-btn" onclick="emSetAlpha(20, this)">20</button>
+                        <button class="sum-type-btn" onclick="emSetAlpha(80, this)">80</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>Controls</label>
+                    <div class="sum-type-buttons">
+                        <button class="sum-type-btn" onclick="emInit()">&#8635; Initialize</button>
+                        <button class="sum-type-btn" onclick="emEStep()">E-step</button>
+                        <button class="sum-type-btn" onclick="emMStep()">M-step</button>
+                        <button class="sum-type-btn" onclick="emRun()">Run to convergence</button>
+                    </div>
+                </div>
+            </div>
+            <div class="viz-canvas-wrap"><canvas id="cnv-em" width="640" height="440"></canvas></div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Iteration</div><div class="readout-value" id="em-iter">0</div></div>
+                <div class="readout-item"><div class="readout-label">Next half-step</div><div class="readout-value exact-val" id="em-phase">Initialize</div></div>
+                <div class="readout-item"><div class="readout-label">&#8467;<sub>semi-sup</sub></div><div class="readout-value" id="em-ll">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">&Delta;&#8467; (last M)</div><div class="readout-value exact-val" id="em-dll">&mdash;</div></div>
+            </div>
+            <p style="font-size:13px; color:var(--text-medium); margin-top:10px; margin-bottom:0;">Ellipses = each cluster&rsquo;s Gaussian at 2 standard deviations; diamonds = means. Gray dots = unlabeled points; after an E-step each is <em>tinted by blending</em> the two cluster colors in proportion to its responsibilities &mdash; a point that is 70/30 wears a 70/30 mixed color. Ringed dots = the pathologist&rsquo;s six annotations, permanently wearing their diagnosed color. Try $\alpha = 0$ (the annotations become decoration; the clusters fit but nobody knows which is malignant) versus $\alpha = 80$ (six expert opinions out-shout 190 unread scans and drag the profiles to themselves &mdash; trusting the pathologist almost to the exclusion of the population evidence).</p>
+        </div>
+        <div class="idea-box">
+            <p style="margin:0;"><strong>Same skeleton as K-means, three upgrades.</strong> Hard assignment (nearest centroid) became a <em>posterior distribution</em>; the centroid (a mean) became a full Gaussian (mean + covariance + weight); descent of a distortion $J$ became ascent of a likelihood $\ell$. The chicken-and-egg survives intact: good beliefs need good parameters, good parameters need good beliefs &mdash; so alternate, and the theory tab proves each lap can only help. And the local-minima story survives too: re-clicking Initialize can land a different fit, which is exactly why the labels&rsquo; anchoring matters.</p>
+        </div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">One full lap, frame by frame</h3>
+            <div style="background: var(--cream); border-radius: 10px; padding: 18px 14px 10px; border: 1px solid var(--gold-pale); margin-bottom: 16px;">
+                <svg viewBox="0 0 940 190" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
+                    <defs><marker id="emarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 z" fill="#8B5E3C"/></marker></defs>
+                    <rect x="8" y="40" width="180" height="72" rx="10" fill="rgba(221,162,94,0.14)" stroke="#DDA25E" stroke-width="2"/>
+                    <text x="98" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#42260D">Initialize</text>
+                    <text x="98" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#4A4A4A">profiles guessed at random scans</text>
+                    <line x1="188" y1="76" x2="238" y2="76" stroke="#8B5E3C" stroke-width="2" marker-end="url(#emarrow)"/>
+                    <rect x="244" y="40" width="180" height="72" rx="10" fill="rgba(33,68,43,0.10)" stroke="#21442B" stroke-width="2"/>
+                    <text x="334" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#21442B">E-step</text>
+                    <text x="334" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#4A4A4A">grade each unread scan&rsquo;s diagnosis</text>
+                    <line x1="424" y1="76" x2="474" y2="76" stroke="#8B5E3C" stroke-width="2" marker-end="url(#emarrow)"/>
+                    <rect x="480" y="40" width="180" height="72" rx="10" fill="rgba(33,68,43,0.10)" stroke="#21442B" stroke-width="2"/>
+                    <text x="570" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#21442B">M-step</text>
+                    <text x="570" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#4A4A4A">refit profiles: all scans vote</text>
+                    <path d="M 570 112 C 570 152, 334 152, 334 116" fill="none" stroke="#8B5E3C" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#emarrow)"/>
+                    <text x="452" y="168" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-style="italic" fill="#8B5E3C">repeat: E &#8594; M &#8594; E &#8594; M &#8594; &#8230; (&#8467; rises every lap)</text>
+                    <line x1="660" y1="76" x2="710" y2="76" stroke="#8B5E3C" stroke-width="2" marker-end="url(#emarrow)"/>
+                    <rect x="716" y="40" width="216" height="72" rx="10" fill="rgba(57,134,78,0.12)" stroke="#39864E" stroke-width="2.5"/>
+                    <text x="824" y="64" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#21442B">Converged</text>
+                    <text x="824" y="84" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#4A4A4A">&#8467; stalls; beliefs and profiles agree</text>
+                    <text x="824" y="101" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#21442B">ellipses = the diagnosis model</text>
+                </svg>
+            </div>
+            <div class="viz-canvas-wrap" style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+                <div style="text-align:center;"><canvas id="cnv-walk1" width="300" height="220"></canvas><div style="font-size:12px; font-weight:600; color:var(--green-dark); margin-top:4px;">Frame 1 &middot; Initialize</div></div>
+                <div style="text-align:center;"><canvas id="cnv-walk2" width="300" height="220"></canvas><div style="font-size:12px; font-weight:600; color:var(--green-dark); margin-top:4px;">Frame 2 &middot; after E-step</div></div>
+                <div style="text-align:center;"><canvas id="cnv-walk3" width="300" height="220"></canvas><div style="font-size:12px; font-weight:600; color:var(--green-dark); margin-top:4px;">Frame 3 &middot; after M-step</div></div>
+                <div style="text-align:center;"><canvas id="cnv-walk4" width="300" height="220"></canvas><div style="font-size:12px; font-weight:600; color:var(--green-dark); margin-top:4px;">Frame 4 &middot; converged</div></div>
+            </div>
+            <p style="font-size:13px; color:var(--text-medium); margin-bottom:14px;">The four frames are real states of a single deterministic run at $\alpha = 5$ &mdash; the same engine as the stepper above, fixed seed.</p>
+            <div class="derivation-step"><div class="step-num">1</div><div class="step-body">
+                <p style="margin-bottom:0;"><strong>Initialize.</strong> Two round ellipses are seeded at randomly chosen scans, weights uniform &mdash; the model&rsquo;s opening guess at the benign and malignant profiles, before it has looked at anything. Every unread scan is gray: no beliefs yet. $\ell_{\text{semi-sup}} = $ <span id="walk-ll-a" style="font-weight:700; color:var(--gold);">&mdash;</span>.</p>
+            </div></div>
+            <div class="derivation-step"><div class="step-num">2</div><div class="step-body">
+                <p style="margin-bottom:0;"><strong>E-step: grade every unread scan.</strong> Each gray dot receives its posterior $Q_i(z) = p(z \mid x^{(i)}; \theta)$ under the current profiles and turns a blended color &mdash; a 70/30 belief wears a 70/30 tint. The six annotations don&rsquo;t participate: they know. Note the readout: $\ell$ is <em>still</em> <span id="walk-ll-b" style="font-weight:700; color:var(--gold);">&mdash;</span> &mdash; <strong>unchanged</strong>. The E-step moves no parameters, so it cannot move $\ell$; its job is invisible here &mdash; it presses the surrogate floor up until it touches the true objective (tab 5, Lemma B), loading the spring the M-step is about to release.</p>
+            </div></div>
+            <div class="derivation-step"><div class="step-num">3</div><div class="step-body">
+                <p style="margin-bottom:0;"><strong>M-step: every scan votes.</strong> Each profile refits to the weighted evidence: unread scans vote fractionally by belief, the pathologist&rsquo;s annotations vote fully for their diagnosed cluster at $\alpha\times$ volume. The ellipses slide, stretch, and tilt toward their voters. Now $\ell$ jumps: <span id="walk-ll-a2" style="font-weight:700; color:var(--gold);">&mdash;</span> $\to$ <span id="walk-ll-c" style="font-weight:700; color:var(--gold);">&mdash;</span> &mdash; the loaded spring released, and (tab 5&rsquo;s sandwich) it can only ever release <em>upward</em>.</p>
+            </div></div>
+            <div class="derivation-step"><div class="step-num">4</div><div class="step-body">
+                <p style="margin-bottom:0;"><strong>Repeat until nothing moves.</strong> Better profiles sharpen the next round of beliefs; sharper beliefs refine the profiles. After <span id="walk-iters" style="font-weight:700; color:var(--gold);">&mdash;</span> laps the two stop changing each other: $\ell$ stalls at <span id="walk-ll-d" style="font-weight:700; color:var(--gold);">&mdash;</span>, and the final ellipses <em>are</em> the learned diagnosis model &mdash; a benign profile and a malignant profile, named by six annotations, shaped by 190 unread scans. (A <em>local</em> optimum, per tab 5&rsquo;s coda &mdash; a different seed can land a different fit.)</p>
+            </div></div>
+        </div>
+    </div>
+    <!-- ═══ TAB 4: THE OBJECTIVES ═══ -->
+    <div id="tab-objectives" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>Three Objectives, One Structural Problem</h2></div>
+        <div class="formula-grid">
+            <div class="formula-tile">
+                <h4>Unsupervised: the hard one</h4>
+                $$\ell_{\text{unsup}}(\theta) = \sum_{i=1}^{n} \log \sum_{z^{(i)}} p(x^{(i)}, z^{(i)}; \theta)$$
+                <div class="formula-note">The 50,000 <strong>unread scans</strong>. A <strong>log of a sum</strong>: because the diagnosis $z$ is hidden, each scan&rsquo;s probability sums over both cell types it could be &mdash; and the log cannot pass through a sum. This single structural annoyance is the entire reason EM exists.</div>
+            </div>
+            <div class="formula-tile">
+                <h4>Supervised: the easy one</h4>
+                $$\ell_{\text{sup}}(\theta) = \sum_{i=1}^{\tilde n} \log p(\tilde x^{(i)}, \tilde z^{(i)}; \theta)$$
+                <div class="formula-note">The pathologist&rsquo;s <strong>annotated scans</strong>. <strong>No inner sum:</strong> the diagnosis $\tilde z$ is written down, so there is nothing to sum over &mdash; plug in the actual joint. This term is directly maximizable and never needs EM&rsquo;s machinery.</div>
+            </div>
+        </div>
+        <div class="card">
+            <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">The weighted marriage</h3>
+            <div class="highlight-box">$$\ell_{\text{semi-sup}}(\theta) = \ell_{\text{unsup}}(\theta) + \alpha\,\ell_{\text{sup}}(\theta)$$</div>
+            <p><strong>$\alpha$ is a hyperparameter</strong> &mdash; chosen before the run, not learned; the same status as $k$ in K-means. It is the <em>trust dial</em> between the pathologist and the population &mdash; how loudly each expert annotation speaks against the anonymous evidence of the unread scans:</p>
+            <p>$\alpha = 0$: the labels are decoration &mdash; plain unsupervised EM, anonymous clusters. &nbsp;&bull;&nbsp; $\alpha$ huge: the mountain is nearly ignored &mdash; back to few-point supervised fitting with its shaky boundary. &nbsp;&bull;&nbsp; In between: labels typically get upweighted <em>beyond their headcount</em>, precisely because $\tilde n \ll n$ and each label carries semantics no unlabeled point can.</p>
+            <p style="margin-bottom:0;">Try all four $\alpha$ buttons in tab 3 and watch the ellipses renegotiate.</p>
+        </div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px;">The E and M steps, labeled</h3>
+            <p><strong>E-step</strong> &mdash; for each <em>unlabeled</em> $i \in \{1, \dots, n\}$, set beliefs to the current posterior:</p>
+            <div class="highlight-box">$$Q_i^{(t)}(z^{(i)}) := p(z^{(i)} \mid x^{(i)}; \theta^{(t)})$$</div>
+            <p>The E-step runs only over unlabeled points: the labeled ones don&rsquo;t need beliefs about $\tilde z$ &mdash; they know.</p>
+            <p><strong>M-step</strong> &mdash; refit parameters against beliefs plus labels:</p>
+            <div class="highlight-box">$$\theta^{(t+1)} := \arg\max_\theta \left[ \sum_{i=1}^{n} \left( \sum_{z^{(i)}} Q_i^{(t)}(z^{(i)}) \log \frac{p(x^{(i)}, z^{(i)}; \theta)}{Q_i^{(t)}(z^{(i)})} \right) + \alpha \left( \sum_{i=1}^{\tilde n} \log p(\tilde x^{(i)}, \tilde z^{(i)}; \theta) \right) \right]$$</div>
+            <p style="margin-bottom:0;">First bracket: the fractional voters, each unlabeled point&rsquo;s possible $z$-values weighted by belief &mdash; this $\log\frac{p}{Q}$ form is the tractable lower bound (ELBO) built in tab 5, and its purpose is that the log now hits a product, dissolving the log-of-sum problem. Second bracket: the committed voters, entering <em>unmodified</em> at $\alpha\times$ volume &mdash; this term was never hard, so it never needed a surrogate.</p>
+        </div>
+        <div class="warning-box">
+            <p style="margin:0;"><strong>Superscript discipline is the trap of this topic.</strong> The M-step deliberately mixes $Q^{(t)}$ (old beliefs) with the <em>new</em> $\theta$ being optimized. Every $Q$ and every $\theta$ carries its iteration index, always &mdash; writing $Q^{(t+1)}$ where $Q^{(t)}$ belongs silently breaks the convergence proof in tab 5.</p>
+        </div>
+    </div>
+    <!-- ═══ TAB 5: THEORY ═══ -->
+    <div id="tab-theory" class="tab-content">
+        <div class="section-header"><div class="section-number">5</div><h2>Why Every Lap Can Only Help (Part (a)&rsquo;s Skeleton)</h2></div>
+        <div class="derivation-step"><div class="step-num">0</div><div class="step-body">
+            <p style="margin-bottom:0;"><strong>The plan.</strong> Build a tractable surrogate that (i) sits <em>below</em> $\ell_{\text{semi-sup}}$ everywhere, (ii) <em>touches</em> it at the current $\theta^{(t)}$, and (iii) is exactly what the M-step maximizes. Then &ldquo;true objective $\ge$ surrogate at new point $\ge$ surrogate at old point $=$ true objective at old point&rdquo; gives monotone ascent in three moves. The same theorem shape as K-means&rsquo; convergence &mdash; run uphill.</p>
+        </div></div>
+        <div class="derivation-step"><div class="step-num">1</div><div class="step-body">
+            <p><strong>Name the surrogate.</strong> For any distributions $Q = \{Q_i\}$ over the hidden $z$&rsquo;s, define the lower bound (ELBO) and the full M-step objective:</p>
+            <p>$$\mathcal{L}(Q, \theta) = \sum_{i=1}^{n} \sum_{z^{(i)}} Q_i(z^{(i)}) \log \frac{p(x^{(i)}, z^{(i)}; \theta)}{Q_i(z^{(i)})}, \qquad F(\theta) = \mathcal{L}(Q^{(t)}, \theta) + \alpha\,\ell_{\text{sup}}(\theta)$$</p>
+            <p style="margin-bottom:0;">The M-step is <em>by definition</em> $\theta^{(t+1)} = \arg\max_\theta F(\theta)$. The supervised term enters $F$ unmodified &mdash; it never needed a surrogate.</p>
+        </div></div>
+        <div class="derivation-step"><div class="step-num">2</div><div class="step-body">
+            <p><strong>Lemma A (the bound):</strong> $\ell_{\text{unsup}}(\theta) \ge \mathcal{L}(Q, \theta)$ for <em>every</em> $Q$ and $\theta$.</p>
+            <p>The engine is <strong>Jensen&rsquo;s inequality</strong> for the concave $\log$: for a random variable $W$, $\log \mathbb{E}[W] \ge \mathbb{E}[\log W]$ &mdash; the log of an average beats the average of the logs. Inside each troublesome $\log \sum_z$, multiply and divide by $Q_i(z)$ to expose an expectation, then push the log inside at the price of &ldquo;$\ge$&rdquo;:</p>
+            <p>$$\log \sum_{z} p(x^{(i)}, z; \theta) = \log \sum_{z} Q_i(z)\,\frac{p(x^{(i)}, z; \theta)}{Q_i(z)} \;\ge\; \sum_{z} Q_i(z) \log \frac{p(x^{(i)}, z; \theta)}{Q_i(z)}$$</p>
+            <p style="margin-bottom:0;">Sum over $i$ and Lemma A is proved. The multiply-and-divide-by-$Q$ move is the single most reusable trick in this corner of ML &mdash; it converts a log-of-sum into an expectation, which Jensen then converts into a tractable sum-of-logs.</p>
+        </div></div>
+        <div class="derivation-step"><div class="step-num">3</div><div class="step-body">
+            <p><strong>Lemma B (tightness &mdash; the load-bearing equality condition):</strong> with the E-step&rsquo;s choice $Q_i^{(t)}(z) = p(z \mid x^{(i)}; \theta^{(t)})$, the bound is <em>exact</em> at $\theta^{(t)}$: &nbsp; $\mathcal{L}(Q^{(t)}, \theta^{(t)}) = \ell_{\text{unsup}}(\theta^{(t)})$.</p>
+            <p>Derivation: substitute the posterior into the ratio and use $p(x, z) = p(z \mid x)\,p(x)$ to collapse it:</p>
+            <p>$$\frac{p(x^{(i)}, z; \theta^{(t)})}{p(z \mid x^{(i)}; \theta^{(t)})} = p(x^{(i)}; \theta^{(t)}) \quad \text{&mdash; no } z \text{ left inside the log}$$</p>
+            <p style="margin-bottom:0;">Then $\sum_z Q_i(z) = 1$ finishes it. <em>This lemma is why the E-step chooses the posterior specifically:</em> any other $Q$ leaves a gap between surrogate and truth, and the chain in Step 4 would leak.</p>
+        </div></div>
+        <div class="derivation-step"><div class="step-num" style="background: var(--gold);">4</div><div class="step-body" style="border-left: 4px solid var(--gold); background: rgba(221,162,94,0.07);">
+            <p style="margin-bottom:6px;"><span style="background: var(--gold); color: white; padding: 3px 12px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">The sandwich chain &mdash; part (a)&rsquo;s answer</span></p>
+            <p>Three moves, each citing exactly one thing:</p>
+            <div class="highlight-box">$$\ell_{\text{semi-sup}}(\theta^{(t+1)}) \;\underset{\text{Lemma A}}{\ge}\; F(\theta^{(t+1)}) \;\underset{\text{M-step argmax}}{\ge}\; F(\theta^{(t)}) \;\underset{\text{Lemma B}}{=}\; \ell_{\text{semi-sup}}(\theta^{(t)}) \qquad \blacksquare$$</div>
+            <p style="margin-bottom:0;">The supervised term rides through every link untouched &mdash; it appears identically on both sides of each comparison, so no inequality is ever applied to it. (The argument never even uses $\alpha \ge 0$: $\alpha\,\ell_{\text{sup}}$ is only carried, never bounded.)</p>
+        </div></div>
+        <div class="derivation-step"><div class="step-num">5</div><div class="step-body">
+            <p style="margin-bottom:0;"><strong>The coda.</strong> Monotone ascent plus a bounded-above objective (when it is) gives convergence of the objective values &mdash; to a <em>stationary point</em>, not the global maximum. Different initializations flow into different fits: exactly the K-means caveat, and exactly why the labels&rsquo; anchoring in tab 2 earns its keep. Picture the surrogate $F$ as a floor pressed up against the true objective at the current point: maximizing the floor cannot take you below where floor touches ceiling, so every lap rises or stalls. In the running example: each lap refines the benign and malignant profiles, and this theorem is the guarantee that a lap can never make the combined fit &mdash; population evidence plus pathologist &mdash; worse than it was.</p>
+        </div></div>
+        <div class="idea-box">
+            <p><strong>The K-means correspondence, made exact.</strong> K-means is &ldquo;hard EM&rdquo;:</p>
+            <p style="margin-bottom:0;">soft posterior $Q_i$ &nbsp;&harr;&nbsp; all-or-nothing nearest-centroid assignment &nbsp;&bull;&nbsp; Gaussian (mean + covariance + weight) &nbsp;&harr;&nbsp; bare centroid &nbsp;&bull;&nbsp; ascend $\ell$ &nbsp;&harr;&nbsp; descend $J$ &nbsp;&bull;&nbsp; ELBO touching at $\theta^{(t)}$ &nbsp;&harr;&nbsp; each half-step exactly minimizing its block. One flip to keep sign discipline about: every inequality in this worksheet points $\ge$; every one in the K-means worksheet pointed $\le$.</p>
+        </div>
+    </div>
+    <!-- ═══ TAB 6: CHECK YOURSELF ═══ -->
+    <div id="tab-practice" class="tab-content">
+        <div class="section-header"><div class="section-number">6</div><h2>Check Yourself</h2></div>
+        <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+                <div style="width:32px; height:32px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; flex-shrink:0;">1</div>
+                <div style="flex:1;">
+                    <p><strong>Whose beliefs?</strong> The E-step runs only over $i \in \{1, \dots, n\}$ &mdash; the unlabeled points. State precisely why the labeled points are excluded.</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                    <div class="solution-body">
+                        <div class="highlight-box">
+                            <p style="margin-bottom:0;">The E-step computes beliefs about a <em>hidden</em> variable &mdash; a posterior $p(z \mid x)$ is only meaningful when $z$ is unobserved. For a labeled point, $\tilde z$ is data, not a hypothesis: its &ldquo;posterior&rdquo; would be a point mass on the recorded label. Mechanically, its full joint $\log p(\tilde x, \tilde z; \theta)$ enters the objective directly with no inner sum, so there is nothing for a $Q$ to smooth over.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+                <div style="width:32px; height:32px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; flex-shrink:0;">2</div>
+                <div style="flex:1;">
+                    <p><strong>The dial&rsquo;s endpoints.</strong> Describe what the algorithm becomes at $\alpha = 0$, and what failure mode returns as $\alpha \to \infty$.</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                    <div class="solution-body">
+                        <div class="highlight-box">
+                            <p style="margin-bottom:0;">$\alpha = 0$: the supervised term vanishes and this is exactly classical unsupervised EM &mdash; clusters fit but <em>anonymous</em>, with the permutation symmetry (and its label-switching ambiguity) fully restored. $\alpha \to \infty$: the unlabeled term becomes negligible, and the fit is driven by $\tilde n$ points alone &mdash; the shaky few-sample boundary of tab 2&rsquo;s left panel, with the mountain of structure wasted. The useful regime is between, usually with labels upweighted beyond headcount because $\tilde n \ll n$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+                <div style="width:32px; height:32px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; flex-shrink:0;">3</div>
+                <div style="flex:1;">
+                    <p><strong>The anonymous-clusters problem.</strong> A perfectly fit unsupervised GMM finds three clean clusters in cell-scan data. Why can no amount of additional <em>unlabeled</em> data identify which cluster is malignant &mdash; and what is the one-word name for the symmetry responsible?</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                    <div class="solution-body">
+                        <div class="highlight-box">
+                            <p style="margin-bottom:0;">The likelihood is invariant under <em>permutation</em> of the cluster indices: relabel clusters $1 \leftrightarrow 3$, swap their parameters, and every probability the model assigns to the data is unchanged. Since all data enters through that likelihood, no quantity computable from unlabeled data can distinguish the relabelings &mdash; the identification is not merely hard but information-theoretically impossible. One labeled malignant example breaks the symmetry instantly: the cluster containing it <em>is</em> the malignant one.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+                <div style="width:32px; height:32px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; flex-shrink:0;">4</div>
+                <div style="flex:1;">
+                    <p><strong>When the mountain hurts.</strong> Give a concrete scenario in which adding unlabeled data makes the semi-supervised fit <em>worse</em> than using the labels alone, and name the assumption being violated.</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                    <div class="solution-body">
+                        <div class="highlight-box">
+                            <p style="margin-bottom:0;">Example: the scans cluster overwhelmingly by <em>lighting condition</em> (bright vs. dim), while malignancy cuts across both lighting groups. The unlabeled mountain pulls the ellipses onto the lighting structure; the few labels cannot out-vote it at moderate $\alpha$; the resulting boundary tracks lighting, not pathology &mdash; worse than a small supervised fit that at least aimed at the right target. Violated assumption: <em>cluster&ndash;category alignment</em> &mdash; that the model&rsquo;s clusters correspond to your classes, i.e., that the true class boundary runs through low-density territory.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+                <div style="width:32px; height:32px; background:var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; flex-shrink:0;">5</div>
+                <div style="flex:1;">
+                    <p><strong>Hard EM.</strong> Modify the E-step so the algorithm becomes (a generalization of) K-means. What is gained and what is lost by the modification?</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                    <div class="solution-body">
+                        <div class="highlight-box">
+                            <p style="margin-bottom:0;">Replace the posterior with a point mass on its argmax: $Q_i(z) = 1$ for the single most probable cluster, $0$ elsewhere &mdash; hard assignment. With shared spherical covariances and equal weights, the resulting alternation <em>is</em> K-means. Gained: speed and simplicity (no responsibilities to carry). Lost: the graded information near boundaries &mdash; a 51/49 point votes as if it were 100/0, so uncertainty is destroyed rather than propagated, and the tight ELBO-touches-truth guarantee weakens (hard EM ascends a different, cruder surrogate). The soft version keeps every point&rsquo;s honest ambivalence on the books.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Semi-Supervised EM &amp; Gaussian Mixtures</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+<script>
+/* ═══════════ Seeded RNG + dataset: two tilted Gaussian blobs, 6 labels ═══════════ */
+function mulberry32(seed) {
+    return function() {
+        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+        var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+}
+var dataRnd = mulberry32(20260803);
+function gaussStd() {
+    var u = 1 - dataRnd(), v = dataRnd();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.28318 * v);
+}
+var U = [];     /* unlabeled points [x,y] in unit-ish space */
+var L = [];     /* labeled points {x, y, c} */
+(function buildData() {
+    var i, a, b;
+    for (i = 0; i < 95; i++) { a = gaussStd(); b = gaussStd();
+        U.push([2.4 + 0.75*a + 0.35*b, 3.4 + 0.28*a - 0.70*b]); }
+    for (i = 0; i < 95; i++) { a = gaussStd(); b = gaussStd();
+        U.push([5.6 + 0.75*a + 0.35*b, 4.9 + 0.28*a - 0.70*b]); }
+    L = [ {x:2.35, y:2.85, c:0}, {x:1.95, y:3.75, c:0}, {x:3.15, y:3.55, c:0},
+          {x:5.30, y:5.55, c:1}, {x:6.05, y:4.55, c:1}, {x:5.05, y:4.45, c:1} ];
+})();
+var COL = [[29,158,117],[210,128,58]];   /* teal, orange */
+var VIEW = { xmin: -0.6, xmax: 8.6, ymin: 0.6, ymax: 7.6 };
+function toScreen(p, W, H) {
+    return [ (p[0]-VIEW.xmin)/(VIEW.xmax-VIEW.xmin) * W,
+             H - (p[1]-VIEW.ymin)/(VIEW.ymax-VIEW.ymin) * H ];
+}
+
+/* ═══════════ Tab switching + solution toggles ═══════════ */
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function(){ MathJax.typeset(); }, 50);
+    }
+}
+
+/* ═══════════ Tab 2: labels-vs-cloud boundary demo ═══════════ */
+var picCloud = true;
+function picSetCloud(on, btn) {
+    picCloud = on;
+    document.getElementById('pic-off').classList.toggle('active', !on);
+    document.getElementById('pic-on').classList.toggle('active', on);
+    document.getElementById('pic-follow').textContent = on ? 'the density valley' : 'six points (guesswork)';
+    drawPic();
+}
+function drawPic() {
+    var cnv = document.getElementById('cnv-pic'); if (!cnv) return;
+    var ctx = cnv.getContext('2d'), W = cnv.width, H = cnv.height;
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#E2E2E2'; ctx.strokeRect(0.5, 0.5, W-1, H-1);
+    var i;
+    if (picCloud) {
+        ctx.fillStyle = 'rgba(120,120,120,0.45)';
+        for (i = 0; i < U.length; i++) {
+            var s = toScreen(U[i], W, H);
+            ctx.beginPath(); ctx.arc(s[0], s[1], 3, 0, 6.28318); ctx.fill();
+        }
+    }
+    /* boundary: labels-only = tilted wrong; cloud = valley */
+    ctx.lineWidth = 2.5; ctx.strokeStyle = '#7B6EC4';
+    ctx.setLineDash([]);
+    var a, b;
+    if (picCloud) { a = toScreen([4.35, 7.6], W, H); b = toScreen([3.65, 0.6], W, H); }
+    else          { a = toScreen([2.55, 7.6], W, H); b = toScreen([5.65, 0.6], W, H); }
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    for (i = 0; i < L.length; i++) {
+        var sl = toScreen([L[i].x, L[i].y], W, H);
+        ctx.fillStyle = 'rgb(' + COL[L[i].c].join(',') + ')';
+        ctx.beginPath(); ctx.arc(sl[0], sl[1], 7, 0, 6.28318); ctx.fill();
+        ctx.lineWidth = 2; ctx.strokeStyle = '#FFFFFF'; ctx.stroke();
+    }
+}
+
+/* ═══════════ GMM engine (K = 2, full 2x2 covariance, semi-supervised M-step) ═══════════ */
+var em = { alpha: 5, pi: null, mu: null, S: null, R: null, phase: 'init', iter: 0, ll: null, rnd: mulberry32(1234) };
+function mat2inv(S) {
+    var det = S[0][0]*S[1][1] - S[0][1]*S[1][0];
+    return { det: det, inv: [[ S[1][1]/det, -S[0][1]/det], [-S[1][0]/det, S[0][0]/det]] };
+}
+function gaussPdf(p, mu, Sinv) {
+    var dx = p[0]-mu[0], dy = p[1]-mu[1];
+    var q = dx*(Sinv.inv[0][0]*dx + Sinv.inv[0][1]*dy) + dy*(Sinv.inv[1][0]*dx + Sinv.inv[1][1]*dy);
+    return Math.exp(-0.5*q) / (2*Math.PI*Math.sqrt(Sinv.det));
+}
+function emLL() {
+    /* semi-supervised log-likelihood at current params */
+    var inv = [mat2inv(em.S[0]), mat2inv(em.S[1])], ll = 0, i, k;
+    for (i = 0; i < U.length; i++) {
+        var s = 0;
+        for (k = 0; k < 2; k++) s += em.pi[k] * gaussPdf(U[i], em.mu[k], inv[k]);
+        ll += Math.log(s);
+    }
+    for (i = 0; i < L.length; i++) {
+        var c = L[i].c;
+        ll += em.alpha * Math.log(em.pi[c] * gaussPdf([L[i].x, L[i].y], em.mu[c], inv[c]));
+    }
+    return ll;
+}
+function emInit() {
+    /* means at two random unlabeled points; round covariances; uniform weights */
+    var i1 = Math.floor(em.rnd() * U.length), i2 = Math.floor(em.rnd() * U.length);
+    while (i2 === i1) i2 = Math.floor(em.rnd() * U.length);
+    em.mu = [ U[i1].slice(), U[i2].slice() ];
+    em.S  = [ [[1.2,0],[0,1.2]], [[1.2,0],[0,1.2]] ];
+    em.pi = [0.5, 0.5];
+    em.R = null; em.phase = 'e'; em.iter = 0; em.ll = null;
+    emReadouts(emLL(), true); drawEm();
+}
+function emEStep() {
+    if (!em.mu) { emInit(); return; }
+    if (em.phase !== 'e') return;
+    var inv = [mat2inv(em.S[0]), mat2inv(em.S[1])];
+    em.R = [];
+    for (var i = 0; i < U.length; i++) {
+        var w0 = em.pi[0]*gaussPdf(U[i], em.mu[0], inv[0]);
+        var w1 = em.pi[1]*gaussPdf(U[i], em.mu[1], inv[1]);
+        var s = w0 + w1;
+        em.R.push([w0/s, w1/s]);
+    }
+    em.phase = 'm';
+    emReadouts(null, false); drawEm();
+}
+function emMStep() {
+    if (!em.mu || em.phase !== 'm') return;
+    var i, k;
+    var Nk = [0, 0], sum = [[0,0],[0,0]];
+    for (i = 0; i < U.length; i++) for (k = 0; k < 2; k++) {
+        Nk[k] += em.R[i][k];
+        sum[k][0] += em.R[i][k]*U[i][0]; sum[k][1] += em.R[i][k]*U[i][1];
+    }
+    for (i = 0; i < L.length; i++) {
+        var c = L[i].c;
+        Nk[c] += em.alpha;
+        sum[c][0] += em.alpha*L[i].x; sum[c][1] += em.alpha*L[i].y;
+    }
+    for (k = 0; k < 2; k++) em.mu[k] = [sum[k][0]/Nk[k], sum[k][1]/Nk[k]];
+    for (k = 0; k < 2; k++) {
+        var Sxx = 0, Sxy = 0, Syy = 0;
+        for (i = 0; i < U.length; i++) {
+            var dx = U[i][0]-em.mu[k][0], dy = U[i][1]-em.mu[k][1];
+            Sxx += em.R[i][k]*dx*dx; Sxy += em.R[i][k]*dx*dy; Syy += em.R[i][k]*dy*dy;
+        }
+        for (i = 0; i < L.length; i++) if (L[i].c === k) {
+            var dx2 = L[i].x-em.mu[k][0], dy2 = L[i].y-em.mu[k][1];
+            Sxx += em.alpha*dx2*dx2; Sxy += em.alpha*dx2*dy2; Syy += em.alpha*dy2*dy2;
+        }
+        em.S[k] = [[Sxx/Nk[k] + 1e-4, Sxy/Nk[k]], [Sxy/Nk[k], Syy/Nk[k] + 1e-4]];
+    }
+    var tot = Nk[0] + Nk[1];
+    em.pi = [Nk[0]/tot, Nk[1]/tot];
+    em.phase = 'e'; em.iter += 1;
+    emReadouts(emLL(), false); drawEm();
+}
+function emRun() {
+    if (!em.mu) emInit();
+    if (em.phase === 'm') emMStepSilent();
+    var prev = -Infinity;
+    for (var t = 0; t < 200; t++) {
+        emEStepSilent(); emMStepSilent();
+        var ll = emLL();
+        if (Math.abs(ll - prev) < 1e-8) break;
+        prev = ll;
+    }
+    em.phase = 'e';
+    emReadouts(emLL(), false); drawEm();
+}
+function emEStepSilent() {
+    var inv = [mat2inv(em.S[0]), mat2inv(em.S[1])];
+    em.R = [];
+    for (var i = 0; i < U.length; i++) {
+        var w0 = em.pi[0]*gaussPdf(U[i], em.mu[0], inv[0]);
+        var w1 = em.pi[1]*gaussPdf(U[i], em.mu[1], inv[1]);
+        var s = w0 + w1;
+        em.R.push([w0/s, w1/s]);
+    }
+    em.phase = 'm'; em.iter += 0;
+}
+function emMStepSilent() { var ph = em.phase; em.phase = 'm'; var sv = emReadouts; emReadouts = function(){}; emMStep(); emReadouts = sv; }
+function emSetAlpha(a, btn) {
+    em.alpha = a;
+    document.querySelectorAll('#tab-emlive .sum-type-btn').forEach(function(b){
+        if (['0','5','20','80'].indexOf(b.textContent.trim()) >= 0) b.classList.remove('active');
+    });
+    if (btn) btn.classList.add('active');
+    emInit();   /* alpha changes the objective, so restart the run cleanly */
+}
+function emReadouts(ll, isInit) {
+    document.getElementById('em-iter').textContent = em.iter;
+    document.getElementById('em-phase').textContent = (em.phase === 'e') ? 'E-step' : 'M-step';
+    if (ll !== null && ll !== undefined) {
+        var d = (em.ll === null || isInit) ? null : ll - em.ll;
+        document.getElementById('em-ll').textContent = ll.toFixed(1);
+        document.getElementById('em-dll').textContent = (d === null) ? '\u2014' : (d >= 0 ? '+' : '') + d.toFixed(2);
+        em.ll = ll;
+    }
+}
+/* ── ellipse from 2x2 covariance: analytic eigen-decomposition ── */
+function ellipseParams(S) {
+    var a = S[0][0], b = S[0][1], c = S[1][1];
+    var tr = a + c, det = a*c - b*b;
+    var disc = Math.sqrt(Math.max(0, tr*tr/4 - det));
+    var l1 = tr/2 + disc, l2 = tr/2 - disc;
+    var theta = (Math.abs(b) < 1e-12) ? (a >= c ? 0 : Math.PI/2) : Math.atan2(l1 - a, b);
+    return { r1: 2*Math.sqrt(Math.max(l1, 1e-9)), r2: 2*Math.sqrt(Math.max(l2, 1e-9)), theta: theta };
+}
+function drawEm() { drawEmState(em, 'cnv-em'); }
+function drawEmState(st, cnvId) {
+    var cnv = document.getElementById(cnvId); if (!cnv) return;
+    var ctx = cnv.getContext('2d'), W = cnv.width, H = cnv.height;
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#E2E2E2'; ctx.strokeRect(0.5, 0.5, W-1, H-1);
+    var i, k;
+    var sx = W/(VIEW.xmax-VIEW.xmin), sy = H/(VIEW.ymax-VIEW.ymin);
+    /* unlabeled points, tinted by responsibility blend */
+    for (i = 0; i < U.length; i++) {
+        var s = toScreen(U[i], W, H), col;
+        if (st.R) {
+            var r0 = st.R[i][0], r1 = st.R[i][1];
+            col = 'rgb(' + Math.round(COL[0][0]*r0 + COL[1][0]*r1) + ',' +
+                           Math.round(COL[0][1]*r0 + COL[1][1]*r1) + ',' +
+                           Math.round(COL[0][2]*r0 + COL[1][2]*r1) + ')';
+        } else col = 'rgba(120,120,120,0.5)';
+        ctx.fillStyle = col;
+        ctx.beginPath(); ctx.arc(s[0], s[1], 3.2, 0, 6.28318); ctx.fill();
+    }
+    /* labeled points: ringed, fixed colors */
+    for (i = 0; i < L.length; i++) {
+        var sl = toScreen([L[i].x, L[i].y], W, H);
+        ctx.fillStyle = 'rgb(' + COL[L[i].c].join(',') + ')';
+        ctx.beginPath(); ctx.arc(sl[0], sl[1], 7, 0, 6.28318); ctx.fill();
+        ctx.lineWidth = 2.5; ctx.strokeStyle = '#42260D'; ctx.stroke();
+        ctx.lineWidth = 1.5; ctx.strokeStyle = '#FFFFFF';
+        ctx.beginPath(); ctx.arc(sl[0], sl[1], 9.5, 0, 6.28318); ctx.stroke();
+    }
+    /* ellipses + mean diamonds */
+    if (st.mu) {
+        for (k = 0; k < 2; k++) {
+            var ep = ellipseParams(st.S[k]);
+            var m = toScreen(st.mu[k], W, H);
+            ctx.save();
+            ctx.translate(m[0], m[1]);
+            ctx.rotate(-ep.theta);          /* screen y is flipped */
+            ctx.strokeStyle = 'rgb(' + COL[k].join(',') + ')';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, ep.r1*sx, ep.r2*sy, 0, 0, 6.28318);
+            ctx.stroke();
+            ctx.restore();
+            ctx.fillStyle = 'rgb(' + COL[k].join(',') + ')';
+            ctx.strokeStyle = '#DDA25E'; ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(m[0], m[1]-9); ctx.lineTo(m[0]+9, m[1]);
+            ctx.lineTo(m[0], m[1]+9); ctx.lineTo(m[0]-9, m[1]);
+            ctx.closePath(); ctx.fill(); ctx.stroke();
+        }
+    }
+}
+
+/* ═══════════ Walkthrough: four real snapshots of one seeded run ═══════════ */
+function snap() { return JSON.parse(JSON.stringify({ mu: em.mu, S: em.S, pi: em.pi, R: em.R })); }
+function runWalkthrough() {
+    em.alpha = 5; em.rnd = mulberry32(777);
+    /* init (no draw/readout) */
+    var i1 = Math.floor(em.rnd()*U.length), i2 = Math.floor(em.rnd()*U.length);
+    while (i2 === i1) i2 = Math.floor(em.rnd()*U.length);
+    em.mu = [U[i1].slice(), U[i2].slice()];
+    em.S = [[[1.2,0],[0,1.2]],[[1.2,0],[0,1.2]]];
+    em.pi = [0.5,0.5]; em.R = null;
+    var llA = emLL(); var f1 = snap();
+    emEStepSilent();
+    var llB = emLL(); var f2 = snap();
+    em.phase = 'm'; emMStepSilent();
+    var llC = emLL(); var f3 = snap();
+    var prev = llC, iters = 1;
+    for (var t = 0; t < 200; t++) {
+        emEStepSilent(); em.phase = 'm'; emMStepSilent();
+        var ll = emLL(); iters++;
+        if (Math.abs(ll - prev) < 1e-8) break;
+        prev = ll;
+    }
+    var llD = emLL(); var f4 = snap();
+    drawEmState(f1, 'cnv-walk1'); drawEmState(f2, 'cnv-walk2');
+    drawEmState(f3, 'cnv-walk3'); drawEmState(f4, 'cnv-walk4');
+    function put(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+    put('walk-ll-a', llA.toFixed(1)); put('walk-ll-b', llB.toFixed(1));
+    put('walk-ll-a2', llA.toFixed(1)); put('walk-ll-c', llC.toFixed(1));
+    put('walk-ll-d', llD.toFixed(1)); put('walk-iters', iters);
+}
+
+/* ═══════════ Boot ═══════════ */
+window.addEventListener('DOMContentLoaded', function() {
+    drawPic();
+    runWalkthrough();
+    em.rnd = mulberry32(1234); em.alpha = 5;
+    emInit();
+});
+</script>
+</body>
+</html>
