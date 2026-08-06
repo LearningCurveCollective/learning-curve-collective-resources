@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics for Machine Learning — Formula Cheat Sheet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [["$","$"]],
+            displayMath: [["$$","$$"]]
+        },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+    <style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* ─── Header ─── */
+.header {
+    background: var(--green-dark);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gold);
+}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo {
+    width: 64px; height: 64px;
+    background: none;
+    display: flex; align-items: center; justify-content: center;
+    overflow: visible; flex-shrink: 0;
+}
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 26px; font-weight: 700; letter-spacing: 0.5px;
+}
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+/* ─── Container ─── */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* ─── Tab System ─── */
+.tab-buttons {
+    display: flex; gap: 6px; margin-bottom: 30px;
+    position: sticky; top: 0; background: var(--cream);
+    z-index: 100; padding: 12px 0 10px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #E8E0D0;
+}
+.tab-button {
+    padding: 8px 13px; background-color: #E2E2E2;
+    border: 2px solid #E0D5C0; border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--text-medium);
+    transition: all 0.25s ease;
+}
+.tab-button:hover {
+    border-color: var(--gold); color: var(--brown-dark);
+    transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.tab-button.active {
+    color: white; border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px);
+}
+
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Headers ─── */
+.section-header {
+    display: flex; align-items: center; gap: 15px;
+    margin-top: 40px; margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--gold-light);
+}
+.section-header:first-child { margin-top: 0; }
+.section-number {
+    width: 40px; height: 40px;
+    background-color: var(--gold); color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; flex-shrink: 0;
+}
+.section-header h2 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 24px; color: var(--brown-dark); margin: 0;
+}
+
+/* ─── Cards & Boxes ─── */
+.card {
+    background-color: white; border-radius: 8px;
+    padding: 20px; margin-bottom: 20px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.highlight-box {
+    background-color: var(--white);
+    border-left: 5px solid var(--green-dark);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--green-dark);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box {
+    background-color: #E8F5E9;
+    border-left: 5px solid var(--green-light);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+.warning-box {
+    background-color: #FFEBEE;
+    border-left: 5px solid #E57373;
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+
+/* ─── Concept List ─── */
+.concept-list {
+    background-color: var(--cream-dark);
+    border-radius: 8px; padding: 20px; margin: 15px 0;
+}
+.concept-item {
+    margin-bottom: 12px; padding: 16px 18px;
+    border-radius: 8px; border-bottom: none;
+    display: flex; gap: 16px; align-items: flex-start;
+}
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) {
+    background-color: rgba(59, 83, 35, 0.08);
+    border-left: 4px solid #21442B;
+}
+.concept-item:nth-child(3n+2) {
+    background-color: rgba(200, 168, 78, 0.10);
+    border-left: 4px solid #DDA25E;
+}
+.concept-item:nth-child(3n+3) {
+    background-color: rgba(139, 94, 60, 0.08);
+    border-left: 4px solid #8B5E3C;
+}
+.concept-visual {
+    flex-shrink: 0; width: 64px; height: 64px;
+    border-radius: 6px; overflow: hidden;
+}
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+
+/* ─── Formula Tiles ─── */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile {
+    background: var(--white); border: 2px solid var(--green-dark);
+    border-radius: 10px; padding: 18px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.formula-tile h4 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    color: var(--brown-dark); font-size: 14px; margin-bottom: 8px;
+}
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note {
+    font-size: 12.5px; color: var(--brown-medium);
+    margin-top: 6px; line-height: 1.5;
+}
+.formula-tile p { margin-bottom: 8px; }
+.formula-tile p:last-child { margin-bottom: 0; }
+
+/* ─── Interactive Visualizer ─── */
+.viz-container {
+    background: white; border-radius: 12px;
+    padding: 24px; margin: 20px 0;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.viz-controls {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--cream-dark);
+}
+.slider-group {
+    flex: 1; min-width: 160px;
+    display: flex; flex-direction: column; gap: 4px;
+}
+.slider-group label {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px;
+}
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display {
+    font-weight: 700; font-size: 18px; color: var(--gold);
+    min-width: 52px; text-align: center;
+}
+.viz-canvas-wrap { text-align: center; margin-bottom: 12px; }
+.viz-canvas-wrap canvas {
+    border-radius: 8px;
+    border: 1px solid var(--cream-dark);
+    max-width: 100%; height: auto;
+    background: #FAF8F4;
+}
+.viz-caption { font-size: 13px; color: var(--text-medium); text-align: center; }
+.sum-type-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+.sum-type-btn {
+    padding: 8px 16px; border: 2px solid var(--gold-light);
+    border-radius: 6px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600; font-size: 13px;
+    background: var(--cream); color: var(--text-medium);
+    transition: all 0.2s;
+}
+.sum-type-btn:hover { border-color: var(--gold); color: var(--gold); }
+.sum-type-btn.active {
+    background: var(--gold); color: white; border-color: var(--gold);
+}
+.readout-panel {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-top: 14px;
+}
+.readout-item {
+    background: var(--cream); border-radius: 8px;
+    padding: 12px 16px; text-align: center;
+    border: 1px solid var(--gold-pale);
+}
+.readout-item .readout-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase;
+    letter-spacing: 0.8px; margin-bottom: 4px;
+}
+.readout-item .readout-value {
+    font-size: 20px; font-weight: 700; color: var(--gold);
+}
+
+/* ─── Collapsible Toggles ─── */
+.example-toggle, .solution-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: none; border-radius: 6px;
+    padding: 7px 14px; margin-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+}
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow {
+    transition: transform 0.25s; display: inline-block;
+}
+.example-toggle.open .arrow, .solution-toggle.open .arrow {
+    transform: rotate(90deg);
+}
+.example-body, .solution-body {
+    display: none; margin-top: 10px; padding: 14px 18px;
+    background: rgba(255,255,255,0.7); border-radius: 6px;
+    border: 1px solid rgba(33,68,43,0.15);
+}
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* ─── Technique Sections ─── */
+.technique-section {
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 18px;
+}
+.technique-section h3 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 20px; margin-bottom: 10px; color: var(--green-dark);
+}
+.technique-section .step-label {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+}
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+
+.practice-box {
+    background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3);
+    border-radius: 8px; padding: 14px 18px; margin-top: 10px;
+}
+
+/* ─── Beyond-Curriculum Badge ─── */
+.beyond-badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: rgba(221,162,94,0.18); color: #8B5E3C;
+    padding: 2px 9px; border-radius: 10px; margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* ─── Distribution Table ─── */
+.dist-table-wrap { overflow-x: auto; margin: 16px 0; }
+table.dist-table {
+    width: 100%; border-collapse: collapse;
+    background: white; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    font-size: 13.5px;
+}
+table.dist-table th {
+    background: var(--green-dark); color: white;
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 13px;
+    text-align: left; padding: 10px 12px;
+    letter-spacing: 0.4px;
+}
+table.dist-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--cream-dark);
+    vertical-align: middle;
+}
+table.dist-table tr:nth-child(even) td { background: rgba(221,162,94,0.07); }
+table.dist-table tr:last-child td { border-bottom: none; }
+table.dist-table td:first-child {
+    font-weight: 600; color: var(--brown-dark); white-space: nowrap;
+}
+
+/* ─── Print button ─── */
+.print-bar { text-align: right; margin-bottom: 10px; }
+.print-btn {
+    background: var(--green-dark); color: white; border: none;
+    border-radius: 6px; padding: 8px 16px; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+}
+.print-btn:hover { background: var(--green-medium); }
+
+/* ─── Misc ─── */
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.formula { font-family: 'Inter', sans-serif; margin: 15px 0; }
+.mjx-container { overflow-x: auto; }
+
+/* ─── Footer ─── */
+.footer {
+    background: var(--brown-dark); color: white;
+    padding: 20px 40px; text-align: center;
+    border-top: 4px solid var(--gold);
+    margin-top: 40px; font-size: 14px; opacity: 0.9;
+}
+.footer a:hover { opacity: 0.85; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Print: expand every tab so it prints as one continuous sheet ─── */
+@media print {
+    body { background: white; }
+    .tab-buttons, .print-bar { display: none !important; }
+    .tab-content { display: block !important; animation: none; }
+    .card, .formula-tile, .highlight-box, .idea-box, .warning-box,
+    .technique-section, table.dist-table { break-inside: avoid; page-break-inside: avoid; }
+    .section-header { break-after: avoid; page-break-after: avoid; }
+    .header { padding: 12px 20px; }
+    .container { padding: 12px; max-width: 100%; }
+    .formula-grid { gap: 8px; }
+    .formula-tile { padding: 10px 12px; }
+    p { line-height: 1.5; margin-bottom: 8px; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Statistics for Machine Learning</h1>
+            <div class="subtitle">FORMULA CHEAT SHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">Probability &bull; Estimation &bull; Information</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('prob', this)">Probability</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('expect', this)">Expectation</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('dists', this)">Distributions</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('mle', this)">MLE &amp; Loss</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('entropy', this)">Entropy &amp; Info</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('calc', this)">Calculus &amp; Bounds</button>
+    </div>
+
+    <div class="print-bar">
+        <button class="print-btn" onclick="window.print()">Print / Save as PDF (all tabs)</button>
+    </div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 0 — CHEAT SHEET (highlights) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-cheat" class="tab-content active">
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <p style="margin-bottom: 0;"><strong>How to use this tab.</strong> These are the results you should be able to write from memory before an exam or problem set. Each one lives in fuller form — with derivations, examples, and traps — on its home tab. If any tile here doesn't feel obvious, that's the tab to revisit.</p>
+    </div>
+
+    <!-- === section 1 — Expectation, variance, covariance === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Expectation, Variance, Covariance</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Expectation</h4>
+            <p>$$\mathbb{E}[X] = \sum_x x\,p(x) \;\;\text{or}\;\; \int x f(x)\,dx, \qquad \mathbb{E}[g(X)] = \int g(x)f(x)\,dx$$</p>
+            <p class="formula-note">The second is LOTUS — no need for the distribution of $g(X)$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Linearity — Always True</h4>
+            <p>$$\mathbb{E}[aX + bY + c] = a\mathbb{E}[X] + b\mathbb{E}[Y] + c$$</p>
+            <p class="formula-note">No independence needed. But $\mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y]$ <em>does</em> need it.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Variance</h4>
+            <p>$$\operatorname{Var}(X) = \mathbb{E}[X^2] - \big(\mathbb{E}[X]\big)^2 = \int (x-\mu)^2 f(x)\,dx$$</p>
+            <p>$$\operatorname{Var}(aX+b) = a^2\operatorname{Var}(X)$$</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Covariance &amp; Sums</h4>
+            <p>$$\operatorname{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$$</p>
+            <p>$$\operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)$$</p>
+            <p class="formula-note">Independence kills the cross term. $\operatorname{Cov}=0$ does <em>not</em> imply independence.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Covariance Matrix</h4>
+            <p>$$\Sigma = \mathbb{E}\big[(\mathbf{x}-\boldsymbol\mu)(\mathbf{x}-\boldsymbol\mu)^{\!\top}\big], \qquad \operatorname{Cov}(A\mathbf{x}) = A\Sigma A^{\!\top}$$</p>
+            <p class="formula-note">Symmetric, positive semi-definite. Diagonal = variances, off-diagonal = covariances.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Tower Property &amp; Total Variance</h4>
+            <p>$$\mathbb{E}[X] = \mathbb{E}\big[\mathbb{E}[X \mid Y]\big]$$</p>
+            <p>$$\operatorname{Var}(X) = \mathbb{E}\big[\operatorname{Var}(X \mid Y)\big] + \operatorname{Var}\big(\mathbb{E}[X \mid Y]\big)$$</p>
+        </div>
+    </div>
+
+    <!-- === section 2 — Gradient rules === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Gradient Rules</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Vector Gradients</h4>
+            <p>$$\nabla_{\mathbf{x}}\big(\mathbf{a}^{\!\top}\mathbf{x}\big) = \mathbf{a}, \qquad \nabla_{\mathbf{x}}\big(\mathbf{x}^{\!\top}A\mathbf{x}\big) = (A + A^{\!\top})\mathbf{x}$$</p>
+            <p>$$\nabla_\theta \|X\theta - \mathbf{y}\|_2^2 = 2X^{\!\top}(X\theta - \mathbf{y})$$</p>
+            <p class="formula-note">Set the last to zero $\to$ normal equations $X^{\!\top}X\theta = X^{\!\top}\mathbf{y}$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Log &amp; Sigmoid Derivatives</h4>
+            <p>$$\frac{d}{d\theta}\log f(\theta) = \frac{f'(\theta)}{f(\theta)}, \qquad \sigma'(z) = \sigma(z)\big(1-\sigma(z)\big)$$</p>
+            <p class="formula-note">These two, plus the chain rule, generate nearly every gradient in this course.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Softmax Jacobian</h4>
+            <p>$$\frac{\partial s_i}{\partial z_j} = s_i(\delta_{ij} - s_j)$$</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>The One To Memorize</h4>
+            <p>$$\nabla_{\mathbf{z}}\, J_{\text{CE}} = \hat{\mathbf{y}} - \mathbf{y}$$</p>
+            <p class="formula-note">Cross-entropy gradient w.r.t. logits: prediction minus truth. Holds for sigmoid <em>and</em> softmax. If your algebra doesn't land here, hunt for a sign error.</p>
+        </div>
+    </div>
+
+    <!-- === section 3 — MLE & NLL === -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>MLE &amp; Negative Log-Likelihood</h2>
+    </div>
+
+    <div class="card">
+        <p><strong>Givens.</strong> Data $\{(\mathbf{x}^{(i)}, y^{(i)})\}_{i=1}^n$ assumed i.i.d.; a model $p(y \mid \mathbf{x}; \theta)$.</p>
+        <div class="highlight-box">
+            $$L(\theta) = \prod_{i=1}^{n} p\big(y^{(i)} \mid \mathbf{x}^{(i)}; \theta\big)
+            \;\;\xrightarrow{\;\log\;}\;\;
+            \ell(\theta) = \sum_{i=1}^{n} \log p\big(y^{(i)} \mid \mathbf{x}^{(i)}; \theta\big)$$
+        </div>
+        <div class="highlight-box">
+            $$\boxed{\;J(\theta) = -\ell(\theta) = -\sum_{i=1}^{n} \log p\big(y^{(i)} \mid \mathbf{x}^{(i)}; \theta\big)\;}$$
+        </div>
+        <p>The negative log-likelihood <em>is</em> the loss function. Maximizing likelihood $=$ minimizing NLL. Which loss you get depends only on which noise model you assumed:</p>
+    </div>
+
+    <div class="dist-table-wrap">
+    <table class="dist-table">
+        <thead>
+            <tr><th>Assumption on $y \mid \mathbf{x}$</th><th>NLL becomes</th><th>Known as</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Gaussian noise</td>
+                <td>$\sum_i \big(y^{(i)} - \theta^{\!\top}\mathbf{x}^{(i)}\big)^2$</td>
+                <td>Squared error / MSE</td>
+            </tr>
+            <tr>
+                <td>Bernoulli labels</td>
+                <td>$-\sum_i \big[y^{(i)}\log\hat y^{(i)} + (1-y^{(i)})\log(1-\hat y^{(i)})\big]$</td>
+                <td>Binary cross-entropy</td>
+            </tr>
+            <tr>
+                <td>Categorical labels</td>
+                <td>$-\sum_i \log \hat y^{(i)}_{\,\text{correct class}}$</td>
+                <td>Cross-entropy</td>
+            </tr>
+            <tr>
+                <td>+ Gaussian prior on $\theta$</td>
+                <td>$\text{NLL} + \lambda\|\theta\|_2^2$</td>
+                <td>Ridge / L2 (this is MAP)</td>
+            </tr>
+            <tr>
+                <td>+ Laplace prior on $\theta$</td>
+                <td>$\text{NLL} + \lambda\|\theta\|_1$</td>
+                <td>LASSO / L1 (this is MAP)</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <!-- === section 4 — Bonus === -->
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>Bonus: From NLL to the Gradient Descent Update</h2>
+    </div>
+
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>Gradient of the NLL for logistic regression</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Gradient descent needs $\nabla_\theta J$. We compute it in GLM notation: natural parameter $\eta = \theta^{\!\top}\mathbf{x}$ and canonical response $\hat y = g(\eta)$, where for the Bernoulli family $g(\eta) = \sigma(\eta) = \frac{1}{1+e^{-\eta}}$ — recall $g = a'$ is derived, not chosen (Distributions tab, §4). Watch the gradient collapse to something clean.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Full derivation</button>
+        <div class="example-body">
+            <p><strong>Step 0 — The plan.</strong> Differentiate the per-example NLL with respect to $\theta$ using the chain rule through $\eta = \theta^{\!\top}\mathbf{x}$, apply the log-derivative rule and the identity $g'(\eta) = g(\eta)\big(1-g(\eta)\big)$ (the sigmoid derivative, written in $g$), and simplify. Then sum over examples and write the update.</p>
+
+            <p><strong>1. Per-example loss.</strong> For one example $(\mathbf{x}, y)$, written out fully in $\theta$ with nothing abbreviated:</p>
+            <p>$$J_1(\theta) = -\Big[\,y\log g\big(\theta^{\!\top}\mathbf{x}\big) + (1-y)\log\Big(1-g\big(\theta^{\!\top}\mathbf{x}\big)\Big)\Big]$$</p>
+            <p>Note that $\theta$ appears <em>only</em> inside the combination $\theta^{\!\top}\mathbf{x}$ — and so does $\mathbf{x}$. Define the abbreviation $\eta = \theta^{\!\top}\mathbf{x}$ and write $\hat y = g(\eta)$, giving the compressed form:</p>
+            <p>$$J_1(\theta) = -\big[y\log g(\eta) + (1-y)\log\big(1-g(\eta)\big)\big]$$</p>
+            <p>Nothing has been dropped: $\eta$ is a box with $\theta^{\!\top}\mathbf{x}$ inside it. $J_1$ is now visibly a <em>composition</em>, $J_1(\theta) = r(\eta) \circ \eta(\theta)$, with outer function $r$ and inner function $\eta(\theta) = \theta^{\!\top}\mathbf{x}$. The strategy for the rest of the derivation follows the chain rule's structure: <strong>steps 2–4 differentiate the outer function only</strong> (treating $\eta$ as the variable, which is why no $\mathbf{x}$ appears in them), and <strong>step 5 differentiates the inner function</strong>.</p>
+
+            <p><strong>Lemma (used in steps 2 and 3): where $g'(\eta) = g(\eta)\big(1-g(\eta)\big)$ comes from.</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Derive the identity</button>
+            <div class="solution-body">
+                <p><strong>Givens.</strong> $g(\eta) = \dfrac{1}{1+e^{-\eta}} = \big(1+e^{-\eta}\big)^{-1}$.</p>
+                <p><strong>(i) Chain rule.</strong> Power rule on the outer $u^{-1}$, then the derivative of the inner $1+e^{-\eta}$, which contributes $-e^{-\eta}$:</p>
+                <p>$$g'(\eta) = -\big(1+e^{-\eta}\big)^{-2}\cdot\big(-e^{-\eta}\big) = \frac{e^{-\eta}}{\big(1+e^{-\eta}\big)^2}$$</p>
+                <p>(The quotient rule gives the same thing with one more line — the numerator here is constant, so the chain rule is the shorter route.)</p>
+                <p><strong>(ii) Split the square</strong> into a product of two fractions:</p>
+                <p>$$\frac{e^{-\eta}}{\big(1+e^{-\eta}\big)^2} = \underbrace{\frac{1}{1+e^{-\eta}}}_{=\,g(\eta)}\cdot\frac{e^{-\eta}}{1+e^{-\eta}}$$</p>
+                <p><strong>(iii) Add and subtract $1$</strong> in the numerator of the second factor:</p>
+                <p>$$\frac{e^{-\eta}}{1+e^{-\eta}} = \frac{\big(1+e^{-\eta}\big)-1}{1+e^{-\eta}} = 1 - \frac{1}{1+e^{-\eta}} = 1-g(\eta)$$</p>
+                <div class="highlight-box">$$\boxed{\;g'(\eta) = g(\eta)\big(1-g(\eta)\big)\;}$$</div>
+                <p><strong>Intuition.</strong> Step (iii) is the surprise: $\frac{e^{-\eta}}{1+e^{-\eta}}$ is $1-g(\eta)$ in disguise. The result expresses the derivative purely in terms of the function's own output — no $\eta$, no exponentials — which is why backprop through a sigmoid reuses the forward-pass value instead of recomputing anything.</p>
+            </div>
+
+            <p><strong>2. Differentiate the first log term.</strong> By the log-derivative rule:</p>
+            <p>$$\frac{\partial}{\partial \eta}\log g(\eta) = \frac{g'(\eta)}{g(\eta)}$$</p>
+            <p>Now substitute the identity $g'(\eta) = g(\eta)\big(1-g(\eta)\big)$ into the numerator and cancel the common factor of $g(\eta)$:</p>
+            <p>$$\frac{g'(\eta)}{g(\eta)} = \frac{g(\eta)\big(1-g(\eta)\big)}{g(\eta)} = 1-g(\eta)$$</p>
+
+            <p><strong>3. Differentiate the second log term.</strong> By the log-derivative rule, where the chain rule through the inner function $1-g(\eta)$ contributes the $-g'(\eta)$ in the numerator:</p>
+            <p>$$\frac{\partial}{\partial \eta}\log\big(1-g(\eta)\big) = \frac{-g'(\eta)}{1-g(\eta)}$$</p>
+            <p>Substitute the same identity $g'(\eta) = g(\eta)\big(1-g(\eta)\big)$ and cancel the common factor of $1-g(\eta)$:</p>
+            <p>$$\frac{-g'(\eta)}{1-g(\eta)} = \frac{-g(\eta)\big(1-g(\eta)\big)}{1-g(\eta)} = -g(\eta)$$</p>
+
+            <p><strong>4. Combine.</strong> $J_1$ is $-1$ times [$y$ times the first log term, plus $(1-y)$ times the second]. Substituting the results of steps 2 and 3:</p>
+            <p>$$\frac{\partial J_1}{\partial \eta} = -\Big[y\big(1-g(\eta)\big) + (1-y)\cdot\big(-g(\eta)\big)\Big]$$</p>
+            <p>Distribute both products, writing out all four terms:</p>
+            <p>$$= -\Big[\,y - y\,g(\eta) - g(\eta) + y\,g(\eta)\,\Big]$$</p>
+            <p>The $-y\,g(\eta)$ and $+y\,g(\eta)$ terms cancel exactly:</p>
+            <p>$$= -\big[\,y - g(\eta)\,\big] = g(\eta) - y = \hat y - y$$</p>
+            <p>This cancellation is the "prediction minus truth" collapse from Section 2, derived rather than quoted — the sigmoid derivative and the log-derivative rule are built to annihilate each other.</p>
+
+            <p><strong>5. Chain rule.</strong> Recall from step 1 that $J_1$ is the composition $J_1(\theta) = r(\eta) \circ \eta(\theta)$ with $\eta(\theta) = \theta^{\!\top}\mathbf{x}$, so:</p>
+            <p>$$\nabla_\theta J_1 = \frac{\partial J_1}{\partial \eta}\,\nabla_\theta\, \eta$$</p>
+            <p>Since $\eta = \theta^{\!\top}\mathbf{x} = \sum_{j} \theta_j x_j$, each partial derivative picks out one coordinate of the feature vector:</p>
+            <p>$$\frac{\partial \eta}{\partial \theta_j} = x_j \quad\Longrightarrow\quad \nabla_\theta\, \eta = \mathbf{x}$$</p>
+            <p>Combining with step 4:</p>
+            <p>$$\nabla_\theta J_1 = (\hat y - y)\,\mathbf{x}$$</p>
+
+            <p><strong>6. Sum over the dataset and write the update.</strong> With learning rate $\alpha > 0$:</p>
+            <div class="highlight-box">
+                $$\boxed{\;\nabla_\theta J = \sum_{i=1}^{n}\big(\hat y^{(i)} - y^{(i)}\big)\mathbf{x}^{(i)}, \qquad
+                \theta \leftarrow \theta - \alpha \sum_{i=1}^{n}\big(\hat y^{(i)} - y^{(i)}\big)\mathbf{x}^{(i)}\;}$$
+            </div>
+
+            <p><strong>Intuition.</strong> Each example pulls $\theta$ in the direction of its own feature vector, with force proportional to how wrong the prediction was, and sign given by the direction of the error. A perfectly predicted example ($\hat y = y$) exerts no pull at all. Stochastic gradient descent is the same update using one example (or a mini-batch) per step instead of the full sum.</p>
+
+            <p class="formula-note" style="font-size:13px;">Why the notation pays off: in exponential-family form the Bernoulli per-example NLL is $J_1 = a(\eta) - y\,\eta + \text{const}$, so $\frac{\partial J_1}{\partial \eta} = a'(\eta) - y = g(\eta) - y$ in <em>one line</em> — steps 2–4 above are the same computation done by hand. And since that one-liner used nothing Bernoulli-specific, $\frac{\partial J_1}{\partial \eta} = g(\eta) - y$ holds for <em>every</em> exponential family with canonical link: linear regression ($g = $ identity), Poisson regression ($g = e^\eta$), softmax regression. "Prediction minus truth, times features" is a theorem for the whole GLM class.</p>
+        </div>
+    </div>
+
+</div><!-- end tab-cheat -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 1 — PROBABILITY & BAYES ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-prob" class="tab-content">
+
+    <!-- === section 1 — Notation === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Notation First</h2>
+    </div>
+
+    <div class="card">
+        <p>Every symbol used on this sheet, stated once:</p>
+        <ul>
+            <li>$X, Y$ — random variables. $x, y$ — specific values they take.</li>
+            <li>$p(x)$ — probability mass function (discrete) or density (continuous). $P(A)$ — probability of an event.</li>
+            <li>$F(x) = P(X \le x)$ — cumulative distribution function.</li>
+            <li>$\theta$ — a parameter (or vector of parameters) you are trying to estimate. $\hat\theta$ — your estimate of it.</li>
+            <li>$\mathbf{x} \in \mathbb{R}^d$ — a feature vector (bold = vector). $\boldsymbol\mu$ — mean vector, $\Sigma$ — covariance matrix.</li>
+            <li>$n$ — number of data points. $d$ — number of features/dimensions.</li>
+            <li>$\mathcal{D} = \{(\mathbf{x}^{(i)}, y^{(i)})\}_{i=1}^n$ — the dataset.</li>
+        </ul>
+        <div class="warning-box">
+            <p><strong>One notation trap.</strong> $p(x)$ is a <em>density</em>, not a probability, when $X$ is continuous. Densities can exceed 1. Only $\int_a^b p(x)\,dx$ is a probability.</p>
+        </div>
+    </div>
+
+    <!-- === section 2 — Core rules === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>The Core Rules</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Conditional Probability</h4>
+            <p>$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$</p>
+            <p class="formula-note">Rearranged, this is the product rule: $P(A \cap B) = P(A \mid B)\,P(B)$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Chain Rule</h4>
+            <p>$$p(x_1,\dots,x_n) = \prod_{i=1}^{n} p(x_i \mid x_1,\dots,x_{i-1})$$</p>
+            <p class="formula-note">The backbone of every probabilistic graphical model and every autoregressive language model.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Marginalization</h4>
+            <p>$$p(x) = \sum_y p(x,y) \quad\text{or}\quad p(x) = \int p(x,y)\,dy$$</p>
+            <p class="formula-note">"Sum out" the variable you don't care about. This is where the calculus enters.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Law of Total Probability</h4>
+            <p>$$P(A) = \sum_i P(A \mid B_i)\,P(B_i)$$</p>
+            <p class="formula-note">Requires $\{B_i\}$ to partition the sample space. Continuous form: $p(x) = \int p(x \mid y)p(y)\,dy$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Bayes' Theorem</h4>
+            <p>$$p(\theta \mid \mathcal{D}) = \frac{p(\mathcal{D} \mid \theta)\,p(\theta)}{p(\mathcal{D})}$$</p>
+            <p class="formula-note">$\text{posterior} \propto \text{likelihood} \times \text{prior}$. The denominator $p(\mathcal{D})$ doesn't depend on $\theta$, so you can drop it when maximizing.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Independence</h4>
+            <p>$$p(x,y) = p(x)p(y) \iff p(x \mid y) = p(x)$$</p>
+            <p class="formula-note">Conditional independence given $Z$: $p(x,y \mid z) = p(x \mid z)\,p(y \mid z)$. This is the Naive Bayes assumption.</p>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Independence and conditional independence are unrelated.</strong> Neither implies the other. Two variables can be independent but conditionally dependent (explaining away), or dependent but conditionally independent (a common cause). Don't assume one from the other.</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>Reading Bayes as an update.</strong> The prior $p(\theta)$ is what you believed before seeing data. The likelihood $p(\mathcal{D} \mid \theta)$ scores how well each $\theta$ explains what you actually saw. The posterior is the reweighted belief. Every Bayesian method in ML is this one line applied repeatedly.</p>
+    </div>
+
+    <!-- === section 3 — PDF vs CDF === -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>Density vs. Distribution Function</h2>
+    </div>
+
+    <div class="card">
+        <p><strong>Givens.</strong> $X$ — a continuous random variable. $f(x)$ — its density (PDF). $F(x)$ — its cumulative distribution function (CDF).</p>
+        <div class="highlight-box">
+            $$F(x) = P(X \le x) = \int_{-\infty}^{x} f(t)\,dt \qquad\qquad f(x) = F'(x)$$
+        </div>
+        <p>The PDF and CDF are the same information viewed through the fundamental theorem of calculus: integrate the density and you get the CDF; differentiate the CDF and you recover the density. Probabilities of intervals come from CDF differences:</p>
+        <div class="highlight-box">
+            $$P(a \le X \le b) = F(b) - F(a) = \int_a^b f(x)\,dx$$
+        </div>
+        <p>Properties forced by the definitions: $F$ is non-decreasing, $F(-\infty) = 0$, $F(+\infty) = 1$; and $f(x) \ge 0$ with $\int_{-\infty}^{\infty} f(x)\,dx = 1$.</p>
+    </div>
+
+    <div class="viz-container">
+        <div class="viz-controls">
+            <div class="sum-type-buttons">
+                <button class="sum-type-btn active" id="pc-btn-normal" onclick="pcSetDist('normal', this)">Gaussian(0,1)</button>
+                <button class="sum-type-btn" id="pc-btn-exp" onclick="pcSetDist('exp', this)">Exponential(1)</button>
+                <button class="sum-type-btn" id="pc-btn-unif" onclick="pcSetDist('unif', this)">Uniform(0,1)</button>
+            </div>
+            <div class="slider-group">
+                <label>Drag x</label>
+                <div class="slider-row">
+                    <input type="range" id="pc-x" min="0" max="1000" value="500" step="1">
+                    <span class="n-display" id="pc-x-val">0.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="viz-canvas-wrap">
+            <canvas id="pc-canvas" width="720" height="430"></canvas>
+        </div>
+        <div class="readout-panel">
+            <div class="readout-item">
+                <div class="readout-label">Shaded area under f</div>
+                <div class="readout-value" id="pc-area">0.500</div>
+            </div>
+            <div class="readout-item">
+                <div class="readout-label">Height of F(x)</div>
+                <div class="readout-value" id="pc-F">0.500</div>
+            </div>
+            <div class="readout-item">
+                <div class="readout-label">f(x) = slope of F at x</div>
+                <div class="readout-value" id="pc-f">0.399</div>
+            </div>
+        </div>
+        <p class="viz-caption">The gold area in the top panel <em>is</em> the height of the dot in the bottom panel. Where $f$ peaks, $F$ climbs steepest.</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>Three things to notice as you drag.</strong> (1) The two readouts on the left are always identical — that <em>is</em> the equation $F(x) = \int_{-\infty}^x f$. (2) At the Gaussian's peak, $F$ has its steepest slope — the density is the <em>rate</em> of probability accumulation, $f = F'$. (3) Switch to Uniform: $f$ is flat, so $F$ is a straight ramp; and where $f = 0$, $F$ is flat — nothing accumulates where there is no density.</p>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Watch the Exponential's density at $x=0$.</strong> $f(0) = 1$, and for Exponential$(\lambda)$ with $\lambda > 1$ it exceeds 1. A density is not a probability — only areas under it are. $P(X = x) = 0$ for every single point of a continuous distribution; all probability lives in intervals.</p>
+    </div>
+
+    <!-- === section 4 — Marginalization visualizer === -->
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>Marginalization, Visualized</h2>
+    </div>
+
+    <div class="card">
+        <p><strong>Givens.</strong> A bivariate Gaussian joint density $p(x,y)$ with standard deviations $\sigma_x$, $\sigma_y$ and correlation $\rho$. The surface below is the joint. The curves on the two walls are its marginals — literally the "shadows" the surface casts when you integrate out the other variable:</p>
+        <div class="highlight-box">
+            $$p(x) = \int_{-\infty}^{\infty} p(x,y)\,dy \qquad\qquad p(y) = \int_{-\infty}^{\infty} p(x,y)\,dx$$
+        </div>
+        <p>The floor shows the $1\sigma$ and $2\sigma$ contour ellipses of the joint.</p>
+    </div>
+
+    <div class="viz-container">
+        <div class="viz-controls">
+            <div class="slider-group">
+                <label>Correlation &rho;</label>
+                <div class="slider-row">
+                    <input type="range" id="mv-rho" min="-90" max="90" value="0" step="5">
+                    <span class="n-display" id="mv-rho-val">0.00</span>
+                </div>
+            </div>
+            <div class="slider-group">
+                <label>&sigma;<sub>x</sub></label>
+                <div class="slider-row">
+                    <input type="range" id="mv-sx" min="60" max="150" value="100" step="5">
+                    <span class="n-display" id="mv-sx-val">1.00</span>
+                </div>
+            </div>
+            <div class="slider-group">
+                <label>&sigma;<sub>y</sub></label>
+                <div class="slider-row">
+                    <input type="range" id="mv-sy" min="60" max="150" value="100" step="5">
+                    <span class="n-display" id="mv-sy-val">1.00</span>
+                </div>
+            </div>
+            <div class="slider-group">
+                <label>Rotate view</label>
+                <div class="slider-row">
+                    <input type="range" id="mv-yaw" min="-55" max="-10" value="-30" step="1">
+                    <span class="n-display" id="mv-yaw-val">-30&deg;</span>
+                </div>
+            </div>
+        </div>
+        <div class="viz-canvas-wrap">
+            <canvas id="mv-canvas" width="720" height="470"></canvas>
+        </div>
+        <p class="viz-caption">Gold shadow on the back wall: $p(x)$. Green shadow on the side wall: $p(y)$. Heights are normalized for display.</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The experiment to run.</strong> Drag $\rho$ from $0$ to $0.9$. The surface collapses into a knife-edge ridge — the joint changes drastically — but <em>neither wall shadow moves at all</em>. That is marginalization destroying information: $p(x)$ and $p(y)$ are identical for every value of $\rho$, so the marginals alone can never tell you whether $X$ and $Y$ are dependent. Recovering the joint from its marginals is impossible; this is why you cannot in general write $p(x,y) = p(x)p(y)$ — that factorization is <em>exactly</em> the claim of independence.</p>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Contrast with $\sigma_x$.</strong> Now drag $\sigma_x$ instead. The joint changes <em>and</em> the back-wall shadow widens with it. Parameters of the marginal show up in the marginal; the dependence structure does not. Knowing which changes are visible in a shadow and which are invisible is the whole game in latent-variable modeling.</p>
+    </div>
+
+</div><!-- end tab-prob -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 2 — EXPECTATION & VARIANCE ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-expect" class="tab-content">
+
+    <!-- === section 1 — Expectation === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Expectation</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Definition</h4>
+            <p>$$\mathbb{E}[X] = \sum_x x\,p(x) \quad\text{or}\quad \int_{-\infty}^{\infty} x f(x)\,dx$$</p>
+            <p class="formula-note">The probability-weighted average. Exists only if the sum/integral converges absolutely.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>LOTUS</h4>
+            <p>$$\mathbb{E}[g(X)] = \int g(x) f(x)\,dx$$</p>
+            <p class="formula-note">Law of the Unconscious Statistician: you do <em>not</em> need the distribution of $g(X)$ — just weight $g$ by the density of $X$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Linearity</h4>
+            <p>$$\mathbb{E}[aX + bY + c] = a\mathbb{E}[X] + b\mathbb{E}[Y] + c$$</p>
+            <p class="formula-note"><strong>Always true.</strong> No independence required. This is the single most-used fact in ML derivations.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Product Rule (needs independence)</h4>
+            <p>$$X \perp Y \implies \mathbb{E}[XY] = \mathbb{E}[X]\,\mathbb{E}[Y]$$</p>
+            <p class="formula-note">Unlike linearity, this one <em>does</em> require independence. Mixing these up is the most common derivation error.</p>
+        </div>
+    </div>
+
+    <!-- === section 2 — Variance & covariance === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Variance &amp; Covariance</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Variance</h4>
+            <p>$$\operatorname{Var}(X) = \mathbb{E}\big[(X-\mu)^2\big] = \mathbb{E}[X^2] - \big(\mathbb{E}[X]\big)^2$$</p>
+            <p>$$\operatorname{Var}(X) = \int_{-\infty}^{\infty} (x-\mu)^2 f(x)\,dx \quad\text{or}\quad \sum_x (x-\mu)^2 p(x)$$</p>
+            <p class="formula-note">The integral form is just LOTUS applied to $g(x) = (x-\mu)^2$. The shortcut form $\mathbb{E}[X^2] - \mu^2$ is almost always faster to compute.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Affine Scaling</h4>
+            <p>$$\operatorname{Var}(aX + b) = a^2 \operatorname{Var}(X)$$</p>
+            <p class="formula-note">Shifting doesn't change spread; scaling changes it <em>quadratically</em>.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Covariance</h4>
+            <p>$$\operatorname{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]$$</p>
+            <p class="formula-note">$\operatorname{Cov}(X,X) = \operatorname{Var}(X)$. Independence $\implies \operatorname{Cov} = 0$, but <strong>the converse is false</strong>.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Variance of a Sum</h4>
+            <p>$$\operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)$$</p>
+            <p class="formula-note">If independent, the cross term vanishes and variances simply add.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Correlation</h4>
+            <p>$$\rho_{XY} = \frac{\operatorname{Cov}(X,Y)}{\sigma_X \sigma_Y} \in [-1, 1]$$</p>
+            <p class="formula-note">Covariance rescaled to be unit-free. $\rho = \pm 1$ exactly when $Y$ is an affine function of $X$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Vector Form</h4>
+            <p>$$\Sigma = \mathbb{E}\big[(\mathbf{x}-\boldsymbol\mu)(\mathbf{x}-\boldsymbol\mu)^{\!\top}\big]$$</p>
+            <p class="formula-note">$\Sigma$ is symmetric positive semi-definite. Under a linear map: $\operatorname{Cov}(A\mathbf{x}) = A\Sigma A^{\!\top}$.</p>
+        </div>
+    </div>
+
+    <!-- === section 3 — Conditioning === -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>Conditioning &amp; Decomposition</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Tower Property</h4>
+            <p>$$\mathbb{E}[X] = \mathbb{E}\big[\mathbb{E}[X \mid Y]\big]$$</p>
+            <p class="formula-note">Also called the law of total (or iterated) expectation. Note $\mathbb{E}[X \mid Y]$ is itself a random variable — a function of $Y$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Law of Total Variance</h4>
+            <p>$$\operatorname{Var}(X) = \mathbb{E}\big[\operatorname{Var}(X \mid Y)\big] + \operatorname{Var}\big(\mathbb{E}[X \mid Y]\big)$$</p>
+            <p class="formula-note">"Average within-group variance plus variance of group means." The structural ancestor of the bias–variance split.</p>
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <h3 style="font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); margin-bottom: 10px;">Bias–Variance Decomposition</h3>
+        <p><strong>Givens.</strong> $\theta$ = the true parameter (fixed, unknown). $\hat\theta$ = an estimator (random, because it depends on the sampled data).</p>
+        <div class="highlight-box">
+            $$\underbrace{\mathbb{E}\big[(\hat\theta - \theta)^2\big]}_{\text{MSE}} = \underbrace{\big(\mathbb{E}[\hat\theta] - \theta\big)^2}_{\text{Bias}^2} + \underbrace{\operatorname{Var}(\hat\theta)}_{\text{Variance}}$$
+        </div>
+        <p>For prediction with irreducible noise $\varepsilon$ of variance $\sigma^2$, the same algebra gives</p>
+        <div class="highlight-box">
+            $$\mathbb{E}\big[(y - \hat f(\mathbf{x}))^2\big] = \operatorname{Bias}\big(\hat f(\mathbf{x})\big)^2 + \operatorname{Var}\big(\hat f(\mathbf{x})\big) + \sigma^2$$
+        </div>
+        <p class="formula-note" style="font-size: 13px;">The $\sigma^2$ floor cannot be reduced by any model. Chasing it is how you overfit.</p>
+    </div>
+
+</div><!-- end tab-expect -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 3 — DISTRIBUTIONS ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-dists" class="tab-content">
+
+    <!-- === section 1 — Discrete === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Discrete Distributions</h2>
+    </div>
+
+    <div class="dist-table-wrap">
+    <table class="dist-table">
+        <thead>
+            <tr><th>Distribution</th><th>PMF</th><th>Mean</th><th>Variance</th><th>Shows up as</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bernoulli$(p)$</td>
+                <td>$p^x(1-p)^{1-x}$, &nbsp;$x \in \{0,1\}$</td>
+                <td>$p$</td>
+                <td>$p(1-p)$</td>
+                <td>Binary labels; logistic regression output</td>
+            </tr>
+            <tr>
+                <td>Categorical$(\boldsymbol\pi)$</td>
+                <td>$\prod_{k=1}^{K}\pi_k^{\,\mathbb{1}[x=k]}$</td>
+                <td>—</td>
+                <td>—</td>
+                <td>Multiclass labels; softmax output</td>
+            </tr>
+            <tr>
+                <td>Binomial$(n,p)$</td>
+                <td>$\binom{n}{k}p^k(1-p)^{n-k}$</td>
+                <td>$np$</td>
+                <td>$np(1-p)$</td>
+                <td>Counts of successes in $n$ trials</td>
+            </tr>
+            <tr>
+                <td>Geometric$(p)$</td>
+                <td>$(1-p)^{k-1}p$, &nbsp;$k \ge 1$</td>
+                <td>$1/p$</td>
+                <td>$(1-p)/p^2$</td>
+                <td>Trials until first success</td>
+            </tr>
+            <tr>
+                <td>Poisson$(\lambda)$</td>
+                <td>$\dfrac{e^{-\lambda}\lambda^k}{k!}$, &nbsp;$k \ge 0$</td>
+                <td>$\lambda$</td>
+                <td>$\lambda$</td>
+                <td>Event counts; Poisson regression (a GLM)</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>Poisson's signature.</strong> Mean equals variance. If your count data has variance much larger than its mean, it is <em>overdispersed</em> and Poisson is the wrong model — reach for negative binomial instead.</p>
+    </div>
+
+    <!-- === section 2 — Continuous === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Continuous Distributions</h2>
+    </div>
+
+    <div class="dist-table-wrap">
+    <table class="dist-table">
+        <thead>
+            <tr><th>Distribution</th><th>Density</th><th>Mean</th><th>Variance</th><th>Shows up as</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Uniform$(a,b)$</td>
+                <td>$\dfrac{1}{b-a}$ on $[a,b]$</td>
+                <td>$\dfrac{a+b}{2}$</td>
+                <td>$\dfrac{(b-a)^2}{12}$</td>
+                <td>Uninformative priors; initialization</td>
+            </tr>
+            <tr>
+                <td>Gaussian$(\mu,\sigma^2)$</td>
+                <td>$\dfrac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$</td>
+                <td>$\mu$</td>
+                <td>$\sigma^2$</td>
+                <td>Noise model $\to$ squared-error loss</td>
+            </tr>
+            <tr>
+                <td>Exponential$(\lambda)$</td>
+                <td>$\lambda e^{-\lambda x}$, &nbsp;$x \ge 0$</td>
+                <td>$1/\lambda$</td>
+                <td>$1/\lambda^2$</td>
+                <td>Waiting times; survival models</td>
+            </tr>
+            <tr>
+                <td>Laplace$(\mu,b)$</td>
+                <td>$\dfrac{1}{2b}e^{-|x-\mu|/b}$</td>
+                <td>$\mu$</td>
+                <td>$2b^2$</td>
+                <td>Prior $\to$ L1 penalty (LASSO); heavy tails</td>
+            </tr>
+            <tr>
+                <td>Beta$(\alpha,\beta)$</td>
+                <td>$\dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$</td>
+                <td>$\dfrac{\alpha}{\alpha+\beta}$</td>
+                <td>$\dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$</td>
+                <td>Conjugate prior for a Bernoulli/Binomial $p$</td>
+            </tr>
+            <tr>
+                <td>Gamma$(\alpha,\lambda)$</td>
+                <td>$\dfrac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}$</td>
+                <td>$\alpha/\lambda$</td>
+                <td>$\alpha/\lambda^2$</td>
+                <td>Conjugate prior for precision; $\alpha=1$ gives Exponential</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <!-- === section 3 — Gaussian toolkit === -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>The Gaussian Toolkit</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Standardization</h4>
+            <p>$$Z = \frac{X - \mu}{\sigma} \sim \mathcal{N}(0,1)$$</p>
+            <p class="formula-note">Turns any Gaussian into the standard one. This is exactly what feature normalization does.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Closure Under Addition</h4>
+            <p>$$X_i \stackrel{\text{ind}}{\sim} \mathcal{N}(\mu_i, \sigma_i^2) \implies \sum_i X_i \sim \mathcal{N}\Big(\sum_i \mu_i, \sum_i \sigma_i^2\Big)$$</p>
+            <p class="formula-note">Sums of independent Gaussians stay Gaussian. Very few families have this property.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Multivariate Gaussian</h4>
+            <p>$$p(\mathbf{x}) = \frac{1}{(2\pi)^{d/2}|\Sigma|^{1/2}}\exp\!\Big(\!-\tfrac{1}{2}(\mathbf{x}-\boldsymbol\mu)^{\!\top}\Sigma^{-1}(\mathbf{x}-\boldsymbol\mu)\Big)$$</p>
+            <p class="formula-note">The exponent is the squared <em>Mahalanobis distance</em> — Euclidean distance rescaled by the covariance.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Linear Transformation</h4>
+            <p>$$\mathbf{x} \sim \mathcal{N}(\boldsymbol\mu, \Sigma) \implies A\mathbf{x} + \mathbf{b} \sim \mathcal{N}(A\boldsymbol\mu + \mathbf{b},\; A\Sigma A^{\!\top})$$</p>
+            <p class="formula-note">Gaussians are closed under affine maps — which is why linear models with Gaussian noise stay tractable.</p>
+        </div>
+    </div>
+
+    <!-- === section 4 — Exponential family === -->
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>The Exponential Family</h2>
+    </div>
+
+    <div class="card">
+        <p><strong>Givens.</strong> $\eta$ — the <em>natural parameter</em>. $T(x)$ — the <em>sufficient statistic</em>. $a(\eta)$ — the <em>log-partition function</em>. $h(x)$ — the base measure.</p>
+        <p>A family of distributions is an <strong>exponential family</strong> if its density/PMF can be written as</p>
+        <div class="highlight-box">
+            $$p(x; \eta) = h(x)\,\exp\!\big(\eta^{\!\top} T(x) - a(\eta)\big)$$
+        </div>
+        <p>$a(\eta)$ is not a free choice — it is forced by normalization: $a(\eta) = \log \int h(x)e^{\eta^\top T(x)}\,dx$, i.e., whatever makes the density integrate to 1.</p>
+    </div>
+
+    <div class="dist-table-wrap">
+    <table class="dist-table">
+        <thead>
+            <tr><th>Distribution</th><th>Natural param $\eta$</th><th>$T(x)$</th><th>$a(\eta)$</th><th>$a'(\eta) = \mathbb{E}[T]$</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bernoulli$(p)$</td>
+                <td>$\log\dfrac{p}{1-p}$ &nbsp;(log-odds)</td>
+                <td>$x$</td>
+                <td>$\log(1+e^{\eta})$</td>
+                <td>$\sigma(\eta) = p$</td>
+            </tr>
+            <tr>
+                <td>Poisson$(\lambda)$</td>
+                <td>$\log\lambda$</td>
+                <td>$x$</td>
+                <td>$e^{\eta}$</td>
+                <td>$e^{\eta} = \lambda$</td>
+            </tr>
+            <tr>
+                <td>Gaussian$(\mu)$, $\sigma^2$ known</td>
+                <td>$\mu/\sigma^2$</td>
+                <td>$x$</td>
+                <td>$\sigma^2\eta^2/2$</td>
+                <td>$\sigma^2\eta = \mu$</td>
+            </tr>
+            <tr>
+                <td>Exponential$(\lambda)$</td>
+                <td>$-\lambda$ &nbsp;$(\eta < 0)$</td>
+                <td>$x$</td>
+                <td>$-\log(-\eta)$</td>
+                <td>$-1/\eta = 1/\lambda$</td>
+            </tr>
+            <tr>
+                <td>Categorical$(\boldsymbol\pi)$</td>
+                <td>$\eta_k = \log(\pi_k/\pi_K)$</td>
+                <td>one-hot$(x)$</td>
+                <td>$\log\sum_k e^{\eta_k}$</td>
+                <td>$\text{softmax}(\boldsymbol\eta) = \boldsymbol\pi$</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="card">
+        <p><strong>Membership scorecard for this sheet.</strong> Exponential family: <span style="color: var(--green-dark); font-weight:600;">Bernoulli, Categorical, Binomial (fixed $n$), Poisson, Gaussian, Exponential, Beta, Gamma</span>. Not exponential family: <span style="color: #C0392B; font-weight:600;">Uniform$(a,b)$</span> — its support depends on the parameters, which the form above cannot express — and <span style="color: #C0392B; font-weight:600;">Laplace with unknown location $\mu$</span>, because $|x-\mu|$ cannot be split into the required $\eta^\top T(x)$ product.</p>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Moments From Derivatives (theorem)</h4>
+            <p>$$\mathbb{E}[T(X)] = a'(\eta), \qquad \operatorname{Var}\big(T(X)\big) = a''(\eta)$$</p>
+            <p class="formula-note">Proved by differentiating the normalization identity $\int h(x)e^{\eta T(x) - a(\eta)}dx = 1$ under the integral sign. No integration against the density needed.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Guaranteed Concavity</h4>
+            <p>$$a''(\eta) = \operatorname{Var}(T) \ge 0 \implies a \text{ is convex} \implies \ell(\eta) \text{ is concave}$$</p>
+            <p class="formula-note">The log-likelihood in $\eta$ has no bad local maxima — ever. This is why logistic and Poisson regression are convex problems.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>MLE = Moment Matching</h4>
+            <p>$$a'(\hat\eta) = \frac{1}{n}\sum_{i=1}^{n} T(x_i)$$</p>
+            <p class="formula-note">Setting the score to zero always reduces to: choose $\eta$ so the model's expected sufficient statistic equals the sample average. Every MLE result in the table on the MLE tab is a special case of this one line.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Sufficiency</h4>
+            <p>$$\ell(\eta) \text{ depends on the data only through } \sum_{i} T(x_i)$$</p>
+            <p class="formula-note">A fixed-size summary carries <em>all</em> the information about $\eta$, no matter how large $n$ grows. This is what makes streaming/online estimation possible.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Conjugate Priors Exist</h4>
+            <p>$$p(\eta) \propto \exp\!\big(\eta^{\!\top}\boldsymbol\tau - \nu\, a(\eta)\big)$$</p>
+            <p class="formula-note">Every exponential family admits a conjugate prior, so the posterior stays in the same family as the prior — Beta–Bernoulli and Gamma–Poisson are the classic pairs.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Maximum Entropy</h4>
+            <p>$$\text{Exp.\ family} = \arg\max_p H(p) \;\text{ s.t. }\; \mathbb{E}_p[T(X)] \text{ fixed}$$</p>
+            <p class="formula-note">Among all distributions matching given expected statistics, the exponential family member is the least-committed one. The Gaussian's max-entropy status (Entropy tab) is this with $T(x) = (x, x^2)$.</p>
+        </div>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The GLM connection.</strong> A generalized linear model makes <em>two</em> moves, and they have different logical status:</p>
+        <ol style="margin-top: 8px;">
+            <li><strong>Design choice:</strong> assume $y \mid \mathbf{x}$ follows an exponential family, and <em>choose</em> to set $\eta = \theta^{\!\top}\mathbf{x}$. Nothing forces linearity here — it is a modeling assumption.</li>
+            <li><strong>Theorem:</strong> the prediction function is then <em>derived</em>: $h_\theta(\mathbf{x}) = \mathbb{E}[y \mid \mathbf{x}] = a'(\theta^{\!\top}\mathbf{x})$, using the moments-from-derivatives result above.</li>
+        </ol>
+        <p>Read the last column of the table with this in mind: $a'(\eta) = \sigma(\eta)$ for Bernoulli is <em>why</em> logistic regression uses the sigmoid — it was never a choice. Same for softmax (Categorical), $e^\eta$ (Poisson), and the identity (Gaussian).</p>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Don't be fooled by the Poisson coincidence.</strong> For Poisson, $a(\eta) = e^\eta$ and $a'(\eta) = e^\eta$ — the log-partition function and its derivative happen to be the same function. That is special to Poisson, not a general pattern. In general $a$ and the response function $a'$ are different objects: for Bernoulli, $a(\eta) = \log(1+e^\eta)$ while $a'(\eta) = \sigma(\eta)$. The relationship $g(\eta) = a'(\eta)$ is a <em>theorem of the family</em>, not a definition you get to write down.</p>
+    </div>
+
+</div><!-- end tab-dists -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 4 — MLE & LOSS ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-mle" class="tab-content">
+
+    <!-- === section 1 — The recipe === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>The MLE Recipe</h2>
+    </div>
+
+    <div class="card">
+        <p><strong>Givens.</strong> Data $x_1, \dots, x_n$ assumed i.i.d. from a family $p(x; \theta)$ with unknown parameter $\theta$.</p>
+
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Step 1 — Likelihood</h4>
+                <p>$$L(\theta) = \prod_{i=1}^{n} p(x_i; \theta)$$</p>
+                <p class="formula-note">The probability of the data you actually saw, viewed as a function of $\theta$.</p>
+            </div>
+
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>Step 2 — Log-Likelihood</h4>
+                <p>$$\ell(\theta) = \sum_{i=1}^{n} \log p(x_i; \theta)$$</p>
+                <p class="formula-note">$\log$ is strictly increasing, so the maximizer is unchanged — but products become sums, which are differentiable one term at a time.</p>
+            </div>
+
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Step 3 — Differentiate</h4>
+                <p>$$\nabla_\theta \ell(\theta) = \mathbf{0}$$</p>
+                <p class="formula-note">Solve the score equation. In multiple parameters this is a system, one equation per component.</p>
+            </div>
+
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Step 4 — Verify a Maximum</h4>
+                <p>$$\nabla^2_\theta \ell(\hat\theta) \prec 0$$</p>
+                <p class="formula-note">A stationary point could be a minimum or saddle. Check the second derivative (or show $\ell$ is concave).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- === section 2 — Standard results === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Standard MLE Results</h2>
+    </div>
+
+    <div class="dist-table-wrap">
+    <table class="dist-table">
+        <thead>
+            <tr><th>Model</th><th>MLE</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bernoulli$(p)$</td>
+                <td>$\hat p = \bar x = \frac{1}{n}\sum_i x_i$</td>
+                <td>Just the sample proportion</td>
+            </tr>
+            <tr>
+                <td>Poisson$(\lambda)$</td>
+                <td>$\hat\lambda = \bar x$</td>
+                <td>Sample mean again</td>
+            </tr>
+            <tr>
+                <td>Exponential$(\lambda)$</td>
+                <td>$\hat\lambda = 1/\bar x$</td>
+                <td>Reciprocal — because $\mathbb{E}[X] = 1/\lambda$</td>
+            </tr>
+            <tr>
+                <td>Gaussian mean</td>
+                <td>$\hat\mu = \bar x$</td>
+                <td>Unbiased</td>
+            </tr>
+            <tr>
+                <td>Gaussian variance</td>
+                <td>$\hat\sigma^2 = \frac{1}{n}\sum_i (x_i - \bar x)^2$</td>
+                <td><strong>Biased</strong> — divides by $n$, not $n-1$</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>MLE is not automatically unbiased.</strong> The Gaussian variance MLE underestimates $\sigma^2$ by a factor of $\frac{n-1}{n}$, because it measures deviations from $\bar x$ (which was fit to the same data) rather than from the true $\mu$. MLE is <em>consistent</em> — it converges to the truth as $n \to \infty$ — but that is a weaker guarantee than unbiasedness.</p>
+    </div>
+
+    <!-- === section 3 — MAP === -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>MAP: Adding a Prior</h2>
+    </div>
+
+    <div class="card">
+        <div class="highlight-box">
+            $$\hat\theta_{\text{MAP}} = \arg\max_\theta \Big[\underbrace{\ell(\theta)}_{\text{log-likelihood}} + \underbrace{\log p(\theta)}_{\text{log-prior}}\Big]$$
+        </div>
+        <p>MLE is the special case where the prior is flat. The log-prior term is exactly where regularization comes from:</p>
+        <ul>
+            <li><strong>Gaussian prior</strong> $\theta \sim \mathcal{N}(0, \tau^2 I)$ &nbsp;$\Longrightarrow$&nbsp; penalty $\frac{1}{2\tau^2}\|\theta\|_2^2$ &nbsp;— this is <strong>L2 / ridge</strong>.</li>
+            <li><strong>Laplace prior</strong> $\theta \sim \text{Laplace}(0,b)$ &nbsp;$\Longrightarrow$&nbsp; penalty $\frac{1}{b}\|\theta\|_1$ &nbsp;— this is <strong>L1 / LASSO</strong>.</li>
+        </ul>
+        <p class="formula-note" style="font-size: 13px;">Regularization strength $\lambda$ and prior width are the same knob wearing different clothes: a tighter prior means a stronger penalty.</p>
+    </div>
+
+    <!-- === section 4 — Bridges to loss === -->
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>Where Loss Functions Come From</h2>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The central idea of this tab.</strong> You never actually choose a loss function. You choose a <em>noise model</em>, write down its negative log-likelihood, and the loss function falls out. Every standard loss in ML is an NLL in disguise.</p>
+    </div>
+
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>Gaussian noise $\Rightarrow$ Squared error</h3>
+        <div class="step-concept"><span class="step-label">Assumption</span></div>
+        <p>$y^{(i)} = \theta^{\!\top}\mathbf{x}^{(i)} + \varepsilon^{(i)}$ with $\varepsilon^{(i)} \sim \mathcal{N}(0,\sigma^2)$ i.i.d.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Derivation</button>
+        <div class="example-body">
+            <p><strong>Step 0 — The plan.</strong> Write the density of each $y^{(i)}$, take logs, drop everything that doesn't involve $\theta$, and see what's left.</p>
+            <p><strong>1.</strong> The assumption says $y^{(i)} \mid \mathbf{x}^{(i)} \sim \mathcal{N}(\theta^{\!\top}\mathbf{x}^{(i)}, \sigma^2)$, so</p>
+            <p>$$p(y^{(i)} \mid \mathbf{x}^{(i)}; \theta) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left(-\frac{(y^{(i)} - \theta^{\!\top}\mathbf{x}^{(i)})^2}{2\sigma^2}\right)$$</p>
+            <p><strong>2.</strong> Taking the log of the product over $i$ turns it into a sum, and $\log(e^u) = u$:</p>
+            <p>$$\ell(\theta) = -n\log\sqrt{2\pi\sigma^2} \;-\; \frac{1}{2\sigma^2}\sum_{i=1}^{n}\big(y^{(i)} - \theta^{\!\top}\mathbf{x}^{(i)}\big)^2$$</p>
+            <p><strong>3.</strong> The first term is a constant in $\theta$. Maximizing $\ell$ is therefore minimizing the sum.</p>
+            <div class="highlight-box">$$\boxed{\;\hat\theta_{\text{MLE}} = \arg\min_\theta \sum_{i=1}^{n}\big(y^{(i)} - \theta^{\!\top}\mathbf{x}^{(i)}\big)^2\;}$$</div>
+            <p><strong>Intuition.</strong> Squaring the residual isn't an arbitrary choice of "fair penalty" — it is the exponent of the Gaussian. Assume different noise and you get a different loss.</p>
+        </div>
+    </div>
+
+    <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+        <h3>Bernoulli labels $\Rightarrow$ Cross-entropy</h3>
+        <div class="step-concept"><span class="step-label">Assumption</span></div>
+        <p>$y^{(i)} \in \{0,1\}$ with $P(y=1 \mid \mathbf{x}) = \hat y = \sigma(\theta^{\!\top}\mathbf{x})$.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Derivation</button>
+        <div class="example-body">
+            <p><strong>Step 0 — The plan.</strong> Write the Bernoulli PMF in the exponent trick form, take logs, negate.</p>
+            <p><strong>1.</strong> The Bernoulli PMF written to cover both cases at once:</p>
+            <p>$$p(y \mid \mathbf{x}) = \hat y^{\,y}(1-\hat y)^{1-y}$$</p>
+            <p><strong>2.</strong> Taking logs pulls the exponents down as coefficients:</p>
+            <p>$$\log p(y \mid \mathbf{x}) = y\log \hat y + (1-y)\log(1-\hat y)$$</p>
+            <p><strong>3.</strong> Sum over the dataset and negate to convert maximization into minimization.</p>
+            <div class="highlight-box">$$\boxed{\;J(\theta) = -\sum_{i=1}^{n}\Big[y^{(i)}\log \hat y^{(i)} + (1-y^{(i)})\log(1-\hat y^{(i)})\Big]\;}$$</div>
+            <p><strong>Intuition.</strong> Only one of the two terms is active for any given example — the indicator $y$ switches the other off. The loss is the log-probability the model assigned to the label that actually occurred.</p>
+        </div>
+    </div>
+
+    <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+        <h3>Categorical labels $\Rightarrow$ Multiclass cross-entropy</h3>
+        <div class="step-concept"><span class="step-label">Result</span></div>
+        <p>With $K$ classes and softmax outputs $\hat y_k$:</p>
+        <div class="highlight-box">$$J(\theta) = -\sum_{i=1}^{n}\sum_{k=1}^{K} \mathbb{1}\big[y^{(i)} = k\big]\log \hat y_k^{(i)}$$</div>
+        <p class="formula-note" style="font-size: 13px;">The indicator collapses the inner sum to a single term: the log-probability of the correct class. The binary case above is exactly this with $K=2$.</p>
+    </div>
+
+</div><!-- end tab-mle -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 5 — ENTROPY & INFORMATION ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-entropy" class="tab-content">
+
+    <!-- === section 1 — Entropy === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Entropy</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Entropy</h4>
+            <p>$$H(X) = -\sum_x p(x)\log p(x) = -\mathbb{E}\big[\log p(X)\big]$$</p>
+            <p class="formula-note">Average surprise. Units: bits if $\log_2$, nats if $\ln$. Convention: $0\log 0 = 0$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Range</h4>
+            <p>$$0 \le H(X) \le \log|\mathcal{X}|$$</p>
+            <p class="formula-note">Zero when $X$ is deterministic; maximal when $X$ is uniform. Uniform = maximally uncertain.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Conditional Entropy</h4>
+            <p>$$H(Y \mid X) = -\sum_{x,y} p(x,y)\log p(y \mid x)$$</p>
+            <p class="formula-note">Uncertainty left in $Y$ after learning $X$. Always $H(Y \mid X) \le H(Y)$ — conditioning never hurts on average.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Chain Rule</h4>
+            <p>$$H(X,Y) = H(X) + H(Y \mid X)$$</p>
+            <p class="formula-note">Total uncertainty = uncertainty in $X$, plus what remains in $Y$ once $X$ is known.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Differential Entropy</h4>
+            <p>$$h(X) = -\int f(x)\log f(x)\,dx$$</p>
+            <p class="formula-note">Continuous analogue. Warning: can be <em>negative</em>, and is not invariant under change of variables.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Gaussian Entropy</h4>
+            <p>$$h\big(\mathcal{N}(\mu,\sigma^2)\big) = \tfrac{1}{2}\log(2\pi e\,\sigma^2)$$</p>
+            <p class="formula-note">In $d$ dimensions: $\tfrac{1}{2}\log\big((2\pi e)^d |\Sigma|\big)$. The Gaussian has maximum entropy among all distributions with a given variance.</p>
+        </div>
+    </div>
+
+    <!-- === section 2 — Divergence === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Cross-Entropy &amp; KL Divergence</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Cross-Entropy</h4>
+            <p>$$H(p,q) = -\sum_x p(x)\log q(x)$$</p>
+            <p class="formula-note">Expected surprise when the truth is $p$ but you encode using $q$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>KL Divergence</h4>
+            <p>$$D_{\text{KL}}(p \,\|\, q) = \sum_x p(x)\log\frac{p(x)}{q(x)}$$</p>
+            <p class="formula-note">The <em>excess</em> cost of using $q$ instead of $p$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>The Bridge</h4>
+            <p>$$H(p,q) = H(p) + D_{\text{KL}}(p \,\|\, q)$$</p>
+            <p class="formula-note">Cross-entropy = irreducible entropy of the truth + penalty for your model being wrong.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Gibbs' Inequality</h4>
+            <p>$$D_{\text{KL}}(p \,\|\, q) \ge 0, \quad \text{with } = 0 \iff p = q$$</p>
+            <p class="formula-note">Follows from Jensen's inequality applied to the convex function $-\log$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>KL Between Gaussians</h4>
+            <p>$$D_{\text{KL}}\big(\mathcal{N}_1 \,\|\, \mathcal{N}_2\big) = \log\frac{\sigma_2}{\sigma_1} + \frac{\sigma_1^2 + (\mu_1-\mu_2)^2}{2\sigma_2^2} - \frac{1}{2}$$</p>
+            <p class="formula-note">The closed form that makes VAE training tractable.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Mutual Information</h4>
+            <p>$$I(X;Y) = H(X) - H(X \mid Y) = D_{\text{KL}}\big(p(x,y) \,\|\, p(x)p(y)\big)$$</p>
+            <p class="formula-note">How much knowing $Y$ reduces uncertainty about $X$. Symmetric, and $I(X;Y)=0 \iff X \perp Y$.</p>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>KL is not a distance.</strong> It is not symmetric — $D_{\text{KL}}(p\|q) \ne D_{\text{KL}}(q\|p)$ in general — and it does not satisfy the triangle inequality. Calling it "KL distance" will cost you points. It is a <em>divergence</em>.</p>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>Why cross-entropy loss is just MLE.</strong> Let $p$ be the empirical label distribution (fixed by the data) and $q_\theta$ your model. Since $H(p,q_\theta) = H(p) + D_{\text{KL}}(p\|q_\theta)$ and $H(p)$ does not depend on $\theta$, minimizing cross-entropy, minimizing KL, and maximizing likelihood are three names for the same optimization problem.</p>
+    </div>
+
+</div><!-- end tab-entropy -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ TAB 6 — CALCULUS & BOUNDS ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-calc" class="tab-content">
+
+    <!-- === section 1 — Log & derivative rules === -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>Log &amp; Derivative Rules You'll Use Constantly</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Log Identities</h4>
+            <p>$$\log(ab) = \log a + \log b, \quad \log(a^b) = b\log a, \quad \log\tfrac{a}{b} = \log a - \log b$$</p>
+            <p class="formula-note">These three are what turn a likelihood product into a differentiable sum.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Log-Derivative Trick</h4>
+            <p>$$\frac{d}{d\theta}\log f(\theta) = \frac{f'(\theta)}{f(\theta)}$$</p>
+            <p class="formula-note">Equivalently $\nabla_\theta f = f \cdot \nabla_\theta \log f$ — the identity behind the REINFORCE / score-function gradient estimator.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Sigmoid</h4>
+            <p>$$\sigma(z) = \frac{1}{1+e^{-z}}, \qquad \sigma'(z) = \sigma(z)\big(1-\sigma(z)\big)$$</p>
+            <p class="formula-note">The derivative expressed in terms of the function itself — which is why backprop through a sigmoid is cheap. Also $1-\sigma(z) = \sigma(-z)$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Softmax</h4>
+            <p>$$s_i = \frac{e^{z_i}}{\sum_j e^{z_j}}, \qquad \frac{\partial s_i}{\partial z_j} = s_i(\delta_{ij} - s_j)$$</p>
+            <p class="formula-note">$\delta_{ij}$ is the Kronecker delta (1 if $i=j$, else 0). Diagonal entries $s_i(1-s_i)$; off-diagonal $-s_is_j$.</p>
+        </div>
+    </div>
+
+    <div class="idea-box">
+        <p><strong>The one gradient worth memorizing.</strong> For both logistic regression and softmax regression, the gradient of the cross-entropy loss with respect to the <em>logits</em> collapses to</p>
+        <p>$$\nabla_{\mathbf{z}} J = \hat{\mathbf{y}} - \mathbf{y}$$</p>
+        <p>prediction minus truth. The messy softmax Jacobian and the messy log-derivative cancel each other exactly. If your algebra doesn't land here, you made a sign error.</p>
+    </div>
+
+    <!-- === section 2 — Matrix calculus === -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>Matrix Calculus</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Linear Form</h4>
+            <p>$$\nabla_{\mathbf{x}}\big(\mathbf{a}^{\!\top}\mathbf{x}\big) = \mathbf{a}$$</p>
+            <p class="formula-note">The vector analogue of $\frac{d}{dx}(ax) = a$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Quadratic Form</h4>
+            <p>$$\nabla_{\mathbf{x}}\big(\mathbf{x}^{\!\top}A\mathbf{x}\big) = (A + A^{\!\top})\mathbf{x} = 2A\mathbf{x} \text{ if } A = A^{\!\top}$$</p>
+            <p class="formula-note">Don't skip the transpose term unless you've confirmed $A$ is symmetric.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Squared Norm</h4>
+            <p>$$\nabla_{\mathbf{x}}\|\mathbf{x}\|_2^2 = 2\mathbf{x}, \qquad \nabla_\theta \|X\theta - \mathbf{y}\|_2^2 = 2X^{\!\top}(X\theta - \mathbf{y})$$</p>
+            <p class="formula-note">Setting the second to zero gives the normal equations $X^{\!\top}X\theta = X^{\!\top}\mathbf{y}$.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Convexity Test</h4>
+            <p>$$f \text{ convex} \iff \nabla^2 f(\mathbf{x}) \succeq 0 \;\;\forall \mathbf{x}$$</p>
+            <p class="formula-note">If the Hessian is PSD everywhere, any stationary point is a global minimum — no local minima to worry about.</p>
+        </div>
+    </div>
+
+    <!-- === section 3 — Integrals === -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>Integrals Worth Recognizing</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Gaussian Integral</h4>
+            <p>$$\int_{-\infty}^{\infty} e^{-a x^2}\,dx = \sqrt{\frac{\pi}{a}}$$</p>
+            <p class="formula-note">Where the $\sqrt{2\pi\sigma^2}$ normalizing constant comes from (take $a = 1/2\sigma^2$).</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Gamma Function</h4>
+            <p>$$\Gamma(n) = \int_0^\infty x^{n-1}e^{-x}\,dx, \qquad \Gamma(n) = (n-1)! \text{ for integer } n$$</p>
+            <p class="formula-note">Normalizes the Gamma, Beta, and $\chi^2$ families.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Exponential Moments</h4>
+            <p>$$\int_0^\infty x^{n}e^{-\lambda x}\,dx = \frac{n!}{\lambda^{n+1}}$$</p>
+            <p class="formula-note">Gets you every moment of the exponential distribution without integration by parts.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Log-Sum-Exp Trick</h4>
+            <p>$$\log\sum_i e^{z_i} = c + \log\sum_i e^{z_i - c}, \quad c = \max_i z_i$$</p>
+            <p class="formula-note">Numerically stable softmax. Without it, large logits overflow to <code>inf</code>.</p>
+        </div>
+    </div>
+
+    <!-- === section 4 — Inequalities & limits === -->
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <h2>Inequalities &amp; Limit Theorems</h2>
+    </div>
+
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Jensen's Inequality</h4>
+            <p>$$g \text{ convex} \implies \mathbb{E}[g(X)] \ge g\big(\mathbb{E}[X]\big)$$</p>
+            <p class="formula-note">Flips for concave $g$ (e.g. $\log$). Underlies Gibbs' inequality and the EM algorithm's lower bound.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Markov's Inequality</h4>
+            <p>$$X \ge 0 \implies P(X \ge a) \le \frac{\mathbb{E}[X]}{a}$$</p>
+            <p class="formula-note">Crudest possible tail bound, but needs only the mean.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Chebyshev's Inequality</h4>
+            <p>$$P\big(|X - \mu| \ge k\sigma\big) \le \frac{1}{k^2}$$</p>
+            <p class="formula-note">Markov applied to $(X-\mu)^2$. Distribution-free, so it's loose — but it always holds.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Hoeffding's Inequality</h4>
+            <p>$$P\big(|\bar X - \mu| \ge t\big) \le 2\exp\!\left(\frac{-2nt^2}{(b-a)^2}\right)$$</p>
+            <p class="formula-note">For i.i.d. $X_i \in [a,b]$. Exponential in $n$ — the workhorse of generalization bounds.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Law of Large Numbers</h4>
+            <p>$$\bar X_n \xrightarrow{\;p\;} \mu \quad \text{as } n \to \infty$$</p>
+            <p class="formula-note">Sample averages converge to the true mean. Why empirical risk approximates true risk at all.</p>
+        </div>
+
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Central Limit Theorem</h4>
+            <p>$$\frac{\bar X_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{\;d\;} \mathcal{N}(0,1)$$</p>
+            <p class="formula-note">Standard error is $\sigma/\sqrt{n}$: to halve your uncertainty you need <em>four times</em> the data.</p>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>LLN vs. CLT.</strong> LLN says $\bar X_n$ lands on $\mu$. CLT says how it fluctuates on the way there, on the $1/\sqrt{n}$ scale. They answer different questions — don't cite one for the other's job.</p>
+    </div>
+
+</div><!-- end tab-calc -->
+
+</div><!-- end container -->
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Statistics for Machine Learning — Formula Cheat Sheet</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    setTimeout(function() {
+        if (window.MathJax && MathJax.typeset) MathJax.typeset();
+    }, 100);
+}
+
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+
+/* ═══ PDF vs CDF visualizer ═══ */
+var pcState = { dist: 'normal', frac: 0.5 };
+
+function pcErf(z) {
+    // Abramowitz–Stegun approximation, |error| < 1.5e-7
+    var sign = z < 0 ? -1 : 1;
+    z = Math.abs(z);
+    var t = 1 / (1 + 0.3275911 * z);
+    var y = 1 - (((((1.061405429*t - 1.453152027)*t) + 1.421413741)*t - 0.284496736)*t + 0.254829592)*t * Math.exp(-z*z);
+    return sign * y;
+}
+
+var pcDists = {
+    normal: {
+        range: [-3.5, 3.5],
+        pdf: function(x) { return Math.exp(-x*x/2) / Math.sqrt(2*Math.PI); },
+        cdf: function(x) { return 0.5 * (1 + pcErf(x / Math.SQRT2)); },
+        ymax: 0.45
+    },
+    exp: {
+        range: [-0.6, 5],
+        pdf: function(x) { return x < 0 ? 0 : Math.exp(-x); },
+        cdf: function(x) { return x < 0 ? 0 : 1 - Math.exp(-x); },
+        ymax: 1.1
+    },
+    unif: {
+        range: [-0.5, 1.5],
+        pdf: function(x) { return (x >= 0 && x <= 1) ? 1 : 0; },
+        cdf: function(x) { return x < 0 ? 0 : (x > 1 ? 1 : x); },
+        ymax: 1.25
+    }
+};
+
+function pcSetDist(name, btn) {
+    pcState.dist = name;
+    document.querySelectorAll('#pc-btn-normal, #pc-btn-exp, #pc-btn-unif').forEach(function(b) {
+        b.classList.remove('active');
+    });
+    if (btn) btn.classList.add('active');
+    pcRender();
+}
+
+function pcRender() {
+    var canvas = document.getElementById('pc-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var d = pcDists[pcState.dist];
+    var x0 = d.range[0], x1 = d.range[1];
+    var xv = x0 + pcState.frac * (x1 - x0);
+
+    var W = canvas.width, PADL = 52, PADR = 20;
+    var pw = W - PADL - PADR;
+    // Panel geometry: pdf on top, cdf below, shared x-axis scale
+    var p1top = 18, p1bot = 200;   // pdf panel
+    var p2top = 240, p2bot = 405;  // cdf panel
+
+    function sx(x) { return PADL + (x - x0) / (x1 - x0) * pw; }
+    function sy1(y) { return p1bot - y / d.ymax * (p1bot - p1top); }
+    function sy2(y) { return p2bot - y / 1.05 * (p2bot - p2top); }
+
+    ctx.clearRect(0, 0, W, canvas.height);
+    ctx.font = '600 12px Inter, sans-serif';
+
+    // Axes
+    ctx.strokeStyle = 'rgba(66,38,13,0.4)'; ctx.lineWidth = 1.2;
+    [[p1bot, sy1], [p2bot, sy2]].forEach(function(pair) {
+        ctx.beginPath(); ctx.moveTo(PADL, pair[0]); ctx.lineTo(W - PADR, pair[0]); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(PADL, pair[0]); ctx.lineTo(PADL, pair[0] === p1bot ? p1top : p2top); ctx.stroke();
+    });
+    // Panel labels
+    ctx.fillStyle = '#21442B'; ctx.font = '700 14px Inter, sans-serif';
+    ctx.fillText('PDF  f(x)', PADL + 6, p1top + 12);
+    ctx.fillText('CDF  F(x)', PADL + 6, p2top + 12);
+    // CDF reference lines at 0 and 1
+    ctx.strokeStyle = 'rgba(66,38,13,0.18)'; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(PADL, sy2(1)); ctx.lineTo(W-PADR, sy2(1)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#4A4A4A'; ctx.font = '600 11px Inter, sans-serif';
+    ctx.fillText('1', PADL - 14, sy2(1) + 4);
+    ctx.fillText('0', PADL - 14, sy2(0) + 4);
+
+    // x tick labels
+    var ticks = pcState.dist === 'normal' ? [-3,-2,-1,0,1,2,3] :
+                pcState.dist === 'exp' ? [0,1,2,3,4,5] : [0,0.5,1];
+    ctx.fillStyle = '#4A4A4A';
+    ticks.forEach(function(t) {
+        ctx.fillText(String(t), sx(t) - 6, p2bot + 16);
+        ctx.strokeStyle = 'rgba(66,38,13,0.25)';
+        [p1bot, p2bot].forEach(function(base) {
+            ctx.beginPath(); ctx.moveTo(sx(t), base); ctx.lineTo(sx(t), base - 4); ctx.stroke();
+        });
+    });
+
+    var steps = 400, i, x, px, py;
+
+    // Shaded area under pdf up to xv
+    ctx.beginPath();
+    ctx.moveTo(sx(x0), sy1(0));
+    for (i = 0; i <= steps; i++) {
+        x = x0 + (xv - x0) * i / steps;
+        ctx.lineTo(sx(x), sy1(d.pdf(x)));
+    }
+    ctx.lineTo(sx(xv), sy1(0));
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(221,162,94,0.45)';
+    ctx.fill();
+
+    // PDF curve
+    ctx.beginPath();
+    for (i = 0; i <= steps; i++) {
+        x = x0 + (x1 - x0) * i / steps;
+        px = sx(x); py = sy1(d.pdf(x));
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#21442B'; ctx.lineWidth = 2.4; ctx.stroke();
+
+    // CDF curve
+    ctx.beginPath();
+    for (i = 0; i <= steps; i++) {
+        x = x0 + (x1 - x0) * i / steps;
+        px = sx(x); py = sy2(d.cdf(x));
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#BC6C26'; ctx.lineWidth = 2.4; ctx.stroke();
+
+    // Vertical marker line through both panels
+    ctx.strokeStyle = 'rgba(66,38,13,0.55)'; ctx.lineWidth = 1.4; ctx.setLineDash([5,4]);
+    ctx.beginPath(); ctx.moveTo(sx(xv), p1top); ctx.lineTo(sx(xv), p2bot); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dot on CDF at (xv, F(xv)) + horizontal guide to axis
+    var Fv = d.cdf(xv);
+    ctx.setLineDash([3,3]); ctx.strokeStyle = 'rgba(188,108,38,0.6)';
+    ctx.beginPath(); ctx.moveTo(PADL, sy2(Fv)); ctx.lineTo(sx(xv), sy2(Fv)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.arc(sx(xv), sy2(Fv), 6, 0, 2*Math.PI);
+    ctx.fillStyle = '#BC6C26'; ctx.fill();
+    ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+
+    // x label at marker
+    ctx.fillStyle = '#42260D'; ctx.font = '700 13px Inter, sans-serif';
+    ctx.fillText('x = ' + xv.toFixed(2), Math.min(sx(xv) + 8, W - 90), p1top + 12);
+
+    // Readouts
+    document.getElementById('pc-x-val').textContent = xv.toFixed(2);
+    document.getElementById('pc-area').textContent = Fv.toFixed(3);
+    document.getElementById('pc-F').textContent = Fv.toFixed(3);
+    document.getElementById('pc-f').textContent = d.pdf(xv).toFixed(3);
+}
+
+/* ═══ Marginalization 3D visualizer ═══ */
+(function() {
+    var R = 3;           // world half-range for x and y
+    var H = 1.5;         // display height of joint peak
+    var HM = 1.15;       // display height of marginal peaks
+    var N = 34;          // surface grid resolution
+    var PITCH = 24 * Math.PI / 180;
+
+    var canvas, ctx;
+    var params = { rho: 0, sx: 1, sy: 1, yaw: -30 * Math.PI / 180 };
+
+    function jointZ(x, y) {
+        // Un-normalized bivariate Gaussian, scaled so the peak height is H.
+        var sx = params.sx, sy = params.sy, r = params.rho;
+        var q = (x*x/(sx*sx) - 2*r*x*y/(sx*sy) + y*y/(sy*sy)) / (1 - r*r);
+        return H * Math.exp(-q / 2);
+    }
+    function margZ(t, s) {
+        // Marginal shape exp(-t^2 / 2s^2), scaled so its peak is HM.
+        return HM * Math.exp(-t*t / (2*s*s));
+    }
+
+    function project(x, y, z) {
+        var cy = Math.cos(params.yaw), sy = Math.sin(params.yaw);
+        var u = x*cy - y*sy;
+        var w = x*sy + y*cy;                 // depth: larger w = farther back
+        var sp = Math.sin(PITCH), cp = Math.cos(PITCH);
+        var S = 64, cx = 360, cyc = 305;
+        return {
+            x: cx + u*S,
+            y: cyc - z*cp*S - w*sp*S,
+            w: w
+        };
+    }
+
+    function heightColor(t) {
+        // Interpolate green-dark (low) -> gold (high).
+        var c1 = [33, 68, 43], c2 = [221, 162, 94];
+        var r = Math.round(c1[0] + (c2[0]-c1[0])*t);
+        var g = Math.round(c1[1] + (c2[1]-c1[1])*t);
+        var b = Math.round(c1[2] + (c2[2]-c1[2])*t);
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+
+    function drawPoly(pts, fill, stroke, alpha) {
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.closePath();
+        ctx.globalAlpha = alpha;
+        if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+        if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 0.7; ctx.stroke(); }
+        ctx.globalAlpha = 1;
+    }
+
+    function render() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var i, j, t, pts;
+
+        /* ── Floor grid ── */
+        ctx.strokeStyle = 'rgba(66,38,13,0.15)';
+        ctx.lineWidth = 1;
+        for (i = -R; i <= R; i++) {
+            var a = project(i, -R, 0), b = project(i, R, 0);
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            a = project(-R, i, 0); b = project(R, i, 0);
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+
+        /* ── Contour ellipses on the floor (1σ, 2σ) ── */
+        var r_ = params.rho, sx = params.sx, sy = params.sy;
+        [1, 2].forEach(function(k) {
+            ctx.beginPath();
+            for (var a2 = 0; a2 <= 64; a2++) {
+                var ang = a2/64 * 2*Math.PI;
+                var t1 = k*Math.cos(ang), t2 = k*Math.sin(ang);
+                // Cholesky of the correlation structure maps the unit circle to the ellipse Q = k^2
+                var ex = sx * t1;
+                var ey = sy * (r_*t1 + Math.sqrt(1-r_*r_)*t2);
+                if (Math.abs(ex) > R || Math.abs(ey) > R) continue;
+                var p = project(ex, ey, 0.005);
+                if (a2 === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+            }
+            ctx.strokeStyle = k === 1 ? 'rgba(188,108,38,0.85)' : 'rgba(188,108,38,0.45)';
+            ctx.lineWidth = k === 1 ? 1.6 : 1.2;
+            ctx.stroke();
+        });
+
+        /* ── Back wall (plane y = +R): marginal p(x) as a gold shadow ── */
+        pts = [];
+        for (i = 0; i <= 60; i++) {
+            var xw = -R + 2*R*i/60;
+            pts.push(project(xw, R, margZ(xw, sx)));
+        }
+        pts.push(project(R, R, 0));
+        pts.push(project(-R, R, 0));
+        drawPoly(pts, 'rgba(221,162,94,0.38)', '#BC6C26', 1);
+
+        /* ── Side wall (plane x = -R): marginal p(y) as a green shadow ── */
+        pts = [];
+        for (i = 0; i <= 60; i++) {
+            var yw = -R + 2*R*i/60;
+            pts.push(project(-R, yw, margZ(yw, sy)));
+        }
+        pts.push(project(-R, R, 0));
+        pts.push(project(-R, -R, 0));
+        drawPoly(pts, 'rgba(57,134,78,0.30)', '#21442B', 1);
+
+        /* ── Joint density surface, painter's algorithm (far quads first) ── */
+        var quads = [];
+        var step = 2*R/N;
+        for (i = 0; i < N; i++) {
+            for (j = 0; j < N; j++) {
+                var x0 = -R + i*step, y0 = -R + j*step;
+                var corners = [
+                    [x0, y0], [x0+step, y0], [x0+step, y0+step], [x0, y0+step]
+                ].map(function(c) { return project(c[0], c[1], jointZ(c[0], c[1])); });
+                var zmid = jointZ(x0+step/2, y0+step/2);
+                var wavg = (corners[0].w + corners[1].w + corners[2].w + corners[3].w) / 4;
+                quads.push({ pts: corners, z: zmid, w: wavg });
+            }
+        }
+        quads.sort(function(a, b) { return b.w - a.w; });  // farthest first
+        quads.forEach(function(q) {
+            drawPoly(q.pts, heightColor(q.z / H), 'rgba(33,68,43,0.35)', 0.93);
+        });
+
+        /* ── Axis labels ── */
+        ctx.fillStyle = '#42260D';
+        ctx.font = '600 15px Inter, sans-serif';
+        var px = project(R + 0.35, -R, 0);
+        ctx.fillText('x', px.x, px.y);
+        var py = project(-R, R + 0.42, 0);
+        ctx.fillText('y', py.x, py.y);
+        ctx.font = '600 13px Inter, sans-serif';
+        ctx.fillStyle = '#BC6C26';
+        var plx = project(0, R, margZ(0, sx) + 0.28);
+        ctx.fillText('p(x)', plx.x - 12, plx.y);
+        ctx.fillStyle = '#21442B';
+        var ply = project(-R, 0, margZ(0, sy) + 0.28);
+        ctx.fillText('p(y)', ply.x - 12, ply.y);
+    }
+
+    function hook(id, valId, fmt, apply) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', function() {
+            apply(parseFloat(el.value));
+            document.getElementById(valId).innerHTML = fmt(parseFloat(el.value));
+            render();
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+        // PDF/CDF visualizer
+        var pcSlider = document.getElementById('pc-x');
+        if (pcSlider) {
+            pcSlider.addEventListener('input', function() {
+                pcState.frac = parseFloat(pcSlider.value) / 1000;
+                pcRender();
+            });
+            pcRender();
+        }
+        // Marginalization visualizer
+        canvas = document.getElementById('mv-canvas');
+        if (!canvas) return;
+        ctx = canvas.getContext('2d');
+        hook('mv-rho', 'mv-rho-val',
+            function(v) { return (v/100).toFixed(2); },
+            function(v) { params.rho = v/100; });
+        hook('mv-sx', 'mv-sx-val',
+            function(v) { return (v/100).toFixed(2); },
+            function(v) { params.sx = v/100; });
+        hook('mv-sy', 'mv-sy-val',
+            function(v) { return (v/100).toFixed(2); },
+            function(v) { params.sy = v/100; });
+        hook('mv-yaw', 'mv-yaw-val',
+            function(v) { return v + '&deg;'; },
+            function(v) { params.yaw = v * Math.PI / 180; });
+        render();
+    });
+})();
+
+// Before printing, force every tab and every collapsible open so nothing is lost on paper.
+window.addEventListener('beforeprint', function() {
+    document.querySelectorAll('.example-body, .solution-body').forEach(function(b) {
+        b.classList.add('open');
+    });
+    if (window.MathJax && MathJax.typeset) MathJax.typeset();
+});
+</script>
+
+</body>
+</html>
