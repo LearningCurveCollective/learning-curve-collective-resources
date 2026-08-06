@@ -189,14 +189,17 @@ li { margin-bottom: 10px; }
             <li>$|\varepsilon| = 1$: <strong>unit elastic</strong> &mdash; the knife edge, and (as you'll see) the revenue-maximizing spot.</li>
         </ul>
         <div class="viz-container" style="margin:20px 0 10px;">
-            <p style="margin-bottom:10px; font-size:14.5px;"><strong>One straight line, every elasticity:</strong> $x = 24 - 2p$. Drag the price up and down the line and watch $\varepsilon$ sweep from $0$ (bottom) toward $-\infty$ (top) &mdash; same slope everywhere, totally different elasticity.</p>
+            <p style="margin-bottom:10px; font-size:14.5px;"><strong>One straight line, every elasticity:</strong> $x = 24 - 2p$. Drag the price up and down the line and watch $\varepsilon$ sweep from $0$ (bottom) toward $-\infty$ (top) &mdash; same slope everywhere, totally different elasticity. The <strong>right panel traces $\varepsilon$ out at every quantity</strong> along the line &mdash; the whole hidden curve behind the single number, with your current point riding on it.</p>
             <div class="viz-controls" style="border-bottom:none; padding-bottom:0; margin-bottom:8px;">
                 <div class="slider-group" style="max-width:420px;">
                     <label>Price p &nbsp;(or drag the dot on the graph)</label>
                     <div class="slider-row"><input type="range" min="0.4" max="11.6" step="0.05" value="3" id="sl-p" oninput="slUpdate()"><span class="n-display" id="sl-disp">3.00</span></div>
                 </div>
             </div>
-            <div class="viz-canvas-wrap"><canvas id="sl-canvas" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
+            <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; margin-bottom:12px;">
+                <div class="viz-canvas-wrap" style="flex:1 1 340px; min-width:300px; margin-bottom:0;"><canvas id="sl-canvas" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
+                <div class="viz-canvas-wrap" style="flex:1 1 340px; min-width:300px; margin-bottom:0;"><canvas id="sl-canvas2" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
+            </div>
             <div class="readout-panel">
                 <div class="readout-item"><div class="readout-label">Quantity x = 24 &minus; 2p</div><div class="readout-value" id="sl-x">&mdash;</div></div>
                 <div class="readout-item"><div class="readout-label">&epsilon; = &minus;2p / x</div><div class="readout-value" id="sl-e">&mdash;</div></div>
@@ -585,6 +588,115 @@ elUpdate();
     function X(x) { return ML + x / XMAX * (W - ML - MR); }
     function Y(p) { return H - MB - p / PMAX * (H - MT - MB); }
 
+    // ── second canvas: elasticity traced out at every point ──
+    var cv2 = document.getElementById('sl-canvas2'), ctx2 = null;
+    if (cv2) {
+        cv2.width = W * dpr; cv2.height = H * dpr;
+        cv2.style.width = '100%'; cv2.style.maxWidth = W + 'px';
+        ctx2 = cv2.getContext('2d');
+        ctx2.scale(dpr, dpr);
+    }
+    var EMIN = -6;                       // clip the plunge to -infinity at -6
+    function Y2(e) { return MT + (-e) / (-EMIN) * (H - MT - MB); }   // e in [EMIN, 0], 0 at top
+    function eps(x) { return (x - 24) / x; }                          // = -2p/x with p = (24-x)/2
+
+    function draw2(p) {
+        if (!ctx2) return;
+        var xc = 24 - 2 * p;
+        var ec = xc > 0.0001 ? -2 * p / xc : -9999;
+        ctx2.clearRect(0, 0, W, H);
+        ctx2.fillStyle = 'white'; ctx2.fillRect(0, 0, W, H);
+        // region tints: elastic (x < 12) green, inelastic (x > 12) copper
+        ctx2.fillStyle = 'rgba(57,134,78,0.06)';
+        ctx2.fillRect(X(0), MT, X(12) - X(0), H - MT - MB);
+        ctx2.fillStyle = 'rgba(188,108,38,0.06)';
+        ctx2.fillRect(X(12), MT, X(24) - X(12), H - MT - MB);
+        // grid
+        ctx2.strokeStyle = GRID; ctx2.lineWidth = 1;
+        for (var gx = 0; gx <= 25; gx += 5) { ctx2.beginPath(); ctx2.moveTo(X(gx), H - MB); ctx2.lineTo(X(gx), MT); ctx2.stroke(); }
+        for (var ge = 0; ge >= EMIN; ge -= 1) { ctx2.beginPath(); ctx2.moveTo(X(0), Y2(ge)); ctx2.lineTo(W - MR, Y2(ge)); ctx2.stroke(); }
+        // axes: left (epsilon) and bottom frame; epsilon = 0 line at the top is the true x-axis
+        ctx2.strokeStyle = TXT; ctx2.lineWidth = 1.6;
+        ctx2.beginPath(); ctx2.moveTo(X(0), MT - 6); ctx2.lineTo(X(0), H - MB); ctx2.lineTo(W - MR + 4, H - MB); ctx2.stroke();
+        ctx2.strokeStyle = '#B9B9B9'; ctx2.lineWidth = 1.4;
+        ctx2.beginPath(); ctx2.moveTo(X(0), Y2(0)); ctx2.lineTo(W - MR, Y2(0)); ctx2.stroke();
+        ctx2.fillStyle = TXT; ctx2.font = '600 13px Inter, sans-serif'; ctx2.textAlign = 'center';
+        for (gx = 0; gx <= 25; gx += 5) ctx2.fillText(gx, X(gx), H - MB + 18);
+        ctx2.textAlign = 'right';
+        for (ge = 0; ge >= EMIN; ge -= 1) ctx2.fillText(ge === 0 ? '0' : '−' + (-ge), X(0) - 8, Y2(ge) + 4);
+        ctx2.textAlign = 'center'; ctx2.font = 'italic 600 14px Inter, sans-serif';
+        ctx2.fillText('quantity x', ML + (W - ML - MR) / 2, H - 12);
+        ctx2.save(); ctx2.translate(16, MT + (H - MT - MB) / 2); ctx2.rotate(-Math.PI / 2);
+        ctx2.fillText('elasticity ε', 0, 0); ctx2.restore();
+        // unit-elastic reference line at epsilon = -1
+        ctx2.setLineDash([6, 5]); ctx2.strokeStyle = GOLD; ctx2.lineWidth = 2;
+        ctx2.beginPath(); ctx2.moveTo(X(0), Y2(-1)); ctx2.lineTo(W - MR, Y2(-1)); ctx2.stroke();
+        ctx2.setLineDash([]);
+        ctx2.fillStyle = '#8B6914'; ctx2.font = '700 12.5px Inter, sans-serif'; ctx2.textAlign = 'left';
+        ctx2.fillText('unit elastic  ε = −1', X(17.4), Y2(-1) + 17);
+        // the traced curve  eps(x) = (x - 24)/x, split at the midpoint x = 12
+        var xStart = 24 / (1 - EMIN);      // where eps(x) = EMIN (enters the frame)
+        ctx2.lineWidth = 4; ctx2.lineCap = 'round';
+        function tracePiece(x0, x1, col) {
+            ctx2.strokeStyle = col; ctx2.beginPath();
+            var first = true;
+            for (var t = 0; t <= 120; t++) {
+                var xx = x0 + (x1 - x0) * t / 120;
+                var yy = Y2(Math.max(eps(xx), EMIN));
+                if (first) { ctx2.moveTo(X(xx), yy); first = false; } else ctx2.lineTo(X(xx), yy);
+            }
+            ctx2.stroke();
+        }
+        tracePiece(xStart, 12, GREEN);     // elastic branch: below the -1 line
+        tracePiece(12, 24, COPPER);        // inelastic branch: between -1 and 0
+        // plunge-to-minus-infinity annotation
+        ctx2.fillStyle = GREEN; ctx2.font = '700 12.5px Inter, sans-serif'; ctx2.textAlign = 'left';
+        ctx2.fillText('ε → −∞ as x → 0', X(xStart) + 10, H - MB - 10);
+        // region labels
+        ctx2.fillStyle = GREEN; ctx2.font = '700 13px Inter, sans-serif';
+        ctx2.fillText('|ε| > 1  ELASTIC', X(6.9), Y2(-3.4));
+        ctx2.fillStyle = COPPER;
+        ctx2.fillText('|ε| < 1  INELASTIC', X(15.5), Y2(-0.78));
+        // midpoint marker at (12, -1)
+        ctx2.beginPath(); ctx2.arc(X(12), Y2(-1), 6, 0, 7);
+        ctx2.fillStyle = GOLD; ctx2.fill();
+        ctx2.strokeStyle = 'white'; ctx2.lineWidth = 1.5; ctx2.stroke();
+        if (Math.abs(p - 6) > 0.85) {
+            ctx2.fillStyle = BROWN; ctx2.font = '700 12.5px Inter, sans-serif'; ctx2.textAlign = 'left';
+            ctx2.fillText('midpoint (x = 12)', X(12) + 11, Y2(-1) + 18);
+        }
+        // dashed guides to the current point
+        var off = ec < EMIN;
+        var ey = off ? H - MB : Y2(ec);
+        ctx2.setLineDash([5, 4]); ctx2.lineWidth = 1.4; ctx2.strokeStyle = '#8a8a8a';
+        ctx2.beginPath(); ctx2.moveTo(X(xc), MT + 4); ctx2.lineTo(X(xc), H - MB); ctx2.stroke();
+        if (!off) { ctx2.beginPath(); ctx2.moveTo(X(0), ey); ctx2.lineTo(X(xc), ey); ctx2.stroke(); }
+        ctx2.setLineDash([]);
+        // current point on the trace (color = classification, matches left panel)
+        var cls2 = Math.abs(ec) > 1.02 ? GREENL : (Math.abs(ec) < 0.98 ? COPPER : GOLD);
+        ctx2.beginPath(); ctx2.arc(X(xc), ey, 10, 0, 7);
+        ctx2.fillStyle = cls2; ctx2.fill();
+        ctx2.strokeStyle = 'white'; ctx2.lineWidth = 2.5; ctx2.stroke();
+        if (off) {  // dot pinned to the frame edge, real value keeps falling
+            ctx2.fillStyle = 'white'; ctx2.font = '700 11px Inter, sans-serif'; ctx2.textAlign = 'center';
+            ctx2.fillText('↓', X(xc), ey + 4);
+        }
+        // epsilon tag that follows the dot
+        var tag2 = 'ε = ' + (ec <= -999 ? '−∞' : ec.toFixed(2)) + (off ? '  (below frame)' : '');
+        ctx2.font = '700 14px Inter, sans-serif'; ctx2.textAlign = 'left';
+        var tw2 = ctx2.measureText(tag2).width + 14;
+        var tx2 = Math.min(X(xc) + 16, W - MR - tw2);
+        var ty2 = Math.max(Math.min(ey - 34, H - MB - 30), MT + 2);
+        ctx2.fillStyle = 'rgba(255,255,255,0.92)';
+        ctx2.strokeStyle = cls2; ctx2.lineWidth = 1.5;
+        ctx2.beginPath(); ctx2.roundRect(tx2, ty2, tw2, 24, 6); ctx2.fill(); ctx2.stroke();
+        ctx2.fillStyle = cls2;
+        ctx2.fillText(tag2, tx2 + 7, ty2 + 17);
+        // title
+        ctx2.fillStyle = GREEN; ctx2.font = '700 15px Inter, sans-serif'; ctx2.textAlign = 'center';
+        ctx2.fillText('…and its elasticity, traced out:  ε = −2p⁄x = (x − 24)⁄x', ML + (W - ML - MR) / 2, 20);
+    }
+
     function draw(p) {
         var x = 24 - 2 * p;
         var e = x > 0.0001 ? -2 * p / x : -9999;
@@ -671,6 +783,7 @@ elUpdate();
             note.innerHTML = '<strong style="color:#8B6914;">Unit elastic \u2014 the midpoint (p = 6, x = 12):</strong> the knife edge where \u03B5 = \u22121 and revenue p\u00B7x is maximized. Every straight-line demand hits \u22121 exactly halfway down.';
         }
         draw(p);
+        draw2(p);
     };
 
     // drag directly on the canvas
@@ -695,6 +808,32 @@ elUpdate();
     cv.addEventListener('touchstart', startDrag, {passive: false});
     cv.addEventListener('touchmove', moveDrag, {passive: false});
     window.addEventListener('touchend', endDrag);
+
+    // drag on the traced-elasticity panel too (horizontal: pick a quantity)
+    if (cv2) {
+        var dragging2 = false;
+        function pFromEvent2(ev) {
+            var r2 = cv2.getBoundingClientRect();
+            var cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r2.left;
+            var xq = (cx * (W / r2.width) - ML) / (W - ML - MR) * XMAX;
+            var p2 = (24 - xq) / 2;
+            return Math.max(0.4, Math.min(11.6, p2));
+        }
+        function startDrag2(ev) { dragging2 = true; cv2.style.cursor = 'grabbing'; moveDrag2(ev); }
+        function moveDrag2(ev) {
+            if (!dragging2) return;
+            ev.preventDefault();
+            document.getElementById('sl-p').value = pFromEvent2(ev);
+            slUpdate();
+        }
+        function endDrag2() { dragging2 = false; cv2.style.cursor = 'grab'; }
+        cv2.addEventListener('mousedown', startDrag2);
+        window.addEventListener('mousemove', moveDrag2);
+        window.addEventListener('mouseup', endDrag2);
+        cv2.addEventListener('touchstart', startDrag2, {passive: false});
+        cv2.addEventListener('touchmove', moveDrag2, {passive: false});
+        window.addEventListener('touchend', endDrag2);
+    }
     slUpdate();
 })();
 
