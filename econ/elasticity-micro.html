@@ -189,17 +189,14 @@ li { margin-bottom: 10px; }
             <li>$|\varepsilon| = 1$: <strong>unit elastic</strong> &mdash; the knife edge, and (as you'll see) the revenue-maximizing spot.</li>
         </ul>
         <div class="viz-container" style="margin:20px 0 10px;">
-            <p style="margin-bottom:10px; font-size:14.5px;"><strong>One straight line, every elasticity:</strong> $x = 24 - 2p$. Drag the price up and down the line and watch $\varepsilon$ sweep from $0$ (bottom) toward $-\infty$ (top) &mdash; same slope everywhere, totally different elasticity. The <strong>right panel traces $\varepsilon$ out at every quantity</strong> along the line &mdash; the whole hidden curve behind the single number, with your current point riding on it.</p>
+            <p style="margin-bottom:10px; font-size:14.5px;"><strong>One straight line, every elasticity:</strong> $x = 24 - 2p$. Drag the price up and down the line and watch $\varepsilon$ sweep from $0$ (bottom) toward $-\infty$ (top) &mdash; same slope everywhere, totally different elasticity.</p>
             <div class="viz-controls" style="border-bottom:none; padding-bottom:0; margin-bottom:8px;">
                 <div class="slider-group" style="max-width:420px;">
                     <label>Price p &nbsp;(or drag the dot on the graph)</label>
                     <div class="slider-row"><input type="range" min="0.4" max="11.6" step="0.05" value="3" id="sl-p" oninput="slUpdate()"><span class="n-display" id="sl-disp">3.00</span></div>
                 </div>
             </div>
-            <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; margin-bottom:12px;">
-                <div class="viz-canvas-wrap" style="flex:1 1 340px; min-width:300px; margin-bottom:0;"><canvas id="sl-canvas" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
-                <div class="viz-canvas-wrap" style="flex:1 1 340px; min-width:300px; margin-bottom:0;"><canvas id="sl-canvas2" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
-            </div>
+            <div class="viz-canvas-wrap"><canvas id="sl-canvas" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
             <div class="readout-panel">
                 <div class="readout-item"><div class="readout-label">Quantity x = 24 &minus; 2p</div><div class="readout-value" id="sl-x">&mdash;</div></div>
                 <div class="readout-item"><div class="readout-label">&epsilon; = &minus;2p / x</div><div class="readout-value" id="sl-e">&mdash;</div></div>
@@ -209,6 +206,26 @@ li { margin-bottom: 10px; }
             <div class="viz-note" id="sl-note" style="margin-top:10px; font-size:14px;"></div>
         </div>
         <p style="margin-bottom:0;">The figure is the first surprise of the unit: a straight line has constant <em>slope</em> but <strong>every possible elasticity</strong>, from nearly $-\infty$ at the top to $0$ at the bottom &mdash; because $\varepsilon$ multiplies the slope by $\tfrac{p}{x}$, which changes as you slide along.</p>
+        <div class="viz-container" style="margin:20px 0 10px;">
+            <p style="margin-bottom:10px; font-size:14.5px;"><strong>Now trace it out:</strong> the same demand line on the left &mdash; and on the right, the elasticity at <em>every</em> point of it, the whole hidden curve behind the single number. The dot rides both panels at once: drag either graph (up&ndash;down on the line, left&ndash;right on the trace) or use the slider.</p>
+            <div class="viz-controls" style="border-bottom:none; padding-bottom:0; margin-bottom:8px;">
+                <div class="slider-group" style="max-width:420px;">
+                    <label>Price p &nbsp;(or drag either graph)</label>
+                    <div class="slider-row"><input type="range" min="0.4" max="11.6" step="0.05" value="9" id="sl2-p" oninput="sl2Update()"><span class="n-display" id="sl2-disp">9.00</span></div>
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; margin-bottom:12px;">
+                <div class="viz-canvas-wrap" style="flex:1 1 340px; min-width:300px; margin-bottom:0;"><canvas id="sl-canvasb" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
+                <div class="viz-canvas-wrap" style="flex:1 1 340px; min-width:300px; margin-bottom:0;"><canvas id="sl-canvas2" width="680" height="470" style="max-width:100%; height:auto; touch-action:none; cursor:grab;"></canvas></div>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Quantity x = 24 &minus; 2p</div><div class="readout-value" id="sl2-x">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">&epsilon; = &minus;2p / x</div><div class="readout-value" id="sl2-e">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">|&epsilon;|</div><div class="readout-value" id="sl2-abse">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">Classification</div><div class="readout-value" id="sl2-class">&mdash;</div></div>
+            </div>
+            <div class="viz-note" id="sl2-note" style="margin-top:10px; font-size:14px;"></div>
+        </div>
     </div>
     <div class="idea-box">
         <p style="margin:0;"><strong>Two ways to compute:</strong> the <em>point</em> formula $\varepsilon = \tfrac{dx}{dp}\cdot\tfrac{p}{x}$ when you have the demand function; the <em>arc</em> (midpoint) formula $\varepsilon = \dfrac{\Delta x / \bar{x}}{\Delta p / \bar{p}}$ when you only have two observations. Same idea, calculus vs. data.</p>
@@ -341,6 +358,15 @@ li { margin-bottom: 10px; }
 <!-- ===== OTHER ===== -->
 <div id="tab-other" class="tab-content">
     <div class="section-header"><div class="section-number">1</div><h2>Same trick, other variables</h2></div>
+    <div class="card" style="border-left-color: var(--green-dark);">
+        <p style="margin-bottom:10px;"><strong>Unit 2 recall first &mdash; the direction chart.</strong> The classification you already have answers a <em>direction</em> question: <em>&ldquo;when income rises, does he buy more or less of it?&rdquo;</em> Only the <strong>sign</strong> of $\tfrac{dx}{dm}$ matters:</p>
+        <table class="info-table">
+            <tr><th>Sign</th><th>Name</th><th>Meaning</th></tr>
+            <tr><td>$\dfrac{dx}{dm} > 0$</td><td><strong>Normal</strong></td><td>income up $\Rightarrow$ buy more of it</td></tr>
+            <tr><td>$\dfrac{dx}{dm} < 0$</td><td><strong>Inferior</strong></td><td>income up $\Rightarrow$ buy <em>less</em> of it (ramen, bus rides)</td></tr>
+        </table>
+        <p style="margin-bottom:0;">(Same idea for the other price: $\tfrac{dx}{dp_y} > 0$ meant substitutes, $\tfrac{dx}{dp_y} < 0$ complements.) That chart is all sign, no size &mdash; it can't say <em>how much</em> more or less. That's the elasticity chart's job.</p>
+    </div>
     <div class="card">
         <p>Any &ldquo;percent response to a percent change&rdquo; is an elasticity. Two more matter constantly &mdash; and both are Unit 2 signatures wearing new clothes:</p>
         <div class="highlight-box">$$\text{income elasticity: } \eta = \frac{dx}{dm}\cdot\frac{m}{x} \qquad\qquad \text{cross-price elasticity: } \varepsilon_{xy} = \frac{dx}{dp_y}\cdot\frac{p_y}{x}$$</div>
@@ -354,6 +380,17 @@ li { margin-bottom: 10px; }
             <tr><td>$\varepsilon_{xy} = 0$</td><td>Independent</td><td>Cobb&ndash;Douglas's zero cross-price</td></tr>
         </table>
         <p style="margin-bottom:0;">Familiar benchmarks: Cobb&ndash;Douglas has $\eta = 1$ exactly (demand proportional to $m$ &mdash; every good a &ldquo;borderline necessity&rdquo;) and $\varepsilon_{xy} = 0$. Quasilinear has $\eta = 0$ for $x$ (the income effect you proved was zero). And the budget identity that answered &ldquo;can all goods be inferior?&rdquo; has an elasticity version: <em>the share-weighted average of income elasticities equals</em> $1$ &mdash; so not everything can be a luxury, and not everything inferior.</p>
+    </div>
+    <div class="idea-box">
+        <p style="margin:0 0 10px 0;"><strong>Two charts, two different questions.</strong> The Unit 2 chart asks <em>which way?</em> (a sign); the elasticity chart asks <em>by what percent?</em> (a unit-free size). They never disagree, because $\eta$ is just $\tfrac{dx}{dm}$ multiplied by $\tfrac{m}{x}$ &mdash; and $m$, $x$ are both positive, so <strong>multiplying by $\tfrac{m}{x} > 0$ can never flip the sign</strong>. Here's the overlap laid side by side:</p>
+        <table class="info-table" style="background:white;">
+            <tr><th>Unit 2 verdict (direction)</th><th>Elasticity verdict (size)</th><th>What the elasticity adds</th></tr>
+            <tr><td><strong>Normal</strong> &nbsp;($\tfrac{dx}{dm} > 0$)</td><td>$\eta > 0$</td><td>a split direction can't see: <strong>necessity</strong> ($0 < \eta < 1$) vs <strong>luxury</strong> ($\eta > 1$)</td></tr>
+            <tr><td><strong>Inferior</strong> &nbsp;($\tfrac{dx}{dm} < 0$)</td><td>$\eta < 0$</td><td>same verdict, now with a percent attached</td></tr>
+            <tr><td><strong>Substitutes</strong> &nbsp;($\tfrac{dx}{dp_y} > 0$)</td><td>$\varepsilon_{xy} > 0$</td><td>how hard a rival's price hike pushes buyers to $x$</td></tr>
+            <tr><td><strong>Complements</strong> &nbsp;($\tfrac{dx}{dp_y} < 0$)</td><td>$\varepsilon_{xy} < 0$</td><td>how hard a partner's price hike drags $x$ down</td></tr>
+        </table>
+        <p style="margin:10px 0 0 0;">So the only genuinely <em>new</em> line in the elasticity chart is $\eta = 1$ &mdash; the necessity/luxury border, where the budget share stops falling and starts rising. Everything else is the Unit 2 chart with a magnitude bolted on.</p>
     </div>
     <div class="technique-section" style="background:rgba(221,162,94,0.06); border-left:4px solid #DDA25E;">
         <h3>Worked example</h3>
@@ -588,6 +625,15 @@ elUpdate();
     function X(x) { return ML + x / XMAX * (W - ML - MR); }
     function Y(p) { return H - MB - p / PMAX * (H - MT - MB); }
 
+    // ── copy of the demand graph (left half of the traced pair) ──
+    var cvb = document.getElementById('sl-canvasb'), ctxb = null;
+    if (cvb) {
+        cvb.width = W * dpr; cvb.height = H * dpr;
+        cvb.style.width = '100%'; cvb.style.maxWidth = W + 'px';
+        ctxb = cvb.getContext('2d');
+        ctxb.scale(dpr, dpr);
+    }
+
     // ── second canvas: elasticity traced out at every point ──
     var cv2 = document.getElementById('sl-canvas2'), ctx2 = null;
     if (cv2) {
@@ -697,7 +743,7 @@ elUpdate();
         ctx2.fillText('…and its elasticity, traced out:  ε = −2p⁄x = (x − 24)⁄x', ML + (W - ML - MR) / 2, 20);
     }
 
-    function draw(p) {
+    function drawDemand(ctx, p) {
         var x = 24 - 2 * p;
         var e = x > 0.0001 ? -2 * p / x : -9999;
         ctx.clearRect(0, 0, W, H);
@@ -762,15 +808,14 @@ elUpdate();
         ctx.fillText('One straight line, every elasticity:  x = 24 \u2212 2p', ML + (W - ML - MR) / 2, 20);
     }
 
-    window.slUpdate = function() {
-        var p = +document.getElementById('sl-p').value;
+    function updateReadouts(prefix, p) {
         var x = 24 - 2 * p;
         var e = -2 * p / x;
-        document.getElementById('sl-disp').textContent = p.toFixed(2);
-        document.getElementById('sl-x').textContent = x.toFixed(1);
-        document.getElementById('sl-e').textContent = e < -999 ? '\u2212\u221E' : e.toFixed(2);
-        document.getElementById('sl-abse').textContent = Math.abs(e) > 999 ? '\u221E' : Math.abs(e).toFixed(2);
-        var cEl = document.getElementById('sl-class'), note = document.getElementById('sl-note');
+        document.getElementById(prefix + '-disp').textContent = p.toFixed(2);
+        document.getElementById(prefix + '-x').textContent = x.toFixed(1);
+        document.getElementById(prefix + '-e').textContent = e < -999 ? '\u2212\u221E' : e.toFixed(2);
+        document.getElementById(prefix + '-abse').textContent = Math.abs(e) > 999 ? '\u221E' : Math.abs(e).toFixed(2);
+        var cEl = document.getElementById(prefix + '-class'), note = document.getElementById(prefix + '-note');
         var a = Math.abs(e);
         if (a > 1.02) {
             cEl.textContent = 'ELASTIC'; cEl.style.color = '#39864E';
@@ -782,59 +827,66 @@ elUpdate();
             cEl.textContent = 'UNIT ELASTIC'; cEl.style.color = '#DDA25E';
             note.innerHTML = '<strong style="color:#8B6914;">Unit elastic \u2014 the midpoint (p = 6, x = 12):</strong> the knife edge where \u03B5 = \u22121 and revenue p\u00B7x is maximized. Every straight-line demand hits \u22121 exactly halfway down.';
         }
-        draw(p);
+    }
+
+    window.slUpdate = function() {
+        var p = +document.getElementById('sl-p').value;
+        updateReadouts('sl', p);
+        drawDemand(ctx, p);
+    };
+
+    window.sl2Update = function() {
+        var p = +document.getElementById('sl2-p').value;
+        updateReadouts('sl2', p);
+        if (ctxb) drawDemand(ctxb, p);
         draw2(p);
     };
 
-    // drag directly on the canvas
-    var dragging = false;
-    function pFromEvent(ev) {
-        var r = cv.getBoundingClientRect();
+    // drag directly on the canvases — each drives its own visualizer's slider
+    var dragEl = null;
+    function pFromEventY(el, ev) {   // vertical drag: pick a price on a demand graph
+        var r = el.getBoundingClientRect();
         var cy = (ev.touches ? ev.touches[0].clientY : ev.clientY) - r.top;
         var p = (H - MB - cy * (H / r.height)) / (H - MT - MB) * PMAX;
         return Math.max(0.4, Math.min(11.6, p));
     }
-    function startDrag(ev) { dragging = true; cv.style.cursor = 'grabbing'; moveDrag(ev); }
-    function moveDrag(ev) {
-        if (!dragging) return;
-        ev.preventDefault();
-        document.getElementById('sl-p').value = pFromEvent(ev);
-        slUpdate();
+    function pFromEventX(el, ev) {   // horizontal drag: pick a quantity on the trace
+        var r = el.getBoundingClientRect();
+        var cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+        var xq = (cx * (W / r.width) - ML) / (W - ML - MR) * XMAX;
+        return Math.max(0.4, Math.min(11.6, (24 - xq) / 2));
     }
-    function endDrag() { dragging = false; cv.style.cursor = 'grab'; }
-    cv.addEventListener('mousedown', startDrag);
+    function moveDrag(ev) {
+        if (!dragEl) return;
+        ev.preventDefault();
+        if (dragEl === cv) {
+            document.getElementById('sl-p').value = pFromEventY(cv, ev);
+            slUpdate();
+        } else if (dragEl === cvb) {
+            document.getElementById('sl2-p').value = pFromEventY(cvb, ev);
+            sl2Update();
+        } else if (dragEl === cv2) {
+            document.getElementById('sl2-p').value = pFromEventX(cv2, ev);
+            sl2Update();
+        }
+    }
+    function endDrag() {
+        if (dragEl) dragEl.style.cursor = 'grab';
+        dragEl = null;
+    }
+    [cv, cvb, cv2].forEach(function(el) {
+        if (!el) return;
+        function startDrag(ev) { dragEl = el; el.style.cursor = 'grabbing'; moveDrag(ev); }
+        el.addEventListener('mousedown', startDrag);
+        el.addEventListener('touchstart', startDrag, {passive: false});
+        el.addEventListener('touchmove', moveDrag, {passive: false});
+    });
     window.addEventListener('mousemove', moveDrag);
     window.addEventListener('mouseup', endDrag);
-    cv.addEventListener('touchstart', startDrag, {passive: false});
-    cv.addEventListener('touchmove', moveDrag, {passive: false});
     window.addEventListener('touchend', endDrag);
 
-    // drag on the traced-elasticity panel too (horizontal: pick a quantity)
-    if (cv2) {
-        var dragging2 = false;
-        function pFromEvent2(ev) {
-            var r2 = cv2.getBoundingClientRect();
-            var cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r2.left;
-            var xq = (cx * (W / r2.width) - ML) / (W - ML - MR) * XMAX;
-            var p2 = (24 - xq) / 2;
-            return Math.max(0.4, Math.min(11.6, p2));
-        }
-        function startDrag2(ev) { dragging2 = true; cv2.style.cursor = 'grabbing'; moveDrag2(ev); }
-        function moveDrag2(ev) {
-            if (!dragging2) return;
-            ev.preventDefault();
-            document.getElementById('sl-p').value = pFromEvent2(ev);
-            slUpdate();
-        }
-        function endDrag2() { dragging2 = false; cv2.style.cursor = 'grab'; }
-        cv2.addEventListener('mousedown', startDrag2);
-        window.addEventListener('mousemove', moveDrag2);
-        window.addEventListener('mouseup', endDrag2);
-        cv2.addEventListener('touchstart', startDrag2, {passive: false});
-        cv2.addEventListener('touchmove', moveDrag2, {passive: false});
-        window.addEventListener('touchend', endDrag2);
-    }
     slUpdate();
+    sl2Update();
 })();
 
 </script>
