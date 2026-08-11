@@ -145,6 +145,8 @@ li { margin-bottom: 10px; }
 .mviz-lbl { position: absolute; transform: translate(12px,-26px); font-weight: 700; color: var(--green-dark); font-size: 14px; background: rgba(255,255,255,0.88); padding: 1px 7px; border-radius: 5px; pointer-events: none; transition: left 0.12s, top 0.12s; white-space: nowrap; }
 .mviz-hguide { position: absolute; border-top: 1.5px dotted var(--gold); pointer-events: none; }
 .mviz-vguide { position: absolute; border-left: 1.5px dotted var(--gold); pointer-events: none; }
+.pt-part { margin-top: 14px; }
+.pt-badge { display:inline-block; min-width:24px; height:24px; line-height:24px; text-align:center; background:rgba(221,162,94,0.22); color:#8B6914; border-radius:50%; font-weight:700; font-size:12.5px; margin-right:7px; font-family:'Inter',sans-serif; }
 </style>
 </head>
 <body>
@@ -444,70 +446,152 @@ li { margin-bottom: 10px; }
 <!-- ===== PRACTICE ===== -->
 <div id="tab-practice" class="tab-content">
     <div class="section-header"><div class="section-number">1</div><h2>Practice</h2></div>
-    <div class="card"><p>Routine: write the demand function, compute $\tfrac{dx}{dp}$, multiply by $\tfrac{p}{x}$, <em>then</em> interpret. Classify before you conclude anything about revenue.</p></div>
+    <div class="card"><p>Routine: write the demand function, compute $\tfrac{dx}{dp}$, multiply by $\tfrac{p}{x}$, <em>then</em> interpret. Classify before you conclude anything about revenue. Each problem is split into parts &mdash; <strong>work each part on paper before you check it</strong>.</p></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
         <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Point elasticity.</strong> Demand is $x = 60 - 5p$. Compute $\varepsilon$ at $p = 2$, $p = 6$, and $p = 10$, and classify each.</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0;">$\varepsilon = \dfrac{-5p}{60-5p} = \dfrac{-p}{12-p}$: at $p=2$, $-\tfrac{1}{5}$ (inelastic); at $p=6$, $-1$ (unit); at $p=10$, $-5$ (elastic).</p>
-        </div></div></div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Write down the point-elasticity formula in calculus form. Hint: $\varepsilon$ has no units.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\varepsilon = \dfrac{dx}{dp}\cdot\dfrac{p}{x}$. Elasticity is <em>unitless</em>, so the ratio must be the one that cancels the units of $\tfrac{dx}{dp}$ &mdash; that forces $\tfrac{p}{x}$, not $\tfrac{x}{p}$.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Compute $\dfrac{dx}{dp}$. Does your answer depend on $p$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\dfrac{dx}{dp} = -5$ at <em>every</em> price &mdash; a straight line has constant slope. (Which is exactly why the slope alone can't be the elasticity: we need three different answers out of one number.)</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Write $\varepsilon$ as a function of $p$: substitute $x = 60 - 5p$ into the formula and simplify.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\varepsilon(p) = -5\cdot\dfrac{p}{60-5p} = \dfrac{-5p}{60-5p} = \dfrac{-p}{12-p}$.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Evaluate $\varepsilon$ at $p = 2, 6, 10$ and classify each point. Check: at what price should this line hit $\varepsilon = -1$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$p=2$: $\tfrac{-2}{10} = -\tfrac{1}{5}$ (inelastic); $\;p=6$: $\tfrac{-6}{6} = -1$ (unit); $\;p=10$: $\tfrac{-10}{2} = -5$ (elastic). Check: the midpoint $\tfrac{a}{2b} = \tfrac{60}{10} = 6$ &mdash; unit elastic exactly there &#10003;.</p></div></div>
+        </div>
+        </div>
     </div></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
         <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Arc elasticity.</strong> Price rises from $4$ to $6$ and quantity falls from $20$ to $12$. Compute the arc (midpoint) elasticity.</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0;">$\bar{p} = 5$, $\bar{x} = 16$: $\;\varepsilon_{\text{arc}} = \dfrac{-8/16}{2/5} = \dfrac{-0.5}{0.4} = \boxed{-1.25}$ &mdash; elastic over this stretch.</p>
-        </div></div></div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Why doesn't the point formula work here? Write down the formula that does.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">There's no demand <em>function</em> to differentiate &mdash; just two observed points. Use the arc (midpoint) formula: $\varepsilon_{\text{arc}} = \dfrac{\Delta x / \bar{x}}{\Delta p / \bar{p}}$, with the averages as the base.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Compute the midpoints $\bar{p}$ and $\bar{x}$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\bar{p} = \tfrac{4+6}{2} = 5$, $\quad \bar{x} = \tfrac{20+12}{2} = 16$.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Compute the two percentage changes (watch the signs).</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\%\Delta x = \dfrac{-8}{16} = -0.5$ &nbsp;and&nbsp; $\%\Delta p = \dfrac{+2}{5} = +0.4$.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Compute $\varepsilon_{\text{arc}}$ and classify. Then compute revenue at both points to confirm the classification.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\varepsilon_{\text{arc}} = \dfrac{-0.5}{0.4} = \boxed{-1.25}$ &mdash; elastic over this stretch, so the price rise should <em>lose</em> revenue. Check: $R$ went from $4\cdot 20 = 80$ to $6\cdot 12 = 72$ &#10003;.</p></div></div>
+        </div>
+        </div>
     </div></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
         <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Constant elasticity.</strong> Demand is $x = 100\,p^{-2}$. Find $\varepsilon$, then verify your revenue prediction by computing $R(p)$ explicitly.</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0;">Power function $\Rightarrow \varepsilon = -2$ everywhere (elastic). Prediction: price rises lose revenue. Check: $R = p\cdot 100p^{-2} = \dfrac{100}{p}$ &mdash; strictly decreasing &#10003;.</p>
-        </div></div></div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> What type of function is this demand curve? What does that type tell you about $\varepsilon$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">It's a power function, $x = Ap^{\varepsilon}$ &mdash; the constant-elasticity family. The shortcut: <em>the exponent on $p$ is the elasticity</em>, the same at every price.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Read off $\varepsilon$ and classify the demand.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\varepsilon = -2$ everywhere: $|\varepsilon| = 2 > 1$, so demand is <strong>elastic at every price</strong>.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> If the seller raises the price, does revenue rise or fall? Why?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Elastic demand: a $1\%$ price rise costs about $2\%$ of quantity &mdash; the quantity loss beats the price gain, so <strong>revenue falls</strong>.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Compute $R(p) = p \cdot x(p)$ and confirm your answer from part (c).</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$R(p) = p\cdot 100p^{-2} = \dfrac{100}{p}$ &mdash; strictly decreasing in $p$ &#10003;. Every price rise loses revenue, exactly as $\varepsilon = -2$ promised.</p></div></div>
+        </div>
+        </div>
     </div></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
         <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Cobb&ndash;Douglas, all three elasticities.</strong> From $U = xy^3$: $x^* = \dfrac{m}{4p_x}$. Find the own-price elasticity, the income elasticity, and the cross-price elasticity with respect to $p_y$.</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0;">$x^* = \tfrac{m}{4}p_x^{-1}$: own-price $\varepsilon = -1$; proportional to $m$: $\eta = +1$; $p_y$ absent: $\varepsilon_{xy} = 0$. The Cobb&ndash;Douglas triple $(-1, +1, 0)$ &mdash; worth memorizing.</p>
-        </div></div></div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Rewrite $x^*$ so that every variable appears as a power.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$x^* = \tfrac{1}{4}\, m^{+1}\, p_x^{-1}$ &mdash; and notice $p_y$ doesn't appear at all.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Find the own-price elasticity $\varepsilon$. Hint: problem 3's shortcut.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\varepsilon = -1$: unit elastic at every price. (That's why Cobb&ndash;Douglas spending on each good never moves &mdash; the revenue box has constant area.)</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Find the income elasticity $\eta$ and classify the good.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\eta = +1$: demand is exactly proportional to income. Normal &mdash; and sitting right on the necessity/luxury border.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Find $\varepsilon_{xy}$. Hint: look back at part (a) &mdash; where is $p_y$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$p_y$ absent $\Rightarrow \dfrac{dx}{dp_y} = 0 \Rightarrow \varepsilon_{xy} = 0$: independent. The Cobb&ndash;Douglas triple $(-1, +1, 0)$ &mdash; worth memorizing.</p></div></div>
+        </div>
+        </div>
     </div></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">5</div>
         <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Revenue &amp; MR.</strong> Demand is $x = 30 - 3p$. Find the revenue-maximizing price and quantity, peak revenue, and $MR$ at $p = 8$ and at $p = 2$.</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0 0 6px 0;">Midpoint: $p = 5$, $x = 15$, $R = 75$. At $p=8$: $\varepsilon = -4$, $MR = 8(1 - \tfrac{1}{4}) = 6$. At $p=2$: $\varepsilon = \tfrac{-6}{24} = -\tfrac{1}{4}$, $MR = 2(1 - 4) = -6$.</p>
-            <p style="margin:0;">Negative $MR$ at $p = 2$: on the inelastic stretch, selling more units <em>lowers</em> revenue.</p>
-        </div></div></div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Find the revenue-maximizing price without computing any revenue. Hint: where on a straight line is $\varepsilon = -1$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">At the midpoint, where $\varepsilon = -1$: $\;p^{R\max} = \dfrac{a}{2b} = \dfrac{30}{6} = 5$.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Find the quantity there and the peak revenue.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$x = 30 - 15 = 15$, $\quad R = 5 \cdot 15 = 75$.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Compute $\varepsilon$ at $p = 8$ and at $p = 2$, and classify each.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">At $p=8$: $x = 6$, $\varepsilon = \dfrac{-24}{6} = -4$ (elastic). At $p=2$: $x = 24$, $\varepsilon = \dfrac{-6}{24} = -\tfrac{1}{4}$ (inelastic).</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Compute $MR = p\left(1 - \tfrac{1}{|\varepsilon|}\right)$ at both prices. What does the sign of each answer tell you?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0 0 6px 0;">$MR(8) = 8\left(1 - \tfrac{1}{4}\right) = 6 > 0$: elastic side, an extra unit adds revenue. $\;MR(2) = 2\left(1 - 4\right) = -6 < 0$.</p><p style="margin:0;">Negative $MR$ at $p = 2$: on the inelastic stretch, selling more units <em>lowers</em> revenue &mdash; you give up too much price to move each extra unit.</p></div></div>
+        </div>
+        </div>
     </div></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">6</div>
-        <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Signs &amp; classification.</strong> For each demand function, give $\eta$ or $\varepsilon_{xy}$ and the classification: (a) quasilinear $x^* = \dfrac{9p_y^2}{p_x^2}$ &mdash; income elasticity; (b) complements $x^* = \dfrac{2m}{2p_x + 3p_y}$ &mdash; sign of $\varepsilon_{xy}$; (c) substitutes below the cliff, $x^* = \dfrac{m}{p_x}$ &mdash; sign of $\varepsilon_{xy}$.</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0;">(a) $m$ absent $\Rightarrow \eta = 0$: borderline normal/inferior, zero income effect. (b) $p_y$ in the denominator $\Rightarrow \varepsilon_{xy} < 0$: complements. (c) On the hyperbola, $p_y$ is absent, so $\varepsilon_{xy} = 0$ locally &mdash; but a rise in $p_y$ can move the <em>cliff</em> and switch the corner: the substitutes signature lives at the threshold, not on the smooth stretch. (Subtle &mdash; and a favorite trick question.)</p>
-        </div></div></div>
+        <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Signs &amp; classification.</strong> Three demand functions from Unit 2, all at the same numbers: $p_x = 3$, $p_y = 2$, $m = 60$. For each, find the elasticity (or its sign) and classify.</p>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Quasilinear: $x^* = \dfrac{9p_y^2}{p_x^2}$. Compute $x^*$ at the given numbers, then find the <em>income</em> elasticity $\eta$. Hint: did you use $m$ anywhere?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$x^* = \dfrac{9\cdot 4}{9} = 4$ &mdash; and $m$ never entered the calculation. $m$ absent $\Rightarrow \dfrac{dx}{dm} = 0 \Rightarrow \eta = 0$: the zero income effect you proved in Unit 2, sitting exactly on the normal/inferior border.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Complements: $x^* = \dfrac{2m}{2p_x + 3p_y}$. Compute $x^*$ at the given numbers. Now raise $p_y$ from $2$ to $4$ and recompute. What is the <em>sign</em> of $\varepsilon_{xy}$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">At $p_y = 2$: $x^* = \dfrac{120}{6+6} = 10$. At $p_y = 4$: $x^* = \dfrac{120}{6+12} = \dfrac{120}{18} \approx 6.7$. A pricier $y$ dragged $x$ down: $\dfrac{dx}{dp_y} < 0 \Rightarrow \varepsilon_{xy} < 0$. <strong>Complements</strong>, as the utility function promised.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Substitutes below the cliff: $x^* = \dfrac{m}{p_x}$. Compute $x^*$ at the given numbers. Now raise $p_y$ from $2$ to $3$: does $x^*$ change? What is $\varepsilon_{xy}$ on this stretch, and where does the substitutes behavior actually show up?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$x^* = \dfrac{60}{3} = 20$ &mdash; and it stays $20$ when $p_y$ moves to $3$, because $p_y$ isn't in the formula: $\varepsilon_{xy} = 0$ <em>locally</em>. But a big enough rise in $p_y$ can move the <em>cliff</em> and switch the corner: the substitutes signature lives at the threshold, not on the smooth stretch. (Subtle &mdash; and a favorite trick question.)</p></div></div>
+        </div>
+        </div>
     </div></div>
 
     <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
         <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">7</div>
-        <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Reasoning.</strong> A streaming service is deciding whether a price cut will raise revenue. What single number settles it, and how? Then: why can a straight-line demand curve never have that number be the same at two different prices?</p>
-        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
-        <div class="solution-body"><div class="highlight-box">
-            <p style="margin:0;">The own-price elasticity at the current price: a cut raises revenue iff demand there is elastic ($|\varepsilon| > 1$). On a line, $\varepsilon = -bp/x$ changes monotonically as you slide along (the ratio $p/x$ strictly falls moving down the curve), so no elasticity value ever repeats &mdash; each $\varepsilon$ happens exactly once.</p>
-        </div></div></div>
+        <div style="flex:1;"><p style="margin-bottom:6px;"><strong>Reasoning.</strong> A streaming service is deciding whether a price cut will raise revenue.</p>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> What single number settles the question?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">The <strong>own-price elasticity of demand at the current price</strong>. Not the slope, not total subscribers &mdash; the unit-free $\varepsilon$ right where they're standing.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> State the decision rule, then explain in one sentence why it works.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">A price cut raises revenue <strong>iff demand is elastic there</strong> ($|\varepsilon| > 1$): the percentage of customers gained exceeds the percentage of price given up, so the revenue box grows.</p></div></div>
+        </div>
+        <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Why can a straight-line demand curve <em>never</em> have the same $\varepsilon$ at two different prices? Hint: what happens to the ratio $\tfrac{p}{x}$ as you slide down the line?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+            <div class="solution-body"><div class="highlight-box"><p style="margin:0;">On a line, $\varepsilon = -b\cdot\tfrac{p}{x}$ with $b$ fixed &mdash; and sliding down the curve, $p$ falls while $x$ rises, so $\tfrac{p}{x}$ <em>strictly</em> falls. $\varepsilon$ changes monotonically, so no value ever repeats: each elasticity happens exactly once.</p></div></div>
+        </div>
+        </div>
     </div></div>
 </div>
 
