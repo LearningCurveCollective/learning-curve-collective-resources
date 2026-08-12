@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [["$","$"]],
+        displayMath: [["$$","$$"]]
+    },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* ─── Header ─── */
+.header {
+    background: var(--green-dark);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gold);
+}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo {
+    width: 64px; height: 64px;
+    background: none;
+    display: flex; align-items: center; justify-content: center;
+    overflow: visible; flex-shrink: 0;
+}
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 26px; font-weight: 700; letter-spacing: 0.5px;
+}
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+/* ─── Container ─── */
+.container { max-width: 1180px; margin: 0 auto; padding: 40px 20px; }
+
+/* ─── Tab System ─── */
+.tab-buttons {
+    display: flex; gap: 6px; margin-bottom: 30px;
+    position: sticky; top: 0; background: var(--cream);
+    z-index: 100; padding: 12px 0 10px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #E8E0D0;
+}
+.tab-button {
+    padding: 8px 12px; background-color: #E2E2E2;
+    border: 2px solid #E0D5C0; border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px; font-weight: 600;
+    color: var(--text-medium);
+    transition: all 0.25s ease;
+}
+.tab-button:hover {
+    border-color: var(--gold); color: var(--brown-dark);
+    transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.tab-button.active {
+    color: white; border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px);
+}
+
+/* Tab color groups */
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Headers ─── */
+.section-header {
+    display: flex; align-items: center; gap: 15px;
+    margin-top: 40px; margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--gold-light);
+}
+.section-header:first-child { margin-top: 0; }
+.section-number {
+    width: 40px; height: 40px;
+    background-color: var(--gold); color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; flex-shrink: 0;
+}
+.section-header h2 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 24px; color: var(--brown-dark); margin: 0;
+}
+
+/* ─── Cards & Boxes ─── */
+.card {
+    background-color: white; border-radius: 8px;
+    padding: 20px; margin-bottom: 20px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.highlight-box {
+    background-color: var(--white);
+    border-left: 5px solid var(--green-dark);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--green-dark);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box {
+    background-color: #E8F5E9;
+    border-left: 5px solid var(--green-light);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+.warning-box {
+    background-color: #FFEBEE;
+    border-left: 5px solid #E57373;
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+
+/* ─── Concept List ─── */
+.concept-list {
+    background-color: var(--cream-dark);
+    border-radius: 8px; padding: 20px; margin: 15px 0;
+}
+.concept-item {
+    margin-bottom: 12px; padding: 16px 18px;
+    border-radius: 8px; border-bottom: none;
+    display: flex; gap: 16px; align-items: flex-start;
+}
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) {
+    background-color: rgba(59, 83, 35, 0.08);
+    border-left: 4px solid #21442B;
+}
+.concept-item:nth-child(3n+2) {
+    background-color: rgba(200, 168, 78, 0.10);
+    border-left: 4px solid #DDA25E;
+}
+.concept-item:nth-child(3n+3) {
+    background-color: rgba(139, 94, 60, 0.08);
+    border-left: 4px solid #8B5E3C;
+}
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+
+/* ─── Formula Tiles ─── */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile {
+    background: var(--white); border: 2px solid var(--green-dark);
+    border-radius: 10px; padding: 18px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.formula-tile h4 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    color: var(--brown-dark); font-size: 14px; margin-bottom: 8px;
+}
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note {
+    font-size: 12.5px; color: var(--brown-medium);
+    margin-top: 6px; line-height: 1.5;
+}
+
+/* ─── Collapsible Toggles ─── */
+.example-toggle, .solution-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: none; border-radius: 6px;
+    padding: 7px 14px; margin-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+}
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow {
+    transition: transform 0.25s; display: inline-block;
+}
+.example-toggle.open .arrow, .solution-toggle.open .arrow {
+    transform: rotate(90deg);
+}
+.example-body, .solution-body {
+    display: none; margin-top: 10px; padding: 14px 18px;
+    background: rgba(255,255,255,0.7); border-radius: 6px;
+    border: 1px solid rgba(33,68,43,0.15);
+}
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* ─── Technique Sections ─── */
+.technique-section {
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 18px;
+}
+.technique-section h3 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 20px; margin-bottom: 10px; color: var(--green-dark);
+}
+.technique-section .step-label {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+}
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+
+/* ─── Derivation Steps ─── */
+.derivation-step {
+    display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px;
+}
+.step-num {
+    width: 30px; height: 30px; flex-shrink: 0;
+    background: var(--green-dark); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+}
+.step-body { flex: 1; }
+.step-body p { margin-bottom: 8px; }
+
+/* ─── Data tables ─── */
+.data-table {
+    width: 100%; border-collapse: collapse; margin: 15px 0;
+    background: white; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    font-size: 14px;
+}
+.data-table th {
+    background: var(--green-dark); color: white;
+    padding: 10px 12px; text-align: left;
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 13px; letter-spacing: 0.5px;
+}
+.data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--cream-dark);
+    vertical-align: top;
+}
+.data-table tr:nth-child(even) { background: rgba(221,162,94,0.05); }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ─── Trap cards ─── */
+.trap-card {
+    background: white; border-radius: 8px; padding: 16px 20px;
+    margin-bottom: 14px; border-left: 5px solid #E57373;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+    display: flex; gap: 14px; align-items: flex-start;
+}
+.trap-num {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: #E57373; color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+}
+
+/* ─── Use-case lines ─── */
+.use-line {
+    font-size: 13px; color: var(--brown-medium);
+    background: rgba(221,162,94,0.10); border-left: 3px solid var(--gold);
+    padding: 8px 12px; border-radius: 4px; margin-top: 12px; line-height: 1.6;
+}
+.use-line strong { color: #8B6914; font-size: 11px; letter-spacing: 0.8px; }
+
+/* ─── Chart figure ─── */
+.chart-fig {
+    background: white; border-radius: 10px; padding: 18px 18px 8px;
+    border: 2px solid var(--gold-light); margin: 16px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.chart-fig svg { width: 100%; height: auto; display: block; }
+.chart-fig .fig-caption { font-size: 13px; color: var(--text-medium); text-align: center; padding: 8px 6px 6px; }
+
+/* ─── Pill badges ─── */
+.ps-badge {
+    display: inline-block; font-size: 10.5px; font-weight: 700;
+    background: rgba(33,68,43,0.10); color: var(--green-dark);
+    padding: 2px 9px; border-radius: 10px; margin-left: 6px;
+    vertical-align: middle; letter-spacing: 0.5px;
+}
+.new-badge {
+    display: inline-block; font-size: 10.5px; font-weight: 700;
+    background: rgba(188,108,38,0.15); color: var(--copper);
+    padding: 2px 9px; border-radius: 10px; margin-left: 6px;
+    vertical-align: middle; letter-spacing: 0.5px;
+}
+
+/* ─── Footer ─── */
+.footer {
+    background: var(--brown-dark); color: white;
+    padding: 20px 40px; text-align: center;
+    border-top: 4px solid var(--gold);
+    margin-top: 40px; font-size: 14px; opacity: 0.9;
+}
+.footer a:hover { opacity: 0.85; }
+
+/* ─── Misc ─── */
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.formula { font-family: 'Inter', sans-serif; margin: 15px 0; }
+.mjx-container { overflow-x: auto; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid { grid-template-columns: 1fr; }
+    .data-table { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>ML Study Guide</h1>
+            <div class="subtitle">FIRST PASS &bull; PS1&ndash;PS3 COVERAGE FOLDED IN</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">MACHINE LEARNING &bull; EXAM PREP</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('linalg', this)">1 &middot; Lin Alg</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('matcalc', this)">2 &middot; Matrix Calc</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('regression', this)">3 &middot; Regression</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('glm', this)">4 &middot; GLMs</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('biasvar', this)">5 &middot; Bias&ndash;Var</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('trees', this)">6 &middot; Trees &amp; EM</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('prob', this)">7 &middot; Probability</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('kernels', this)">8 &middot; Kernels &amp; NNs</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('pca', this)">9 &middot; PCA</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('losses', this)">10 &middot; Losses</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('traps', this)">11 &middot; Trap List</button>
+    </div>
+
+    <div id="tab-linalg" class="tab-content active">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Linear Algebra Core</h2>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">The Four Subspaces &amp; Row-Space Trap <span class="ps-badge">PS1-4d</span></h3>
+            <p><strong>Givens:</strong> $X \in \mathbb{R}^{n\times d}$ (rows = training examples $x^{(i)\top}$), $\beta \in \mathbb{R}^d$ parameter vector.</p>
+            <div class="highlight-box">
+                $$\operatorname{Row}(X) = \operatorname{Col}(X^\top) \subseteq \mathbb{R}^d, \qquad \operatorname{Col}(X) \subseteq \mathbb{R}^n$$
+                $$\beta = X^\top v \text{ for some } v\in\mathbb{R}^n \iff \beta \in \operatorname{Row}(X)$$
+            </div>
+            <div class="idea-box">
+                <strong>The "GD trapped in Row($X$)" punchline:</strong> GD initialized at $\beta^{(0)}=0$ only ever adds multiples of $X^\top(\cdot)$, so every iterate stays in $\operatorname{Row}(X)$ (proof by induction: $0 = X^\top 0$; update keeps the form $\beta^{(t)} = X^\top v^{(t)}$). Limits preserve subspace membership &rArr; the solution GD finds lies in Row($X$). Combined with $X\hat\beta = y$: $(XX^\top)v = y \Rightarrow \hat\beta = X^\top(XX^\top)^{-1}y$ = the min-norm solution.
+            </div>
+            <p><strong>Rank&ndash;Nullity</strong> <span class="new-badge">ADDED</span>: $\dim\operatorname{Row}(X) + \dim\operatorname{Null}(X) = d$. With $n &lt; d$ and full row rank, $\dim\operatorname{Null}(X) = d-n \ge 1$ &rArr; a nonzero null vector exists &rArr; infinitely many interpolating solutions $\beta = \rho + \zeta$, $X\zeta = 0$.</p>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Spectral Theorem — cite by name, don't prove</h3>
+            <div class="highlight-box">
+                <p>$A$ symmetric ($A = A^\top$, real entries) $\Longrightarrow$</p>
+                $$A = Q\Lambda Q^\top, \quad Q^\top Q = QQ^\top = I, \quad \Lambda = \operatorname{diag}(\lambda_1,\dots,\lambda_d) \text{ real}$$
+            </div>
+            <p>Real eigenvalues, orthonormal eigenvectors, always diagonalizable. Orthogonal maps preserve norms: $\|Q^\top v\| = \|v\|$.</p>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Eigendecomposition mechanics</h4>
+                    <p>$$A^{-1} = Q\Lambda^{-1}Q^\top, \qquad A^k = Q\Lambda^k Q^\top$$</p>
+                    <p class="formula-note">Inverse flips eigenvalues ($\lambda \mapsto 1/\lambda$), keeps the same eigenvectors. Powers act on eigenvalues only.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Rayleigh bound <span class="new-badge">ADDED · PS1-1d</span></h4>
+                    <p>$$v^\top A v \le \lambda_{\max}(A)\,\|v\|^2 \quad (A = A^\top)$$</p>
+                    <p class="formula-note">Proof: set $z = Q^\top v$; then $v^\top A v = \sum_i \lambda_i z_i^2 \le \lambda_{\max}\|z\|^2 = \lambda_{\max}\|v\|^2$. Load-bearing in the GD descent lemma.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Trace</h4>
+                    <p>$$\operatorname{tr}(A) = \sum_i A_{ii} = \sum_i \lambda_i$$</p>
+                    <p class="formula-note">Cyclic property: $\operatorname{tr}(ABC) = \operatorname{tr}(BCA) = \operatorname{tr}(CAB)$. Proof of $\operatorname{tr}(AB)=\operatorname{tr}(BA)$: both equal $\sum_i\sum_j A_{ij}B_{ji}$.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Rotation invariance <span class="ps-badge">PS1-1c</span></h4>
+                    <p>$$\lambda_i(R A R^\top) = \lambda_i(A) \text{ for rotation } R$$</p>
+                    <p class="formula-note">Rotating a quadratic objective rotates the contours but preserves eigenvalues &mdash; so GD step-size limits are rotation-invariant.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--copper);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Worked Example — What Diagonalization Actually Looks Like <span class="new-badge">NUMBERS</span></h3>
+            <p><strong>Givens:</strong> $A = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}$ (symmetric). Characteristic polynomial: $(2-\lambda)^2 - 1 = 0 \Rightarrow \lambda_1 = 3,\; \lambda_2 = 1$. Eigenvectors: $\tfrac{1}{\sqrt2}(1,1)^\top$ and $\tfrac{1}{\sqrt2}(1,-1)^\top$ (orthonormal, as the spectral theorem promises).</p>
+            <div class="highlight-box">
+                $$A \;=\; \underbrace{\tfrac{1}{\sqrt{2}}\begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}}_{Q}\; \underbrace{\begin{pmatrix} 3 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}}_{\Lambda}\; \underbrace{\tfrac{1}{\sqrt{2}}\begin{pmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}}_{Q^\top}$$
+            </div>
+            <p>Now every "mechanics" claim from this tab becomes arithmetic you can check:</p>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Inverse flips eigenvalues</h4>
+                    <p>$$A^{-1} = Q\begin{pmatrix} \tfrac13 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}Q^\top = \begin{pmatrix} \tfrac23 &amp; -\tfrac13 \\ -\tfrac13 &amp; \tfrac23 \end{pmatrix}$$</p>
+                    <p class="formula-note">Same $Q$, eigenvalues $3, 1 \mapsto \tfrac13, 1$. Check: $A A^{-1} = I$. &check;</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Powers act on eigenvalues</h4>
+                    <p>$$A^{2} = Q\begin{pmatrix} 9 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}Q^\top = \begin{pmatrix} 5 &amp; 4 \\ 4 &amp; 5 \end{pmatrix}$$</p>
+                    <p class="formula-note">Multiply $A\cdot A$ directly to confirm. &check;</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Trace &amp; PD check</h4>
+                    <p>$$\operatorname{tr}(A) = 2 + 2 = 4 = 3 + 1 = \lambda_1 + \lambda_2$$</p>
+                    <p class="formula-note">Both eigenvalues $&gt; 0$ &rArr; $A$ is PD &rArr; invertible, unique minimizer of $w^\top A w - b^\top w$ stories.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Rayleigh bound, live</h4>
+                    <p>$$v = (1,0)^\top:\;\; v^\top A v = 2 \;\le\; \lambda_{\max}\|v\|^2 = 3$$</p>
+                    <p class="formula-note">Equality only when $v$ is the top eigenvector: $v = \tfrac{1}{\sqrt2}(1,1)^\top$ gives exactly $3$.</p>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>Same $Q$, very different matrix:</strong> the adjacency matrix $B = \begin{pmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{pmatrix}$ diagonalizes with the <em>identical</em> $Q$ but $\Lambda = \operatorname{diag}(1, -1)$:
+                $$v = (1,-1)^\top:\quad v^\top B v = -2 \;&lt;\; 0$$
+                Symmetric, perfectly diagonalizable, <em>not</em> PSD. Diagonalizability and positivity are separate properties — the eigenvalue signs are the whole story.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">PSD vs PD — definitions and why PD is load-bearing</h3>
+            <p><strong>Givens:</strong> $A \in \mathbb{R}^{d\times d}$ symmetric, quadratic form $v^\top A v$.</p>
+            <div class="highlight-box">
+                $$\text{PSD:}\quad v^\top A v \ge 0 \;\;\forall v \qquad\iff\qquad \lambda_i \ge 0 \;\forall i \;\;(\text{symmetric case})$$
+                $$\text{PD:}\quad v^\top A v &gt; 0 \;\;\forall v \ne 0 \qquad\iff\qquad \lambda_i &gt; 0 \;\forall i$$
+            </div>
+            <div class="derivation-step">
+                <div class="step-num">&#9733;</div>
+                <div class="step-body">
+                    <p><strong>PD $\Rightarrow$ invertible (proof by contradiction)</strong> <span class="new-badge">ADDED · PS1-5a</span>: if $Ax = 0$ for some $x \ne 0$, then $x^\top A x = 0$, contradicting $x^\top A x &gt; 0$. So $\operatorname{Null}(A) = \{0\}$ and $A^{-1}$ exists. This is why $X^\top X + \lambda I$ ($\lambda &gt; 0$) is <em>always</em> invertible: PSD + $\lambda I$ = PD.</p>
+                </div>
+            </div>
+            <div class="warning-box">
+                <strong>Trap — PD, not PSD, is what buys uniqueness</strong> <span class="ps-badge">PS1-5a</span>: PSD gives convexity (global min exists), but only PD gives a <em>unique</em> minimizer / invertibility. And <strong>symmetric $\not\Rightarrow$ PSD</strong>: the adjacency matrix $\begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix}$ is symmetric with eigenvalues $\pm 1$.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Covariance Matrices</h3>
+            <p><strong>Givens:</strong> random vector $X \in \mathbb{R}^d$, $\Sigma = \mathbb{E}[(X-\mu)(X-\mu)^\top]$.</p>
+            <div class="highlight-box">
+                $$v^\top \Sigma v = \operatorname{Var}(v^\top X) \ge 0 \quad\Rightarrow\quad \Sigma \text{ is always PSD (and symmetric)}$$
+            </div>
+            <ul>
+                <li>$\Sigma$ invertible $\Rightarrow$ no zero eigenvalues $\Rightarrow$ $\Sigma$ is PD.</li>
+                <li>$\Sigma^{-1} = Q\Lambda^{-1}Q^\top$ is symmetric and PD too (eigenvalues $1/\lambda_i &gt; 0$) &mdash; the precision matrix in the Gaussian density is well-behaved.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="tab-matcalc" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Matrix Calculus</h2>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Conventions</h3>
+            <ul>
+                <li><strong>Vectors are columns.</strong> The gradient of a scalar w.r.t. a variable takes the <em>variable's shape</em>: $\nabla_w f \in \mathbb{R}^{d}$ if $w \in \mathbb{R}^d$; $\nabla_W f$ has $W$'s shape.</li>
+                <li><strong>Jacobian</strong> = outputs &times; inputs: $J_{ij} = \partial f_i / \partial x_j$, so $J \in \mathbb{R}^{m\times d}$ for $f: \mathbb{R}^d \to \mathbb{R}^m$.</li>
+                <li><strong>Perturbation identity is ground truth:</strong> $f(x + \delta) \approx f(x) + \langle \nabla f(x), \delta\rangle$. When in doubt about a rule, expand to first order in $\delta$ and read the gradient off the linear term.</li>
+            </ul>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Vector-Variable Rules</h3>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Linear map / Jacobian</h4>
+                    <p>$$\frac{\partial (Aw)}{\partial w} = A$$</p>
+                    <p class="formula-note">Jacobian of a linear map is the matrix itself.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Inner product</h4>
+                    <p>$$\nabla_w\, a^\top w = a$$</p>
+                    <p class="formula-note">Gradient takes the variable's (column) shape.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Quadratic form — symmetrize trap</h4>
+                    <p>$$\nabla_w\, w^\top A w = (A + A^\top)\,w$$</p>
+                    <p class="formula-note">Only collapses to $2Aw$ when $A$ is <strong>symmetric</strong>. Writing $2A\theta$ for general $A$ is a classic exam error.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Least-squares residual</h4>
+                    <p>$$\nabla_w \|Xw - y\|^2 = 2X^\top(Xw - y)$$</p>
+                    <p class="formula-note">Residual first, then chain rule pushes $X^\top$ out front.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Log-det <span class="new-badge">ADDED · PS3-4c</span></h4>
+                    <p>$$\nabla_S \log|S| = S^{-1}$$</p>
+                    <p class="formula-note">Key step in the GMM M-step for $\Sigma$ (work with the precision $S=\Sigma^{-1}$; chain rule justifies switching variables since $\nabla_S \ell = 0 \iff \nabla_\Sigma \ell = 0$).</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Gaussian quadratic <span class="new-badge">ADDED · PS3-4c</span></h4>
+                    <p>$$\nabla_\mu (x-\mu)^\top S (x-\mu) = -2S(x-\mu)$$
+                    $$\nabla_S (x-\mu)^\top S (x-\mu) = (x-\mu)(x-\mu)^\top$$</p>
+                    <p class="formula-note">The two identities that generate the $\mu_j$ and $\Sigma_j$ EM updates.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Left/Right Law &amp; "Column-Born, Row-Filed"</h3>
+            <div class="highlight-box">
+                $$\nabla_A \left( u^\top A v \right) = u v^\top$$
+            </div>
+            <p>The factor on the <em>left</em> of $A$ becomes the column, the factor on the <em>right</em> becomes the row. A transpose on the variable swaps the sides.</p>
+            <div class="idea-box">
+                <strong>"Column-born, row-filed":</strong> in $Y = EXw$ stories, $\nabla_E Y_i = e_i (Xw)^\top$ &mdash; the output index is born as a column selector $e_i$, the input vector gets filed as a row. Verify any such formula with the <strong>shape test</strong>: the gradient must have exactly the variable's shape. The shape test never fails you on exam day.
+            </div>
+            <div class="card" style="border-left-color: var(--copper); margin-bottom:0;">
+                <p style="margin-bottom:8px;"><strong>Backprop compositions:</strong> for $\ell(g(h(w)))$, chain Jacobians right-to-left, then transpose once at the end to make shapes match: $\nabla_w \ell = J_h^\top J_g^\top \nabla \ell$. Every intermediate product must pass the shape test.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--copper);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Flow-Through With Numbers <span class="new-badge">NUMBERS</span></h3>
+            <p><strong>Givens:</strong> $A = \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix}$ (deliberately <em>not</em> symmetric), $\;w = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$, $\;a = \begin{pmatrix} 2 \\ -1 \end{pmatrix}$. Run every rule from the table above on these.</p>
+            <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Inner product.</strong> $a^\top w = 2 - 1 = 1$ (scalar). Gradient: $\nabla_w\, a^\top w = a = (2, -1)^\top$ — same shape as $w$. Shape test &check;</p></div></div>
+            <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Linear map.</strong> $Aw = \begin{pmatrix} 1+2 \\ 3+4 \end{pmatrix} = \begin{pmatrix} 3 \\ 7 \end{pmatrix}$. Jacobian: $\partial(Aw)/\partial w = A$, a $2\times 2$ = outputs &times; inputs. &check;</p></div></div>
+            <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Quadratic form — watch the trap fire.</strong> $w^\top A w = w^\top (3,7)^\top = 10$. The rule says
+            $$\nabla_w\, w^\top A w = (A + A^\top)w = \begin{pmatrix} 2 &amp; 5 \\ 5 &amp; 8 \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 7 \\ 13 \end{pmatrix}$$
+            The lazy answer $2Aw = (6, 14)^\top$ is <strong>wrong</strong>. Ground-truth check by expanding to a scalar: $f(w) = w_1^2 + 5w_1 w_2 + 4w_2^2$, so $\partial f/\partial w_1 = 2w_1 + 5w_2 = 7$ and $\partial f/\partial w_2 = 5w_1 + 8w_2 = 13$. &check; The symmetrize rule wins.</p></div></div>
+            <div class="derivation-step"><div class="step-num">4</div><div class="step-body"><p><strong>Least-squares gradient.</strong> $X = \begin{pmatrix} 1 &amp; 0 \\ 1 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}$, $y = \begin{pmatrix} 0 \\ 1 \\ 1 \end{pmatrix}$, $\theta = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$. Residual $r = X\theta - y = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$; then
+            $$\nabla_\theta \|X\theta - y\|^2 = 2X^\top r = 2\begin{pmatrix} 1 &amp; 1 &amp; 1 \\ 0 &amp; 1 &amp; 2 \end{pmatrix}\begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} = \begin{pmatrix} 2 \\ 4 \end{pmatrix}$$
+            $X^\top$ pulls a length-3 residual back to a length-2 gradient — the shape test in action.</p></div></div>
+            <div class="derivation-step"><div class="step-num">5</div><div class="step-body"><p><strong>Left/right law.</strong> $u = (1,2)^\top$, $v = (3,1)^\top$:
+            $$\nabla_A\, u^\top A v = uv^\top = \begin{pmatrix} 1 \\ 2 \end{pmatrix}\begin{pmatrix} 3 &amp; 1 \end{pmatrix} = \begin{pmatrix} 3 &amp; 1 \\ 6 &amp; 2 \end{pmatrix}$$
+            $u$ (left of $A$) born as the column, $v$ (right of $A$) filed as the row; result has $A$'s shape. &check;</p></div></div>
+        </div>
+    </div>
+
+    <div id="tab-regression" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Regression Models</h2>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">OLS</h3>
+            <p><strong>Givens:</strong> $X \in \mathbb{R}^{n\times d}$, $y \in \mathbb{R}^n$, objective $J(\theta) = \tfrac12\|X\theta - y\|^2$.</p>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> 3-line gradient derivation</button>
+            <div class="example-body">
+                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Name the residual.</strong> $r(\theta) = X\theta - y$, so $J = \tfrac12 r^\top r$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Chain rule.</strong> $\nabla_\theta J = \left(\frac{\partial r}{\partial \theta}\right)^\top r = X^\top r$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Set to zero.</strong> $X^\top(X\theta - y) = 0 \Rightarrow X^\top X\,\theta = X^\top y$ (normal equations).</p></div></div>
+            </div>
+            <div class="highlight-box">
+                $$\nabla J = X^\top(X\theta - y), \qquad \boxed{\theta^* = (X^\top X)^{-1} X^\top y} \;\;(X^\top X \text{ invertible})$$
+            </div>
+            <ul>
+                <li><strong>Projection interpretation:</strong> $X\theta^*$ is the orthogonal projection of $y$ onto $\operatorname{Col}(X)$; the residual is $\perp$ to every column of $X$.</li>
+                <li><strong>Why a closed form exists:</strong> stationarity condition is <em>linear in $\theta$</em>. Whenever $\nabla J = 0$ is linear in the parameter, you can solve in closed form; when it's transcendental (logistic), you can't.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; predicting a continuous target from features: house price from square footage, exam score from study hours. The baseline every fancier regression is measured against.</div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Weighted Least Squares &amp; LWR <span class="ps-badge">PS1-2</span></h3>
+            <p><strong>Givens:</strong> weights $w^{(i)} &gt; 0$, $J(\theta) = \tfrac12\sum_i w^{(i)}(\theta^\top x^{(i)} - y^{(i)})^2 = (X\theta - y)^\top W (X\theta - y)$.</p>
+            <div class="warning-box">
+                <strong>Trap:</strong> the $\tfrac12$ lives <em>inside</em> $W$: $W_{ii} = \tfrac{1}{2}w^{(i)}$, off-diagonals $0$. (Positive rescaling never changes the argmin, but state $W$ correctly.)
+            </div>
+            <div class="highlight-box">
+                $$\nabla J = 2X^\top W X \theta - 2X^\top W y \;\Rightarrow\; \boxed{\theta^* = (X^\top W X)^{-1} X^\top W y}$$
+            </div>
+            <div class="idea-box">
+                <strong>MLE $\iff$ WLS with inverse-variance weights</strong> <span class="new-badge">ADDED · PS1-2a(iii)</span>: with heteroscedastic Gaussian noise $y^{(i)} \sim \mathcal{N}(\theta^\top x^{(i)}, (\sigma^{(i)})^2)$, maximizing the log-likelihood $\equiv$ minimizing $\sum_i \frac{(y^{(i)} - \theta^\top x^{(i)})^2}{2(\sigma^{(i)})^2}$, i.e. WLS with $w^{(i)} = 1/(\sigma^{(i)})^2$. Noisier points get down-weighted by their precision.
+            </div>
+            <p><strong>LWR:</strong> at each query $x$, solve WLS with Gaussian kernel weights $w^{(i)} = \exp\!\left(-\frac{\|x^{(i)} - x\|^2}{2\tau^2}\right)$. Non-parametric, per-query solve. <strong>Bandwidth $\tau$:</strong> small $\tau$ &rarr; only neighbors matter &rarr; overfits noise; large $\tau$ &rarr; uniform weights &rarr; global linear fit &rarr; underfits. Validation error is U-shaped in $\tau$ <span class="ps-badge">PS1-2c</span>.</p>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; WLS: when you know some measurements are noisier than others (weight by precision $1/\sigma^2$). LWR: a smooth trend whose shape changes across the input — the PS1 wavy sensor data, fuel efficiency vs speed.</div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Ridge Regression</h3>
+            <p><strong>Givens:</strong> $J_\lambda(\theta) = \tfrac12\|X\theta - y\|^2 + \tfrac{\lambda}{2}\|\theta\|^2$, $\lambda &gt; 0$.</p>
+            <div class="highlight-box">
+                $$\boxed{\hat\theta_\lambda = (X^\top X + \lambda I)^{-1} X^\top y}$$
+            </div>
+            <ul>
+                <li><strong>Always invertible:</strong> $X^\top X$ PSD $+\; \lambda I$ ($\lambda&gt;0$) $=$ PD $\Rightarrow$ invertible (Tab 1 lemma) $\Rightarrow$ unique minimizer regardless of $n$ vs $d$.</li>
+                <li><strong>L2 = MAP with Gaussian prior</strong> <span class="ps-badge">PS2-3</span>: $\theta \sim \mathcal{N}(0, \tfrac{1}{\lambda}I)$ prior + Gaussian likelihood &rArr; MAP estimate = ridge solution.</li>
+                <li>$\lambda = 0$ with singular $X^\top X$: define $\hat\theta_0 = (X^\top X)^+ X^\top y$ via the Moore&ndash;Penrose pseudo-inverse.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; many correlated features or $d \gtrsim n$ (predicting an outcome from thousands of gene-expression levels with few patients); any time OLS is non-invertible, unstable, or overfitting.</div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Min-Norm Solutions &amp; Implicit Regularization <span class="ps-badge">PS1-4</span></h3>
+            <p><strong>Givens:</strong> overparameterized regime $n &lt; d$, $XX^\top$ invertible, noiseless labels $y = X\beta^*$.</p>
+            <div class="highlight-box">
+                <p>All zero-cost solutions: $\;\beta = \rho + \zeta$, where</p>
+                $$\rho = X^\top(XX^\top)^{-1}y \;\;(\text{min-norm, in Row}(X)), \qquad X\zeta = 0 \;\;(\zeta \in \operatorname{Null}(X))$$
+                $$\|\beta\|^2 = \|\rho\|^2 + \|\zeta\|^2 \;\;(\rho \perp \zeta, \text{ Pythagoras}) \;\Rightarrow\; \rho \text{ has strictly smallest norm}$$
+            </div>
+            <ul>
+                <li><strong>GD from $0$ converges to the min-norm solution:</strong> iterates stay in Row($X$) (Tab 1), and the only zero-cost point in Row($X$) is $\rho$.</li>
+                <li><strong>Empirically:</strong> validation error grows with solution norm &mdash; min-norm generalizes best <span class="ps-badge">PS1-4c</span>.</li>
+            </ul>
+            <div class="idea-box">
+                <strong>Three implicit-regularization knobs</strong> <span class="new-badge">ADDED · PS1-4f/g</span> &mdash; all reach zero training error, but generalization differs:
+                <ul style="margin-top:8px;">
+                    <li><strong>Zero initialization</strong> &rarr; min-norm solution (the theorem above).</li>
+                    <li><strong>Initialization scale:</strong> in the quadratically parameterized model $f(x) = x^\top(\theta^{\odot 2} - \phi^{\odot 2})$, smaller init $\alpha$ generalizes better (val err $0.24 \to 0.031 \to 0.0045$ for $\alpha = 0.1, 0.03, 0.01$).</li>
+                    <li><strong>Batch size:</strong> smaller SGD batches (more gradient noise) find better-generalizing minima; batch $=n$ recovers full-batch GD exactly.</li>
+                </ul>
+            </div>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; the exam story of <em>why overparameterized models (deep nets) can generalize at all</em>: the optimizer itself acts as a regularizer, silently picking the tame solution out of infinitely many interpolants.</div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Double Descent <span class="ps-badge">PS1-5</span> <span class="new-badge">CHART</span></h3>
+            <div class="chart-fig">
+                <svg viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sample-wise double descent: validation loss spikes at n equals d for the unregularized model; ridge regularization flattens the peak">
+                    <line x1="60" y1="310" x2="620" y2="310" stroke="#4A4A4A" stroke-width="2"/>
+                    <line x1="60" y1="310" x2="60" y2="35" stroke="#4A4A4A" stroke-width="2"/>
+                    <polygon points="626,310 614,304 614,316" fill="#4A4A4A"/>
+                    <polygon points="60,29 54,41 66,41" fill="#4A4A4A"/>
+                    <line x1="330" y1="310" x2="330" y2="48" stroke="#4A4A4A" stroke-width="1.5" stroke-dasharray="4 5"/>
+                    <text x="338" y="330" font-size="13" font-weight="600" fill="#4A4A4A" font-family="Inter, sans-serif">n = d</text>
+                    <text x="338" y="60" font-size="12" fill="#4A4A4A" font-family="Inter, sans-serif">interpolation threshold</text>
+                    <text x="338" y="76" font-size="11" font-style="italic" fill="#4A4A4A" font-family="Inter, sans-serif">(X&#8868;X ill-conditioned, &#8214;&#946;&#8214; blows up)</text>
+                    <path d="M 75 155 C 140 235, 200 248, 250 238 C 290 228, 314 130, 330 62 C 346 130, 380 232, 450 258 C 520 276, 570 281, 610 284" fill="none" stroke="#BC6C26" stroke-width="3"/>
+                    <text x="86" y="132" font-size="13.5" font-weight="600" fill="#BC6C26" font-family="Inter, sans-serif">&#955; = 0 (pseudo-inverse)</text>
+                    <path d="M 75 205 C 200 242, 400 268, 610 280" fill="none" stroke="#39864E" stroke-width="3"/>
+                    <text x="100" y="296" font-size="13.5" font-weight="600" fill="#39864E" font-family="Inter, sans-serif">&#955; large (ridge) — peak gone</text>
+                    <text x="26" y="200" font-size="13" fill="#4A4A4A" font-family="Inter, sans-serif" transform="rotate(-90 26 200)">Validation loss</text>
+                    <text x="180" y="348" font-size="13" fill="#4A4A4A" font-family="Inter, sans-serif"># training samples n &nbsp;(d = 500 fixed; peak lives exactly at n &#8776; d)</text>
+                    <text x="105" y="52" font-size="12" font-style="italic" fill="#4A4A4A" font-family="Inter, sans-serif">n &lt; d: overparameterized</text>
+                    <text x="470" y="100" font-size="12" font-style="italic" fill="#4A4A4A" font-family="Inter, sans-serif">n &gt; d: classical regime</text>
+                </svg>
+                <div class="fig-caption">The PS1-5 experiment: validation loss vs $n$ at fixed $d = 500$. Unregularized ($\lambda = 0$, copper) descends, spikes at $n \approx d$, then descends again. Enough ridge (green) caps the solution norm and the second hump never happens.</div>
+            </div>
+            <ul>
+                <li>Validation loss vs sample count $n$ is <strong>non-monotonic</strong>: dips, spikes at the <strong>interpolation threshold $n \approx d$</strong> (where $X^\top X$ is maximally ill-conditioned and solution norms blow up), then descends again for $n &gt; d$.</li>
+                <li><strong>Regularization kills the peak</strong> <span class="new-badge">ADDED · PS1-5c</span>: larger $\lambda$ shrinks the spike ($\lambda = 1$: peak &asymp; 0.9; $\lambda = 5$: &asymp; 0.5); large enough $\lambda$ makes the curve monotone &mdash; no double descent. The $\lambda I$ term caps the solution norm exactly where the unregularized model explodes.</li>
+            </ul>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">GD Convergence — Quantitative Results <span class="ps-badge">PS1-1</span></h3>
+            <p><strong>Givens:</strong> update $\theta^{[t]} = \theta^{[t-1]} - \alpha\nabla J(\theta^{[t-1]})$.</p>
+            <table class="data-table">
+                <tr><th>Setting</th><th>Convergence condition</th><th>Key fact</th></tr>
+                <tr><td>Scalar quadratic $J = \tfrac12\beta\theta^2$</td><td>$0 &lt; \alpha &lt; 2/\beta$</td><td>$\theta^{[t]} = \theta^{[0]}(1-\alpha\beta)^t$ (geometric); $\alpha = 1/\beta$ converges in <strong>one step</strong></td></tr>
+                <tr><td>Diagonal quadratic $J = \tfrac12\sum_i\beta_i\theta_i^2$</td><td>$0 &lt; \alpha &lt; 2/\max_i \beta_i$</td><td>Coordinates decouple; the <strong>largest curvature</strong> dictates the step size</td></tr>
+                <tr><td>General convex, $\lambda_{\max}(\nabla^2 J) \le \beta_{\max}$</td><td>$0 &lt; \alpha &lt; 1/\beta_{\max}$ (safe)</td><td>Descent lemma below; strict decrease for $\alpha &lt; 2/\beta_{\max}$</td></tr>
+                <tr><td>Linear regression $J=\tfrac12\|X\theta - y\|^2$</td><td>$0 &lt; \alpha &lt; 1/\lambda_{\max}(X^\top X)$</td><td>$\nabla^2 J = X^\top X$: constant, PSD; large/correlated features inflate $\lambda_{\max}$ &rArr; use smaller $\alpha$</td></tr>
+            </table>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Iteration count <span class="new-badge">ADDED · PS1-1a</span></h4>
+                    <p>$$T = \left\lceil \frac{\ln(\epsilon/|\theta^{[0]}|)}{\ln|1 - \alpha\beta|} \right\rceil$$</p>
+                    <p class="formula-note">$T(\alpha)$ is U-shaped: decreasing on $(0, 1/\beta)$, increasing on $(1/\beta, 2/\beta)$. Near $2/\beta$: overshoot/oscillation across the valley; near $0$: tiny steps. Both logs are negative &mdash; watch inequality flips.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Descent lemma <span class="new-badge">ADDED · PS1-1d</span></h4>
+                    <p>$$J(\theta^{[t]}) \le J(\theta^{[t-1]}) - \alpha\left(1 - \tfrac{\alpha\beta_{\max}}{2}\right)\|\nabla J\|^2$$</p>
+                    <p class="formula-note">From Taylor + Rayleigh bound $v^\top\nabla^2 J\, v \le \beta_{\max}\|v\|^2$. Decrease + bounded below + MCT &rArr; $J$ converges (and $\|\nabla J\| \to 0$).</p>
+                </div>
+            </div>
+            <div class="warning-box">
+                <p style="margin-bottom:8px;"><strong>Trap 1 — monotone decrease $\ne$ convergence to the min.</strong> You need <em>bounded below</em> + Monotone Convergence Theorem to conclude $J$ converges &mdash; and even then only to <em>some</em> value (3 sightings across psets).</p>
+                <p style="margin-bottom:8px;"><strong>Trap 2 — stopping $\ne$ converging</strong> <span class="new-badge">ADDED</span>: (a) at $\alpha = 2/\beta_i$ exactly, a coordinate oscillates $\pm$ forever with $J$ constant, so a $|\Delta J| &lt; \epsilon$ rule falsely reports convergence at a non-optimum <span class="ps-badge">PS1-1c</span>. (b) A decaying rate $\alpha_t \propto 1/t^2$ makes $\|\Delta\theta\|$ shrink to zero <em>because steps shrink</em>, triggering the stopping rule without the iterates approaching a minimizer <span class="ps-badge">PS2-3c</span>.</p>
+                <p><strong>$\alpha$ failure modes:</strong> too small &rarr; slow crawl; $\in(1/\beta, 2/\beta)$ &rarr; oscillating but converging; $= 2/\beta$ &rarr; permanent oscillation; $&gt; 2/\beta$ &rarr; divergence.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-glm" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <h2>Classification &amp; GLMs</h2>
+        </div>
+
+        <p style="margin-bottom:20px;"><strong>Framework first:</strong> the exponential family is the machine that <em>generates</em> every classifier on this tab. Pick a distribution for $y$, set $\eta = \theta^\top x$, and logistic regression, Poisson regression, and softmax all fall out as special cases &mdash; same convexity proof, same gradient shape.</p>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Exponential Family &amp; GLMs — the Machine</h3>
+            <div class="highlight-box">
+                $$p(y;\eta) = b(y)\exp\!\left(\eta^\top T(y) - a(\eta)\right)$$
+            </div>
+            <ul>
+                <li>$b(y)$: base measure (constant during optimization) &bull; $T(y)$: sufficient statistic (usually $T(y)=y$) &bull; $\eta$: natural parameter &bull; $a(\eta)$: log-partition (normalizer).</li>
+                <li><strong>Moments by differentiation</strong> (proved by differentiating $\int p = 1$ under the integral sign): $$a'(\eta) = \mathbb{E}[Y;\eta], \qquad a''(\eta) = \operatorname{Var}(Y;\eta)$$</li>
+            </ul>
+            <div class="idea-box">
+                <strong>Every GLM is convex</strong> <span class="new-badge">ADDED · PS2-2c</span>: for NLL $\ell(\theta)$ with $\eta = \theta^\top x$,
+                $$H = a''(\theta^\top x)\, x x^\top \quad\text{(rank-1)}, \qquad z^\top H z = a''(\theta^\top x)\,(x^\top z)^2 \ge 0$$
+                since $a'' = \operatorname{Var} \ge 0$. PSD Hessian &rArr; convex NLL for <em>any</em> GLM — one proof covers linear, logistic, Poisson, all of them.
+            </div>
+            <div class="highlight-box">
+                <p><strong>Universal GLM gradient</strong> (same "(error) &times; input" shape for every family):</p>
+                $$\nabla_\theta \ell = \sum_i \left(y^{(i)} - h_\theta(x^{(i)})\right) x^{(i)}, \qquad h_\theta(x) = \mathbb{E}[y \mid x] = g(\theta^\top x)$$
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Canonical Link Table</h3>
+            <table class="data-table">
+                <tr><th>Distribution</th><th>$\eta$ (natural param)</th><th>$g(\eta) = \mathbb{E}[y]$ (canonical response)</th><th>What's linear in $x$</th><th>Model</th></tr>
+                <tr><td>Gaussian (fixed $\sigma^2$)</td><td>$\mu$ &nbsp;<em>(or $\mu/\sigma^2$ — see note)</em></td><td>$\eta$</td><td>the mean</td><td>Linear regression <em>(house prices)</em></td></tr>
+                <tr><td>Bernoulli</td><td>$\log\frac{\phi}{1-\phi}$ (log-odds)</td><td>$\frac{1}{1+e^{-\eta}}$ (sigmoid)</td><td>the log-odds</td><td>Logistic regression <em>(spam filter)</em></td></tr>
+                <tr><td>Poisson</td><td>$\log\lambda$</td><td>$e^\eta$</td><td>the log-rate</td><td>Poisson regression <em>(daily site-traffic counts, PS2-1)</em></td></tr>
+                <tr><td>Multinomial</td><td>$\log\frac{\phi_k}{\phi_K}$</td><td>softmax</td><td>log class-probability ratios</td><td>Softmax regression <em>(digit classification)</em></td></tr>
+                <tr><td>Exponential</td><td>$-\lambda$</td><td>$-1/\eta$</td><td>(negative) rate</td><td>Survival-style GLM <em>(time between events)</em></td></tr>
+            </table>
+            <ul>
+                <li><strong>Gaussian convention note:</strong> with $\sigma^2$ kept as a parameter, $\eta = \mu/\sigma^2$; with $\sigma^2 = 1$ normalized away (the usual course convention), $\eta = \mu$. Say which you're using.</li>
+                <li><strong>Poisson mean = variance</strong> <span class="new-badge">ADDED · PS2-1d</span>: $\mathbb{E} = \operatorname{Var} = \lambda$, so predicted-count scatter grows with the count &mdash; expected, not a bug.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Logistic Regression — the Bernoulli GLM, Worked Out</h3>
+            <p><strong>Givens:</strong> Bernoulli $y \in \{0,1\}$ &rArr; canonical response is the sigmoid, so $h_\theta(x) = g(\theta^\top x)$, $g(z) = \frac{1}{1+e^{-z}}$. Everything below is the general machine specialized to one row of the table above.</p>
+            <div class="highlight-box">
+                $$g'(z) = g(z)(1-g(z)) \qquad \ell(\theta) = \sum_i \left[ y^{(i)}\log h_\theta(x^{(i)}) + (1-y^{(i)})\log(1-h_\theta(x^{(i)})) \right]$$
+                $$\nabla_\theta \ell = \sum_i (y^{(i)} - h_\theta(x^{(i)}))\,x^{(i)} \qquad \theta := \theta + \alpha\, \nabla_\theta\ell \;(\text{ascent})$$
+            </div>
+            <ul>
+                <li><strong>Concave</strong> log-likelihood (NLL convex &mdash; instance of the $a''\,xx^\top$ theorem) &rArr; any stationary point is the global MLE&hellip; when one exists.</li>
+                <li><strong>No closed form:</strong> $\nabla\ell = 0$ is transcendental in $\theta$ (sigmoids of $\theta$), unlike OLS.</li>
+                <li><strong>Decision boundary</strong> $\theta^\top x = 0$ (where $h = \tfrac12$). <span class="new-badge">ADDED</span> It is <strong>scale-invariant</strong>: $c\theta$ ($c&gt;0$) gives the same line &mdash; which is why L2 regularization shrinks $\|\theta\|$ (less confident probabilities) while barely rotating the boundary on non-separable data.</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Separable-data pathology</strong> <span class="ps-badge">PS2-3</span>: if a strict separator $\theta^*$ exists, then $J(c\theta^*) \to 0$ as $c \to \infty$ but $J &gt; 0$ for every finite $\theta$ &mdash; the infimum is never attained, $\|\theta\| \to \infty$, no finite MLE. <em>Not</em> a numerical/rounding issue.
+                <p style="margin-top:8px; margin-bottom:0;"><strong>Fixes checklist</strong> <span class="new-badge">nuances ADDED</span>: L2 regularization &check; (loss now blows up as $\|\theta\|\to\infty$); big-enough label/feature noise &check; (destroys separability); different constant $\alpha$ &#10007; (changes speed only); decaying $\alpha_t \propto 1/t^2$ &#10007; (terminates without converging); rescaling features by $k$ &#10007; (separability is scale-invariant).</p>
+            </div>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; binary decisions where you want a <em>probability</em>, not just a label: spam vs not-spam, disease present/absent, click/no-click. The default first classifier for almost any yes/no question.</div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Imbalanced Data <span class="ps-badge">PS2-4</span></h3>
+            <p><strong>Givens:</strong> positive fraction $\rho \in (0,1)$ small; confusion counts TP, TN, FP, FN; $A_1 = \frac{TP}{TP+FN}$ (recall on positives), $A_0 = \frac{TN}{TN+FP}$.</p>
+            <div class="highlight-box">
+                $$A = \rho A_1 + (1-\rho)A_0 \qquad \bar{A} = \tfrac12(A_0 + A_1)$$
+            </div>
+            <ul>
+                <li><strong>Trivial classifier exposes accuracy</strong> <span class="new-badge">ADDED</span>: always predicting the majority class gets $A \ge 1-\rho$ (e.g. 99%+) but $\bar A = 50\%$ exactly. Accuracy weights classes by prior; balanced accuracy weights them equally.</li>
+                <li><strong>Resampling $=$ reweighting:</strong> with $\kappa = \frac{\rho}{1-\rho}$, duplicating each positive $1/\kappa$ times makes the new prior $\rho' = \tfrac12$, and plain accuracy on the resampled set $=$ balanced accuracy on the original (duplication invariance). Equivalently: weight each example's loss by inverse class frequency.</li>
+                <li><strong>Expected trade-off</strong> <span class="new-badge">ADDED</span>: after reweighting, $A_1$ jumps (0.57 &rarr; 0.91), $A_0$ dips, and plain accuracy <em>drops</em> while balanced accuracy rises &mdash; that's the point, not a failure.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; fraud detection, rare-disease screening, spam with few positives: any task where one class is a sliver of the data and a do-nothing classifier already scores 99% accuracy.</div>
+        </div>
+    </div>
+
+    <div id="tab-biasvar" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <h2>Bias&ndash;Variance &amp; Ensembles</h2>
+        </div>
+
+        <div class="card" style="border-left-color: var(--copper);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">The Picture — Error vs Model Complexity <span class="new-badge">CHART</span></h3>
+            <div class="chart-fig">
+                <svg viewBox="0 0 660 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bias-variance tradeoff: bias squared falls, variance rises, total error is U-shaped with an optimum complexity">
+                    <line x1="60" y1="330" x2="620" y2="330" stroke="#4A4A4A" stroke-width="2"/>
+                    <line x1="60" y1="330" x2="60" y2="40" stroke="#4A4A4A" stroke-width="2"/>
+                    <polygon points="626,330 614,324 614,336" fill="#4A4A4A"/>
+                    <polygon points="60,34 54,46 66,46" fill="#4A4A4A"/>
+                    <line x1="60" y1="318" x2="620" y2="318" stroke="#DDA25E" stroke-width="1.5" stroke-dasharray="2 4"/>
+                    <text x="430" y="313" font-size="11" fill="#8B6914" font-family="Inter, sans-serif">irreducible &#963;&#178;</text>
+                    <line x1="335" y1="330" x2="335" y2="58" stroke="#4A4A4A" stroke-width="1.5" stroke-dasharray="4 5"/>
+                    <text x="344" y="70" font-size="12" fill="#4A4A4A" font-family="Inter, sans-serif">optimum complexity</text>
+                    <path d="M 75 80 C 170 240, 280 292, 610 308" fill="none" stroke="#BC6C26" stroke-width="3"/>
+                    <text x="548" y="294" font-size="14" font-weight="600" fill="#BC6C26" font-family="Inter, sans-serif">Bias&#178;</text>
+                    <path d="M 75 310 C 300 298, 460 220, 610 78" fill="none" stroke="#39864E" stroke-width="3"/>
+                    <text x="538" y="185" font-size="14" font-weight="600" fill="#39864E" font-family="Inter, sans-serif">Variance</text>
+                    <path d="M 75 62 C 190 218, 258 242, 335 244 C 418 242, 520 162, 610 48" fill="none" stroke="#42260D" stroke-width="3.5"/>
+                    <text x="452" y="84" font-size="14" font-weight="700" fill="#42260D" font-family="Inter, sans-serif">Total error</text>
+                    <circle cx="335" cy="244" r="4.5" fill="#42260D"/>
+                    <text x="26" y="200" font-size="13" fill="#4A4A4A" font-family="Inter, sans-serif" transform="rotate(-90 26 200)">Error</text>
+                    <text x="200" y="352" font-size="13" fill="#4A4A4A" font-family="Inter, sans-serif">Model complexity &nbsp;(&#8776; d = # parameters; grows with features, depth, K, &#8230;)</text>
+                    <text x="90" y="52" font-size="12" fill="#4A4A4A" font-family="Inter, sans-serif" font-style="italic">underfit &#8592;</text>
+                    <text x="548" y="52" font-size="12" fill="#4A4A4A" font-family="Inter, sans-serif" font-style="italic">&#8594; overfit</text>
+                </svg>
+                <div class="fig-caption">Left of the dashed line the model is too simple (bias dominates); right of it, too flexible (variance dominates). Total error $=$ bias$^2$ + variance + $\sigma^2$ sits in a U — the minimum is the capacity sweet spot.</div>
+            </div>
+            <div class="idea-box">
+                <strong>Read it with the two-knob table below:</strong> moving <em>right</em> along the x-axis is the "capacity &uarr;" row (bias&darr;, variance&uarr;). Adding <em>data</em> doesn't move you along this axis — it pulls the whole variance curve down and shifts the optimum to the right, which is why bigger datasets tolerate bigger models.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">The Decomposition</h3>
+            <div class="highlight-box">
+                $$\mathbb{E}\left[(y - \hat f(x))^2\right] = \underbrace{\left(\mathbb{E}[\hat f(x)] - f(x)\right)^2}_{\text{bias}^2} + \underbrace{\operatorname{Var}(\hat f(x))}_{\text{variance}} + \underbrace{\sigma^2}_{\text{irreducible}}$$
+            </div>
+            <ul>
+                <li><strong>Bias, 3 levels:</strong> (i) informal — systematic error the model family can't escape; (ii) $\mathbb{E}[\hat f(x)] - f(x)$ at a point; (iii) approximation error of the best-in-class hypothesis.</li>
+                <li><strong>Variance = "redraw the dataset":</strong> how much $\hat f$ wobbles across independent draws of the training set of the same size. Expectations are over training sets.</li>
+            </ul>
+            <table class="data-table">
+                <tr><th>Knob</th><th>Bias</th><th>Variance</th><th>Why</th></tr>
+                <tr><td>Capacity &uarr; (bigger hypothesis class)</td><td>&darr; (monotone)</td><td>&uarr;</td><td><strong>Nesting argument:</strong> a larger class contains the smaller one, so its best fit is at least as good &rArr; bias can't increase.</td></tr>
+                <tr><td>Data &uarr; (more samples, same class)</td><td>&asymp; unchanged</td><td>&darr;</td><td>Best-in-class target doesn't move; estimates concentrate around it.</td></tr>
+                <tr><td><em>Replace</em> features with random ones</td><td>&uarr;</td><td>&uarr;</td><td>Not nested! Both can rise — the "random-feature replace" trick question.</td></tr>
+            </table>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Bootstrap &amp; Bagging <span class="ps-badge">PS3-1d</span></h3>
+            <ul>
+                <li><strong>Bootstrap:</strong> resample $n$ points <em>with replacement</em>. $P(\text{point excluded}) = (1-\tfrac1n)^n \to e^{-1}$, so each bootstrap set contains $\approx 1 - 1/e \approx 63.2\%$ unique points. Monte Carlo over bootstrap sets estimates an estimator's variance.</li>
+                <li><strong>Bagging = variance killer</strong> for high-variance/low-bias models (deep trees). Useless for high-bias models — averaging biased models keeps the bias.</li>
+            </ul>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Correlated-average variance derivation</button>
+            <div class="example-body">
+                <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Expand the variance of a mean of $B$ identically distributed, pairwise-correlated trees and count terms.</p></div></div>
+                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Givens.</strong> $\operatorname{Var}(T_i) = \sigma^2$ for all $i$; $\operatorname{Corr}(T_i,T_j) = \rho$ so $\operatorname{Cov}(T_i,T_j) = \rho\sigma^2$ for $i \ne j$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Expand.</strong> $\operatorname{Var}\!\left(\tfrac1B\sum T_i\right) = \tfrac{1}{B^2}\left[\sum_i \operatorname{Var}(T_i) + \sum_{i\ne j}\operatorname{Cov}(T_i,T_j)\right] = \tfrac{1}{B^2}\left[B\sigma^2 + B(B-1)\rho\sigma^2\right]$ ($B(B-1)$ ordered pairs).</p></div></div>
+                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Simplify.</strong> Split into the $\rho$ part and the rest.</p></div></div>
+            </div>
+            <div class="highlight-box">
+                $$\boxed{\operatorname{Var}\!\left(\tfrac1B\textstyle\sum_i T_i\right) = \rho\sigma^2 + \frac{1-\rho}{B}\,\sigma^2}$$
+            </div>
+            <div class="idea-box">
+                <strong>The floor:</strong> as $B \to \infty$ the second term vanishes but $\rho\sigma^2$ remains — no amount of bagging removes correlated error. <strong>Random Forests</strong> exist to shrink $\rho$: random feature subsets at each split decorrelate the trees.
+            </div>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; Random Forests on messy tabular data (mixed types, missing values, no feature engineering): the industry-default "just works" model for structured datasets.</div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Boosting &amp; AdaBoost</h3>
+            <ul>
+                <li><strong>Boosting = bias killer:</strong> sequentially fit weak learners to the <em>same data, reweighted</em> toward current mistakes. (Bagging resamples; boosting reweights — do not conflate.)</li>
+                <li><strong>AdaBoost loop:</strong> train $h_t$ on weights $D_t$; weighted error $\varepsilon_t$; coefficient $\alpha_t$; upweight mistakes $D_{t+1}(i) \propto D_t(i)\,e^{-\alpha_t y^{(i)} h_t(x^{(i)})}$; final $H(x) = \operatorname{sign}\left(\sum_t \alpha_t h_t(x)\right)$.</li>
+            </ul>
+            <div class="highlight-box">
+                $$\alpha_t = \tfrac12 \ln\frac{1-\varepsilon_t}{\varepsilon_t}$$
+            </div>
+            <ul>
+                <li>$\varepsilon_t &lt; \tfrac12 \Rightarrow \alpha_t &gt; 0$; $\varepsilon_t &gt; \tfrac12 \Rightarrow \alpha_t &lt; 0$: a worse-than-chance learner gets a <strong>negative coefficient = inverted vote</strong> (still useful!).</li>
+                <li><strong>Exponential-loss view:</strong> AdaBoost = greedy coordinate-wise minimization of $\sum_i e^{-y^{(i)} F(x^{(i)})}$.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; combining many cheap, barely-better-than-chance rules into one strong classifier. Classic example: real-time face detection (Viola&ndash;Jones) built from thousands of simple edge-pattern stumps.</div>
+        </div>
+    </div>
+
+    <div id="tab-trees" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            <h2>Trees, Clustering, EM</h2>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Decision Trees &amp; Split Losses <span class="ps-badge">PS3-1</span></h3>
+            <p><strong>Givens:</strong> region $R$ with class proportions $p_k$; binary Gini $G(p) = 2p(1-p)$; misclassification $M(p) = \min(p, 1-p)$; split into $R_1, R_2$ with parent proportion $p_p = \lambda p_1 + (1-\lambda)p_2$, $\lambda = \frac{n_1}{n_1+n_2}$.</p>
+            <div class="highlight-box">
+                <p><strong>Jensen split argument:</strong> $G''(p) = -4 &lt; 0$ &rArr; $G$ strictly concave &rArr;</p>
+                $$\frac{n_1 G(p_1) + n_2 G(p_2)}{n_1+n_2} \le G(p_p), \text{ strict when } p_1 \ne p_2 \text{ and } \lambda \in (0,1)$$
+            </div>
+            <ul>
+                <li><strong>Equality cases:</strong> an empty child ($\lambda \in \{0,1\}$) or $p_1 = p_2$ — these fail the strict-concavity hypotheses, so no contradiction.</li>
+                <li><strong>Misclassification stalling:</strong> $M$ is piecewise linear; if both children share the parent's majority class, weighted child loss $=$ parent loss <em>exactly</em> (conservation of minority count: $N_{1}m_1 + N_2 m_2 = N_p m_p$). Splits that don't flip a majority give zero progress &rArr; why Gini/entropy are preferred.</li>
+                <li><strong>Termination</strong> <span class="new-badge">ADDED</span>: any impure leaf (no-overlap data) contains two differing points &rArr; a non-vacuous split exists &rArr; regions strictly shrink &rArr; finite data ends at pure leaves, $G = 0$. Stalling blocks a <em>particular</em> split's progress, never termination.</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Three-slot schema trap:</strong> purity criterion (which split wins) / tournament (search over $j, t$) / shrinkage (min-leaf-size or depth cap). <strong>"Shrinkage ensures termination," NOT improvement</strong> — the big recurring trap.
+            </div>
+            <table class="data-table">
+                <tr><th>Cost</th><th>Formula</th><th>Notes</th></tr>
+                <tr><td>Threshold split at a node</td><td>$O(dm\log m)$</td><td>sort each feature ($m\log m$) + amortized sweep over thresholds</td></tr>
+                <tr><td>Logistic-split node</td><td>$O(dmw)$</td><td>$w$ = GD iterations to fit the split model</td></tr>
+                <tr><td>Whole tree</td><td>sum over nodes; balanced depth $k$: each level touches all $m$ points</td><td>equal totals when $jw \approx k\log m$ — the equality condition question</td></tr>
+            </table>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; interpretable decisions on tabular/mixed features where you must be able to read the rule back: loan approval, medical triage checklists. (Ensemble them &mdash; Tab 5 &mdash; when accuracy matters more than interpretability.)</div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">K-means vs GMM</h3>
+            <table class="data-table">
+                <tr><th></th><th>K-means</th><th>GMM (EM)</th></tr>
+                <tr><td>Assignments</td><td>hard: $c^{(i)} = \arg\min_j \|x^{(i)} - \mu_j\|^2$</td><td>soft responsibilities $w_j^{(i)} = p(z = j \mid x^{(i)})$</td></tr>
+                <tr><td>Objective</td><td>distortion $\sum_i \|x^{(i)} - \mu_{c^{(i)}}\|^2$</td><td>marginal log-likelihood $\sum_i \log\sum_j \phi_j\,\mathcal{N}(x^{(i)};\mu_j,\Sigma_j)$</td></tr>
+                <tr><td>Outputs</td><td>centroids + hard labels</td><td>$\phi, \mu_j, \Sigma_j$ + posteriors (density model)</td></tr>
+                <tr><td>Relationship</td><td colspan="2">K-means = EM on a GMM with shared $\Sigma = \sigma^2 I$ in the limit $\sigma^2 \to 0$ (responsibilities harden to argmax)</td></tr>
+            </table>
+            <p><span class="new-badge">ADDED · PS3-3</span> <strong>Compression accounting:</strong> quantizing to $k$ colors costs $\log_2 k$ bits/pixel + a $k \times 24$-bit palette; for $k=16$ on 24-bit RGB the ratio is $\approx 24/4 = 6$ (palette negligible). Both steps of K-means decrease distortion &rArr; convergence (to a local optimum; initialization matters).</p>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; K-means: hard grouping when clusters are round-ish and you just need labels — image color compression (the PS3 task), customer segmentation. GMM: when you need <em>soft membership probabilities</em> and elliptical cluster shapes — e.g. clusters that overlap.</div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">EM — the Jensen Sandwich <span class="ps-badge">PS3-4</span></h3>
+            <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Lower-bound the intractable $\log\sum_z$ with Jensen; make the bound tight at the current $\theta$; maximize the bound; conclude monotone improvement.</p></div></div>
+            <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Lower bound (Jensen, log concave).</strong> $\log \sum_z Q(z)\frac{p(x,z;\theta)}{Q(z)} \ge \sum_z Q(z)\log\frac{p(x,z;\theta)}{Q(z)} =: \mathcal{L}(Q,\theta)$ — in class this is just "the lower bound from Jensen." (Papers call this exact object the <em>ELBO</em>, "evidence lower bound" — same thing, fancier name; don't let the acronym throw you on exam day.)</p></div></div>
+            <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>E-step = tightness.</strong> Choosing $Q(z) = p(z\mid x;\theta^{(t)})$ makes the ratio constant in $z$ — Jensen's equality condition — so the bound <em>touches</em> $\ell$ at $\theta^{(t)}$.</p></div></div>
+            <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>M-step = argmax of the bound.</strong> Then $\ell(\theta^{(t+1)}) \ge \mathcal{L}(Q,\theta^{(t+1)}) \ge \mathcal{L}(Q,\theta^{(t)}) = \ell(\theta^{(t)})$: monotone &nearr;. Bounded above &rArr; converges — but only to a <strong>local</strong> optimum; initialization matters (runs differ).</p></div></div>
+            <div class="highlight-box">
+                <p><strong>GMM E-step (Bayes + total probability)</strong> <span class="new-badge">ADDED</span>:</p>
+                $$w_j^{(i)} = \frac{\phi_j\, \mathcal{N}(x^{(i)}; \mu_j, \Sigma_j)}{\sum_l \phi_l\, \mathcal{N}(x^{(i)}; \mu_l, \Sigma_l)}$$
+                <p><strong>M-step results</strong> (unsupervised): $\phi_j = \frac1n\sum_i w_j^{(i)}$, &nbsp; $\mu_j = \frac{\sum_i w_j^{(i)} x^{(i)}}{\sum_i w_j^{(i)}}$, &nbsp; $\Sigma_j = \frac{\sum_i w_j^{(i)} (x^{(i)}-\mu_j)(x^{(i)}-\mu_j)^\top}{\sum_i w_j^{(i)}}$</p>
+            </div>
+            <ul>
+                <li><span class="new-badge">ADDED · PS3-4c</span> <strong>Where the updates come from:</strong> $\mu_j$ via $\nabla_\mu(x-\mu)^\top S(x-\mu) = -2S(x-\mu)$; $\Sigma_j$ via precision reparam $S = \Sigma^{-1}$ and $\nabla_S \log|S| = S^{-1}$; $\phi_j$ via a <strong>Lagrange multiplier</strong> on $\sum_j \phi_j = 1$ (solve the multiplier by summing the stationarity condition over $j$; uses $\sum_j w_j^{(i)} = 1$).</li>
+            </ul>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Semi-Supervised EM <span class="ps-badge">PS3-4</span></h3>
+            <p><strong>Givens:</strong> $n$ unlabeled + $\tilde n$ labeled points, $\ell_{\text{semi}} = \ell_{\text{unsup}} + \alpha\,\ell_{\text{sup}}$.</p>
+            <ul>
+                <li>Labeled examples enter every M-step update as <strong>$\alpha$-weighted hard counts</strong> ($\alpha \cdot 1\{\tilde z = j\}$ next to the soft $w_j^{(i)}$); denominators become $n + \alpha\tilde n$ style sums. Setting $\alpha = 0$ recovers plain EM.</li>
+                <li><strong>Empirics</strong> <span class="new-badge">ADDED</span>: ~25 vs ~120 iterations, near-identical partitions across seeds, and 5 labels/cluster reliably recovers the high-variance component that unsupervised EM keeps absorbing into neighbors.</li>
+            </ul>
+            <div class="warning-box">
+                <strong>Trap:</strong> $\alpha$ is a <strong>fixed hyperparameter</strong>, not something you optimize in the M-step — the objective is linear in $\alpha$, so "optimizing" it degenerates ($\alpha \to \infty$ or $0$).
+            </div>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; cluster discovery when labels exist but are scarce and expensive: tumor subtyping from gene-expression profiles where only a handful of biopsies have pathologist labels; a few anchors make the clustering fast, stable, and aligned with the real subtypes.</div>
+        </div>
+    </div>
+
+    <div id="tab-prob" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">7</div>
+            <h2>Probability &amp; Inequalities</h2>
+        </div>
+
+        <div class="card" style="border-left-color: var(--copper);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Inference Basics — Definitions First <span class="new-badge">ADDED</span></h3>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Expectation</h4>
+                    <p>$$\mathbb{E}[X] = \sum_x x\,p(x) \;\;\text{or}\;\; \int x\,p(x)\,dx$$</p>
+                    <p class="formula-note"><strong>Linearity always holds:</strong> $\mathbb{E}[aX + bY] = a\,\mathbb{E}X + b\,\mathbb{E}Y$ — no independence needed. (Variance is the one that needs care.)</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Variance</h4>
+                    <p>$$\operatorname{Var}(X) = \mathbb{E}\big[(X - \mathbb{E}X)^2\big] = \mathbb{E}[X^2] - (\mathbb{E}X)^2$$</p>
+                    <p class="formula-note">$\operatorname{Var}(aX + b) = a^2\operatorname{Var}(X)$ — shifts vanish, scales square. Always $\ge 0$ (this fact alone proves GLM convexity).</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Covariance</h4>
+                    <p>$$\operatorname{Cov}(X,Y) = \mathbb{E}\big[(X - \mathbb{E}X)(Y - \mathbb{E}Y)\big] = \mathbb{E}[XY] - \mathbb{E}X\,\mathbb{E}Y$$</p>
+                    <p class="formula-note">$\operatorname{Cov}(X,X) = \operatorname{Var}(X)$. Independence $\Rightarrow$ $\operatorname{Cov} = 0$, but $\operatorname{Cov}=0 \not\Rightarrow$ independent.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Correlation</h4>
+                    <p>$$\operatorname{Corr}(X,Y) = \frac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}X}\sqrt{\operatorname{Var}Y}} \in [-1, 1]$$</p>
+                    <p class="formula-note">Unitless, scale-free covariance. This $\rho$ is exactly the one in the bagging variance formula $\rho\sigma^2 + \frac{1-\rho}{B}\sigma^2$.</p>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Covariance matrix</strong> of a random vector $X \in \mathbb{R}^d$ with mean $\mu$ — an <em>outer product</em>, averaged:</p>
+                $$\Sigma = \mathbb{E}\big[(X-\mu)(X-\mu)^\top\big] \in \mathbb{R}^{d\times d}, \qquad \Sigma_{ij} = \operatorname{Cov}(X_i, X_j), \qquad \Sigma_{ii} = \operatorname{Var}(X_i)$$
+                <p>Symmetric by construction; PSD because $v^\top\Sigma v = \operatorname{Var}(v^\top X) \ge 0$ (Tab 1). It packs every pairwise covariance into one object — the $\Sigma$ in $\mathcal{N}(x;\mu,\Sigma)$.</p>
+            </div>
+            <div class="idea-box">
+                <strong>Operator glossary — $\odot$ is NOT the outer product:</strong>
+                <ul style="margin-top:8px; margin-bottom:0;">
+                    <li><strong>Outer product</strong> $uv^\top$: column times row $\to$ a full matrix ($u \in \mathbb{R}^m, v \in \mathbb{R}^n \Rightarrow uv^\top \in \mathbb{R}^{m\times n}$). Where it lives: covariance $\Sigma$, GLM Hessian $a''\,xx^\top$, the left/right law $\nabla_A u^\top A v = uv^\top$, GMM $\Sigma_j$ updates.</li>
+                    <li><strong>Hadamard / element-wise product</strong> $u \odot v$ ("circle-dot"): same-shape arrays multiplied entry by entry, output the <em>same shape</em>. Where it lives: backprop $\left(\frac{\partial J}{\partial Z^{[2]}}W^{[2]\top}\right)\odot A \odot (1-A)$, the quadratically parameterized model $\theta^{\odot 2} - \phi^{\odot 2}$ (element-wise square).</li>
+                    <li>Quick test: outer product of two vectors <em>grows</em> a matrix; $\odot$ never changes shape. Mixing them up fails the shape test instantly.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Jensen's Inequality</h3>
+            <div class="highlight-box">
+                $$f \text{ convex:}\quad f(\mathbb{E}X) \le \mathbb{E}[f(X)] \qquad\qquad f \text{ concave:}\quad f(\mathbb{E}X) \ge \mathbb{E}[f(X)]$$
+            </div>
+            <ul>
+                <li><strong>Equality condition:</strong> $X$ constant (a.s.), or $f$ affine on the support — this is exactly what makes the EM E-step bound tight.</li>
+                <li><strong>Workhorse example:</strong> $(\mathbb{E}X)^2 \le \mathbb{E}[X^2]$ with the gap <em>equal to</em> $\operatorname{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}X)^2 \ge 0$.</li>
+            </ul>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Mean vs Median (L&sup2; vs L&sup1;)</h3>
+            <p><strong>Givens:</strong> data $y^{(1)},\dots,y^{(n)}$; $F_2(c) = \sum_i (y^{(i)}-c)^2$; $F_1(c) = \sum_i |y^{(i)}-c|$.</p>
+            <ul>
+                <li><strong>L&sup2;:</strong> $F_2'(c) = -2\sum_i(y^{(i)}-c) = 0 \Rightarrow c = \bar y$; $F_2'' = 2n &gt; 0$ &rArr; strictly convex &rArr; the mean is the <strong>unique</strong> minimizer.</li>
+                <li><strong>L&sup1;:</strong> away from data points, $F_1'(c) = \#\{y^{(i)} &lt; c\} - \#\{y^{(i)} &gt; c\}$ (sign count). Minimized where counts balance &rArr; any median; with even $n$, an <strong>interval</strong> of minimizers.</li>
+                <li><strong>Counterexample to "always unique":</strong> data $\{0, 1\}$ — every $c \in [0,1]$ minimizes $F_1$.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Reference Facts <span class="new-badge">ADDED</span></h3>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Multivariate Gaussian density</h4>
+                    <p>$$\mathcal{N}(x;\mu,\Sigma) = \frac{\exp\!\left(-\tfrac12 (x-\mu)^\top \Sigma^{-1}(x-\mu)\right)}{(2\pi)^{d/2}\,|\Sigma|^{1/2}}$$</p>
+                    <p class="formula-note">Needed verbatim for GMM responsibilities and the E-step.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Variance of sums</h4>
+                    <p>$$\operatorname{Var}\!\left(\sum_i X_i\right) = \sum_i \operatorname{Var}(X_i) + \sum_{i\ne j}\operatorname{Cov}(X_i, X_j)$$</p>
+                    <p class="formula-note">With $\operatorname{Var}(aX) = a^2\operatorname{Var}(X)$ and $\operatorname{Corr} = \operatorname{Cov}/(\sigma_X \sigma_Y)$ — the exact toolkit for the bagging formula.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Bootstrap 63%</h4>
+                    <p>$$\left(1 - \tfrac1n\right)^n \xrightarrow{n\to\infty} e^{-1} \approx 0.368$$</p>
+                    <p class="formula-note">So a bootstrap sample covers $\approx 63.2\%$ of unique points in expectation.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Differentiation under the integral</h4>
+                    <p>$$\partial_\eta \!\int p(y;\eta)\,dy = \int \partial_\eta p(y;\eta)\,dy$$</p>
+                    <p class="formula-note">Applied to $\int p = 1$: yields $a'(\eta) = \mathbb{E}[Y]$, and differentiating again, $a''(\eta) = \operatorname{Var}(Y)$.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-kernels" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">8</div>
+            <h2>Kernels, Exam Patterns &amp; Neural Nets</h2>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Kernel Trick</h3>
+            <ul>
+                <li><strong>Recipe:</strong> (1) rewrite the algorithm so features appear only via inner products $\langle\phi(x), \phi(x')\rangle$; (2) swap in $K(x, x')$. Never materialize $\phi$.</li>
+                <li><strong>Representer / span argument:</strong> under SGD from $\theta = 0$, every update adds multiples of $\phi(x^{(i)})$, so $\theta = \sum_i \beta_i\, \phi(x^{(i)})$ always — predictions need only $\sum_i \beta_i K(x^{(i)}, x)$.</li>
+                <li><strong>Linear kernel = no-op:</strong> $K(x,x') = x^\top x'$ is the identity feature map; "kernelizing" with it recovers the original algorithm exactly.</li>
+                <li><strong>Kernelized logistic:</strong> substitute $\theta^\top\phi(x) = \sum_i\beta_i K(x^{(i)},x)$ into the sigmoid; the update becomes an update on $\beta$.</li>
+                <li><strong>SVM dual is the native inner-product model</strong>; separability + max-margin + regularization tell one story: the margin term plays the role L2 plays for logistic on separable data.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; nonlinear decision boundaries without hand-designing features, especially small-to-medium $n$ with large/implicit $d$: text classification with bag-of-words, bioinformatics sequences.</div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Runtimes &amp; Linearity-in-What</h3>
+            <ul>
+                <li><strong>SGD:</strong> $O(dmw)$ ($d$ features, $m$ examples per pass, $w$ passes); <strong>one epoch costs the same as one batch-GD step</strong>. SGD wants smaller / decaying $\alpha$ (gradient noise).</li>
+                <li><strong>Linearity test:</strong> ask "linear in $\theta$ or linear in $x$?" — models can be linear in parameters with wildly nonlinear features (polynomials, $\sin x$). Normalizing inputs to the sphere changes gradients <em>off</em> the sphere but not predictions <em>on</em> it (parts d/e pattern).</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Neural Networks <span class="ps-badge">PS2-5/6</span></h3>
+            <div class="highlight-box">
+                <p><strong>The famous gradient</strong> (softmax + cross-entropy, logits $t$, one-hot $e_y$):</p>
+                $$\nabla_t\, \ell_{CE} = p - e_y, \qquad p = \operatorname{softmax}(t)$$
+                <p>Derivation: $\ell_{CE} = -t_y + \log\sum_s e^{t_s}$; $\partial_j(-t_y) = -\mathbb{1}\{j = y\}$; $\partial_j \log\sum_s e^{t_s} = p_j$.</p>
+            </div>
+            <p><strong>Full 2-layer backprop set</strong> <span class="new-badge">ADDED · PS2-5b</span> (batch $B$; $Z^{[1]} = XW^{[1]}+b^{[1]}$, $A = \sigma(Z^{[1]})$, $Z^{[2]} = AW^{[2]}+b^{[2]}$, $\hat Y = \operatorname{softmax}(Z^{[2]})$):</p>
+            <div class="highlight-box">
+                $$\frac{\partial J}{\partial Z^{[2]}} = \tfrac1B(\hat Y - Y) \qquad \frac{\partial J}{\partial W^{[2]}} = A^\top \frac{\partial J}{\partial Z^{[2]}} \qquad \frac{\partial J}{\partial b^{[2]}} = \text{col-sum}\,\frac{\partial J}{\partial Z^{[2]}}$$
+                $$\frac{\partial J}{\partial Z^{[1]}} = \left(\frac{\partial J}{\partial Z^{[2]}} W^{[2]\top}\right)\!\odot A \odot (1 - A) \qquad \frac{\partial J}{\partial W^{[1]}} = X^\top \frac{\partial J}{\partial Z^{[1]}}$$
+            </div>
+            <div class="warning-box">
+                <strong>Practical traps</strong> <span class="new-badge">ADDED</span>: subtract the row-max of logits before exponentiating in softmax (shift invariance, kills overflow); add $\epsilon$ inside CE logs; <strong>never regularize biases</strong>; <strong>never include the L2 penalty in the reported/plotted loss</strong> (it belongs in gradients only; Frobenius gradient is $2\lambda W$); touch the test set exactly once.
+            </div>
+            <ul>
+                <li><strong>Step-function construction</strong> <span class="ps-badge">PS2-6b</span>: each hidden step neuron = one half-plane; a triangle = AND of 3 half-planes via an output neuron counting $h_1+h_2+h_3 \ge 3$ (mind strict-vs-non-strict inequality at the boundary).</li>
+                <li><strong>Linear-collapse impossibility</strong> <span class="ps-badge">PS2-6c</span>: linear hidden activations compose to a single linear map &rArr; one line as decision boundary &rArr; can't shatter a surrounded cluster. This is <em>the</em> "why nonlinearities" argument.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; perception problems where the features themselves must be learned: classifying MNIST digit images (the PS2 task), speech, anything where raw pixels/signals beat hand-built features.</div>
+        </div>
+    </div>
+
+    <div id="tab-pca" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">9</div>
+            <h2>PCA <span class="new-badge" style="font-size:13px;">NEW SECTION · PS3-2</span></h2>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Two Views, One Vector</h3>
+            <p><strong>Givens:</strong> data $x^{(1)},\dots,x^{(n)}$ standardized (zero mean, unit variance per coordinate); unit vector $u$ ($u^\top u = 1$).</p>
+            <div class="highlight-box">
+                $$\arg\min_{\|u\|=1} \sum_i \left\|x^{(i)} - f_u(x^{(i)})\right\|^2 \;=\; \arg\max_{\|u\|=1} \sum_i (u^\top x^{(i)})^2 \;=\; \text{first principal component}$$
+            </div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Full derivation</button>
+            <div class="example-body">
+                <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> First find the closest point to $x$ on the line $\{\alpha u\}$ (the projection lemma). Then rewrite total reconstruction error so that minimizing it is visibly the same as maximizing projected variance.</p></div></div>
+                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Projection lemma.</strong> $r(\alpha) = \|x - \alpha u\|^2 = \|x\|^2 - 2\alpha\, u^\top x + \alpha^2$ (using $u^\top u = 1$). Then $r'(\alpha) = -2u^\top x + 2\alpha = 0 \Rightarrow \alpha^* = u^\top x$, and $r'' = 2 &gt; 0$ (strictly convex, unique minimum). So $$f_u(x) = (u^\top x)\,u.$$</p></div></div>
+                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Pythagorean split.</strong> With $c = u^\top x$: $\|x - cu\|^2 = \|x\|^2 - 2c\,(u^\top x) + c^2 = \|x\|^2 - c^2$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Swap min for max.</strong> $\sum_i \|x^{(i)} - f_u(x^{(i)})\|^2 = \underbrace{\sum_i \|x^{(i)}\|^2}_{\text{constant } K} - \sum_i (u^\top x^{(i)})^2$. Dropping the constant and flipping sign: minimizing reconstruction error $\equiv$ maximizing $\sum_i (u^\top x^{(i)})^2$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">4</div><div class="step-body"><p><strong>Recognize the variance.</strong> Since the data have zero mean, $\frac1n\sum_i (u^\top x^{(i)})^2$ <em>is</em> the empirical variance of the projections — the quantity the first PC maximizes by definition. $\blacksquare$</p></div></div>
+            </div>
+            <div class="idea-box">
+                <strong>Argmin toolkit on display:</strong> additive constants and positive scalings never move an argmin/argmax, and $\min(-f) = -\max(f)$. The <em>zero-mean assumption</em> is precisely what turns "sum of squared projections" into "variance."
+            </div>
+            <ul>
+                <li><strong>$k$-dimensional version (state, don't prove):</strong> the best rank-$k$ subspace in the least-squares sense is the span of the top-$k$ principal components (eigenvectors of the empirical covariance with largest eigenvalues).</li>
+                <li><strong>Connection to Tab 1:</strong> the empirical covariance $\frac1n X^\top X$ is symmetric PSD &rArr; spectral theorem gives the orthonormal PC basis for free.</li>
+            </ul>
+            <div class="use-line"><strong>USE IT FOR</strong> &mdash; compressing/visualizing high-dimensional data before anything else: projecting 784-dim MNIST to 2-D to <em>see</em> cluster structure, denoising, decorrelating features as preprocessing for other models.</div>
+        </div>
+    </div>
+
+    <div id="tab-losses" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">10</div>
+            <h2>Loss Functions &rarr; Models <span class="new-badge" style="font-size:13px;">NEW SECTION</span></h2>
+        </div>
+
+        <div class="idea-box">
+            <strong>The master principle:</strong> a model is just $\arg\min_\theta \sum_i \ell(h_\theta(x^{(i)}), y^{(i)})$ over a hypothesis class. <em>Choosing the loss is choosing the model</em> — and almost every loss in this course is secretly the negative log-likelihood of a noise model: squared $\leftrightarrow$ Gaussian, absolute $\leftrightarrow$ Laplace, cross-entropy $\leftrightarrow$ Bernoulli/Categorical, weighted squared $\leftrightarrow$ heteroscedastic Gaussian. Add a penalty and MLE becomes MAP.
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">The Full Map</h3>
+            <table class="data-table">
+                <tr><th>Loss</th><th>Formula</th><th>What minimizing it gives you</th><th>Probabilistic view</th></tr>
+                <tr><td><strong>Squared (L&sup2;)</strong></td><td>$(h - y)^2$</td><td>Constant $h$: the <strong>mean</strong> (strictly convex &rArr; unique). Linear $h$: <strong>OLS</strong>, $\theta = (X^\top X)^{-1}X^\top y$.</td><td>Gaussian noise MLE</td></tr>
+                <tr><td><strong>Weighted squared</strong></td><td>$w^{(i)}(h - y^{(i)})^2$</td><td><strong>WLS / LWR</strong>, $\theta = (X^\top W X)^{-1}X^\top W y$</td><td>Heteroscedastic Gaussian MLE, $w = 1/\sigma^2$</td></tr>
+                <tr><td><strong>Absolute (L&sup1;)</strong></td><td>$|h - y|$</td><td>Constant $h$: the <strong>median</strong> (interval of minimizers possible!)</td><td>Laplace noise MLE; robust to outliers</td></tr>
+                <tr><td><strong>Binary cross-entropy</strong> (log loss)</td><td>$-[y\log h + (1{-}y)\log(1{-}h)]$</td><td><strong>Logistic regression</strong> (no closed form; concave $\ell$)</td><td>Bernoulli NLL</td></tr>
+                <tr><td><strong>Softmax cross-entropy</strong></td><td>$-\log p_y,\;\; p = \operatorname{softmax}(t)$</td><td><strong>Softmax regression / NN output layer</strong>; gradient $p - e_y$</td><td>Categorical NLL</td></tr>
+                <tr><td><strong>Poisson NLL</strong></td><td>$e^{\theta^\top x} - y\,\theta^\top x + \ln y!$</td><td><strong>Poisson regression</strong>, update $\propto (y - e^{\theta^\top x})x$</td><td>Count-data NLL; mean = variance</td></tr>
+                <tr><td><strong>Exponential</strong></td><td>$e^{-y F(x)},\; y \in \{\pm 1\}$</td><td><strong>AdaBoost</strong> (greedy stagewise minimization gives $\alpha_t = \tfrac12\ln\frac{1-\varepsilon_t}{\varepsilon_t}$)</td><td>Smooth upper bound on 0&ndash;1 loss</td></tr>
+                <tr><td><strong>Hinge</strong></td><td>$\max(0,\, 1 - y\,\theta^\top x)$</td><td><strong>SVM</strong> (max-margin separator)</td><td>Margin surrogate for 0&ndash;1</td></tr>
+                <tr><td><strong>0&ndash;1 / misclassification</strong></td><td>$\mathbb{1}\{h \ne y\}$</td><td>What you actually care about &mdash; but flat/discontinuous, so you never optimize it directly. As a <em>tree split criterion</em> $M(p)=\min(p,1{-}p)$ it <strong>stalls</strong> (piecewise linear).</td><td>&mdash;</td></tr>
+                <tr><td><strong>Gini / entropy</strong> (node impurity)</td><td>$2p(1-p)$ / $-\sum_k p_k\log p_k$</td><td><strong>Tree splits that always make progress</strong> (strictly concave &rArr; Jensen argument)</td><td>Entropy: expected code length</td></tr>
+                <tr><td><strong>Distortion</strong></td><td>$\sum_i \|x^{(i)} - \mu_{c^{(i)}}\|^2$</td><td><strong>K-means</strong> (both steps decrease it &rArr; convergence)</td><td>GMM with $\Sigma = \sigma^2 I$, $\sigma^2 \to 0$</td></tr>
+                <tr><td><strong>Negative marginal log-likelihood</strong></td><td>$-\sum_i \log \sum_z p(x^{(i)}, z;\theta)$</td><td><strong>GMM via EM</strong> (intractable directly &rArr; Jensen-sandwich lower bound $\mathcal{L}$)</td><td>Latent-variable MLE</td></tr>
+                <tr><td><strong>Anything $+\; \frac{\lambda}{2}\|\theta\|^2$</strong></td><td>L2 penalty</td><td><strong>Ridge</strong> / regularized logistic (restores finite MLE on separable data)</td><td>MAP with Gaussian prior $\theta \sim \mathcal{N}(0, \tfrac{1}{\lambda}I)$</td></tr>
+            </table>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Cross-Entropy, Properly Defined <span class="new-badge">ADDED</span></h3>
+            <p><strong>Givens:</strong> true distribution $p$, predicted distribution $q$ over $K$ classes.</p>
+            <div class="highlight-box">
+                $$H(p, q) = -\sum_{k=1}^{K} p_k \log q_k \qquad\qquad H(p,q) = H(p) + \operatorname{KL}(p \,\|\, q)$$
+            </div>
+            <ul>
+                <li><strong>One-hot labels:</strong> $p = e_y$ collapses the sum to a single term: $\ell_{CE} = -\log q_y$ — "penalize the log-probability you gave the true class." Since $H(e_y) = 0$, minimizing CE $=$ minimizing KL $=$ pushing $q$ toward the label.</li>
+                <li><strong>Binary case</strong> ($K = 2$, $q_1 = h$): recovers $-[y\log h + (1-y)\log(1-h)]$ — logistic regression's loss is CE with a sigmoid $q$.</li>
+                <li><strong>CE $=$ NLL:</strong> summing $-\log q_{y^{(i)}}$ over data is exactly the negative log-likelihood of a categorical model — so "train with cross-entropy" and "do MLE" are the same sentence.</li>
+                <li><strong>Log-sum-exp form + gradient:</strong> with logits $t$, $\ell_{CE} = -t_y + \log\sum_s e^{t_s}$ and $\nabla_t\,\ell_{CE} = p - e_y$ (derivation in Tab 8). Numerically: subtract $\max_s t_s$ before exponentiating.</li>
+            </ul>
+            <div class="idea-box">
+                <strong>Surrogate-loss picture:</strong> 0&ndash;1 loss is the target; CE, hinge, and exponential loss are the differentiable stand-ins that upper-bound it. Each surrogate's shape leaves a fingerprint on the model: CE &rarr; probabilities, hinge &rarr; margins &amp; sparsity in support vectors, exponential &rarr; aggressive reweighting of mistakes (AdaBoost).
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-traps" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">11</div>
+            <h2>Trap Watch List</h2>
+        </div>
+        <p style="margin-bottom:20px;">The distilled "watch list" — every recurring trap from the psets in one place. Scan this the night before.</p>
+
+        <div class="trap-card"><div class="trap-num">1</div><div><strong>Shrinkage ensures termination, not improvement.</strong> Depth caps / min-leaf-size stop the tree; they don't make splits better.</div></div>
+        <div class="trap-card"><div class="trap-num">2</div><div><strong>Monotone decrease $\ne$ convergence.</strong> Need bounded below + Monotone Convergence Theorem — and even then $J$ converges to <em>some</em> value, not necessarily the min. (3 sightings.)</div></div>
+        <div class="trap-card"><div class="trap-num">3</div><div><strong>Stopping $\ne$ converging.</strong> <span class="new-badge">ADDED</span> Two flavors: $|\Delta J| &lt; \epsilon$ fooled by a constant-$J$ oscillation at the critical step size (PS1-1c); $\|\Delta\theta\|$ rules trivially triggered by decaying learning rates (PS2-3c).</div></div>
+        <div class="trap-card"><div class="trap-num">4</div><div><strong>PD, not PSD, buys uniqueness/invertibility.</strong> PSD gives convexity; PD gives one answer. And symmetric $\not\Rightarrow$ PSD (adjacency matrix, eigenvalues $\pm1$).</div></div>
+        <div class="trap-card"><div class="trap-num">5</div><div><strong>$\nabla_w w^\top A w = (A + A^\top)w$.</strong> Writing $2A\theta$ requires symmetry — say so or lose the point.</div></div>
+        <div class="trap-card"><div class="trap-num">6</div><div><strong>$\alpha$ is fixed in semi-supervised EM.</strong> The objective is linear in $\alpha$; "optimizing" it degenerates.</div></div>
+        <div class="trap-card"><div class="trap-num">7</div><div><strong>Dummy-index collisions &amp; function-argument smuggling.</strong> Don't reuse a summation index inside a nested sum; don't let $\theta$ sneak inside a function you're differentiating "as constant."</div></div>
+        <div class="trap-card"><div class="trap-num">8</div><div><strong>"Always unique" &rarr; hunt a tiny counterexample.</strong> L1 minimizers on $\{0,1\}$: an entire interval. Two-point datasets kill many "always" claims.</div></div>
+        <div class="trap-card"><div class="trap-num">9</div><div><strong>Boosting $\ne$ resampling.</strong> Boosting reweights the same data (bias killer); bagging resamples (variance killer).</div></div>
+        <div class="trap-card"><div class="trap-num">10</div><div><strong>WLS: the $\tfrac12$ lives inside $W$.</strong> <span class="new-badge">ADDED</span> $W_{ii} = \tfrac12 w^{(i)}$ when matching $J = (X\theta-y)^\top W(X\theta-y)$ to $\tfrac12\sum w^{(i)}(\cdot)^2$.</div></div>
+        <div class="trap-card"><div class="trap-num">11</div><div><strong>Never regularize biases; never report the penalty in the loss.</strong> <span class="new-badge">ADDED</span> L2 enters gradients only ($2\lambda W$ Frobenius / $\lambda\theta$ vector); plotted loss is the raw objective.</div></div>
+        <div class="trap-card"><div class="trap-num">12</div><div><strong>Feature scaling does not fix separability.</strong> <span class="new-badge">ADDED</span> Scaling inputs (or $\theta$) preserves the separator; only regularization or noise restores a finite MLE.</div></div>
+        <div class="trap-card"><div class="trap-num">13</div><div><strong>Accuracy can drop while balanced accuracy rises.</strong> <span class="new-badge">ADDED</span> That's reweighting working as intended, not a bug.</div></div>
+        <div class="trap-card"><div class="trap-num">14</div><div><strong>Inequality flips with negative logs.</strong> <span class="new-badge">ADDED</span> $\ln|1-\alpha\beta|$ and $\ln(\epsilon/|\theta^{[0]}|)$ are both negative in the GD iteration-count derivation — dividing flips the direction.</div></div>
+        <div class="trap-card"><div class="trap-num">15</div><div><strong>Misclassification loss stalls; Gini doesn't.</strong> Same-majority children give exactly zero improvement under $M(p)$ — the reason splitting criteria are concave.</div></div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: ML Study Guide</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    setTimeout(function() {
+        if (window.MathJax && MathJax.typeset) MathJax.typeset();
+    }, 100);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+</script>
+
+</body>
+</html>
