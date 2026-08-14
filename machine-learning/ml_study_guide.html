@@ -510,6 +510,43 @@ li { margin-bottom: 10px; }
                 <li>$\Sigma^{-1} = Q\Lambda^{-1}Q^\top$ is symmetric and PD too (eigenvalues $1/\lambda_i &gt; 0$) &mdash; the precision matrix in the Gaussian density is well-behaved.</li>
             </ul>
         </div>
+
+        <div class="card" style="border-left-color: var(--copper);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Special Matrices Gallery <span class="new-badge">ADDED</span></h3>
+            <p>The six named matrices that keep showing up. Know the definition, the two-line property list, and where each one lives in the course.</p>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Orthogonal matrix</h4>
+                    <p>$$Q^\top Q = Q Q^\top = I \quad\Longleftrightarrow\quad Q^{-1} = Q^\top$$</p>
+                    <p class="formula-note">Columns are orthonormal. Preserves lengths ($\|Qv\| = \|v\|$) and angles. This is the $Q$ in the spectral theorem; rotations and reflections are the two flavors.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Rotation matrix</h4>
+                    <p>$$R_\phi = \begin{pmatrix} \cos\phi &amp; -\sin\phi \\ \sin\phi &amp; \cos\phi \end{pmatrix}$$</p>
+                    <p class="formula-note">Orthogonal with $\det R = +1$ (reflections have $\det = -1$). $R A R^\top$ rotates a quadratic form's contours but keeps its <strong>eigenvalues</strong> — why the GD step-size threshold was rotation-invariant in PS1-1c.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Projection matrix (hat matrix)</h4>
+                    <p>$$H = X(X^\top X)^{-1} X^\top, \qquad \hat y = Hy$$</p>
+                    <p class="formula-note">Symmetric <em>and</em> idempotent; projects any $y$ onto $\operatorname{Col}(X)$ — OLS in one matrix. $I - H$ projects onto the residual space: $r = (I-H)y \perp \operatorname{Col}(X)$. Eigenvalues all $0$ or $1$; $\operatorname{tr}(H) = d$ = # parameters.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                    <h4>Idempotent matrix</h4>
+                    <p>$$P^2 = P$$</p>
+                    <p class="formula-note">"Applying twice = applying once" — projecting an already-projected point does nothing. Eigenvalues can only be $0$ or $1$: $Pv = \lambda v \Rightarrow \lambda v = P^2 v = \lambda^2 v \Rightarrow \lambda^2 = \lambda$. Both $H$ and $I - H$ qualify.</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                    <h4>Hessian</h4>
+                    <p>$$\big(\nabla^2 J\big)_{ij} = \frac{\partial^2 J}{\partial\theta_i\,\partial\theta_j}$$</p>
+                    <p class="formula-note"><strong>Symmetric</strong> always (Clairaut/Schwarz: mixed partials commute). PSD everywhere $\iff$ $J$ convex; PD $\Rightarrow$ strictly convex $\Rightarrow$ unique minimizer. Course zoo: $X^\top X$ (OLS, PSD), $X^\top X + \lambda I$ (ridge, PD), $a''(\theta^\top x)\,xx^\top$ (GLM, PSD rank-1), $\operatorname{diag}(\beta_i)$ (PS1-1b).</p>
+                </div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                    <h4>Covariance matrix</h4>
+                    <p>$$\Sigma = \mathbb{E}\big[(X-\mu)(X-\mu)^\top\big]$$</p>
+                    <p class="formula-note">Symmetric by construction; always PSD ($v^\top\Sigma v = \operatorname{Var}(v^\top X) \ge 0$); PD $\iff$ invertible $\iff$ no coordinate is a perfect linear combo of the others. Entry-level view ($\Sigma_{ij} = \operatorname{Cov}(X_i,X_j)$) in Tab 7.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="tab-matcalc" class="tab-content">
@@ -614,7 +651,7 @@ li { margin-bottom: 10px; }
                 $$\nabla J = X^\top(X\theta - y), \qquad \boxed{\theta^* = (X^\top X)^{-1} X^\top y} \;\;(X^\top X \text{ invertible})$$
             </div>
             <ul>
-                <li><strong>Projection interpretation:</strong> $X\theta^*$ is the orthogonal projection of $y$ onto $\operatorname{Col}(X)$; the residual is $\perp$ to every column of $X$.</li>
+                <li><strong>Projection interpretation:</strong> $\hat y = X\theta^* = \underbrace{X(X^\top X)^{-1}X^\top}_{H,\;\text{the projection matrix}}\,y$ is the orthogonal projection of $y$ onto $\operatorname{Col}(X)$; $H$ is symmetric and idempotent (Tab 1 gallery), and the residual $r = (I - H)y$ is $\perp$ to every column of $X$.</li>
                 <li><strong>Why a closed form exists:</strong> stationarity condition is <em>linear in $\theta$</em>. Whenever $\nabla J = 0$ is linear in the parameter, you can solve in closed form; when it's transcendental (logistic), you can't.</li>
             </ul>
             <div class="use-line"><strong>USE IT FOR</strong> &mdash; predicting a continuous target from features: house price from square footage, exam score from study hours. The baseline every fancier regression is measured against.</div>
@@ -1019,6 +1056,22 @@ li { margin-bottom: 10px; }
                     <li>Quick test: outer product of two vectors <em>grows</em> a matrix; $\odot$ never changes shape. Mixing them up fails the shape test instantly.</li>
                 </ul>
             </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); margin-bottom:10px;">Likelihood &amp; Log-Likelihood <span class="new-badge">ADDED</span></h3>
+            <p><strong>Givens:</strong> i.i.d. data $(x^{(i)}, y^{(i)})$, $i = 1,\dots,n$; a model $p(y \mid x; \theta)$.</p>
+            <div class="highlight-box">
+                $$L(\theta) = \prod_{i=1}^{n} p\big(y^{(i)} \mid x^{(i)}; \theta\big) \qquad \ell(\theta) = \log L(\theta) = \sum_{i=1}^{n} \log p\big(y^{(i)} \mid x^{(i)}; \theta\big) \qquad \hat\theta_{\text{MLE}} = \arg\max_\theta\, \ell(\theta)$$
+            </div>
+            <ul>
+                <li><strong>Read it right:</strong> $\theta$ is the variable, the data are fixed. $L(\theta)$ asks "how probable is <em>my</em> dataset under this $\theta$?" — the product comes from independence.</li>
+                <li><strong>Why the log (3 reasons):</strong> $\log$ is strictly increasing, so the argmax doesn't move; products become sums you can differentiate term-by-term; and $n$ tiny probabilities multiplied underflow to $0$ numerically while their logs just add.</li>
+                <li><strong>NLL is a loss:</strong> minimizing $-\ell(\theta)$ $=$ maximizing likelihood. This is the bridge to Tab 10 — squared error, cross-entropy, and Poisson loss are all NLLs in disguise.</li>
+                <li><strong>MLE mechanics:</strong> set $\nabla_\theta\, \ell = 0$, then check curvature: logistic $\ell$ is concave, every GLM NLL is convex ($a''\,xx^\top$), so the stationary point is global.</li>
+                <li><strong>Worked one-liner:</strong> Gaussian model $y \sim \mathcal{N}(\theta^\top x, \sigma^2)$ gives $\ell(\theta) = \text{const} - \frac{1}{2\sigma^2}\sum_i (y^{(i)} - \theta^\top x^{(i)})^2$ — so MLE $=$ least squares <span class="ps-badge">PS1-2a</span>.</li>
+                <li><strong>MAP = MLE + prior:</strong> $\arg\max_\theta\, \ell(\theta) + \log p(\theta)$; a Gaussian prior turns the extra term into $-\frac{\lambda}{2}\|\theta\|^2$ — ridge.</li>
+            </ul>
         </div>
 
         <div class="card">
