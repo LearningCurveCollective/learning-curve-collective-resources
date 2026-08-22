@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRE Quant: Sequences</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC;
+    --copper: #BC6C26; --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1050px; margin: 0 auto; padding: 32px 20px 40px; }
+.tab-buttons { display: flex; gap: 6px; margin-bottom: 26px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-button { padding: 8px 15px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="drill"] { border-color: #21442B; }
+.tab-button[data-group="drill"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="official"] { border-color: #8B5E3C; }
+.tab-button[data-group="official"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.card { background-color: white; border-radius: 8px; padding: 20px 22px; margin-bottom: 18px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.trap-box { background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 15px; margin: 12px 0; }
+.trap-box .trap-label, .sol-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #8B6914; margin-bottom: 5px; }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 8px; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 22px; color: var(--brown-dark); margin: 0; }
+.btn { border: none; border-radius: 6px; padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-gold { background: var(--gold); color: var(--brown-dark); }
+.btn-gold:hover { background: var(--gold-light); }
+.btn-green { background: var(--green-dark); color: white; }
+.btn-green:hover { background: var(--green-medium); }
+.btn-ghost { background: transparent; color: var(--text-medium); border: 2px solid var(--cream-dark); padding: 7px 12px; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--brown-dark); }
+.btn-sm { padding: 5px 11px; font-size: 12.5px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+.timer-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-medium); }
+.timer-display { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-dark); background: var(--gold-pale); border-radius: 6px; padding: 4px 10px; min-width: 64px; text-align: center; display: none; }
+.timer-display.on { display: inline-block; }
+.tog { position: relative; width: 40px; height: 22px; background: var(--cream-dark); border-radius: 11px; cursor: pointer; transition: background 0.2s; border: none; }
+.tog.on { background: var(--green-light); }
+.tog::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: left 0.2s; }
+.tog.on::after { left: 21px; }
+
+/* Reference page (spacious, print-like, brand-accented) */
+.ref-page { background: white; border-radius: 10px; border: 1px solid var(--cream-dark); border-top: 4px solid var(--gold); box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 44px 48px; font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 2.0; }
+.ref-page .ref-intro { margin-bottom: 26px; }
+.ref-rule, .ref-case { margin: 20px 0; padding: 16px 22px; border-left: 3px solid transparent; border-radius: 0 10px 10px 0; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.ref-rule:hover { background: rgba(57,134,78,0.05); border-left-color: var(--green-light); transform: translateX(3px); }
+.ref-case:hover { background: rgba(188,108,38,0.06); border-left-color: var(--copper); transform: translateX(3px); }
+.ref-rule-line { font-size: 19px; margin-bottom: 12px; }
+.rname { font-weight: 600; }
+.ref-rule .rname { color: var(--green-dark); }
+.ref-case .rname { color: var(--copper); }
+.rtag { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 9px; margin-right: 10px; vertical-align: 2px; }
+.ref-rule .rtag { background: rgba(57,134,78,0.13); color: var(--green-dark); }
+.ref-case .rtag { background: rgba(188,108,38,0.13); color: var(--copper); }
+.exlab { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; margin-right: 6px; }
+.ref-ex { margin: 13px 0 13px 48px; }
+.ref-note { margin: 13px 0 0 48px; font-style: italic; color: var(--text-medium); }
+.ref-divider { border: none; border-top: 2px solid var(--gold-light); margin: 38px 0 30px; }
+.ref-h { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+@media (max-width: 768px) { .ref-page { padding: 22px 14px; } .ref-ex, .ref-note { margin-left: 16px; } .ref-rule, .ref-case { padding: 12px 12px; } }
+
+/* Rules at a glance */
+.rules-index { width: 100%; border-collapse: collapse; margin: 14px 0 4px; }
+.rules-index tr { border-bottom: 1px solid var(--cream-dark); }
+.rules-index tr:last-child { border-bottom: none; }
+.rules-index td { padding: 9px 10px; vertical-align: middle; }
+.ri-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--green-dark); width: 38%; }
+.ri-formula { font-family: "Times New Roman", Georgia, serif; font-size: 17px; }
+
+/* Stepper */
+.stepper { background: white; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border: 1px solid var(--cream-dark); overflow: hidden; }
+.step-head { background: var(--green-dark); color: white; padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.step-head .step-count { font-weight: 700; font-size: 14px; letter-spacing: 0.4px; }
+.step-dots { display: flex; gap: 7px; margin-left: auto; }
+.step-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; padding: 0; transition: all 0.2s; }
+.step-dot.current { background: var(--gold); transform: scale(1.25); }
+.step-dot.done { background: var(--green-light); }
+.step-body { padding: 26px 30px 22px; }
+.step-rule-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--copper); margin-bottom: 6px; }
+.step-rule { font-family: "Times New Roman", Georgia, serif; font-size: 22px; margin-bottom: 4px; }
+.step-say { font-size: 15px; color: var(--text-dark); margin: 10px 0 14px; }
+.step-ex { background: var(--cream); border-radius: 8px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.step-ex .sol-label { color: var(--green-dark); }
+.micro { border: 2px solid var(--cream-dark); border-radius: 8px; padding: 13px 16px; margin-top: 14px; }
+.micro .micro-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 8px; }
+.micro-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.step-nav { display: flex; gap: 10px; padding: 0 30px 22px; align-items: center; }
+.drill { background: white; border-radius: 8px; border-left: 5px solid var(--green-medium); box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 15px 18px; margin-bottom: 12px; }
+.drill-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.drill-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.drill-row input[type="text"], .micro input[type="text"] { width: 90px; padding: 7px 10px; font-size: 16px; text-align: center; border: 2px solid #9a9a9a; border-radius: 5px; font-family: 'Inter', sans-serif; outline: none; }
+.drill-row input[type="text"]:focus, .micro input[type="text"]:focus { border-color: var(--green-dark); }
+.fb { font-size: 13.5px; font-weight: 600; display: none; }
+.fb.ok { display: inline; color: var(--green-light); }
+.fb.no { display: inline; color: #C0392B; }
+.fb-exp { font-size: 13.5px; color: var(--text-medium); margin-top: 8px; display: none; }
+.fb-exp.show { display: block; }
+.mc-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.mc-opt { border: 2px solid var(--cream-dark); background: white; border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: "Times New Roman", Georgia, serif; font-size: 17px; transition: all 0.15s; }
+.mc-opt:hover { border-color: var(--gold); }
+.mc-opt.right { border-color: var(--green-light); background: rgba(57,134,78,0.15); }
+.mc-opt.wrong { border-color: #C0392B; background: rgba(192,57,43,0.10); }
+.testbar { display: flex; align-items: center; gap: 10px; background: var(--green-dark); color: white; border-radius: 8px 8px 0 0; padding: 10px 18px; flex-wrap: wrap; }
+.testbar .tprog { font-weight: 700; font-size: 14px; }
+.test-stage { background: white; border: 1px solid var(--cream-dark); border-top: none; border-radius: 0 0 8px 8px; padding: 28px 32px 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); min-height: 340px; }
+.q-directions { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin-bottom: 16px; border-bottom: 1px solid var(--cream-dark); padding-bottom: 10px; }
+.q-stem { font-family: "Times New Roman", Georgia, serif; font-size: 19px; line-height: 1.85; margin-bottom: 16px; }
+.qc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0 6px; }
+.qc-col { text-align: center; }
+.qc-col .qc-head { font-family: "Times New Roman", Georgia, serif; font-weight: 600; text-decoration: underline; margin-bottom: 12px; font-size: 18px; }
+.qc-col .qc-body { font-family: "Times New Roman", Georgia, serif; font-size: 19px; line-height: 1.8; }
+.choices { margin-top: 14px; }
+.choice { display: flex; align-items: center; gap: 14px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.choice:hover { background: rgba(221,162,94,0.10); }
+.choice .oval { width: 30px; height: 19px; border: 2px solid #9a9a9a; border-radius: 50%; flex-shrink: 0; background: white; }
+.choice.selected .oval { background: #5c5c5c; border-color: #5c5c5c; }
+.choice .sq { width: 19px; height: 19px; border: 2px solid #9a9a9a; border-radius: 3px; flex-shrink: 0; background: white; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--brown-dark); font-size: 14px; margin: 0 5px; }
+.choice.selected .sq { border-color: #5c5c5c; }
+.choice.selected .sq::after { content: "\2715"; }
+.multi-note { font-family: "Times New Roman", Georgia, serif; font-size: 17px; margin: 4px 0 2px; }
+.multi-note u { font-weight: 600; }
+.choice .ctext { font-family: "Times New Roman", Georgia, serif; font-size: 18px; }
+.ne-entry { display: flex; align-items: center; gap: 12px; margin: 18px 0 6px; }
+.ne-entry input { width: 120px; padding: 8px 10px; font-size: 17px; text-align: center; border: 2px solid #9a9a9a; border-radius: 4px; font-family: 'Inter', sans-serif; outline: none; }
+.ne-entry input:focus { border-color: var(--green-dark); }
+.test-nav { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.qmap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.qchip { width: 34px; height: 30px; border-radius: 6px; border: 2px solid var(--cream-dark); background: white; font-size: 12.5px; font-weight: 700; color: var(--text-medium); cursor: pointer; }
+.qchip.answered { background: rgba(57,134,78,0.15); border-color: rgba(57,134,78,0.5); color: var(--green-dark); }
+.qchip.current { border-color: var(--green-dark); box-shadow: 0 0 0 2px rgba(33,68,43,0.25); }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.stat-tile { background: white; border-radius: 10px; padding: 16px 18px; text-align: center; border: 2px solid var(--gold-light); }
+.stat-tile .stat-num { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--gold); }
+.stat-tile.green .stat-num { color: var(--green-light); }
+.stat-tile .stat-label { font-size: 12px; font-weight: 600; color: var(--text-medium); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 4px; }
+.res-entry { background: white; border-radius: 8px; border-left: 5px solid #E57373; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+.res-entry.correct { border-left-color: var(--green-light); }
+.res-head { display: flex; align-items: center; gap: 12px; padding: 13px 18px; cursor: pointer; }
+.res-head:hover { background: rgba(221,162,94,0.05); }
+.res-arrow { color: var(--gold); font-size: 13px; transition: transform 0.25s; margin-left: auto; }
+.res-entry.open .res-arrow { transform: rotate(90deg); }
+.res-body { display: none; padding: 0 20px 16px; border-top: 1px solid var(--cream-dark); }
+.res-entry.open .res-body { display: block; }
+.sol-block { background: var(--cream); border-radius: 8px; padding: 13px 15px; margin: 10px 0; font-size: 15px; }
+.sol-block .sol-label { color: var(--green-dark); }
+.ets-item { background: white; border-radius: 8px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 15px 18px; margin-bottom: 12px; }
+.ets-ref { font-weight: 700; color: var(--brown-dark); font-size: 14.5px; }
+.ets-note { font-size: 14px; color: var(--text-medium); margin-top: 5px; }
+.reveal { display: none; margin-top: 8px; font-size: 14px; background: var(--cream); border-radius: 6px; padding: 10px 12px; }
+.reveal.show { display: block; }
+.rule-write { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--cream-dark); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14.5px; resize: vertical; outline: none; }
+.rule-write:focus { border-color: var(--gold); }
+.attrib { background: #FFF6E5; border: 1.5px solid var(--gold-light); border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; font-size: 14px; }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.mjx-container { overflow-x: auto; }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .container { padding: 16px 10px; }
+    .qc-grid { grid-template-columns: 1fr; gap: 10px; }
+    .test-stage, .step-body { padding: 20px 16px; }
+    .step-nav { padding: 0 16px 18px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>GRE Quant: Sequences</h1>
+            <div class="subtitle">CONCEPT + DRILLS &bull; SEQUENCES</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">GRE QUANT SERIES</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('ref', this)">1. Sequence Rules</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('core', this)">2. Worked Examples &amp; Practice</button>
+        <button class="tab-button" data-group="drill" onclick="switchTab('fluency', this)">3. Fluency Drills</button>
+        <button class="tab-button" data-group="drill" onclick="switchTab('gauntlet', this)">4. GRE Gauntlet</button>
+        <button class="tab-button" data-group="drill" onclick="switchTab('challenge', this)">5. Challenge Questions</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('exit', this)">6. Exit Ticket</button>
+    </div>
+
+    <!-- ============ TAB 1: REFERENCE ============ -->
+    <div id="tab-ref" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Sequence rules</h2></div>
+        <div class="ref-page">
+            <p class="ref-intro">A sequence is an ordered list of numbers built by a rule; $a_n$ means the $n$th term. The GRE gives sequence rules in two forms, and translating between them is most of the work. In the rules below, $a_1$ is the first term, $d$ is a constant difference, and $r$ is a constant ratio.</p>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 1</span><span class="rname">Two ways to define a sequence:</span> &nbsp; explicit (jump to any term) or recursive (build up)</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>explicit: $a_n = 3n - 1$ gives $2, 5, 8, 11, \ldots$ — want $a_{100}$? Plug in: $3(100) - 1 = 299$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>recursive: $a_1 = 2$, $a_n = a_{n-1} + 3$ gives the same list — but $a_{100}$ needs $a_{99}$ first</div>
+                <div class="ref-note">The GRE's favorite sequence move is handing you a recursive rule and asking about a far-away term — which forces you to identify the type and find the explicit form.</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 2</span><span class="rname">Arithmetic sequences (add $d$ each step):</span> &nbsp; $a_n = a_1 + (n-1)\,d$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$4, 9, 14, 19, \ldots$ has $a_1 = 4$, $d = 5$, so $a_n = 4 + 5(n-1) = 5n - 1$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>$a_{20} = 5(20) - 1 = 99$ — no need to list twenty terms</div>
+                <div class="ref-ex"><span class="exlab">Example C</span>the test for arithmetic: <em>subtract</em> neighbors — a constant difference confirms it. $7, 3, -1, -5$: every difference is $-4$ ✓</div>
+                <div class="ref-note">This is $y = mx + b$ in disguise: $d$ is the slope, $a_1$ is the starting point, and the sequence is a straight line sampled at $n = 1, 2, 3, \ldots$</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 3</span><span class="rname">Geometric sequences (multiply by $r$ each step):</span> &nbsp; $a_n = a_1 \cdot r^{\,n-1}$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$3, 6, 12, 24, \ldots$ has $a_1 = 3$, $r = 2$, so $a_n = 3 \cdot 2^{\,n-1}$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>$r$ can shrink or alternate: $48, 12, 3, \ldots$ has $r = \tfrac{1}{4}$; &nbsp; $2, -6, 18, \ldots$ has $r = -3$</div>
+                <div class="ref-ex"><span class="exlab">Example C</span>the test for geometric: <em>divide</em> neighbors — a constant ratio confirms it. $4, 6, 9$: differences change, but the ratio is $\tfrac{3}{2}$ throughout ✓</div>
+                <div class="ref-note">The exponent is $n - 1$, not $n$: after $n - 1$ multiplications you're at term $n$. And alternating signs — like $2, -6, 18, -54$ — are a dead giveaway for geometric with a negative $r$: adding a fixed $d$ can never flip the sign back and forth, but multiplying by a negative does it every step. Geometric sequences are where the GRE re-tests your exponent rules. And you've already met one in the wild: compound interest is a geometric sequence in banking costume — the yearly balances $P, \; P(1+r), \; P(1+r)^2, \ldots$ multiply by the same ratio every step. (Adding those balances up would make a geometric <em>series</em> — that's annuity math, and the GRE stays out of it.)</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 4</span><span class="rname">Counting terms (the fencepost rule):</span> &nbsp; count $= \dfrac{\text{last} - \text{first}}{d} + 1$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>multiples of 4 from 16 to 96: $\dfrac{96 - 16}{4} + 1 = 21$ terms</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>integers from 12 to 45 inclusive: $45 - 12 + 1 = 34$ (not 33)</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 5</span><span class="rname">Evenly spaced sums:</span> &nbsp; sum $=$ count $\times \dfrac{\text{first} + \text{last}}{2}$, &nbsp; and mean $=$ median $= \dfrac{\text{first} + \text{last}}{2}$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$1 + 2 + \cdots + 100$: pair the ends ($1 + 100$, $2 + 99$, \ldots) — 50 pairs of 101, so $5{,}050$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>sum of $2 + 4 + \cdots + 100$: 50 terms $\times \dfrac{2 + 100}{2} = 50 \times 51 = 2{,}550$</div>
+            </div>
+
+            <hr class="ref-divider">
+            <div class="ref-h">Moves that are not allowed</div>
+            <p>The statements below <em>look</em> reasonable but are false, and each one generates a standard wrong answer. Keep them in mind.</p>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 1</span><span class="rname">not allowed:</span> &nbsp; two terms do not determine the sequence</div>
+                <div class="ref-ex">$2, 6, \ldots$ could be arithmetic ($+4$: next is 10) or geometric ($\times 3$: next is 18) or neither. Never assume the type — the problem must state it or give three or more terms.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 2</span><span class="rname">not allowed:</span> &nbsp; $a_n \neq a_1 + n\,d$</div>
+                <div class="ref-ex">The correct form is $a_1 + (n-1)\,d$: reaching term $n$ takes $n - 1$ steps, not $n$. The off-by-one version is a standard answer choice on every arithmetic question.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 3</span><span class="rname">not allowed:</span> &nbsp; eyeballing far-away geometric terms</div>
+                <div class="ref-ex">A huge power multiplying a tiny term can land anywhere: $5^{15} \cdot 5^{-23} = 5^{-8}$, a very small number despite the $5^{15}$. Convert to one power and compare exponents — never judge by appearance.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 4</span><span class="rname">not allowed:</span> &nbsp; count $\neq$ last $-$ first</div>
+                <div class="ref-ex">The integers from 12 to 45 number $34$, not $33$ — subtracting counts the <em>gaps</em>, and there's one more fencepost than gaps. Add the $+1$ every time, deliberately.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 5</span><span class="rname">not allowed:</span> &nbsp; "sequences grow"</div>
+                <div class="ref-ex">A geometric sequence with $0 < r < 1$ shrinks toward zero, and one with $r < 0$ alternates sign every term. $C_{n+1} = \tfrac{1}{5} C_n$ is a sequence in freefall — treat the ratio's size and sign as information, not decoration.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB 2: STEPPER ============ -->
+    <div id="tab-core" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>Worked examples &amp; practice</h2></div>
+        <div class="card">
+            <p>Everything on the reference tab runs on one idea: <strong>a sequence is a starting value plus a repeated step.</strong> Adding the same step makes it arithmetic (a line). Multiplying by the same step makes it geometric (a power). Every GRE sequence question is asking you to name the step and count how many times it happened.</p>
+            <p style="margin-top:8px; font-size:14px; color:var(--text-medium);">The walkthrough below takes the rules one at a time — each with a worked example, the trap it pairs with, and a ten-second check. Reading a rule isn't knowing it; the check is the point.</p>
+        </div>
+        <div class="stepper">
+            <div class="step-head">
+                <span class="step-count" id="stepCount">Rule 1 of 7</span>
+                <div class="step-dots" id="stepDots"></div>
+            </div>
+            <div class="step-body" id="stepBody"></div>
+            <div class="step-nav">
+                <button class="btn btn-ghost" id="stepBack" onclick="stepNav(-1)">&#8592; Back</button>
+                <button class="btn btn-green" id="stepNext" onclick="stepNav(1)">Next &#8594;</button>
+                <span style="flex:1"></span>
+                <span style="font-size:13px; color:var(--text-medium);" id="stepHint"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB 3: FLUENCY ============ -->
+    <div id="tab-fluency" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Fluency drills — mixed reps</h2></div>
+        <div class="toolbar">
+            <span style="font-size:13.5px; color:var(--text-medium);">Untimed. Fractions can be entered as 1/5 or 0.2 — both count.</span>
+            <span class="timer-wrap">Timer <button class="tog" id="togF" onclick="toggleTimer('F')" aria-label="toggle timer"></button> <span class="timer-display" id="timerF">0:00</span></span>
+        </div>
+        <div id="fluencyList"></div>
+    </div>
+
+    <!-- ============ TAB 4: GAUNTLET ============ -->
+    <div id="tab-gauntlet" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>GRE Gauntlet — real formats, real traps</h2></div>
+        <div id="gauntletArea"></div>
+    </div>
+
+    <!-- ============ TAB 5: CHALLENGE ============ -->
+    <div id="tab-challenge" class="tab-content">
+        <div class="section-header"><div class="section-number">5</div><h2>Challenge questions</h2></div>
+        <div class="card">
+            <p>These five sit at the top of what the GRE asks about sequences — each one is a rule you already have, paired with a second idea (iteration, solving backwards, exponent conversion). Work each one, then check it right away. Understanding the mechanism matters more than getting it right on the first try.</p>
+        </div>
+        <div id="challengeArea"></div>
+    </div>
+
+    <!-- ============ TAB 6: EXIT TICKET ============ -->
+    <div id="tab-exit" class="tab-content">
+        <div class="section-header"><div class="section-number">6</div><h2>Exit ticket</h2></div>
+        <div id="exitArea"></div>
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:8px;">Write your rule</h3>
+            <p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">One sentence you'll say to yourself the next time a sequence shows up. Make it an if-then. (Shape: "When a rule is given recursively, I ______ before answering anything.")</p>
+            <textarea class="rule-write" id="ruleBox" placeholder="My rule:" oninput="saveRule()"></textarea>
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-gold btn-sm" onclick="copyRule()">Copy rule</button>
+                <span id="ruleStatus" style="font-size:12.5px; color:var(--green-light); font-weight:600; opacity:0; transition:opacity 0.3s;">saved &#10003;</span>
+            </div>
+        </div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:6px;">Official extra reps</h3>
+            <p style="font-size:14px;">ETS's free <em>GRE Math Review</em> (&copy; ETS) doesn't give sequences their own section — the skills underneath them live in Algebra section 2.2 (exponent rules, the engine of every geometric sequence), and official sequence questions appear throughout ETS's practice materials in exactly the recursive-rule form this sheet drills. For targeted reps, redo Algebra Exercise 5 with this sheet's explicit formulas in mind. <a href="https://www.ets.org/pdfs/gre/gre-math-review.pdf" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">Open the official PDF &#8594;</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family:'Switzer','Space Grotesk',sans-serif; font-weight:700;">Learning Curve Collective</a> &mdash; GRE Quant Series: Sequences</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+<script>
+/* ================= Rule stepper ================= */
+/* Each step: name, rule (LaTeX), say (coach line), ex (worked example), trap, micro-check */
+var STEPS = [
+ { name: 'Rule 1 \u2014 Read the rule, build the terms', rule: 'A recursive rule is instructions: seed, then repeat the step',
+   say: 'Read $a_{n+1}$ as "the next term" and $a_n$ as "the term before it" \u2014 so $a_{n+1} = 2a_n - 3$ just says: <em>next term = double the one before it, minus 3</em>. Then write the seed and build three or four terms by hand.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $a_1 = 4$ and $a_{n+1} = 2a_n - 3$.<br>$a_2 = 2(4) - 3 = 5$, &nbsp;$a_3 = 2(5) - 3 = 7$, &nbsp;$a_4 = 2(7) - 3 = 11$. Four terms, ten seconds, and the sequence is no longer abstract.',
+   trap: 'The subscripts point the direction: the bigger index is the newer term. Write each term on its own line with its label ($a_2 = \\ldots$, $a_3 = \\ldots$) \u2014 skipping the labels is where terms get crossed.',
+   micro: { q: 'If $a_1 = 2$ and $a_{n+1} = 3a_n - 1$, then $a_3 =$', accept: ['14'], exp: '$a_2 = 3(2) - 1 = 5$, then $a_3 = 3(5) - 1 = 14$.' } },
+ { name: 'Rule 2 \u2014 The arithmetic explicit formula (it\u2019s a line)', rule: '$a_n = a_1 + (n-1)\\,d$',
+   say: 'This formula is $y = mx + b$ wearing subscripts. Compare: $y = y_1 + m(x - x_1)$ versus $a_n = a_1 + d\\,(n - 1)$. Same skeleton \u2014 $a_1$ is the starting point, $d$ is the slope, and $(n-1)$ counts the steps taken. An arithmetic sequence is a straight line sampled at $n = 1, 2, 3, \\ldots$',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $4, 9, 14, 19, \\ldots$ \u2014 find $a_{20}$.<br>$a_1 = 4$, $d = 5$: &nbsp; $a_n = 4 + 5(n-1) = 5n - 1$, so $a_{20} = 5(20) - 1 = 99$. Nineteen steps of size 5 from the start \u2014 exactly like walking up a line of slope 5.',
+   trap: 'The exponent-free off-by-one: $a_1 + n\\,d$ overshoots by one step. Reaching term 20 takes 19 steps, and the answer choices will include the 20-step impostor.',
+   micro: { q: 'For $a_1 = 4$, $d = 5$: $a_{20} =$', accept: ['99'], exp: '$4 + 19 \\times 5 = 99$.' } },
+ { name: 'Rule 3 \u2014 The geometric explicit formula (it\u2019s a power)', rule: '$a_n = a_1 \\cdot r^{\\,n-1}$',
+   say: 'Where arithmetic adds the step $n-1$ times, geometric multiplies by it $n-1$ times \u2014 and repeated multiplication is an exponent. Everything from the exponents sheet now reports for duty.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $3, 6, 12, 24, \\ldots$ \u2014 find $a_{10}$.<br>$a_1 = 3$, $r = 2$: &nbsp; $a_{10} = 3 \\cdot 2^{9} = 3 \\cdot 512 = 1536$. Nine doublings from the seed.',
+   trap: 'Same off-by-one, exponent edition: $a_1 \\cdot r^{n}$ is one multiplication too many. The exponent counts steps, and there are $n - 1$ of them.',
+   micro: { q: 'For $3, 6, 12, \\ldots$: $a_6 =$', accept: ['96'], exp: '$3 \\cdot 2^{5} = 96$.' } },
+ { name: 'Rule 4 \u2014 Recursive to closed: name the step', rule: '$a_{n+1} = a_n + d$ means arithmetic; $\\;a_{n+1} = r \\cdot a_n$ means geometric',
+   say: 'The GRE loves recursive costumes. Undressing them takes one question: is the rule <em>adding</em> a constant or <em>multiplying</em> by one? Adding \u2192 write $a_1 + (n-1)d$. Multiplying \u2192 write $a_1 \\cdot r^{n-1}$. That single translation converts a build-up problem into a jump-to-any-term problem.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $C_1 = 5$ and $C_{j+1} = \\tfrac{1}{5}\\,C_j$.<br>The rule multiplies by $\\tfrac{1}{5}$, so it\u2019s geometric: $C_j = 5 \\cdot \\left(\\tfrac{1}{5}\\right)^{j-1}$. Convert the base (Sheet 1, Rule 0): $\\left(\\tfrac{1}{5}\\right)^{j-1} = 5^{-(j-1)}$, so $C_j = 5^{1-(j-1)} = 5^{\\,2-j}$. Now $C_{100}$ is one substitution away.',
+   trap: 'Trying to answer far-term questions by iterating the recursion \u2014 you cannot build 25 terms under time pressure, and the test knows it. A recursive rule plus a far index is a direct order: find the explicit formula first.',
+   micro: { mc: true, q: 'If $b_1 = 7$ and $b_{n+1} = b_n - 3$, the explicit formula is $b_n =$', opts: ['$10 - 3n$', '$7 - 3n$', '$4n + 3$', '$7 \\cdot (-3)^{\\,n-1}$'], correct: 0, exp: 'Arithmetic with $d = -3$: $b_n = 7 - 3(n-1) = 10 - 3n$. The $7 - 3n$ choice is the off-by-one.' } },
+ { name: 'Rule 5 \u2014 Far-away terms run on exponent rules', rule: 'Ratios of geometric terms collapse: $\\dfrac{a_m}{a_n} = r^{\\,m-n}$',
+   say: 'Once a geometric sequence is written explicitly, questions about distant terms become pure exponent arithmetic \u2014 quotient rule, product rule, base conversion. The sequence was the costume; the exponents are the question.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $a_n = 3 \\cdot 2^{\\,n-1}$ \u2014 compare $a_{10}$ to $a_7$.<br>$\\dfrac{a_{10}}{a_7} = \\dfrac{3 \\cdot 2^9}{3 \\cdot 2^6} = 2^{3} = 8$. Three steps apart means three multiplications by $r$ \u2014 no term values needed.',
+   trap: 'Case 3 from the reference tab: a huge power times a tiny term can be any size. $5^{15} \\cdot C_{25}$ where $C_{25} = 5^{-23}$ is just $5^{-8}$ \u2014 convert everything to one power and compare exponents, never sizes on sight.',
+   micro: { q: 'For $a_n = 3 \\cdot 2^{\\,n-1}$: $\\dfrac{a_{10}}{a_{7}} = 2^{\\,?}$', accept: ['3'], exp: '$2^{9}/2^{6} = 2^{3}$ \u2014 the quotient rule from Sheet 1.' } },
+ { name: 'Rule 6 \u2014 Counting terms (fenceposts)', rule: 'count $= \\dfrac{\\text{last} - \\text{first}}{d} + 1$',
+   say: 'Subtracting last minus first counts the <em>gaps</em> between terms, and there is always one more term than gaps \u2014 like fenceposts and fence panels. Divide by the spacing, then add 1, as a deliberate written step.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> how many multiples of 4 from 16 to 96 inclusive?<br>$\\dfrac{96 - 16}{4} + 1 = 20 + 1 = 21$. The subtraction found 20 gaps; the $+1$ found the 21st fencepost.',
+   trap: 'Forgetting the $+1$ undercounts by exactly one, and the undercount is always among the answer choices. Make "$+1$" its own written mark \u2014 it\u2019s the cheapest point on the test.',
+   micro: { q: 'How many multiples of 4 are there from 16 to 96 inclusive?', accept: ['21'], exp: '$(96-16)/4 + 1 = 21$.' } },
+ { name: 'Rule 7 \u2014 Evenly spaced sums (the pairing move)', rule: 'sum $=$ count $\\times \\dfrac{\\text{first} + \\text{last}}{2}$',
+   say: 'Pair the first term with the last, the second with the second-to-last \u2014 every pair has the same total, because each step forward from one end is a step backward from the other. So the sum is just count times the average of the ends. Bonus fact the GRE tests directly: for any evenly spaced set, mean $=$ median $= \\tfrac{\\text{first}+\\text{last}}{2}$.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $1 + 2 + \\cdots + 100$.<br>Pairs: $1{+}100$, $2{+}99$, $3{+}98$, \\ldots \u2014 fifty pairs, each totaling 101. Sum $= 50 \\times 101 = 5{,}050$. In formula form: $100 \\times \\tfrac{1+100}{2}$.',
+   trap: 'The pairing only works for evenly spaced lists \u2014 applying it to a geometric or irregular sequence produces confident nonsense. Check the spacing before reaching for the shortcut.',
+   micro: { q: '$1 + 2 + \\cdots + 40 =$', accept: ['820'], exp: '$40 \\times \\tfrac{1+40}{2} = 40 \\times 20.5 = 820$.' } }
+]
+
+var stepState = { idx: 0, done: {} };
+function renderStep() {
+    var i = stepState.idx, s = STEPS[i];
+    document.getElementById('stepCount').textContent = 'Rule ' + (i+1) + ' of ' + STEPS.length;
+    var dots = '';
+    STEPS.forEach(function(_, di) {
+        var cls = 'step-dot' + (di === i ? ' current' : '') + (stepState.done[di] ? ' done' : '');
+        dots += '<button class="' + cls + '" onclick="stepState.idx=' + di + ';renderStep();" aria-label="rule ' + (di+1) + '"></button>';
+    });
+    document.getElementById('stepDots').innerHTML = dots;
+    var m = s.micro, mid = 'micro' + i, microHtml = '';
+    if (m.mc) {
+        microHtml = '<div class="mc-opts" id="opts-' + mid + '">' + m.opts.map(function(o, oi) {
+            return '<button class="mc-opt" onclick="microMC(' + i + ',' + oi + ')">' + o + '</button>';
+        }).join('') + '</div>';
+    } else {
+        microHtml = '<div class="drill-row">? = <input type="text" id="in-' + mid + '" autocomplete="off">' +
+            '<button class="btn btn-green btn-sm" onclick="microExp(' + i + ')">Check</button>' +
+            '<span class="fb" id="fb-' + mid + '"></span></div>';
+    }
+    document.getElementById('stepBody').innerHTML =
+        '<div class="step-rule-name">' + s.name + '</div>' +
+        '<div class="step-rule">' + s.rule + '</div>' +
+        '<p class="step-say">' + s.say + '</p>' +
+        '<div class="step-ex">' + s.ex + '</div>' +
+        '<div class="trap-box"><div class="trap-label">The trap it pairs with</div>' + s.trap + '</div>' +
+        '<div class="micro"><div class="micro-label">Ten-second check</div><div class="micro-q">' + m.q + '</div>' + microHtml +
+        '<div class="fb-exp" id="exp-' + mid + '">' + m.exp + '</div></div>';
+    document.getElementById('stepBack').disabled = (i === 0);
+    document.getElementById('stepNext').disabled = (i === STEPS.length - 1);
+    document.getElementById('stepHint').textContent = (i === STEPS.length - 1) ? 'Done here? Fluency Drills is next.' : '';
+    typeset(document.getElementById('stepBody'));
+}
+function stepNav(d) { stepState.idx = Math.max(0, Math.min(STEPS.length-1, stepState.idx + d)); renderStep(); }
+function microExp(i) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var ok = answerMatches(document.getElementById('in-' + mid).value, s.micro.accept);
+    var fb = document.getElementById('fb-' + mid);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ got it' : '✗ not yet';
+    if (ok) { stepState.done[i] = true; }
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function microMC(i, chosen) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var opts = document.getElementById('opts-' + mid).children;
+    for (var k = 0; k < opts.length; k++) opts[k].classList.remove('right','wrong');
+    var ok = (chosen === s.micro.correct);
+    opts[chosen].classList.add(ok ? 'right' : 'wrong');
+    if (!ok) opts[s.micro.correct].classList.add('right');
+    if (ok) stepState.done[i] = true;
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function renderDotsOnly() {
+    var dots = document.getElementById('stepDots').children;
+    for (var di = 0; di < dots.length; di++) {
+        dots[di].classList.toggle('done', !!stepState.done[di]);
+    }
+}
+
+/* ================= Fluency drills ================= */
+var FLUENCY = [
+ { sec: 'A. Identify the sequence \u2014 find the step', items: [
+   { q: 'For $7, 3, -1, -5, \\ldots$ the common difference $d =$', accept: ['-4'], exp: 'Subtract consecutive terms: $3 - 7 = -4$, and it stays constant. Arithmetic, heading down.' },
+   { q: 'For $48, 12, 3, 0.75, \\ldots$ the common ratio $r =$', accept: ['1/4', '0.25', '.25'], exp: 'Divide consecutive terms: $\\tfrac{12}{48} = \\tfrac{1}{4}$, constant throughout. Geometric and shrinking \u2014 ratios under 1 are legal.' },
+   { mc: true, q: 'The sequence $5, 15, 45, 135, \\ldots$ is', opts: ['arithmetic', 'geometric', 'both', 'neither'], correct: 1, exp: 'Differences ($10, 30, 90$) change; ratios hold at 3. Geometric.' },
+   { q: 'If $t_1 = 4$ and $t_{n+1} = 2t_n - 3$, then $t_3 =$', accept: ['7'], exp: '$t_2 = 2(4) - 3 = 5$, then $t_3 = 2(5) - 3 = 7$. Build the terms; label the indices.' }
+ ]},
+ { sec: 'B. Explicit formulas \u2014 jump to the term', items: [
+   { q: 'For $a_1 = -3$, $d = 5$: $a_{15} =$', accept: ['67'], exp: '$-3 + 14 \\times 5 = 67$. Fourteen steps, not fifteen.' },
+   { mc: true, q: 'The explicit formula for $4, 9, 14, 19, \\ldots$ is $a_n =$', opts: ['$5n - 1$', '$4n + 5$', '$5n + 4$', '$4 + 5n$'], correct: 0, exp: '$a_n = 4 + 5(n-1) = 5n - 1$. Check with $n = 1$: $5(1) - 1 = 4$ \u2713 \u2014 always test the formula on the first term.' },
+   { q: 'For $a_1 = 729$, $r = \\tfrac{1}{3}$: $a_5 =$', accept: ['9'], exp: '$729 \\cdot \\left(\\tfrac{1}{3}\\right)^4 = \\tfrac{729}{81} = 9$.' },
+   { q: 'An arithmetic sequence has $a_4 = 11$ and $a_9 = 31$. Then $d =$', accept: ['4'], exp: 'From term 4 to term 9 is 5 steps covering $31 - 11 = 20$, so $d = 4$. Steps between indices, not the indices themselves.' }
+ ]},
+ { sec: 'C. Counting and sums \u2014 evenly spaced sets', items: [
+   { q: 'How many multiples of 7 are there from 14 to 140 inclusive?', accept: ['19'], exp: '$(140 - 14)/7 + 1 = 18 + 1 = 19$. The $+1$ is the fencepost.' },
+   { q: '$2 + 4 + 6 + \\cdots + 100 =$', accept: ['2550'], exp: '50 terms $\\times \\tfrac{2 + 100}{2} = 50 \\times 51 = 2550$.' },
+   { q: '$1 + 2 + 3 + \\cdots + 100 =$', accept: ['5050'], exp: '$100 \\times \\tfrac{101}{2} = 5050$ \u2014 the pairing move at full speed.' },
+   { q: 'The mean of the evenly spaced set $13, 17, 21, \\ldots, 41$ is', accept: ['27'], exp: 'Evenly spaced \u21d2 mean $=$ median $= \\tfrac{13 + 41}{2} = 27$. No listing required.' }
+ ]},
+ { sec: 'D. Recursive and far-away \u2014 the GRE\u2019s favorites', items: [
+   { q: 'If $x_1 = 1$ and $x_{n+1} = 2x_n + 1$, then $x_4 =$', accept: ['15'], exp: '$1 \\to 3 \\to 7 \\to 15$. Four terms by hand beats any cleverness here.' },
+   { q: 'A geometric sequence has $a_2 = 6$ and $a_5 = 162$. Then $r =$', accept: ['3'], exp: 'Three steps: $r^3 = \\tfrac{162}{6} = 27$, so $r = 3$. Far-apart terms give $r$ raised to the gap.' },
+   { q: 'If $C_1 = 5$ and $C_{j+1} = \\tfrac{1}{5} C_j$, then $C_3 =$', accept: ['1/5', '0.2', '.2'], exp: '$5 \\to 1 \\to \\tfrac{1}{5}$. Written explicitly: $C_j = 5^{\\,2-j}$, and $C_3 = 5^{-1}$.' },
+   { q: 'For $a_n = 3 \\cdot 2^{\\,n-1}$: $a_8 =$', accept: ['384'], exp: '$3 \\cdot 2^{7} = 3 \\cdot 128 = 384$.' }
+ ]}
+]
+
+function renderFluency() {
+    var host = document.getElementById('fluencyList');
+    var html = '';
+    var n = 0;
+    FLUENCY.forEach(function(sec, si) {
+        html += '<h3 style="font-family:\'Switzer\',\'Space Grotesk\',sans-serif; color:var(--green-dark); margin:18px 0 10px;">' + sec.sec + '</h3>';
+        sec.items.forEach(function(it, ii) {
+            var id = 'f' + si + '_' + ii;
+            n++;
+            html += '<div class="drill"><div class="drill-q">' + n + '. &nbsp;' + it.q + '</div>';
+            if (it.mc) {
+                html += '<div class="mc-opts" id="opts-' + id + '">';
+                it.opts.forEach(function(o, oi) {
+                    html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+                });
+                html += '</div>';
+            } else {
+                html += '<div class="drill-row">? = <input type="text" id="in-' + id + '" autocomplete="off">' +
+                    '<button class="btn btn-green btn-sm" onclick="checkExp(\'' + id + '\',' + si + ',' + ii + ')">Check</button>' +
+                    '<span class="fb" id="fb-' + id + '"></span></div>';
+            }
+            html += '<div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+        });
+    });
+    host.innerHTML = html;
+}
+function normalizeAns(s) {
+    s = (s || '').trim().replace(/\s+/g,'').replace(/^\+/,'');
+    var uni = { '\u00BD':'1/2', '\u2153':'1/3', '\u2154':'2/3', '\u00BC':'1/4', '\u00BE':'3/4', '\u2155':'1/5', '\u2212':'-' };
+    Object.keys(uni).forEach(function(k){ s = s.split(k).join(uni[k]); });
+    return s;
+}
+function parseVal(s) {
+    s = normalizeAns(s);
+    if (s === '') return null;
+    var m = s.match(/^(-?\d+(?:\.\d+)?|-?\.\d+)\/(-?\d+(?:\.\d+)?|-?\.\d+)$/);
+    if (m) { var d = parseFloat(m[2]); return d === 0 ? null : parseFloat(m[1]) / d; }
+    var n = parseFloat(s);
+    return (isNaN(n) || String(n) !== String(parseFloat(s))) && isNaN(Number(s)) ? null : (isNaN(n) ? null : n);
+}
+function answerMatches(raw, acceptList) {
+    var val = normalizeAns(raw);
+    if (acceptList.indexOf(val) !== -1) return true;
+    var num = parseVal(raw);
+    if (num == null) return false;
+    for (var i = 0; i < acceptList.length; i++) {
+        var target = parseVal(acceptList[i]);
+        if (target != null && Math.abs(num - target) < 1e-9) return true;
+    }
+    return false;
+}
+function checkExp(id, si, ii) {
+    var it = FLUENCY[si].items[ii];
+    var ok = answerMatches(document.getElementById('in-' + id).value, it.accept);
+    var fb = document.getElementById('fb-' + id);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ correct' : '✗ not yet — retry, or peek below';
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+function checkMC(id, chosen, correct) {
+    var opts = document.getElementById('opts-' + id).children;
+    for (var i = 0; i < opts.length; i++) opts[i].classList.remove('right','wrong');
+    opts[chosen].classList.add(chosen === correct ? 'right' : 'wrong');
+    if (chosen !== correct) opts[correct].classList.add('right');
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+
+/* ================= Gauntlet ================= */
+var QC_CHOICES = ["Quantity A is greater.", "Quantity B is greater.", "The two quantities are equal.", "The relationship cannot be determined from the information given."];
+var GAUNTLET = [
+ { type: 'qc', pre: 'The first three terms of an arithmetic sequence are $17, 13, 9$', qa: 'The 12th term of the sequence', qb: '$-27$', correct: 2,
+   sol: '<strong>Given:</strong> $a_1 = 17$, $d = -4$.<br><br>$a_{12} = 17 + 11(-4) = 17 - 44 = -27$. Equal \u2014 (C).',
+   trap: 'Eleven steps to term 12, not twelve. The off-by-one version gives $-31$ and picks (B) \u2014 the fencepost strikes even inside explicit formulas.' },
+ { type: 'qc', pre: 'An arithmetic sequence has common difference $d > 0$', qa: '$a_{10} - a_{6}$', qb: '$4d$', correct: 2,
+   sol: '<strong>Given:</strong> arithmetic, $d > 0$, no first term supplied.<br><br>From term 6 to term 10 is exactly 4 steps of size $d$: $a_{10} - a_6 = 4d$. Equal \u2014 (C), regardless of $a_1$.',
+   trap: 'The missing $a_1$ tempts (D), but differences between terms depend only on the number of steps between them \u2014 $a_1$ cancels. Unknown values that cancel are a favorite QC construction.' },
+ { type: 'qc', pre: '$C_1 = 4$ and $C_{n+1} = \\tfrac{1}{4}\\,C_n$ for all $n \\ge 1$', qa: '$C_{10}$', qb: '$4^{15} \\cdot C_{25}$', correct: 2,
+   sol: '<strong>Given:</strong> geometric with ratio $\\tfrac{1}{4}$.<br><br>Explicit formula: $C_n = 4 \\cdot \\left(\\tfrac{1}{4}\\right)^{n-1} = 4^{\\,2-n}$. So $C_{10} = 4^{-8}$, and $C_{25} = 4^{-23}$, making Quantity B $= 4^{15} \\cdot 4^{-23} = 4^{-8}$. Equal \u2014 (C).',
+   trap: 'The $4^{15}$ looks decisive, but it multiplies something astronomically small. Explicit formula first, then pure exponent arithmetic \u2014 the sequence was only ever a costume for Sheet 1\u2019s product rule.' },
+ { type: 'mc', stem: 'A theater has 25 rows. The first row has 18 seats, and each row after the first has 2 more seats than the row in front of it. How many seats are in the last row?',
+   options: ['$64$', '$66$', '$68$', '$50$', '$70$'], correct: 1,
+   sol: '<strong>Given:</strong> $a_1 = 18$, $d = 2$, $n = 25$.<br><br>$a_{25} = 18 + 24 \\times 2 = 66$.',
+   trap: '$68$ takes 25 steps instead of 24; $64$ takes 23. Real-world costumes don\u2019t change the formula \u2014 they just hide the words "arithmetic sequence."' },
+ { type: 'mc', stem: 'If $s_1 = 9$ and $s_{n+1} = s_n + 7$ for all $n \\ge 1$, which of the following gives $s_n$ ?',
+   options: ['$7n + 2$', '$9 + 7n$', '$7n - 2$', '$9 \\cdot 7^{\\,n-1}$', '$2n + 7$'], correct: 0,
+   sol: '<strong>Given:</strong> arithmetic, $a_1 = 9$, $d = 7$.<br><br>$s_n = 9 + 7(n-1) = 7n + 2$. Check at $n = 1$: $7 + 2 = 9$ \u2713.',
+   trap: '$9 + 7n$ is the off-by-one; $9 \\cdot 7^{n-1}$ treats the added 7 as a multiplier. Testing $n = 1$ against the seed kills every impostor in five seconds.' },
+ { type: 'ms', stem: 'Which of the following sequences are geometric?',
+   options: ['$2, 6, 18, 54$', '$1, 4, 9, 16$', '$100, 50, 25, 12.5$', '$5, 10, 15, 20$', '$3, -6, 12, -24$'], correct: [0, 2, 4],
+   sol: '<strong>Given:</strong> five candidate sequences \u2014 test each ratio.<br><br>$2, 6, 18, 54$: ratio 3 \u2713. &nbsp;$1, 4, 9, 16$: squares, ratios change \u2717. &nbsp;$100, 50, 25, 12.5$: ratio $\\tfrac{1}{2}$ \u2713. &nbsp;$5, 10, 15, 20$: constant <em>difference</em>, not ratio \u2717. &nbsp;$3, -6, 12, -24$: ratio $-2$ \u2713.<br><br>Three answers: the first, third, and fifth.',
+   trap: 'Shrinking ($r = \\tfrac{1}{2}$) and alternating ($r = -2$) sequences are still geometric \u2014 Case 5 from the reference tab. And $5, 10, 15, 20$ is the classic bait: the first ratio is 2, but the second is 1.5. Check at least two ratios.' },
+ { type: 'ne', stem: 'How many multiples of 6 are there from 30 to 300 inclusive?', label: 'Count $=$', accept: ['46'],
+   sol: '<strong>Given:</strong> evenly spaced with $d = 6$, ends 30 and 300.<br><br>$\\dfrac{300 - 30}{6} + 1 = 45 + 1 = 46$.',
+   trap: '45 is the gap count \u2014 the answer without the fencepost. On numeric entry there are no choices to warn you, which is exactly why the $+1$ needs to be a written habit.' },
+ { type: 'ne', stem: 'What is the sum of the integers from 51 to 100 inclusive?', label: 'Sum $=$', accept: ['3775'],
+   sol: '<strong>Given:</strong> evenly spaced, first 51, last 100.<br><br>Count: $100 - 51 + 1 = 50$. Sum $= 50 \\times \\dfrac{51 + 100}{2} = 50 \\times 75.5 = 3775$.',
+   trap: 'Two chances to slip: the count (50, not 49) and the average ($75.5$ \u2014 it need not be an integer). Both are the pairing move plus the fencepost, run cleanly.' },
+ { type: 'qc', pre: '$b_n = 5 \\cdot 2^{\\,n-1}$ for all $n \\ge 1$', qa: '$\\dfrac{b_8}{b_5}$', qb: '$8$', correct: 2,
+   sol: '<strong>Given:</strong> geometric with $r = 2$.<br><br>$\\dfrac{b_8}{b_5} = \\dfrac{5 \\cdot 2^7}{5 \\cdot 2^4} = 2^{3} = 8$. Equal \u2014 (C).',
+   trap: 'Three index steps means $r^3$, and the 5\u2019s cancel before any arithmetic happens. Computing $b_8 = 640$ and $b_5 = 80$ works too \u2014 but the exponent route is faster and immune to slips.' },
+ { type: 'qc', pre: 'A set consists of 20 evenly spaced numbers with common difference $d > 0$', qa: 'The mean of the set', qb: 'The median of the set', correct: 2,
+   sol: '<strong>Given:</strong> evenly spaced, 20 numbers.<br><br>For any evenly spaced set, the terms pair symmetrically around the center, so mean $=$ median $= \\tfrac{\\text{first} + \\text{last}}{2}$. Equal \u2014 (C).',
+   trap: 'This holds with an even count too \u2014 the median is the average of the middle pair, which is still the midpoint of the ends. Zero computation; the structure is the entire answer.' }
+]
+
+var gState = { idx: 0, answers: {}, finished: false };
+
+function renderGauntlet() {
+    var host = document.getElementById('gauntletArea');
+    if (gState.finished) { renderGauntletResults(host); return; }
+    var total = GAUNTLET.length, i = gState.idx, p = GAUNTLET[i];
+    var dirs = { qc: 'Compare Quantity A and Quantity B. Select one answer choice.', mc: 'Select one answer choice.', ms: 'Select one or more answer choices.', ne: 'Enter your answer in the box.' };
+    var html = '<div class="testbar"><span class="tprog">Question ' + (i+1) + ' of ' + total + '</span>' +
+        '<span class="timer-wrap" style="margin-left:auto;">Timer <button class="tog' + (timers.G.on ? ' on' : '') + '" id="togG" onclick="toggleTimer(\'G\')"></button> <span class="timer-display' + (timers.G.on ? ' on' : '') + '" id="timerG">' + fmtTime(timers.G.sec) + '</span></span></div>' +
+        '<div class="test-stage"><div class="q-directions">' + dirs[p.type] + '</div>';
+    var ans = gState.answers[i];
+    if (p.type === 'qc') {
+        if (p.pre) html += '<div class="q-stem" style="text-align:center;">' + p.pre + '</div>';
+        html += '<div class="qc-grid"><div class="qc-col"><div class="qc-head">Quantity A</div><div class="qc-body">' + p.qa + '</div></div>' +
+            '<div class="qc-col"><div class="qc-head">Quantity B</div><div class="qc-body">' + p.qb + '</div></div></div><div class="choices">';
+        QC_CHOICES.forEach(function(c, ci) {
+            html += '<div class="choice' + (ans === ci ? ' selected' : '') + '" onclick="gPick(' + ci + ')"><span class="oval"></span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else if (p.type === 'mc') {
+        html += '<div class="q-stem">' + p.stem + '</div><div class="choices">';
+        p.options.forEach(function(c, ci) {
+            html += '<div class="choice' + (ans === ci ? ' selected' : '') + '" onclick="gPick(' + ci + ')"><span class="oval"></span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else if (p.type === 'ms') {
+        html += '<div class="q-stem">' + p.stem + '</div><div class="multi-note">Indicate <u>all</u> such expressions.</div><div class="choices">';
+        var set = Array.isArray(ans) ? ans : [];
+        p.options.forEach(function(c, ci) {
+            html += '<div class="choice' + (set.indexOf(ci) !== -1 ? ' selected' : '') + '" onclick="gPickMS(' + ci + ')"><span class="sq"></span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else {
+        html += '<div class="q-stem">' + p.stem + '</div>' +
+            '<div class="ne-entry"><span class="q-stem" style="margin:0;">' + p.label + '</span>' +
+            '<input type="text" id="neIn" value="' + (ans != null ? ans : '') + '" oninput="gState.answers[' + i + '] = this.value" autocomplete="off"></div>';
+    }
+    html += '<div class="test-nav">' +
+        '<button class="btn btn-ghost" onclick="gNav(-1)"' + (i === 0 ? ' disabled' : '') + '>&#8592; Back</button>' +
+        '<button class="btn btn-green" onclick="gNav(1)"' + (i === total-1 ? ' disabled' : '') + '>Next &#8594;</button>' +
+        '<span style="flex:1"></span><button class="btn btn-gold" onclick="gFinish()">Finish &amp; Score</button></div>' +
+        '<div class="qmap">' + GAUNTLET.map(function(q, qi) {
+            var cls = 'qchip';
+            if (gHasAns(qi)) cls += ' answered';
+            if (qi === i) cls += ' current';
+            return '<button class="' + cls + '" onclick="gState.idx=' + qi + ';renderGauntlet();">' + (qi+1) + '</button>';
+        }).join('') + '</div></div>';
+    host.innerHTML = html;
+    typeset(host);
+}
+function gPick(ci) { gState.answers[gState.idx] = ci; renderGauntlet(); }
+function gPickMS(ci) {
+    var cur = gState.answers[gState.idx];
+    var set = Array.isArray(cur) ? cur.slice() : [];
+    var at = set.indexOf(ci);
+    if (at === -1) set.push(ci); else set.splice(at, 1);
+    gState.answers[gState.idx] = set;
+    renderGauntlet();
+}
+function gHasAns(qi) {
+    var a = gState.answers[qi];
+    if (Array.isArray(a)) return a.length > 0;
+    return a != null && a !== '';
+}
+function gNav(s) { gState.idx = Math.max(0, Math.min(GAUNTLET.length-1, gState.idx + s)); renderGauntlet(); }
+function gGrade(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (p.type === 'ne') return a != null && answerMatches(String(a), p.accept);
+    if (p.type === 'ms') {
+        if (!Array.isArray(a)) return false;
+        return a.slice().sort().join(',') === p.correct.slice().sort().join(',');
+    }
+    return a === p.correct;
+}
+function gAnswerText(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (a == null || a === '') return '(no answer)';
+    if (p.type === 'qc') return QC_CHOICES[a];
+    if (p.type === 'mc') return p.options[a];
+    if (p.type === 'ms') return a.length ? a.slice().sort().map(function(i){ return p.options[i]; }).join(' &nbsp;and&nbsp; ') : '(no answer)';
+    return String(a);
+}
+function gCorrectText(i) {
+    var p = GAUNTLET[i];
+    if (p.type === 'qc') return QC_CHOICES[p.correct];
+    if (p.type === 'mc') return p.options[p.correct];
+    if (p.type === 'ms') return p.correct.slice().sort().map(function(i){ return p.options[i]; }).join(' &nbsp;and&nbsp; ');
+    return p.accept[0];
+}
+function gFinish() {
+    var un = 0;
+    for (var i = 0; i < GAUNTLET.length; i++) if (!gHasAns(i)) un++;
+    if (un > 0 && !confirm(un + ' unanswered. Score anyway?')) return;
+    gState.finished = true;
+    stopTimer('G');
+    renderGauntlet();
+}
+function renderGauntletResults(host) {
+    var right = 0;
+    GAUNTLET.forEach(function(_, i){ if (gGrade(i)) right++; });
+    var html = '<div class="stat-grid">' +
+        '<div class="stat-tile green"><div class="stat-num">' + right + '/' + GAUNTLET.length + '</div><div class="stat-label">Correct</div></div>' +
+        '<div class="stat-tile"><div class="stat-num">' + Math.round(100*right/GAUNTLET.length) + '%</div><div class="stat-label">Score</div></div></div>' +
+        '<div class="toolbar"><button class="btn btn-gold" onclick="gState={idx:0,answers:{},finished:false};timers.G.sec=0;renderGauntlet();">&#8635; Retake gauntlet</button></div>';
+    GAUNTLET.forEach(function(p, i) {
+        var ok = gGrade(i);
+        html += '<div class="res-entry' + (ok ? ' correct' : '') + '"><div class="res-head" onclick="this.parentElement.classList.toggle(\'open\'); typeset(this.parentElement);">' +
+            '<span style="font-size:18px;">' + (ok ? '&#9989;' : '&#10060;') + '</span>' +
+            '<span style="font-weight:600; font-size:14.5px;">Q' + (i+1) + ' &mdash; your answer: ' + gAnswerText(i) + '</span>' +
+            '<span class="res-arrow">&#9654;</span></div>' +
+            '<div class="res-body"><div class="sol-block" style="background:white; border:1px solid var(--cream-dark); font-family:\'Times New Roman\',Georgia,serif; font-size:16.5px;">' +
+            (p.type === 'qc' ? ((p.pre ? p.pre + '<br>' : '') + '<strong>A:</strong> ' + p.qa + ' &nbsp;&nbsp;vs.&nbsp;&nbsp; <strong>B:</strong> ' + p.qb) : p.stem) + '</div>' +
+            '<p style="font-size:14px; margin:8px 0;"><strong>Correct answer:</strong> ' + gCorrectText(i) + '</p>' +
+            '<div class="sol-block"><div class="sol-label">Full solution</div>' + p.sol + '</div>' +
+            '<div class="trap-box"><div class="trap-label">The trap / takeaway</div>' + p.trap + '</div></div></div>';
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+
+/* ================= Challenge questions ================= */
+var CHALLENGE = [
+ { type: 'ne', stem: 'In a sequence, $a_1 = 5$ and each term after the first is twice the preceding term. How many terms of the sequence are less than $10{,}000$ ?', label: 'Terms $=$', accept: ['11'],
+   sol: '<strong>Given:</strong> $a_n = 5 \\cdot 2^{\\,n-1}$; count terms below $10{,}000$.<br><br>The second idea is <strong>iteration</strong>: we need $2^{\\,n-1} < 2{,}000$. List powers: $2^{10} = 1024 < 2000$ but $2^{11} = 2048 > 2000$. So $n - 1 \\le 10$, giving $n \\le 11$ \u2014 <strong>11 terms</strong>. (Check the boundary: $a_{11} = 5 \\cdot 1024 = 5120$ \u2713, $a_{12} = 10240$ \u2717.)',
+   trap: 'No logarithms on the GRE \u2014 threshold questions are settled by listing powers until the fence falls, then verifying the boundary term on both sides. The boundary check is where the point is won or lost.' },
+ { type: 'ne', stem: 'The sum of the first $k$ consecutive positive integers is 210. What is the value of $k$ ?', label: '$k =$', accept: ['20'],
+   sol: '<strong>Given:</strong> $\\dfrac{k(k+1)}{2} = 210$, i.e. $k(k+1) = 420$.<br><br>The second idea is <strong>solving backwards</strong>: find two consecutive integers whose product is 420. Estimate with the square root: $\\sqrt{420} \\approx 20.5$, so try $20 \\times 21 = 420$ \u2713. $k = 20$.',
+   trap: 'Consecutive-integer products live right around the square root of the target \u2014 estimate, test one pair, done. Solving the quadratic formally works but spends a minute the estimate gets for free.' },
+ { type: 'mc', stem: 'An arithmetic sequence has $a_4 = 11$ and $a_{11} = 39$. What is $a_{25}$ ?',
+   options: ['$91$', '$95$', '$99$', '$100$', '$103$'], correct: 1,
+   sol: '<strong>Given:</strong> two far-apart terms of an arithmetic sequence.<br><br>The second idea is the <strong>slope</strong> reading: from term 4 to term 11 is 7 steps covering $39 - 11 = 28$, so $d = 4$ \u2014 exactly rise over run. Then jump from a known point: $a_{25} = a_{11} + 14 \\times 4 = 39 + 56 = 95$.',
+   trap: 'Two terms of an arithmetic sequence work like two points on a line: difference of values over difference of indices gives $d$. Jumping from $a_{11}$ (14 steps) beats rebuilding from $a_1$ \u2014 fewer steps, fewer chances for the off-by-one.' },
+ { type: 'ne', stem: '$\\dfrac{1}{2} + \\dfrac{1}{4} + \\dfrac{1}{8} + \\cdots + \\dfrac{1}{2^{10}} =$ &nbsp; <span style="font-size:15px; color:var(--text-medium);">(enter your answer as a fraction)</span>', label: 'Sum $=$', accept: ['1023/1024'],
+   sol: '<strong>Given:</strong> ten terms, each half the one before \u2014 the closest the GRE gets to an infinite series, and it needs no formula.<br><br>The second idea is the <strong>remaining gap</strong>: each term covers exactly half the distance left to 1. After $\\tfrac{1}{2}$ you are $\\tfrac{1}{2}$ short of 1; after adding $\\tfrac{1}{4}$ you are $\\tfrac{1}{4}$ short; after the $k$th term you are $\\tfrac{1}{2^k}$ short. So the whole sum is $1 - \\tfrac{1}{2^{10}} = \\tfrac{1023}{1024}$.',
+   trap: 'There is no sum formula to remember here \u2014 on purpose. Write the first three partial sums ($\\tfrac{1}{2}, \\tfrac{3}{4}, \\tfrac{7}{8}$) and the pattern names itself: each is 1 minus the size of the last term added. Adding forever would creep toward exactly 1 \u2014 but the GRE always stops at a finite fence.' },
+ { type: 'ne', stem: 'If $C_1 = 3$ and $C_{j+1} = \\dfrac{1}{3}\\,C_j$ for all $j \\ge 1$, and $C_{12} = 3^{\\,k}$, what is the value of $k$ ?', label: '$k =$', accept: ['-10'],
+   sol: '<strong>Given:</strong> a recursive multiplier rule and a far-away term \u2014 this is a question type of its own, the <strong>recursive-exponent conversion</strong>, and it runs the same three steps every time.<br><br>' +
+        '<strong>Step 1 \u2014 name the step.</strong> The rule multiplies by $\\tfrac{1}{3}$ each time, so the sequence is geometric: $C_j = 3 \\cdot \\left(\\tfrac{1}{3}\\right)^{j-1}$.<br><br>' +
+        '<strong>Step 2 \u2014 convert to one base</strong> (Sheet 1, Rule 0): $\\left(\\tfrac{1}{3}\\right)^{j-1} = 3^{-(j-1)}$, so $C_j = 3^{1} \\cdot 3^{-(j-1)} = 3^{\\,2-j}$.<br><br>' +
+        '<strong>Step 3 \u2014 substitute the far index.</strong> $C_{12} = 3^{\\,2-12} = 3^{-10}$, so $k = -10$.',
+   trap: 'This is the exact architecture of the hardest official sequence questions: the recursion is a costume, and the explicit formula $a_1 \\cdot r^{\\,n-1}$ plus one base conversion is the whole solution. The practice set below runs it in every variation.' }
+]
+var chState = {};
+var chExtraOpen = {};
+var cxState = {};
+CHALLENGE[3].extrasIntro = 'No-formula sums come in a few costumes, and the move is always the same: write the first few partial sums and name the pattern. Three more reps.';
+CHALLENGE[3].extras = [
+ { type: 'ne', q: '$1 + 2 + 4 + 8 + \\cdots + 2^{9} =$', label: 'Sum $=$', accept: ['1023'],
+   exp: '<strong>Step 1 \u2014 add the terms one at a time and watch the running total.</strong> After 1: total 1. Add 2: total 3. Add 4: total 7. Add 8: total 15.<br><strong>Step 2 \u2014 name the pattern.</strong> The totals $1, 3, 7, 15$ are each exactly one less than $2, 4, 8, 16$ \u2014 one less than the <em>next</em> power of 2. (Quick check: $1 + 2 + 4 = 7$, and the next power after 4 is 8. \u2713)<br><strong>Step 3 \u2014 apply it to the full sum.</strong> The last term is $2^9$, so the next power is $2^{10} = 1024$, and the sum is $1024 - 1 = 1023$.' },
+ { type: 'ne', q: '$\\dfrac{1}{1 \\cdot 2} + \\dfrac{1}{2 \\cdot 3} + \\dfrac{1}{3 \\cdot 4} + \\cdots + \\dfrac{1}{9 \\cdot 10} =$ &nbsp; <span style="font-size:14px; color:var(--text-medium);">(enter a fraction)</span>', label: 'Sum $=$', accept: ['9/10', '0.9', '.9'],
+   exp: '<strong>Step 1 \u2014 compute the first few running totals slowly.</strong> First term: $\\tfrac{1}{1 \\cdot 2} = \\tfrac{1}{2}$. Add $\\tfrac{1}{2 \\cdot 3} = \\tfrac{1}{6}$: &nbsp;$\\tfrac{1}{2} + \\tfrac{1}{6} = \\tfrac{3}{6} + \\tfrac{1}{6} = \\tfrac{4}{6} = \\tfrac{2}{3}$. Add $\\tfrac{1}{3 \\cdot 4} = \\tfrac{1}{12}$: &nbsp;$\\tfrac{2}{3} + \\tfrac{1}{12} = \\tfrac{8}{12} + \\tfrac{1}{12} = \\tfrac{9}{12} = \\tfrac{3}{4}$.<br><strong>Step 2 \u2014 name the pattern.</strong> The totals go $\\tfrac{1}{2}, \\tfrac{2}{3}, \\tfrac{3}{4}$ \u2014 after $k$ terms the total is $\\tfrac{k}{k+1}$: the count over one more than the count.<br><strong>Step 3 \u2014 apply it.</strong> There are nine terms (the last is $\\tfrac{1}{9 \\cdot 10}$), so the sum is $\\tfrac{9}{10}$.<br><span style=\"color:var(--text-medium);\">(Behind the curtain: each piece equals $\\tfrac{1}{k} - \\tfrac{1}{k+1}$ and the middles cancel in a chain \u2014 but the pattern found the answer without needing that.)</span>' },
+ { type: 'ne', q: '$1 - 2 + 3 - 4 + \\cdots - 98 + 99 =$', label: 'Sum $=$', accept: ['50'],
+   exp: '<strong>Step 1 \u2014 group the terms into pairs from the front.</strong> $(1 - 2) = -1$, &nbsp;$(3 - 4) = -1$, &nbsp;$(5 - 6) = -1$ \u2014 every pair collapses to $-1$.<br><strong>Step 2 \u2014 count the pairs.</strong> Each pair uses two numbers, and the numbers 1 through 98 make $98 \\div 2 = 49$ pairs, contributing $49 \\times (-1) = -49$.<br><strong>Step 3 \u2014 handle the leftover.</strong> The 99 has no partner, so it joins as is: $-49 + 99 = 50$.<br><span style=\"color:var(--text-medium);\">(Sanity check on a tiny version: $1 - 2 + 3$ should be 2, and the method gives $(1-2) + 3 = -1 + 3 = 2$. \u2713)</span>' }
+];
+CHALLENGE[4].extrasIntro = 'The recursive-exponent conversion above is a question type of its own. Three more reps \u2014 two straight, one in decimal costume.';
+CHALLENGE[4].extras = [
+ { type: 'ne', q: 'If $B_1 = 7$ and $B_{n+1} = \\tfrac{1}{7} B_n$, and $B_6 = 7^{\\,k}$, then $k =$', label: '$k =$', accept: ['-4'],
+   exp: '<strong>Step 1 \u2014 name the step.</strong> The rule multiplies by $\\tfrac{1}{7}$ each time, so it\u2019s geometric: $B_n = 7 \\cdot \\left(\\tfrac{1}{7}\\right)^{n-1}$.<br><strong>Step 2 \u2014 convert to one base.</strong> $\\left(\\tfrac{1}{7}\\right)^{n-1} = 7^{-(n-1)}$, so $B_n = 7^{1} \\cdot 7^{-(n-1)} = 7^{\\,2-n}$.<br><strong>Step 3 \u2014 substitute.</strong> $B_6 = 7^{\\,2-6} = 7^{-4}$, so $k = -4$. (Sanity: $B_2$ should be $7 \\times \\tfrac{1}{7} = 1$, and the formula gives $7^{0} = 1$. \u2713)' },
+ { type: 'ne', q: 'If $a_1 = 2$ and $a_{n+1} = 4a_n$, and $a_{10} = 2^{\\,k}$, then $k =$', label: '$k =$', accept: ['19'],
+   exp: '<strong>Step 1 \u2014 name the step.</strong> The rule multiplies by 4, so $a_n = 2 \\cdot 4^{\\,n-1}$.<br><strong>Step 2 \u2014 convert to one base.</strong> The target is a power of 2, and $4 = 2^2$: so $4^{\\,n-1} = 2^{\\,2(n-1)}$ and $a_n = 2^{1} \\cdot 2^{\\,2(n-1)} = 2^{\\,2n-1}$.<br><strong>Step 3 \u2014 substitute.</strong> $a_{10} = 2^{\\,2(10)-1} = 2^{19}$, so $k = 19$. (Sanity: $a_1 = 2^{1} = 2$ matches the seed. \u2713)' },
+ { type: 'ne', q: 'If $D_1 = 1$ and $D_{n+1} = \\tfrac{D_n}{10}$, and $D_8 = 10^{\\,k}$, then $k =$', label: '$k =$', accept: ['-7'],
+   exp: '<strong>Step 1 \u2014 name the step.</strong> Dividing by 10 is multiplying by $\\tfrac{1}{10}$ \u2014 geometric: $D_n = 1 \\cdot \\left(\\tfrac{1}{10}\\right)^{n-1}$.<br><strong>Step 2 \u2014 convert to one base.</strong> $\\left(\\tfrac{1}{10}\\right)^{n-1} = 10^{-(n-1)}$, so $D_n = 10^{\\,-(n-1)}$.<br><strong>Step 3 \u2014 substitute.</strong> $D_8 = 10^{-7}$, so $k = -7$ \u2014 seven divisions by 10 from the seed. (In decimal form that\u2019s $0.0000001$: the decimal point walked seven places. Same machine, decimal costume.)' }
+];
+function renderChallenge() {
+    var host = document.getElementById('challengeArea');
+    var html = '';
+    CHALLENGE.forEach(function(p, i) {
+        var st = chState[i] || {};
+        html += '<div class="drill" style="border-left-color: var(--gold);"><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:8px;">Challenge ' + (i+1) + ' of ' + CHALLENGE.length + '</div>';
+        if (p.type === 'qc') {
+            html += '<div class="qc-grid" style="margin-top:4px;"><div class="qc-col"><div class="qc-head">Quantity A</div><div class="qc-body">' + p.qa + '</div></div>' +
+                '<div class="qc-col"><div class="qc-head">Quantity B</div><div class="qc-body">' + p.qb + '</div></div></div><div class="choices">';
+            QC_CHOICES.forEach(function(c, ci) {
+                var cls = 'choice';
+                if (st.checked) { if (ci === p.correct) cls += ' selected'; }
+                else if (st.pick === ci) cls += ' selected';
+                html += '<div class="' + cls + '" onclick="chPick(' + i + ',' + ci + ')"><span class="oval"></span><span class="ctext">' + c + '</span></div>';
+            });
+            html += '</div>';
+        } else if (p.type === 'mc') {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div><div class="mc-opts" id="chopts-' + i + '">';
+            p.options.forEach(function(o, oi) {
+                var cls = 'mc-opt';
+                if (st.checked) { if (oi === p.correct) cls += ' right'; else if (st.pick === oi) cls += ' wrong'; }
+                html += '<button class="' + cls + '" onclick="chPick(' + i + ',' + oi + ')">' + o + '</button>';
+            });
+            html += '</div>';
+        } else {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div>' +
+                '<div class="drill-row"><span class="drill-q" style="margin:0;">' + p.label + '</span>' +
+                '<input type="text" id="chin-' + i + '" value="' + (st.pick != null ? st.pick : '') + '" oninput="chState[' + i + '] = chState[' + i + '] || {}; chState[' + i + '].pick = this.value;" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                (st.checked ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '\u2713 correct' : '\u2717 not this time') + '</span>' : '') +
+                '</div>';
+        }
+        if (!st.checked) {
+            html += '<div style="margin-top:10px;"><button class="btn btn-green btn-sm" onclick="chCheck(' + i + ')">Check</button></div>';
+        } else {
+            if (p.type !== 'ne') {
+                html += '<p style="font-size:13.5px; font-weight:600; margin-top:8px; color:' + (st.ok ? 'var(--green-light)' : '#C0392B') + ';">' + (st.ok ? '\u2713 correct' : '\u2717 not this time \u2014 the mechanism below is the takeaway') + '</p>';
+            }
+            html += '<div class="sol-block"><div class="sol-label">How it works</div>' + p.sol + '</div>' +
+                '<div class="trap-box"><div class="trap-label">The move to remember</div>' + p.trap + '</div>';
+        }
+        html += '</div>';
+        if (p.extras) html += renderChExtra(i, p);
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+function renderChExtra(ci, p) {
+    var open = !!chExtraOpen[ci];
+    var h = '<div class="drill" style="border-left-color: var(--gold-light); background: #FFFDF8;">' +
+        '<div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:6px;">Keep the pattern going</div>' +
+        '<p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">' + p.extrasIntro + '</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="chExtraOpen[' + ci + '] = !chExtraOpen[' + ci + ']; renderChallenge();">' + (open ? 'Hide practice set' : 'Show practice set (' + p.extras.length + ')') + '</button>';
+    if (open) {
+        p.extras.forEach(function(x, j) {
+            var key = ci + '_' + j;
+            var st = cxState[key] || {};
+            h += '<div style="border-top: 1px dashed var(--cream-dark); margin-top: 14px; padding-top: 12px;">' +
+                '<div class="drill-q" style="font-size:17.5px;">' + String.fromCharCode(97 + j) + '. &nbsp;' + x.q + '</div>';
+            if (x.type === 'mc') {
+                h += '<div class="mc-opts">';
+                x.opts.forEach(function(o, oi) {
+                    var cls = 'mc-opt';
+                    if (st.checked) { if (oi === x.correct) cls += ' right'; else if (st.pick === oi) cls += ' wrong'; }
+                    h += '<button class="' + cls + '" style="font-family: Inter, sans-serif; font-size: 14.5px;" onclick="cxPickMC(' + ci + ',' + j + ',' + oi + ')">' + o + '</button>';
+                });
+                h += '</div>';
+            } else {
+                h += '<div class="drill-row"><span style="font-family: \'Times New Roman\', Georgia, serif; font-size:16px;">' + x.label + '</span>' +
+                    '<input type="text" id="cxin-' + key + '" value="' + (st.pick != null ? st.pick : '') + '" oninput="cxState[\'' + key + '\'] = cxState[\'' + key + '\'] || {}; cxState[\'' + key + '\'].pick = this.value;" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                    (st.checked
+                        ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '\u2713 correct' : '\u2717 not yet') + '</span>'
+                        : '<button class="btn btn-green btn-sm" onclick="cxCheckNE(' + ci + ',' + j + ')">Check</button>') +
+                    '</div>';
+            }
+            if (st.checked) h += '<div class="fb-exp show">' + x.exp + '</div>';
+            h += '</div>';
+        });
+    }
+    h += '</div>';
+    return h;
+}
+function cxPickMC(ci, j, oi) {
+    var key = ci + '_' + j;
+    if (cxState[key] && cxState[key].checked) return;
+    cxState[key] = { pick: oi, checked: true, ok: (oi === CHALLENGE[ci].extras[j].correct) };
+    renderChallenge();
+}
+function cxCheckNE(ci, j) {
+    var key = ci + '_' + j;
+    var v = document.getElementById('cxin-' + key).value;
+    if (v == null || normalizeAns(v) === '') return;
+    cxState[key] = { pick: v, checked: true, ok: answerMatches(v, CHALLENGE[ci].extras[j].accept) };
+    renderChallenge();
+}
+function chPick(i, ci) {
+    if (chState[i] && chState[i].checked) return;
+    chState[i] = chState[i] || {};
+    chState[i].pick = ci;
+    renderChallenge();
+}
+function chCheck(i) {
+    var p = CHALLENGE[i];
+    var st = chState[i] = chState[i] || {};
+    if (p.type === 'ne') {
+        var v = document.getElementById('chin-' + i).value;
+        st.pick = v;
+        if (v == null || normalizeAns(v) === '') return;
+        st.ok = answerMatches(v, p.accept);
+    } else {
+        if (st.pick == null) return;
+        st.ok = (st.pick === p.correct);
+    }
+    st.checked = true;
+    renderChallenge();
+}
+
+/* ================= Exit ticket ================= */
+var EXIT = [
+ { q: 'The explicit formula for $5, 8, 11, 14, \\ldots$ is $a_n =$', opts: ['$3n + 2$', '$5n + 3$', '$3n + 5$', '$8n - 3$'], correct: 0, exp: '$a_n = 5 + 3(n-1) = 3n + 2$. Check $n = 1$: $3 + 2 = 5$ \u2713.' },
+ { q: 'For any set of evenly spaced numbers, which must be true?', opts: ['mean $>$ median', 'mean $=$ median', 'mean $<$ median', 'it depends on the count'], correct: 1, exp: 'Evenly spaced sets are symmetric around their center: mean $=$ median $= \\tfrac{\\text{first}+\\text{last}}{2}$, for any count.' }
+]
+function renderExit() {
+    var host = document.getElementById('exitArea');
+    var html = '';
+    EXIT.forEach(function(it, i) {
+        var id = 'x' + i;
+        html += '<div class="drill"><div class="drill-q">' + (i+1) + '. &nbsp;' + it.q + '</div><div class="mc-opts" id="opts-' + id + '">';
+        it.opts.forEach(function(o, oi) {
+            html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+        });
+        html += '</div><div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+    });
+    host.innerHTML = html;
+}
+
+/* rule box: optional persistent save */
+function hasStore(){ return (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function'); }
+var ruleTimer = null;
+function saveRule() {
+    if (ruleTimer) clearTimeout(ruleTimer);
+    ruleTimer = setTimeout(async function() {
+        if (hasStore()) {
+            try { await window.storage.set('seq-sheet:rule', document.getElementById('ruleBox').value, false); } catch(e) {}
+        }
+        var s = document.getElementById('ruleStatus');
+        s.style.opacity = 1; setTimeout(function(){ s.style.opacity = 0; }, 1200);
+    }, 500);
+}
+async function loadRule() {
+    if (!hasStore()) return;
+    try { var r = await window.storage.get('seq-sheet:rule', false); if (r && r.value) document.getElementById('ruleBox').value = r.value; } catch(e) {}
+}
+function copyRule() {
+    var t = document.getElementById('ruleBox');
+    t.select(); t.setSelectionRange(0, 99999);
+    try { document.execCommand('copy'); } catch(e) {}
+    var s = document.getElementById('ruleStatus');
+    s.textContent = 'copied ✓'; s.style.opacity = 1;
+    setTimeout(function(){ s.style.opacity = 0; s.textContent = 'saved ✓'; }, 1200);
+}
+
+/* ================= Timers (off by default) ================= */
+var timers = { F: { on: false, sec: 0, iv: null }, G: { on: false, sec: 0, iv: null } };
+function fmtTime(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function toggleTimer(k) {
+    var t = timers[k];
+    t.on = !t.on;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.toggle('on', t.on);
+    if (disp) disp.classList.toggle('on', t.on);
+    if (t.on) {
+        t.iv = setInterval(function() {
+            t.sec++;
+            var d = document.getElementById('timer' + k);
+            if (d) d.textContent = fmtTime(t.sec);
+        }, 1000);
+    } else stopTimer(k);
+}
+function stopTimer(k) {
+    var t = timers[k];
+    if (t.iv) { clearInterval(t.iv); t.iv = null; }
+    t.on = false;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.remove('on');
+    if (disp) disp.classList.remove('on');
+}
+
+/* ================= Tabs & init ================= */
+function typeset(el) { if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(function(){}); }
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (name === 'gauntlet') renderGauntlet();
+    if (name === 'challenge') renderChallenge();
+    setTimeout(function(){ typeset(); }, 80);
+}
+renderStep();
+renderFluency();
+renderExit();
+loadRule();
+</script>
+</body>
+</html>
