@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRE Quant: Circles</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC;
+    --copper: #BC6C26; --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1050px; margin: 0 auto; padding: 32px 20px 40px; }
+.tab-buttons { display: flex; gap: 6px; margin-bottom: 26px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-button { padding: 8px 15px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="drill"] { border-color: #21442B; }
+.tab-button[data-group="drill"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="official"] { border-color: #8B5E3C; }
+.tab-button[data-group="official"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.card { background-color: white; border-radius: 8px; padding: 20px 22px; margin-bottom: 18px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.trap-box { background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 15px; margin: 12px 0; }
+.trap-box .trap-label, .sol-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #8B6914; margin-bottom: 5px; }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 8px; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 22px; color: var(--brown-dark); margin: 0; }
+.btn { border: none; border-radius: 6px; padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-gold { background: var(--gold); color: var(--brown-dark); }
+.btn-gold:hover { background: var(--gold-light); }
+.btn-green { background: var(--green-dark); color: white; }
+.btn-green:hover { background: var(--green-medium); }
+.btn-ghost { background: transparent; color: var(--text-medium); border: 2px solid var(--cream-dark); padding: 7px 12px; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--brown-dark); }
+.btn-sm { padding: 5px 11px; font-size: 12.5px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+.timer-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-medium); }
+.timer-display { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-dark); background: var(--gold-pale); border-radius: 6px; padding: 4px 10px; min-width: 64px; text-align: center; display: none; }
+.timer-display.on { display: inline-block; }
+.tog { position: relative; width: 40px; height: 22px; background: var(--cream-dark); border-radius: 11px; cursor: pointer; transition: background 0.2s; border: none; }
+.tog.on { background: var(--green-light); }
+.tog::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: left 0.2s; }
+.tog.on::after { left: 21px; }
+
+/* Reference page (spacious, print-like, brand-accented) */
+.ref-page { background: white; border-radius: 10px; border: 1px solid var(--cream-dark); border-top: 4px solid var(--gold); box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 44px 48px; font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 2.0; }
+.ref-page .ref-intro { margin-bottom: 26px; }
+.ref-rule, .ref-case { margin: 20px 0; padding: 16px 22px; border-left: 3px solid transparent; border-radius: 0 10px 10px 0; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.ref-rule:hover { background: rgba(57,134,78,0.05); border-left-color: var(--green-light); transform: translateX(3px); }
+.ref-case:hover { background: rgba(188,108,38,0.06); border-left-color: var(--copper); transform: translateX(3px); }
+.ref-rule-line { font-size: 19px; margin-bottom: 12px; }
+.rname { font-weight: 600; }
+.ref-rule .rname { color: var(--green-dark); }
+.ref-case .rname { color: var(--copper); }
+.rtag { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 9px; margin-right: 10px; vertical-align: 2px; }
+.ref-rule .rtag { background: rgba(57,134,78,0.13); color: var(--green-dark); }
+.ref-case .rtag { background: rgba(188,108,38,0.13); color: var(--copper); }
+.exlab { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; margin-right: 6px; }
+.ref-ex { margin: 13px 0 13px 48px; }
+.ref-note { margin: 13px 0 0 48px; font-style: italic; color: var(--text-medium); }
+.ref-divider { border: none; border-top: 2px solid var(--gold-light); margin: 38px 0 30px; }
+.ref-h { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+@media (max-width: 768px) { .ref-page { padding: 22px 14px; } .ref-ex, .ref-note { margin-left: 16px; } .ref-rule, .ref-case { padding: 12px 12px; } }
+
+/* Geometry figures */
+.fig { display: block; margin: 14px auto; max-width: 100%; }
+.fig-wrap { text-align: center; margin: 16px 0; }
+.fig text { font-family: "Times New Roman", Georgia, serif; font-size: 15px; fill: var(--text-dark); }
+.fig .side { stroke: var(--green-dark); stroke-width: 2.5; fill: none; }
+.fig .aux { stroke: var(--copper); stroke-width: 1.8; stroke-dasharray: 5 4; fill: none; }
+.fig .mark { stroke: var(--copper); stroke-width: 2; fill: none; }
+.fig .arc { stroke: var(--copper); stroke-width: 1.8; fill: none; }
+
+/* Rules at a glance */
+.rules-index { width: 100%; border-collapse: collapse; margin: 14px 0 4px; }
+.rules-index tr { border-bottom: 1px solid var(--cream-dark); }
+.rules-index tr:last-child { border-bottom: none; }
+.rules-index td { padding: 9px 10px; vertical-align: middle; }
+.ri-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--green-dark); width: 38%; }
+.ri-formula { font-family: "Times New Roman", Georgia, serif; font-size: 17px; }
+
+/* Stepper */
+.stepper { background: white; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border: 1px solid var(--cream-dark); overflow: hidden; }
+.step-head { background: var(--green-dark); color: white; padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.step-head .step-count { font-weight: 700; font-size: 14px; letter-spacing: 0.4px; }
+.step-dots { display: flex; gap: 7px; margin-left: auto; }
+.step-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; padding: 0; transition: all 0.2s; }
+.step-dot.current { background: var(--gold); transform: scale(1.25); }
+.step-dot.done { background: var(--green-light); }
+.step-body { padding: 26px 30px 22px; }
+.step-rule-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--copper); margin-bottom: 6px; }
+.step-rule { font-family: "Times New Roman", Georgia, serif; font-size: 22px; margin-bottom: 4px; }
+.step-say { font-size: 15px; color: var(--text-dark); margin: 10px 0 14px; }
+.step-ex { background: var(--cream); border-radius: 8px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.step-ex .sol-label { color: var(--green-dark); }
+.micro { border: 2px solid var(--cream-dark); border-radius: 8px; padding: 13px 16px; margin-top: 14px; }
+.micro .micro-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 8px; }
+.micro-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.step-nav { display: flex; gap: 10px; padding: 0 30px 22px; align-items: center; }
+.drill { background: white; border-radius: 8px; border-left: 5px solid var(--green-medium); box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 15px 18px; margin-bottom: 12px; }
+.drill-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.drill-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.drill-row input[type="text"], .micro input[type="text"] { width: 90px; padding: 7px 10px; font-size: 16px; text-align: center; border: 2px solid #9a9a9a; border-radius: 5px; font-family: 'Inter', sans-serif; outline: none; }
+.drill-row input[type="text"]:focus, .micro input[type="text"]:focus { border-color: var(--green-dark); }
+.fb { font-size: 13.5px; font-weight: 600; display: none; }
+.fb.ok { display: inline; color: var(--green-light); }
+.fb.no { display: inline; color: #C0392B; }
+.fb-exp { font-size: 13.5px; color: var(--text-medium); margin-top: 8px; display: none; }
+.fb-exp.show { display: block; }
+.mc-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.mc-opt { border: 2px solid var(--cream-dark); background: white; border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: "Times New Roman", Georgia, serif; font-size: 17px; transition: all 0.15s; }
+.mc-opt:hover { border-color: var(--gold); }
+.mc-opt.picked { border-color: var(--gold); background: rgba(196,154,58,0.16); font-weight: 700; box-shadow: 0 0 0 3px rgba(196,154,58,0.18); }
+.mc-opt.right::after { content: ' \2713'; }
+/* Drag-and-drop side labeling */
+.dz-wrap { position: relative; display: inline-block; margin: 6px auto; }
+.dz { position: absolute; transform: translate(-50%, -50%); min-width: 62px; padding: 5px 9px; border: 2px dashed #C9C2B4;
+      border-radius: 6px; background: white; font-family: "Times New Roman", Georgia, serif; font-size: 17px;
+      text-align: center; cursor: pointer; color: var(--text-medium); transition: all 0.15s; user-select: none; }
+.dz.empty::after { content: 'drop'; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; font-family: Inter, sans-serif; color: #A8A093; }
+.dz.filled { border-style: solid; border-color: var(--gold); background: rgba(196,154,58,0.14); color: var(--text-dark); font-weight: 600; }
+.dz.over { border-color: var(--green-light); background: rgba(57,134,78,0.12); }
+.dz.right { border-style: solid; border-color: var(--green-light); background: rgba(57,134,78,0.18); color: var(--green-dark); font-weight: 700; }
+.dz.wrong { border-style: solid; border-color: #C0392B; background: rgba(192,57,43,0.12); color: #A5291B; font-weight: 700; }
+.tile-bank { display: flex; gap: 9px; flex-wrap: wrap; justify-content: center; margin-top: 6px; min-height: 42px; }
+.tile { border: 2px solid var(--cream-dark); background: white; border-radius: 6px; padding: 6px 16px; cursor: grab;
+        font-family: "Times New Roman", Georgia, serif; font-size: 18px; transition: all 0.15s; }
+.tile:hover { border-color: var(--gold); }
+.tile.sel { border-color: var(--gold); background: rgba(196,154,58,0.18); font-weight: 700; box-shadow: 0 0 0 3px rgba(196,154,58,0.18); }
+.dz-hint { font-size: 13px; color: var(--text-medium); text-align: center; margin-bottom: 4px; }
+.mc-opt.right { border-color: var(--green-light); background: rgba(57,134,78,0.15); }
+.mc-opt.wrong { border-color: #C0392B; background: rgba(192,57,43,0.10); }
+.testbar { display: flex; align-items: center; gap: 10px; background: var(--green-dark); color: white; border-radius: 8px 8px 0 0; padding: 10px 18px; flex-wrap: wrap; }
+.testbar .tprog { font-weight: 700; font-size: 14px; }
+.test-stage { background: white; border: 1px solid var(--cream-dark); border-top: none; border-radius: 0 0 8px 8px; padding: 28px 32px 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); min-height: 340px; }
+.q-directions { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin-bottom: 16px; border-bottom: 1px solid var(--cream-dark); padding-bottom: 10px; }
+.q-stem { font-family: "Times New Roman", Georgia, serif; font-size: 19px; line-height: 1.85; margin-bottom: 16px; }
+.qc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0 6px; }
+.qc-col { text-align: center; }
+.qc-col .qc-head { font-family: "Times New Roman", Georgia, serif; font-weight: 600; text-decoration: underline; margin-bottom: 12px; font-size: 18px; }
+.qc-col .qc-body { font-family: "Times New Roman", Georgia, serif; font-size: 19px; line-height: 1.8; }
+.choices { margin-top: 14px; }
+.choice { display: flex; align-items: center; gap: 14px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.choice:hover { background: rgba(221,162,94,0.10); }
+.choice .oval { width: 30px; height: 19px; border: 2px solid #9a9a9a; border-radius: 50%; flex-shrink: 0; background: white; }
+.choice.selected .oval { background: #5c5c5c; border-color: #5c5c5c; }
+.choice .sq { width: 19px; height: 19px; border: 2px solid #9a9a9a; border-radius: 3px; flex-shrink: 0; background: white; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--brown-dark); font-size: 14px; margin: 0 5px; }
+.choice.selected .sq { border-color: #5c5c5c; }
+.choice.selected .sq::after { content: "\2715"; }
+.multi-note { font-family: "Times New Roman", Georgia, serif; font-size: 17px; margin: 4px 0 2px; }
+.multi-note u { font-weight: 600; }
+.choice .ctext { font-family: "Times New Roman", Georgia, serif; font-size: 18px; }
+.ne-entry { display: flex; align-items: center; gap: 12px; margin: 18px 0 6px; }
+.ne-entry input { width: 120px; padding: 8px 10px; font-size: 17px; text-align: center; border: 2px solid #9a9a9a; border-radius: 4px; font-family: 'Inter', sans-serif; outline: none; }
+.ne-entry input:focus { border-color: var(--green-dark); }
+.test-nav { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.qmap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.qchip { width: 34px; height: 30px; border-radius: 6px; border: 2px solid var(--cream-dark); background: white; font-size: 12.5px; font-weight: 700; color: var(--text-medium); cursor: pointer; }
+.qchip.answered { background: rgba(57,134,78,0.15); border-color: rgba(57,134,78,0.5); color: var(--green-dark); }
+.qchip.current { border-color: var(--green-dark); box-shadow: 0 0 0 2px rgba(33,68,43,0.25); }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.stat-tile { background: white; border-radius: 10px; padding: 16px 18px; text-align: center; border: 2px solid var(--gold-light); }
+.stat-tile .stat-num { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--gold); }
+.stat-tile.green .stat-num { color: var(--green-light); }
+.stat-tile .stat-label { font-size: 12px; font-weight: 600; color: var(--text-medium); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 4px; }
+.res-entry { background: white; border-radius: 8px; border-left: 5px solid #E57373; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+.res-entry.correct { border-left-color: var(--green-light); }
+.res-head { display: flex; align-items: center; gap: 12px; padding: 13px 18px; cursor: pointer; }
+.res-head:hover { background: rgba(221,162,94,0.05); }
+.res-arrow { color: var(--gold); font-size: 13px; transition: transform 0.25s; margin-left: auto; }
+.res-entry.open .res-arrow { transform: rotate(90deg); }
+.res-body { display: none; padding: 0 20px 16px; border-top: 1px solid var(--cream-dark); }
+.res-entry.open .res-body { display: block; }
+.sol-block { background: var(--cream); border-radius: 8px; padding: 13px 15px; margin: 10px 0; font-size: 15px; }
+.sol-block .sol-label { color: var(--green-dark); }
+.ets-item { background: white; border-radius: 8px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 15px 18px; margin-bottom: 12px; }
+.ets-ref { font-weight: 700; color: var(--brown-dark); font-size: 14.5px; }
+.ets-note { font-size: 14px; color: var(--text-medium); margin-top: 5px; }
+.reveal { display: none; margin-top: 8px; font-size: 14px; background: var(--cream); border-radius: 6px; padding: 10px 12px; }
+.reveal.show { display: block; }
+.rule-write { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--cream-dark); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14.5px; resize: vertical; outline: none; }
+.rule-write:focus { border-color: var(--gold); }
+.attrib { background: #FFF6E5; border: 1.5px solid var(--gold-light); border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; font-size: 14px; }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.mjx-container { overflow-x: auto; }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .container { padding: 16px 10px; }
+    .qc-grid { grid-template-columns: 1fr; gap: 10px; }
+    .test-stage, .step-body { padding: 20px 16px; }
+    .step-nav { padding: 0 16px 18px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>GRE Quant: Circles</h1>
+            <div class="subtitle">CONCEPT + DRILLS &bull; CIRCLES</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">GRE QUANT SERIES</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('ref', this)">1. Circle Rules</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('core', this)">2. Worked Examples &amp; Practice</button>
+        <button class="tab-button" data-group="drill" onclick="switchTab('fluency', this)">3. Fluency Drills</button>
+        <button class="tab-button" data-group="drill" onclick="switchTab('gauntlet', this)">4. GRE Gauntlet</button>
+        <button class="tab-button" data-group="drill" onclick="switchTab('challenge', this)">5. Challenge Questions</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('exit', this)">6. Exit Ticket</button>
+    </div>
+
+    <!-- ============ TAB 1: REFERENCE ============ -->
+    <div id="tab-ref" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Circle rules</h2></div>
+        <div class="ref-page">
+            <p class="ref-intro">A circle is the set of points a fixed distance $r$ from a center. That single number drives everything below: $r$ is the radius, $d = 2r$ is the diameter, and $n$ denotes a central angle in degrees. Answers are normally left in terms of $\pi$.</p>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 1</span><span class="rname">Radius, diameter, chord:</span> &nbsp; $d = 2r$, and a diameter is the longest chord</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>a <em>chord</em> joins two points on the circle; a <em>diameter</em> is a chord through the center; a <em>tangent</em> touches the circle at one point</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>a circle with diameter $18$ has $r = 9$ &mdash; halve before using any formula</div>
+                <div class="fig-wrap"><svg class="fig" viewBox="0 0 380 265" width="380" height="265" xmlns="http://www.w3.org/2000/svg" style="display:block;"><circle class="side" cx="170" cy="120" r="88" fill="none"></circle><line class="side" x1="82" y1="120" x2="258" y2="120"></line><line class="mark" x1="170" y1="120" x2="216.6" y2="45.4"></line><line class="mark" x1="93.8" y1="76.0" x2="160.8" y2="32.5"></line><line class="mark" x1="98" y1="208" x2="242" y2="208"></line><circle cx="170" cy="120" r="3.5" fill="#2C5F3E"></circle><text x="156" y="134" dominant-baseline="central">O</text></svg></div>
+                <div class="ref-note">Every formula below is written in $r$. The GRE hands you a diameter constantly, so make "$r = $" its own written line.</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 2</span><span class="rname">Circumference:</span> &nbsp; $C = 2\pi r = \pi d$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$r = 7$ gives $C = 14\pi \approx 44$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>backwards: $C = 20\pi$ means $2\pi r = 20\pi$, so $r = 10$</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 3</span><span class="rname">Area:</span> &nbsp; $A = \pi r^{2}$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$r = 6$ gives $A = 36\pi$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>backwards: $A = 49\pi$ means $r^2 = 49$, so $r = 7$</div>
+                <div class="ref-note">Area grows with the <em>square</em> of the radius: double $r$ and the area quadruples. All circles are similar, so the similar-figures rule applies &mdash; lengths scale by $k$, areas by $k^2$.</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 4</span><span class="rname">Arcs and central angles:</span> &nbsp; an arc's measure equals its central angle; a full circle is $360^\circ$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>arcs take three letters &mdash; arc $ABC$ &mdash; because two points leave two possible paths, and the middle letter picks the route</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>in a regular hexagon inscribed in a circle, each side subtends $\dfrac{360^\circ}{6} = 60^\circ$, so an arc across two sides measures $120^\circ$</div>
+                <div class="fig-wrap"><svg class="fig" viewBox="0 0 336 296" width="336" height="296" xmlns="http://www.w3.org/2000/svg"><circle cx="148" cy="148" r="94" fill="none" stroke="#2C5F3E" stroke-width="2.5"></circle><polyline points="242.0,148.0 241.9,143.1 241.5,138.2 240.8,133.3 239.9,128.5 238.8,123.7 237.4,119.0 235.8,114.3 233.9,109.8 231.8,105.3 229.4,101.0 226.8,96.8 224.0,92.7 221.1,88.8 217.9,85.1 214.5,81.5 210.9,78.1 207.2,74.9 203.3,72.0 199.2,69.2 195.0,66.6 190.7,64.2 186.2,62.1 181.7,60.2 177.0,58.6 172.3,57.2 167.5,56.1 162.7,55.2 157.8,54.5 152.9,54.1 148.0,54.0 143.1,54.1 138.2,54.5 133.3,55.2 128.5,56.1 123.7,57.2 119.0,58.6 114.3,60.2 109.8,62.1 105.3,64.2 101.0,66.6" fill="none" stroke="#B7791F" stroke-width="5.5" stroke-linecap="round"></polyline><line x1="148" y1="148" x2="242.0" y2="148.0" stroke="#2C5F3E" stroke-width="2.2"></line><line x1="148" y1="148" x2="101.0" y2="66.6" stroke="#2C5F3E" stroke-width="2.2"></line><polyline points="178.0,148.0 178.0,146.4 177.8,144.9 177.6,143.3 177.3,141.8 177.0,140.2 176.5,138.7 176.0,137.2 175.4,135.8 174.7,134.4 174.0,133.0 173.2,131.7 172.3,130.4 171.3,129.1 170.3,127.9 169.2,126.8 168.1,125.7 166.9,124.7 165.6,123.7 164.3,122.8 163.0,122.0 161.6,121.3 160.2,120.6 158.8,120.0 157.3,119.5 155.8,119.0 154.2,118.7 152.7,118.4 151.1,118.2 149.6,118.0 148.0,118.0 146.4,118.0 144.9,118.2 143.3,118.4 141.8,118.7 140.2,119.0 138.7,119.5 137.2,120.0 135.8,120.6 134.4,121.3 133.0,122.0" fill="none" stroke="#B7791F" stroke-width="1.8"></polyline><text x="176" y="100" text-anchor="middle" dominant-baseline="central">120&#176;</text><circle cx="148" cy="148" r="3.5" fill="#2C5F3E"></circle><text x="133" y="164" text-anchor="middle" dominant-baseline="central">O</text><text x="260" y="148" text-anchor="middle" dominant-baseline="central">A</text><text x="204" y="51" text-anchor="middle" dominant-baseline="central">B</text><text x="92" y="51" text-anchor="middle" dominant-baseline="central">C</text></svg></div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 5</span><span class="rname">Arc length:</span> &nbsp; $\text{arc} = \dfrac{n}{360} \cdot 2\pi r$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$r = 12$, $n = 45$: &nbsp;$\dfrac{45}{360} = \dfrac{1}{8}$ of $24\pi$, so the arc is $3\pi$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>a semicircular arc ($n = 180$) has length $\pi r$ &mdash; half the circumference</div>
+                <div class="fig-wrap"><svg class="fig" viewBox="0 0 336 296" width="336" height="296" xmlns="http://www.w3.org/2000/svg"><circle cx="148" cy="148" r="94" fill="none" stroke="#2C5F3E" stroke-width="2.5"></circle><polyline points="241.1,134.9 240.8,133.1 240.5,131.3 240.2,129.5 239.8,127.7 239.4,125.9 238.9,124.1 238.4,122.3 237.9,120.5 237.3,118.8 236.7,117.0 236.1,115.3 235.5,113.5 234.8,111.8 234.0,110.1 233.3,108.5 232.5,106.8 231.7,105.1 230.8,103.5 229.9,101.9 229.0,100.3 228.0,98.7 227.1,97.1 226.0,95.6 225.0,94.1 223.9,92.6 222.8,91.1 221.7,89.6 220.5,88.2 219.3,86.8 218.1,85.4 216.9,84.0 215.6,82.7 214.3,81.4 213.0,80.1 211.7,78.8 210.3,77.6 208.9,76.4 207.5,75.2 206.0,74.1 204.6,72.9" fill="none" stroke="#B7791F" stroke-width="5.5" stroke-linecap="round"></polyline><line x1="148" y1="148" x2="241.1" y2="134.9" stroke="#2C5F3E" stroke-width="2.2"></line><line x1="148" y1="148" x2="204.6" y2="72.9" stroke="#2C5F3E" stroke-width="2.2"></line><polyline points="177.7,143.8 177.6,143.2 177.5,142.7 177.4,142.1 177.3,141.5 177.2,140.9 177.0,140.4 176.9,139.8 176.7,139.2 176.5,138.7 176.3,138.1 176.1,137.6 175.9,137.0 175.7,136.5 175.5,135.9 175.2,135.4 175.0,134.8 174.7,134.3 174.4,133.8 174.1,133.3 173.8,132.8 173.5,132.3 173.2,131.8 172.9,131.3 172.6,130.8 172.2,130.3 171.9,129.8 171.5,129.4 171.1,128.9 170.8,128.5 170.4,128.0 170.0,127.6 169.6,127.2 169.2,126.7 168.7,126.3 168.3,125.9 167.9,125.5 167.4,125.1 167.0,124.8 166.5,124.4 166.1,124.0" fill="none" stroke="#B7791F" stroke-width="1.8"></polyline><text x="196" y="120" text-anchor="middle" dominant-baseline="central">45&#176;</text><circle cx="148" cy="148" r="3.5" fill="#2C5F3E"></circle><text x="133" y="164" text-anchor="middle" dominant-baseline="central">O</text><text x="202" y="158" text-anchor="middle" dominant-baseline="central">12</text><text x="255" y="85" text-anchor="middle" dominant-baseline="central">arc = 3&#960;</text></svg></div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 6</span><span class="rname">Sector area:</span> &nbsp; $\text{sector} = \dfrac{n}{360} \cdot \pi r^{2}$</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$r = 6$, $n = 60$: &nbsp;$\dfrac{1}{6}$ of $36\pi$, so the sector is $6\pi$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>a sector is bounded by two radii and an arc, so its <em>perimeter</em> is $2r + \text{arc}$</div>
+                <div class="fig-wrap"><svg class="fig" viewBox="0 0 336 296" width="336" height="296" xmlns="http://www.w3.org/2000/svg"><polygon points="148.0,148.0 240.6,131.7 240.1,129.3 239.6,126.9 239.0,124.5 238.4,122.1 237.6,119.7 236.9,117.4 236.0,115.1 235.2,112.8 234.2,110.5 233.2,108.3 232.1,106.1 231.0,103.9 229.8,101.7 228.6,99.6 227.3,97.5 225.9,95.4 224.5,93.4 223.1,91.4 221.6,89.5 220.0,87.6 218.4,85.7 216.7,83.9 215.0,82.1 213.3,80.4 211.5,78.7 209.7,77.1 207.8,75.5 205.9,73.9 203.9,72.4 201.9,71.0 199.9,69.6 197.8,68.3 195.7,67.0 193.6,65.8 191.4,64.6 189.2,63.5 187.0,62.5 184.7,61.5 182.5,60.5 180.1,59.7" fill="rgba(196,154,58,0.20)" stroke="none"></polygon><circle cx="148" cy="148" r="94" fill="none" stroke="#2C5F3E" stroke-width="2.5"></circle><polyline points="240.6,131.7 240.1,129.3 239.6,126.9 239.0,124.5 238.4,122.1 237.6,119.7 236.9,117.4 236.0,115.1 235.2,112.8 234.2,110.5 233.2,108.3 232.1,106.1 231.0,103.9 229.8,101.7 228.6,99.6 227.3,97.5 225.9,95.4 224.5,93.4 223.1,91.4 221.6,89.5 220.0,87.6 218.4,85.7 216.7,83.9 215.0,82.1 213.3,80.4 211.5,78.7 209.7,77.1 207.8,75.5 205.9,73.9 203.9,72.4 201.9,71.0 199.9,69.6 197.8,68.3 195.7,67.0 193.6,65.8 191.4,64.6 189.2,63.5 187.0,62.5 184.7,61.5 182.5,60.5 180.1,59.7" fill="none" stroke="#B7791F" stroke-width="5.5" stroke-linecap="round"></polyline><line x1="148" y1="148" x2="240.6" y2="131.7" stroke="#2C5F3E" stroke-width="2.2"></line><line x1="148" y1="148" x2="180.1" y2="59.7" stroke="#2C5F3E" stroke-width="2.2"></line><polyline points="177.5,142.8 177.4,142.0 177.2,141.3 177.0,140.5 176.8,139.7 176.6,139.0 176.4,138.2 176.1,137.5 175.8,136.8 175.5,136.0 175.2,135.3 174.8,134.6 174.5,133.9 174.1,133.2 173.7,132.5 173.3,131.9 172.9,131.2 172.4,130.6 172.0,129.9 171.5,129.3 171.0,128.7 170.5,128.1 169.9,127.5 169.4,127.0 168.8,126.4 168.3,125.9 167.7,125.4 167.1,124.9 166.5,124.4 165.8,123.9 165.2,123.4 164.6,123.0 163.9,122.6 163.2,122.2 162.5,121.8 161.9,121.4 161.2,121.0 160.4,120.7 159.7,120.4 159.0,120.1 158.3,119.8" fill="none" stroke="#B7791F" stroke-width="1.8"></polyline><text x="191" y="112" text-anchor="middle" dominant-baseline="central">60&#176;</text><circle cx="148" cy="148" r="3.5" fill="#2C5F3E"></circle><text x="133" y="164" text-anchor="middle" dominant-baseline="central">O</text><text x="202" y="156" text-anchor="middle" dominant-baseline="central">6</text><text x="243" y="68" text-anchor="middle" dominant-baseline="central">sector = 6&#960;</text></svg></div>
+                <div class="ref-note">Rules 5 and 6 share the fraction $\dfrac{n}{360}$ and differ only in what it multiplies: circumference for a length, area for a region.</div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 7</span><span class="rname">Tangents:</span> &nbsp; a tangent is perpendicular to the radius drawn to the point of tangency</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>radius $6$ and tangent segment $8$ from an external point $P$ give $OP = \sqrt{36+64} = 10$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>the converse holds too: a line perpendicular to a radius at its endpoint on the circle is tangent there</div>
+                <div class="fig-wrap"><svg class="fig" viewBox="0 0 320 220" width="320" height="220" xmlns="http://www.w3.org/2000/svg"><circle class="side" cx="120" cy="105" r="68" fill="none"></circle><line class="side" x1="28" y1="173" x2="270" y2="173"></line><line class="mark" x1="120" y1="105" x2="120" y2="173"></line><path class="mark" d="M120,156 L137,156 L137,173" fill="none"></path><circle cx="120" cy="105" r="3.5" fill="#2C5F3E"></circle><text x="106" y="105" dominant-baseline="central">O</text><text x="114" y="191" dominant-baseline="central">T</text></svg></div>
+            </div>
+
+            <div class="ref-rule">
+                <div class="ref-rule-line"><span class="rtag">Rule 8</span><span class="rname">Inscribed triangles:</span> &nbsp; a side that is a diameter forces a right angle at the opposite vertex</div>
+                <div class="ref-ex"><span class="exlab">Example A</span>$PQ$ a diameter with $PR = 6$, $QR = 8$ gives $\angle R = 90^\circ$, so $PQ = 10$, $r = 5$, area $25\pi$</div>
+                <div class="ref-ex"><span class="exlab">Example B</span>the converse: if an inscribed triangle is right, its hypotenuse must be a diameter</div>
+                <div class="fig-wrap"><svg class="fig" viewBox="0 0 340 235" width="340" height="235" xmlns="http://www.w3.org/2000/svg"><circle class="side" cx="150" cy="118" r="82" fill="none"></circle><polygon class="side" points="68,118 232,118 106.5,48.5" fill="none"></polygon><polyline class="mark" points="99.3,61.6 112.4,68.9 119.7,55.7" fill="none"></polyline><circle cx="150" cy="118" r="3.5" fill="#2C5F3E"></circle><text x="144" y="134" dominant-baseline="central">O</text><text x="54" y="118" dominant-baseline="central">P</text><text x="246" y="118" dominant-baseline="central">Q</text><text x="101" y="32" dominant-baseline="central">R</text></svg></div>
+                <div class="ref-note">A polygon is <em>inscribed</em> in a circle when all its vertices lie on the circle; the circle is then <em>circumscribed</em> about it. Circles sharing a center are <em>concentric</em>.</div>
+            </div>
+
+            <hr class="ref-divider">
+            <div class="ref-h">Moves that are not allowed</div>
+            <p>The statements below <em>look</em> reasonable but are false, and each one generates a standard wrong answer. Keep them in mind.</p>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 1</span><span class="rname">not allowed:</span> &nbsp; using a diameter where the formula wants a radius</div>
+                <div class="ref-ex">This is the single most common circle error. A diameter of $10$ gives area $25\pi$, not $100\pi$ &mdash; substituting $d$ for $r$ multiplies the area by $4$ and the circumference by $2$.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 2</span><span class="rname">not allowed:</span> &nbsp; $\pi r^2 \neq (\pi r)^2$, and $\pi \neq 3$ exactly</div>
+                <div class="ref-ex">Square the radius only. And when a comparison is close, $\pi \approx 3.14$ decides it: $\dfrac{2\pi r}{3}$ versus $2r$ comes down to whether $\pi > 3$, which the rough estimate would call a tie.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 3</span><span class="rname">not allowed:</span> &nbsp; treating an arc's degree measure as a length</div>
+                <div class="ref-ex">A $60^\circ$ arc is not $60$ units long. Degrees describe how much of the circle you traverse; length requires multiplying that fraction by $2\pi r$.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 4</span><span class="rname">not allowed:</span> &nbsp; reading a three-letter arc as one piece</div>
+                <div class="ref-ex">Arc $RST$ travels <em>through</em> $S$, so in an inscribed regular polygon it may cover two sides, not one. Trace the path and count the equal pieces before converting to degrees.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 5</span><span class="rname">not allowed:</span> &nbsp; subtracting radii and then squaring</div>
+                <div class="ref-ex">For concentric circles of radii $5$ and $3$, the ring's area is $25\pi - 9\pi = 16\pi$, not $\pi(5-3)^2 = 4\pi$. Compute each area, then subtract.</div>
+            </div>
+
+            <div class="ref-case">
+                <div class="ref-rule-line"><span class="rtag">Case 6</span><span class="rname">not allowed:</span> &nbsp; confusing inscribed with circumscribed</div>
+                <div class="ref-ex">A circle <em>inscribed in</em> a square has diameter equal to the square's side. A square <em>inscribed in</em> a circle has diagonal equal to the diameter. Decide which figure is inside before matching any length.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB 2: STEPPER ============ -->
+    <div id="tab-core" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>Worked examples &amp; practice</h2></div>
+        <div class="card">
+            <p>Everything on the reference tab runs on one idea: <strong>a triangle's angles and its sides carry the same information.</strong> Know the angles and you know which sides are longest, which are equal, and &mdash; for the two special triangles &mdash; their exact ratios. Most GRE triangle questions are just a translation between the two.</p>
+            <p style="margin-top:8px; font-size:14px; color:var(--text-medium);">The walkthrough below takes the rules one at a time &mdash; each with a worked example, the trap it pairs with, and a ten-second check. Reading a rule isn't knowing it; the check is the point.</p>
+        </div>
+        <div class="stepper">
+            <div class="step-head">
+                <span class="step-count" id="stepCount">Rule 1 of 8</span>
+                <div class="step-dots" id="stepDots"></div>
+            </div>
+            <div class="step-body" id="stepBody"></div>
+            <div class="step-nav">
+                <button class="btn btn-ghost" id="stepBack" onclick="stepNav(-1)">&#8592; Back</button>
+                <button class="btn btn-green" id="stepNext" onclick="stepNav(1)">Next &#8594;</button>
+                <span style="flex:1"></span>
+                <span style="font-size:13px; color:var(--text-medium);" id="stepHint"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB 3: FLUENCY ============ -->
+    <div id="tab-fluency" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Fluency drills &mdash; mixed reps</h2></div>
+        <div class="toolbar">
+            <span style="font-size:13.5px; color:var(--text-medium);">Untimed. When a prompt shows <strong>__ &#960;</strong>, enter either the number alone (<strong>25</strong>) or the full expression (<strong>25pi</strong>, <strong>25&#960;</strong>) &mdash; both count. Radicals take any form: <strong>6sqrt3</strong>, <strong>6&#8730;3</strong>, <strong>6(3)^0.5</strong>, or a decimal.</span>
+            <span class="timer-wrap">Timer <button class="tog" id="togF" onclick="toggleTimer('F')" aria-label="toggle timer"></button> <span class="timer-display" id="timerF">0:00</span></span>
+        </div>
+        <div id="fluencyList"></div>
+    </div>
+
+    <!-- ============ TAB 4: GAUNTLET ============ -->
+    <div id="tab-gauntlet" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>GRE Gauntlet &mdash; real formats, real traps</h2></div>
+        <div id="gauntletArea"></div>
+    </div>
+
+    <!-- ============ TAB 5: CHALLENGE ============ -->
+    <div id="tab-challenge" class="tab-content">
+        <div class="section-header"><div class="section-number">5</div><h2>Challenge questions</h2></div>
+        <div class="card">
+            <p>These four sit at the top of what the GRE asks about circles &mdash; each one is a rule you already have, paired with a second idea (deciding which shape sits inside, tracing a boundary, subtracting regions, a right triangle hidden in the circle). Work each one, then check it right away. Understanding the mechanism matters more than getting it right on the first try.</p>
+        </div>
+        <div id="challengeArea"></div>
+    </div>
+
+    <!-- ============ TAB 6: EXIT TICKET ============ -->
+    <div id="tab-exit" class="tab-content">
+        <div class="section-header"><div class="section-number">6</div><h2>Exit ticket</h2></div>
+        <div id="exitArea"></div>
+        <div id="dragArea"></div>
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:8px;">Write your rule</h3>
+            <p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">One sentence you'll say to yourself the next time a circle shows up. Make it an if-then. (Shape: "When a circle question gives me a diameter, I ______ before using any formula.")</p>
+            <textarea class="rule-write" id="ruleBox" placeholder="My rule:" oninput="saveRule()"></textarea>
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-gold btn-sm" onclick="copyRule()">Copy rule</button>
+                <span id="ruleStatus" style="font-size:12.5px; color:var(--green-light); font-weight:600; opacity:0; transition:opacity 0.3s;">saved &#10003;</span>
+            </div>
+        </div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:6px;">Official extra reps</h3>
+            <p style="font-size:14px;">ETS's free <em>GRE Math Review</em> (&copy; ETS) covers this same ground in Geometry section 3.5, with practice in Geometry Exercises 12 and 13 &mdash; circumference, arc length, and the area of a shaded sector in one, then concentric circles and the area of a ring in the other. Answers are printed in the same PDF. <a href="https://www.ets.org/pdfs/gre/gre-math-review.pdf" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">Open the official PDF &#8594;</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family:'Switzer','Space Grotesk',sans-serif; font-weight:700;">Learning Curve Collective</a> &mdash; GRE Quant Series: Circles</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+<script>
+/* ================= Rule stepper ================= */
+/* Each step: name, rule (LaTeX), say (coach line), ex (worked example), trap, micro-check */
+var STEPS = [
+ { name: 'Rule 1 \u2014 Radius, diameter, chord', rule: '$d = 2r$ &nbsp; and every circle formula is written in terms of $r$',
+   say: 'A radius joins the center to the circle; a diameter is a chord that passes <em>through</em> the center, so it is twice a radius. The GRE loves handing you a diameter and asking for something the formulas measure with a radius \u2014 halve it first, on paper.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> a circle with diameter $18$.<br>Then $r = 9$, so the circumference is $2\\pi(9) = 18\\pi$ and the area is $\\pi(9)^2 = 81\\pi$. Notice the circumference happens to equal $\\pi d$ \u2014 but the area has no such shortcut.',
+   trap: 'Substituting a diameter where a radius belongs inflates the circumference by $2$ and the area by $4$. Write "$r = $" as its own line every single time, even when it feels unnecessary.',
+   micro: { q: 'A circle has diameter $18$. Its radius is', accept: ['9'], exp: '$r = d/2 = 9$.' } },
+ { name: 'Rule 2 \u2014 Circumference', rule: '$C = 2\\pi r = \\pi d$',
+   say: 'Circumference is the distance around. The ratio of circumference to diameter is $\\pi$ for every circle \u2014 that is what $\\pi$ <em>is</em>. Keep answers in terms of $\\pi$ unless the question asks for a decimal.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> a circle with radius $7$.<br>$C = 2\\pi(7) = 14\\pi$. If a decimal is wanted, $14(3.14) \\approx 44$.',
+   trap: 'Going backwards, divide: a circumference of $14\\pi$ means $2\\pi r = 14\\pi$, so $r = 7$ \u2014 not $14$. Cancel the $\\pi$ on both sides first and the arithmetic gets simple.',
+   micro: { q: 'A circle has circumference $20\\pi$. Its radius is', accept: ['10'], exp: '$2\\pi r = 20\\pi \\Rightarrow r = 10$.' } },
+ { name: 'Rule 3 \u2014 Area', rule: '$A = \\pi r^{2}$',
+   say: 'Area is the space inside, and it depends on $r$ <em>squared</em> \u2014 which is why circles reward and punish radius errors so heavily. Doubling the radius quadruples the area.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> a circle with radius $6$.<br>$A = \\pi(6)^2 = 36\\pi$. Backwards: an area of $49\\pi$ means $r^2 = 49$, so $r = 7$.',
+   trap: 'Square the radius, not the whole product: $\\pi r^2$, never $(\\pi r)^2$. And an area of $36\\pi$ has radius $6$, not $36$ \u2014 take the square root after cancelling $\\pi$.',
+   micro: { q: 'A circle has area $64\\pi$. Its radius is', accept: ['8'], exp: '$r^2 = 64$, so $r = 8$.' } },
+ { name: 'Rule 4 \u2014 Arcs and central angles', rule: 'the measure of an arc $=$ the measure of its central angle; a full circle is $360^\\circ$',
+   say: 'An arc is a piece of the circle\u2019s edge, and its size in degrees is exactly the central angle that opens onto it. Arcs get three letters \u2014 arc $ABC$ \u2014 because two points on a circle leave two possible paths, and the middle letter says which way you travel.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> a regular hexagon inscribed in a circle.<br>Each side subtends a central angle of $\\dfrac{360^\\circ}{6} = 60^\\circ$. So an arc spanning two adjacent sides measures $120^\\circ$, not $60^\\circ$ \u2014 count the vertices the arc passes.',
+   trap: 'Reading a three-letter arc as if it named a single side. Trace the path through the middle letter and count how many equal pieces it covers before converting to degrees.',
+   micro: { q: 'A regular hexagon is inscribed in a circle. An arc spanning two adjacent sides measures ?$^\\circ$', accept: ['120'], exp: 'Each side spans $360/6 = 60^\\circ$, so two spans $120^\\circ$.' } },
+ { name: 'Rule 5 \u2014 Arc length is a fraction of the circumference', rule: '$\\text{arc length} = \\dfrac{n}{360} \\cdot 2\\pi r$',
+   say: 'Everything about arcs and sectors runs on one idea: the part is to the whole as the angle is to $360^\\circ$. Write the fraction first, then multiply by the whole thing.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $r = 12$ and a central angle of $45^\\circ$.<br>Fraction: $\\dfrac{45}{360} = \\dfrac{1}{8}$. Circumference: $24\\pi$. Arc length: $\\dfrac{24\\pi}{8} = 3\\pi$.',
+   trap: 'An arc\u2019s <em>measure</em> is in degrees; its <em>length</em> is a distance. A $45^\\circ$ arc is not $45$ long. Decide which one the question wants before computing.',
+   micro: { q: 'For $r = 12$, a $45^\\circ$ arc has length $\\underline{\\;?\\;}\\,\\pi$', accept: ['3'], exp: '$\\tfrac{1}{8}$ of $24\\pi$ is $3\\pi$.' } },
+ { name: 'Rule 6 \u2014 Sector area is the same fraction', rule: '$\\text{sector area} = \\dfrac{n}{360} \\cdot \\pi r^{2}$',
+   say: 'A sector is the pizza slice bounded by two radii and an arc. Same fraction as before \u2014 only now you multiply by the area instead of the circumference.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $r = 6$ and a central angle of $60^\\circ$.<br>Fraction: $\\dfrac{60}{360} = \\dfrac{1}{6}$. Area: $36\\pi$. Sector: $\\dfrac{36\\pi}{6} = 6\\pi$.',
+   trap: 'Arc length and sector area share the fraction but not the second factor \u2014 one uses $2\\pi r$, the other $\\pi r^2$. Name which quantity you want before writing the formula.',
+   micro: { q: 'For $r = 6$, a $60^\\circ$ sector has area $\\underline{\\;?\\;}\\,\\pi$', accept: ['6'], exp: '$\\tfrac{1}{6}$ of $36\\pi$ is $6\\pi$.' } },
+ { name: 'Rule 7 \u2014 A tangent meets the radius at a right angle', rule: 'tangent line $\\perp$ radius drawn to the point of tangency',
+   say: 'A tangent touches the circle at exactly one point, and the radius to that point is perpendicular to it. That right angle is the hinge: it turns a tangent problem into a right-triangle problem, which means the Pythagorean theorem is usually one step away.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> a circle of radius $6$, and a tangent from an external point $P$ touching at $T$ with $PT = 8$.<br>$\\triangle OTP$ has a right angle at $T$, so $OP = \\sqrt{6^2 + 8^2} = 10$ \u2014 the $3\\text{-}4\\text{-}5$ family again.',
+   trap: 'The right angle sits at the point of tangency, not at the external point. Mark it on the figure before writing any equation, and confirm which segment is the hypotenuse.',
+   micro: { q: 'Radius $6$, tangent segment $8$ from an external point. The distance from the center to that point is', accept: ['10'], exp: 'Right angle at the point of tangency: $\\sqrt{36+64} = 10$.' } },
+ { name: 'Rule 8 \u2014 A triangle on a diameter is a right triangle', rule: 'if one side of an inscribed triangle is a diameter, the opposite angle is $90^\\circ$ (and the converse holds)',
+   say: 'This is the highest-yield circle fact on the test. Whenever a figure shows a triangle with one side passing through the center, the angle across from it is a right angle \u2014 for free. Run it backwards too: if an inscribed triangle is right, its hypotenuse must be a diameter.',
+   ex: '<div class="sol-label">Worked</div><strong>Given:</strong> $PQ$ is a diameter and $R$ is on the circle, with $PR = 6$ and $QR = 8$.<br>The angle at $R$ is $90^\\circ$, so $PQ = \\sqrt{36+64} = 10$. That is the diameter, so $r = 5$ and the area is $25\\pi$.',
+   trap: 'The right angle lands on the vertex <em>away</em> from the diameter, never at the center. And the converse is what unlocks the hard version: a right angle inscribed in a circle tells you the hypotenuse is a diameter, which hands you the radius.',
+   micro: { mc: true, q: '$AB$ is a diameter and $C$ is on the circle. Then $\\angle ACB$ measures', opts: ['$45^\\circ$', '$60^\\circ$', '$90^\\circ$', 'it depends on where $C$ is'], correct: 2, exp: 'Any inscribed angle standing on a diameter is a right angle, wherever $C$ sits on the circle.' } }
+];
+
+var stepState = { idx: 0, done: {} };
+function renderStep() {
+    var i = stepState.idx, s = STEPS[i];
+    document.getElementById('stepCount').textContent = 'Rule ' + (i+1) + ' of ' + STEPS.length;
+    var dots = '';
+    STEPS.forEach(function(_, di) {
+        var cls = 'step-dot' + (di === i ? ' current' : '') + (stepState.done[di] ? ' done' : '');
+        dots += '<button class="' + cls + '" onclick="stepState.idx=' + di + ';renderStep();" aria-label="rule ' + (di+1) + '"></button>';
+    });
+    document.getElementById('stepDots').innerHTML = dots;
+    var m = s.micro, mid = 'micro' + i, microHtml = '';
+    if (m.mc) {
+        microHtml = '<div class="mc-opts" id="opts-' + mid + '">' + m.opts.map(function(o, oi) {
+            return '<button class="mc-opt" onclick="microMC(' + i + ',' + oi + ')">' + o + '</button>';
+        }).join('') + '</div>';
+    } else {
+        microHtml = '<div class="drill-row">? = <input type="text" id="in-' + mid + '" autocomplete="off">' +
+            '<button class="btn btn-green btn-sm" onclick="microExp(' + i + ')">Check</button>' +
+            '<span class="fb" id="fb-' + mid + '"></span></div>';
+    }
+    document.getElementById('stepBody').innerHTML =
+        '<div class="step-rule-name">' + s.name + '</div>' +
+        '<div class="step-rule">' + s.rule + '</div>' +
+        '<p class="step-say">' + s.say + '</p>' +
+        '<div class="step-ex">' + s.ex + '</div>' +
+        '<div class="trap-box"><div class="trap-label">The trap it pairs with</div>' + s.trap + '</div>' +
+        '<div class="micro"><div class="micro-label">Ten-second check</div><div class="micro-q">' + m.q + '</div>' + microHtml +
+        '<div class="fb-exp" id="exp-' + mid + '">' + m.exp + '</div></div>';
+    document.getElementById('stepBack').disabled = (i === 0);
+    document.getElementById('stepNext').disabled = (i === STEPS.length - 1);
+    document.getElementById('stepHint').textContent = (i === STEPS.length - 1) ? 'Done here? Fluency Drills is next.' : '';
+    typeset(document.getElementById('stepBody'));
+}
+function stepNav(d) { stepState.idx = Math.max(0, Math.min(STEPS.length-1, stepState.idx + d)); renderStep(); }
+function microExp(i) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var ok = answerMatches(document.getElementById('in-' + mid).value, s.micro.accept);
+    var fb = document.getElementById('fb-' + mid);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ got it' : '✗ not yet';
+    if (ok) { stepState.done[i] = true; }
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function microMC(i, chosen) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var opts = document.getElementById('opts-' + mid).children;
+    for (var k = 0; k < opts.length; k++) opts[k].classList.remove('right','wrong');
+    var ok = (chosen === s.micro.correct);
+    opts[chosen].classList.add(ok ? 'right' : 'wrong');
+    if (!ok) opts[s.micro.correct].classList.add('right');
+    if (ok) stepState.done[i] = true;
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function renderDotsOnly() {
+    var dots = document.getElementById('stepDots').children;
+    for (var di = 0; di < dots.length; di++) {
+        dots[di].classList.toggle('done', !!stepState.done[di]);
+    }
+}
+
+/* ================= Fluency drills ================= */
+var FLUENCY = [
+ { sec: 'A. Radius, diameter, circumference', items: [
+   { q: 'A circle has diameter $22$. Its radius is', accept: ['11'], exp: '$r = d/2 = 11$.' },
+   { q: 'A circle has radius $9$. Its circumference is $\\underline{\\;?\\;}\\,\\pi$', accept: ['18', '18pi'], exp: '$C = 2\\pi(9) = 18\\pi$.' },
+   { q: 'A circle has circumference $30\\pi$. Its diameter is', accept: ['30'], exp: '$C = \\pi d$, so $d = 30$ (and $r = 15$).' },
+   { q: 'A circle has diameter $14$. Its circumference is $\\underline{\\;?\\;}\\,\\pi$', accept: ['14', '14pi'], exp: '$C = \\pi d = 14\\pi$.' }
+ ]},
+ { sec: 'B. Area \u2014 forwards and backwards', items: [
+   { q: 'A circle has radius $5$. Its area is $\\underline{\\;?\\;}\\,\\pi$', accept: ['25', '25pi'], exp: '$A = \\pi(5)^2 = 25\\pi$.' },
+   { q: 'A circle has area $81\\pi$. Its radius is', accept: ['9'], exp: '$r^2 = 81$, so $r = 9$.' },
+   { q: 'A circle has diameter $12$. Its area is $\\underline{\\;?\\;}\\,\\pi$', accept: ['36', '36pi'], exp: '$r = 6$, so $A = 36\\pi$. (Using $12$ would give $144\\pi$ \u2014 four times too big.)' },
+   { mc: true, q: 'If the radius of a circle is tripled, its area is multiplied by', opts: ['$3$', '$6$', '$9$', '$27$'], correct: 2, exp: 'Area depends on $r^2$, so tripling $r$ multiplies the area by $3^2 = 9$.' }
+ ]},
+ { sec: 'C. Arcs and sectors \u2014 fractions of 360\u00b0', items: [
+   { q: 'A central angle of $90^\\circ$ cuts off what fraction of the circle? Enter a fraction.', accept: ['1/4', '0.25'], exp: '$\\tfrac{90}{360} = \\tfrac{1}{4}$.' },
+   { q: 'For $r = 10$, a $36^\\circ$ arc has length $\\underline{\\;?\\;}\\,\\pi$', accept: ['2', '2pi'], exp: '$\\tfrac{36}{360} = \\tfrac{1}{10}$ of $20\\pi$ is $2\\pi$.' },
+   { q: 'For $r = 4$, a $90^\\circ$ sector has area $\\underline{\\;?\\;}\\,\\pi$', accept: ['4', '4pi'], exp: '$\\tfrac{1}{4}$ of $16\\pi$ is $4\\pi$.' },
+   { q: 'For $r = 9$, a $120^\\circ$ sector has area $\\underline{\\;?\\;}\\,\\pi$', accept: ['27', '27pi'], exp: '$\\tfrac{1}{3}$ of $81\\pi$ is $27\\pi$.' },
+   { q: 'A regular hexagon is inscribed in a circle. Each side subtends a central angle of ?$^\\circ$', accept: ['60'], exp: '$360 \\div 6 = 60$.' }
+ ]},
+ { sec: 'D. Tangents, inscribed triangles, and rings', items: [
+   { q: 'A tangent touches a circle at $T$. The angle between the tangent and radius $OT$ measures ?$^\\circ$', accept: ['90'], exp: 'A tangent is perpendicular to the radius at the point of tangency.' },
+   { q: 'Radius $5$, tangent segment $12$ from an external point $P$. Then $OP =$', accept: ['13'], exp: 'Right angle at the point of tangency: $\\sqrt{25 + 144} = 13$.' },
+   { q: '$AB$ is a diameter, $C$ is on the circle, $AC = 3$ and $BC = 4$. The radius is', accept: ['2.5', '5/2'], exp: 'Angle $C$ is right, so $AB = 5$ is the diameter and $r = 2.5$.' },
+   { q: 'Concentric circles have radii $3$ and $5$. The area between them is $\\underline{\\;?\\;}\\,\\pi$', accept: ['16', '16pi'], exp: '$25\\pi - 9\\pi = 16\\pi$.' },
+   { q: 'A circle is inscribed in a square of side $10$. The circle\u2019s area is $\\underline{\\;?\\;}\\,\\pi$', accept: ['25', '25pi'], exp: 'The circle\u2019s diameter equals the square\u2019s side, so $r = 5$ and $A = 25\\pi$.' }
+ ]}
+];
+
+function renderFluency() {
+    var host = document.getElementById('fluencyList');
+    var html = '';
+    var n = 0;
+    FLUENCY.forEach(function(sec, si) {
+        html += '<h3 style="font-family:\'Switzer\',\'Space Grotesk\',sans-serif; color:var(--green-dark); margin:18px 0 10px;">' + sec.sec + '</h3>';
+        sec.items.forEach(function(it, ii) {
+            var id = 'f' + si + '_' + ii;
+            n++;
+            html += '<div class="drill"><div class="drill-q">' + n + '. &nbsp;' + it.q + '</div>';
+            if (it.mc) {
+                html += '<div class="mc-opts" id="opts-' + id + '">';
+                it.opts.forEach(function(o, oi) {
+                    html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+                });
+                html += '</div>';
+            } else {
+                html += '<div class="drill-row">? = <input type="text" id="in-' + id + '" autocomplete="off">' +
+                    '<button class="btn btn-green btn-sm" onclick="checkExp(\'' + id + '\',' + si + ',' + ii + ')">Check</button>' +
+                    '<span class="fb" id="fb-' + id + '"></span></div>';
+            }
+            html += '<div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+        });
+    });
+    host.innerHTML = html;
+}
+function normalizeAns(s) {
+    s = (s || '').trim().replace(/\s+/g,'').replace(/^\+/,'');
+    s = s.replace(/\u221a/g, 'sqrt').replace(/\u03c0/gi, 'pi').replace(/\*/g, '');
+    var uni = { '\u00BD':'1/2', '\u2153':'1/3', '\u2154':'2/3', '\u00BC':'1/4', '\u00BE':'3/4', '\u2155':'1/5', '\u2212':'-' };
+    Object.keys(uni).forEach(function(k){ s = s.split(k).join(uni[k]); });
+    return s;
+}
+function parseVal(s) {
+    s = normalizeAns(s);
+    if (s === '') return null;
+    if (/pi|\u03c0/i.test(s)) {
+        var ex = s.replace(/\u03c0/gi, 'pi').replace(/(\d)pi/gi, '$1*pi').replace(/pi/gi, String(Math.PI));
+        if (/^[-+*\/().0-9\s]+$/.test(ex)) { try { var vv = Function('return (' + ex + ')')(); if (typeof vv === 'number' && isFinite(vv)) return vv; } catch (e) {} }
+    }
+    /* radicals and half-powers: 25sqrt3, 25sqrt(3), 25root3, 25(3)^0.5, 25(3)^(1/2), sqrt(75), 75^.5 */
+    var coefOf = function(c) {
+        if (c === '' || c === '+') return 1;
+        if (c === '-') return -1;
+        var v = parseFloat(c);
+        return isNaN(v) ? null : v;
+    };
+    var rad = s.match(/^(-?\d*\.?\d*)(?:sqrt|root)\(?(\d+(?:\.\d+)?|\d+\/\d+)\)?$/i);
+    if (rad) {
+        var c1 = coefOf(rad[1]);
+        var inner = rad[2].indexOf('/') !== -1
+            ? parseFloat(rad[2].split('/')[0]) / parseFloat(rad[2].split('/')[1])
+            : parseFloat(rad[2]);
+        if (c1 != null && inner >= 0) return c1 * Math.sqrt(inner);
+    }
+    var pw = s.match(/^(-?\d*\.?\d*)\(?(\d+(?:\.\d+)?)\)?\^\(?(?:0?\.5|1\/2)\)?$/i);
+    if (pw) {
+        var c2 = coefOf(pw[1]);
+        if (c2 != null) return c2 * Math.sqrt(parseFloat(pw[2]));
+    }
+    var frac = s.match(/^(-?\d*\.?\d*)(?:sqrt|root)\(?(\d+(?:\.\d+)?)\)?\/(\d+(?:\.\d+)?)$/i);
+    if (frac) {
+        var c3 = coefOf(frac[1]), den = parseFloat(frac[3]);
+        if (c3 != null && den !== 0) return c3 * Math.sqrt(parseFloat(frac[2])) / den;
+    }
+    var m = s.match(/^(-?\d+(?:\.\d+)?|-?\.\d+)\/(-?\d+(?:\.\d+)?|-?\.\d+)$/);
+    if (m) { var d = parseFloat(m[2]); return d === 0 ? null : parseFloat(m[1]) / d; }
+    var n = parseFloat(s);
+    return (isNaN(n) || String(n) !== String(parseFloat(s))) && isNaN(Number(s)) ? null : (isNaN(n) ? null : n);
+}
+function answerMatches(raw, acceptList) {
+    var val = normalizeAns(raw);
+    if (acceptList.indexOf(val) !== -1) return true;
+    var num = parseVal(raw);
+    if (num == null) return false;
+    for (var i = 0; i < acceptList.length; i++) {
+        var target = parseVal(acceptList[i]);
+        if (target == null) continue;
+        var tol = Math.max(0.02, Math.abs(target) * 0.002);
+        if (Math.abs(num - target) < tol) return true;
+    }
+    return false;
+}
+function checkExp(id, si, ii) {
+    var it = FLUENCY[si].items[ii];
+    var ok = answerMatches(document.getElementById('in-' + id).value, it.accept);
+    var fb = document.getElementById('fb-' + id);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ correct' : '✗ not yet — retry, or peek below';
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+function checkMC(id, chosen, correct) {
+    var opts = document.getElementById('opts-' + id).children;
+    for (var i = 0; i < opts.length; i++) opts[i].classList.remove('right','wrong');
+    opts[chosen].classList.add(chosen === correct ? 'right' : 'wrong');
+    if (chosen !== correct) opts[correct].classList.add('right');
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+
+/* ================= Gauntlet ================= */
+var QC_CHOICES = ["Quantity A is greater.", "Quantity B is greater.", "The two quantities are equal.", "The relationship cannot be determined from the information given."];
+var GAUNTLET = [
+ { type: 'qc', pre: 'A circle has radius $2$', qa: 'The area of the circle', qb: 'The circumference of the circle', correct: 2,
+   sol: '<strong>Given:</strong> $r = 2$.<br><br>Area $= \\pi(2)^2 = 4\\pi$. Circumference $= 2\\pi(2) = 4\\pi$. Equal \u2014 (C).',
+   trap: 'Area and circumference measure different things, so equality feels wrong \u2014 but as pure numbers they coincide at exactly $r = 2$. Compute both rather than reasoning from the shapes.' },
+ { type: 'qc', pre: 'Circle $A$ has radius $r$. Circle $B$ has radius $2r$', qa: 'The area of circle $B$ divided by the area of circle $A$', qb: '$2$', correct: 0,
+   sol: '<strong>Given:</strong> radii $r$ and $2r$.<br><br>$\\dfrac{\\pi(2r)^2}{\\pi r^2} = \\dfrac{4\\pi r^2}{\\pi r^2} = 4 > 2$ \u2014 (A).',
+   trap: 'Quantity B is the ratio of the <em>radii</em>. Lengths scale by $k$, areas by $k^2$ \u2014 the same rule as similar triangles, since all circles are similar.' },
+ { type: 'qc', pre: 'A regular hexagon is inscribed in a circle with radius $r$', qa: 'The length of an arc cut off by two adjacent sides of the hexagon', qb: 'The diameter of the circle', correct: 0,
+   sol: '<strong>Given:</strong> a regular hexagon inscribed in a circle of radius $r$.<br><br>Each side subtends $\\dfrac{360^\\circ}{6} = 60^\\circ$, so two adjacent sides span $120^\\circ$ \u2014 one third of the circle.<br><br>Arc length $= \\dfrac{1}{3}(2\\pi r) = \\dfrac{2\\pi r}{3} \\approx 2.09r$, while the diameter is $2r$. So Quantity A is greater \u2014 (A).',
+   trap: 'The entire question is whether $\\dfrac{2\\pi}{3} > 2$, which is just $\\pi > 3$. Estimating $\\pi \\approx 3$ makes them look equal, so carry $\\pi \\approx 3.14$ whenever a comparison is this tight.' },
+ { type: 'mc', stem: 'A circle has area $36\\pi$. What is its circumference?',
+   options: ['$6\\pi$', '$12\\pi$', '$18\\pi$', '$36\\pi$', '$72\\pi$'], correct: 1,
+   sol: '<strong>Given:</strong> area $= 36\\pi$.<br><br>$\\pi r^2 = 36\\pi \\Rightarrow r^2 = 36 \\Rightarrow r = 6$. Then $C = 2\\pi(6) = 12\\pi$.',
+   trap: '$36\\pi$ is the answer for anyone who reuses the area\u2019s number, and $6\\pi$ for anyone who stops at $r$. Area-to-circumference always routes through the radius \u2014 two steps, not one.' },
+ { type: 'mc', stem: 'In a circle with radius $9$, a sector has a central angle of $40^\\circ$. What is the area of the sector?',
+   options: ['$9\\pi$', '$\\dfrac{81\\pi}{9}$', '$18\\pi$', '$\\dfrac{27\\pi}{2}$', '$81\\pi$'], correct: 0,
+   sol: '<strong>Given:</strong> $r = 9$, central angle $40^\\circ$.<br><br>Fraction: $\\dfrac{40}{360} = \\dfrac{1}{9}$. Full area: $81\\pi$. Sector: $\\dfrac{81\\pi}{9} = 9\\pi$.',
+   trap: 'Choice (B) is the same value left unsimplified \u2014 correct arithmetic, wrong form, and on the real test only one choice will be reduced. Always simplify before matching.' },
+ { type: 'ms', stem: 'A circle has diameter $10$. Which of the following are true?',
+   options: ['Its radius is $5$', 'Its circumference is $10\\pi$', 'Its area is $100\\pi$', 'Its area is $25\\pi$', 'A chord of length $10$ must pass through the center'], correct: [0, 1, 3, 4],
+   sol: '<strong>Given:</strong> $d = 10$, so $r = 5$.<br><br>Radius $5$ \u2713. &nbsp;$C = \\pi d = 10\\pi$ \u2713. &nbsp;Area $= \\pi(5)^2 = 25\\pi$, so $100\\pi$ \u2717 and $25\\pi$ \u2713. &nbsp;A chord of length $10$ is as long as a chord can be, and only a diameter reaches that length \u2713.<br><br>Four answers: the first, second, fourth, and fifth.',
+   trap: '$100\\pi$ comes from squaring the diameter. The last statement is the subtle one: the longest possible chord <em>is</em> the diameter, so a chord matching that length has no choice but to pass through the center.' },
+ { type: 'ne', stem: 'Two concentric circles have radii $3$ and $5$, as shown. The area of the shaded region is $k\\pi$. What is the value of $k$ ?<div class="fig-wrap"><svg class="fig" viewBox="0 0 320 320" width="320" height="320" xmlns="http://www.w3.org/2000/svg"><circle cx="160" cy="160" r="112" fill="rgba(196,154,58,0.20)" stroke="#2C5F3E" stroke-width="2.5"></circle><circle cx="160" cy="160" r="62" fill="#FFFFFF" stroke="#2C5F3E" stroke-width="2.5"></circle><line x1="160" y1="160" x2="222.0" y2="160.0" stroke="#B7791F" stroke-width="2.6"></line><line x1="160" y1="160" x2="91.0" y2="71.7" stroke="#B7791F" stroke-width="2.6"></line><line x1="222.0" y1="154.0" x2="222.0" y2="166.0" stroke="#B7791F" stroke-width="2.6"></line><line x1="86.3" y1="75.4" x2="95.8" y2="68.0" stroke="#B7791F" stroke-width="2.6"></line><text x="194" y="145" text-anchor="middle" dominant-baseline="central">3</text><text x="89" y="93" text-anchor="middle" dominant-baseline="central">5</text><circle cx="160" cy="160" r="3.5" fill="#2C5F3E"></circle><text x="163" y="178" text-anchor="middle" dominant-baseline="central">O</text></svg></div>', label: '$k =$', accept: ['16', '16pi'],
+   sol: '<strong>Given:</strong> concentric circles with radii $3$ and $5$.<br><br>Shaded area $=$ big $-$ small $= \\pi(5)^2 - \\pi(3)^2 = 25\\pi - 9\\pi = 16\\pi$, so $k = 16$.',
+   trap: '$4\\pi$ comes from subtracting the radii and then squaring: $(5-3)^2 = 4$. Squares do not distribute over subtraction \u2014 compute each area, then subtract.' },
+ { type: 'ne', stem: 'In the figure, $PQ$ is a diameter of the circle, $R$ is on the circle, $PR = 6$, and $QR = 8$. The area of the circle is $k\\pi$. What is the value of $k$ ?<div class="fig-wrap"><svg class="fig" viewBox="0 0 340 235" width="340" height="235" xmlns="http://www.w3.org/2000/svg"><circle class="side" cx="150" cy="118" r="82" fill="none"></circle><polygon class="side" points="68,118 232,118 106.5,48.5" fill="none"></polygon><polyline class="mark" points="99.3,61.6 112.4,68.9 119.7,55.7" fill="none"></polyline><circle cx="150" cy="118" r="3.5" fill="#2C5F3E"></circle><text x="144" y="134" dominant-baseline="central">O</text><text x="54" y="118" dominant-baseline="central">P</text><text x="246" y="118" dominant-baseline="central">Q</text><text x="101" y="32" dominant-baseline="central">R</text></svg></div>', label: '$k =$', accept: ['25', '25pi'],
+   sol: '<strong>Given:</strong> $PQ$ is a diameter, $PR = 6$, $QR = 8$.<br><br>A triangle with a diameter as one side has a right angle at the opposite vertex, so $\\angle R = 90^\\circ$ and $PQ = \\sqrt{36 + 64} = 10$.<br><br>That is the diameter, so $r = 5$ and the area is $25\\pi$: $k = 25$.',
+   trap: 'Forgetting to halve gives $100\\pi$ \u2014 the trap that appears on nearly every diameter question. The Pythagorean step produces a <em>diameter</em>, and the area formula wants a radius.' },
+ { type: 'qc', pre: 'A circle with center $O$ has radius $8$. A line tangent to the circle at $T$ passes through external point $P$, and $PT = 15$', qa: 'The length of $OP$', qb: '$17$', correct: 2,
+   sol: '<strong>Given:</strong> radius $8$, tangent segment $PT = 15$.<br><br>The radius meets the tangent at a right angle at $T$, so $OP = \\sqrt{8^2 + 15^2} = \\sqrt{289} = 17$. Equal \u2014 (C).',
+   trap: 'The $8\\text{-}15\\text{-}17$ triple, hidden in a circle. The right angle is at the point of tangency, which makes $OP$ the hypotenuse \u2014 and the hypotenuse is what the question asked for.' },
+ { type: 'qc', pre: 'A circle is inscribed in a square with side $6$', qa: 'The area of the circle', qb: 'The area of the square minus the area of the circle', correct: 0,
+   sol: '<strong>Given:</strong> a circle inscribed in a square of side $6$.<br><br>The circle\u2019s diameter equals the square\u2019s side, so $r = 3$ and the circle\u2019s area is $9\\pi \\approx 28.3$. The square\u2019s area is $36$, so the leftover corners total $36 - 9\\pi \\approx 7.7$.<br><br>$28.3 > 7.7$ \u2014 (A).',
+   trap: 'Inscribed in a square means the circle touches all four sides, so its diameter is the side length \u2014 not the diagonal. Approximating $9\\pi$ as about $28$ settles the comparison instantly.' }
+];
+
+var gState = { idx: 0, answers: {}, finished: false };
+
+function renderGauntlet() {
+    var host = document.getElementById('gauntletArea');
+    if (gState.finished) { renderGauntletResults(host); return; }
+    var total = GAUNTLET.length, i = gState.idx, p = GAUNTLET[i];
+    var dirs = { qc: 'Compare Quantity A and Quantity B. Select one answer choice.', mc: 'Select one answer choice.', ms: 'Select one or more answer choices.', ne: 'Enter your answer in the box.' };
+    var html = '<div class="testbar"><span class="tprog">Question ' + (i+1) + ' of ' + total + '</span>' +
+        '<span class="timer-wrap" style="margin-left:auto;">Timer <button class="tog' + (timers.G.on ? ' on' : '') + '" id="togG" onclick="toggleTimer(\'G\')"></button> <span class="timer-display' + (timers.G.on ? ' on' : '') + '" id="timerG">' + fmtTime(timers.G.sec) + '</span></span></div>' +
+        '<div class="test-stage"><div class="q-directions">' + dirs[p.type] + '</div>';
+    var ans = gState.answers[i];
+    if (p.type === 'qc') {
+        if (p.pre) html += '<div class="q-stem" style="text-align:center;">' + p.pre + '</div>';
+        html += '<div class="qc-grid"><div class="qc-col"><div class="qc-head">Quantity A</div><div class="qc-body">' + p.qa + '</div></div>' +
+            '<div class="qc-col"><div class="qc-head">Quantity B</div><div class="qc-body">' + p.qb + '</div></div></div><div class="choices">';
+        QC_CHOICES.forEach(function(c, ci) {
+            html += '<div class="choice' + (ans === ci ? ' selected' : '') + '" onclick="gPick(' + ci + ')"><span class="oval"></span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else if (p.type === 'mc') {
+        html += '<div class="q-stem">' + p.stem + '</div><div class="choices">';
+        p.options.forEach(function(c, ci) {
+            html += '<div class="choice' + (ans === ci ? ' selected' : '') + '" onclick="gPick(' + ci + ')"><span class="oval"></span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else if (p.type === 'ms') {
+        html += '<div class="q-stem">' + p.stem + '</div><div class="multi-note">Indicate <u>all</u> such expressions.</div><div class="choices">';
+        var set = Array.isArray(ans) ? ans : [];
+        p.options.forEach(function(c, ci) {
+            html += '<div class="choice' + (set.indexOf(ci) !== -1 ? ' selected' : '') + '" onclick="gPickMS(' + ci + ')"><span class="sq"></span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else {
+        html += '<div class="q-stem">' + p.stem + '</div>' +
+            '<div class="ne-entry"><span class="q-stem" style="margin:0;">' + p.label + '</span>' +
+            '<input type="text" id="neIn" value="' + (ans != null ? ans : '') + '" oninput="gState.answers[' + i + '] = this.value" autocomplete="off"></div>';
+    }
+    html += '<div class="test-nav">' +
+        '<button class="btn btn-ghost" onclick="gNav(-1)"' + (i === 0 ? ' disabled' : '') + '>&#8592; Back</button>' +
+        '<button class="btn btn-green" onclick="gNav(1)"' + (i === total-1 ? ' disabled' : '') + '>Next &#8594;</button>' +
+        '<span style="flex:1"></span><button class="btn btn-gold" onclick="gFinish()">Finish &amp; Score</button></div>' +
+        '<div class="qmap">' + GAUNTLET.map(function(q, qi) {
+            var cls = 'qchip';
+            if (gHasAns(qi)) cls += ' answered';
+            if (qi === i) cls += ' current';
+            return '<button class="' + cls + '" onclick="gState.idx=' + qi + ';renderGauntlet();">' + (qi+1) + '</button>';
+        }).join('') + '</div></div>';
+    host.innerHTML = html;
+    typeset(host);
+}
+function gPick(ci) { gState.answers[gState.idx] = ci; renderGauntlet(); }
+function gPickMS(ci) {
+    var cur = gState.answers[gState.idx];
+    var set = Array.isArray(cur) ? cur.slice() : [];
+    var at = set.indexOf(ci);
+    if (at === -1) set.push(ci); else set.splice(at, 1);
+    gState.answers[gState.idx] = set;
+    renderGauntlet();
+}
+function gHasAns(qi) {
+    var a = gState.answers[qi];
+    if (Array.isArray(a)) return a.length > 0;
+    return a != null && a !== '';
+}
+function gNav(s) { gState.idx = Math.max(0, Math.min(GAUNTLET.length-1, gState.idx + s)); renderGauntlet(); }
+function gGrade(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (p.type === 'ne') return a != null && answerMatches(String(a), p.accept);
+    if (p.type === 'ms') {
+        if (!Array.isArray(a)) return false;
+        return a.slice().sort().join(',') === p.correct.slice().sort().join(',');
+    }
+    return a === p.correct;
+}
+function gAnswerText(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (a == null || a === '') return '(no answer)';
+    if (p.type === 'qc') return QC_CHOICES[a];
+    if (p.type === 'mc') return p.options[a];
+    if (p.type === 'ms') return a.length ? a.slice().sort().map(function(i){ return p.options[i]; }).join(' &nbsp;and&nbsp; ') : '(no answer)';
+    return String(a);
+}
+function gCorrectText(i) {
+    var p = GAUNTLET[i];
+    if (p.type === 'qc') return QC_CHOICES[p.correct];
+    if (p.type === 'mc') return p.options[p.correct];
+    if (p.type === 'ms') return p.correct.slice().sort().map(function(i){ return p.options[i]; }).join(' &nbsp;and&nbsp; ');
+    return p.accept[0];
+}
+function gFinish() {
+    var un = 0;
+    for (var i = 0; i < GAUNTLET.length; i++) if (!gHasAns(i)) un++;
+    if (un > 0 && !confirm(un + ' unanswered. Score anyway?')) return;
+    gState.finished = true;
+    stopTimer('G');
+    renderGauntlet();
+}
+function renderGauntletResults(host) {
+    var right = 0;
+    GAUNTLET.forEach(function(_, i){ if (gGrade(i)) right++; });
+    var html = '<div class="stat-grid">' +
+        '<div class="stat-tile green"><div class="stat-num">' + right + '/' + GAUNTLET.length + '</div><div class="stat-label">Correct</div></div>' +
+        '<div class="stat-tile"><div class="stat-num">' + Math.round(100*right/GAUNTLET.length) + '%</div><div class="stat-label">Score</div></div></div>' +
+        '<div class="toolbar"><button class="btn btn-gold" onclick="gState={idx:0,answers:{},finished:false};timers.G.sec=0;renderGauntlet();">&#8635; Retake gauntlet</button></div>';
+    GAUNTLET.forEach(function(p, i) {
+        var ok = gGrade(i);
+        html += '<div class="res-entry' + (ok ? ' correct' : '') + '"><div class="res-head" onclick="this.parentElement.classList.toggle(\'open\'); typeset(this.parentElement);">' +
+            '<span style="font-size:18px;">' + (ok ? '&#9989;' : '&#10060;') + '</span>' +
+            '<span style="font-weight:600; font-size:14.5px;">Q' + (i+1) + ' &mdash; your answer: ' + gAnswerText(i) + '</span>' +
+            '<span class="res-arrow">&#9654;</span></div>' +
+            '<div class="res-body"><div class="sol-block" style="background:white; border:1px solid var(--cream-dark); font-family:\'Times New Roman\',Georgia,serif; font-size:16.5px;">' +
+            (p.type === 'qc' ? ((p.pre ? p.pre + '<br>' : '') + '<strong>A:</strong> ' + p.qa + ' &nbsp;&nbsp;vs.&nbsp;&nbsp; <strong>B:</strong> ' + p.qb) : p.stem) + '</div>' +
+            '<p style="font-size:14px; margin:8px 0;"><strong>Correct answer:</strong> ' + gCorrectText(i) + '</p>' +
+            '<div class="sol-block"><div class="sol-label">Full solution</div>' + p.sol + '</div>' +
+            '<div class="trap-box"><div class="trap-label">The trap / takeaway</div>' + p.trap + '</div></div></div>';
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+
+/* ================= Challenge questions ================= */
+var CHALLENGE = [
+ { type: 'qc', pre: 'A circle has radius $5$. In Figure I, a square is inscribed in that circle. In Figure II, that same circle is inscribed in a square.',
+   qa: 'The area inside the circle but outside the square, in Figure I', qb: 'The area inside the square but outside the circle, in Figure II', correct: 0,
+   sol: '<strong>Given:</strong> one circle of radius $5$, used two ways \u2014 once as the outer shape, once as the inner shape.<br><br>The second idea is <strong>which shape is inside</strong>: that single choice decides whether the circle\u2019s diameter matches the square\u2019s <em>diagonal</em> or its <em>side</em>.<br><br>' +
+        '<strong>Figure I \u2014 square inside the circle.</strong> All four corners touch the circle, so the square\u2019s diagonal is the diameter, $10$. A square with diagonal $d$ has area $\\dfrac{d^2}{2} = 50$. Leftover $= 25\\pi - 50 \\approx 28.5$.<br><br>' +
+        '<strong>Figure II \u2014 circle inside the square.</strong> The circle touches all four sides, so the square\u2019s side is the diameter, $10$, and its area is $100$. Leftover $= 100 - 25\\pi \\approx 21.5$.<br><br>' +
+        '$28.5 > 21.5$, so Quantity A is greater \u2014 (A).',
+   trap: 'The two quantities look like mirror images of each other, which makes (C) tempting \u2014 but the same circle meets a square\u2019s diagonal in one figure and its side in the other, and that asymmetry is the whole question. In symbols the leftovers are $(\\pi - 2)r^2$ and $(4 - \\pi)r^2$, so Quantity A wins exactly when $\\pi - 2 > 4 - \\pi$, that is when $2\\pi > 6$, that is when $\\pi > 3$. Same punchline as the hexagon comparison in the Gauntlet \u2014 and it holds for every radius, which is why no specific value was needed.' },
+ { type: 'ne', stem: 'A sector of a circle has a central angle of $90^\\circ$ and a radius of $6$. What is the perimeter of the sector? &nbsp; <span style="font-size:15px; color:var(--text-medium);">(enter in the form <strong>2pi+7</strong> or a decimal)</span>', label: 'Perimeter $=$', accept: ['3pi+12', '21.42'],
+   sol: '<strong>Given:</strong> a $90^\\circ$ sector with radius $6$.<br><br>The second idea is <strong>counting the boundary</strong>: a sector is bounded by two radii <em>and</em> the arc, so the perimeter has three pieces.<br><br>Arc: $\\dfrac{1}{4}(2\\pi \\cdot 6) = 3\\pi$. Radii: $6 + 6 = 12$. Perimeter $= 3\\pi + 12 \\approx 21.4$.',
+   trap: 'Perimeter is not the arc alone, and it is not the sector\u2019s area. Trace the boundary with a finger before writing anything \u2014 for a sector that path is radius, arc, radius.' },
+ { type: 'mc', stem: 'A circle is inscribed in a square with side $8$. What is the area of the region inside the square but outside the circle?',
+   options: ['$64 - 8\\pi$', '$64 - 16\\pi$', '$64 - 64\\pi$', '$16 - 16\\pi$', '$8 - 4\\pi$'], correct: 1,
+   sol: '<strong>Given:</strong> a circle inscribed in a square of side $8$.<br><br>The second idea is <strong>subtracting regions</strong>: the leftover is the square minus the circle.<br><br>Square: $8^2 = 64$. The circle touches all four sides, so its diameter is $8$ and $r = 4$, giving area $16\\pi$. Leftover $= 64 - 16\\pi \\approx 13.7$.',
+   trap: '$64 - 64\\pi$ is negative, which is impossible for a region inside the square \u2014 a free sanity check. And $64 - 8\\pi$ comes from using the diameter as the radius.' },
+ { type: 'ne', stem: 'In a circle with center $O$, points $P$, $Q$, and $R$ lie on the circle and $PQ$ is a diameter. If $PR = 10$ and $QR = 24$, what is the circumference of the circle? Enter the coefficient of $\\pi$.', label: 'Circumference $= \\;?\\;\\pi$', accept: ['26', '26pi'],
+   sol: '<strong>Given:</strong> $PQ$ is a diameter, $PR = 10$, $QR = 24$.<br><br>This is a question type of its own \u2014 <strong>the diameter hiding inside a right triangle</strong> \u2014 and it runs the same three steps every time.<br><br>' +
+        '<strong>Step 1 \u2014 claim the right angle.</strong> One side of the inscribed triangle is a diameter, so the angle at the opposite vertex $R$ is $90^\\circ$. Free, from Rule 8.<br><br>' +
+        '<strong>Step 2 \u2014 Pythagorean theorem gives the diameter.</strong> $PQ = \\sqrt{10^2 + 24^2} = \\sqrt{676} = 26$. (It is the $5\\text{-}12\\text{-}13$ triple doubled.) The hypotenuse <em>is</em> the diameter.<br><br>' +
+        '<strong>Step 3 \u2014 answer what was asked.</strong> Circumference $= \\pi d = 26\\pi$, so the coefficient is $26$.',
+   trap: 'Every question of this type ends with a choice: does the answer want $d$ or $r$? Circumference can take the diameter directly ($C = \\pi d$), but area must have the radius. Write down both $d = 26$ and $r = 13$ before answering, and the last step never goes wrong.' }
+];
+var chState = {};
+var chExtraOpen = {};
+var cxState = {};
+CHALLENGE[3].extrasIntro = 'The diameter hiding inside a right triangle is a question type of its own. Three more reps \u2014 same three steps, different final question.';
+CHALLENGE[3].extras = [
+ { type: 'ne', q: '$AB$ is a diameter, $C$ is on the circle, $AC = 12$, and $BC = 16$. The area of the circle is $\\underline{\\;?\\;}\\,\\pi$', label: '$?\\;=$', accept: ['100', '100pi'],
+   exp: '<strong>Step 1:</strong> angle $C$ is right (side $AB$ is a diameter). <strong>Step 2:</strong> $AB = \\sqrt{144 + 256} = 20$, the diameter. <strong>Step 3:</strong> the question wants area, so halve first: $r = 10$ and $A = 100\\pi$. (Skipping the halving gives $400\\pi$.)' },
+ { type: 'ne', q: '$PQ$ is a diameter, $R$ is on the circle, $PR = 5$, and $QR = 12$. The circumference is $\\underline{\\;?\\;}\\,\\pi$', label: '$?\\;=$', accept: ['13', '13pi'],
+   exp: '<strong>Step 1:</strong> right angle at $R$. <strong>Step 2:</strong> $PQ = \\sqrt{25 + 144} = 13$ \u2014 the $5\\text{-}12\\text{-}13$ triple. <strong>Step 3:</strong> circumference takes the diameter directly: $C = \\pi d = 13\\pi$.' },
+ { type: 'ne', q: 'A right triangle with legs $9$ and $12$ is inscribed in a circle. The radius of the circle is &nbsp;<span style="font-size:14px; color:var(--text-medium);">(decimal)</span>', label: 'Radius $=$', accept: ['7.5', '15/2'],
+   exp: 'Run Rule 8 backwards: an inscribed <em>right</em> triangle must have its hypotenuse as a diameter. Hypotenuse $= \\sqrt{81 + 144} = 15$, so $r = 7.5$. The converse is what makes this version solvable.' }
+];
+function renderChallenge() {
+    var host = document.getElementById('challengeArea');
+    var html = '';
+    CHALLENGE.forEach(function(p, i) {
+        var st = chState[i] || {};
+        html += '<div class="drill" style="border-left-color: var(--gold);"><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:8px;">Challenge ' + (i+1) + ' of ' + CHALLENGE.length + '</div>';
+        if (p.type === 'qc') {
+            if (p.pre) html += '<div class="q-stem" style="margin-bottom:10px;">' + p.pre + '</div>';
+            html += '<div class="qc-grid" style="margin-top:4px;"><div class="qc-col"><div class="qc-head">Quantity A</div><div class="qc-body">' + p.qa + '</div></div>' +
+                '<div class="qc-col"><div class="qc-head">Quantity B</div><div class="qc-body">' + p.qb + '</div></div></div><div class="choices">';
+            QC_CHOICES.forEach(function(c, ci) {
+                var cls = 'choice';
+                if (st.checked) { if (ci === p.correct) cls += ' selected'; }
+                else if (st.pick === ci) cls += ' selected';
+                html += '<div class="' + cls + '" onclick="chPick(' + i + ',' + ci + ')"><span class="oval"></span><span class="ctext">' + c + '</span></div>';
+            });
+            html += '</div>';
+        } else if (p.type === 'mc') {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div><div class="mc-opts" id="chopts-' + i + '">';
+            p.options.forEach(function(o, oi) {
+                var cls = 'mc-opt';
+                if (st.checked) { if (oi === p.correct) cls += ' right'; else if (st.pick === oi) cls += ' wrong'; }
+                else if (st.pick === oi) cls += ' picked';
+                html += '<button class="' + cls + '" onclick="chPick(' + i + ',' + oi + ')">' + o + '</button>';
+            });
+            html += '</div>';
+        } else {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div>' +
+                '<div class="drill-row"><span class="drill-q" style="margin:0;">' + p.label + '</span>' +
+                '<input type="text" id="chin-' + i + '" value="' + (st.pick != null ? st.pick : '') + '" oninput="chState[' + i + '] = chState[' + i + '] || {}; chState[' + i + '].pick = this.value;" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                (st.checked ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '\u2713 correct' : '\u2717 not this time') + '</span>' : '') +
+                '</div>';
+        }
+        if (!st.checked) {
+            html += '<div style="margin-top:10px;"><button class="btn btn-green btn-sm" onclick="chCheck(' + i + ')">Check</button></div>';
+        } else {
+            if (p.type !== 'ne') {
+                html += '<p style="font-size:13.5px; font-weight:600; margin-top:8px; color:' + (st.ok ? 'var(--green-light)' : '#C0392B') + ';">' + (st.ok ? '\u2713 correct' : '\u2717 not this time \u2014 the mechanism below is the takeaway') + '</p>';
+            }
+            html += '<div class="sol-block"><div class="sol-label">How it works</div>' + p.sol + '</div>' +
+                '<div class="trap-box"><div class="trap-label">The move to remember</div>' + p.trap + '</div>';
+        }
+        html += '</div>';
+        if (p.extras) html += renderChExtra(i, p);
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+function renderChExtra(ci, p) {
+    var open = !!chExtraOpen[ci];
+    var h = '<div class="drill" style="border-left-color: var(--gold-light); background: #FFFDF8;">' +
+        '<div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:6px;">Keep the pattern going</div>' +
+        '<p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">' + p.extrasIntro + '</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="chExtraOpen[' + ci + '] = !chExtraOpen[' + ci + ']; renderChallenge();">' + (open ? 'Hide practice set' : 'Show practice set (' + p.extras.length + ')') + '</button>';
+    if (open) {
+        p.extras.forEach(function(x, j) {
+            var key = ci + '_' + j;
+            var st = cxState[key] || {};
+            h += '<div style="border-top: 1px dashed var(--cream-dark); margin-top: 14px; padding-top: 12px;">' +
+                '<div class="drill-q" style="font-size:17.5px;">' + String.fromCharCode(97 + j) + '. &nbsp;' + x.q + '</div>';
+            if (x.type === 'mc') {
+                h += '<div class="mc-opts">';
+                x.opts.forEach(function(o, oi) {
+                    var cls = 'mc-opt';
+                    if (st.checked) { if (oi === x.correct) cls += ' right'; else if (st.pick === oi) cls += ' wrong'; }
+                    else if (st.pick === oi) cls += ' picked';
+                    h += '<button class="' + cls + '" style="font-family: Inter, sans-serif; font-size: 14.5px;" onclick="cxPickMC(' + ci + ',' + j + ',' + oi + ')">' + o + '</button>';
+                });
+                h += '</div>';
+            } else {
+                h += '<div class="drill-row"><span style="font-family: \'Times New Roman\', Georgia, serif; font-size:16px;">' + x.label + '</span>' +
+                    '<input type="text" id="cxin-' + key + '" value="' + (st.pick != null ? st.pick : '') + '" oninput="cxState[\'' + key + '\'] = cxState[\'' + key + '\'] || {}; cxState[\'' + key + '\'].pick = this.value;" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                    (st.checked
+                        ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '\u2713 correct' : '\u2717 not yet') + '</span>'
+                        : '<button class="btn btn-green btn-sm" onclick="cxCheckNE(' + ci + ',' + j + ')">Check</button>') +
+                    '</div>';
+            }
+            if (st.checked) h += '<div class="fb-exp show">' + x.exp + '</div>';
+            h += '</div>';
+        });
+    }
+    h += '</div>';
+    return h;
+}
+function cxPickMC(ci, j, oi) {
+    var key = ci + '_' + j;
+    if (cxState[key] && cxState[key].checked) return;
+    cxState[key] = { pick: oi, checked: true, ok: (oi === CHALLENGE[ci].extras[j].correct) };
+    renderChallenge();
+}
+function cxCheckNE(ci, j) {
+    var key = ci + '_' + j;
+    var v = document.getElementById('cxin-' + key).value;
+    if (v == null || normalizeAns(v) === '') return;
+    cxState[key] = { pick: v, checked: true, ok: answerMatches(v, CHALLENGE[ci].extras[j].accept) };
+    renderChallenge();
+}
+function chPick(i, ci) {
+    if (chState[i] && chState[i].checked) return;
+    chState[i] = chState[i] || {};
+    chState[i].pick = ci;
+    renderChallenge();
+}
+function chCheck(i) {
+    var p = CHALLENGE[i];
+    var st = chState[i] = chState[i] || {};
+    if (p.type === 'ne') {
+        var v = document.getElementById('chin-' + i).value;
+        st.pick = v;
+        if (v == null || normalizeAns(v) === '') return;
+        st.ok = answerMatches(v, p.accept);
+    } else {
+        if (st.pick == null) return;
+        st.ok = (st.pick === p.correct);
+    }
+    st.checked = true;
+    renderChallenge();
+}
+
+/* ================= Exit ticket ================= */
+var EXIT = [
+ { q: 'A circle has diameter $20$. Its area is', opts: ['$100\\pi$', '$400\\pi$', '$40\\pi$', '$20\\pi$'], correct: 0, exp: '$r = 10$, so $A = \\pi(10)^2 = 100\\pi$. The $400\\pi$ choice squares the diameter instead of the radius.' },
+ { q: 'A central angle of $72^\\circ$ cuts off what fraction of a circle\u2019s circumference?', opts: ['$\\dfrac{1}{4}$', '$\\dfrac{1}{5}$', '$\\dfrac{1}{6}$', '$\\dfrac{72}{100}$'], correct: 1, exp: '$\\dfrac{72}{360} = \\dfrac{1}{5}$ \u2014 arcs and sectors are always the angle over $360$.' }
+];
+function renderExit() {
+    var host = document.getElementById('exitArea');
+    var html = '';
+    EXIT.forEach(function(it, i) {
+        var id = 'x' + i;
+        html += '<div class="drill"><div class="drill-q">' + (i+1) + '. &nbsp;' + it.q + '</div><div class="mc-opts" id="opts-' + id + '">';
+        it.opts.forEach(function(o, oi) {
+            html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+        });
+        html += '</div><div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+    });
+    host.innerHTML = html;
+}
+
+/* rule box: optional persistent save */
+function hasStore(){ return (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function'); }
+var ruleTimer = null;
+function saveRule() {
+    if (ruleTimer) clearTimeout(ruleTimer);
+    ruleTimer = setTimeout(async function() {
+        if (hasStore()) {
+            try { await window.storage.set('circ-sheet:rule', document.getElementById('ruleBox').value, false); } catch(e) {}
+        }
+        var s = document.getElementById('ruleStatus');
+        s.style.opacity = 1; setTimeout(function(){ s.style.opacity = 0; }, 1200);
+    }, 500);
+}
+async function loadRule() {
+    if (!hasStore()) return;
+    try { var r = await window.storage.get('circ-sheet:rule', false); if (r && r.value) document.getElementById('ruleBox').value = r.value; } catch(e) {}
+}
+function copyRule() {
+    var t = document.getElementById('ruleBox');
+    t.select(); t.setSelectionRange(0, 99999);
+    try { document.execCommand('copy'); } catch(e) {}
+    var s = document.getElementById('ruleStatus');
+    s.textContent = 'copied ✓'; s.style.opacity = 1;
+    setTimeout(function(){ s.style.opacity = 0; s.textContent = 'saved ✓'; }, 1200);
+}
+
+/* ================= Timers (off by default) ================= */
+var timers = { F: { on: false, sec: 0, iv: null }, G: { on: false, sec: 0, iv: null } };
+function fmtTime(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function toggleTimer(k) {
+    var t = timers[k];
+    t.on = !t.on;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.toggle('on', t.on);
+    if (disp) disp.classList.toggle('on', t.on);
+    if (t.on) {
+        t.iv = setInterval(function() {
+            t.sec++;
+            var d = document.getElementById('timer' + k);
+            if (d) d.textContent = fmtTime(t.sec);
+        }, 1000);
+    } else stopTimer(k);
+}
+function stopTimer(k) {
+    var t = timers[k];
+    if (t.iv) { clearInterval(t.iv); t.iv = null; }
+    t.on = false;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.remove('on');
+    if (disp) disp.classList.remove('on');
+}
+
+/* ================= Tabs & init ================= */
+function typeset(el) { if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(function(){}); }
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (name === 'gauntlet') renderGauntlet();
+    if (name === 'challenge') renderChallenge();
+    setTimeout(function(){ typeset(); }, 80);
+}
+var DRAGS = [
+ { id: 'd1', prompt: 'Drag each term onto the matching part of the circle.',
+   svg: '<svg class="fig" viewBox="0 0 380 265" width="380" height="265" xmlns="http://www.w3.org/2000/svg" style="display:block;"><circle class="side" cx="170" cy="120" r="88" fill="none"></circle><line class="side" x1="82" y1="120" x2="258" y2="120"></line><line class="mark" x1="170" y1="120" x2="216.6" y2="45.4"></line><line class="mark" x1="93.8" y1="76.0" x2="160.8" y2="32.5"></line><line class="mark" x1="98" y1="208" x2="242" y2="208"></line><circle cx="170" cy="120" r="3.5" fill="#2C5F3E"></circle><text x="156" y="134" dominant-baseline="central">O</text></svg>', w: 380, h: 265,
+   tiles: ['radius', 'diameter', 'chord', 'tangent'],
+   slots: [{ id: 's0', want: 'radius', left: '61.5%', top: '25.0%' },
+           { id: 's1', want: 'diameter', left: '25.5%', top: '52.0%' },
+           { id: 's2', want: 'chord', left: '20.0%', top: '17.0%' },
+           { id: 's3', want: 'tangent', left: '73.0%', top: '80.5%' }],
+   exp: 'A <strong>radius</strong> joins the center to the circle. A <strong>diameter</strong> is a chord through the center \u2014 twice a radius, and the longest chord there is. A <strong>chord</strong> joins any two points on the circle. A <strong>tangent</strong> touches the circle at exactly one point and is perpendicular to the radius drawn there.' },
+ { id: 'd2', prompt: 'Now match each formula to what it measures. Here $n$ is the central angle in degrees.',
+   svg: '<svg class="fig" viewBox="0 0 380 200" width="380" height="200" xmlns="http://www.w3.org/2000/svg" style="display:block;"><text x="8" y="30" dominant-baseline="central">Circumference</text><line x1="126" y1="30" x2="192" y2="30" stroke="#D9D2C5" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="8" y="76" dominant-baseline="central">Area</text><line x1="126" y1="76" x2="192" y2="76" stroke="#D9D2C5" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="8" y="122" dominant-baseline="central">Arc length</text><line x1="126" y1="122" x2="192" y2="122" stroke="#D9D2C5" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="8" y="168" dominant-baseline="central">Sector area</text><line x1="126" y1="168" x2="192" y2="168" stroke="#D9D2C5" stroke-width="1.5" stroke-dasharray="4 4"></line></svg>', w: 380, h: 200,
+   tiles: ['$2\\pi r$', '$\\pi r^2$', '$\\dfrac{n}{360}\\cdot 2\\pi r$', '$\\dfrac{n}{360}\\cdot \\pi r^2$'],
+   slots: [{ id: 's0', want: '$2\\pi r$', left: '55.0%', top: '15.0%' },
+           { id: 's1', want: '$\\pi r^2$', left: '55.0%', top: '38.0%' },
+           { id: 's2', want: '$\\dfrac{n}{360}\\cdot 2\\pi r$', left: '55.0%', top: '61.0%' },
+           { id: 's3', want: '$\\dfrac{n}{360}\\cdot \\pi r^2$', left: '55.0%', top: '84.0%' }],
+   exp: 'Arc length and sector area share the same fraction, $\\dfrac{n}{360}$ \u2014 they differ only in what that fraction multiplies: the circumference for a length, the area for a region. Getting the fraction right is half the work; choosing the right second factor is the other half.' }
+];
+
+var dragState = {};
+function dsFor(id) {
+    if (!dragState[id]) dragState[id] = { placed: {}, sel: null, checked: false };
+    return dragState[id];
+}
+function renderDrags() {
+    var host = document.getElementById('dragArea');
+    if (!host) return;
+    var out = '';
+    DRAGS.forEach(function(d, di) {
+        var st = dsFor(d.id);
+        var used = {};
+        Object.keys(st.placed).forEach(function(k){ used[st.placed[k]] = true; });
+        out += '<div class="card"><div class="q-stem" style="margin-bottom:10px;">' + d.prompt + '</div>';
+        out += '<div class="dz-hint">Tap a length, then tap a side \u2014 or drag it across. Tap a filled box to send it back.</div>';
+        out += '<div style="text-align:center;"><div class="dz-wrap" style="width:' + d.w + 'px; height:' + d.h + 'px;">' + d.svg;
+        d.slots.forEach(function(s) {
+            var ti = st.placed[s.id];
+            var cls = 'dz';
+            if (ti == null) cls += ' empty';
+            else if (st.checked) cls += (d.tiles[ti] === s.want ? ' right' : ' wrong');
+            else cls += ' filled';
+            out += '<div class="' + cls + '" style="left:' + s.left + '; top:' + s.top + ';"' +
+                ' ondragover="dzOver(event, \'' + d.id + '\', \'' + s.id + '\')"' +
+                ' ondragleave="dzLeave(event)"' +
+                ' ondrop="dzDrop(event, \'' + d.id + '\', \'' + s.id + '\')"' +
+                ' onclick="dzClick(\'' + d.id + '\', \'' + s.id + '\')">' +
+                (ti == null ? '' : d.tiles[ti]) + '</div>';
+        });
+        out += '</div></div>';
+        out += '<div class="tile-bank">';
+        d.tiles.forEach(function(t, ti) {
+            if (used[ti]) return;
+            var cls = 'tile' + (st.sel === ti ? ' sel' : '');
+            out += '<div class="' + cls + '" draggable="' + (!st.checked) + '"' +
+                ' ondragstart="dgStart(event, \'' + d.id + '\', ' + ti + ')"' +
+                ' onclick="tileClick(\'' + d.id + '\', ' + ti + ')">' + t + '</div>';
+        });
+        out += '</div>';
+        var filled = Object.keys(st.placed).length === d.slots.length;
+        out += '<div style="margin-top:12px; display:flex; gap:10px; align-items:center; justify-content:center;">';
+        if (!st.checked) {
+            out += '<button class="btn btn-green btn-sm"' + (filled ? '' : ' disabled style="opacity:0.45;cursor:default;"') +
+                   ' onclick="dgCheck(\'' + d.id + '\')">Check</button>';
+            if (Object.keys(st.placed).length) out += '<button class="btn btn-ghost btn-sm" onclick="dgReset(\'' + d.id + '\')">Clear</button>';
+        } else {
+            out += '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '\u2713 all three correct' : '\u2717 not yet \u2014 see below, then try again') + '</span>' +
+                   '<button class="btn btn-ghost btn-sm" onclick="dgReset(\'' + d.id + '\')">Try again</button>';
+        }
+        out += '</div>';
+        if (st.checked) out += '<div class="fb-exp show" style="margin-top:12px;">' + d.exp + '</div>';
+        out += '</div>';
+    });
+    host.innerHTML = out;
+    typeset(host);
+}
+function tileClick(id, ti) {
+    var st = dsFor(id);
+    if (st.checked) return;
+    st.sel = (st.sel === ti ? null : ti);
+    renderDrags();
+}
+function dzClick(id, sid) {
+    var st = dsFor(id);
+    if (st.checked) return;
+    if (st.placed[sid] != null) { delete st.placed[sid]; st.sel = null; renderDrags(); return; }
+    if (st.sel == null) return;
+    st.placed[sid] = st.sel;
+    st.sel = null;
+    renderDrags();
+}
+function dgStart(e, id, ti) {
+    var st = dsFor(id);
+    if (st.checked) { e.preventDefault(); return; }
+    st.sel = ti;
+    if (e.dataTransfer) { e.dataTransfer.setData('text/plain', String(ti)); e.dataTransfer.effectAllowed = 'move'; }
+}
+function dzOver(e, id, sid) {
+    var st = dsFor(id);
+    if (st.checked) return;
+    e.preventDefault();
+    e.currentTarget.classList.add('over');
+}
+function dzLeave(e) { e.currentTarget.classList.remove('over'); }
+function dzDrop(e, id, sid) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('over');
+    var st = dsFor(id);
+    if (st.checked) return;
+    var ti = st.sel;
+    if (e.dataTransfer) {
+        var raw = e.dataTransfer.getData('text/plain');
+        if (raw !== '' && raw != null && !isNaN(parseInt(raw, 10))) ti = parseInt(raw, 10);
+    }
+    if (ti == null) return;
+    Object.keys(st.placed).forEach(function(k){ if (st.placed[k] === ti) delete st.placed[k]; });
+    st.placed[sid] = ti;
+    st.sel = null;
+    renderDrags();
+}
+function dgCheck(id) {
+    var d = null;
+    DRAGS.forEach(function(x){ if (x.id === id) d = x; });
+    var st = dsFor(id);
+    if (Object.keys(st.placed).length !== d.slots.length) return;
+    var ok = true;
+    d.slots.forEach(function(s) {
+        var ti = st.placed[s.id];
+        if (ti == null || d.tiles[ti] !== s.want) ok = false;
+    });
+    st.checked = true; st.ok = ok; st.sel = null;
+    renderDrags();
+}
+function dgReset(id) {
+    dragState[id] = { placed: {}, sel: null, checked: false };
+    renderDrags();
+}
+
+renderStep();
+renderFluency();
+renderExit();
+renderDrags();
+loadRule();
+</script>
+</body>
+</html>
