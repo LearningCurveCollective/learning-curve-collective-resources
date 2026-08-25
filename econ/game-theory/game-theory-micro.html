@@ -304,6 +304,19 @@ li { margin-bottom: 10px; }
             <div class="highlight-box">
                 <p style="margin-bottom:6px;"><strong>The cartel game.</strong> Two firms sell into demand $p = 120 - Q$ with $MC = 30$. Each simultaneously picks one of two outputs: <em>Collude</em> ($q = 22.5$, half the monopoly quantity) or <em>Compete</em> ($q = 30$, the Cournot quantity). Profits, computed cell by cell in the Simultaneous tab:</p>
                 <p style="margin:0;">$$u_i(\text{Collude},\text{Collude}) = 1012.5 \qquad u_i(\text{Compete},\text{Compete}) = 900$$ $$u_1(\text{Compete},\text{Collude}) = 1125 \qquad u_1(\text{Collude},\text{Compete}) = 843.75$$</p>
+                <div class="pm-wrap" style="margin:14px 0 6px;">
+                    <table class="pm">
+                        <tr><td class="pm-corner" rowspan="2"></td><td class="pm-title-col" colspan="2">Firm 2</td></tr>
+                        <tr><td class="pm-colhead">Collude (22.5)</td><td class="pm-colhead">Compete (30)</td></tr>
+                        <tr><td class="pm-rowhead">Collude (22.5)</td>
+                            <td class="pm-cell"><div class="pay"><span class="p1">1012.5</span>, <span class="p2">1012.5</span></div></td>
+                            <td class="pm-cell"><div class="pay"><span class="p1">843.75</span>, <span class="p2">1125</span></div></td></tr>
+                        <tr><td class="pm-rowhead">Compete (30)</td>
+                            <td class="pm-cell"><div class="pay"><span class="p1">1125</span>, <span class="p2">843.75</span></div></td>
+                            <td class="pm-cell"><div class="pay"><span class="p1">900</span>, <span class="p2">900</span></div></td></tr>
+                    </table>
+                    <div class="pm-legend">The same four numbers as a payoff matrix. Firm 1 picks the <strong>row</strong>, firm 2 the <strong>column</strong>; in each cell the first (green) entry is $u_1$ and the second (copper) is $u_2$. Nothing is marked yet &mdash; the definitions below are what tell you where to look.</div>
+                </div>
             </div>
             <p>Whenever a formula below looks abstract, drop these numbers into it &mdash; every quantifier ("for all $s_{-i}$&hellip;") turns into a two-line check you can actually do. Definitions that need sequencing or randomness borrow the entry game (Sequential tab) or Matching Pennies (Mixed tab) instead.</p>
 
@@ -634,6 +647,113 @@ li { margin-bottom: 10px; }
                 <p style="margin:0;"><strong>Matching Pennies (pure conflict).</strong> Every cell has exactly one player wanting out, so the chase never settles. No pure-strategy Nash equilibrium exists. This is not a defect in the theory &mdash; it is a signal that the equilibrium must involve deliberate randomization, which is the Mixed Strategies tab.</p>
             </div>
         </div>
+
+        <div class="section-header"><div class="section-number">7</div><h2>Practice</h2></div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <p style="margin:0;">Four problems on the tools from this tab &mdash; reading a matrix, dominance, the underlining method, and building a matrix from a demand curve. Each is broken into lettered parts with its own check button. <strong>Work the part on paper before you open it.</strong> If a part comes out wrong, the check text names the move that went astray so you can fix that one step instead of restarting.</p>
+        </div>
+
+        <!-- S1 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Dominance in a price war.</strong> Two petrol stations on the same corner each set a <em>High</em> or <em>Low</em> price. Daily profits (Station A, Station B): $(\text{H},\text{H}) = (60,60)$; $(\text{H},\text{L}) = (10,80)$; $(\text{L},\text{H}) = (80,10)$; $(\text{L},\text{L}) = (30,30)$.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Draw the $2\times2$ matrix with rows $=$ Station A. Then hold B at <em>High</em> and ask which price is better for A. (Compare inside that one column only.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">In the <em>High</em> column, A compares $u_A(\text{L},\text{H}) = 80$ against $u_A(\text{H},\text{H}) = 60$. <strong>Low is better.</strong> The other column is a different scenario &mdash; it plays no part in this comparison.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Now hold B at <em>Low</em>. Which is better for A? What can you now conclude about A's strategy?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$u_A(\text{L},\text{L}) = 30 > u_A(\text{H},\text{L}) = 10$, so <em>Low</em> again. Low beat High in <em>every</em> column, which is the definition: <strong>Low is strictly dominant</strong> for A. By symmetry it is strictly dominant for B too.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> State the Nash equilibrium as strategies and then as payoffs. Is it Pareto efficient? If not, name the cell that Pareto dominates it.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\boxed{\text{NE} = (\text{Low},\text{Low}),\ \text{payoffs } (30,30)}$. Not Pareto efficient: $(\text{High},\text{High}) = (60,60)$ makes <em>both</em> strictly better off. Rational individual choice landed on the worst joint outcome &mdash; the signature of a Prisoner's Dilemma.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> The two owners shake hands over coffee and agree to both price High. Using the <em>definition</em> of Nash equilibrium, explain in one sentence why the handshake will not hold.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$(\text{High},\text{High})$ is not a Nash equilibrium because a <em>unilateral</em> deviation to Low raises that station's profit from $60$ to $80$ &mdash; and Nash equilibrium tests exactly that one-player-at-a-time deviation. <strong>Joint optimality is not stability.</strong> A promise with nothing enforcing it does not change a single payoff in the matrix, so it does not change the equilibrium.</p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- S2 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>The underlining method on a $3\times3$.</strong> Row chooses $U$, $M$, or $D$; Column chooses $L$, $C$, or $R$. Payoffs (Row, Column):</p>
+            <div class="pm-wrap">
+                <table class="pm">
+                    <tr><td class="pm-corner" rowspan="2"></td><td class="pm-title-col" colspan="3">Column player</td></tr>
+                    <tr><td class="pm-colhead">L</td><td class="pm-colhead">C</td><td class="pm-colhead">R</td></tr>
+                    <tr><td class="pm-rowhead">U</td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">3</span>, <span class="p2">1</span></div></td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">0</span>, <span class="p2">2</span></div></td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">5</span>, <span class="p2">0</span></div></td></tr>
+                    <tr><td class="pm-rowhead">M</td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">2</span>, <span class="p2">2</span></div></td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">4</span>, <span class="p2">5</span></div></td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">1</span>, <span class="p2">1</span></div></td></tr>
+                    <tr><td class="pm-rowhead">D</td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">1</span>, <span class="p2">0</span></div></td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">3</span>, <span class="p2">4</span></div></td>
+                        <td class="pm-cell"><div class="pay"><span class="p1">2</span>, <span class="p2">3</span></div></td></tr>
+                </table>
+            </div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Show that the <em>Row</em> player has no strictly dominant strategy. (Find Row's best response in each column; if the answer changes, you are done.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Column $L$: Row compares $3, 2, 1$ &rarr; $U$. Column $C$: $0, 4, 3$ &rarr; $M$. Column $R$: $5, 1, 2$ &rarr; $U$. The best answer changes with the column, so no single row is best everywhere &mdash; <strong>no strictly dominant strategy for Row.</strong></p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Now examine the <em>Column</em> player. Compare the copper numbers column-by-column, one row at a time. What do you find?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$C$ against $L$: $2>1$ (row $U$), $5>2$ (row $M$), $4>0$ (row $D$). $C$ against $R$: $2>0$, $5>1$, $4>3$. $C$ beats both alternatives in <em>every</em> row, so <strong>$C$ is strictly dominant for Column</strong>. Careful with orientation: for Column you hold the <em>row</em> fixed and compare across, which is the mirror image of what you did in (a).</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Use (b) to predict Column's play, then find Row's best response to it. State the Nash equilibrium and verify it with the underlining method on the full matrix.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Column plays $C$; Row's best response to $C$ is $M$ ($4 > 3 > 0$). So $\boxed{\text{NE} = (M, C) = (4,5)}$. Underlining check: Row's marks land on $U$ in column $L$, $M$ in $C$, $U$ in $R$; Column's marks land on $C$ in every row. The only cell carrying both marks is $(M,C)$, so it is the unique pure-strategy Nash equilibrium.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Conceptual: Row has no dominant strategy, yet the game has a clean unique answer. Explain what did the work, and why the underlining method would still have found $(M,C)$ even if you had never noticed the dominance in (b).</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Column's dominant strategy did the work: it removed Row's uncertainty entirely, turning Row's strategic problem into an ordinary "pick the biggest number" problem. Dominance is a <em>shortcut</em>, not a requirement &mdash; underlining checks the Nash condition (no player regrets their choice given the other's) cell by cell and never needs a dominant strategy to exist. <strong>When in doubt, underline; dominance just gets you there faster when it happens to be present.</strong></p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- S3 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Two equilibria, then none.</strong> Alex and Sam must each pick an evening plan without talking: <em>Concert</em> or <em>Game</em>. Both would rather be together than apart, but they disagree about where. Payoffs (Alex, Sam): $(\text{C},\text{C}) = (2,1)$; $(\text{C},\text{G}) = (0,0)$; $(\text{G},\text{C}) = (0,0)$; $(\text{G},\text{G}) = (1,2)$.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Show that neither player has a dominant strategy.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Alex against Sam's <em>Concert</em>: $2 > 0$, choose Concert. Against Sam's <em>Game</em>: $1 > 0$, choose Game. Different answers, so no dominant strategy; Sam's case is symmetric ($1>0$ in row C, $2>0$ in row G). Each player wants to do whatever the <em>other</em> is doing &mdash; that is what makes it a coordination game.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Apply the underlining method and list every pure-strategy Nash equilibrium.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Alex's marks: Concert in the Concert column, Game in the Game column. Sam's marks: Concert in row Concert, Game in row Game. Two cells carry both: $\boxed{(\text{C},\text{C}) \text{ and } (\text{G},\text{G})}$. The two mismatched cells pay $(0,0)$ and both players would move &mdash; neither is stable.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Compare the two equilibria on Pareto grounds. Does either Pareto dominate the other? Contrast this with problem 1.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Neither dominates: moving from $(2,1)$ to $(1,2)$ helps Sam and hurts Alex, so no comparison is possible &mdash; both equilibria are <strong>Pareto efficient</strong>. The problem here is not inefficiency (as in problem 1) but <strong>indeterminacy</strong>: Nash equilibrium says both are stable and is silent on which occurs. That silence is where custom, communication, precedent and reputation do their work.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Alex buys a nonrefundable concert ticket in the morning and texts Sam a photo of it. Nothing about the payoff numbers has changed. Why might the outcome change anyway?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">The photo converts a simultaneous game into a <em>sequential</em> one: Sam now moves knowing Alex's choice, and Sam's best response to Concert is Concert ($1 > 0$). Coordination games are exactly the games where being able to move first &mdash; visibly and irreversibly &mdash; is worth something, because the mover gets to select which equilibrium happens. A text saying "I'm planning on the concert" with no ticket attached would <em>not</em> do it: talk that can be walked back changes nothing. See the Sequential tab.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">e</span> Now change the story to pure conflict: Alex wins if they match, Sam wins if they do not. Payoffs (Alex, Sam): $(\text{C},\text{C}) = (1,-1)$; $(\text{C},\text{G}) = (-1,1)$; $(\text{G},\text{C}) = (-1,1)$; $(\text{G},\text{G}) = (1,-1)$. How many pure Nash equilibria are there, and what does the answer tell you to do next?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (e)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Alex's marks fall on the two matching cells; Sam's fall on the two mismatched cells. No cell carries both, so there are <strong>zero</strong> pure-strategy Nash equilibria &mdash; this is Matching Pennies. That is not a failure of the analysis; it is a signal that the equilibrium requires deliberate randomization, which is the Mixed Strategies tab. Any game in which being predictable is fatal will look like this.</p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- S4 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Build the cartel matrix yourself.</strong> Market demand is $p = 140 - Q$ with $Q = q_1 + q_2$. Both firms have $MC = 20$ and no fixed costs. Each firm chooses <em>Collude</em> $= 30$ or <em>Compete</em> $= 40$.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Justify the two labels: show that $30$ is half the monopoly output and $40$ is the Cournot quantity. (Use $Q^{M} = \tfrac{a-c}{2b}$ and $q^{*} = \tfrac{a-c}{3b}$.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Here $a = 140$, $b = 1$, $c = 20$, so $a - c = 120$. Monopoly: $Q^{M} = \tfrac{120}{2} = 60$, half of which is $30$. &#10003; Cournot: $q^{*} = \tfrac{120}{3} = 40$. &#10003; So "Collude" means acting as half a monopolist and "Compete" means playing the one-shot Cournot quantity.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Compute the $(\text{Collude},\text{Collude})$ cell. Work in order: $Q$, then $p$, then $\pi_i = (p - MC)q_i$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$Q = 60$, $p = 140-60 = 80$, $\pi_i = (80-20)(30) = 60 \times 30 = 1800$ each &mdash; $3600$ jointly, which is exactly the monopoly profit. The most common slip here is using each firm's <em>own</em> quantity in the demand curve; price depends on <strong>total</strong> output.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Compute the two off-diagonal cells and the $(\text{Compete},\text{Compete})$ cell, then write out the full matrix.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">Mixed cells: $Q = 70$, $p = 70$. The colluder earns $(70-20)(30) = 1500$; the cheat earns $(70-20)(40) = 2000$. Both compete: $Q = 80$, $p = 60$, $\pi_i = (60-20)(40) = 1600$ each.</p><p style="margin:0;">Matrix (Firm 1, Firm 2): $(\text{Col},\text{Col}) = (1800,1800)$; $(\text{Col},\text{Com}) = (1500,2000)$; $(\text{Com},\text{Col}) = (2000,1500)$; $(\text{Com},\text{Com}) = (1600,1600)$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Find the Nash equilibrium. Then say precisely how much a firm gains by cheating and how much the pair loses collectively by ending up there.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Against <em>Collude</em>: $2000 > 1800$. Against <em>Compete</em>: $1600 > 1500$. <em>Compete</em> is strictly dominant, so $\boxed{\text{NE} = (\text{Compete},\text{Compete}) = (1600,1600)}$. Cheating on a colluder is worth $2000 - 1800 = 200$; the equilibrium costs the pair $3600 - 3200 = 400$ relative to the cartel. Same structure as problem 1 with money attached &mdash; the cartel cell is jointly better but individually unstable. <strong>The one thing that can rescue it is the game being played again tomorrow</strong> (Repeated tab).</p></div></div></div>
+            </div></div>
+        </div>
+
     </div>
 
     <!-- ═══════════ TAB: SEQUENTIAL ═══════════ -->
@@ -736,6 +856,146 @@ li { margin-bottom: 10px; }
                 <p style="margin:0;">This is the <strong>first-mover advantage</strong>, and it exists only because the commitment is <em>observable and irreversible</em>. An announcement firm 1 could quietly walk back is not a commitment &mdash; it is a non-credible threat with better PR. The full computation is in the Cournot tab.</p>
             </div>
         </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Practice</h2></div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <p style="margin:0;">Four problems on backward induction, credibility and commitment. Each is broken into lettered parts with its own check button &mdash; <strong>work the part on paper before you open it.</strong> Two habits are being drilled throughout: always solve the <em>last</em> node first, and always write the equilibrium as a <em>complete plan</em>, not just the path that gets played.</p>
+        </div>
+
+        <!-- Q1 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Two nodes to fold, not one.</strong> A publisher offers an author either a <em>Big</em> or a <em>Small</em> advance. The author observes the offer and then <em>Accepts</em> or <em>Rejects</em>. Payoffs in thousands, listed as (Publisher, Author).</p>
+            <div class="tree-wrap">
+                <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Publisher and author game tree">
+                    <line x1="80" y1="170" x2="300" y2="90" stroke="#21442B" stroke-width="3"/>
+                    <line x1="80" y1="170" x2="300" y2="255" stroke="#21442B" stroke-width="3"/>
+                    <line x1="300" y1="90" x2="560" y2="50" stroke="#BC6C26" stroke-width="3"/>
+                    <line x1="300" y1="90" x2="560" y2="120" stroke="#BC6C26" stroke-width="3"/>
+                    <line x1="300" y1="255" x2="560" y2="215" stroke="#BC6C26" stroke-width="3"/>
+                    <line x1="300" y1="255" x2="560" y2="290" stroke="#BC6C26" stroke-width="3"/>
+                    <circle cx="80" cy="170" r="9" fill="#21442B"/>
+                    <circle cx="300" cy="90" r="9" fill="#BC6C26"/>
+                    <circle cx="300" cy="255" r="9" fill="#BC6C26"/>
+                    <text x="80" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#21442B">Publisher</text>
+                    <text x="300" y="70" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#BC6C26">Author</text>
+                    <text x="262" y="288" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#BC6C26">Author</text>
+                    <text x="185" y="118" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(-20 185 118)">Big advance</text>
+                    <text x="185" y="232" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(21 185 232)">Small advance</text>
+                    <text x="430" y="62" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(-8.7 430 62)">Accept</text>
+                    <text x="430" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(6.6 430 120)">Reject</text>
+                    <text x="430" y="227" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(-8.7 430 227)">Accept</text>
+                    <text x="430" y="288" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(7.7 430 288)">Reject</text>
+                    <rect x="564" y="33" width="104" height="34" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="616" y="55" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(6</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">8)</tspan></text>
+                    <rect x="564" y="103" width="104" height="34" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="616" y="125" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(0</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">2)</tspan></text>
+                    <rect x="564" y="198" width="104" height="34" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="616" y="220" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(10</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">3)</tspan></text>
+                    <rect x="564" y="273" width="104" height="34" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="616" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(1</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">4)</tspan></text>
+                </svg>
+                <div class="tree-caption">Payoffs are (Publisher, Author). Nothing is highlighted &mdash; that is the exercise.</div>
+            </div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> How many decision nodes are there, and which one(s) does backward induction solve first? Say why those and not the root.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Three decision nodes: the Publisher's root and <em>two</em> Author nodes (one after each offer). Both Author nodes are solved first &mdash; they sit next to the terminal payoffs, so the Author has nothing left to predict and each choice is a plain comparison of the Author's own numbers. The root cannot be solved first because the Publisher's payoff depends on a reaction that has not been pinned down yet.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Solve <em>both</em> Author nodes. Read only the second coordinate.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">After a <strong>Big</strong> advance: Accept pays the Author $8$, Reject pays $2$. Since $8 > 2$, she <strong>accepts</strong>. After a <strong>Small</strong> advance: Accept pays $3$, Reject pays $4$. Since $4 > 3$, she <strong>rejects</strong>. The two nodes get different answers &mdash; that is the whole point of solving them separately.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Fold each subgame down to its value and solve the Publisher's node.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">The Big subgame is worth $(6,8)$; the Small subgame is worth $(1,4)$ &mdash; not $(10,3)$, because that branch is never reached. The Publisher compares his own numbers, $6$ against $1$, and <strong>offers the Big advance</strong>.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Write the SPNE as a complete strategy profile and give the payoffs. Then diagnose the reasoning "the Publisher should offer Small, because $10 > 6$."</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">$\boxed{\text{SPNE} = \big(\text{Big};\ \text{Accept after Big},\ \text{Reject after Small}\big),\ \text{payoffs } (6,8)}$. The Author's strategy must name an action at <em>both</em> her nodes, including the one that never gets reached &mdash; a strategy is a full contingency plan.</p><p style="margin:0;">The faulty reasoning reads a payoff off a terminal node the Author would never allow to happen. The $10$ requires her cooperation, and she prefers $4$ to $3$. <strong>You cannot help yourself to a payoff that sits behind someone else's decision.</strong></p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Spotting the non-credible threat.</strong> A Rival decides whether to <em>Enter</em> a market or <em>Stay out</em>. If it enters, the Incumbent chooses a <em>Price war</em> or to <em>Share</em>. Payoffs (Rival, Incumbent).</p>
+            <div class="tree-wrap">
+                <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rival and incumbent game tree">
+                    <line x1="90" y1="170" x2="330" y2="80" stroke="#21442B" stroke-width="3"/>
+                    <line x1="90" y1="170" x2="330" y2="262" stroke="#21442B" stroke-width="3"/>
+                    <line x1="330" y1="80" x2="580" y2="38" stroke="#BC6C26" stroke-width="3"/>
+                    <line x1="330" y1="80" x2="580" y2="140" stroke="#BC6C26" stroke-width="3"/>
+                    <circle cx="90" cy="170" r="9" fill="#21442B"/>
+                    <circle cx="330" cy="80" r="9" fill="#BC6C26"/>
+                    <text x="90" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#21442B">Rival</text>
+                    <text x="330" y="60" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#BC6C26">Incumbent</text>
+                    <text x="196" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(-20 196 108)">Enter</text>
+                    <text x="200" y="236" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(21 200 236)">Stay out</text>
+                    <text x="452" y="45" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(-9.5 452 45)">Price war</text>
+                    <text x="452" y="126" text-anchor="middle" font-family="Inter, sans-serif" font-size="13.5" fill="#2D2D2D" transform="rotate(13.5 452 126)">Share</text>
+                    <rect x="584" y="20" width="104" height="36" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="636" y="43" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(&#8722;3</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">4)</tspan></text>
+                    <rect x="584" y="122" width="104" height="36" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="636" y="145" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(3</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">6)</tspan></text>
+                    <rect x="334" y="244" width="104" height="36" rx="6" fill="#FFFFFF" stroke="#C9C0AE"/>
+                    <text x="386" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="600"><tspan fill="#21442B">(0</tspan><tspan fill="#4A4A4A">, </tspan><tspan fill="#BC6C26">12)</tspan></text>
+                </svg>
+                <div class="tree-caption">Payoffs are (Rival, Incumbent), in millions.</div>
+            </div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Solve the tree by backward induction and state the SPNE with its payoffs.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Incumbent's node: Share pays $6$, Price war pays $4$, so he <strong>shares</strong>. Folding, the Rival compares Enter $= 3$ against Stay out $= 0$ and <strong>enters</strong>. $\boxed{\text{SPNE} = (\text{Enter};\ \text{Share if entry occurs}),\ (3,6)}$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Write the game in normal form. Careful: the Incumbent needs a strategy named even in the branch where he never moves.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">Rival's strategies $\{\text{Enter}, \text{Stay out}\}$; Incumbent's $\{\text{Price war}, \text{Share}\}$ &mdash; his plan describes what he <em>would</em> do if entry happened.</p><p style="margin:0;">$(\text{Enter},\text{War}) = (-3,4)$; $(\text{Enter},\text{Share}) = (3,6)$; $(\text{Stay out},\text{War}) = (0,12)$; $(\text{Stay out},\text{Share}) = (0,12)$. The bottom row repeats because if the Rival stays out, the Incumbent's plan is never executed and cannot affect anyone's payoff.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Underline the best responses and list <em>all</em> pure-strategy Nash equilibria of that matrix.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Rival: in the War column, $0 > -3$ &rarr; Stay out; in the Share column, $3 > 0$ &rarr; Enter. Incumbent: in row Enter, $6 > 4$ &rarr; Share; in row Stay out, $12 = 12$, so <em>both</em> are best responses (mark them both). Two cells carry both marks: $\boxed{(\text{Enter},\text{Share}) \text{ and } (\text{Stay out},\text{War})}$. The tie in the bottom row is what lets the second one exist &mdash; do not skip over it.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> One of those two survives subgame perfection and one does not. Identify which, and explain precisely what the Nash test failed to notice.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$(\text{Stay out},\text{Price war})$ is <strong>not</strong> subgame perfect. It passes the Nash test only because the threat is never tested: the Rival stays out, so the Incumbent's plan is never executed and costs him nothing to announce. Push him into the subgame where entry <em>has</em> occurred and war pays $4$ against Share's $6$ &mdash; he would not do it. That is a <strong>non-credible threat</strong>. Subgame perfection demands the plan be optimal in <em>every</em> subgame, including off-path ones, and only $(\text{Enter},\text{Share})$ clears it. Note the direction: every SPNE is a Nash equilibrium, but not conversely.</p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Buying credibility.</strong> Same game as problem 2, but first the Incumbent may build excess capacity at a cost of $3$ (paid whatever happens next). The capacity is visible to the Rival and cannot be undone. It makes a price war cheap to run: with capacity in place, the war branch pays the Incumbent $10$ gross instead of $4$. All other gross payoffs are unchanged, and the Rival's payoffs are unchanged throughout.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Write down the Incumbent's equilibrium payoff if he does <em>not</em> invest. (You already have this.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">From problem 2, the SPNE without investment is $(\text{Enter};\text{Share})$, so the Incumbent earns $\mathbf{6}$ and the Rival earns $3$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Now suppose the capacity is built. Redo the backward induction in that subgame. Net the cost of $3$ off every Incumbent payoff and solve his node first.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">With capacity, the Incumbent's net payoffs are: Price war $= 10-3 = 7$; Share $= 6-3 = 3$; Stay out $= 12-3 = 9$. At his node, $7 > 3$, so he <strong>fights</strong>. The Rival, forecasting a war, compares Enter $= -3$ against Stay out $= 0$ and <strong>stays out</strong>. Outcome: $(0, 9)$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Should he invest? State the full SPNE of the three-stage game.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Investing yields $9$; not investing yields $6$. Since $9 > 6$, he <strong>invests</strong>. $\boxed{\text{SPNE} = \big(\text{Invest};\ \text{Stay out if capacity, Enter if not};\ \text{War if capacity, Share if not}\big)}$, payoffs $(0,9)$. The capacity is <em>never used</em> in equilibrium &mdash; no war is ever fought &mdash; and it is still worth $3$ to build.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Two conceptual follow-ups. (i) The investment made one of the Incumbent's own options worse to walk away from &mdash; why is that the mechanism rather than a side effect? (ii) What if the capacity were secret, or could be quietly sold off later?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">(i) The Incumbent's problem in problem 2 was never information or willpower &mdash; it was that fighting genuinely was not in his interest once entry occurred, and the Rival could see that. The only way to make the threat credible is to <strong>change the payoffs so that carrying it out becomes a best response</strong>. Spending $3$ to shrink your own future options is exactly what commitment is; talk cannot do it, because talk leaves the tree unchanged.</p><p style="margin:0;">(ii) Both destroy it. If the capacity is secret, the Rival's node is unchanged &mdash; it still forecasts Share and enters, and the Incumbent has burned $3$ for nothing. If it can be quietly reversed, it is not a commitment but an announcement with a receipt attached; the Rival reasons that once entry occurs the Incumbent will sell the capacity and share. <strong>Commitment requires observable and irreversible.</strong></p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>First-mover advantage in quantities.</strong> Demand is $p = 120 - Q$ with $Q = q_1 + q_2$, and both firms have $MC = 0$, so $\pi_i = p\,q_i$. Firm 1 commits to $q_1 \in \{40, 60\}$ first; firm 2 observes $q_1$ and then chooses $q_2 \in \{30, 40, 60\}$.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Compute the six $(\pi_1, \pi_2)$ outcomes. Work each one as $Q \to p \to$ profits.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">With $q_1 = 40$: against $q_2=30$, $Q=70$, $p=50$, $(2000, 1500)$. Against $q_2=40$, $Q=80$, $p=40$, $(1600, 1600)$. Against $q_2=60$, $Q=100$, $p=20$, $(800, 1200)$.</p><p style="margin:0;">With $q_1 = 60$: against $q_2=30$, $Q=90$, $p=30$, $(1800, 900)$. Against $q_2=40$, $Q=100$, $p=20$, $(1200, 800)$. Against $q_2=60$, $Q=120$, $p=0$, $(0,0)$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Solve firm 2's two nodes. What is its best response to each possible $q_1$?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">If $q_1 = 40$: firm 2 compares $1500,\ 1600,\ 1200$ and picks $q_2 = 40$. If $q_1 = 60$: it compares $900,\ 800,\ 0$ and picks $q_2 = 30$. Firm 2 <strong>shrinks when firm 1 expands</strong> &mdash; the discrete version of a downward-sloping best-response function, and the whole reason the first move is worth something.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Fold the two subgames back and solve firm 1's node. State the SPNE and the equilibrium payoffs.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Choosing $40$ leads to $(1600,1600)$; choosing $60$ leads to $(1800,900)$. Firm 1 compares $1800 > 1600$ and commits to $60$. $\boxed{\text{SPNE} = \big(q_1 = 60;\ q_2 = 30 \text{ if } q_1=60,\ q_2 = 40 \text{ if } q_1=40\big),\ \pi = (1800, 900)}$. Firm 1 deliberately produces <em>more</em> than it would want to if it were guessing &mdash; because the extra output is what makes firm 2 pull back.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> If the same quantities were chosen simultaneously, the Nash equilibrium is $(40,40)$ with profits $(1600,1600)$ &mdash; verify this quickly, then compare it to (c): who gains, who loses, what happens to total output and to price?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">Verification: against $q_2=30$ firm 1 prefers $40$ ($2000 > 1800$); against $q_2 = 40$ it prefers $40$ ($1600 > 1200$); against $q_2=60$ it prefers $40$ ($800 > 0$). So $q_1 = 40$ is dominant, and firm 2's best response to $40$ is $40$. NE $= (40,40) = (1600,1600)$, the Cournot outcome.</p><p style="margin:0;">Moving first: firm 1 gains $200$, firm 2 loses $700$. Total output rises from $80$ to $90$ and price falls from $40$ to $30$, so <strong>consumers gain and joint industry profit falls</strong> ($2700 < 3200$). Note what did <em>not</em> change: the payoff numbers are identical in both games. Only the information structure moved &mdash; and that alone moved the answer, which is the lesson of this whole tab.</p></div></div></div>
+            </div></div>
+        </div>
+
     </div>
 
     <!-- ═══════════ TAB: REPEATED ═══════════ -->
@@ -843,6 +1103,95 @@ li { margin-bottom: 10px; }
                 <p style="margin:0;"><strong>The general shape of the result.</strong> Solving the same inequality with symbols gives $\delta^{*} = \dfrac{\pi^{D} - \pi^{C}}{\pi^{D} - \pi^{N}}$ &mdash; the temptation to cheat, divided by the total damage of getting caught. Cooperation is easier to sustain when cheating gains little (small numerator) or when punishment is severe (large denominator). Every real-world cartel story is one of those two levers: make cheating unprofitable, or make retaliation frightening. <span class="beyond-badge">beyond the syllabus</span> The <em>folk theorem</em> generalizes this: for $\delta$ close enough to $1$, essentially any outcome giving each player at least their one-shot Nash payoff can be supported as an equilibrium of the repeated game.</p>
             </div>
         </div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>Practice</h2></div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <p style="margin:0;">Four problems on repetition: the unravelling of a known-finite game, the grim-trigger threshold from first principles, how that threshold moves, and what happens when punishment is not forever. Each is broken into lettered parts with its own check button &mdash; <strong>work the part on paper before you open it.</strong> The single most common error in this material is putting the punishment stream in the wrong period; parts (b) of problems 2 and 4 are aimed straight at it.</p>
+        </div>
+
+        <!-- R1 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>Unravelling.</strong> Two firms play a Prisoner's Dilemma <em>exactly three times</em>, and both know it. Per-period payoffs: mutual cooperation $10$ each; cheating on a cooperator $15$ (the cooperator gets $2$); mutual defection $6$ each. Ignore discounting.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Start where backward induction says to start. What happens in period 3, and why is the reasoning there identical to a one-shot game?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Period 3 is the last, so nothing follows it &mdash; there is no future to punish in and no reputation left worth having. That makes it a plain one-shot Prisoner's Dilemma, where <em>Defect</em> is strictly dominant ($15 > 10$ against a cooperator, $6 > 2$ against a defector). <strong>Both defect in period 3, whatever happened earlier.</strong></p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Fold back to period 2. Can a threat to punish in period 3 support cooperation in period 2?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">No. Period 3's outcome is already pinned down at $(6,6)$ regardless of what happens in period 2, so nothing done in period 2 can change what either firm receives later. With the future fixed, period 2 becomes effectively the last round &mdash; a one-shot dilemma &mdash; and both defect. <strong>A threat only has bite if carrying it out is conditional on behaviour; here it cannot be.</strong></p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Complete the argument and state the unique SPNE outcome and each firm's total payoff. Compare it to the total they would get by cooperating throughout.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">The same argument now applies to period 1, so $\boxed{\text{both firms defect in every period}}$, for a total of $6 \times 3 = 18$ each. Full cooperation would have paid $10 \times 3 = 30$ each. The dilemma is not softened at all by repetition here &mdash; it is reproduced three times over.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Now suppose that after each period the relationship continues with probability $0.9$ and ends otherwise, so no one ever knows which round is last. Does the argument above still go through? Say precisely which step breaks.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">It breaks at step (a): there is no identified last period to anchor the induction, so the whole chain never starts. The expected length is finite ($1/0.1 = 10$ periods), which shows that <strong>it is the <em>certainty of a known end</em>, not the finiteness, that destroys cooperation.</strong> An indefinitely repeated game is analysed exactly like an infinite one, with the continuation probability folded into the discount factor: $\delta = 0.9 \times \tfrac{1}{1+r}$ if there is interest discounting too.</p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- R2 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>The grim-trigger threshold, from scratch.</strong> A Prisoner's Dilemma is repeated infinitely with discount factor $\delta$. Per-period payoffs: mutual cooperation $\pi^{C} = 40$; cheating on a cooperator $\pi^{D} = 60$; mutual defection $\pi^{N} = 25$. Both players announce grim trigger. Derive the condition without using the ready-made formula.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Write the present value of cooperating forever. (You will need $1 + \delta + \delta^{2} + \cdots = \tfrac{1}{1-\delta}$ for $|\delta| < 1$.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$PV_{C} = 40 + 40\delta + 40\delta^{2} + \cdots = \dfrac{40}{1-\delta}$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Write the present value of cheating once and then being punished forever. Think carefully about which period the punishment stream starts in.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$PV_{D} = 60 + \dfrac{25\,\delta}{1-\delta}$. The punishment cannot begin until <em>next</em> period &mdash; the opponent has to observe the defection before reacting &mdash; so the entire punishment stream carries a factor of $\delta$. Writing $60 + \tfrac{25}{1-\delta}$ is the standard error, and it makes cheating look far worse than it is.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Set up the no-deviation inequality and clear the denominator. Justify the direction of the inequality sign as you multiply.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Cooperation is sustainable when $\dfrac{40}{1-\delta} \ge 60 + \dfrac{25\delta}{1-\delta}$. Since $\delta < 1$, the factor $(1-\delta)$ is strictly positive, so multiplying both sides by it leaves the sign unchanged: $40 \ge 60(1-\delta) + 25\delta$.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Solve for $\delta^{*}$, then check your answer against $\delta^{*} = \dfrac{\pi^{D}-\pi^{C}}{\pi^{D}-\pi^{N}}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$40 \ge 60 - 35\delta \Rightarrow 35\delta \ge 20 \Rightarrow \boxed{\delta \ge \tfrac{4}{7} \approx 0.571}$. Formula check: $\dfrac{60-40}{60-25} = \dfrac{20}{35} = \dfrac47$. &#10003;</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">e</span> Using $\delta = \tfrac{1}{1+r}$, what is the highest per-period interest rate at which cooperation survives? Then plug the three payoffs into the explorer above and confirm the crossing point.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (e)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\delta \ge \tfrac47 \iff r \le \dfrac{1-\delta}{\delta} = \dfrac{3/7}{4/7} = \dfrac34$, i.e. up to $\mathbf{75\%}$ per period &mdash; a strikingly impatient firm can still be held in line, because the punishment lasts forever while the gain lasts one period. Entering $\pi^{C}=40$, $\pi^{D}=60$, $\pi^{N}=25$ in the explorer puts $\delta^{*}$ at $0.571$.</p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- R3 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>What moves the threshold.</strong> Keep the setup of problem 2 ($\pi^{C} = 40$, $\pi^{D} = 60$, $\pi^{N} = 25$, so $\delta^{*} = \tfrac47$) and change one thing at a time. Predict the direction <em>before</em> computing each answer.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> A gap in the law makes cheating more lucrative: $\pi^{D}$ rises from $60$ to $80$. Find the new $\delta^{*}$ and say what happened to the cartel's prospects.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\delta^{*} = \dfrac{80-40}{80-25} = \dfrac{40}{55} = \dfrac{8}{11} \approx 0.727$. The threshold <strong>rises</strong>, so cooperation is harder to sustain &mdash; a larger set of discount factors now leads to collapse. Bigger temptation means only very patient firms hold the line.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Instead, the firms find a way to make the price war far nastier: $\pi^{N}$ falls from $25$ to $10$. Find the new $\delta^{*}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">$\delta^{*} = \dfrac{60-40}{60-10} = \dfrac{20}{50} = 0.4$. The threshold <strong>falls</strong>: harsher punishment sustains cooperation among less patient firms. Reading the formula as "temptation divided by total damage", (a) inflated the numerator and (b) inflated the denominator &mdash; those are the only two levers there are.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Back to the original numbers, but cheating now takes <em>two</em> periods to detect, so the cheat earns $\pi^{D} = 60$ in both period $0$ and period $1$ before punishment starts in period $2$. Write the new $PV_{D}$, set up the condition, and solve for $\delta^{*}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">$PV_{D} = 60 + 60\delta + \dfrac{25\,\delta^{2}}{1-\delta}$ &mdash; the punishment stream now starts two periods out, so it carries $\delta^{2}$.</p><p style="margin:0;">Condition: $\dfrac{40}{1-\delta} \ge 60 + 60\delta + \dfrac{25\delta^{2}}{1-\delta}$. Multiply by $(1-\delta) > 0$: $40 \ge (60+60\delta)(1-\delta) + 25\delta^{2} = 60 - 60\delta^{2} + 25\delta^{2} = 60 - 35\delta^{2}$. So $35\delta^{2} \ge 20 \Rightarrow \delta^{2} \ge \tfrac47 \Rightarrow \boxed{\delta \ge \sqrt{\tfrac47} \approx 0.756}$, up from $0.571$. <strong>Slower detection is equivalent to weaker punishment</strong>, and it is why cartels invest so heavily in monitoring each other.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> An antitrust authority wants to break cartels up. Using the formula, name one policy that works through the numerator and one that works through the denominator, and explain the mechanism in each case.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;"><strong>Numerator (raise the temptation).</strong> A leniency programme that pays the first firm to confess adds a private gain to defecting, raising $\pi^{D}$ and pushing $\delta^{*}$ up until it exceeds the firms' actual patience. Banning the information-sharing arrangements that speed detection does the same thing indirectly, via the argument in (c).</p><p style="margin:0;"><strong>Denominator (shrink the damage).</strong> Anything that makes the punishment phase less painful &mdash; price floors, capacity rules that stop a genuine price war, or simply a short expected market life &mdash; raises $\pi^{N}$ toward $\pi^{C}$ and again pushes $\delta^{*}$ up. Both routes attack the same inequality, from opposite ends.</p></div></div></div>
+            </div></div>
+        </div>
+
+        <!-- R4 -->
+        <div class="card" style="margin-bottom:16px;"><div style="display:flex; align-items:flex-start; gap:14px;">
+            <div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
+            <div style="flex:1;">
+            <p style="margin-bottom:6px;"><strong>When punishment is not forever.</strong> Same payoffs as problem 2 ($\pi^{C} = 40$, $\pi^{D} = 60$, $\pi^{N} = 25$), but the players now use a milder rule: a defection triggers exactly <em>two</em> periods of mutual defection, after which cooperation resumes. It is easiest here to compare <em>differences</em> rather than full present values, since the streams are identical from period $3$ onwards.</p>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">a</span> Write the one-period gain from cheating today.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (a)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">Gain $= \pi^{D} - \pi^{C} = 60 - 40 = 20$, received in the current period so it is undiscounted.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">b</span> Write the discounted loss over the punishment phase. Two things to be careful about: which periods it covers, and what the loss is <em>relative to</em>.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (b)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin:0;">The punishment covers periods $1$ and $2$ (not $0$ &mdash; detection takes a period), and in each of them the cheat gets $25$ instead of the $40$ he would otherwise have had, so the loss is $\pi^{C} - \pi^{N} = 15$ per period. Discounted: $15\delta + 15\delta^{2}$. From period $3$ onward both paths pay $40$ forever and cancel, which is what makes the difference method work.</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">c</span> Set up the no-deviation condition and solve the resulting quadratic for $\delta^{*}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (c)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">$20 \le 15\delta + 15\delta^{2}$, i.e. $3\delta^{2} + 3\delta - 4 \ge 0$. The positive root is $$\delta^{*} = \frac{-3 + \sqrt{9 + 48}}{6} = \frac{-3+\sqrt{57}}{6} \approx \frac{4.550}{6} \approx 0.758.$$</p><p style="margin:0;">So $\boxed{\delta \ge 0.758}$ (the negative root is economically meaningless, and the inequality holds above the positive root because the parabola opens upward).</p></div></div></div>
+            <div class="pt-part"><p style="margin-bottom:6px;"><span class="pt-badge">d</span> Compare with grim trigger's $\tfrac47 \approx 0.571$ from problem 2. Explain the direction, and then say why real cartels and real people so often use short punishments anyway.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check (d)</button>
+                <div class="solution-body"><div class="highlight-box"><p style="margin-bottom:6px;">A two-period punishment demands <em>more</em> patience ($0.758$ versus $0.571$), because the cheat only forfeits two periods of cooperation instead of an infinite stream. <strong>Milder punishment shrinks the set of discount factors that sustain cooperation</strong> &mdash; the same denominator logic as problem 3(b), acting through duration rather than severity.</p><p style="margin:0;">Why use it anyway? Grim trigger is unforgiving to the point of being implausible: one accidental price cut, one misread signal, or one genuine cost shock destroys the relationship permanently, and both players would obviously prefer to renegotiate back to cooperation rather than serve an infinite sentence &mdash; which is precisely what makes the infinite punishment hard to believe. A finite punishment is credible <em>because</em> both sides can live with carrying it out. Tit-for-tat is the one-period version of the same idea. <span class="beyond-badge">beyond the syllabus</span> Formalising "both would rather renegotiate" leads to the literature on renegotiation-proof equilibrium.</p></div></div></div>
+            </div></div>
+        </div>
+
     </div>
 
     <!-- ═══════════ TAB: MIXED ═══════════ -->
