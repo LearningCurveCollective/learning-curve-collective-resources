@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Desmos Strategies — Interactive Worksheet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <script>
+    window.MathJax = {
+        tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+    <script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+    <style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* ─── Header ─── */
+.header {
+    background: var(--green-dark);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gold);
+}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo {
+    width: 64px; height: 64px;
+    background: none;
+    display: flex; align-items: center; justify-content: center;
+    overflow: visible; flex-shrink: 0;
+}
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 26px; font-weight: 700; letter-spacing: 0.5px;
+}
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+/* ─── Container ─── */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* ─── Tab System ─── */
+.tab-buttons {
+    display: flex; gap: 6px; margin-bottom: 30px;
+    position: sticky; top: 0; background: var(--cream);
+    z-index: 100; padding: 12px 0 10px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #E8E0D0;
+}
+.tab-button {
+    padding: 8px 13px; background-color: #E2E2E2;
+    border: 2px solid #E0D5C0; border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--text-medium);
+    transition: all 0.25s ease;
+}
+.tab-button:hover {
+    border-color: var(--gold); color: var(--brown-dark);
+    transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.tab-button.active {
+    color: white; border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px);
+}
+
+/* Tab color groups */
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Headers ─── */
+.section-header {
+    display: flex; align-items: center; gap: 15px;
+    margin-top: 40px; margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--gold-light);
+}
+.section-header:first-child { margin-top: 0; }
+.section-number {
+    width: 40px; height: 40px;
+    background-color: var(--gold); color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; flex-shrink: 0;
+}
+.section-header h2 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 24px; color: var(--brown-dark); margin: 0;
+}
+
+/* ─── Cards & Boxes ─── */
+.card {
+    background-color: white; border-radius: 8px;
+    padding: 20px; margin-bottom: 20px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.highlight-box {
+    background-color: var(--white);
+    border-left: 5px solid var(--green-dark);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--green-dark);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box {
+    background-color: #E8F5E9;
+    border-left: 5px solid var(--green-light);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+.warning-box {
+    background-color: #FFEBEE;
+    border-left: 5px solid #E57373;
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+
+/* ─── Concept List ─── */
+.concept-list {
+    background-color: var(--cream-dark);
+    border-radius: 8px; padding: 20px; margin: 15px 0;
+}
+.concept-item {
+    margin-bottom: 12px; padding: 16px 18px;
+    border-radius: 8px; border-bottom: none;
+    display: flex; gap: 16px; align-items: flex-start;
+}
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) {
+    background-color: rgba(59, 83, 35, 0.08);
+    border-left: 4px solid #21442B;
+}
+.concept-item:nth-child(3n+2) {
+    background-color: rgba(200, 168, 78, 0.10);
+    border-left: 4px solid #DDA25E;
+}
+.concept-item:nth-child(3n+3) {
+    background-color: rgba(139, 94, 60, 0.08);
+    border-left: 4px solid #8B5E3C;
+}
+.concept-visual {
+    flex-shrink: 0; width: 64px; height: 64px;
+    border-radius: 6px; overflow: hidden;
+}
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+
+/* ─── Chart Cards ─── */
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+.chart-card {
+    background: white; border-radius: 10px; padding: 20px;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.chart-card h3 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    color: var(--green-dark); font-size: 18px; margin-bottom: 12px;
+}
+.chart-card canvas { border-radius: 6px; margin-bottom: 10px; }
+.chart-card .chart-info { font-size: 14px; color: var(--text-medium); margin-top: 8px; }
+
+/* ─── Interactive Visualizer ─── */
+.viz-container {
+    background: white; border-radius: 12px;
+    padding: 24px; margin: 20px 0;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.viz-controls {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--cream-dark);
+}
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px;
+}
+.control-group select, .control-group input[type="number"] {
+    padding: 8px 12px; border: 2px solid var(--gold-light);
+    border-radius: 6px; font-family: 'Inter', sans-serif;
+    font-size: 14px; background: var(--cream);
+    color: var(--text-dark); outline: none;
+    transition: border-color 0.2s;
+}
+.control-group select:focus, .control-group input[type="number"]:focus {
+    border-color: var(--gold);
+}
+.control-group input[type="number"] { width: 70px; }
+.slider-group {
+    flex: 1; min-width: 200px;
+    display: flex; flex-direction: column; gap: 4px;
+}
+.slider-group label {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px;
+}
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display {
+    font-weight: 700; font-size: 20px; color: var(--gold);
+    min-width: 50px; text-align: center;
+}
+.sum-type-buttons { display: flex; gap: 6px; }
+.sum-type-btn {
+    padding: 8px 16px; border: 2px solid var(--gold-light);
+    border-radius: 6px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600; font-size: 13px;
+    background: var(--cream); color: var(--text-medium);
+    transition: all 0.2s;
+}
+.sum-type-btn:hover { border-color: var(--gold); color: var(--gold); }
+.sum-type-btn.active {
+    background: var(--gold); color: white; border-color: var(--gold);
+}
+.viz-canvas-wrap { text-align: center; margin-bottom: 16px; }
+.viz-canvas-wrap canvas {
+    border-radius: 8px;
+    border: 1px solid var(--cream-dark);
+    max-width: 100%; height: auto;
+}
+.readout-panel {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px; margin-top: 16px;
+}
+.readout-item {
+    background: var(--cream); border-radius: 8px;
+    padding: 12px 16px; text-align: center;
+    border: 1px solid var(--gold-pale);
+}
+.readout-item .readout-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase;
+    letter-spacing: 0.8px; margin-bottom: 4px;
+}
+.readout-item .readout-value {
+    font-size: 20px; font-weight: 700; color: var(--gold);
+}
+.readout-item .readout-value.error-val { color: #E57373; }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+
+/* ─── Formula Tiles ─── */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile {
+    background: var(--white); border: 2px solid var(--green-dark);
+    border-radius: 10px; padding: 18px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.formula-tile h4 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    color: var(--brown-dark); font-size: 14px; margin-bottom: 8px;
+}
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note {
+    font-size: 12.5px; color: var(--brown-medium);
+    margin-top: 6px; line-height: 1.5;
+}
+
+/* ─── Collapsible Toggles ─── */
+.example-toggle, .solution-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: none; border-radius: 6px;
+    padding: 7px 14px; margin-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+}
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow {
+    transition: transform 0.25s; display: inline-block;
+}
+.example-toggle.open .arrow, .solution-toggle.open .arrow {
+    transform: rotate(90deg);
+}
+.example-body, .solution-body {
+    display: none; margin-top: 10px; padding: 14px 18px;
+    background: rgba(255,255,255,0.7); border-radius: 6px;
+    border: 1px solid rgba(33,68,43,0.15);
+}
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* ─── Technique Sections ─── */
+.technique-section {
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 18px;
+}
+.technique-section h3 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 20px; margin-bottom: 10px; color: var(--green-dark);
+}
+.technique-section .step-label {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+}
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+
+.practice-box {
+    background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3);
+    border-radius: 8px; padding: 14px 18px; margin-top: 10px;
+}
+
+/* ─── Beyond-Curriculum Badge ─── */
+.beyond-badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: rgba(221,162,94,0.18); color: #8B5E3C;
+    padding: 2px 9px; border-radius: 10px; margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* ─── Footer ─── */
+.footer {
+    background: var(--brown-dark); color: white;
+    padding: 20px 40px; text-align: center;
+    border-top: 4px solid var(--gold);
+    margin-top: 40px; font-size: 14px; opacity: 0.9;
+}
+.footer a:hover { opacity: 0.85; }
+
+/* ─── Misc ─── */
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.formula { font-family: 'Inter', sans-serif; margin: 15px 0; }
+.mjx-container { overflow-x: auto; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .formula-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ─── Worksheet-specific ─── */
+.technique-section h3 { display: flex; align-items: center; gap: 12px; }
+.tech-num {
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    background: var(--gold); color: white; font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.q-box {
+    background: var(--white); border: 1px solid var(--cream-dark); border-radius: 8px;
+    padding: 14px 18px; margin: 8px 0 12px;
+}
+.q-box .q-tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--copper); margin-bottom: 6px;
+}
+.choices { list-style: none; padding: 0; margin: 8px 0 0; }
+.choices li { padding: 4px 0; }
+.choices .ltr {
+    display: inline-block; width: 24px; height: 24px; border-radius: 50%; text-align: center;
+    line-height: 22px; border: 1.5px solid var(--green-dark); color: var(--green-dark);
+    font-size: 12px; font-weight: 700; margin-right: 8px;
+}
+.tech-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 6px 0 4px; }
+.load-btn {
+    background: var(--white); color: var(--green-dark); border: 2px solid var(--green-dark);
+    border-radius: 8px; padding: 8px 14px; font-family: 'Inter', sans-serif; font-size: 13px;
+    font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+    transition: background 0.15s, color 0.15s;
+}
+.load-btn:hover { background: var(--green-dark); color: white; }
+.load-btn .ico { font-size: 15px; }
+.answer-pill {
+    display: inline-block; background: var(--green-dark); color: white; border-radius: 6px;
+    padding: 3px 12px; font-weight: 700; font-size: 13px; margin-top: 8px;
+}
+.givens { margin: 6px 0 10px; padding-left: 0; list-style: none; }
+.givens li { padding: 2px 0; }
+.givens li::before { content: '▸'; color: var(--gold); margin-right: 8px; }
+.kbd {
+    display: inline-block; background: var(--cream); border: 1px solid var(--cream-dark);
+    border-bottom-width: 2px; border-radius: 4px; padding: 1px 7px; font-family: 'Inter', monospace;
+    font-size: 12px; font-weight: 600; color: var(--brown-dark);
+}
+table.ref { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+table.ref th, table.ref td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--cream-dark); vertical-align: top; }
+table.ref th { background: rgba(33,68,43,0.06); color: var(--green-dark); font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 13px; letter-spacing: 0.3px; }
+table.ref tr:last-child td { border-bottom: none; }
+.mini-desmos {
+    border: 2px solid var(--green-dark); border-radius: 10px; overflow: hidden;
+    background: var(--white); margin: 14px 0;
+}
+.mini-desmos .md-bar {
+    background: linear-gradient(135deg, var(--green-dark), var(--green-medium)); color: white;
+    padding: 8px 14px; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.mini-desmos .md-bar span.hint { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 12px; opacity: 0.85; }
+.mini-desmos .md-calc { height: 380px; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+.badge {
+    background: rgba(221,162,94,0.15); border: 1px solid var(--gold); color: var(--brown-dark);
+    border-radius: 99px; padding: 4px 12px; font-size: 12px; font-weight: 600;
+}
+
+.order-bar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:14px; }
+.order-label { font-weight:600; color:var(--brown-dark); font-size:14px; }
+.order-btn {
+    background: var(--white); color: var(--brown-dark); border: 2px solid #8B5E3C; border-radius: 99px;
+    padding: 7px 16px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.order-btn:hover { background: rgba(66,38,13,0.08); }
+.order-btn.active { background: linear-gradient(135deg, #8B5E3C, #A0704D); color: white; }
+.order-note { font-size: 12px; color: var(--text-medium); }
+.card .tech-chip {
+    display:inline-block; background: rgba(33,68,43,0.08); color: var(--green-dark); border-radius: 4px;
+    padding: 2px 9px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px;
+}
+
+/* ─── Desmos floating button + panel (mirrors the SAT Math builder) ─── */
+.desmos-fab {
+    position: fixed; right: 24px; bottom: 24px; z-index: 1200;
+    display: flex; align-items: center; gap: 9px;
+    background: linear-gradient(135deg, var(--green-dark), var(--green-medium));
+    color: white; border-radius: 99px;
+    padding: 13px 22px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.3px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.28);
+    border: 2px solid var(--gold);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.desmos-fab:hover { transform: translateY(-2px); box-shadow: 0 9px 26px rgba(0,0,0,0.34); }
+.desmos-fab .fab-ico { font-size: 17px; }
+.desmos-panel {
+    position: fixed; z-index: 1250;
+    right: auto; bottom: auto;
+    left: calc(100vw - 444px); top: calc(100vh - 612px);
+    width: 420px; height: 520px;
+    min-width: 300px; min-height: 280px;
+    background: var(--white); border-radius: 12px;
+    border: 2px solid var(--green-dark);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.38);
+    display: none; flex-direction: column; overflow: hidden;
+}
+.desmos-panel.open { display: flex; animation: fadeIn 0.2s ease; }
+.desmos-panel.dragging, .desmos-panel.resizing { user-select: none; }
+.desmos-panel .dp-bar {
+    background: linear-gradient(135deg, var(--green-dark), var(--green-medium));
+    color: white; padding: 10px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; cursor: move; gap: 10px;
+}
+.desmos-panel .dp-title {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 7px; white-space: nowrap;
+}
+.desmos-panel .dp-title .dp-grip { font-size: 13px; opacity: 0.7; letter-spacing: -1px; }
+.desmos-panel .dp-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+.desmos-panel .dp-btn {
+    background: rgba(255,255,255,0.16); color: white;
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 6px;
+    font-size: 12px; font-weight: 600; padding: 4px 9px; cursor: pointer;
+    transition: background 0.15s; white-space: nowrap;
+}
+.desmos-panel .dp-btn:hover { background: rgba(255,255,255,0.30); }
+.desmos-panel .dp-btn.active { background: var(--gold); color: var(--brown-dark); border-color: var(--gold); }
+.desmos-panel .dp-close { background: transparent; border: none; color: white; font-size: 19px; cursor: pointer; line-height: 1; padding: 0 4px; }
+.desmos-panel .dp-body { flex: 1; position: relative; }
+.desmos-panel .dp-calc { position: absolute; inset: 0; }
+.dp-handle { position: absolute; z-index: 6; }
+.dp-handle.dp-n  { top: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.dp-handle.dp-s  { bottom: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.dp-handle.dp-e  { right: -3px; top: 10px; bottom: 10px; width: 8px; cursor: ew-resize; }
+.dp-handle.dp-w  { left: -3px; top: 10px; bottom: 10px; width: 8px; cursor: ew-resize; }
+.dp-handle.dp-ne { top: -4px; right: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.dp-handle.dp-nw { top: -4px; left: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.dp-handle.dp-se { bottom: -4px; right: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.dp-handle.dp-sw { bottom: -4px; left: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.dp-handle.dp-se::before {
+    content: ''; position: absolute; right: 3px; bottom: 3px; width: 9px; height: 9px;
+    border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+}
+.desmos-fallback { padding: 18px; font-size: 13px; color: var(--text-medium); text-align: center; line-height: 1.7; }
+.desmos-fallback a { color: var(--green-dark); font-weight: 600; }
+@media (max-width: 768px) {
+    .desmos-panel { width: calc(100vw - 32px) !important; left: 16px !important; top: auto !important; bottom: 84px !important; height: 60vh !important; }
+    .desmos-fab { right: 16px; bottom: 16px; padding: 11px 18px; }
+    .mini-desmos .md-calc { height: 320px; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>SAT Desmos Strategies</h1>
+            <div class="subtitle">INTERACTIVE WORKSHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">SAT MATH &bull; CALCULATOR &amp; ANSWER FORMAT</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('overview', this)">Calculator Basics</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('tech1', this)">Techniques 1–7</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('tech2', this)">Techniques 8–13</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('fillin', this)">Fill-Ins &amp; Formulas</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Practice</button>
+    </div>
+
+    <!-- ═══ TAB 1 — CALCULATOR BASICS ═══ -->
+    <div id="tab-overview" class="tab-content active">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Can I Use a Calculator?</h2>
+        </div>
+        <div class="card">
+            <p>Yes — and on the digital SAT you can use one on <strong>every</strong> Math question. There is no longer a no-calculator section. You may bring your own approved scientific or graphing calculator (the College Board keeps the current approved list on its calculator policy page), but a Desmos graphing calculator is also built directly into the Bluebook testing app.</p>
+            <p style="margin-top:10px;">Because the built-in calculator is always one click away, the smartest habit is to know <em>exactly which kinds of problems Desmos handles faster than algebra</em>. That is what this sheet trains. Bring the calculator you are comfortable with, but learn the Desmos moves below — several of them are things a handheld simply can't do.</p>
+            <div class="idea-box" style="margin-top:12px;">
+                <strong>Two ways to solve is a safety net.</strong> The SAT gives you a fairly generous amount of time per Math question. On a question you're unsure about, solve it algebraically on scratch paper <em>and</em> confirm it on the graph. If the two answers agree, move on with confidence.
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>What the Test Calculator Looks Like</h2>
+        </div>
+        <div class="card">
+            <p>The calculator embedded in Bluebook is the standard Desmos graphing calculator: a grid on the top, an expression list underneath, and a keypad. The one below is the real thing, running right on this page — type into it, or scroll to any technique and press <strong>Load into Desmos</strong> to send that problem's equations straight into the floating calculator (bottom-right button).</p>
+            <div class="mini-desmos">
+                <div class="md-bar">Desmos Graphing Calculator <span class="hint">same engine as the SAT's Bluebook calculator</span></div>
+                <div class="md-calc" id="inline-desmos"></div>
+            </div>
+            <div class="badge-row">
+                <span class="badge">Hover a point → coordinates appear</span>
+                <span class="badge">Grey dots = intercepts, vertices, intersections</span>
+                <span class="badge">Plus (+) button → table, folder, note</span>
+                <span class="badge">Wrench → axis window &amp; zoom</span>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Keypad Shortcuts Worth Memorizing</h2>
+        </div>
+        <div class="card">
+            <table class="ref">
+                <tr><th style="width:38%;">You want…</th><th>Type this</th></tr>
+                <tr><td>An exponent, e.g. $x^{2}$</td><td><span class="kbd">x</span> <span class="kbd">^</span> <span class="kbd">2</span> — then press <span class="kbd">→</span> to leave the exponent</td></tr>
+                <tr><td>A fraction $\dfrac{3}{4}x$</td><td><span class="kbd">3</span> <span class="kbd">/</span> <span class="kbd">4</span> <span class="kbd">→</span> <span class="kbd">x</span></td></tr>
+                <tr><td>Absolute value $|x-5|$</td><td>type <span class="kbd">abs(</span> or the <span class="kbd">|a|</span> key</td></tr>
+                <tr><td>A square root $\sqrt{x}$</td><td><span class="kbd">sqrt(</span></td></tr>
+                <tr><td>Mean / median of a list</td><td><span class="kbd">mean(3,7,8)</span> &nbsp;·&nbsp; <span class="kbd">median(3,7,8)</span></td></tr>
+                <tr><td>A slider for a constant $k$</td><td>Just type an equation containing $k$; Desmos offers <em>add slider: k</em></td></tr>
+                <tr><td>A regression through data points</td><td>Make a table, then type <span class="kbd">y1 ~ m x1 + b</span></td></tr>
+                <tr><td>An inequality region</td><td>Use <span class="kbd">&lt;</span>, <span class="kbd">&gt;</span>, <span class="kbd">≤</span>, <span class="kbd">≥</span> instead of <span class="kbd">=</span></td></tr>
+            </table>
+            <div class="warning-box" style="margin-top:12px;">
+                <strong>Variable names matter.</strong> Desmos graphs in $x$ and $y$. If a question uses other letters (like $a$ and $b$, or $t$ and $h$), rewrite the equations with $x$ and $y$ before graphing — otherwise Desmos will just offer you sliders.
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <h2>The 13 Moves at a Glance</h2>
+        </div>
+        <div class="card">
+            <p>Each technique on the next two tabs follows the same structure: the concept, a sample question, and exactly how to get the answer out of Desmos. Use this list as a checklist.</p>
+            <div class="formula-grid" style="margin-top:14px;">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>1 · Key points on a graph</h4><p class="formula-note">Intercepts, vertices — just hover</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>2 · Solve a system</h4><p class="formula-note">Read the intersection point</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>3 · Where a curve crosses an axis</h4><p class="formula-note">Roots without factoring</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>4 · Count solutions</h4><p class="formula-note">One crossing, parallel, or same line</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>5 · Graph a circle</h4><p class="formula-note">Standard form goes straight in</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>6 · Max / min</h4><p class="formula-note">Vertex is auto-highlighted</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>7 · Translations</h4><p class="formula-note">See where the shifted graph lands</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>8 · Mean &amp; median</h4><p class="formula-note">Built-in list functions</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>9 · Absolute value</h4><p class="formula-note">Both solutions appear as crossings</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>10 · Inequalities</h4><p class="formula-note">Find the doubly-shaded region</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>11 · Check the answer choices</h4><p class="formula-note">Graph all four, keep the one that fits</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>12 · Unknown constants</h4><p class="formula-note">Slide $k$ until the picture is right</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>13 · Line of best fit</h4><p class="formula-note">Table + regression in two steps</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 2 — TECHNIQUES 1–7 ═══ -->
+    <div id="tab-tech1" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Graphing to Find Points</h2>
+        </div>
+        <div class="card">
+            <p>The first seven techniques all rely on one fact: <strong>Desmos automatically marks the points that matter.</strong> Intercepts, vertices, and intersections show up as grey dots. Hover (or tap) a dot and its coordinates appear. Most of the work is simply typing the equation correctly.</p>
+        </div>
+
+        <!-- T1 -->
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3><span class="tech-num">1</span> Visualizing Important Points on a Function</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Any intercept or vertex you'd normally solve for algebraically can be read directly off the graph. Desmos highlights them for you.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>In the parabola $y = 3x^{2} - 5$, what is the $x$-coordinate of the positive $x$-intercept? Round to the nearest thousandth.</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['y=3x^{2}-5'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$y = 3x^{2} - 5$</li><li>Want the positive $x$-intercept, i.e. where $y = 0$ and $x &gt; 0$</li></ul>
+                    <p>Type the equation. Two grey dots appear where the parabola crosses the $x$-axis. Hover the one on the right: it reads $(1.291,\,0)$.</p>
+                    <p>Algebra check: $3x^{2} = 5 \;\Rightarrow\; x = \sqrt{5/3} \approx 1.291$.</p>
+                    <span class="answer-pill">Answer: 1.291</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- T2 -->
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3><span class="tech-num">2</span> Finding the Solution to a System of Equations</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>The solution to a system of two equations is the point where their graphs meet. Enter each equation on its own line and read the intersection.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>$$2x + 5y = 9$$ $$y = 2x - 3$$ The solution to the system above is $(x,\,y)$. What is the value of $x$?</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['2x+5y=9','y=2x-3'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>Line 1: $2x + 5y = 9$</li><li>Line 2: $y = 2x - 3$</li><li>Want the $x$-value of the intersection</li></ul>
+                    <p>Both lines go in exactly as written — Desmos handles standard form and slope-intercept form equally well. The lines cross at $(2,\,1)$, so $x = 2$.</p>
+                    <p>Algebra check: substitute $y = 2x - 3$: $2x + 5(2x-3) = 9 \Rightarrow 12x = 24 \Rightarrow x = 2$.</p>
+                    <span class="answer-pill">Answer: 2</span>
+                </div>
+            </div>
+            <div class="idea-box" style="margin-top:12px;"><strong>Watch the letters.</strong> If the test writes the system in $a$ and $b$, retype it with $x$ and $y$. The intersection is the same; Desmos just needs those two names to draw a graph.</div>
+        </div>
+
+        <!-- T3 -->
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3><span class="tech-num">3</span> Finding Points of Intersection with an Axis</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>"Where does $f(x)$ cross the $x$-axis?" is the same question as "what are the zeros of $f$?" — and the graph shows every zero at once, including ones that are hard to factor.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>At what values of $x$ does the function $f(x) = 3x^{2} - 27$ intersect the $x$-axis?</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['f(x)=3x^{2}-27'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$f(x) = 3x^{2} - 27$</li><li>Want all $x$ with $f(x) = 0$</li></ul>
+                    <p>Graph it and hover the two grey dots on the $x$-axis: $(-3,\,0)$ and $(3,\,0)$.</p>
+                    <p>Algebra check: $3x^{2} = 27 \Rightarrow x^{2} = 9 \Rightarrow x = \pm 3$.</p>
+                    <span class="answer-pill">Answer: x = 3 and x = −3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- T4 -->
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3><span class="tech-num">4</span> Determining the Number of Solutions to a System</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Two lines can cross once (one solution), run parallel (no solutions), or lie on top of each other (infinitely many). When neither equation is in slope-intercept form, graphing is much faster than converting.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Multiple choice</span><br>How many solutions does the following system have? $$3x + 2y = 7$$ $$5x - 4y = 8$$
+                <ul class="choices"><li><span class="ltr">A</span>Zero</li><li><span class="ltr">B</span>Exactly one</li><li><span class="ltr">C</span>Exactly two</li><li><span class="ltr">D</span>Infinitely many</li></ul></div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['3x+2y=7','5x-4y=8'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$3x + 2y = 7$ and $5x - 4y = 8$</li><li>Want the number of $(x,y)$ pairs satisfying both</li></ul>
+                    <p>Type each equation on its own line. The two lines have clearly different slopes and cross exactly once, at $(2,\,0.5)$. One intersection means one solution.</p>
+                    <span class="answer-pill">Answer: B — exactly one</span>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top:12px;"><strong>Zoom out before deciding "no solutions."</strong> Two lines with nearly equal slopes can look parallel in the default window but cross far off-screen. Compare the slopes ($-\tfrac{3}{2}$ vs. $\tfrac{5}{4}$ here) if the picture is ambiguous.</div>
+        </div>
+
+        <!-- T5 -->
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3><span class="tech-num">5</span> Graphing a Circle</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>The standard form $(x-h)^{2} + (y-k)^{2} = r^{2}$ goes into Desmos exactly as written. Questions about where a circle sits relative to the axes become a quick look.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>How many times does the graph of the circle with the equation below intersect the $x$-axis? $$(x - 1)^{2} + (y - 5)^{2} = 16$$</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['(x-1)^{2}+(y-5)^{2}=16'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>Center $(h,k) = (1,\,5)$, radius $r = \sqrt{16} = 4$</li><li>Want the number of $x$-axis crossings</li></ul>
+                    <p>Graph it. The lowest point of the circle is at $y = 5 - 4 = 1$, which is still above the $x$-axis, so the circle never touches it.</p>
+                    <span class="answer-pill">Answer: 0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- T6 -->
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3><span class="tech-num">6</span> Minimum and Maximum</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>The maximum or minimum of a parabola is its vertex, and Desmos flags the vertex automatically. Hover it and read the coordinates — no completing the square needed.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>$$f(x) = -(x + 4)(x - 2)$$ The function $f$ is defined above. For which value of $x$ does $f(x)$ reach its maximum?</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['f(x)=-(x+4)(x-2)'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$f(x) = -(x+4)(x-2)$, a downward-opening parabola</li><li>Want the $x$-value of the vertex</li></ul>
+                    <p>Graph the function and drag the view until the highest point is visible. The vertex dot reads $(-1,\,9)$. The question asks for the $x$-value, so the answer is $-1$ — not $9$.</p>
+                    <p>Algebra check: the zeros are $x = -4$ and $x = 2$; the vertex sits at their midpoint, $\dfrac{-4 + 2}{2} = -1$.</p>
+                    <span class="answer-pill">Answer: −1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- T7 -->
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3><span class="tech-num">7</span> Translation</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Shifting a graph up or down moves every point by the same amount. Graph the original, note where the vertex is, and reason about where the shifted vertex would land — or just graph the shifted version too.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>$$f(x) = 3x^{2} - 12x + 7$$ The function above is translated up 2 units in the $xy$-plane. How many times does the translated function intersect the $x$-axis?</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['f(x)=3x^{2}-12x+7','y=f(x)+2'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$f(x) = 3x^{2} - 12x + 7$</li><li>Translated graph: $g(x) = f(x) + 2$</li><li>Want the number of $x$-intercepts of $g$</li></ul>
+                    <p>Graph $f$ and hover the vertex: $(2,\,-5)$. Moving up 2 puts the new vertex at $(2,\,-3)$ — still below the axis, and the parabola opens upward, so it must cross the axis twice. Typing $y = f(x) + 2$ as a second line confirms it visually.</p>
+                    <span class="answer-pill">Answer: 2</span>
+                </div>
+            </div>
+            <div class="idea-box" style="margin-top:12px;"><strong>Shortcut:</strong> once you've defined $f(x)$ on one line, Desmos lets you reuse it. $y = f(x) + 2$, $y = f(x - 3)$, $y = -f(x)$ all graph instantly.</div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 3 — TECHNIQUES 8–13 ═══ -->
+    <div id="tab-tech2" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Beyond Plain Graphing</h2>
+        </div>
+        <div class="card">
+            <p>These six techniques use features a handheld calculator either lacks or buries in menus: list statistics, shaded inequalities, sliders for unknown constants, and one-click regression.</p>
+        </div>
+
+        <!-- T8 -->
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3><span class="tech-num">8</span> Mean and Median</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Desmos has list functions built in. Type <span class="kbd">mean(</span> or <span class="kbd">median(</span> followed by the numbers and it evaluates immediately — no sorting, no counting, no arithmetic slips.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>What are the mean and median of the data set below? $$\{3,\ 7,\ 8,\ 12,\ 15,\ 21\}$$</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['\\operatorname{mean}\\left(3,7,8,12,15,21\\right)','\\operatorname{median}\\left(3,7,8,12,15,21\\right)'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong> the six values $3, 7, 8, 12, 15, 21$.</p>
+                    <p>Type <span class="kbd">mean(3,7,8,12,15,21)</span> → Desmos shows $11$.<br>Type <span class="kbd">median(3,7,8,12,15,21)</span> → Desmos shows $10$.</p>
+                    <p>Check: $\text{mean} = \dfrac{66}{6} = 11$; with six values the median is the average of the 3rd and 4th, $\dfrac{8 + 12}{2} = 10$.</p>
+                    <span class="answer-pill">Mean 11 · Median 10</span>
+                </div>
+            </div>
+            <div class="idea-box" style="margin-top:12px;">Also available: <span class="kbd">stdev(</span>, <span class="kbd">min(</span>, <span class="kbd">max(</span>, <span class="kbd">total(</span>, and <span class="kbd">count(</span>. Great for the data-analysis questions.</div>
+        </div>
+
+        <!-- T9 -->
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3><span class="tech-num">9</span> Absolute Value Equations</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>An absolute value equation usually has two solutions. Graph the left side and the right side as separate curves; the solutions are the $x$-coordinates of the intersections.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>What is the sum of the solutions to the equation below? $$|x - 5| = 12$$</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['y=\\left|x-5\\right|','y=12'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong> $|x - 5| = 12$; want the sum of all solutions.</p>
+                    <p>Graph $y = |x - 5|$ (a V shape) and $y = 12$ (a horizontal line). They cross at $x = -7$ and $x = 17$.</p>
+                    <p>$$(-7) + 17 = 10$$</p>
+                    <p>Algebra check: $x - 5 = 12$ or $x - 5 = -12$, giving $17$ and $-7$.</p>
+                    <span class="answer-pill">Answer: 10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- T10 -->
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3><span class="tech-num">10</span> Inequalities</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Desmos shades the solution region of an inequality. With two inequalities, the answer is wherever the shading overlaps. This turns "find a point that satisfies both" into a look-and-pick task.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>$$y &lt; x - 2$$ $$y &gt; -x + 5$$ The point $(x,\,4)$ is a solution to the system of inequalities above. What is one possible value of $x$?</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['y<x-2','y>-x+5','y=4'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$y &lt; x - 2$ and $y &gt; -x + 5$</li><li>The point has $y = 4$; want any valid $x$</li></ul>
+                    <p>Graph both inequalities, then add the line $y = 4$ as a guide. Along $y = 4$, the doubly-shaded region begins just to the right of $x = 6$. So any $x &gt; 6$ works — for example $x = 8$.</p>
+                    <p>Algebra check: $4 &lt; x - 2 \Rightarrow x &gt; 6$, and $4 &gt; -x + 5 \Rightarrow x &gt; 1$. Both hold when $x &gt; 6$.</p>
+                    <span class="answer-pill">Answer: any x &gt; 6 (e.g. 7, 8, 10)</span>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top:12px;"><strong>Strict vs. non-strict.</strong> With $&lt;$ the boundary line is dashed and <em>not</em> included: $x = 6$ itself is not a solution here. Look for the dashed line before grabbing a boundary value.</div>
+        </div>
+
+        <!-- T11 -->
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3><span class="tech-num">11</span> Checking Solutions</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>When the choices are four equations, graph all four. The one whose graph has the properties the question describes is the answer. This is often faster than manipulating each equation by hand.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Multiple choice</span><br>Which of the following is an equation of a line that has a $y$-intercept of $8$ and an $x$-intercept of $2$?
+                <ul class="choices"><li><span class="ltr">A</span>$2x + 8y = 16$</li><li><span class="ltr">B</span>$4x + y = 8$</li><li><span class="ltr">C</span>$x + 4y = 8$</li><li><span class="ltr">D</span>$8x - 2y = 16$</li></ul></div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['2x+8y=16','4x+y=8','x+4y=8','8x-2y=16'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong> the line must pass through $(0,\,8)$ and $(2,\,0)$.</p>
+                    <p>Enter each answer choice on its own line. Hover the intercepts of each. Only choice B passes through both $(0,\,8)$ and $(2,\,0)$. Choice A is the trap — it has the intercepts swapped, $(0,\,2)$ and $(8,\,0)$.</p>
+                    <p>Check B: $x=0 \Rightarrow y = 8$ ✓ &nbsp; $y = 0 \Rightarrow 4x = 8 \Rightarrow x = 2$ ✓</p>
+                    <span class="answer-pill">Answer: B</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- T12 -->
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3><span class="tech-num">12</span> Evaluating Constants</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>If an equation contains an unknown constant like $k$, Desmos offers to create a <strong>slider</strong>. Drag the slider and watch the graph change until it does what the question describes.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Fill-in</span><br>$$3x - 6y = 9$$ $$4x + ky = 5$$ In the system of equations above, $k$ is a constant. For what value of $k$ does the system have no solutions?</div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['3x-6y=9','4x+ky=5','k=1'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong></p>
+                    <ul class="givens"><li>$3x - 6y = 9$ (fixed line)</li><li>$4x + ky = 5$ (line whose slope depends on $k$)</li><li>No solutions $\Leftrightarrow$ the lines are parallel and distinct</li></ul>
+                    <p>Type both equations. After the second one, click <em>add slider: k</em>. Drag $k$ (widen the slider's range if needed) until the two lines are parallel. That happens at $k = -8$.</p>
+                    <p>Algebra check: slope of line 1 is $\dfrac{3}{6} = \dfrac{1}{2}$; slope of line 2 is $-\dfrac{4}{k}$. Setting $-\dfrac{4}{k} = \dfrac{1}{2}$ gives $k = -8$. The intercepts differ, so the lines don't coincide.</p>
+                    <span class="answer-pill">Answer: k = −8</span>
+                </div>
+            </div>
+            <div class="idea-box" style="margin-top:12px;"><strong>Slider tip:</strong> click the endpoints of the slider bar to change its range and step. Setting the step to 1 makes it easy to land on an integer exactly.</div>
+        </div>
+
+        <!-- T13 -->
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3><span class="tech-num">13</span> Slope and $y$-Intercept of a Line from Its Points</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Given a set of points, Desmos can compute the line of best fit in two steps: put the points in a table, then type a regression. The output tells you the slope and intercept directly.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
+            <div class="q-box"><span class="q-tag">Multiple choice</span><br>Which of the following best approximates the equation of the line of best fit for the points $(2, 5)$, $(5, 9)$, and $(9, 14)$?
+                <ul class="choices"><li><span class="ltr">A</span>$y = -1.3x + 2.5$</li><li><span class="ltr">B</span>$y = 1.3x + 2.5$</li><li><span class="ltr">C</span>$y = 2.5x + 1.3$</li><li><span class="ltr">D</span>$y = 0.8x + 3.4$</li></ul></div>
+            <div class="tech-actions"><button class="load-btn" onclick="loadRegression([2,5,9],[5,9,14])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> How to use Desmos</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p><strong>Given:</strong> data points $(2,5)$, $(5,9)$, $(9,14)$; want $y = mx + b$ approximately.</p>
+                    <p><strong>Step 1.</strong> Click the <span class="kbd">+</span> button at the top of the expression list and choose <em>table</em>. Enter the $x$-values in the $x_1$ column and the $y$-values in the $y_1$ column.</p>
+                    <p><strong>Step 2.</strong> On a new line type <span class="kbd">y1 ~ m x1 + b</span>. Desmos runs a linear regression and reports:</p>
+                    $$m \approx 1.284, \qquad b \approx 2.486$$
+                    <p>Slope about $1.3$, intercept about $2.5$ — that is choice B. (Notice choice C has the two numbers swapped.)</p>
+                    <span class="answer-pill">Answer: B</span>
+                </div>
+            </div>
+            <div class="idea-box" style="margin-top:12px;"><strong>Not just lines.</strong> The same trick fits other models: <span class="kbd">y1 ~ a x1^2 + b x1 + c</span> for a quadratic, <span class="kbd">y1 ~ a b^x1</span> for an exponential. Useful whenever the SAT asks "which function best models the data?"</div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 4 — FILL-INS & FORMULAS ═══ -->
+    <div id="tab-fillin" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>How Do the Fill-In Questions Work?</h2>
+        </div>
+        <div class="card">
+            <p>Roughly a quarter of the Math questions are <strong>student-produced responses</strong> — you type an answer instead of picking one. On the digital SAT these are mixed in throughout each module rather than grouped at the end. The rules below prevent avoidable lost points.</p>
+
+            <div class="concept-list" style="margin-top:14px;">
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="20" width="48" height="24" rx="4" fill="none" stroke="#21442B" stroke-width="2.5"/><text x="32" y="37" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="#21442B">4.5</text><path d="M12 12 L20 12" stroke="#DDA25E" stroke-width="3" stroke-linecap="round"/><path d="M44 52 L52 52" stroke="#DDA25E" stroke-width="3" stroke-linecap="round"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">More than one right answer is possible</div>Some questions accept a whole range. If any number from 3 to 7 works, entering $4.5$ (or $3$, or $6$) is fully correct. Enter <strong>one</strong> answer — never a list or a range.</div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><text x="32" y="30" text-anchor="middle" font-size="12" font-family="Inter" font-weight="700" fill="#42260D">.5555</text><text x="32" y="48" text-anchor="middle" font-size="12" font-family="Inter" font-weight="700" fill="#42260D">.5556</text><path d="M8 36 L56 36" stroke="#DDA25E" stroke-width="2" stroke-dasharray="3 3"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Repeating decimals: fill every space</div>Answers can be at most 5 characters if positive, 6 if negative (the minus sign counts). For $\tfrac{5}{9}$ you may enter <span class="kbd">5/9</span>, <span class="kbd">.5555</span>, or <span class="kbd">.5556</span>. Rounded or truncated <em>short</em> forms like <span class="kbd">.56</span> or <span class="kbd">0.55</span> are marked wrong.</div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><text x="16" y="38" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="#21442B">3/4</text><text x="32" y="38" text-anchor="middle" font-size="13" font-family="Inter" fill="#DDA25E">=</text><text x="48" y="38" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="#21442B">9/12</text></svg></div>
+                    <div class="concept-body"><div class="concept-label">You don't have to reduce fractions</div>$\tfrac{3}{4}$, $\tfrac{6}{8}$, and $\tfrac{9}{12}$ are all scored the same. Don't waste time simplifying — just make sure it fits in the character limit. Mixed numbers are <em>not</em> allowed: enter $2\tfrac{1}{2}$ as <span class="kbd">5/2</span> or <span class="kbd">2.5</span>.</div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="14" width="44" height="14" rx="3" fill="none" stroke="#21442B" stroke-width="2"/><rect x="10" y="36" width="44" height="14" rx="3" fill="#F5E4CC" stroke="#DDA25E" stroke-width="2"/><path d="M28 30 L32 35 L36 30" fill="none" stroke="#DDA25E" stroke-width="2"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Use the Answer Preview</div>Bluebook shows a preview of how it read your entry. Glance at it every time — it catches a stray character or a fraction typed as a decimal before you submit.</div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top:16px;">
+                <p><strong>Bottom line:</strong> the SAT is not trying to trick you on formatting. A reasonable form of the correct answer, entered carefully, earns the point. Don't enter units, symbols like $\%$ or $\$$, or spaces.</p>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Do They Provide Any Formulas?</h2>
+        </div>
+        <div class="card">
+            <p>Yes — Bluebook has a reference sheet you can open and close on any Math question. It covers geometry and basic trig. It does <strong>not</strong> cover algebra, which is most of the test, so the quadratic formula, slope, exponent rules, and the like must be memorized. Here is what the popup contains:</p>
+            <div class="formula-grid" style="margin-top:14px;">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Circle</h4><p>$$A = \pi r^{2} \qquad C = 2\pi r$$</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Rectangle &amp; Triangle</h4><p>$$A = \ell w \qquad A = \tfrac{1}{2}bh$$</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>Right Triangle</h4><p>$$c^{2} = a^{2} + b^{2}$$</p><p class="formula-note">Pythagorean theorem</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Special Right Triangles</h4><p>$$30\text{–}60\text{–}90:\ x,\ x\sqrt{3},\ 2x$$ $$45\text{–}45\text{–}90:\ s,\ s,\ s\sqrt{2}$$</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Box &amp; Cylinder</h4><p>$$V = \ell w h \qquad V = \pi r^{2} h$$</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>Sphere</h4><p>$$V = \tfrac{4}{3}\pi r^{3}$$</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Cone &amp; Pyramid</h4><p>$$V = \tfrac{1}{3}\pi r^{2} h \qquad V = \tfrac{1}{3}\ell w h$$</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Angle Facts</h4><p>$$360^{\circ} = 2\pi \text{ radians in a circle}$$ $$\text{Triangle angles sum to } 180^{\circ}$$</p></div>
+            </div>
+            <div class="warning-box" style="margin-top:12px;">
+                <strong>Memorize these — they are NOT on the sheet:</strong> quadratic formula $x = \dfrac{-b \pm \sqrt{b^{2} - 4ac}}{2a}$, vertex $x = -\dfrac{b}{2a}$, slope $m = \dfrac{y_2 - y_1}{x_2 - x_1}$, distance $\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$, midpoint $\left(\dfrac{x_1+x_2}{2}, \dfrac{y_1+y_2}{2}\right)$, exponential growth $A = P(1 + r)^{t}$, circle $(x-h)^2 + (y-k)^2 = r^2$.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 5 — PRACTICE ═══ -->
+    <div id="tab-practice" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Mixed Practice</h2>
+        </div>
+        <div class="card" style="border-left-color: #8B5E3C;">
+            <p>Twenty-six questions — two for each of the 13 techniques. By default they run in technique order (1, 1, 2, 2, …), so you can drill one move at a time. Flip the switch to shuffle them so you also practice <em>recognizing</em> which move a question calls for. For every one, try to answer it <strong>with Desmos first</strong>, then confirm with algebra.</p>
+            <div class="order-bar">
+                <span class="order-label">Question order:</span>
+                <button class="order-btn active" id="order-seq" onclick="setOrder('seq')">By technique</button>
+                <button class="order-btn" id="order-shuf" onclick="setOrder('shuf')">Shuffled</button>
+                <span class="order-note" id="order-note">Technique labels shown in the solutions.</span>
+            </div>
+        </div>
+
+        <div id="practice-problems">
+            <div class="card" style="margin-bottom:16px;" data-tech="1">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+                    <div style="flex:1;">
+                        <p>In the parabola $y = 2x^{2} - 7$, what is the $x$-coordinate of the positive $x$-intercept, rounded to the nearest hundredth?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=2x^{2}-7"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 1 · Key points on a graph</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $y = 2x^{2} - 7$; want the positive root.</p><p>Graph and hover the right-hand $x$-intercept: $(1.871,\,0)$. Or: $2x^2 = 7 \Rightarrow x = \sqrt{3.5} \approx 1.87$.</p><span class="answer-pill">1.87</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="1">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+                    <div style="flex:1;">
+                        <p>The graph of $y = -x^{2} + 4x + 6$ has two $x$-intercepts. What is the $x$-coordinate of the one that is positive, rounded to the nearest hundredth?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=-x^{2}+4x+6"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 1 · Key points on a graph</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $y = -x^{2} + 4x + 6$.</p><p>Hover the right-hand intercept: $(5.162,\,0)$. Quadratic formula check: $x = 2 \pm \sqrt{10}$, and $2 + \sqrt{10} \approx 5.16$.</p><span class="answer-pill">5.16</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="2">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+                    <div style="flex:1;">
+                        <p>$$4x - 3y = 10$$ $$x + 2y = 8$$ If $(x,\,y)$ is the solution to the system above, what is the value of $x + y$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["4x-3y=10", "x+2y=8"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 2 · Solve a system</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> two lines; want $x + y$ at their intersection.</p><p>Graph both; they cross at $(4,\,2)$. So $x + y = 6$. (Read the question twice — it asks for the sum, not $x$.)</p><span class="answer-pill">6</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="2">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
+                    <div style="flex:1;">
+                        <p>$$y = -3x + 11$$ $$y = x - 5$$ The solution to the system above is $(x,\,y)$. What is the value of $y$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=-3x+11", "y=x-5"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 2 · Solve a system</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> two lines in slope-intercept form; want the $y$-value of the intersection.</p><p>Hover the crossing: $(4,\,-1)$. Check: $-3x + 11 = x - 5 \Rightarrow 4x = 16 \Rightarrow x = 4$, $y = -1$.</p><span class="answer-pill">−1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="3">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">5</div>
+                    <div style="flex:1;">
+                        <p>The function $f(x) = x^{2} - 6x + 5$ intersects the $x$-axis at two points. What is the sum of the $x$-coordinates of those points?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=x^{2}-6x+5"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 3 · Where a curve crosses an axis</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = x^{2} - 6x + 5$.</p><p>The $x$-intercepts read $(1,\,0)$ and $(5,\,0)$, so the sum is $6$. Check: $(x-1)(x-5) = 0$.</p><span class="answer-pill">6</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="3">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">6</div>
+                    <div style="flex:1;">
+                        <p>At what positive value of $x$ does the graph of $f(x) = 2x^{2} - 5x - 3$ cross the $x$-axis?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=2x^{2}-5x-3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 3 · Where a curve crosses an axis</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = 2x^{2} - 5x - 3$; want the positive zero.</p><p>Intercepts at $(-0.5,\,0)$ and $(3,\,0)$. Check: $(2x+1)(x-3) = 0$.</p><span class="answer-pill">3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="4">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">7</div>
+                    <div style="flex:1;">
+                        <p>How many solutions does the following system have? $$6x - 4y = 10$$ $$3x - 2y = 5$$<ul class="choices"><li><span class="ltr">A</span>Zero</li><li><span class="ltr">B</span>Exactly one</li><li><span class="ltr">C</span>Exactly two</li><li><span class="ltr">D</span>Infinitely many</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["6x-4y=10", "3x-2y=5"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 4 · Count solutions</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> two equations in standard form.</p><p>Graph both — only <em>one</em> line appears, because the first equation is exactly twice the second. Every point on the line satisfies both.</p><span class="answer-pill">D — infinitely many</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="4">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">8</div>
+                    <div style="flex:1;">
+                        <p>How many solutions does the following system have? $$2x + 3y = 6$$ $$4x + 6y = 9$$<ul class="choices"><li><span class="ltr">A</span>Zero</li><li><span class="ltr">B</span>Exactly one</li><li><span class="ltr">C</span>Exactly two</li><li><span class="ltr">D</span>Infinitely many</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["2x+3y=6", "4x+6y=9"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 4 · Count solutions</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> two equations in standard form.</p><p>The graphs are parallel: both have slope $-\tfrac{2}{3}$ but different intercepts ($y=2$ vs. $y=1.5$). Parallel lines never meet.</p><span class="answer-pill">A — zero</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="5">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">9</div>
+                    <div style="flex:1;">
+                        <p>How many times does the circle $(x - 2)^{2} + (y - 3)^{2} = 9$ intersect the $x$-axis?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["(x-2)^{2}+(y-3)^{2}=9"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 5 · Graph a circle</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> center $(2,\,3)$, radius $3$.</p><p>The lowest point is at $y = 3 - 3 = 0$ — exactly on the axis. The circle is <em>tangent</em> to the $x$-axis, touching it once at $(2,\,0)$.</p><span class="answer-pill">1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="5">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">10</div>
+                    <div style="flex:1;">
+                        <p>How many times does the graph of $(x + 2)^{2} + (y - 1)^{2} = 25$ intersect the $x$-axis?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["(x+2)^{2}+(y-1)^{2}=25"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 5 · Graph a circle</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> center $(-2,\,1)$, radius $5$.</p><p>The center is only 1 unit above the axis and the radius is 5, so the circle dips well below it and crosses twice — at $x \approx 2.90$ and $x \approx -6.90$.</p><span class="answer-pill">2</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="6">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">11</div>
+                    <div style="flex:1;">
+                        <p>$$h(x) = -(x - 1)(x + 7)$$ For what value of $x$ does $h$ reach its maximum value, and what is that maximum?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["h(x)=-(x-1)(x+7)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 6 · Max / min</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> zeros at $x = 1$ and $x = -7$; parabola opens down.</p><p>Vertex $x$ is the midpoint of the zeros: $\dfrac{1 + (-7)}{2} = -3$. Then $h(-3) = -(-4)(4) = 16$. Desmos shows the vertex dot at $(-3,\,16)$.</p><span class="answer-pill">x = −3, maximum 16</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="6">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">12</div>
+                    <div style="flex:1;">
+                        <p>What is the minimum value of the function $f(x) = 2x^{2} + 8x - 3$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=2x^{2}+8x-3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 6 · Max / min</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = 2x^{2} + 8x - 3$, opening upward.</p><p>Hover the vertex: $(-2,\,-11)$. The question asks for the minimum <em>value</em>, which is the $y$-coordinate. Check: $x = -\dfrac{b}{2a} = -2$, $f(-2) = 8 - 16 - 3 = -11$.</p><span class="answer-pill">−11</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="7">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">13</div>
+                    <div style="flex:1;">
+                        <p>$$f(x) = x^{2} - 6x + 10$$ The graph of $f$ is translated down 4 units. How many times does the translated graph intersect the $x$-axis?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=x^{2}-6x+10", "y=f(x)-4"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 7 · Translations</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = x^{2} - 6x + 10$; new graph is $f(x) - 4$.</p><p>Vertex of $f$: $(3,\,1)$ — above the axis, so $f$ has no real zeros. Down 4 puts the vertex at $(3,\,-3)$; an upward parabola with vertex below the axis crosses twice.</p><span class="answer-pill">2</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="7">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">14</div>
+                    <div style="flex:1;">
+                        <p>$$f(x) = -x^{2} + 2x + 3$$ The graph of $f$ is translated up 3 units. What is the maximum value of the translated function?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=-x^{2}+2x+3", "y=f(x)+3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 7 · Translations</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = -x^{2} + 2x + 3$; new graph is $f(x) + 3$.</p><p>Vertex of $f$ reads $(1,\,4)$. Shifting up 3 moves it to $(1,\,7)$, so the new maximum value is $7$.</p><span class="answer-pill">7</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="8">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">15</div>
+                    <div style="flex:1;">
+                        <p>The data set $\{4,\ 4,\ 9,\ 11,\ 15,\ 20,\ 21\}$ has mean $m$ and median $d$. What is $m - d$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["\\operatorname{mean}\\left(4,4,9,11,15,20,21\\right)", "\\operatorname{median}\\left(4,4,9,11,15,20,21\\right)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 8 · Mean &amp; median</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> seven values (already sorted).</p><p><span class="kbd">mean(...)</span> gives $\dfrac{84}{7} = 12$; <span class="kbd">median(...)</span> gives the 4th value, $11$.</p>$$m - d = 12 - 11 = 1$$<span class="answer-pill">1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="8">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">16</div>
+                    <div style="flex:1;">
+                        <p>What is the sum of the mean and the median of the data set $\{6,\ 9,\ 10,\ 10,\ 14,\ 17,\ 22,\ 24\}$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["\\operatorname{mean}\\left(6,9,10,10,14,17,22,24\\right)", "\\operatorname{median}\\left(6,9,10,10,14,17,22,24\\right)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 8 · Mean &amp; median</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> eight values.</p><p>Mean $= \dfrac{112}{8} = 14$. With an even count, the median is the average of the 4th and 5th values: $\dfrac{10 + 14}{2} = 12$.</p>$$14 + 12 = 26$$<span class="answer-pill">26</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="9">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">17</div>
+                    <div style="flex:1;">
+                        <p>What is the sum of the solutions to $|2x + 3| = 9$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=\\left|2x+3\\right|", "y=9"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 9 · Absolute value</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $|2x + 3| = 9$.</p><p>Graph $y = |2x+3|$ and $y = 9$; intersections at $x = 3$ and $x = -6$.</p>$$3 + (-6) = -3$$<span class="answer-pill">−3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="9">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">18</div>
+                    <div style="flex:1;">
+                        <p>What is the sum of the solutions to $|3x - 4| = 8$? Enter your answer as a fraction or a decimal.</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=\\left|3x-4\\right|", "y=8"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 9 · Absolute value</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $|3x - 4| = 8$.</p><p>Crossings at $x = 4$ and $x = -\dfrac{4}{3}$ (Desmos shows $-1.333$).</p>$$4 + \left(-\dfrac{4}{3}\right) = \dfrac{8}{3}$$<p>Enter <span class="kbd">8/3</span> or <span class="kbd">2.666</span> or <span class="kbd">2.667</span> — not <span class="kbd">2.67</span>.</p><span class="answer-pill">8/3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="10">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">19</div>
+                    <div style="flex:1;">
+                        <p>$$y \le 2x - 1$$ $$y \ge -x + 5$$ The point $(3,\,y)$ is a solution to the system of inequalities above. What is one possible value of $y$?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y\\le 2x-1", "y\\ge -x+5", "x=3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 10 · Inequalities</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> $x = 3$; want $y$ inside both shaded regions.</p><p>Along the vertical line $x = 3$, the overlap runs from $y = 2$ up to $y = 5$ (solid boundaries, so both endpoints count).</p><p>Check: $y \le 5$ and $y \ge 2$.</p><span class="answer-pill">any y with 2 ≤ y ≤ 5</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="10">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">20</div>
+                    <div style="flex:1;">
+                        <p>$$y > x + 1$$ $$y < -2x + 10$$ Which of the following points is a solution to the system of inequalities above?<ul class="choices"><li><span class="ltr">A</span>$(1,\,1)$</li><li><span class="ltr">B</span>$(2,\,4)$</li><li><span class="ltr">C</span>$(0,\,12)$</li><li><span class="ltr">D</span>$(4,\,3)$</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y>x+1", "y<-2x+10", "(1,1)", "(2,4)", "(0,12)", "(4,3)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 10 · Inequalities</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> four candidate points; want the one in the doubly-shaded region.</p><p>Plot the points on top of the inequalities — only $(2,\,4)$ lands in the overlap. Check: $4 > 3$ ✓ and $4 < 6$ ✓. $(0,\,12)$ fails the second inequality, the other two fail the first.</p><span class="answer-pill">B</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="11">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">21</div>
+                    <div style="flex:1;">
+                        <p>Which of the following is an equation of a line with slope $-2$ and $y$-intercept $6$?<ul class="choices"><li><span class="ltr">A</span>$x + 2y = 6$</li><li><span class="ltr">B</span>$2x - y = 6$</li><li><span class="ltr">C</span>$2x + y = 6$</li><li><span class="ltr">D</span>$y = 2x + 6$</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["x+2y=6", "2x-y=6", "2x+y=6", "y=2x+6"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 11 · Check the answer choices</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> the line must pass through $(0,\,6)$ and fall 2 for every 1 to the right.</p><p>Graph all four. Only $2x + y = 6$ crosses the $y$-axis at 6 <em>and</em> slopes downward. Rewritten: $y = -2x + 6$.</p><span class="answer-pill">C</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="11">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">22</div>
+                    <div style="flex:1;">
+                        <p>Which of the following is an equation of a line that has an $x$-intercept of $3$ and passes through the point $(6,\,-4)$?<ul class="choices"><li><span class="ltr">A</span>$3x + 4y = 12$</li><li><span class="ltr">B</span>$4x - 3y = 12$</li><li><span class="ltr">C</span>$3x - 4y = 12$</li><li><span class="ltr">D</span>$4x + 3y = 12$</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["3x+4y=12", "4x-3y=12", "3x-4y=12", "4x+3y=12", "(6,-4)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 11 · Check the answer choices</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> the line must pass through $(3,\,0)$ and $(6,\,-4)$.</p><p>Plot the point $(6,\,-4)$ with the four lines; only $4x + 3y = 12$ goes through it while also hitting $(3,\,0)$. Check: $4(6) + 3(-4) = 12$ ✓. Choice B has the right $x$-intercept but the wrong slope.</p><span class="answer-pill">D</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="12">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">23</div>
+                    <div style="flex:1;">
+                        <p>$$5x - 2y = 7$$ $$10x + ky = 3$$ In the system above, $k$ is a constant. For what value of $k$ does the system have no solutions?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["5x-2y=7", "10x+ky=3", "k=1"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 12 · Unknown constants</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> no solutions means parallel, distinct lines.</p><p>Slope of line 1: $\dfrac{5}{2}$. Slope of line 2: $-\dfrac{10}{k}$. Parallel when $-\dfrac{10}{k} = \dfrac{5}{2} \Rightarrow k = -4$. The slider confirms the lines never meet at $k = -4$, and $10x - 4y = 3$ is not a multiple of $5x - 2y = 7$, so they're distinct.</p><span class="answer-pill">k = −4</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="12">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">24</div>
+                    <div style="flex:1;">
+                        <p>$$2x + 5y = 12$$ $$kx + 10y = 24$$ In the system above, $k$ is a constant. For what value of $k$ does the system have infinitely many solutions?</p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["2x+5y=12", "kx+10y=24", "k=1"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 12 · Unknown constants</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> infinitely many solutions means the two equations describe the <em>same</em> line.</p><p>Slide $k$ until the second line sits exactly on top of the first — that happens at $k = 4$. Check: doubling $2x + 5y = 12$ gives $4x + 10y = 24$.</p><span class="answer-pill">k = 4</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="13">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">25</div>
+                    <div style="flex:1;">
+                        <p>Which equation best approximates the line of best fit for the points $(1, 3)$, $(4, 8)$, $(6, 11)$, and $(10, 18)$?<ul class="choices"><li><span class="ltr">A</span>$y = 1.7x + 1.3$</li><li><span class="ltr">B</span>$y = 1.3x + 1.7$</li><li><span class="ltr">C</span>$y = 2.1x - 0.4$</li><li><span class="ltr">D</span>$y = 0.6x + 4.5$</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadRegression([1, 4, 6, 10],[3, 8, 11, 18])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 13 · Line of best fit</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> four data points; want $y \approx mx + b$.</p><p>Table, then <span class="kbd">y1 ~ m x1 + b</span>: Desmos reports $m \approx 1.661$, $b \approx 1.281$. Closest choice: A. (B swaps the two numbers.)</p><span class="answer-pill">A</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:16px;" data-tech="13">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">26</div>
+                    <div style="flex:1;">
+                        <p>A line of best fit is drawn through the points $(0, 4)$, $(3, 7)$, $(5, 10)$, and $(8, 12)$. Which of the following best approximates its slope and $y$-intercept?<ul class="choices"><li><span class="ltr">A</span>slope $\approx 4.1$, intercept $\approx 1.0$</li><li><span class="ltr">B</span>slope $\approx 1.0$, intercept $\approx 4.1$</li><li><span class="ltr">C</span>slope $\approx 0.5$, intercept $\approx 4.0$</li><li><span class="ltr">D</span>slope $\approx 1.5$, intercept $\approx 2.0$</li></ul></p>
+                        <div class="tech-actions"><button class="load-btn" onclick='loadRegression([0, 3, 5, 8],[4, 7, 10, 12])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                                <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 13 · Line of best fit</span></p>
+                                <div class="highlight-box"><p><strong>Given:</strong> four data points.</p><p>Regression output: $m \approx 1.029$, $b \approx 4.132$. Slope about 1, intercept about 4.1 — choice B. Choice A swaps them.</p><span class="answer-pill">B</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end container -->
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: SAT Desmos Strategies</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<!-- ═══════════════════════ DESMOS FLOATING CALCULATOR ═══════════════════════ -->
+<button class="desmos-fab" id="desmos-fab" onclick="toggleDesmos()" aria-label="Open Desmos calculator">
+    <span class="fab-ico">&#128202;</span> Desmos Calculator
+</button>
+<div class="desmos-panel" id="desmos-panel" aria-hidden="true">
+    <div class="dp-bar" id="dp-bar" title="Drag to move">
+        <span class="dp-title"><span class="dp-grip">&#8942;&#8942;</span> Desmos</span>
+        <div class="dp-tools">
+            <button class="dp-btn active" id="dp-mode-graph" onclick="setDesmosMode('graph')">Graphing</button>
+            <button class="dp-btn" id="dp-mode-sci" onclick="setDesmosMode('scientific')">Scientific</button>
+            <button class="dp-btn" id="dp-expand" onclick="toggleDesmosExpand()" title="Expand the calculator window">Expand</button>
+        </div>
+        <button class="dp-close" onclick="toggleDesmos()" aria-label="Close calculator">&times;</button>
+    </div>
+    <div class="dp-body" id="dp-body">
+        <div class="dp-calc" id="desmos-calc"></div>
+    </div>
+    <div class="dp-handle dp-n"  data-dir="n"  title="Drag to resize"></div>
+    <div class="dp-handle dp-s"  data-dir="s"  title="Drag to resize"></div>
+    <div class="dp-handle dp-e"  data-dir="e"  title="Drag to resize"></div>
+    <div class="dp-handle dp-w"  data-dir="w"  title="Drag to resize"></div>
+    <div class="dp-handle dp-ne" data-dir="ne" title="Drag to resize"></div>
+    <div class="dp-handle dp-nw" data-dir="nw" title="Drag to resize"></div>
+    <div class="dp-handle dp-se" data-dir="se" title="Drag to resize"></div>
+    <div class="dp-handle dp-sw" data-dir="sw" title="Drag to resize"></div>
+</div>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    setTimeout(function() {
+        if (window.MathJax && MathJax.typeset) MathJax.typeset();
+        if (name === 'overview' && inlineCalc && inlineCalc.resize) inlineCalc.resize();
+    }, 100);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
+}
+function toggleSolution(btn) { toggleExample(btn); }
+
+/* ---- practice order: by technique (default) or shuffled ---- */
+const PRACTICE_ORIG = Array.from(document.querySelectorAll('#practice-problems > .card'));
+function renumber(container) {
+    container.querySelectorAll(':scope > .card').forEach(function(card, idx) {
+        var circle = card.querySelector('.pnum');
+        if (circle) circle.textContent = idx + 1;
+    });
+}
+function setOrder(mode) {
+    var container = document.getElementById('practice-problems');
+    var cards = PRACTICE_ORIG.slice();
+    if (mode === 'shuf') {
+        for (var i = cards.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = cards[i]; cards[i] = cards[j]; cards[j] = t;
+        }
+    }
+    cards.forEach(function(c){ container.appendChild(c); });
+    renumber(container);
+    document.getElementById('order-seq').classList.toggle('active', mode === 'seq');
+    document.getElementById('order-shuf').classList.toggle('active', mode === 'shuf');
+    document.getElementById('order-note').textContent = mode === 'shuf'
+        ? 'Order randomized — press Shuffled again for a new order.'
+        : 'Questions 1–2 test technique 1, 3–4 test technique 2, and so on.';
+    document.querySelectorAll('#practice-problems .tech-chip').forEach(function(ch){ ch.style.display = mode === 'seq' ? '' : 'none'; });
+    window.scrollTo({ top: container.offsetTop - 120, behavior: 'smooth' });
+}
+/* small technique chip on each card (visible only in by-technique order) */
+PRACTICE_ORIG.forEach(function(card){
+    var chip = document.createElement('span'); chip.className = 'tech-chip';
+    chip.textContent = 'Technique ' + card.dataset.tech;
+    card.querySelector('div[style*="flex:1"]').prepend(chip);
+});
+document.getElementById('order-note').textContent = 'Questions 1–2 test technique 1, 3–4 test technique 2, and so on.';
+
+/* ════════════ DESMOS: inline demo calculator on the Basics tab ════════════ */
+let inlineCalc = null;
+(function(){
+    const host = document.getElementById('inline-desmos');
+    if (!host) return;
+    if (typeof Desmos === 'undefined') {
+        host.innerHTML = '<div class="desmos-fallback">The Desmos calculator could not load '
+            + '(no internet connection, or the script is blocked).<br><br>Open it in a new tab instead: '
+            + '<a href="https://www.desmos.com/calculator" target="_blank" rel="noopener">desmos.com/calculator</a></div>';
+        return;
+    }
+    inlineCalc = Desmos.GraphingCalculator(host, {
+        keypad: true, expressions: true, settingsMenu: false,
+        zoomButtons: true, expressionsTopbar: true, border: false
+    });
+    inlineCalc.setExpression({ id: 'demo', latex: 'y=x^{2}-4' });
+})();
+
+/* ════════════ DESMOS floating calculator ════════════ */
+let desmosCalc = null;
+let desmosMode = 'graph';
+let desmosLoaded = false;
+const DESMOS_OPTS = { keypad: true, expressions: true, settingsMenu: false, zoomButtons: true, expressionsTopbar: true, border: false };
+
+function initDesmos() {
+    if (desmosLoaded) return;
+    const host = document.getElementById('desmos-calc');
+    if (typeof Desmos === 'undefined') {
+        host.parentElement.innerHTML =
+            '<div class="desmos-fallback">The Desmos calculator could not load '
+            + '(no internet connection, or the script is blocked).<br><br>'
+            + 'You can open it in a new tab instead:<br>'
+            + '<a href="https://www.desmos.com/calculator" target="_blank" rel="noopener">'
+            + 'desmos.com/calculator</a></div>';
+        desmosLoaded = true;
+        return;
+    }
+    desmosCalc = Desmos.GraphingCalculator(host, DESMOS_OPTS);
+    desmosLoaded = true;
+}
+function buildDesmosFor(mode) {
+    const host = document.getElementById('desmos-calc');
+    if (typeof Desmos === 'undefined') return;
+    if (desmosCalc) { desmosCalc.destroy(); desmosCalc = null; }
+    host.innerHTML = '';
+    if (mode === 'scientific' && Desmos.ScientificCalculator) desmosCalc = Desmos.ScientificCalculator(host);
+    else desmosCalc = Desmos.GraphingCalculator(host, DESMOS_OPTS);
+}
+function openDesmos() {
+    const panel = document.getElementById('desmos-panel');
+    if (!panel.classList.contains('open')) toggleDesmos();
+}
+function toggleDesmos() {
+    const panel = document.getElementById('desmos-panel');
+    const open = panel.classList.toggle('open');
+    panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (open) {
+        dpClampToViewport();
+        if (!desmosLoaded) initDesmos();
+        else if (desmosCalc && desmosCalc.resize) desmosCalc.resize();
+    }
+}
+function setDesmosMode(mode) {
+    if (mode === desmosMode) return;
+    desmosMode = mode;
+    document.getElementById('dp-mode-graph').classList.toggle('active', mode === 'graph');
+    document.getElementById('dp-mode-sci').classList.toggle('active', mode === 'scientific');
+    if (desmosLoaded && typeof Desmos !== 'undefined') buildDesmosFor(mode);
+}
+
+/* ---- "Load into Desmos" buttons: send a problem's equations to the calculator ---- */
+function loadIntoDesmos(latexList) {
+    openDesmos();
+    if (desmosMode !== 'graph') setDesmosMode('graph');
+    if (!desmosCalc || typeof Desmos === 'undefined') return;  // panel already shows the fallback link
+    desmosCalc.setBlank();
+    latexList.forEach(function(l, i){ desmosCalc.setExpression({ id: 'e' + i, latex: l }); });
+    desmosCalc.setMathBounds({ left: -10, right: 10, bottom: -10, top: 10 });
+    desmosCalc.resize();
+}
+function loadRegression(xs, ys) {
+    openDesmos();
+    if (desmosMode !== 'graph') setDesmosMode('graph');
+    if (!desmosCalc || typeof Desmos === 'undefined') return;  // panel already shows the fallback link
+    desmosCalc.setBlank();
+    desmosCalc.setExpression({ id: 'tbl', type: 'table', columns: [
+        { latex: 'x_{1}', values: xs.map(String) },
+        { latex: 'y_{1}', values: ys.map(String) }
+    ]});
+    desmosCalc.setExpression({ id: 'reg', latex: 'y_{1}\\sim mx_{1}+b' });
+    const pad = 2;
+    desmosCalc.setMathBounds({ left: Math.min.apply(null, xs) - pad, right: Math.max.apply(null, xs) + pad,
+                               bottom: Math.min.apply(null, ys) - pad, top: Math.max.apply(null, ys) + pad });
+    desmosCalc.resize();
+}
+
+/* ════════ Desmos window: drag to move, resize from any edge, expand ════════ */
+const DP_MIN_W = 300, DP_MIN_H = 280;
+let dpExpanded = false;
+let dpPreExpand = null;
+function dpClampToViewport() {
+    const panel = document.getElementById('desmos-panel');
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    let w = Math.min(r.width, window.innerWidth - 16);
+    let h = Math.min(r.height, window.innerHeight - 16);
+    let left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
+    let top  = Math.min(Math.max(8, r.top),  window.innerHeight - h - 8);
+    panel.style.width = w + 'px'; panel.style.height = h + 'px';
+    panel.style.left = left + 'px'; panel.style.top = top + 'px';
+}
+function dpAfterResize() { if (desmosCalc && desmosCalc.resize) desmosCalc.resize(); }
+function toggleDesmosExpand() {
+    const panel = document.getElementById('desmos-panel');
+    const btn = document.getElementById('dp-expand');
+    if (!panel) return;
+    if (!dpExpanded) {
+        const r = panel.getBoundingClientRect();
+        dpPreExpand = {w:r.width, h:r.height, left:r.left, top:r.top};
+        const w = Math.min(900, window.innerWidth - 32);
+        const h = Math.min(720, window.innerHeight - 32);
+        panel.style.width = w + 'px'; panel.style.height = h + 'px';
+        panel.style.left = ((window.innerWidth - w) / 2) + 'px';
+        panel.style.top = ((window.innerHeight - h) / 2) + 'px';
+        dpExpanded = true;
+        if (btn) { btn.textContent = 'Restore'; btn.classList.add('active'); }
+    } else {
+        if (dpPreExpand) {
+            panel.style.width = dpPreExpand.w + 'px'; panel.style.height = dpPreExpand.h + 'px';
+            panel.style.left = dpPreExpand.left + 'px'; panel.style.top = dpPreExpand.top + 'px';
+        }
+        dpExpanded = false;
+        if (btn) { btn.textContent = 'Expand'; btn.classList.remove('active'); }
+        dpClampToViewport();
+    }
+    dpAfterResize();
+}
+(function(){
+    const panel = document.getElementById('desmos-panel');
+    const bar = document.getElementById('dp-bar');
+    if (!panel || !bar) return;
+    let sx, sy, sl, st;
+    function onMove(e){
+        const r = panel.getBoundingClientRect();
+        let left = sl + (e.clientX - sx);
+        let top  = st + (e.clientY - sy);
+        left = Math.min(Math.max(8 - r.width + 60, left), window.innerWidth - 60);
+        top  = Math.min(Math.max(8, top), window.innerHeight - 44);
+        panel.style.left = left + 'px'; panel.style.top = top + 'px';
+    }
+    function onUp(){
+        panel.classList.remove('dragging');
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+    }
+    bar.addEventListener('mousedown', function(e){
+        if (e.target.closest('button')) return;
+        e.preventDefault();
+        const r = panel.getBoundingClientRect();
+        sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top;
+        panel.classList.add('dragging');
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+    });
+})();
+(function(){
+    const panel = document.getElementById('desmos-panel');
+    if (!panel) return;
+    let dir, sx, sy, sl, st, sw, sh;
+    function onMove(e){
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        let w = sw, h = sh, left = sl, top = st;
+        if (dir.indexOf('e') !== -1) w = sw + dx;
+        if (dir.indexOf('s') !== -1) h = sh + dy;
+        if (dir.indexOf('w') !== -1) { w = sw - dx; left = sl + dx; }
+        if (dir.indexOf('n') !== -1) { h = sh - dy; top = st + dy; }
+        if (w < DP_MIN_W) { if (dir.indexOf('w') !== -1) left -= (DP_MIN_W - w); w = DP_MIN_W; }
+        if (h < DP_MIN_H) { if (dir.indexOf('n') !== -1) top  -= (DP_MIN_H - h); h = DP_MIN_H; }
+        w = Math.min(w, window.innerWidth - 16); h = Math.min(h, window.innerHeight - 16);
+        left = Math.min(Math.max(8, left), window.innerWidth - w - 8);
+        top  = Math.min(Math.max(8, top),  window.innerHeight - h - 8);
+        panel.style.width = w + 'px'; panel.style.height = h + 'px';
+        panel.style.left = left + 'px'; panel.style.top = top + 'px';
+        dpAfterResize();
+    }
+    function onUp(){
+        panel.classList.remove('resizing');
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+    }
+    panel.querySelectorAll('.dp-handle').forEach(function(handle){
+        handle.addEventListener('mousedown', function(e){
+            e.preventDefault(); e.stopPropagation();
+            dir = handle.dataset.dir;
+            const r = panel.getBoundingClientRect();
+            sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top; sw = r.width; sh = r.height;
+            if (dpExpanded) {
+                dpExpanded = false;
+                const btn = document.getElementById('dp-expand');
+                if (btn) { btn.textContent = 'Expand'; btn.classList.remove('active'); }
+            }
+            panel.classList.add('resizing');
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+        });
+    });
+})();
+window.addEventListener('resize', function(){
+    const panel = document.getElementById('desmos-panel');
+    if (panel && panel.classList.contains('open')) { dpClampToViewport(); dpAfterResize(); }
+});
+</script>
+</body>
+</html>
