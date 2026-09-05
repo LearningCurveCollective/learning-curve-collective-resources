@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullerton (2001): Comparing Environmental Policies — Interactive Worksheet</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- MathJax 3.2.2 -->
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [["$","$"]],
+            displayMath: [["$$","$$"]]
+        },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+    <style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* ─── Header ─── */
+.header {
+    background: var(--green-dark);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--gold);
+}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo {
+    width: 64px; height: 64px;
+    background: none;
+    display: flex; align-items: center; justify-content: center;
+    overflow: visible; flex-shrink: 0;
+}
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 26px; font-weight: 700; letter-spacing: 0.5px;
+}
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+/* ─── Container ─── */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* ─── Tab System ─── */
+.tab-buttons {
+    display: flex; gap: 6px; margin-bottom: 30px;
+    position: sticky; top: 0; background: var(--cream);
+    z-index: 100; padding: 12px 0 10px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #E8E0D0;
+}
+.tab-button {
+    padding: 8px 13px; background-color: #E2E2E2;
+    border: 2px solid #E0D5C0; border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--text-medium);
+    transition: all 0.25s ease;
+}
+.tab-button:hover {
+    border-color: var(--gold); color: var(--brown-dark);
+    transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.tab-button.active {
+    color: white; border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px);
+}
+
+/* Tab color groups */
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Headers ─── */
+.section-header {
+    display: flex; align-items: center; gap: 15px;
+    margin-top: 40px; margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--gold-light);
+}
+.section-header:first-child { margin-top: 0; }
+.section-number {
+    width: 40px; height: 40px;
+    background-color: var(--gold); color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; flex-shrink: 0;
+}
+.section-header h2 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 24px; color: var(--brown-dark); margin: 0;
+}
+
+/* ─── Cards & Boxes ─── */
+.card {
+    background-color: white; border-radius: 8px;
+    padding: 20px; margin-bottom: 20px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.highlight-box {
+    background-color: var(--white);
+    border-left: 5px solid var(--green-dark);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--green-dark);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box {
+    background-color: #E8F5E9;
+    border-left: 5px solid var(--green-light);
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+.warning-box {
+    background-color: #FFEBEE;
+    border-left: 5px solid #E57373;
+    border-radius: 6px; padding: 15px; margin: 15px 0;
+}
+
+/* ─── Concept List ─── */
+.concept-list {
+    background-color: var(--cream-dark);
+    border-radius: 8px; padding: 20px; margin: 15px 0;
+}
+.concept-item {
+    margin-bottom: 12px; padding: 16px 18px;
+    border-radius: 8px; border-bottom: none;
+    display: flex; gap: 16px; align-items: flex-start;
+}
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) {
+    background-color: rgba(59, 83, 35, 0.08);
+    border-left: 4px solid #21442B;
+}
+.concept-item:nth-child(3n+2) {
+    background-color: rgba(200, 168, 78, 0.10);
+    border-left: 4px solid #DDA25E;
+}
+.concept-item:nth-child(3n+3) {
+    background-color: rgba(139, 94, 60, 0.08);
+    border-left: 4px solid #8B5E3C;
+}
+.concept-visual {
+    flex-shrink: 0; width: 64px; height: 64px;
+    border-radius: 6px; overflow: hidden;
+}
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+
+/* ─── Chart Cards ─── */
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+.chart-card {
+    background: white; border-radius: 10px; padding: 20px;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.chart-card h3 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    color: var(--green-dark); font-size: 18px; margin-bottom: 12px;
+}
+.chart-card canvas { border-radius: 6px; margin-bottom: 10px; }
+.chart-card .chart-info { font-size: 14px; color: var(--text-medium); margin-top: 8px; }
+
+/* ─── Interactive Visualizer ─── */
+.viz-container {
+    background: white; border-radius: 12px;
+    padding: 24px; margin: 20px 0;
+    border: 2px solid var(--gold-light);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.viz-controls {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--cream-dark);
+}
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px;
+}
+.control-group select, .control-group input[type="number"] {
+    padding: 8px 12px; border: 2px solid var(--gold-light);
+    border-radius: 6px; font-family: 'Inter', sans-serif;
+    font-size: 14px; background: var(--cream);
+    color: var(--text-dark); outline: none;
+    transition: border-color 0.2s;
+}
+.control-group select:focus, .control-group input[type="number"]:focus {
+    border-color: var(--gold);
+}
+.control-group input[type="number"] { width: 70px; }
+.slider-group {
+    flex: 1; min-width: 200px;
+    display: flex; flex-direction: column; gap: 4px;
+}
+.slider-group label {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px;
+}
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display {
+    font-weight: 700; font-size: 20px; color: var(--gold);
+    min-width: 50px; text-align: center;
+}
+.sum-type-buttons { display: flex; gap: 6px; }
+.sum-type-btn {
+    padding: 8px 16px; border: 2px solid var(--gold-light);
+    border-radius: 6px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600; font-size: 13px;
+    background: var(--cream); color: var(--text-medium);
+    transition: all 0.2s;
+}
+.sum-type-btn:hover { border-color: var(--gold); color: var(--gold); }
+.sum-type-btn.active {
+    background: var(--gold); color: white; border-color: var(--gold);
+}
+.viz-canvas-wrap { text-align: center; margin-bottom: 16px; }
+.viz-canvas-wrap canvas {
+    border-radius: 8px;
+    border: 1px solid var(--cream-dark);
+    max-width: 100%; height: auto;
+}
+.readout-panel {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px; margin-top: 16px;
+}
+.readout-item {
+    background: var(--cream); border-radius: 8px;
+    padding: 12px 16px; text-align: center;
+    border: 1px solid var(--gold-pale);
+}
+.readout-item .readout-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--green-dark); text-transform: uppercase;
+    letter-spacing: 0.8px; margin-bottom: 4px;
+}
+.readout-item .readout-value {
+    font-size: 20px; font-weight: 700; color: var(--gold);
+}
+.readout-item .readout-value.error-val { color: #E57373; }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+
+/* ─── Formula Tiles ─── */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile {
+    background: var(--white); border: 2px solid var(--green-dark);
+    border-radius: 10px; padding: 18px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.formula-tile h4 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    color: var(--brown-dark); font-size: 14px; margin-bottom: 8px;
+}
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note {
+    font-size: 12.5px; color: var(--brown-medium);
+    margin-top: 6px; line-height: 1.5;
+}
+
+/* ─── Collapsible Toggles ─── */
+.example-toggle, .solution-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: none; border-radius: 6px;
+    padding: 7px 14px; margin-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+}
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow {
+    transition: transform 0.25s; display: inline-block;
+}
+.example-toggle.open .arrow, .solution-toggle.open .arrow {
+    transform: rotate(90deg);
+}
+.example-body, .solution-body {
+    display: none; margin-top: 10px; padding: 14px 18px;
+    background: rgba(255,255,255,0.7); border-radius: 6px;
+    border: 1px solid rgba(33,68,43,0.15);
+}
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* ─── Technique Sections ─── */
+.technique-section {
+    border-radius: 10px; padding: 22px 24px; margin-bottom: 18px;
+}
+.technique-section h3 {
+    font-family: 'Switzer', 'Space Grotesk', sans-serif;
+    font-size: 20px; margin-bottom: 10px; color: var(--green-dark);
+}
+.technique-section .step-label {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+}
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+
+.practice-box {
+    background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3);
+    border-radius: 8px; padding: 14px 18px; margin-top: 10px;
+}
+
+/* ─── Beyond-Curriculum Badge ─── */
+.beyond-badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: rgba(221,162,94,0.18); color: #8B5E3C;
+    padding: 2px 9px; border-radius: 10px; margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* ─── Footer ─── */
+.footer {
+    background: var(--brown-dark); color: white;
+    padding: 20px 40px; text-align: center;
+    border-top: 4px solid var(--gold);
+    margin-top: 40px; font-size: 14px; opacity: 0.9;
+}
+.footer a:hover { opacity: 0.85; }
+
+/* ─── Misc ─── */
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.formula { font-family: 'Inter', sans-serif; margin: 15px 0; }
+.mjx-container { overflow-x: auto; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .formula-grid { grid-template-columns: 1fr; }
+}
+
+
+/* ===== Worksheet-specific styles ===== */
+.qa-question { font-weight: 600; color: var(--text-dark); }
+.given-key {
+    background: rgba(33,68,43,0.05);
+    border: 1px solid rgba(33,68,43,0.18);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14.5px;
+}
+.given-key p { margin: 4px 0; }
+.t1 { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+.t1 th {
+    background: var(--green-dark); color: white; padding: 9px 10px;
+    font-family: 'Switzer','Space Grotesk',sans-serif; font-weight: 600;
+    text-align: left; font-size: 13px; letter-spacing: 0.3px;
+}
+.t1 td { padding: 8px 10px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; }
+.t1 tr.grp td {
+    background: rgba(221,162,94,0.14); font-weight: 700;
+    color: var(--brown-dark); font-family: 'Switzer','Space Grotesk',sans-serif;
+}
+.t1 tr:nth-child(even):not(.grp) td { background: rgba(33,68,43,0.03); }
+.fig-caption { font-size: 13px; color: var(--text-medium); text-align: center; margin-top: 8px; font-style: italic; }
+.mini-badge {
+    display: inline-block; background: var(--gold); color: white;
+    padding: 1px 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-right: 6px;
+}
+.mini-badge.green { background: var(--green-light); }
+.mini-badge.brown { background: #8B5E3C; }
+/* --- Area quiz interactivity --- */
+.qfig { max-width: 640px; margin: 12px 0 4px 0; }
+.qfig svg { width: 100%; height: auto; display: block; }
+.qarea { cursor: pointer; stroke: transparent; stroke-width: 2.5; transition: all 0.12s ease; }
+.qarea:hover { opacity: 0.75; }
+.qarea.sel { stroke: var(--copper); stroke-width: 3.5; stroke-linejoin: round; }
+.clear-link { margin-left: 12px; font-size: 12.5px; color: var(--text-medium); text-decoration: underline; }
+.qfb { margin-top: 10px; }
+.qfb .fb-good {
+    background: rgba(57,134,78,0.10); border-left: 4px solid var(--green-light);
+    border-radius: 6px; padding: 12px 16px; font-size: 14.5px;
+}
+.qfb .fb-bad {
+    background: rgba(188,108,38,0.10); border-left: 4px solid var(--copper);
+    border-radius: 6px; padding: 12px 16px; font-size: 14.5px;
+}
+/* --- Splits tab mini-models --- */
+.policy-def { font-size: 13.5px; color: var(--text-medium); margin: 6px 0 8px 0; }
+.split-fig { margin: 6px 0 10px 0; background: white; border-radius: 8px; padding: 6px; border: 1px solid var(--cream-dark); }
+.split-fig svg { width: 100%; height: auto; display: block; }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAE5CAYAAAC9N7qHAAB7OElEQVR4nOzdd5weV3X4/8+5M/O07VXVkix3yV3uGFwB00yVaQFCen5JSALfNNp6QwtpBBKSQAokQCiiGgMGbGzZ4N5tyd2yrL69PHXKPb8/5tmVZKusirfI980LS9ryPPO0M3fOPfdcYTr19JjVK9dL37o+KS4symu3vjbppRd6sdN1CCt6VmfyTZVmv6xtGSNNiZgWRVrwadKEDhHtxpJX7NFGJFJkHsoCIFJBgCVGpKCqCshuN66oeCJqdYvCCOCJYhCeQikDvqJVMfK0gjHKuGKfBY/E6pCnWiEwVRvG/UayYdgd9jduXRWu7e2ND/iB9vSYHuDahds8gMatjylA9/puXbFihfZe3asACHrwz+Y00Z3P8+qrVpuJv/et6Jv8enHhCQLp47yYiy3AdL+3ZlpPT4/Z/0/tdBM3mYnnba6beH8/V/f67smv7/a+hznx3n9hXxxFeq7ukfXr18uaNWss7PUJSZ8qgSs+e0VmrJrJBOXsAT15UaEmWvbyfoAXmmSJ0eRo8DoUWSDYDoWjxJBVpVWQBqAZpYDQKL4JvIyPWgVN71Zt/U9VsDsPRVX3/igmHoyR5/9b5PnfFxBJvxdXI9RqLBCiDIHGCsNiTCiqIwolYIuio0bZqpYRych2X832Wi4ZCio29KqFqHsllTVX7fO53l0PZvXK1ekBrdn55RUrVuj69etlxYoV2julGzowPc/59/r163d/0lanf6xZt0Lp7T2UICso9FzdI99rvDXfaPOmwVRsJc5korzJ2DARE3lq0DZjvPkWz6q1k8cixiqxLhJDqyqJiu48TkWM58UWfUYgVGv2+nkSY9SSGE+l5ll5JpR4j48pF5oaZPZyQu6rru1dmzz3le25ukd6D+05enFSZPWa+gn/Oe99gOe973cOatLfngYvSIBevXq1t2bF8z9Y5/zd6472qhytIouNT6cmsgjRBkUXi4qnooko80DaEZJdR077eRSKaqAii0XwRWQyKKYBsB4UNQ28qjoZjNNArFaR9Fg1/QCKsDOK7nocMqVj0t1ePlHd+Y3nfFdE6/fipbeeHrvIzsA+eez1k0P6p9YfS/oiWmv7RGRU0WeBKiIbxRLisQFrY9TbalRqeNFWIhOHvre9UNNkbe8PRqb0HM+gVX+zuiWvZRNnCuJXq4vVWEkS8QSzQAxeIjYw1sxXUcFqXo05SlCLSB6ri0VEUDxEF6OSUyEEOoyRrokTcfpe2fP9T55g9/KRVLUH9HFVu5cfFsCyXWEM1BNk4u0iImJR3aJCSVS8XUd/ghpg3CpbMVMfREvCVjW2hCJzYTS5dx5gh7EyZrAGI4qoqJJYsdsCayKrxqjEsUeywwuzUZKL5Zd/9aPhg73Hnp4ec+22a73lly+3h2EQsVeHN0BPXGLVD/bcT7xunsGcr0ZfJcpZKAtV6PSzvm8CD03sZNCcMBFAD4baXT4oiiKoToRERFGdCK/pZ1Enw/BsuMzTyf/WA/rOsfpzj71+0tjl2CeDuScI6Z8A4hlQJa7E9edHR4EEkVEFKzAqQmItwwrbBIzAZjUMG6uBVdkMMmwl8cQ3ViyeiOyIrQzs7wH5tShDNliWaOxj6iciFUUkMJocrUggKqqqIoalKI2KCQXbqkYWY0HAKNoKIvUH3pY+dhFEmkXSZ8TPBekzofX3wcQTOHElRHolNPnWmjw5T+mV0XQQsIdA9pzX4VA992rrud+TPXxPUSYHJYfpvuYaGybYKNn9VVCw1o6LkKAi6ftdR1UkHfyJjiESYTUWw9MoiahsUxhRtF9F+tVqX8Z4Q2GSRBonFZsPK8vvaSuuWbMm2e0AFOHqHlm9fr2sWbFGD1dq7bC9OqtXr/YmDvqCT7zmpVb8Xwf7Kj8TLJiIMzZR1FrUaiJgdfLdtvOyUUDQg3zXTG10e2SaOBOlwT09IQGiqvUPoQ/IxIc4/XPiSmPyNnbe1ESGfW8xbEonUdn3O0ye+9fnfWG3KwfQ553M2fnIJ9MCulsU2/W9JTIZZNM/Z9/7ZdeTwXO/Nfna7vH3Jq/GpkomX+i5TwUjiMfuD0j2mG5kl8/Ant77u/x74nNgwzhSZFBgEMMmteZZNHkGTx5F9aHbP/jDJ3e9n9XfWu0djpH1ob9BFeFqhF7suT2vO9XLmo9geK2X9XNJLcZaO3mAu4xaZ98H48inu/x3D6P09KvP+8teTfUlnFoA0H38c7cwv+vJ+zmfvSkekHPkev6b7blf2T3dOPX3voiZuEoRYxA/TRbElQhRHbKqzyKsJeG6qsndc/+H1vRP/Obq1avNfubg9uqwvanP++Tr/8R4XG18ryUJY1SJRfFcMHYc5wigE+lHTXNKE3NHvnj1oF0fOyRR/Lgm+nNjvK/d+sHv31b/7cmB7IHc6cEHz3qFxh3tdwQjpcy/+zn/15MwQRObiIg5pNt2HMeZG3YG7vq/vMDzjG9IwqRmVdda9NN3/tUPfwHAt1Z7XPWc/PU+HHQQXf2t1d6aq9Yk537iyi9nCpn3xOVaAmLciNlxnBczRS2IFfC9jI9NLGrjb2GDj932oe89TE+P4epenUrlzEEF056eHtPb22sv+OSV7zdZ/x/iWhxPlok5juM4kNYKqSD4ucDEtaiItX9524eu/TwAPZj9pTwOOKDWqzXsOZ+48qQgMHdZa7MkuJGz4zjOnqmqWvGMZwIPje1/BeXhP1zbu7a6vyB9QEtDAdZ861sWUCN8TDxT0ERf3OVtjuM4+yYi4pGoJrUo8bLeb4bZlusv/MQVXfRi2ccS/QMLrD09ht5ee95fv/4UyXCnoBlNZmk9qeM4ziykqrGfz/hJGN0S29Ib7/rgDYN7W815QCPoiy6+Kf15z77bzwVZa7EuODuO40ydiPhxJYr9bPBSn4avXPHZK7L1CpDnxdIDCdCy9pK18UU978mJyNk2tjLRt8JxHMeZOhH8qBzFXj541ch48GkRdLJx0y6mHqB7egQgKpSXipGX2VqsIuIdxmN2HMd50RDBTyph4mW8Pz7/41e+Zs1Va5LntoydcoCeaA+pcWWx+EZ2XTLpOI7jHJS0RYzoZ6/ouaK5t7d3tz4sB1zFociq9E/HcRzn0IhJwjjx85ljRrPBH8PuqY4pB+idDdXlAjcv6DiOc3iIIBrHFpHfP7vn1fPXXLXGToyiD3gEjeiS+t/cINpxHOeQiUkii5/1F3gZ8zuATmztNvWhcL1O77xPXvmwl/FWJmFsBTnwAO84juPsRlHr+Z4kYfJYebh61oN///MyMvURtCDoy//u5Q2gOdQ13XAcxzlcBDE2tmoy3nH5ltwrEfSinou8qQXoeoldtZrrFqQx3cnChWjHcZzDRcF6ge8Zj5cDXMxaO6UAPVFiJ0HciGqWdAsiF6Edx3EOE1G8pBYDXLGq57WF3l6mFqDXr0wrOOLEtCqSV3U5DsdxnMNKELVWxTfLvJweB1PMQfet6xOABNNlfJPFugoOx3GcF4CKMepZ72I4mDI7x3Ec5wWhYI1vBHgpuADtOI4ze6iKWkVFl17Uc5HvArTjOM4sIYLY2IJKd5JrXOICtOM4zmyhIlgFmGetv8gFaMdxnNlCEGtt4mW9LCbpdgHacRxnNhFR4xkU6XAB2nEcZzZRFVVFLZ0uQDuO48wmAlgFxaU4HMdxZhOhvl+VYemBBWi3SazjOM60mVKALm4rCoAYWeBlfVRIcN04HMdxXjAGmeJKwlWrAFAlK+l+sa4Xh+M4zgtEgIhkat3sdv6WuMDsOI7zAkvU0uW1NB5QgBZ1Xewcx3FeSEY8U61UecsZrz1vagH6nnsAUMiCgrj0s+M4zuEmIlTiKse1LuU1p1zWPKUAvfzy5RbAQLPaF/YAHcdxXqwEIUliXn/S5bS3tenURtBrJn5bfcDtGes4jnOYGYRqUmN54xIuP+0iKmFVphSgV6xYoQCqNOAKOBzHcQ4/gSRKeMc5b6CjuY1qVJtSmZ309vamiQ2lW626BSuO4ziHkSBUNWLl/ON4+YqXUksintq+oTL1Kg5FRKSA4hIcjuM4h4sqXuBRHhznbSteQy6f0yCT4dvX/WB4ygF6xdWrA5SW+hoVF6Idx3EOA8/zGCuPcWbnCl5y4jkY33D3I/fyvZ/+YGT/Abqecs7nyYMuUquIujo7x3Gcw0EFpArvOPeNNLY1o1b1S9d8lf7Bgc3+Ad2SiCuycxzHOUw8MYxVirxxxct5+XmXkIQxtz9+Lz+9+Xq6WtrHp5zi8JNqTmGeWptmtB3HcZyDJiKESUx70MJbz389YRySeMp/fvfLWqvW8LPZp6ccoEWtL55pcIu9HcdxDp1BCDXijadfwbHzl+EHATfedws3/vImmhubiKJabf8B+up0tByoybgaaMdxnEMnQE0jGkd9Vp/+amoaMVoe49/W/BcaWUUEhWenMILuASDJmhY3Neg4jnMYiGBrCX/8qt+mtbmVQr7A//7w6/zq5l/S2NiItQkqMvUcNLHk639zw2jHcZyDZESo2pCzFp3Cq868FCvKU1s38LUffZOW5hZNrPU0UUS1vN8A3VP/M9FkASIuPDuO4xwsBfWEcKDMu896MxJ4+L7Pl378NTZv2kwmyKCqYtVGaqcwgl6/fn263RW0iQiIC9GO4zgHwxhDuVzmjStfwWnLV5LJZPj57TfyX//7JVqaWkhsopIOhEc8L+mfcopDRZan04UuPjuO4xwoQYiIWVTo5ndf+R7UE8bL4/zn9/4HEZPOHCqKgCCDppLbsf8Avbp+40qrpDOLLkI7juMcEMV4hvGhMd5z9lvobO8gm8lw3T038Ku7bqOpoRFr03WA9ThbzAyFo1MfQaMt9QjvOI7jHAAjHlUNOaPjJC496ULEEx595nE+/k+fpiHXgJ3YCUU0HUELY+vXrw/3G6D71vWlOWhlodvqynEc58AIQkwCgxF/9cb3kW/Mo6r81zVfYduO7WQyAbrbGhNB0RKw/37Q3eu70/Z1RoxbqOI4jnNgjDFUqhXefurrOGHxMRhjuOOpe/nOT75Pe0srcRzv/GGtl8opowD7a5Yka761xqapDc29cA/BcRznyGPEUIxKnNx2HL/x6l+jZiPGy+N84vN/h00s+MKeBr5GpA/2N4JOm/PrsZ+9IqtITtXtRug4jjMVAlgsBXL8f5e+myAIKOQLfPln3+DOu+6kIZefnBjc5ZekHq83wf4C9NU9AtBWM21AM7ZeAeI4juPskzGGsWqR1Se9irOPPh3P87jlvtv4r699ifbWduIk2fMvqkKiO2A/AXpiFWFec00iFFwK2nEcZ/+MGCphjdO7TuIdF72ZahISewn/+LV/YXRkFOPtNfQKComRbbCfAL1+ZbqKMLLxAlQ7NbH1JLbjOI6zN4kmGIQ/PP/dNOUaKOTz/NOXP8/td99Ba0sryd5Gz3ViGYYpVHEAKGQwxkt/81AP3XEc58jlGY8wiXjnqa/n9BNPQQUe2vwoX/r+V8gHuefnnXcnqkrGRltgPwF6sgba0unnAhSNcSHacRxnj4wYRsujLI/n8xsvfRthHFEJq/zlpz9CtVzFD/zn1DzvWdWaAKY6glYyYgRRt47QcRxnb6yBjlwb/+/K38fL+hTyeb78869z1wP30JAv7G/0PEmMUdhPgO5emS5SUdEGVSVts+Q4juPsRsEPAnZs286bl72cs09ZhTGGG+/7JZ/74r/Q1tRKMsXgDOBlfAtTHEEbMQ0HediO4zhHPM/zGKuO8/rTX8F7rng7pWqZ0ajI3371c4TVEGPMlFIbE+Ik7oT9BOg161bUb1Hb3DJvx3Gc5/PEUK5VWGrm8f8u/10kMPiez6e++Pc8cPd9NDU2kdh9V23sIk1UGF0A+12o0jsRoLtUFVRdisNxHKdOFBJRkkrI7577Djo6Oshlc3zzxu/x5W/8Ly3NLcRJvP8beg6DF6d/7vPe00lBtbRhcfUbjuM4ExQ836MW1viTy36LV770chKbsH7T43z2K5+ntaV1ypOCz2XFerDvAC0AF914kS8iy9Ut83Ycx5kU+D79I4OcmT2Bq855PeVqhdHxUf6o9/1s27wN359aSd3zCHjWLIMpTBIWHz9BEMxE5yTHcZwXO4OhlFRZVGvnL9/0R1hjyeazfO77/8GDjzxES1PLwY6e0/I6Kx7sv90oQXHYV7StfiJwEdpxnBc1QbCepSkp8Pe/9REWLVqEQfjadd/if7/+FTraOoji6OBuXNPbT3zaYAoj6KhvOAPMx7oqDsdxXuQUvMBjtH+ED5z/G5y45DgEuOPJ+/jIP/w1GT9zcGmNXe/BAGqXwBQCdLa9YHE7ETqO82Knih/4bN+6nSsXXswrzr2UKInpLw/x8f/6W1DF87xDDdD1u7I+TCFAq6nkXQc7x3Fe7Ix4jFbGWL3qNfT81l9QS0KsZ/nzf/wI999xH/nc1Jdy75Wku6J4YhbDvgJ0/SRgbaZFBFP/pwvUjuO86BgxhBJxXvdp/PkVv09NI3zj0/Mvn+Sn1/+MlpbmA1mMsl8K+y2zAyBbC3xVNS7L4TjOi5EnhqoNKYz4fPQ1fwK+obmhiX/9wX/z39/6XzraOva+O8qBUgQUhRYuusjfe4Cub3dlfdssIsbFZ8dxXmyMCLFRKs+M8KEr/pCOrk7ymTzX3vNzvvjN/6KrreOwjpxJ4zNA5tgt+b3vuzIh8qRDxKU2HMd5cRGERJSxJ/v5u7d+hMsuvBSscs8zD/DBv+mhNFREvANrgjT1+6aBY7c37zVAr16fbnclcdKKMeByHI7jvEgYBPVhbPMwn37zh3jlRS+nXC3z1I6N/MFH/5ShgUHyhT3syn2oJN1RBWiJbLljvwtVjDVu9Ow4zouGQUiwRNWIj7/tL3j5GZcSRiF9I/38+l/+Dtu3b6ehoWG/+woeoiQwQbT3FMfq9A/1aUVw42fHcY54RoRELVEc8aFL/5BXn34ZsSb0Dw/wrj//bTZt2UxjQ+MLGZwlbRyqzUlE+14D9MR+hFZZaIxBRQ/zWN5xHGf2kHpwDpOID176h7zm9MuJbMRIcZS3/7/38uTGp2hubD6o9qEHRBURaVbZR4CePGhcYHYc58hmxGAnRs6X/CGvPeNyylEFCTw+9c3P8tiGJ2htan3hg/Nzj2ta781xHGeWEYREE8I44oOX/gGvPeMyymEVPxvwkS99km9/+9u0NbcQJQfZAOkQuADtOM6LlhFBPQij+sj59Mup2RA/F/DR//kUX/va12jMFQ5ow9fDab9VHI7jOEciTwyJp4w+2c/fvedqLjv9pUSaUKpV+NT/fpZvfuMbNBWa0nV9M8QFaMdxXnQMhiohxSdG+LvVH+KVqy4hTCKGRod4x1/8Jo8+9TgtTc1YtTNaweZSHI7jvKgYEUKJyA4Jn3nrR3nNpa+kElXZMdLP2//8N3js6Sdom9hPcIbLi90I2nGcFwcFP/AZLo9y4cJVfPjX3kd7Rzu1Wsjmga285y9/h2c2P0trcwtxPL3VGnvjRtCO4xzxBMHP+OzYsYPXHncpn3jjX9DY1IgvHg8++wjv+ovf4tktm2hpbJ41wRlcgHYc5whnMFij9G3r402LL6P3DR/AD3yaG5u47qGb+O0P/yFbtm6lsaFx2uuc90BFBFUdE2XIpTgcxzkyKXieRymu0J1p4+o3vY+XnX4+NRshRvjn7/8n//yVf6MyVJqO3hpTl3Y/Go2tC9CO4xyBjAgSGMaK4ywM2/inX+tlWddRRHGM9Swf/peP8T/f/hpdbe3k8rnZE5w1HUEjDBdqLX0uQDuOc0TxxKNqa5Q2j/PbL30H73rJm8g3NoAI26sDfORzH+PnN1zP/K5ukiQ5/C1DDwspNdZq1f0HaHXN+h3Hmf0MggqMhGMcV1jK71z5x1xy7ssIk5BMNsMPb/4JvV/4G/p39NPW3DqrJgMniSrpDimj99xzT7TfAK2GWfgoHMdx6uq55kpSxavBG064nN+76F10tnWQJAnqC5/57r/zuS/8M8TQUCjMnpTGc00OiHUE9lEH3b2+WwG8hGessQjiKj4cx5lVDAIZQ7FYYmFTN++77L1cdOJ5RJLgBwGPb3+aD/7j1dz10L0U/Bwmb2ZvcAbSPQkVsbIVprJQRdwI2nGcWUYhCHwqSY3is6O845w38N6L30ZHezsq4OHz79/5b7743S+xfdM2mhrTnhqzM9+8C8GoAsY+CfsI0GtWrEgXOYr2afqgXC7acZwZJSIIggawZdtWzlt2Jr/zzrdz1klnYI1ijMcjzz7Ov3z7i3zn+9+lsaGR5ubmWT5q3p0AGPPo5N/3SNPn4fxPvOZkxdwvRryZXpfuOM6Ll2c8wiSkGtVoKeW56uzX8ZYLXkt7ZwciQqlW5ru/upZPfubTjI2P0dLcglWL2rkTuIwx1MKalsbHlw3fs+3Z/aY4Qo0HMyaTgHgz3jnEcZwXFUEwRohtwnBljO5cO+84+/W84aSXs3DBImIbY61l7X2/4t++9R/cds8dFDIFWppb5tSoGcDzPB0vFWXJwiW1P3n/b5ffeeU795GDro+tG6PqeJjNxgIZTSO0S3UcIWTipZx4RevnX5FDf4nrW8fveme7nd9nsseuM/sJYMQj1IhKpUpHroW3nP4qXnfa5Rw9bwmRJogH24b7+PIPv8a//vcXyGQCmvJprnkOBmfGx8c5fvlxfPhP/qLYdOw8C1OYJMy356OwyGY8OZ5YXXieizTNzU0EXuMZEpsQJzGqYOtvZvEMqkoSJ7v8qmJ138XwSn3lVv32FfC9nfenVic2wkTEpB8+YxARfN9Pv2/TkK3plsZYVRQ9LCcLZ+4wYjCeIYxDxsIS3Zl23nz6Fbz5jFexqH0BJjBgDMXxUb5xzXf50ne/wpatW2ltbgFh9k8C7oHneZTLFTq7Ou2X/ubfPc/3Hzn6giVFEdl/gG5a0BSPPFEdMEaOV1EF94mZzdJJFJgYsooxiG8oVUpEcURiLeF4lcZcA23NrXi+Rz6fRyPL8CM7aCw0cO6pZ2OMwdqEtuY2Otra0yC+p5deFeN5DA4PMjw2ihHBGI/bHriDsVIRo1A4qoVcRwNhrUYYR6hVqmGNKA7ZMbIDL+PjFwI8MRjPw/c8ctkcnvFIwvg5mTXd/W9aD+ruXTln7fqeLcdlwvGItqjAO055DW+56HUs6ziKUGMy+Sw7hvv4/i+u5avXfINHnnyM5kITzY1Ns6J388EwxlCtVmltb+FfP/5Ze8yio70d/Tt+ynpCq9bbV4BWgDVXrUnO+/jrtooICuo+B7OMpqNX43lYUWq1KolaUAXPEA5WiAeqnHfGOSyat5DO1g4GH9/GsQuO5tQTTyaXzbGgc346ak3SEWsmCDAYFMUYg2989v3ul8lcYPovofaa39g58jaC8dKTxMj4KFEc0T84wFhpnHvX3U+utYGGo1oYGh5ivFRkcGSIh59Yz1hpnOZl7Zhgl+mPyayMYIzBM4ZsNotanRypK7uMpNwbdtYykl5F1eIasU3QxLJq/skcX1jKWy96A93tXQRBgBVLuVThf3/0db5yzdd5YsOTZPzM5EKUuThqhvTEZJOETGOWT/3Vx7nguLMktgnlSnmg/iNm3yPonh5Db68VI9swAsgcPEcdeaSeTlCrSCBUoirFkRK5yOfoZUdDf8gZC0/mjFNOY35zF0kxYtmiJbQ0tVDIFeAVAlaJ4xhREGMwGW/y9qMoIrIRnnhEScxYOLrPVIOqUsjk8T1/MkC2tbQ/7+eaC03Mb5uXpi6OTR/Dm694A1ggUiq1MtVajVKlzPaB7VRqVRo7mxkcH2bHYB9bdmzlpjtuoeHoVryGgGKxRLlWYfMzW5C8NzkK9zyfQi6PqGDjZPLYJx+D1nPgbvQ9rYSdaTCLUozK2DhhfqGLhVE7v/mmd3HivGPobO+gGlbJ5fNs7tvKT375M7703a/yxIYnyOfytDa1oujsXKp9AAShGFb4p4/+PVecdrGGSeSPDY8N3vnofb+q/0iyzwB9ETeZtWAR3ShGkDl5EXHkMAhe4FMOK4TVkCAbED9b4cKV53Lcqcvpjlu48KwL6GjpQNUSeD6ZbA58SOKEKIkYC8ehBuPVEgOlQcajMhs3buTx9Y+TyQQoMFoZoxxW8I1HOaoyVBrBE7PHib10y3pLe0Mr+SCHqqJq6WzsIPB8tJ57DsOIU888lfnz5pHzsjTlGsn7WVpyzWnANkKQydCQa6SlvYXFSxand2AhrkZYtSQ24f+78jcRIEpiBkcGGRgZ4o777sLryOI3B2zv72NwdJjb7rmdai6mYX4LcRSiColNUFWMZ/A9H9/zyGaz2DgtxdptIYML2oeHppfxRoSajajVagDkTZaLF5zDGceczIVLzmLhvAUYMfjZgEpYY9tYH9/77jWsue77PPXUk+RyOdpb2klsQmLn1gTgnvi+z46Bfn579XtYfd7rqFSrNrax9w8/+cKzf/8bVz+sqkZE7JS62Wki/SLpEkSXgp5G9Te3ko7yykmNsc07OOXoFTRJljee9ypOOup4Ohpa6eroAt9QrVbIZrJgYLA8wtZnn2LH1u30F4fYUtzOHffcxZanNqGeUAkrhDamWBxndHgUzzP1zIjBSPp3I4JnvP0eamITbH00KpBestYrOUQgSSztP2mnkC/giUfG8/GMR9bPYK0SZAIuvfwS2hrbaMk1Ma+pk8AEZPNZjlp6FHk/S2O2gcZMYzoZFCc05BtYtmgp555xdn0UbilVylTDGjtesgPrgw1g8/bNbB/o484H7mY4HqPhqFaGhocZHh9h44YN5Dob8DPp6DuXy+FhsLGdvFKZ+P+uE5mq1n0WnkvTq5SJ92xik3T+I6xQq1ZZ2ryI9s5WljGPd7/u7XTl2mltaaWWhAS+TzEsc/fdt7N23a388CfXsnnrFvKZHG2tbVhrZ0Mz/cPC9336Bvv5rbe8m0/9aS+lcplAPT51/Rf44YYbtqmqXHXVVQL7qeLoXpn24xCfwaQWgYiHK7WbFkYMJvAYK4+R8TNE/RUuX/lSTjn9RF5y/NkcvWQZtbBGLpMF3zBWLlIeLrGt3M8vbl3LU08+xWA4wuMbnuCZJ58hk8nsUj2R5v68+p8ZL2BB1zx2VsbtPlZ+XsncHjw3BSLPeYuIQBTFlEdLKFoPcprumlyf0Hz0C4+lX68fQ5IkNDQ1ctLJK2gMCrQXWmktNBPWQpYfdwxnnHYaLUETXU0d+MbDC3wK+QItjTk6ujsAsNWEk+Ydi8XyjsvegkGo1qoMDA+yfWAH6558hMbFrQyVRxgYGmTtnb9kKB6h5ehOwmpIbGPCMCSycTqZaTx8308nVmOLJjr5fFlr6ycoedGUEQrUK3MEyRgqYYVquYqxQlNTE5Vt47x8xYWcseI0VrQcw4lHHw+SLjoxGY9SucTA+BA33n8LP7nhp6y9/ZcYhEyQoa053bh1rpXM7YvvpcH5N970Lj79/r9Og7Px+fi1/yw/2nAj8wtdN4mI9vT0KExx01iJ2WElKeOZAsl+aq6cgzYx8RUnMaWkQnV7kXNPWsXLj7mQc5afQWdTO22d7dTCGhYlNpaHtz/Ow+vW8avH7uTmG9cSa8LQyBC1WkjWz5DNZOlq70hHt7Az/7oLVSWajnye2fdofDJXPPFfAZtYHr7rAZJ6iiNRi7WWfD5PU1MTvnhkgyxRFLFo8SIuOP98OvNtzG/pxhfD0mOOpqO1neZsI03ZxnSE5xuWFAocvXQZF5xzPiQQVqqEUcR7L7iKSGO8XMC2ge1s69/Bg488xMahzbQe383g4CADo0M8uu5xsp15/HyAUJ+szGTTUbZVRNLLeqk/5onVbBMnu4kT1C4PeHZSnTyhC2kpplUlSeL0MRgIoyqxTQi3llm59ES6uzqZX2vlNZdcQVdjBy25Rtpa2ogkxsYWL+PzxLYNPLjuQW586FesvWktxVqJWqlKS3PL5An8SArMAIHvs2Own99487v49Ps/xni5RKOf5xPf+Sd+sOFndDa2E8fJbQC99d/ZZ4Besa7ejyNjhjVORo1IQcW6PMcLwJsoyi8Xack08dqlF3P2BafwslMvoNBQQFXJ5DL0DfazY6yf7/z8Bzyw/iE2jWxlw2NPEfgZMpm0+qIx10hzwUyOUOPZ8kbXfY8r9zZSzzcU0hhW78MwEbijSkiIUtQiACPrR7jvgftRtfWctWX5ccfQ1dZBc7aR1kILURhxznnncOKxJ9CeaaGt0IwX+DS3tJDJBCxpW5oeS2hZ1DIfjoUrX3IFRgxxFDM8NszA8BCPPPko2a4GEt+ybcd2tg/u4IZbb0I6MxS6m6hVaoRxTFirMV4q4uV8jGfwjIfneRhjyGVzGAQbJRNNzHZ9Nnb+W3b78nOftSmP1Z97VfP8BUq735kYwQQe1VqVKI6Ik4SwXCXrZ2lubMbzDEG/5SWnvJTjlx9LY5zjpIXHsmzJMjBCEsXkCnmsWIaL44yOjXDHk/fx45/+hCe2Ps36devJ53JkggwZLyDXkj3igvIE30uD83vf9C4+/f6PUyyN05RvpOffP8k3n/wJC5cuIrGWKLFDu/7evgNtvR/Hqi+8thAMmju8wDs5ieJEkP0nJZ39qy8gSTShWCszP9/JJcecz+tWXsbyRcso5AvUkhAjhk0jW/nVPbfzjWvXsO6x9YRxRBLF5DM5srlsurBDdx+lHen2VFlixOxWilerVonimESTyUnCXD5PNpPBEw9UaW5t4YKXXEBbroXF7QvImgyLli9m6YIlNGUaaM034XsB1loEwfM9jFfvvhumpY1hHFEsl8BLR5kDI4NsH+hjx8AO7nroHpqWd6AZYXhkmLHSGKVKmSc3Pk1FahTmNaOJrR+7YOqPy/PqH7NdeklMjGZ3Pl7Z4/OwJ1Zt/b2Rng0StZNlkCKSlqzVe1eoQFQOCftKHH/0sczvmEd3VzfVZ8dY3LqAC1edz/yueRS8HLlMjkI2j9+QIYljoijGGMNAdZj7HrqfpzZu4MGtj/DLm26hXK1QLpfIZ/LkC3mstbtfTRyBJkbO733Tu/i7D3ycYqlIU76Bj/7bJ/nW09ex8OhFNgkTYxP7uGeS8375Vz8apgdDL3a/r2xPT4/p7e3V8z5x5a/8vH9+XIkSERegD5UgeIFHsVKiweR59QkX8+azXsPy7qWEGpHxA4phiXUbH+PL3/kqDz+9nqeeeprA+GSz2bSG1MjkG9zZs8lJvvrIW4DE7qzagDR3XK1W01G3WuI4Zt6ieczrmEchyNGca8JGMSedtpIzTj6d9mwL81u6UFUaGxtpa2sn6wVpigMggTgM0yGpgB8EaGxJ4phiuUSpUqJSq7F1x1aqhBQ6mxgfH2NgZIjR4iiDw8PUohq33X8nKkrziV3pY0GohbV0skye8+8p5ElymSye56GqeJ5HLpNFPENp4wil/jHOPf1s5nXMo721jUXzFtAYNFAdKHLUwqPoaGmjpbGZXEMhTTXFMQaDnw+I45jxWpHBwSEGxoa468n7uPGGGxmPSjz21OOMDo9SyOXJZrPpBHT9GOZq/fJUiQi+56XB+Y2/xt9+4OMUyyWa8g1c/e+f4htP/YTFRy+mVgnjIB/4UTn66u0fvuZdEwNjmEIO+iZuMkCMsGN2J8vmCAVjhJCY/s19vPqkS/idS9/F0QuW4Ps+CZZqVOPn967lW9d9l5tvuYUoDPGMR0tD82QpmFULR+bV4GG119GZ7Lzk932fpqamnXlWEcJixDPDGybL+6wqtz18F57nT1a2hLWQZcuXcdppp9ESNDK/pQsstHW0c8ppp9AcNNKSb6IhKdRn06DQ1EBTSxNiDMcee0x6LBaSWoy1CYm1kyP98E1heqj10boxhsGRIcrV8uSoeXBkmHKlhIhhf4uJOts6yOfSDVJz2Rzd7V1pSkHT5fgZP8DzPDzjpZOu+SA9bqvESUycJFRqFRIbs6M4yOaRbTzywHr6hvvZOLaFO++4i+GBQdQIURjhG498Ls+8ru70PWstCkdsGmNXadUbbB/o471vro+cyyWaC430/Nsn+cZTP2HRssWElRoiouIbxOg2gFVfXOXfwz0RTCFAT1RyqGUT1hX1HwojBusplbDGUbVOet/0Pi5YeQ7ZfBYRoX9skGvW/piv/ODrbB3aQWl4nKamJrJBBuCIqP+cjfYUxI1nyPk5YOekpdb7g0xMtObyOTY9u4knHn9icvSdJAmFhgILFi4g52XJB1lyQY5atcZJp67g5JUrafIbaG9opbOhHVCM7zF/4YL06ihI5xICL6DRb9r9OGNLIZPHmF02N1qWBoP9rbeZOO5dH7Pv++Dv/K0kSajFIaWoSjWssW3DNjROGI/KbBnaxvbyALfdciujgyOU4gqjlTG2bdmGKAReQD6fJ5tNn7NCJj852TfXF5QcKGMMNk4Iifmdq97LJ/64h1K5TKNfoOffPsk368E5qtZABEW9JExQK08DNG5tnHyl9l/FsaZ+p+gWTQs4XIg+QBOX11Vbo7q1yB9f8Vtcdd6V5PJ5MBDFEb989E4+9o+f5NEnHyefTSdOWlrSlokuhTH9ppIXVVWCICCbTVMb6Uq5tOZ7cNsAtj5ZOVFBs37Do3znmu+yS51KWgOeDTj9rDPIehmac400ZAsUMnmaso2TDaOiMGLh0oWsWLEiLe+r319nY1t9QdC+H4+IMFoZo1grp60BfI+HHnyI7Vu2E2QCUCiFJcZrJUYr44xWxrn/7vsIayHGyGTp48SJIB1l+3S1dta/Y7F253OW6ItzMGE8j7Bawy9k+Nu//Bhvu+ANjJXGCcTnk9d8jm8+9RMW7hKcUdR4nklq0bBaewPA2qvXJhNlHFMqswPQQDajCirPmwx29s4zHrHG1Mo1Xnbsubz39W/h+CXHYAU83+P2R+7mP7//P9xw841orHS0tpHUc3MvhkvBuW5v5WBBJgD20bp1lwoNtco9v7orva3JoG539jaRNJDnGwq0tbWC3bkYIRtk6qs8900QwiQkSuJ0wGBgeGiYSrmSBmCt194bky6XN2kTrUxDsMeVDxOB+EhZPHI4eJ5HuVKhubWZf/zIp7n05AsZL42ni1B+8i987/GfsWDJIqJquLMQTlTFiIilePtHrn2SjwoT+WeYQoCe2PrKxPKsei7FcSA84zFaGac128ifvuz3eO1ZL0cyHplMhi39W/m7f/4sP7rppxTHizQ1NCBZM3tK4pxDMuWKmvq3Cw0FYNda8OeXxNnEUhkt7/blUr3EcComJ0vrGrMNNBea9tine2ISb3I3EncRt09BEDA2PkZ3Vzf/+rF/4qzlpxFFEdVSlX+44Qtc9/TNtOdaiMNotxiaBldQ5SlEdKL/0cT3pzCCro+1rWzFSxcWHs4HdiSaqBwoRxWW63w+9Ko/5vSTTqMW1vCA7918LZ/76r/xwIMP0tneQXNTU/3DcGTPajt7N9WKBs/fvYDK4+ALqqxabOzec4fK9zwGBgdZvnQZ//XJf+O4henk79joGB/70T/xy2330ppvTueQnh89VURUkO8D9LBzkQpMJUBfjdILiUmKxhIiknFn070zYgiTiFK5xHvPWc1vX/gOglyGJIkZrozyT1//V770tf+hodDAvK5u4jh2OWZnytx7ZfaYuNoZLRV53ZWv48O/9n4WdS0kmwm45Y5f8Ymf/DNDDWVac017n+BXECPiWdYBrF+/frcQPuUcdDU0tXxGtxnPLNXY6vOvwV7cVBXfeFRtSD4M+J3T3s2vX/EuytUyQRCw9v5f8v5P/hU7Bvtob0tbcb7YZrcd50hhTLqytFKr8nu/8dv82TvfB3EaA66/+Rd84JsfI7OkgYLk0v7se6bGiElqcSkJzJY9/cD+A7RM/GASggyJyFK3s8ruVJVMEDBSK3J88xI+/Ib3sfKYk6iEVRISPnvNF/nX//g3wmpEc0OTm/xznDnMMx61sIb4ho++76/4nTf9OuVSiZyf42cPruUjP/s7CktbyPrBPueUVNV62cCLq+EdcefCJwHWrFmzWzQ3e/7V51u+Pl8TlQEMz6mofHFTVTLZLH0D/ZycX87n3voxjj3qaGIbM1QZ5reu/iM++fd/g1jI5Y7cXgOOc8QTIfB9RsZHWH78MXzj8//Lb7/+3dSqVXzx+c+ffZWrf/oZsm15AuPvd8JfEGt8g0E23vO7X4wuuvGi521dNOUAvWbNGqtGSxMrZBxAIZPJ0D/Yz6nmGD73zr+mqaGRwA+47dG7+fWP/B633P5LOts6QOSIX9rqOEcqY9JSi607tnH5hZfxvx//AqcvXEEUxRQrZX7vc/+P/3zgm2SCDMZKvY3uvqmoZ6MEJc0/c9Me7ncKx6arV6+e6AO9UTwD4ra+EtK2lX2DA5wmx/DFP/8nso15stkMX7r2a1z1B+/kqceform52U0EOs4c5hmPYrGIl/X5s9/7U77woc/QUWjDzwQ8tXkD71vTw/32SRoLTfWOjVP6rKsxxiS1uGyT5MdQX6DyHFOeJAQQdd0foL7ZoypJLeL95/8GV134erzA4AcB/7rmv/jYP/8NLU3N6c+5UbPjzEnpqBmK1RJHH3M0f/0HH+aysy+iWCxirOH71/+Q/7j/WwzYEdpyzcQH0opBqS/zllpbv30a2G2ByoQpBei+/2+FsAYUBkUESTeam/rBHEHS3jGWKIp53znv5m0vexPVuIbxPf7ua5/js//5eVqbWnbf385xnDnF8zxqtRrlSoW3XfVWPvSb/482v4larUYSJnz+xi/xpVu+Qceibgomf2DBGVBRNUYE0Xuv++frart2sNvVlAJ08fFtE+sSKy/64jpjSMKQ953zbt564RsohSVy+Ryf/upn+fx//RutjTt3hHAcZ26Rej/uYrFI57xO/vItH+A33vRuolqI8TwefPhBPn/L/3Jf8THmL1lIEiVYDmYgJtb4xsSRfhdg9VWrzRrWHFqKQ1/Etc+qSiaTYXB4iN8/8+287WVvolwrkSvUg/N//zstTS1HfPNxxzlSeZ5HHMeMVcu85Mzz+PRffIxjupZRrVUgsnz3zh/ymev/k2o2pqWhiTiMD21dtQhi2QTQt6Jvj7d0QAH6xWqilK5/sJ/TZDnvuextVKIK2UKOv/3qZ/n8f/07LY1NLjg7zhxkjEGtMjI2QmtTC//4kb/hDRe+GrFCHMWMV0p85Ct/w63b76V9XieZhLSE7uCDs/U848el2mbRzIMAF3OxXcva5/2gC9D7pWT8DH19fZxijuYLf/YZ1APfD/jbr32uHpybXVrDceYYqW+8UKlWEN/wxte+gT94829x0rITiOKIfC7Hl6/9P75y3/cYy1fp6OwkiQ69TkLBSuAZTewjt3/kuxup71q1p591AXo/PPEYjYqc3no8//LeTyK+IZ/L8/f/9zn++T//lVYXnB1nzvGMRxiFDJdGWHniSfS8/8NcePw56RZlxuOxpx/jS7d+i5v67sbLCHnJHtYNM9LBt24CWLXtWu8eiPb0cy5A74MnhnJS45iGRXzmnR8nm8uRz+f5929/ic988V/qI2fXwMZx5oqJ0rmx8jjdXV287zf/P97+8rfQ3tiGVUttvMq1D93Mv9/xf2wZ305nWyc6scXcYSLgJWGsJjE/A1g+vNzewz17/FkXoPfCIMQmoSUq8KHL/oimXCPZbIb/+8kaej73cVoamwEXnB1nLpgIzKVyiTiJectr3sgHfuuPWdKyMK1ts8qGzRv555/9N7946ld0Luymq62TOD6kXPOeiYhNbBJgboXn99/YlQvQeyGeoe/prXzwsj/gtBNPplqt8cCW9Xzqy5+hkMm7RSiOMwdM7N9YLBaRwHD+qnP5w3f8HueuOBODAYStmzbz3Qev4/uP/ZyyrTJ/0QLiKCbmBQjOoGIQtbojKmQG9vfDBxagVV8UZXae8ShHFX7z3Lfy7te+jUqtymBlmPd/6q8Y6x8hn8+7DVwdZxYzxiAIxXIRq8oF557Pe1//Ti4752I8MRgrVGoVbrn/Fv7lhv9mY2UbbW3t5E3u0Mvn9kFVrRf4Hla/f+sH1lRQlX21zphSgF7eNmzvARRtUXtkdxr1PZ/h8iin5I/hT1b/HuWwitWED/zNB3nk4fW0NLe4jnSOM0t5noe1lnK5TIJl1eln8p43vIOXn3UJLQ3NhGENjS23PXUf/3fn97lr64MEuQxd+S7iJMbywm7rJ2CN73lJNVkHcNHVF3trYa+N4ac2gp7Y2VtNAdJNAI7EEC0IoUZk+5U/es+vgwiFQoF/+M7nueGWX9DV2eWa7DvOLDOxxZyIMDo2ih8EnLPqbN77xl/jwjPPp9Ev4Ps+1WKZdc88yn/+9KvcFz1JrAkN+QJqdXo2v1UUI15cjUKUxwC6V3bvcxJrSgF6zbfWWAQQ7Z7cRPIII/X/aGj52Dv+gnNOP5s4Tvj5PTfxhf/5Tzpa211wdpxZxPM8UKiFNWphCAKXveRi3vra1Vy26mXkszmSKMFguPWeO/j2nddy08Y7MC0BhUyeLJnpnUcSVeP7JqnFT9sougtgzboVhxyg0yYePRhBOrEKqBxpe8d6ns/A2CCv7Dify8+8mEqtyqahLfzZJz9IXInwMpkjsg/2brtIv5Avqe7ehNFVvzgHY2KkjCpjY2NYURbOX8CVr34dl6x8CeeedhaBBBjPUCtXWff0I3z5F9/gzv6HqWViWue3ora+Y/k0f6BVUfEMYui/s/e6sdXfWu2tuap3n/nS/QdoBQQuKFzZYCM9Rq19oT/K086IUA4rnL5gBR+86v1U4xpe4PPpr32O/sEBWptapucSaBqISDqBIoJaJQxDrFoSa9HDWOv5XJ5Jd59OJ28g8AM832MiTk98WFRdF0Dn+dLRslKt1YjiCD8b8LKLX8bZx53BVa9+I91NXeSyOcJKDWsSbrnzl/zooRu4/qlb8Voz5Nvz5NWQRPHMJmitIsJ9gPSt23P/jV1NuYojSkzGM7ZNrYLKkdM2SUECj1L/OG8/9zW0NreSJDGf/fq/8+Nrf0TLHA7Ok6MNdo5YozCiUqsQxRFBLsv8BfPI+7n0ks/PoAqqlssuv4xCQwMCzGvqwq9fTu7pPkYr4wyXRzBiEN9w3wP3s/HxDWSyGWx6xUUprKBqKYdVVJT+gQGKfeMYz2Ak/b9nDL7nk8vlUHTy2CcfC7LbqMcF8iPXzpFy+jqPjIxgsh5HzV/M6Sedynve+E5WLD+B9kIrlWqVQibPjv4+1m95nO8+/FNufewual5E28J2NLZoYklIZjQ4i4ixiVWFHwC6loste+i/sdvv7PdW631Kz+m5YrGXz27iCMtBe8ZjtDTGe896C39w+XtRAw88s44rf3s1Dbn8nM1qeJ5HEidUa1USTQiCDEkUs/y4Yzjn9LPozrXT1d3NyaetpD3bQluhlYZsYbffN5I2qPWNl4642fMbJk6SNKACqqQnNCEN6JqOjgdLI1hNGCqNkIjy+BOPs/3ZbQTZgJHyGOPVIkPlYXYMD/Dg3fdPBmOrFlWd3JVGxOAZD08M2VwWz5j0pFJ/pay1Ln0yhxljMCJUKzVCGyFAU1sLLzv/Qs476Sxe/pJLmNfYhed5eCpUw5DB0SG+ddP3WDf2FPf1rUeMIZfL4WOI4ni3E/1ME8+QWD36jr/6wTN76wG9q/2PoK/uEehVzTe0CPGcDVh7IgiRxLTVGnjzKa8iwTI+Ps5f/8un8D0fMQadQ6M0z/OwicWiDA0P0dzZyolHn0h3cwevevWrWTnvOLraO+no6KQxWwCFqFJDjEl7EAQBGltQpVguEUUhiDBeKhLFEXvbj7K5sQnf81G1GM+jpbEFVJHAgEk/HLkgi6pyVMtCVJWzjzoV/PR7SZIQJhG1qEa5VmV4YBBBGK6MsmOsn6HyCL+4/kbCao1IY8arJcpRhQ1Pb6BSqeB7Hp7xMGLIZrPp5TDp6ysiGK++s1s9kCvKkTrZPZdM9F5GhCRJsKqUx4tExCxZuoRjFx/DFa94BWcvPY2li5fSkmuiXC6T8QP6+/pZv/lx7tryID9/6pdsGdhGrrlAQ64BUGyixCSzKThb8YyxiX24Oaj0T/WX9huge4BewGjchYG9DqPmnDSTHo3X+MRb/oqu7m583+dLP/k/br7tl8zvmjdnUhsTed3RsVGyuSy5TI7ffMd7ufzCSzj5mBV05FpRVbLZLIJQK1XoH+kjUUukMRu3PMumHVu468F7aTy6Db8QMDwyTDWsISIMjg4RhhHGyB5Hpx2t7WSCdEbc9z06WzsR31DZOk51oEiQCTj75FU0FRrpbO+gIVegs60TmyTYyFLI5fE9j7yfpaXQyMLj5wGkJxub/v/dl7wVI4ZaVGW4PMZ4WOKhBx+iVCxRTWpsH+1nOBzjrjvuZMe2HXi+R2wTwjikUqwgCJ5JR9++8cjl87BLwsRau/O9rbt+xzlcJiek6/MgURhRqlaIbUxDoYFcLscrXvFyzj1uFWetWsWxXUvx1CPI+EgCI8PDDI+PcuOjv2Ltk7dz2+P30DivBR9DZ2dn+n55AedRDoWC9TOesZXkhp//2c9LPT09pld693uwU85Bi9qTxfioJJYD2A18tvLEMFYb56Utp/OSk87FqvLo1if48ne+Skd7x5xYjDJRlF8ql0DgwnNfwptf+0YuOP4suju7aQjyVKoVfOMThSEPPPgAG0e3MhSPcs31P2JLsY+2Y7soFUvUopDx0jhe2UdM2oZR6stkfc9DxECy56C1oW9bGrjrOY7o6Rgxgq3F2MgiRrjpjvvwjEcm8DHikclmiEshxaeHueDMc+lobaerrYOF8xailQQdTzhm6dG0NDbT3NBIQ6ER4wk5P8e8hgzzG7o46RXHMTFoqEU1wiRi9C2jRGHEeLXIQGWYDVuf4eabbsH3fcarRUaqYwwXR3nqsScAqee/hUyQ2Tnyruc/PeOlvYLdBOZBkXq6QkhHyEmSYK0ljEKq1SpdC+Zx/mmn05pr4rWveg1nLjuF9rZ2mgtNJLWYWGOyQcAjjz3Gur7HWXv/rdzTt44wb7HGsmDJQpIoRoVZXwIrqiqewYhsAbh227Ue7H8rlv0G6PUr19dLhOX0NA+pc35jFUGoaY1F2W4+cNUfEGOxmvDZr/8bw0PDNBUaSGbxB3FiBDJeHMd4HueuOpfffNO7uPTsl+HjkclkSWoxW3ZsZag0zNd/9l2GG8tsePYZnhp6lkJHI9nmANOSY6Q4ijGGTD5Dd0M32Ho42q0sTtlXWjcbZHYeG0C2PlIqyGQATep56lBj1EaUShVEQI4vsHb4XnSoPlpGqY1WkFLC8qXLaW1spqmhidbWVoaf7KMr08ZLz76AjtYOuju6ILIUgjy5bI5cJsvizkXpu9qmeeuXnngev/GKdwIwXisxWhlnpDTKU489SZhE7BjtZ7A2wp1338XGp57BD3yqUUisMaVymUp5ZwrFMx6FfAExE6ke3Wc3wxdDLvy5KYSJyVwEqpUqtSgkikMKTQ00F5oo5AtcetmlnNh1DCccczwrjjuR1kwTURTj+R4mEYYHhhitjXPXw/dx4xO/YnOlj0e2P0HbvHa8ZkPepCWvURjtnOuY3RTEj8uhqpUnABoXNE7pqPcboCdLQVSXMvHGnNvxGRGoVUPecsGrWdixAC/j8e2bf8B3v/99OlrbZnVwntjMshrWOHfV2fzO6vdy8RkXks/mCashfsZn7e238OjY0/zwluvoz44RJhF2QCnkCyxcvJAkTiZ3fxHjT+ZkY3two5DnBaJd//mcCxEhzTt6kn6yNIGCn61/J2UWtqIGhmrj9I0Pk4wk2E2WJErwxOOGm+7GM4ZMNkN52zgnth/DksVHsbB7Ad2tHYxsGOD4pceyaP5COlraaSgUsECWgPn5ThYWujllyUlAOvKKkpjylWXiMKIWh2wb62O4Nsa6R9fz7OPPEBEzVBphpDLGA/c/QFgLMV7a60EQfN/b5fI9HTUaEYJdTlyTo/D6cz0Xg/dEeSbsfLWiKCKxSX0yN30+FSVJYo5feSLHLjya1qCJk884hZeedgEd+RYKDQ005RvACpVymTiKqVYqPLHpaR4ff4a7H7qXm5+4A68jR7FcpLGpkUWLFhFH8e6bMc+ZOKQqgWdslGyshOYmgLWsnVKQ2d9DnJi61/M/ceVtXs4/L65GiYh4h3jEM0YUYs/SNdbIl//oc+SbCvQPD/Cej/4uGzY8QxAEs/LDMzEyGR4eZvlJx/KH7/xd3vCSV5P3syBCWKvx4DOP8D/XfZ37Rx9jRIu0t7Yhyc4ctZ0IDLP9jV1/+nctExSZ+A9poyoFq4rxhNDGxHFcv4yOKfcVWdy9kM62dtra2ol2lMhVAs4942yOmr+IxfMW4VmDrcbM6+ymkMtTyBcgY9AkDS5qFWMMXsYnjEKKtRKlWpmnnnoaGyeUwyrbxnYwVBnhphvXMjQ0hO97VKOQMAmpRSH9ff3pSXCX/Lcg5HK5ne+zA3gtJt6Xhzpo3PX3p7xASZVKpUqcJCSakNj0JN/d3UUhVyDnZcnlc1zxyleyrOMouhraWbh0MQvb59OSbyKJYuIkIZvLYmsJfQN9DFVHGSwO8e2fX0N/fpS+sSG2VvvIZbPk/Byi6XvXJnZuvG/3QlHrZwKThPGDt33wmtPo6TH07j//DPsbQdeD8zmfvaKZ4kSjpMNxyDNEFT+bZWjrdv7iVb9FS2sz+B7//I0vcN8DDzC/e96szGV5nkcURkSScOWVV/KX7/4Tli9YRq1aBYU77r2Dr9/7Q+4cXUcUhjS0NDCfLqI4LXfbLW86F16/+jHutlPNHiKSEQGbjoxzQQbJpOM609ZFLQrZUulnY2k7Nk6H8fc9+BTmIcELfKqDJXQo4sKzzmdeZzcLu+Yz+vQgxyw6mmOXLKe1uZX25la0WsWIodHkaS40ctRZiyZnYOIoIrYJv//q904GkZHKKMPVcYbGh7n91ttI6hNXI5VRRsvjVLXGo+sfZfPmLWQOZDAggie7T/1MdGyberhOJ3l3nUibKGPcF1XwfMPJZ59KV1M7bflW2htaMWK44CXns7BjAfObOvGNTyabIRtkMZ5BawlhFFEaL2E1YcuOrdz64J1UWhLuffh+7nz2AQrzmqhVqkjFkM1k6Wxow6qmz6ewcy5oLrxv90PVrgNk9fr1smaKv7PPAL16TboVuFfJnqyiy22cICpmrj5ZnuczPD7MqnkrueyMi0hUWf/kOr5//bV0dXTO2uBcHC+SyWX42Ac+yjte8RaSSgRWGR4f5e/WfI5bdzxAzY9paWom52XQxBLxwrVMnG0mA/lEnKnG6cSfF5D1Mkh9lf5EIFJVGruaYb5w2+ADxH3pyLsyVKL9yXY6W9vJZ/M0NDYw+Mg2lncu4fwzz6WrrYOu9m7CsQp5k2XhvIUUcjmaco1IQ1qq2FRo5Kj0oLj81JdNvgbVsEY1qhJrQt+OPkZHR/E8D1Vlx/gAsY3ZNtqHFeXZzZu457a7yWR3BnCrlnKtMtk0RtVSjqrYdGXvFJ8nCDyfXJCjXqpCNsgSeAEiENYiFh9zFKvOPBNfDV2NHbQ3tNGSbQID8xfNpyFbIB/kyWdzAETVME1b+R4GQ61SZUvfFjZv24LXHLDumUf5/k+vxVuQo5ZJ2LBpA9rg0ZAv0LKwDRtbGguN6eGoEuuRE5An1JN5Kuh3AV2xYt/9N3a1zwA9mX+2sjQoBNmoXItFZM42+VcsgfV429mvp9BYIFHLF7/3JcbHxmhpaiHR2VW54RmP8eI4J562gg+/+wNcfOaF1Ko1fM/nGz/5Dl9bdw3b7ACNrQ3kxcyJypNpUV9Uk0506h4HmDa2EEPBzyN+feK1pZMoiRmKx7DhCHbUQjPsCNdx2+3rAMX4HmObhmkLmjhz5em0NbXQ1dlFecc4uarPGStPo6Wphc7WDlqamrGJxRND4AfkTQYjhs4lJ0Kwy7Ekae35RI/xOEng15k86YhAbNNFPmlGQkjUMlweJU6mvhBDVckFWVrzzZPPS3OukVyQ2y2FMLFIydSrWKRey24rMXESE9cShovDiAiVqMKm7Vt45IlH2aqD2Cysf+IRbn/gLpqWdWAyBtqBEPzEp3NhNyRpHtlG9vlXeEcoQcQYnoC0bHmqphZs1XZP3M1clZbVFXnDiZfzqvMvpxaF3PP0g/x87Q005BtmXf2k73mMjI5y+csv42/+5K+ZX+gkimO2b93Ol277Fj947HpyhRzN2SYSm6TLWJ2pq7+VJ193BWrpDhqB+ODv6d2epgjmH7uQRC239z9Isj0heTwhLod4iaF9+41kgoBcJkuukGfw0e0saurm5ONX0tbcSltzK92d3fiJoTwwTnNzC/M7ujHG0NTQiIjQ0tiCMfX8uz+xyEYpBPnJY1eFJS0LD+wjWa/vngi4qqQllfXywnSRUrotVBiFlColytUKz27dRLYtTygxm7dtYcdQPzfdfjO2zSPb1cD4+BgjY2OUqZHJZcgGGRadcTQ2TNI7mRxDQhztcpU6d8PJ1CkqvmfiMN4otcy29ItTD9H7DNCTM40qS9Va6t3/D/5gZ4ggRCQ0SYErT38ltTjE5Hz+43v/w/jY+Kxrwu95HkMjQ7zhtW/gb//kYwRJumz7ye0b+NOv9bA1GqCzvRMbJ25nl8Npl9z3ngfe6VfiWgQIDfXRNyKYBkEFojimrFWKlTK2NIR0C4/rNh55Zkt9RGxRI8TFkOLWETo7Olm2cCm+59He0oqI0NnaiZ8JCEfKlDeNoUYp5Aqcc/IqrCqqlmwmy7zO7gNaKScihFHI1h3bQITA89nSt431Tz+KLx4NS1sJmnLpIqValdHxUcbLRR596nGCrjxBYxaxaVD35/vp0zFSwvM8GtoaaaK5XqFiiSrhLsc2+ybdp4sKiR94vo2S227r/V5fPYZOeTS4rwAt9GJXfWFVoIP2Eo2FudoiSYxQqVZZvfJVnLL0JPDhuz+7hhtuupHmpuZZFZx9z2NweJh3v+XX6P2DD6Z1vvk8P73jBv72l1+klKvS2dBBPFED6ky/euDZdfSd1P+ajnfTmmk8JstSxXtOvXBHI10LuonjiGfD7WisPL5tIwrEz6ajTBtbbC2dSzDGcMPYXZMnD2MMQRBwoB9Jq5YwDOsPQ6hFIeVKOV2YU/IRb+ciJd94GM+w8JQlaGyxuyxUmkyJ1Oco0xYDO+POLFpiPaNEUfENYsw22P8OKs+13xSHt/XEPJnx49LeBXPzWbfW0hI0ctWq1xFrQrlc5l++/kVsFEMmO9OHN8nzPAaGh3jPW97Jp97XQ61Wo5DN0/sfn+an/bdC1pAls7MZkTPr6C7/3XXg+LxKiQTicowgZCVIX8966kEyu5QWTi6Kqeemd7mnSA9sUnsi2eBlg8mvNGQbaGppmphFTTMSukvVtkJUCff+0X/xDo6nSI2NElTZcDC/vfcl2/UnPpMtzQfN7VKCOaf4xmOsVuQ1J17CUZ2LyOayfP/GH/HIE4/R1Ng0ayYojDGMjo7yxtdeyUd//y+JahGN2QY++Pm/5muP/xC/IYOPt9soxZnbRNIaZIumpWVq672509RVnCTp7tJx+v96L9j6/5lcKDPV/00srdn1Nqy1O+8jSe83qR+HnZhknZvjstlAMcZLqnE5UPMrgIu5+IA+wHsN0KuvWm0AErWnGmO8Wbl6Yz9EhDAJmVfo5HWnvQLjC0Njw3z5e1+lIV+YNflbYwzVWpWLLr2Iv/njv8a3Hr7n81ef7+V7m27gqGVHodH07wDhOM4hUDCeoKIjtajyJEBvb+8BfYj3GqCfvvzpienjy7ysj8rcKxMQhGoUcsGiMzhuwdGIGL5z/TU8/vQTZDKZWXHO8TyPSqVCe0cHf/+nnyBPhkI2z3/84H/59jM/Y/HSxYSV2hy8dnGcFzlJr3NQie/svW6s/tXDE6CXty236a3J4jnSkOR5FKXBy/PGM15FlMRUtMY1N/8YM0uKUUSEKIoIgoB/eP8nWNDQiWc8fnHfLXzr6Z+w6KhFhPvK/zmOM4ul8VmEp+v/POAP8t4CtKy5ak1y7GevyAKdmlhA51SU8IzHaGWci5edw4mLj8XP+Ny17h4e2/A4DYUGklnQsF0QIo356z/7KJeeexEWWLfxMT5x4+cJTZwupphTz7rjOBMUVAyo1QcAeq7uOTwBevXqNP/cOppZIYZTbGRVVOZUD2g14MeGUztOJFvIUYmqfOXH36Q4NI74HvvsnzkNfM9naGSIt1/1Nt566RupVCtseGYD7//ihylphYwJXM7ZceYyhXQY5q0/2JvYY9DtW5Eu8fYDu9jPZxqsanLABZczSESoVCscHSzgygtfRa1W46Fn1nPLL2+mobEBO8N1z8YYKrUKp6w8hT9+/e8Q1UJ89fjHH32BgaYShSA/61Y2Oo5zEETAt1tgZ2/9A7HHAN29srveoYWFMz3SPBgGQ5hEvOuS1QD4GZ9vXvttxovFdHfqGWbr+6998s966WrtJDABX7v9e9xXfYzO5naiOJrpQ3Qc51CJqIhAxPjB3sQeA/Saq9bY9PbNpTaxCDpn0htGDJWkykkdx3DBiWeTyWZY//Rj/PTm62nMN854M37P86iEVX79zb/G2UefTpLErH/6Uf779m/ief6sWtXoOM5BU1G8uBbFaD1AT7XH6C72FngVRVT1ZZoo6NwpIxAR4ijm5ce+hO7WTmpxyFd/9E2Gh4fx/Zkt5/Y8j/GxcU464UT+/Lf+hFpUoxaFfOaW/6JGSCC+yzo7zpEgbUQlGtuaJa4CHEib0Ql7CtACcNmnLmtHyM2lFIcghElEsxS45PgLqMY1xqrjXH/LDeRzeewMPxabWHJNBd7/nj8iR4Z8kOPTX/ssd29/mELG5Z0d50ihoipGQNhucwwD9B5Qo9HU8wN0T1oKUtb86YI0TnYLnAMEIbIRKwpHM79zHrlsjp/cfj0DY0Nk/Mz+b+AF5Hs+o+NjrL7yjVxxweXEUcz9Gx/mVyP3p1sCzbJe1I7jHBLFM4gwWNsRpSmOqw/8Avl5AXpVuh04irnIywW+qsbMlRBtgFh516vfRi6TZbg0xrU3XJe2PvRkxtIbRoRqrcr8hfP5rde9h1qpijGGL938Dca1gm+8uXSh4jjO/ky0MFHGHmy8oAIcVBR9XoBufHvjRFuko4xJW6sc0oFOEyOGYljmtK4TOaF9OdYTHnjiIW6545cz3lJU6mV1737d2zlmwVIyQZavXvctfrnpHpozMz9x6TjOYVav4BAjRXp77cGsIoTnB2hZe8na+KKei3zQo+obYc6JCg4xgq3GHJtdTHtnBzZJuP6+tXjGm9EFH0aEWq3Gwu6FvP1VbyGKYgZGB/j+E9cTZGbnDuKO4xwGAqjEMNl87tBSHD31/HPFbz5KVM6wUYLI7F9BKEAUR7Q3tfLOK95KLayydXQHP/35z/Fk5io3ROq7KIvlw+//S+a1duFh+P49P+XZaAeFTMFNDDrOEUhAEcGqrcDOxX8HarfgO7HSJQh0kVcI2m3aj3PW558FIdSICxeeRXtDK7l8nh/d8BM2bNpAIZ+fwQANlWqVM884k1eceQlhFLFx27N856Ef0+Dnie3s20XccZzDo77hQgWguPCEw5DiqBdSWzULZrwmbapUMRmfUt84Zy08mcbGRkZKo9zxxL1pP4sZHaEK4gnvfeO7yHoZMibge/dfR19lGN+bs5ujO44zVXpoTeZ2C9Br6oXUavU8mBvdN4wxFCtFVh1/KueeuIrYRjy56WluvvlmGhoaZmwCzvM8xovjXHjeS7jsjJeiieWprRv46eO3kM/mUDcx6DjOfuw+gr56stv/JWoVmQvpDTHEtYjOsJl58+aBhRvX30qczGB/JxFskuBnAt7y6jeS93JYa/nUmn9iMB6trxicGxcojuPMnN0DtKCrV6/2ENpn6HgOWGIT8tk8737F26jVaozHJW64/gY0sTPW596IUKnWWHXmmbz8jIuJk5iN2zfxrPaT87MznHZxHGeu2Bmge9K/bzl1fJmoNGliZ38PDk37PudGDfOaO8kV8tx461rue/h+Ghtmrr5YAPWU91z5DvKZHEYNP374FwxHYwTG9dtwHGdqJgP0RVyUbhIr/uni0apWdbZnoX3PY7Q0xjtfsZr57d1Uwgr3PfMwNk5mLDljPI9iscQpp5zCS04/D40sG/ue5SeP3kQ+l8POko1qHceZ/SYD9EQZiEFO9fNZQ7rEe9YShNDGzM92cMa8FUhgGBwa4vs/+WE6ep6hlYOiSiKW8088i65CB8Yz/PihGxmIRghwo2fHcaZuMkA3bn2svsRbmlWVtNP07CUi1KIaR3UtYuWyE4njmPs3raNYLGLMzK2tiZKYjvYO3vPGdxLGIVu3b+NnT9xCxs/MmcpFx3Fmh4lIJmt718b1mr1j0vzz7N8kVkR4ybwzESNkshl++JNrKZVLeDO0a8pEv+c3ver1LGibR9bP8NN7b+Sprc+Qz87cghnHceamNEDXl3if+9kru1U4q77Ee1YHaEUxarjglHPwPZ+NA5t5fOvTZL3MjARCESEKY+YvWcCVl7yajJdh6/ZtfO/+62ib304SRXOgaNFxnMNJD3E3qt1+2ZT8Li/jL1Br7XO/N5sYMVRtyLnzTmFeoQM/F3D/Qw/y4IMP0tBQwM5A9YYRoVwrc/yiYzht+cnUalWe2rGB7TKEZ43LPTvOi4iCaKIYTCfAPb/zxYNq27x7ELZ0z4XrcM8YxsfHOXbhcjrbOylVSvzqsTvJeMGM5XlVFSPCm654A8RKJshwzaO/QHwz24thHMeZpQxAT/0faqILme0X4goxCa1BE0v8eVhjGSsV+dnPf04mM3PpjTCKOeaEY7l01cvwMz53PHg3tz16F7lcbi6c8xzHeSHIYejFMdHFTsRcKkbQWdykX4xQrdWY19jJFRe+nCRKuO3RuxivFPE9f0aCYdp3Y4zLzrmYzrZ2kmrEg1sfYTAZc8u6HefFSFXUKmq1+7w/XZ1HDi4MGIA1V62ZSNq2zfpgoiCecEJuKWotmXyWW371y/qu3dPfIS6dHIxoa2/nZWdcgKeGclzlpo2309rcQhLP6nJyx3FeCIKk/YykJemKCgBcfTA56HSJt17w6SsXgraTzO4mSZ7nURou8vqLXk0um+OZ7c+ybuOjNOYaZmTjVRGhGtVYdfoZnHfK2SRxws333spTo5vwxZvtpzvHcV5AKiKFTHzQ8dRMLPFWlVMwZr5N7MR2h7OOADWNWJZbQFemFS/r8/iTT3D3vfdQKBRQOwP5Z8Amllde9ko8NWSCDD979GYqtSqemZl6bMdxZpaoiFoLyjwtaxtAz+Rs39SZiSXeVvXEoJDxsbN3F2/PeBTLRc5bdS7HLj2WarXKE0PPkM1kZ2zrqDhJ6Oju4Jxlp5HJZFj32Ho2DG+iqbmJJHHpDcd50VJA1Y+z3kGXLJvlbcMWwKi2q53dS7wTlBwZjskvBk9I4oTrbvgZpr7333TzPI/x8XFecvb5HL1kGRpbHh/ckJ40vMClNxznxUoQVU28rJ+3UdICO4sxDoRZc9UaS0+PEThV49m7xFsQ4iSmvbmN845fRZLEPDOyhWeefWbGto9SqwSFDOectIrGoECxVORnd/6C1q524sh1rXOcFzMF9XzPV5XMwd6GAfQcnmxU5GwbJwizdBdvAasW0xfR2dJOJpfh+pt/wfb+HWQz2WkfQYsItbBGd3s3F513IdVKlfFaiXXFpzGuH7/jOKpi08ZzHcDknq8HwgD4jDciLFKrs3YnQlEh1oS3vOxKMl6GWhLxzNZnSNK+IdN/PAiJWk5euZLFzQsIshmuu+VnlKkR+IGrfXYcB1A8rx6gD0I6Wg7i7lkalyd5vqE0Os6S+UdRKBTYPtTHA8+spyGXn5EJQjFCrVbjVS99BcbzSGoRj5U3UklqmNnbxsRxnOkigAXUHgM7N+U+EPUSO+8k8QRm6QrCtLwuZlnjIub5bSTGsnXbVh55YB3ZbHbamyNNLE5ZtHQxpy9fSS7I8MjTj3PHY/fS1trqqjccxwGQNBMt3Qd7A+lQT+R88QzK7NzN1PN8xsbGWLn4RE496WSiMOKmB3+FeIaZqAj0jEexVOSsk05n2eJl1CpVNo1vY9CMY6zMzrOc4zjTSgBVQGQeAFf3HtwIGuE4MQLIrIwtVi1ZApb587Eo1ibccOMNYO2MVGxbawkaspx9xtkUJEuUxHznF9dQaChgk1l5jnMcZyYooCwBDipW1QO0ZjUtqp6ViegkiWlubeEVL7uMJErYWuqnqiGe8ac9KSMiRHFER1MbLz3zfMIoZGhsmG3BEGZWL5J3HGdmaPvB/qa54NNXNqnSrulodPaFFwU1Qry1RGuumUwuy51338lTG54ml83NyAShVUtToZEFDV1k81muu/V6tg7PTLmf4zizlZB2d4Mr/uiKbPqPA4uxRmq6BFigsZ2F0RmMEcIk5NJTLqQQ5EjE8vSWjdTKVczBr6A8hOMxVKtV3vqG1TQ0NBCWQ/r8UWxW0hlbx3EcAEVUQZVscX5Tc/1rB8RYYxaLSJcmaTb78B/loTHGozReZuWxK2huamFobIj7Nj5MIZefka2tVBUT+Jy06DhymRxPbn6aH9/6M1qbWkgSt3rQcZzDx2Bsu5fzUWH2NUlSSMTSFOfo0mYIhL6+fu6+7U6yudy0B2jPGMqlMqedcgorVqwgqtSomohys0USnW3PnuM4s4CIaFaigwpWRsU0zNYdvI0xVKoVTj3pZE478VSiMGLj2JZ6ImcmDlmIbMSJS45nYdM8oiTmF7fehDc7nz7HcWaaKoo2FDVZBMDVPQeWgybRttk6ryUmXRAiIwltLa2IEX7xy5uohTXSssDplSQJDU2NvOzilxFHEb7vc9e2B0msxQ2fHcfZjdTroJWcwXQBrF5/YB3tDKLzSTPZsy7CWGvJZbKcv/RM4iSmElV57LHHwOqMhENF8azh5O7jMYHHPQ/dx6COuY1hHcfZKwGVg1wEaETSPtCzscRONV06c8Gq8zAYNo1sZbA6QtbPYKe5AHpiefeK01bS0dpOID4P9T3GxsHNZP2Ma47kOM5hZxQ5Cp2ZEem+iIIaJT/sUSBLkM/w4P0P8tijj5HL56d9eyvPeFRqFS4966W0NjZTLpYYs2UaWpuwsavecBzn8DOCLFGroLNrpkvEUImqXHLuS2lvbiNOYnYU+xHLzIxWFdTAguZ5BH6GvpEBfnjTjylkZqabnuM4Rz6jMCuHf8Y3VMZKLCh00djcyGhxlFvuvS1dPTjd3euMUKmWWbFiBaeffjphpUZZq1TakvoJw3Ec5/Az6CwM0Ap4gpYSgpJgAo/x8SIP3PcAmUxm2ifkDIZaHNGRbWVp+2IQuPH2m7GqM7JZgOM4c4ig5iD3WTII3bNtCChGKFfKrDxxBRefdxFRNWTz+DbEn5lG+IpijOHkk1fii4cg3L3lIWpxiJmlO4Q5jjPDdGJttkSRiYpw4E37jTHSpTq7qjgEIUkSMonHgq55iAgPPLWOcrU8IwHRWksum+U1F1+BouwY6KPWYMlms6jLPzuOs0+aqPUqB/ObRmfrDJeFxbYrTSEYuPvWu6iWKzPSICkldGbbyGQCHnpiHeseW1/Ph8+yyw/HcWYPEVSp5sOGPuCAm/YbmYXX6KoWPxvw6otfiYdhoDLCUDRKxp+B/LMxVCoVLr7oIjq6OkiqMf2MEDZYxLr+z47j7F9I9aDirLHWbhORGapd24N6t7jipiFag0b8XMATTz3Jg+seJp/Lz0yArlU5ccExtDW1MlYc54HHHqbQUEBd9zrHcfZDVFSb/XSj0gMc0BlUhmbTKFBESEhoMY3kTBbxDNu3b2NkYBg/8Kc9QNvEkm/Is3TxEsRCNa5x2xP3EJgA65Z3O46zDyKgRpMmO1I7mN83iPqH+6AOhRGPUqXEqy59JcsWLaUW1thY3EYmE0x7/bMRQ7VWZfnSoznnzHMIqyHDlVGChQ2Ide1FHcfZB9F6kJDoguLPK0xusTJ1RuzsqoM2nlAZr9CY5GhobKBSrXLXA3fjeTNwHhGIbULeZOkutONnfH528/WMjozMzPE4jjPniKr29h7cfksGYaN4ph7tZ5YAsSa0+I0sKywiwVKtVnjkwfX4vjf9HePqdYznvOQ8Ai/AWMOz2k9IjHELVBzHmYJDWa1tEB0/nAdzSESI4piuri5WnrACjRM2jW0jMYphJopNFGM8Vp14Or7n0Tewg7FonFx++pebO44zBwmIyNPAQfWEMKrmWUlr9WZ8BA2QJBYTKgs654EI6zY+xlhpDM+bgRG0CFEYsrhhHn4m4OFnHuW2h+6iIVdwDZIcx5kSPYTtpA0iW8QTEJnxAJ0egTIvasNg8LMB6+55iOJoEc/zpvdYRAhrIcedcBxdXV3Y0FLLJUhHBqID3j3dcZwXmXQbbgFlCDjg7a4AjKhuT9uNzoIdVURQlMsvuITADxirFBksjxD4/rSXaRtjKFfLnHvK2Syct4BatcKGzc/gm+k/Fsdx5iRNUxz6xMHegAHbH1ejREQ8ZrhzpogQRRGLuhaQ8QMGxgZ5euBZsn4w7ekNQYg1oaPQRi7IUg1r/Pz2m9KThUtvOI6zPxMhS2UIoOcgbsJAsANhSDzZ9Sann4J6ij+iZEMfk/XYumkrjz64jmw+P62TchMnis6uTs4490yiSkRMQrk9SdMwroLDcZypEMFgtgGsP8ANYwGMR2UHMCRiZvTS3RhDpVrltONO5qjuhdgkYftYH5rMzDHFSUxrYyvHzTsaMfDwk49QjaozM1npOM6cZVVHAVh94L9rfnlc0xDK4EyPoAUI44hF8xfR0dpBLQ55tP8pxMxMLyerlgw+8xo78bMB1//qBrb17yDjZ2bkeBzHmWNEVASSJC4f7E0YrlqTgAyJESbqKGaEZ4grEblRIVvIYRPL7b+8LV0QMu3VdYK1llXnn4XxPDS0FJa2EjRkUFf/7DjO/qkIJq7FVoQ0QK858BuZGJ4+m+6SPXOVHNYmtOQbOW3pSqI4pFQtM9Q/yEylXlSVs048nXw2S/9AHxsHtqS7iScuQDuOsx/pHihGE1s2npQAVhzgbipQD9BG2KqaVoQc7uOciokdVBqbmzlm2dFgYfP4dkq2ij8DKQ4jhjAMWdQ4H8/3eXr7s9z28J0UsnkSV8HhOM7+iGq6voQdcWBHAHoP4mYMgDWyIa2FnqnyBEVFiXaUmN82Dy/weODhB+nr7yOY5hI7ESEMQ5YsX8q8+d3YyKIFwevOQayugsNxnP1SRcUzoGyxTy4eBA54NxWYCNCJbmOG22cqkK8G2MQinmHTM89SLpYx07yC0IihUq1w8gkrWbxgMXEtYtO2zRi3ctBxnKkSUTECIkP3fPGLET09BjnwXK0BSMrhs/VfnZkURz2l8LrLXk1jvkA1qjGWlNLR8zTnn0WEMIlo85tpyTYRJiE/XHsdYma2DNFxnLlDQBFB0DGAi7jp4La8AsD3R61qPFODRBFIsBy1YDGZbJb+kQEefOxhcpnstHeNU1X8wGfh4oX1YzOUOpIZXmPpOM5cUw+nFYDiwhMOKrqmATqfj1C2iDHTvzehKuJ7hINlgorgZX0G+gZ44IEHyOVy055/juOYttZWzjnnbJIwYrQ0hqKu/7PjOFOmqLFpxdcOgMatjx1UIDMAjRUS0OrhO7ypEzFUoyrHzVvOsq6jsImlFJbJZKZ/B2+oL1AxGZY2L8LLBNx23+1s2raZTCbrRtGO40yNYmxsAXkGoHtl98EH6LX0VUG2GM+gMr11ZGnfi5iF8xbQ3dlFEsdsHNtKYu2MZFystTQ1N9PW0ILxDE9ue4ah8RECt8TbcZypUTEiNk4S1ehxgDXrDrwGGiYXqqy1MmMjaCGKI9paWmlrbsOq5fa776jnnqc3RE8cywUvPZ9MLktcCskubKTQ0UgSW9cC2nGcKREEEakh/o5DuZ2dM4sqwSEf1cFINyJEt9XQ+qruJx99Ih2tTnNAnFjifVzX0eQzOcbLRTZt24Tv+W707DjO1KWtjcLIVPoB6D3wGmgAgyL0oogOpYswprcfR2ITGrMFLjn9QpIkZqwyTiIJ3gysIBQRwihKGyT5Pv3DA9yz/n7yuZzrweE4ztRMtCRWksZKVNrlqwfMrF6z2pCuIdxQ72g3ray15Ap5li46CkHYURpkuDKe7lwyzRUcSZzQ3NJMc3MzapUyVYbzFTxrZrBLieM4c4roxCKVjWt71x70jt4AZiJ5rSqNTPdlvILxDcVnh2nONuFnfB555BG2bNky7VUcIkK5UubklSs56cSTiKshI6UxsrmsS284jjNladMMQS3PkhYuH/TwzuzMjWjbdO9NKAJWlVbTmF4AeML2bdsojxfxvOlNcQhCbBPasi205Zqxqtx0xy1EceTmBh3HmToFDIjoOuCgNoudYOo3h4o0MM2bVYsYKrUql55/Ea3NLdRqNfpKg2QyGex0j1oFLJbW5hZyQQ4xwv1PPpRWk7hFKo7jTJVIOoL2dBPA6pUHvtXVhHSY2oMRJXeYDm/KRASrlqPmLyYXZKnENbYXB/CY/ppjm1gKhQbOvfA8oiiiVqvRemI3Ju1I5TiOMyUCihHUMgLQt67vEAM0acPPw3BsU6fg+R7F7aPIaIKfzzA6NMKdt99JNjf9PTisWrJ+wDGdSxGBwZEhRotjaYmdi9CO40yRgmiiivHHDvW2DMBrF742JyILrbWIMm3J38jGtDe00tmQLlCp1CqMjYziTXOL0QmiwrymLrzA58HHHubZrZvIZrK4Hv2O40yJoiL4cSVKqNkhOPhl3lAP0EMjxlO0kA4Up2cgLSZtjL904VEcd/Rx2MSybbxvxlbr2cTS1NJELpvDqGE0U2HcVPBUZnSrRsdx5hBRNZ5BYLsx/nY4+GXesEuKQ5Dp7cGBENuYjvYOuto6sIll4/BWYpsg0xyljTHUajXOu+A8mpqbiKo1ilGJbD437akWx3HmLlVUjAF0hxa8PuCgdlKZkDbsj7WgcLQmlumMjkmcYEsxhXwBzzP86sZbCGs1zDSvIhQRYk1Y1r6YQpCjXK2waetmPOO57LPjOFMnohgBGL79A2sqB7uTyoSdI2jBPxzHdyA8DAttB4larCqlcmna18pAfZPYKKQj30YQBAyPj3DnunvIZbKoS0A7jnMA0lXe1ODgd1KZYACCsNxwOA7sQCiK53mccuJKjArD5RHGakV840171UQSxzQ2N9LR1YkmFrKG8eYIYw/h1Oc4zouTgiADAMVtxUPKSBiAMJdrkmlejKGqBJkMy49ahgDjUYliWMLI9KY3jDHUwhpLly7jxBOOJwkT+ocG8HxXXuc4zoFSUasgdgtA44LGQwoiBkDUm/5FKp5QHSzRlG3EC3ye2fQsm7ZuScvapjnPEduE1lwT7flWrFq2DWwnjiOm+6TlOM7cJopRaxE1z8ChldhBPUCrxPPriZPpiYyqYAQZjtGaRQLDjs3bGNjeT5CZ5i52CIlNyElAS74Zz/f42S03UKlV8MzM1GM7jjNHiYhNFIs9pJ1UJhgAo17rdA4WjXhUqhXOO+McOtrasUnCSHWMTDADPTg0TXMsOe5oDIIohA1u9xTHcQ6CgFqbGN9sBw6pxA4mqjiMmYcIyPRERxGIk4SF8xbQkM1TiyP6K8Nphd80x2eLxfd9Vp15JtYq5UoFvzOHF/iodTlox3EOhICgarzhw3Fr6Qg6YZEYQacrPEqaVljcvZB8oUCxVOSOu+8km8lgp7usTdMyu85cG77v0zfcz47+vvo2V9N7KI7jzGkqAgLVpFhJ93g9xCtxA2BVo0M+tKlS8AKP8kCR0WcGkYwhrIU8+cST+IE/7SPotJu2sKxtMcYzbNm6la1928gEGcDVQDuOM2UqRlBlS55KeDhuMK3igHki05NeSHfOjulqbmf5gqXYJCFMwl12UJn+YavxPIwxiAiDdpSBaDTdcmvaj8RxnLlL673jZQiID8ct1qs46EZIlylOgyiO6Gjr4JglR2MTy47iAGEcckhrIg+CMYZqpcqq886irasDW42JgoRccwGND2krMcdxXmTSPhwCylNre9fGpAmOw1AHPY3X8iLpTt4tLc10tnaiCpsHthHGETLNi1REhCiJWNa1mKZcA7WoxpZtWw/9WXUc58VHRMUIIroNoKfn4Le6mjC9EREAwSaWZDikqaGRIAi4+aa1jI2N4fvTW3csQKKW7sZOckGWUqXMXQ/dS3aaN6x1HOcIsTPFwfpD2OpqwkSAnvZoJIM7UzTTXrkxcQxiiKOIjARpuiMKeWTTE/UKDhegHceZOlFVEcGio3BoW11NqOegNTN9IVoRES4863wEoRSWGauW8GT6W3vGcUxLexuLli7CRgkmY+hYsQAbJW6fWMdxDpwBo1KDQ2+UVL85QMmqKuj07EsowMLu+RhjKNZKjFbG8L3p3ShWRIiikO6uLk464URsbNnWv51atYoxxuWgHcc5ICoYW0sQT0bh0BslwUSAnsbiCQXEMyxZeBS+8RitjDNYGq63GZ0+aQ8OS0OQpz3bAga29m0njMJp76jnOM6cp4J4SRSDJuNw6I2SYLKbnalN1zW9GCEqhmQkg8n6bHx6A4+tf4xcPodO5/ZSkk4Q5oM8rfkWPD/gpjtuZqw4PmOb1jqOM7cpxKg5bAv/6iNojWQ66qBVMb5HbVuRcKwKAnGUYKOYmUr6ep6HGEGskpnfAIG4CULHcQ6UiieIZSQO2QGw4hA72cHOHPS0REcjhnK1zKqTz2DhvAVYaxksDU/7HoQTROAll7wEEaFWraINBj8z/cvNHceZ63RiO9dqkLdFgN7DcKtpFQc6LRFSRIiThO6OLhrzDcRxzI7xfkTMDI1ahQVt89JceGmMgcEBV2LnOM4BUwAjqFCM8vEIcMitRmFyJaFsQ5mGKg4hTmLmdXTTkCsQJTEDlRHMTDRfrj91C5vn4XkeY8UiQ2PDeC5AO45z4DTtNEqYHzq3DByWnvL1kbMOquoL3qReDCRxQiHIEWSzhGHIbbfchu/PXFDsLLQhnmHjlmd59KnHyWdzbidvx3EOmCAoatcextYZ9QAt/fUR5QsaosUzRGNVRp7shwA0sZRGx2dsgtBaO7mDi2Yhziu4Jv2O4xwspUZvr+UwxdJ6FYdsUWsnktwvCAGiOKazrZMzVpyOjRLGakUsdto3ZzXGUKlUWHX2mSxcvJCkElM2IYXOJjS2M3bCcBxnjlImomkN4KKeizwOQ7lB2rDfJBvq2zu9gJOFgk0SGgsNHDV/EdZaBopDVKPatC8MSbvYxSzomE9TQxNxHLG9fwck07VrruM4zv4ZAE/M09baF7YBcr3NaD6Xo6utA7XKSDhGaCPMDAxYE5vQlmsh52cJ44h1TzziFqg4jjOrTAxdx0E2i2fSPaBeIKpKxs/Q3NiMl/G5/74HGB0ZwfeD6e3DQbonYltDC9kgQxiH3P3IvXhmevuBOI7j7IsBuLV8TUlUHzCeQeUFKmFQwAgDD28ljmKMZxjuGyKshdOeg4Z0grAW1gDwAp/OlYvSpeYu/ew4zkGSw7wa26z+1mqPXizC3eIbROUFCdAi6RLqM044lcDzSZKEUCM8c1hy6Qd0HHEc09HZwRlnnkESxpQqZSIbMV37MjqOc8TyD+eNmYmm0omVe5NaHCOH9w52Za3lmKOOxvc8ymGF4eJImlZ4oe5wL5L6ZOWSRUehVhkcGaRWq037lluO4xxBFFQZOJw3aday1gL4Qfk+TZJ+4xuBFybNoSgdre0Y4xEmEcWkMjmynk6KkvEytGSbECMMjY4QRhHGyAuZgncc50g1sZGpshUOT6tRAEMvdvVqvFv/4vqtIPeLMaov4IX+/K75+EFAX38fTzzxBLlsbtoDdGItuUyW9oZ0FeEjTz7KaHEU33vBLh4cxzmypbNXh/ki3ACsWNGjgFiRbyGIvABTZSJCUo3JmACTMQwMDLLh6Q1kZmiD1qgWYcRgjGHbWB+VsOoa9TuOc1AEQa2CkQfg8LQahXqA7k27Lqln9GdJFPeLMQKHMWqqYjKGyrYxaoMlAHzPm5HgLCJYaznhlBPxPAOhpfXYLjJNOTRxPTgcxzkIiqgqGrIJDk+rUdi55RX0YG79i2u2amx/arK+KHLYFq6IGCq1KiuOXcFRCxajiWWkMnZYzwEHQq3l5BUryQQZiuUi2/t2uBpox3EO3kTOwbObD+fNTlzTK+tXS/2O/tOGcSjgHa4Zs7S0LaG9pY2mhkYStfQXh2ak5lhIW021BE14nkclrFEsjeMZ4yYIHcc5WKI2sYk1w8Bh6QUNu6a016xJALn9Q9eutZG9w8v4ghy+IWWSJLQ2NdOQbyBJEsbCcWZuVYilq7Edz3gMjQzy5OYNZDNZN4J2HOdgWOMbVHlI42TwcN7wbrNiq1evnthh5VNqbVo0chiIpEur29vaJwP0r2751QwtDEnrYdob2hAj9A0M8PjTT7oA7TjOQVGwJvBB+dU9vdeWe3p6DHJ4IttuAXrNt9bYnp4ec8eHrr0uCfU7fi7jqdVDz0UL2CghGQnxfA+1ytatW2dk/DyRbomTGIBsU56GriZs7CYIHcc5cKKq4gkGtgBcu+3aw9Z1bfe6MkF76QVBjdUPx7V4PF24cmhnA/GEuBoxsrEf/DQsZzKZQ7nJg2KMoVqtctxJJ7B4yWJsLUFzQrarwfWBdhznwCkqxvhxORxD9EaA5cPLD/eOKrvoxfb09JhbP3rNY1jba3zPaLqy8KCDtE2UQj7PMcuOQa1lvFakGtVmpElSFEXM6+yitaWFJEnYvH0zxC/8dl+O4xyBRNX4Rmxi+2/94LW3A7Imnc87LPa4MqO3t1fp6TG3hWd+Jq5GP/ZzgafKQd9p2vuikdNPOIUkThirlqhGIUamt3JCRLBYGjMN5L0c1lr6BwdccHYc56BMbHMiIt8BtKen57BGk70tnVN6e5XeXitZ/71JLXray3o+euD5aCHtA+17Pk2NjaBQjIpEdvrbjAppo/7mbCOFTB6rlqHxkfp33QSh4zgHRFHERlY1lq/C4VugMmFfa5u1p6fH3PZn3+vTyLxBw2Sjl/E9VeIDuwtB1ZLJBHS1dSFG2LpjO+PFIv6072CSriJsyjeSCTIkarn93jvcCNpxnAOmkAT5jFhrv3N7cvo6ejD0Hp765wn7bD7R29trV39rtXf7R3/wUKy82sb2CT/n+6DJgeQmFPAwZDNZvIzPugcepr+vf9p3UoF0NF+r1UDS9fPBggY3eHYc58AoKoIkURwq8vf09lrWc8gFFc+13+5Aa65ak7B6tXfnh65ZT1UvTmrxd71s4IlnRCHeX6BWFOMbBtZvIw4jADJBBmOmvzGRVUs2m+Woo47CxpYkicm052dkstJxnLlLRRM/F3hJqP96xwevuYMeDGsOfp5ub6YWJdekQfrW3mu2Lj42e1VSjf9QbTLi5wNfjIjq3kfUEzuYnHLsSrJ+uhikGteQGcgrJElCY3MTZ5x1BkmUMFwcoVQsYYxxg2jHcaZEVRMvE/hxNb437rYfoqfnBRttTr0B8po1CYqskTUJ8PlVH3vDdUEl/KAgb/dzQd5GFpskCYCITCaXBcGqZUHXfALfJ4xChkujM9P7Qv//9q4tNq6riq51zr0zY3viOI6T0JaglBRSOVKFsFLgh+YDAV+8pIlA4gtEK7XfqKFSNZkfHgIJgYQQCPULCSkj8VCL+odk9YMSaolHOtCgJk2a2rHzcBKPncx97MXHvTOecUzixzgRqtfo+N4Z39c5Z5+91znnnr2zoZYhPwDngJvNBbQe0Ot+23hfYHURfxDsZBt9gYDEF4JAUTKXIP7a1DOvLkkvk+zv2HMb69P82fJFVk5W/NSLv3/79Rde/qYcP5HG6c8hmwsGCj4ohT7LiCx7f1pmaaq9o2MIfYBWGmOh1bzvvpfJLFqK9x7DpTKc95ieu4SFxYVssnKbQr+foE7q/uTyikx20xWpI8//O6EnkST9nSlX23ccf7drqzd1nqlzTCcPnbSN/sIEJUEpCCyxc4npi3994dUz1WrV9TtQbDc2EkJE9WMZm66eqLJ2vPZPAM8++f0vf9ffbn2VdJ+HdDQoZoragVAEjOwYSRzJVtJyzWiRzrn7PkFoMhR8iD1Do2DgcPqtNzF79TI+OPwhxK1o+22O/zd081NC6vZfKwBdDYe5sIkkgXYPj/TLlZ75Qc+dOi7v9qi7TI8Dq04HrZBnS+wmhAVBbvlkFnzoxrCatK3Wk8vv09PLy3dl6txT1rOVgISS1D5RavN2Umx7rtyW+HvDBJj3LmDonUXJn+LbybfeqP3xbKVS8bVare/jzt3YeIynbFm42uMvp47XLgL40cTTEz8JDn7gAFrJZ0F8jkH4eBwn+z9y8LFSYccAmu/O4tTrpzAwOAgz67L66lwXAnuktY+CJAmpRDNTMBDCBV552+29h4D1ePNbd5iwFQrkwUFb00jvlr9lZdENdn5UFqAi33aryZ6z6Mm2mJAgHdERIOeWJYjMFC4ApULaijtXtNQWSKQQKOM1ZUwWBG9ISAlI5AVATUgeju/A1HRUaPLnSLtpdEWXYCbxvIICgCi/rYuWvB+IFCUEAFcIFLTgI0VlS8M7SiD06SNmGMlF1DnYR0F4kAmFg5IGAQYgHoXgSZQlFAEEhHbmryYN0zkGRR/Qu44Sl9o5y7g3kPlFXyG1Hfat7k27Hnvr7U5zIm6lyt96Y6Lc7X5bA4GOgXNB6F0ape9ZK/lxNLrvp1PHfxlXq1W31coZ6EeI8FotW3cu8KkTT/nJ2mQM4D95+tkXfvCNHRfTdz+WLsWPnz73r6803v73J5vNpYFSsVDMmh9zG79CP9rycnap/WfzKBQKKBWK5ujc8IfHUDg3kN3eoZcZOeaMam1wvq1L1vic3QrkASJrrFtgJ+6Sv1XrU8ssEABAsJshom0u8+8koUSzom6Q8Aa1KF4AIFLOxEsA5kWGoK5BmvPOw5I0IjALD0hI5WzGx0gQApHCi4MtpQAxWfvD9X4WxxpxZj0Hj1crhWGgnA4tFgop9ykNKGEfiFK82Nrjg6Aks91GjlI2AnCPoAKAAxmL1n44F3YZsqw1Eh2DllGl3Lh16iML9NxTX1hV4W8emQN3ietdf5FD9yAgufEh5Oico3dk4DJjlhrS2M6kcfqbxOulqe+8cgEAUIWrtfXeFqN/UVIJTWIyAUBUq6wCaBxusH7spQUAr336e596DcCvjjz3pdHBwUF361azGAbhBByfoPFhAWOAiiQDQQHEA6RCZF2M3RTKIjZcKASQxDEOHToUXm/ddIsXF2320sy8MyxZkjoZxkB4ZsJAmmIzmydoa2HwluIKpIT3mnEUJMIDyTzB2xvNTz8gyQPcBSigo2W8YZMgJJMDcf2O/OVzGGa6RmCWyCYiRBHALZjOgxBFgQwNmiEwC/iALvXeeCmGrlqU0u3yKs27FlBI4sEWoyWlU/j4bdRqqlar3HQDqlZd5XAjK49677/Gx8fVaDQ4Pj6uu68cqwEnVqisEyBQXdsjdO03Go3euqkA9WP1CMC1/JdL97ygwEq94ubmMBAvtigXDFiUkEHwiMyGXaoRQ7KPcIGIR5ENkIwB3JN3THYI2AEoATAIYYRkRs+zFwNGBfh+OREWQEpG7wtBKQg2QtJWGpGVyIayiDRKoNgWZXYZiZ0X9DdIvytGA1OTtXoTACqViq/X64baxvXQenE/ug3EsYp74/nn3ZNHjsS2xkLe/5lDD/vUhT50JuM+IN1JcxsumAQACKVRUnzu2WdKO21o8S/n/n7ltM4uDBW8i80/BPiAlkrO01GRIruc4t6BCi0IGXqbeW/pRvzQ8N67lmnx5qDmy6n/x7d/vbjRvPQTE794OsT0dFg+sNta15Y2LQ/F0UE137nqpmqvLPXj+TaM9hwJgMrhBs/O78pnpadQni53hHBvY29nv36yvlzXffLnu8XInvIEWMkjIs2NzxEAmjNNYmIC5em3dBRHrZatcNt0np744deHlgpXkl2LpXIR2B0nsRg4yfnQyfYACmj9GbqTiQZnzrMMr11I1zeiILEA4rFVJ/GyToCHdJFwNyAskOms0sL0n1/87fnuQysnK77+5rhwn1hzN/4LQ5hMWgEaT+AAAAAASUVORK5CYII=" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Comparing Environmental Policies</h1>
+            <div class="subtitle">GUIDE-QUESTION PRACTICE QUIZ &bull; FULLERTON (2001)</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">ENVIRONMENTAL ECONOMICS &bull; POLICY INSTRUMENTS</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('overview', this)">Overview</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('model', this)">Figure 1 &amp; the Model</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('quiz', this)">Guide-Question Quiz</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('areaquiz', this)">Area Quiz</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('splits', this)">One Gain, 8 Splits</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('table1', this)">Table 1 Reference</button>
+    </div>
+
+    <!-- ═══ TAB 1: OVERVIEW ═══ -->
+    <div id="tab-overview" class="tab-content active">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>What this quiz covers</h2>
+        </div>
+
+        <div class="card">
+            <p>This worksheet turns the guide questions for the reading below into a practice quiz. Each question has a <strong>drop-down detailed answer</strong> — try writing or saying your own answer first, then open the drop-down to compare.</p>
+            <div class="highlight-box" style="margin-top:12px;">
+                <p style="margin:0;"><strong>Reading:</strong> Don Fullerton (2001), &ldquo;A Framework to Compare Environmental Policies,&rdquo; <em>Southern Economic Journal</em>, Vol. 68, No. 2, pp. 224&ndash;248. (Paired with Field &amp; Field, Chapter 5.)</p>
+            </div>
+            <p style="margin-top:12px;">The big idea of the paper: <strong>a whole menu of environmental policies — taxes, subsidies, permits, command-and-control, and Coase bargaining — can all be analyzed in one diagram (Figure 1)</strong>. Under perfect information, every one of them can achieve the <em>same</em> efficient level of pollution and the <em>same</em> net gain to society. What differs is the <strong>distribution</strong>: who pays, who profits, and who collects the rectangle of &ldquo;scarcity rents.&rdquo;</p>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>How to use this page.</strong> Work the tabs left to right: skim <em>Figure&nbsp;1 &amp; the Model</em> so the symbols $P^0$, $P'$, $Z^0$, $Z'$ and areas 1&ndash;8 are familiar, then do the <em>Guide-Question Quiz</em>. Keep the <em>Table 1 Reference</em> tab open on the side — questions 3 and 4 lean on it directly.</p>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p><strong>Where each answer lives in the paper:</strong></p>
+            <table class="t1">
+                <tr><th>Guide question</th><th>Where in Fullerton</th></tr>
+                <tr><td>Q1 — What the x-axis measures</td><td>Section 2, pp. 3 &ndash; middle of p. 5</td></tr>
+                <tr><td>Q2 — PMC, SMC, MED and the efficient level</td><td>Section 2, pp. 3 &ndash; middle of p. 5</td></tr>
+                <tr><td>Q3 — The policy instruments</td><td>Section 3 + Table 1</td></tr>
+                <tr><td>Q4 — Efficient tax / subsidy / standard / permit price</td><td>Section 3 headings + Figure 1</td></tr>
+                <tr><td>Q5 — Other criteria for comparing instruments</td><td>Section 4 headings, pp. 16&ndash;26</td></tr>
+                <tr><td>Q6 — Tradeoffs between criteria</td><td>Sections 4&ndash;5</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 2: FIGURE 1 & MODEL ═══ -->
+    <div id="tab-model" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>The key: what every symbol means</h2>
+        </div>
+
+        <div class="card">
+            <div class="given-key">
+                <p><strong>Key — variables and curves in Figure 1:</strong></p>
+                <p>$Z$ &nbsp;=&nbsp; quantity of <strong>emissions / pollution</strong> (the x-axis), treated as an <em>input</em> to production</p>
+                <p>$P^0$ &nbsp;=&nbsp; the firm's fixed <strong>private cost per unit of emissions</strong> (removal &amp; disposal)</p>
+                <p>$P'$ &nbsp;=&nbsp; the <strong>full social price</strong> of a unit of emissions at the optimum, $P' = P^0 + t^*$</p>
+                <p>$Z^0$ &nbsp;=&nbsp; <strong>unregulated</strong> pollution level (where $MB = PMC$)</p>
+                <p>$Z'$ &nbsp;=&nbsp; <strong>socially optimal</strong> pollution level (where $MB = SMC$)</p>
+                <p>$PMC$ &nbsp;=&nbsp; private marginal cost of emissions (flat at $P^0$)</p>
+                <p>$MED$ &nbsp;=&nbsp; marginal environmental damage (external cost of one more unit of $Z$)</p>
+                <p>$SMC$ &nbsp;=&nbsp; social marginal cost $= PMC + MED$ (upward sloping)</p>
+                <p>$MB$ &nbsp;=&nbsp; marginal benefit of pollution (the demand curve for emissions; downward sloping)</p>
+            </div>
+            <div class="highlight-box">
+                $$SMC = PMC + MED \qquad\qquad \text{Optimum: } MB(Z') = SMC(Z') \quad\Rightarrow\quad Z',\; P'$$
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Figure 1, rebuilt with the areas labeled</h2>
+        </div>
+
+        <div class="card">
+            <div style="max-width: 720px; margin: 0 auto;">
+            <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+                <!-- area fills -->
+                <!-- 1: above P' line, under MB, left of Z' -->
+                <path d="M 70 170 L 70 54 L 100 37 L 330 170 Z" fill="rgba(57,134,78,0.18)"/>
+                <!-- 2: between P' line and SMC, 0..Z' -->
+                <path d="M 70 170 L 330 170 L 70 272 Z" fill="rgba(221,162,94,0.32)"/>
+                <!-- 3: between SMC and PMC, 0..Z' -->
+                <path d="M 70 272 L 330 170 L 330 280 L 70 280 Z" fill="rgba(188,108,38,0.30)"/>
+                <!-- 4: between MB and PMC, Z'..Z0 -->
+                <path d="M 330 170 L 520 280 L 330 280 Z" fill="rgba(94,108,57,0.28)"/>
+                <!-- 5: between MB and P' line, Z'..Z0 -->
+                <path d="M 330 170 L 520 170 L 520 280 Z" fill="rgba(66,38,13,0.20)"/>
+                <!-- 6: between SMC and P' line, Z'..Z0 -->
+                <path d="M 330 170 L 520 96 L 520 170 Z" fill="rgba(66,38,13,0.30)"/>
+                <!-- 7: under PMC, 0..Z' -->
+                <rect x="70" y="280" width="260" height="80" fill="rgba(226,226,226,0.85)"/>
+                <!-- 8: under PMC, Z'..Z0 -->
+                <rect x="330" y="280" width="190" height="80" fill="rgba(226,226,226,0.5)"/>
+
+                <!-- dashed guides -->
+                <line x1="330" y1="170" x2="330" y2="360" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>
+                <line x1="520" y1="280" x2="520" y2="360" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>
+                <line x1="70" y1="170" x2="330" y2="170" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>
+
+                <!-- curves -->
+                <line x1="70" y1="280" x2="620" y2="280" stroke="#21442B" stroke-width="3"/>
+                <line x1="70" y1="272" x2="600" y2="64" stroke="#BC6C26" stroke-width="3"/>
+                <line x1="100" y1="37" x2="600" y2="326" stroke="#39864E" stroke-width="3"/>
+
+                <!-- axes -->
+                <line x1="70" y1="20" x2="70" y2="360" stroke="#2D2D2D" stroke-width="2"/>
+                <line x1="70" y1="360" x2="650" y2="360" stroke="#2D2D2D" stroke-width="2"/>
+
+                <!-- area numbers -->
+                <text x="140" y="128" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#21442B">1</text>
+                <text x="150" y="212" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#8a5a1e">2</text>
+                <text x="150" y="264" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#7a4416">3</text>
+                <text x="358" y="252" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#3d4a22">4</text>
+                <text x="450" y="210" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#42260D">5</text>
+                <text x="452" y="150" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#42260D">6</text>
+                <text x="192" y="325" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#4A4A4A">7</text>
+                <text x="415" y="325" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#7a7a7a">8</text>
+
+                <!-- curve labels -->
+                <text x="560" y="330" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#39864E">MB</text>
+                <text x="625" y="285" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#21442B">PMC</text>
+                <text x="606" y="62" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#BC6C26">SMC</text>
+
+                <!-- axis labels -->
+                <text x="40" y="175" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">P&#8242;</text>
+                <text x="38" y="285" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">P&#8304;</text>
+                <text x="323" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">Z&#8242;</text>
+                <text x="512" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">Z&#8304;</text>
+                <text x="545" y="400" font-family="Inter, sans-serif" font-size="14" fill="#4A4A4A">Pollution (Z)</text>
+                <text x="18" y="40" font-family="Inter, sans-serif" font-size="14" fill="#4A4A4A">$/unit</text>
+            </svg>
+            </div>
+            <p class="fig-caption">Recreation of Fullerton's Figure 1. $PMC$ is flat at $P^0$; $SMC = PMC + MED$ rises; $MB$ (demand for pollution) falls. Unregulated equilibrium at $Z^0$, optimum at $Z'$. Between $Z'$ and $Z^0$: area 4 sits below $MB$, area 5 between $MB$ and the $P'$ line, area 6 between the $P'$ line and $SMC$.</p>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p><strong>What each area (or combination) means — this is the currency of Table 1:</strong></p>
+            <table class="t1">
+                <tr><th>Area(s)</th><th>Meaning</th></tr>
+                <tr><td>$1+2+3+4$</td><td>Consumer surplus <em>before</em> any policy (benefits of pollution above cost $P^0$, out to $Z^0$)</td></tr>
+                <tr><td>$1$</td><td>Consumer surplus <em>after</em> an efficient policy raises the price of polluting to $P'$</td></tr>
+                <tr><td>$2+3$</td><td>The rectangle $(P'-P^0)\times Z'$ — tax revenue, permit value, or scarcity rents. <strong>Who gets this rectangle is the whole distributional story.</strong></td></tr>
+                <tr><td>$3$</td><td>External damage that still remains at the optimum $Z'$</td></tr>
+                <tr><td>$3+4+5+6$</td><td>Total external cost to &ldquo;victims&rdquo; at unregulated $Z^0$</td></tr>
+                <tr><td>$4+5+6$</td><td>Victims' gain from cutting pollution $Z^0 \to Z'$</td></tr>
+                <tr><td>$4+5$</td><td>The rectangle $(P'-P^0)\times(Z^0-Z')$ — the government's outlay under the abatement subsidy</td></tr>
+                <tr><td>$5+6$</td><td>The <strong>net efficiency gain to society</strong> — identical for every efficient policy in the paper</td></tr>
+                <tr><td>$7+8$</td><td>Private resource cost of $Z^0$ units (payments to labor, capital, other inputs)</td></tr>
+            </table>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>Common trap:</strong> the x-axis is <em>not</em> output of the dirty good in general — it is <strong>emissions</strong> $Z$. Only in the special case where pollution is fixed per unit of output can the $MB$ curve be read as the demand for the output itself (and only then can a tax on <em>output</em> work as well as a tax on <em>emissions</em>).</p>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 3: GUIDE-QUESTION QUIZ ═══ -->
+    <div id="tab-quiz" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">&#10003;</div>
+            <h2>Guide-Question Practice Quiz</h2>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>Answer out loud or on paper first</strong> — then open the drop-down to compare against a full model answer. The answers here are written the way you'd want to type them up: complete sentences, correct symbols, and the page/section they come from.</p>
+        </div>
+
+        <!-- Q1 -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Identify what is measured on the x-axis of the model. <span style="font-weight:400; color: var(--text-medium);">(Section 2, pp. 3 &ndash; middle of p. 5)</span></p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                    <div class="solution-body">
+                        <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                            <p><span class="mini-badge">Answer</span></p>
+                            <p>The x-axis measures the <strong>quantity of pollution — emissions, $Z$</strong> (gaseous, liquid, or solid waste). It is <em>not</em> output of the dirty good.</p>
+                            <p>Fullerton gets there with a clever re-write of the production function. Instead of treating pollution as a by-product on the left-hand side, he solves for output so that emissions appear as an <strong>input</strong>:</p>
+                            <div class="highlight-box">$$Y = F(L,\,K,\,R,\,Z)$$</div>
+                            <p>where $Y$ is dirty-good output, $L$ is labor, $K$ is capital, $R$ is other resources, and $Z$ is emissions. Like any input, emissions have a downward-sloping marginal product — the first units of pollution are crucial to production, and additional units matter less and less. That marginal product is exactly the downward-sloping <strong>marginal benefit (demand) curve for pollution</strong> in Figure&nbsp;1. The y-axis is then the price or cost <em>per unit of emissions</em> (dollars per unit of $Z$).</p>
+                            <p><strong>One special case worth stating:</strong> if pollution is fixed per unit of output (think: a ton of steel always makes the same emissions), the demand-for-pollution curve can also be read as the demand for the <em>output</em> — and only in that case can a tax on output cut damages effectively. With variable emissions per unit of output, you have to target emissions themselves.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Identify and briefly describe the cost and benefit concepts on the y-axis — define and distinguish PMC, SMC, MED. Then discuss how they are used to illustrate the efficient level of what the x-axis measures.</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                    <div class="solution-body">
+                        <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                            <p><span class="mini-badge">Definitions</span></p>
+                            <p><strong>$PMC$ — private marginal cost.</strong> The cost the <em>firm itself</em> bears to remove and dispose of one more unit of waste. Fullerton assumes this cost is fixed at $P^0$ per unit, so $PMC$ is a flat horizontal line at height $P^0$.</p>
+                            <p><strong>$MED$ — marginal environmental damage.</strong> The dollar value of the lost utility to <em>all other individuals</em> from one more unit of emissions — the external cost. It starts small (the first unit of pollution does little harm) and grows as pollution accumulates (when the air is already dirty, one more unit can send people to the hospital).</p>
+                            <p><strong>$SMC$ — social marginal cost.</strong> The full cost to society of one more unit of emissions: the firm's cost <em>plus</em> the harm to everyone else.</p>
+                            <div class="highlight-box">$$SMC \;=\; PMC \;+\; MED$$</div>
+                            <p>$SMC$ starts just above $PMC$ (small first-unit damage) and slopes upward because $MED$ rises. The gap between $SMC$ and $PMC$ at any $Z$ <em>is</em> the $MED$ of that unit.</p>
+                            <p><span class="mini-badge green">Efficient level</span></p>
+                            <p>The downward-sloping demand curve is the <strong>marginal benefit ($MB$)</strong> of pollution — what someone is willing to pay for the right to emit one more unit.</p>
+                            <p><strong>Unregulated equilibrium:</strong> firms pollute as long as $MB$ exceeds their own private cost, stopping where</p>
+                            <div class="highlight-box">$$MB(Z^0) = PMC = P^0 \quad\Rightarrow\quad Z^0 \text{ (too much pollution)}$$</div>
+                            <p><strong>Social optimum:</strong> society gains from pollution as long as its benefits exceed the <em>full</em> social cost, so the efficient level is where</p>
+                            <div class="highlight-box">$$MB(Z') = SMC(Z') \quad\Rightarrow\quad Z' \text{ at social price } P'$$</div>
+                            <p>The policy problem, for every instrument in the paper, is the same: <strong>cut pollution from $Z^0$ down to $Z'$</strong>. Doing so eliminates the units whose social cost exceeds their benefit, generating the net welfare gain of area $5+6$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">List and briefly describe the policy instruments compared in the paper. <span style="font-weight:400; color: var(--text-medium);">(Table 1 and Section 3)</span></p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                    <div class="solution-body">
+                        <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                            <p><span class="mini-badge">Answer</span></p>
+                            <p>Section 3 reviews <strong>eight policy types, organized under four headings with two variants each</strong> (the rows of Table 1). If your write-up needs seven, list the four headings and their variants and note that 3b — the price-plus-quantity control — is included by Fullerton only as a cautionary &ldquo;what not to do&rdquo; case; check with the guide/class if unsure which one to fold together.</p>
+
+                            <p><strong>1. Pigouvian solutions</strong></p>
+                            <p style="margin-left:16px;"><strong>1a. Tax on pollution.</strong> A tax $t^*$ per unit of emissions equal to marginal external damage at the optimum. It raises the firm's cost of polluting from $P^0$ to $P' = P^0 + t^*$, so firms stop at $Z'$. Government collects revenue $2+3$.</p>
+                            <p style="margin-left:16px;"><strong>1b. Subsidy for abatement.</strong> Government pays firms $t^* = P' - P^0$ for each unit of pollution they cut below $Z^0$. Polluting now carries an <em>opportunity cost</em> (subsidy foregone), so the full cost of a unit of pollution is again $P'$ and firms choose $Z'$. Same incentive, opposite direction of payment — firms end up with profits.</p>
+
+                            <p><strong>2. Tradeable permits</strong> (real-world example: SO$_2$ allowances under the 1990 Clean Air Act Amendments)</p>
+                            <p style="margin-left:16px;"><strong>2a. Handed out to firms (&ldquo;grandfathered&rdquo;).</strong> Government issues $Z'$ permits free, typically in proportion to past emissions. Permits trade at $P' - P^0$, so recipients are handed a private profit of area $2+3$.</p>
+                            <p style="margin-left:16px;"><strong>2b. Sold at auction.</strong> Same $Z'$ permits, but government sells them. Firms bid the price up to $P' - P^0$, so government collects $2+3$ — in this model, <em>identical in every respect to the Pigouvian tax</em>.</p>
+
+                            <p><strong>3. Command and control (CAC)</strong></p>
+                            <p style="margin-left:16px;"><strong>3a. Quantity restriction (performance standard).</strong> A mandate: &ldquo;pollution shall not exceed $Z'$.&rdquo; Output is restricted, price rises to $P'$, and firms — not government — capture scarcity rents $2+3$. Equivalent to handing out permits (2a), even if nothing is tradeable.</p>
+                            <p style="margin-left:16px;"><strong>3b. Quantity <em>and</em> price restriction.</strong> Restrict pollution to $Z'$ <em>and</em> forbid price increases above $P^0$. But $(Z', P^0)$ is off the demand curve — excess demand means rationing by coupons (which become de facto permits), queues, or lobbying. In the worst case, rent-seeking wastes the whole rectangle $2+3$. Fullerton includes it to show Congress &ldquo;cannot repeal the Law of Supply and Demand.&rdquo;</p>
+
+                            <p><strong>4. Coase solutions</strong> (no government intervention — bargaining, which works only with well-defined property rights, low bargaining costs, and excludability, i.e., few parties)</p>
+                            <p style="margin-left:16px;"><strong>4a. &ldquo;Victim&rdquo; has property rights.</strong> Firms must pay victims for the right to pollute, so they face the full $SMC$ and produce $Z'$. Victims collect a negotiated payment $B$, with $3 \le B \le 2+3$.</p>
+                            <p style="margin-left:16px;"><strong>4b. Polluter has property rights.</strong> Victims pay firms $C$ to cut back to $Z'$ (they'll pay up to the damage avoided, $C \le 4+5+6$). Firms &ldquo;make out like bandits&rdquo; — but the efficient quantity is reached either way. That's the Coase theorem: <strong>the rights assignment changes the distribution, not the efficiency</strong>.</p>
+
+                            <div class="highlight-box" style="margin-top:10px;">
+                                <p style="margin:0;"><strong>Punchline of Section 3:</strong> in this perfect-information model, <em>every</em> one of these policies reaches $Z'$ and delivers the same net gain $5+6$. They differ only in who gets rectangle $2+3$: government (tax, auction), firms (subsidy, grandfathered permits, CAC quantity), consumers (price control, at best), or the bargaining parties (Coase).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">4</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Using Figure 1, give each efficient policy level in terms of $P'$/$P^0$ (or $Z'$/$Z^0$):</p>
+                    <p style="margin-left: 8px;">a. Efficient <strong>tax</strong> level (price instrument)<br>
+                       b. Efficient <strong>subsidy</strong> level (price instrument)<br>
+                       c. Efficient <strong>pollution standard</strong> (quantity instrument)<br>
+                       d. Efficient <strong>permit price</strong> (price instrument)</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                    <div class="solution-body">
+                        <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                            <div class="given-key">
+                                <p><strong>Recall the key:</strong> $P^0$ = private cost per unit of emissions; $P'$ = full social price at the optimum; $Z^0$ = unregulated pollution; $Z'$ = optimal pollution.</p>
+                            </div>
+                            <p><span class="mini-badge">a. Tax</span> The efficient Pigouvian tax rate is the <em>gap</em> between the two prices:</p>
+                            <div class="highlight-box">$$t^* = P' - P^0$$</div>
+                            <p>It equals marginal external damage at the optimum, and it raises the firm's cost of polluting from $P^0$ up to exactly $P'$ — so if the question wants a single label from the figure, the answer is that the tax makes polluters face $P'$.</p>
+
+                            <p><span class="mini-badge">b. Subsidy</span> Same magnitude, opposite direction:</p>
+                            <div class="highlight-box">$$s^* = P' - P^0 \;\; \text{per unit of pollution cut below } Z^0$$</div>
+                            <p>Each unit of pollution now costs the firm $P^0$ in disposal <em>plus</em> $P' - P^0$ in subsidy foregone, so the full cost of polluting is again $P'$, and firms stop at $Z'$.</p>
+
+                            <p><span class="mini-badge">c. Standard</span> The quantity instrument sets the quantity directly:</p>
+                            <div class="highlight-box">$$\bar{Z} = Z' \quad (\text{not } Z^0 \text{ — that's the unregulated level})$$</div>
+                            <p>&ldquo;Pollution shall not exceed $Z'$.&rdquo; The market then pushes the implicit (shadow) price of polluting up to $P'$ on its own.</p>
+
+                            <p><span class="mini-badge">d. Permit price</span> With $Z'$ permits issued, firms bid until the permit price equals what a unit of pollution is worth above its disposal cost:</p>
+                            <div class="highlight-box">$$p_{\text{permit}} = P' - P^0 \qquad\Rightarrow\qquad \text{total marginal cost of polluting} = P^0 + p_{\text{permit}} = P'$$</div>
+                            <p>(Fullerton's real-world anchor: an SO$_2$ allowance traded around \$150/ton, so a polluter's all-in cost was disposal cost plus \$150.)</p>
+
+                            <div class="idea-box" style="margin-top: 10px;">
+                                <p><strong>Pattern to remember:</strong> every <em>price</em> instrument (a, b, d) is set at the gap $P' - P^0$ so the all-in price of polluting lands on $P'$; the <em>quantity</em> instrument (c) is set at $Z'$ and lets the price adjust. Under certainty they're interchangeable — Q5/Q6 explain why uncertainty breaks the tie.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">5</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">From Section 4 (pp. 16&ndash;26), briefly describe at least 3 of the other 7 criteria for comparing instruments. <span style="font-weight:400; color: var(--text-medium);">(Each criterion is a Section 4 sub-heading; economic efficiency is #1, so the &ldquo;other 7&rdquo; are #2&ndash;#8.)</span></p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                    <div class="solution-body">
+                        <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                            <p><span class="mini-badge">All 7 (pick any 3 for your write-up)</span></p>
+
+                            <p><strong>2. Administrative efficiency.</strong> How cheaply the policy can be run. A tax on easily measured market transactions (e.g., chemical feedstocks, gasoline) piggybacks on existing tax machinery at very low cost; a true emissions tax that requires measuring every source's waste could cost far more to administer.</p>
+
+                            <p><strong>3. Monitoring and enforcement.</strong> A policy is only as good as your ability to measure the pollutant and catch cheaters. SO$_2$ permits work because utilities are large point sources with continuous emissions monitoring; auto tailpipe emissions can only be measured inaccurately and expensively, which is why we tax gasoline instead of emissions.</p>
+
+                            <p><strong>4. Information and uncertainty.</strong> Under certainty, a tax and a permit system are equivalent. Under uncertainty about the curves (Weitzman 1974), they split: a <em>price instrument</em> fixes $P$ and leaves $Z$ uncertain; a <em>quantity instrument</em> fixes $Z$ and leaves the price/abatement cost uncertain. Which is better depends on the relative slopes — steep abatement costs favor the price instrument (avoid runaway compliance costs); steep marginal damages favor the quantity instrument (avoid catastrophic pollution).</p>
+
+                            <p><strong>5. Political and ethical considerations.</strong> A new &ldquo;tax&rdquo; may be dead on arrival; CAC mandates are popular partly because their costs to consumers are hidden, and legislators can &ldquo;guarantee&rdquo; results. Grandfathered permits win industry support because they hand firms rents. Ethically, some view pollution as a wrong to be stigmatized by law, not merely priced.</p>
+
+                            <p><strong>6. Equity and distributional effects.</strong> Who bears the burden: rich vs. poor (vertical equity — do low-income households spend a larger share on the taxed goods?), similar people treated similarly (horizontal equity), urban vs. rural, young vs. old — plus the &ldquo;polluter pays&rdquo; principle, which works prospectively (efficiency) but fails as retroactive fairness.</p>
+
+                            <p><strong>7. Other distortions.</strong> The clean model assumed lump-sum taxes. In reality, pre-existing distortionary taxes, monopoly power, and trade barriers interact with environmental policy (the &ldquo;double dividend&rdquo; debate). Policies that raise revenue (tax, auctioned permits) can fund cuts in other distorting taxes; policies that hand out rents cannot.</p>
+
+                            <p><strong>8. Flexibility and dynamic adjustments.</strong> Can the policy adapt as science, measurement, and conditions change — and does it reward innovation? Market-based incentives keep paying firms to find cheaper abatement; a technology mandate freezes the status quo. Transitions also carry real costs (layoffs, retraining, capital losses) that the static model ignores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">6</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Be able to describe tradeoffs between some criteria.</p>
+                    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                    <div class="solution-body">
+                        <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+                            <p><span class="mini-badge">Four ready-to-use examples</span></p>
+
+                            <p><strong>Economic efficiency vs. administrative / monitoring ease — the gasoline tax.</strong> The ideal instrument taxes <em>emissions</em>, which would reward cleaner cars, better maintenance, and gentler driving. But tailpipe emissions are costly to measure, so we tax gasoline instead: cheap to administer and enforce, but only loosely tied to actual emissions. We deliberately give up efficiency to gain administrability — a balance that could shift as measurement technology improves.</p>
+
+                            <p><strong>Cost certainty vs. environmental certainty — prices vs. quantities.</strong> A tax caps the marginal cost of compliance but leaves the amount of pollution uncertain; a permit cap guarantees the quantity but leaves compliance costs uncertain. If damages are gradual (hazier views at the Grand Canyon), fix the price. If damages have a catastrophic threshold (deaths in a temperature inversion), fix the quantity. You cannot have both certainties with one instrument.</p>
+
+                            <p><strong>Political feasibility vs. distribution (and revenue).</strong> The policies easiest to pass — grandfathered permits, CAC quantity limits — are exactly the ones that hand rectangle $2+3$ to firms as rents, building a powerful industry&ndash;environmentalist coalition while consumers quietly pay higher prices. The policies best for the treasury (tax, auctioned permits) collect $2+3$ as revenue that could offset other taxes, but &ldquo;tax&rdquo; is politically toxic. Feasibility is often bought with the rents.</p>
+
+                            <p><strong>Flexibility / innovation vs. certainty of compliance.</strong> Incentive policies (taxes, permits) keep rewarding firms for inventing cheaper abatement, but the outcome depends on firms' responses. A technology mandate is easy to verify — inspect whether the equipment is installed — but gives zero incentive to do better than the mandate, and locks in today's technology.</p>
+
+                            <div class="idea-box" style="margin-top: 10px;">
+                                <p><strong>Frame for the exam:</strong> Section 3 shows the instruments are efficiency-<em>equivalent</em> on the blackboard; Section 4 shows why they are <em>not equivalent</em> in the world. Every real policy choice trades one criterion against another — there is no instrument that wins on all eight.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══ TAB: AREA QUIZ (interactive) ═══ -->
+    <div id="tab-areaquiz" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">&#63;</div>
+            <h2>Area Selection Quiz</h2>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>How it works:</strong> each question has its own copy of Figure 1. <strong>Tap or click the shaded areas</strong> that answer the question (selected areas get a copper outline — tap again to deselect), then hit <em>Check my areas</em>. Areas 7 and 8 are live too, so watch out for distractors. The same region means different things under different policies — that's the skill being drilled.</p>
+            <button class="example-toggle" style="margin-top: 8px;" onclick="shuffleAreaQuiz()"><span class="arrow" style="transform:none;">&#8646;</span> Shuffle questions</button>
+        </div>
+
+        <div id="aq-container">
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Under the <strong>Pigouvian tax</strong>: select the area(s) that become <strong>government revenue</strong>.</p>
+                    <div class="qfig" id="fig-aq1"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq1')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq1')">clear</a>
+                    <div class="qfb" id="fb-aq1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Under <em>any</em> policy that raises the price of polluting to $P'$ (tax, permits, CAC quota): select the area(s) of the <strong>consumers' loss</strong>.</p>
+                    <div class="qfig" id="fig-aq2"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq2')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq2')">clear</a>
+                    <div class="qfb" id="fb-aq2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Select the area(s) of the <strong>net efficiency gain to society</strong> — the piece that is identical under every efficient policy.</p>
+                    <div class="qfig" id="fig-aq3"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq3')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq3')">clear</a>
+                    <div class="qfb" id="fb-aq3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">4</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Select the area(s) of the <strong>&ldquo;victims'&rdquo; gain</strong> from cutting pollution from $Z^0$ to $Z'$.</p>
+                    <div class="qfig" id="fig-aq4"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq4')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq4')">clear</a>
+                    <div class="qfb" id="fb-aq4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">5</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Under the <strong>abatement subsidy</strong>: select the area(s) of the <strong>government's subsidy outlay</strong> (what the treasury pays out).</p>
+                    <div class="qfig" id="fig-aq5"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq5')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq5')">clear</a>
+                    <div class="qfb" id="fb-aq5"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">6</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Select the area(s) of the <strong>external damage that still remains</strong> once pollution is cut to the optimum $Z'$.</p>
+                    <div class="qfig" id="fig-aq6"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq6')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq6')">clear</a>
+                    <div class="qfb" id="fb-aq6"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">7</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Select the area(s) of the <strong>total external cost to victims</strong> at the <em>unregulated</em> level $Z^0$ (before any policy).</p>
+                    <div class="qfig" id="fig-aq7"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq7')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq7')">clear</a>
+                    <div class="qfb" id="fb-aq7"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">8</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Under the <strong>CAC quantity restriction</strong> (no tax, nothing tradeable): select the area(s) of the <strong>scarcity rents firms capture</strong>.</p>
+                    <div class="qfig" id="fig-aq8"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq8')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq8')">clear</a>
+                    <div class="qfb" id="fb-aq8"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: flex-start; gap: 14px;">
+                <div style="width: 32px; height: 32px; background: #8B5E3C; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">9</div>
+                <div style="flex: 1;">
+                    <p class="qa-question">Under the <strong>quantity <em>and</em> price restriction</strong>, best case (clean rationing at price $P^0$): select the area(s) of the <strong>consumer surplus consumers keep</strong>.</p>
+                    <div class="qfig" id="fig-aq9"></div>
+                    <button class="solution-toggle" onclick="checkAreas(this,'aq9')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                    <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq9')">clear</a>
+                    <div class="qfb" id="fb-aq9"></div>
+                </div>
+            </div>
+        </div>
+        </div><!-- /aq-container -->
+
+        <div class="warning-box">
+            <p><strong>Notation note:</strong> the paper usually writes the net gain as $5+6$ and the victims' gain as $4+5+6$ without splitting 5 from 6 in the text — here the figure splits them (5 below the $P'$ line, 6 above it) so questions like the subsidy outlay ($4+5$) are selectable. If you can also <em>say</em> what each selection means, you're exam-ready.</p>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: ONE GAIN, 8 SPLITS ═══ -->
+    <div id="tab-splits" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">=</div>
+            <h2>Cheat sheet: who matches whom</h2>
+        </div>
+
+        <div class="card" style="border-left-color: var(--gold); background: linear-gradient(135deg, rgba(221,162,94,0.08), rgba(240,240,240,0.4));">
+            <p style="font-size: 16px; font-family: 'Switzer','Space Grotesk',sans-serif; margin-bottom: 6px;"><strong>The one line to remember</strong></p>
+            <p style="font-size: 15px;">Fullerton's own framing — the only differences among these efficient policies are distributional, coming down to <em>&ldquo;who gets the scarcity rents&rdquo;</em>: rectangle $2+3$ may end up as firms' profits, as government tax revenue, or as consumer surplus. <span style="color: var(--text-medium); font-size: 13px;">(Section 3, following the price-control discussion)</span></p>
+            <p style="font-size: 14px; margin-top: 8px; color: var(--text-medium);">If John can restate that sentence and then point to which box below each policy falls into, he has the paper.</p>
+        </div>
+
+        <div class="card">
+            <p>All eight policies deliver the same net gain, so the fastest way to organize them is by <strong>where rectangle $2+3$ ends up</strong>. Policies in the same box below produce <em>identical</em> distributional rows in Table 1.</p>
+            <div class="highlight-box">
+                $$\text{Follow the rectangle: } \; 2+3 = (P'-P^0)\times Z'$$
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark); padding: 22px;">
+            <h3 style="font-family: 'Switzer','Space Grotesk',sans-serif; margin-bottom: 14px;">Where does $2+3$ go?</h3>
+
+            <div style="border: 2px solid #21442B; border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; background: rgba(33,68,43,0.05);">
+                <p style="margin:0 0 6px 0;"><span class="mini-badge green">&rarr; Government</span> <strong>Identical twins #1:</strong> &nbsp;1a Pigouvian tax &nbsp;$\equiv$&nbsp; 2b auctioned permits</p>
+                <p style="margin:0; font-size: 13.5px; color: var(--text-medium);">Every Table 1 cell matches: consumers $-(2{+}3{+}4)$, firms $0$, gov't $+(2{+}3)$, victims $+(4{+}5{+}6)$. A tax of $P'-P^0$ per unit and an auction of $Z'$ permits are the same policy under certainty — the revenue-raising pair.</p>
+            </div>
+
+            <div style="border: 2px solid #DDA25E; border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; background: rgba(221,162,94,0.07);">
+                <p style="margin:0 0 6px 0;"><span class="mini-badge">&rarr; Firms</span> <strong>Identical twins #2:</strong> &nbsp;2a grandfathered permits &nbsp;$\equiv$&nbsp; 3a CAC quantity restriction</p>
+                <p style="margin:0 0 8px 0; font-size: 13.5px; color: var(--text-medium);">Both restrict quantity to $Z'$ and hand firms the scarcity rents $2{+}3$; gov't gets nothing. Tradeability changes nothing — a strict quota is a permit handout in disguise. The politically popular pair.</p>
+                <p style="margin:0; font-size: 13.5px; color: var(--text-medium);"><strong>Cousin, not twin — 1b abatement subsidy:</strong> firms also capture $2{+}3$, <em>plus</em> the subsidy $4{+}5$, and it's the only row where gov't revenue is <em>negative</em>, $-(4{+}5)$. Firms' best row; treasury's worst.</p>
+            </div>
+
+            <div style="border: 2px solid #8B5E3C; border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; background: rgba(66,38,13,0.05);">
+                <p style="margin:0 0 6px 0;"><span class="mini-badge brown">&rarr; Consumers (or nobody)</span> <strong>One of a kind:</strong> &nbsp;3b quantity + price restriction</p>
+                <p style="margin:0; font-size: 13.5px; color: var(--text-medium);">The only row where consumers can keep $2{+}3$ (losing just area $4$) — <em>if</em> rationing is clean. With coupons the holders capture it; with queues or lobbying, rent-seeking burns it and nobody gets it. The only policy whose net effect can fall below $5{+}6$.</p>
+            </div>
+
+            <div style="border: 2px solid #5E6C39; border-radius: 10px; padding: 14px 18px; background: rgba(94,108,57,0.06);">
+                <p style="margin:0 0 6px 0;"><span class="mini-badge green" style="background:#5E6C39;">&rarr; The bargaining table</span> <strong>The Coase family:</strong> &nbsp;4a victims' rights &nbsp;&harr;&nbsp; 4b polluter's rights</p>
+                <p style="margin:0; font-size: 13.5px; color: var(--text-medium);">Same structure, mirror-image payments: under 4a firms pay victims $B$ (with $3 \le B \le 2{+}3$), under 4b victims pay firms $C$ (with $C \le 4{+}5{+}6$). The rights assignment slides money across the table without moving $Z'$ — Coase's whole point.</p>
+            </div>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>30-second recall drill:</strong> Government gets it &rarr; <em>tax, auction</em>. Firms get it &rarr; <em>free permits, quota</em> (and the subsidy pays them extra). Consumers might keep it &rarr; <em>price cap</em>. It's negotiated &rarr; <em>Coase</em>. That's all eight.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">8</div>
+            <h2>Policy-by-policy: definition, model, and split</h2>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p><strong>Reading the mini-models:</strong> each chart below is Figure 1 with the areas <strong>colored by who ends up holding them</strong> once the policy runs its course. Area 1 is always the consumers' remaining surplus; areas 4&ndash;6 are always the victims' gain; the action is in rectangle $2{+}3$, which changes hands.</p>
+            <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:10px; font-size:13.5px;">
+                <span><span style="display:inline-block;width:14px;height:14px;background:rgba(221,162,94,0.75);border-radius:3px;vertical-align:-2px;"></span> Consumers</span>
+                <span><span style="display:inline-block;width:14px;height:14px;background:rgba(33,68,43,0.75);border-radius:3px;vertical-align:-2px;"></span> Firms</span>
+                <span><span style="display:inline-block;width:14px;height:14px;background:rgba(188,108,38,0.8);border-radius:3px;vertical-align:-2px;"></span> Government</span>
+                <span><span style="display:inline-block;width:14px;height:14px;background:rgba(94,108,57,0.75);border-radius:3px;vertical-align:-2px;"></span> Victims</span>
+                <span><span style="display:inline-block;width:14px;height:14px;background:rgba(190,190,190,0.7);border-radius:3px;vertical-align:-2px;"></span> Resource costs (7, 8)</span>
+            </div>
+        </div>
+
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>1a &middot; Pigouvian tax</h4>
+                <p class="policy-def"><strong>What it is:</strong> a tax of $t^* = P' - P^0$ per unit of emissions, set equal to marginal environmental damage at the optimum.</p>
+                <div class="split-fig" data-policy="p1a"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $0$ &nbsp;&bull;&nbsp; Gov't $+(2{+}3)$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6)$</p>
+                <p class="formula-note">Twin of 2b. The rectangle goes to the treasury — textbook-clean, politically the hardest sell.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>1b &middot; Abatement subsidy</h4>
+                <p class="policy-def"><strong>What it is:</strong> government pays firms $t^* = P' - P^0$ for every unit of pollution they cut below the initial level $Z^0$.</p>
+                <div class="split-fig" data-policy="p1b"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $+(2{+}3)+(4{+}5)$ &nbsp;&bull;&nbsp; Gov't $-(4{+}5)$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6)$</p>
+                <p class="formula-note">No twin. Firms hold the rectangle <em>and</em> cash a check equal to the dashed box $4{+}5$ — the only negative-revenue row.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>2a &middot; Permits handed out</h4>
+                <p class="policy-def"><strong>What it is:</strong> government creates $Z'$ tradeable pollution permits and gives them to existing firms free, in proportion to past emissions (&ldquo;grandfathering&rdquo;).</p>
+                <div class="split-fig" data-policy="p2a"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $+(2{+}3)$ &nbsp;&bull;&nbsp; Gov't $0$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6)$</p>
+                <p class="formula-note">Twin of 3a. A grandfathered permit is a handed-out profit — valuable even if the recipient shuts down.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>2b &middot; Permits auctioned</h4>
+                <p class="policy-def"><strong>What it is:</strong> the same $Z'$ permits, but sold by the government to the highest bidders; the permit price settles at $P' - P^0$.</p>
+                <div class="split-fig" data-policy="p2b"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $0$ &nbsp;&bull;&nbsp; Gov't $+(2{+}3)$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6)$</p>
+                <p class="formula-note">Twin of 1a — cell-for-cell identical to the tax. Notice the chart is the same picture.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>3a &middot; CAC quantity limit</h4>
+                <p class="policy-def"><strong>What it is:</strong> a regulatory mandate — &ldquo;pollution shall not exceed $Z'$&rdquo; — with the output price left free to rise.</p>
+                <div class="split-fig" data-policy="p3a"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $+(2{+}3)$ &nbsp;&bull;&nbsp; Gov't $0$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6)$</p>
+                <p class="formula-note">Twin of 2a: same picture as free permits — the quota creates scarcity rents with nothing tradeable.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>3b &middot; Quantity + price cap</h4>
+                <p class="policy-def"><strong>What it is:</strong> pollution capped at $Z'$ <em>and</em> the output price capped at $P^0$ — a point that is off the demand curve, forcing rationing.</p>
+                <div class="split-fig" data-policy="p3b"></div>
+                <p style="font-size:13.5px;">Consumers $-4$ (best case) &nbsp;&bull;&nbsp; Firms $0$ &nbsp;&bull;&nbsp; Gov't $0$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6)$</p>
+                <p class="formula-note">No twin. Best case shown: consumers keep $2{+}3$. With queues or lobbying, rent-seeking burns the rectangle instead.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>4a &middot; Coase — victims' rights</h4>
+                <p class="policy-def"><strong>What it is:</strong> no government policy — victims hold the right to be free of pollution, so firms must pay them (a bargained amount $B$) for permission to produce $Z'$.</p>
+                <div class="split-fig" data-policy="p4a"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $+(2{+}3{-}B)$ &nbsp;&bull;&nbsp; Gov't $0$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6{+}B)$</p>
+                <p class="formula-note">Mirror of 4b. The rectangle is shaded half-and-half: bargaining splits it, with $3 \le B \le 2{+}3$.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>4b &middot; Coase — polluter's rights</h4>
+                <p class="policy-def"><strong>What it is:</strong> no government policy — firms hold the right to pollute, so victims pay them a bargained amount $C$ to cut back to $Z'$.</p>
+                <div class="split-fig" data-policy="p4b"></div>
+                <p style="font-size:13.5px;">Consumers $-(2{+}3{+}4)$ &nbsp;&bull;&nbsp; Firms $+(2{+}3{+}C)$ &nbsp;&bull;&nbsp; Gov't $0$ &nbsp;&bull;&nbsp; Victims $+(4{+}5{+}6{-}C)$</p>
+                <p class="formula-note">Mirror of 4a. Firms keep the rectangle, and the dashed victims' region marks where the payment $C \le 4{+}5{+}6$ comes from.</p>
+            </div>
+        </div>
+
+        <div class="idea-box" style="margin-top: 18px;">
+            <p><strong>The takeaway sentence for the exam:</strong> under perfect information, all of these instruments are <em>efficiency-equivalent</em> — each moves pollution to $Z'$ and earns society $5+6$ — so the fight over which instrument to use is really a fight over <strong>who captures rectangle $2+3$</strong>: the treasury, the firms, the consumers, or the bargaining table.</p>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 4: TABLE 1 REFERENCE ═══ -->
+    <div id="tab-table1" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Table 1 — Distributional effects of alternative policies</h2>
+        </div>
+
+        <div class="card">
+            <p>Reconstruction of Fullerton's Table 1. Entries are the Figure 1 areas gained ($+$) or lost ($-$) by each group. Read across any row: the pieces always sum to the same net gain, $5+6$.</p>
+            <div style="overflow-x: auto;">
+            <table class="t1">
+                <tr>
+                    <th>Policy</th>
+                    <th>Consumers</th>
+                    <th>Firms' profits</th>
+                    <th>Gov't revenue</th>
+                    <th>&ldquo;Victims&rdquo;</th>
+                    <th>Net effect</th>
+                </tr>
+                <tr class="grp"><td colspan="6">1. Pigouvian solutions</td></tr>
+                <tr><td>a. Tax on pollution</td><td>$-(2{+}3{+}4)$</td><td>$0$</td><td>$+(2{+}3)$</td><td>$+(4{+}5{+}6)$</td><td>$5{+}6$</td></tr>
+                <tr><td>b. Subsidy to abate</td><td>$-(2{+}3{+}4)$</td><td>$+(2{+}3)+(4{+}5)$</td><td>$-(4{+}5)$</td><td>$+(4{+}5{+}6)$</td><td>$5{+}6$</td></tr>
+                <tr class="grp"><td colspan="6">2. Permits</td></tr>
+                <tr><td>a. Handed out to firms</td><td>$-(2{+}3{+}4)$</td><td>$+(2{+}3)$</td><td>$0$</td><td>$+(4{+}5{+}6)$</td><td>$5{+}6$</td></tr>
+                <tr><td>b. Sold at auction</td><td>$-(2{+}3{+}4)$</td><td>$0$</td><td>$+(2{+}3)$</td><td>$+(4{+}5{+}6)$</td><td>$5{+}6$</td></tr>
+                <tr class="grp"><td colspan="6">3. Command and control</td></tr>
+                <tr><td>a. Quantity restriction</td><td>$-(2{+}3{+}4)$</td><td>$+(2{+}3)$</td><td>$0$</td><td>$+(4{+}5{+}6)$</td><td>$5{+}6$</td></tr>
+                <tr><td>b. Quantity <em>and</em> price restriction*</td><td>$-4$</td><td>$0$</td><td>$0$</td><td>$+(4{+}5{+}6)$</td><td>$5{+}6$</td></tr>
+                <tr class="grp"><td colspan="6">4. Coase solution</td></tr>
+                <tr><td>a. &ldquo;Victim&rdquo; has rights</td><td>$-(2{+}3{+}4)$</td><td>$+(2{+}3{-}B)$</td><td>$0$</td><td>$+(4{+}5{+}6{+}B)$</td><td>$5{+}6$</td></tr>
+                <tr><td>b. Polluter has rights</td><td>$-(2{+}3{+}4)$</td><td>$+(2{+}3{+}C)$</td><td>$0$</td><td>$+(4{+}5{+}6{-}C)$</td><td>$5{+}6$</td></tr>
+            </table>
+            </div>
+            <p style="font-size: 13px; color: var(--text-medium);">*Best case: consumers keep surplus $1{+}2{+}3$ (losing only area $4$) if the ration is allocated cleanly. If the rights are allocated by queuing or lobbying, rent-seeking can waste the entire rectangle $2{+}3$, and the net effect becomes $5{+}6-(2{+}3)$ — possibly negative.<br>
+            $B$ = payment from firm to victims, with $3 \le B \le 2{+}3$. &nbsp; $C$ = payment from victims to firm, with $0 \le C \le 4{+}5{+}6$.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>How to read the table (the two big equivalences)</h2>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p><strong>Equivalence #1 — tax $=$ auctioned permits (rows 1a &amp; 2b).</strong> Every cell matches: consumers pay, government collects $2+3$, victims gain, net $5+6$. Under perfect information these are the same policy wearing different clothes.</p>
+            <p><strong>Equivalence #2 — grandfathered permits $=$ CAC quantity restriction (rows 2a &amp; 3a).</strong> Both restrict quantity to $Z'$ and let firms keep the scarcity rents $2+3$ — tradeability doesn't change who wins in this model.</p>
+            <p><strong>What never changes:</strong> consumers lose $2+3+4$ (except the price-control case), victims gain $4+5+6$, and society nets $5+6$. <strong>What changes:</strong> the address of rectangle $2+3$. That rectangle — tax revenue vs. firm profits vs. bargaining payments — is why interest groups fight over instruments that economists call &ldquo;equivalent.&rdquo;</p>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>For class:</strong> the professor will derive the entries in these rows on the board — you're expected to understand each policy <em>in relation to the graph</em>, not to reproduce every cell from scratch. If you can explain why consumers lose $2+3+4$ when price rises from $P^0$ to $P'$, and who captures $2+3$ under each row, you're in good shape.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Comparing Environmental Policies — Fullerton (2001) Guide-Question Quiz</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    setTimeout(function() {
+        if (window.MathJax && MathJax.typeset) MathJax.typeset();
+    }, 100);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) {
+        setTimeout(function() { MathJax.typeset(); }, 50);
+    }
+}
+
+/* ===== Area Selection Quiz ===== */
+var AQ = {
+    aq1: { ans: ['2','3'],
+        why: "Revenue = tax rate &times; taxed pollution = (P&prime; &minus; P&#8304;) &times; Z&prime; = rectangle <strong>2+3</strong>. Firms earn zero profit; consumers lose 2+3+4." },
+    aq2: { ans: ['2','3','4'],
+        why: "Consumer surplus falls from 1+2+3+4 down to just 1 when the price of polluting rises from P&#8304; to P&prime;, so the loss is the trapezoid <strong>2+3+4</strong> — the cost of environmental protection." },
+    aq3: { ans: ['5','6'],
+        why: "The net gain is <strong>5+6</strong>: for each unit beyond Z&prime;, social marginal cost exceeded marginal benefit, and cutting those units recovers exactly that wedge. Identical in every row of Table 1." },
+    aq4: { ans: ['4','5','6'],
+        why: "Victims bore external cost 3+4+5+6 at Z&#8304;; at Z&prime; only area 3 remains. Their gain is the difference, <strong>4+5+6</strong> — the gap between SMC and PMC over the eliminated units." },
+    aq5: { ans: ['4','5'],
+        why: "The treasury pays t* = (P&prime; &minus; P&#8304;) on each of the (Z&#8304; &minus; Z&prime;) units cut back — the rectangle <strong>4+5</strong>. Firms pocket it on top of profits 2+3, and gov't revenue is &minus;(4+5)." },
+    aq6: { ans: ['3'],
+        why: "Even at the optimum, Z&prime; units are still emitted, each with external cost equal to the SMC&ndash;PMC gap. Summing those gaps from 0 to Z&prime; gives area <strong>3</strong> — optimal pollution isn't zero pollution." },
+    aq7: { ans: ['3','4','5','6'],
+        why: "Total social cost at Z&#8304; is 3+4+5+6+7+8 (under SMC); the firm's private share is 7+8 (under PMC). The external cost dumped on victims is the difference: <strong>3+4+5+6</strong>." },
+    aq8: { ans: ['2','3'],
+        why: "The quota restricts output, price rises to P&prime;, costs stay at P&#8304; — a shadow price of (P&prime; &minus; P&#8304;) on each of Z&prime; permitted units. Firms capture <strong>2+3</strong> as scarcity rents, exactly like grandfathered permits (2a)." },
+    aq9: { ans: ['1','2','3'],
+        why: "Best case, consumers buy Z&prime; at the old price P&#8304;, keeping surplus <strong>1+2+3</strong> and losing only area 4. But (Z&prime;, P&#8304;) is off the demand curve — with queues or lobbying, rent-seeking can burn 2+3 entirely." }
+};
+
+function figSVG() {
+    return '<svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">' +
+    '<path class="qarea" data-area="1" d="M 70 170 L 70 54 L 100 37 L 330 170 Z" fill="rgba(57,134,78,0.22)" onclick="toggleArea(this)"/>' +
+    '<path class="qarea" data-area="2" d="M 70 170 L 330 170 L 70 272 Z" fill="rgba(221,162,94,0.36)" onclick="toggleArea(this)"/>' +
+    '<path class="qarea" data-area="3" d="M 70 272 L 330 170 L 330 280 L 70 280 Z" fill="rgba(188,108,38,0.34)" onclick="toggleArea(this)"/>' +
+    '<path class="qarea" data-area="4" d="M 330 170 L 520 280 L 330 280 Z" fill="rgba(94,108,57,0.32)" onclick="toggleArea(this)"/>' +
+    '<path class="qarea" data-area="5" d="M 330 170 L 520 170 L 520 280 Z" fill="rgba(66,38,13,0.22)" onclick="toggleArea(this)"/>' +
+    '<path class="qarea" data-area="6" d="M 330 170 L 520 96 L 520 170 Z" fill="rgba(66,38,13,0.34)" onclick="toggleArea(this)"/>' +
+    '<rect class="qarea" data-area="7" x="70" y="280" width="260" height="80" fill="rgba(200,200,200,0.55)" onclick="toggleArea(this)"/>' +
+    '<rect class="qarea" data-area="8" x="330" y="280" width="190" height="80" fill="rgba(200,200,200,0.32)" onclick="toggleArea(this)"/>' +
+    '<g style="pointer-events:none;">' +
+    '<line x1="330" y1="170" x2="330" y2="360" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>' +
+    '<line x1="520" y1="280" x2="520" y2="360" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>' +
+    '<line x1="70" y1="170" x2="520" y2="170" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>' +
+    '<line x1="70" y1="280" x2="620" y2="280" stroke="#21442B" stroke-width="3"/>' +
+    '<line x1="70" y1="272" x2="600" y2="64" stroke="#BC6C26" stroke-width="3"/>' +
+    '<line x1="100" y1="37" x2="600" y2="326" stroke="#39864E" stroke-width="3"/>' +
+    '<line x1="70" y1="20" x2="70" y2="360" stroke="#2D2D2D" stroke-width="2"/>' +
+    '<line x1="70" y1="360" x2="650" y2="360" stroke="#2D2D2D" stroke-width="2"/>' +
+    '<text x="140" y="128" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#21442B">1</text>' +
+    '<text x="150" y="212" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#8a5a1e">2</text>' +
+    '<text x="150" y="264" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#7a4416">3</text>' +
+    '<text x="358" y="252" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#3d4a22">4</text>' +
+    '<text x="450" y="212" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#42260D">5</text>' +
+    '<text x="452" y="150" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#42260D">6</text>' +
+    '<text x="192" y="325" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#4A4A4A">7</text>' +
+    '<text x="415" y="325" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#7a7a7a">8</text>' +
+    '<text x="560" y="330" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#39864E">MB</text>' +
+    '<text x="625" y="285" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#21442B">PMC</text>' +
+    '<text x="606" y="62" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#BC6C26">SMC</text>' +
+    '<text x="40" y="175" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">P&#8242;</text>' +
+    '<text x="38" y="285" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">P&#8304;</text>' +
+    '<text x="323" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">Z&#8242;</text>' +
+    '<text x="512" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">Z&#8304;</text>' +
+    '</g></svg>';
+}
+
+function initAreaQuiz() {
+    for (var qid in AQ) {
+        var holder = document.getElementById('fig-' + qid);
+        if (holder && !holder.innerHTML) holder.innerHTML = figSVG();
+    }
+}
+
+function toggleArea(el) { el.classList.toggle('sel'); }
+
+function clearAreas(qid) {
+    var holder = document.getElementById('fig-' + qid);
+    holder.querySelectorAll('.qarea.sel').forEach(function(e){ e.classList.remove('sel'); });
+    document.getElementById('fb-' + qid).innerHTML = '';
+}
+
+function setLabel(areas) {
+    return areas.length ? areas.slice().sort().join(' + ') : '(nothing selected)';
+}
+
+function checkAreas(btn, qid) {
+    var holder = document.getElementById('fig-' + qid);
+    var sel = Array.prototype.map.call(holder.querySelectorAll('.qarea.sel'), function(e){ return e.dataset.area; });
+    var ans = AQ[qid].ans;
+    var selSorted = sel.slice().sort().join(',');
+    var ansSorted = ans.slice().sort().join(',');
+    var fb = document.getElementById('fb-' + qid);
+    if (selSorted === ansSorted) {
+        fb.innerHTML = '<div class="fb-good"><strong>Correct — area ' + setLabel(ans) + '.</strong> ' + AQ[qid].why + '</div>';
+    } else {
+        fb.innerHTML = '<div class="fb-bad"><strong>Not quite.</strong> You selected ' + setLabel(sel) +
+            '; the answer is <strong>' + setLabel(ans) + '</strong>. ' + AQ[qid].why + '</div>';
+    }
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
+}
+
+document.addEventListener('DOMContentLoaded', initAreaQuiz);
+initAreaQuiz();
+
+/* ===== Shuffle the area quiz ===== */
+function shuffleAreaQuiz() {
+    var container = document.getElementById('aq-container');
+    if (!container) return;
+    var cards = Array.from(container.querySelectorAll(':scope > .card'));
+    for (var i = cards.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        container.appendChild(cards[j]);
+        cards.splice(j, 1, cards[i]);
+    }
+    container.querySelectorAll(':scope > .card').forEach(function(card, idx) {
+        var circle = card.querySelector('div[style*="border-radius: 50%"]');
+        if (circle) circle.textContent = idx + 1;
+    });
+    window.scrollTo({ top: container.offsetTop - 120, behavior: 'smooth' });
+}
+
+/* ===== Splits tab: color-coded mini-models ===== */
+var GROUP_COLORS = {
+    cons: 'rgba(221,162,94,0.75)',   /* gold — consumers */
+    firm: 'rgba(33,68,43,0.72)',     /* dark green — firms */
+    gov:  'rgba(188,108,38,0.8)',    /* copper — government */
+    vict: 'rgba(94,108,57,0.72)',    /* olive — victims */
+    none: 'rgba(190,190,190,0.55)'   /* gray — resource costs */
+};
+
+/* who holds each area once the policy has run; 'split' = bargained half/half */
+var POLICY_SPLITS = {
+    p1a: { map: {1:'cons', 2:'gov', 3:'gov', 4:'vict', 5:'vict', 6:'vict'} },
+    p1b: { map: {1:'cons', 2:'firm', 3:'firm', 4:'vict', 5:'vict', 6:'vict'}, outline45: true,
+           tag: {x: 425, y: 245, text: "gov't pays firms 4+5"} },
+    p2a: { map: {1:'cons', 2:'firm', 3:'firm', 4:'vict', 5:'vict', 6:'vict'} },
+    p2b: { map: {1:'cons', 2:'gov', 3:'gov', 4:'vict', 5:'vict', 6:'vict'} },
+    p3a: { map: {1:'cons', 2:'firm', 3:'firm', 4:'vict', 5:'vict', 6:'vict'} },
+    p3b: { map: {1:'cons', 2:'cons', 3:'cons', 4:'vict', 5:'vict', 6:'vict'} },
+    p4a: { map: {1:'cons', 2:'split', 3:'split', 4:'vict', 5:'vict', 6:'vict'},
+           tag: {x: 118, y: 232, text: 'split by B'} },
+    p4b: { map: {1:'cons', 2:'firm', 3:'firm', 4:'vict', 5:'vict', 6:'vict'}, outline456: true,
+           tag: {x: 405, y: 245, text: 'C paid from here'} }
+};
+
+var AREA_PATHS = {
+    1: 'M 70 170 L 70 54 L 100 37 L 330 170 Z',
+    2: 'M 70 170 L 330 170 L 70 272 Z',
+    3: 'M 70 272 L 330 170 L 330 280 L 70 280 Z',
+    4: 'M 330 170 L 520 280 L 330 280 Z',
+    5: 'M 330 170 L 520 170 L 520 280 Z',
+    6: 'M 330 170 L 520 96 L 520 170 Z'
+};
+
+function splitFigSVG(cfg) {
+    var s = '<svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">';
+    s += '<defs><linearGradient id="gradSplit" x1="0" y1="0" x2="1" y2="0">' +
+         '<stop offset="0%" stop-color="' + GROUP_COLORS.firm + '"/>' +
+         '<stop offset="50%" stop-color="' + GROUP_COLORS.firm + '"/>' +
+         '<stop offset="50%" stop-color="' + GROUP_COLORS.vict + '"/>' +
+         '<stop offset="100%" stop-color="' + GROUP_COLORS.vict + '"/></linearGradient></defs>';
+    for (var a = 1; a <= 6; a++) {
+        var g = cfg.map[a];
+        var fill = (g === 'split') ? 'url(#gradSplit)' : GROUP_COLORS[g];
+        s += '<path d="' + AREA_PATHS[a] + '" fill="' + fill + '"/>';
+    }
+    s += '<rect x="70" y="280" width="260" height="80" fill="' + GROUP_COLORS.none + '"/>';
+    s += '<rect x="330" y="280" width="190" height="80" fill="rgba(190,190,190,0.32)"/>';
+    if (cfg.outline45) s += '<rect x="330" y="170" width="190" height="110" fill="none" stroke="#BC6C26" stroke-width="2.5" stroke-dasharray="7,5"/>';
+    if (cfg.outline456) s += '<path d="M 330 170 L 520 96 L 520 280 L 330 280 Z" fill="none" stroke="#BC6C26" stroke-width="2.5" stroke-dasharray="7,5"/>';
+    s += '<line x1="330" y1="170" x2="330" y2="360" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>' +
+         '<line x1="520" y1="280" x2="520" y2="360" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>' +
+         '<line x1="70" y1="170" x2="520" y2="170" stroke="#4A4A4A" stroke-width="1.2" stroke-dasharray="5,4"/>' +
+         '<line x1="70" y1="280" x2="620" y2="280" stroke="#21442B" stroke-width="3"/>' +
+         '<line x1="70" y1="272" x2="600" y2="64" stroke="#BC6C26" stroke-width="3"/>' +
+         '<line x1="100" y1="37" x2="600" y2="326" stroke="#39864E" stroke-width="3"/>' +
+         '<line x1="70" y1="20" x2="70" y2="360" stroke="#2D2D2D" stroke-width="2"/>' +
+         '<line x1="70" y1="360" x2="650" y2="360" stroke="#2D2D2D" stroke-width="2"/>';
+    var labels = [[140,128,'1'],[150,212,'2'],[150,264,'3'],[358,252,'4'],[450,212,'5'],[452,150,'6'],[192,325,'7'],[415,325,'8']];
+    labels.forEach(function(L){
+        s += '<text x="' + L[0] + '" y="' + L[1] + '" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="0.6" paint-order="stroke">' + L[2] + '</text>';
+    });
+    s += '<text x="560" y="330" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#39864E">MB</text>' +
+         '<text x="625" y="285" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#21442B">PMC</text>' +
+         '<text x="606" y="62" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#BC6C26">SMC</text>' +
+         '<text x="40" y="175" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">P&#8242;</text>' +
+         '<text x="38" y="285" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">P&#8304;</text>' +
+         '<text x="323" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">Z&#8242;</text>' +
+         '<text x="512" y="380" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#2D2D2D">Z&#8304;</text>';
+    if (cfg.tag) s += '<text x="' + cfg.tag.x + '" y="' + cfg.tag.y + '" font-family="Inter, sans-serif" font-size="13.5" font-weight="700" fill="#8a4a10">' + cfg.tag.text + '</text>';
+    s += '</svg>';
+    return s;
+}
+
+function initSplitFigs() {
+    document.querySelectorAll('.split-fig').forEach(function(holder) {
+        var cfg = POLICY_SPLITS[holder.dataset.policy];
+        if (cfg && !holder.innerHTML) holder.innerHTML = splitFigSVG(cfg);
+    });
+}
+document.addEventListener('DOMContentLoaded', initSplitFigs);
+initSplitFigs();
+</script>
+
+</body>
+</html>
