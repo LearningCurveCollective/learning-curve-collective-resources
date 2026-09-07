@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fullerton (2001): Comparing Environmental Policies — Interactive Worksheet</title>
+    <title>Comparing Environmental Policies</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -454,6 +454,49 @@ li { margin-bottom: 10px; }
 .policy-def { font-size: 13.5px; color: var(--text-medium); margin: 6px 0 8px 0; }
 .split-fig { margin: 6px 0 10px 0; background: white; border-radius: 8px; padding: 6px; border: 1px solid var(--cream-dark); }
 .split-fig svg { width: 100%; height: auto; display: block; }
+/* --- Flashcards --- */
+.fc-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+.fc-controls label { font-size: 13.5px; color: var(--text-medium); font-weight: 600; }
+.fc-controls select {
+    font-family: 'Inter', sans-serif; font-size: 13.5px; padding: 6px 10px;
+    border: 1px solid var(--cream-dark); border-radius: 6px; background: white; color: var(--text-dark);
+}
+.fc-btn {
+    font-family: 'Switzer','Space Grotesk',sans-serif; font-size: 13.5px; font-weight: 600;
+    padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; transition: all 0.15s ease;
+}
+.fc-btn.primary { background: var(--green-dark); color: white; }
+.fc-btn.primary:hover { background: var(--green-light); }
+.fc-btn.gold { background: var(--gold); color: white; }
+.fc-btn.gold:hover { background: var(--copper); }
+.fc-btn.ghost { background: transparent; color: var(--green-dark); border: 1.5px solid var(--green-dark); }
+.fc-btn.ghost:hover { background: rgba(33,68,43,0.06); }
+.fc-btn.pile { background: #8B5E3C; color: white; }
+.fc-btn.pile:hover { background: #6e4a2e; }
+.fc-btn:disabled { opacity: 0.4; cursor: default; }
+.fc-card {
+    background: white; border: 2px solid var(--gold); border-radius: 14px;
+    padding: 26px 28px; min-height: 180px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    position: relative;
+}
+.fc-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-medium); margin-bottom: 10px; }
+.fc-cat { display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: white; }
+.fc-cat.crit { background: var(--green-light); }
+.fc-cat.trade { background: var(--copper); }
+.fc-cat.core { background: #8B5E3C; }
+.fc-prompt-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gold); margin-bottom: 6px; }
+.fc-front { font-size: 17px; font-weight: 600; color: var(--text-dark); line-height: 1.5; }
+.fc-answer { width: 100%; min-height: 80px; margin-top: 14px; padding: 10px 12px; font-family: 'Inter', sans-serif; font-size: 14px; border: 1px solid var(--cream-dark); border-radius: 8px; resize: vertical; box-sizing: border-box; }
+.fc-back { display: none; margin-top: 16px; padding: 14px 16px; background: rgba(33,68,43,0.06); border-left: 4px solid var(--green-light); border-radius: 8px; font-size: 14.5px; line-height: 1.55; }
+.fc-back.open { display: block; }
+.fc-back .fc-yours { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--cream-dark); font-size: 13.5px; color: var(--text-medium); }
+.fc-inpile { position: absolute; top: 12px; right: 14px; background: #8B5E3C; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+.fc-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; align-items: center; }
+.fc-nav .spacer { flex: 1; }
+.fc-pile-box { margin-top: 18px; background: rgba(139,94,60,0.07); border: 1px solid rgba(139,94,60,0.35); border-radius: 10px; padding: 14px 18px; font-size: 14px; }
+.fc-pile-box ul { margin: 8px 0 0 18px; padding: 0; font-size: 13.5px; }
+.fc-pile-box li { margin: 3px 0; }
+.fc-pile-box li a { color: #8B5E3C; font-size: 12px; margin-left: 6px; }
     </style>
 </head>
 <body>
@@ -481,6 +524,7 @@ li { margin-bottom: 10px; }
         <button class="tab-button" data-group="core" onclick="switchTab('model', this)">Figure 1 &amp; the Model</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('quiz', this)">Guide-Question Quiz</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('areaquiz', this)">Area Quiz</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('flash', this)">Flashcards</button>
         <button class="tab-button" data-group="techniques" onclick="switchTab('splits', this)">One Gain, 8 Splits</button>
         <button class="tab-button" data-group="techniques" onclick="switchTab('table1', this)">Table 1 Reference</button>
     </div>
@@ -1100,6 +1144,77 @@ li { margin-bottom: 10px; }
         </div>
     </div>
 
+    <!-- ═══ TAB: FLASHCARDS ═══ -->
+    <div id="tab-flash" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">&#9829;</div>
+            <h2>Flashcard Review — Q5 criteria, Q6 tradeoffs, core concepts</h2>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>How it works:</strong> read the front, <strong>type your answer</strong> in the box, then hit <em>Reveal</em> to compare against the model answer. Cards you're shaky on go in the <strong>review pile</strong> — study just that pile until it's empty. Switch between <em>term &rarr; definition</em> and <em>definition &rarr; term</em>, or let <em>Mixed</em> flip them for you.</p>
+        </div>
+
+        <div class="card">
+            <div class="fc-controls">
+                <label>Deck:</label>
+                <select id="fc-cat" onchange="fcBuild()">
+                    <option value="all">Everything</option>
+                    <option value="crit">Q5 — The 7 other criteria</option>
+                    <option value="trade">Q6 — Tradeoffs</option>
+                    <option value="core">Core concepts (Q1–4)</option>
+                    <option value="crit,trade">Q5 + Q6 only</option>
+                </select>
+                <label>Direction:</label>
+                <select id="fc-mode" onchange="fcBuild()">
+                    <option value="mixed">Mixed (random per card)</option>
+                    <option value="t2d">Show term &rarr; write definition</option>
+                    <option value="d2t">Show definition &rarr; write term</option>
+                </select>
+                <label>Order:</label>
+                <select id="fc-order" onchange="fcBuild()">
+                    <option value="seq">In order</option>
+                    <option value="shuf">Shuffled</option>
+                </select>
+                <button class="fc-btn ghost" onclick="fcBuild(true)">&#8646; Reshuffle</button>
+            </div>
+
+            <div class="fc-card" id="fc-card">
+                <div class="fc-meta"><span id="fc-progress">Card 1 of 1</span><span id="fc-catbadge"></span></div>
+                <div class="fc-prompt-label" id="fc-label">Term</div>
+                <div class="fc-front" id="fc-front">&mdash;</div>
+                <textarea class="fc-answer" id="fc-input" placeholder="Type your answer here, then Reveal…"></textarea>
+                <div class="fc-back" id="fc-back"></div>
+                <div class="fc-inpile" id="fc-inpile" style="display:none;">In review pile</div>
+            </div>
+
+            <div class="fc-nav">
+                <button class="fc-btn ghost" onclick="fcPrev()">&larr; Prev</button>
+                <button class="fc-btn primary" id="fc-reveal-btn" onclick="fcReveal()">Reveal answer</button>
+                <button class="fc-btn ghost" onclick="fcNext()">Next &rarr;</button>
+                <span class="spacer"></span>
+                <button class="fc-btn gold" onclick="fcGotIt()">&#10003; Got it &rarr;</button>
+                <button class="fc-btn pile" id="fc-pile-btn" onclick="fcTogglePile()">+ Review pile</button>
+            </div>
+
+            <div class="fc-pile-box" id="fc-pile-box">
+                <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+                    <strong>Review pile: <span id="fc-pile-count">0</span> card(s)</strong>
+                    <span class="spacer" style="flex:1;"></span>
+                    <button class="fc-btn pile" id="fc-study-pile" onclick="fcStudyPile()">Study the pile</button>
+                    <button class="fc-btn ghost" id="fc-exit-pile" onclick="fcExitPile()" style="display:none;">Back to full deck</button>
+                    <button class="fc-btn ghost" onclick="fcClearPile()">Clear pile</button>
+                </div>
+                <ul id="fc-pile-list"></ul>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>Exam tip:</strong> for Q5 the professor wants each criterion <em>described</em>, not just named — so on the term &rarr; definition cards, aim for two sentences: what the criterion asks, and one concrete example from the paper (gasoline tax, SO$_2$ monitoring, Weitzman, etc.).</p>
+        </div>
+    </div>
+
     <!-- ═══ TAB 4: TABLE 1 REFERENCE ═══ -->
     <div id="tab-table1" class="tab-content">
 
@@ -1158,7 +1273,7 @@ li { margin-bottom: 10px; }
 <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
 <div class="footer">
     <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
-          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Comparing Environmental Policies — Fullerton (2001) Guide-Question Quiz</p>
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Comparing Environmental Policies</p>
     <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
           style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
 </div>
@@ -1385,6 +1500,198 @@ function initSplitFigs() {
 }
 document.addEventListener('DOMContentLoaded', initSplitFigs);
 initSplitFigs();
+
+/* ===== Flashcards ===== */
+/* flip:true => term/definition card (direction can swap); flip:false => prompt/answer only */
+var FC_DECK = [
+  /* --- Q5: the 7 other criteria --- */
+  {cat:'crit', flip:true, term:'Administrative efficiency',
+   def:'How cheaply a policy can be run. Taxes on already-measured market transactions (chemical feedstocks, gasoline) piggyback on existing tax machinery at very low cost; measuring every source\'s actual emissions could cost far more to administer.'},
+  {cat:'crit', flip:true, term:'Monitoring and enforcement',
+   def:'A policy is only as good as the ability to measure the pollutant and catch cheaters. SO&#8322; permits work because utilities are large point sources with continuous emissions monitoring; tailpipe emissions can only be measured inaccurately and expensively, so we tax gasoline instead.'},
+  {cat:'crit', flip:true, term:'Information and uncertainty',
+   def:'Under certainty a tax and a permit cap are equivalent; under uncertainty (Weitzman 1974) they split. A price instrument fixes the price and leaves pollution uncertain; a quantity instrument fixes pollution and leaves compliance cost uncertain. Steep abatement costs favor prices; steep marginal damages favor quantities.'},
+  {cat:'crit', flip:true, term:'Political and ethical considerations',
+   def:'A new "tax" may be dead on arrival; command-and-control is popular because its costs to consumers are hidden and legislators can "guarantee" results; grandfathered permits win industry support by handing firms rents. Ethically, some view pollution as a wrong to be stigmatized by law, not merely priced.'},
+  {cat:'crit', flip:true, term:'Equity and distributional effects',
+   def:'Who bears the burden: rich vs. poor (vertical equity — do low-income households spend a larger share on the taxed goods?), similar people treated similarly (horizontal equity), regions, and generations. The polluter-pays principle works prospectively for efficiency but fails as retroactive fairness.'},
+  {cat:'crit', flip:true, term:'Other distortions',
+   def:'The clean model assumed lump-sum taxes. In reality pre-existing distortionary taxes, monopoly power, and trade barriers interact with environmental policy (the "double dividend" debate). Revenue-raising policies (tax, auctioned permits) can fund cuts in other distorting taxes; rent-giving policies cannot.'},
+  {cat:'crit', flip:true, term:'Flexibility and dynamic adjustments',
+   def:'Can the policy adapt as science, measurement, and conditions change — and does it reward innovation? Incentive policies keep paying firms to find cheaper abatement; a technology mandate freezes the status quo. Transitions also carry real costs (layoffs, retraining, capital losses) the static model ignores.'},
+  {cat:'crit', flip:true, term:'Economic efficiency (criterion #1, the one Q5 excludes)',
+   def:'Reaching the optimal pollution level Z&prime; — where marginal benefit equals social marginal cost — at least cost. Under perfect information all eight policies in Section 3 tie on this criterion, which is why the other seven criteria decide real-world choices.'},
+
+  /* --- Q6: tradeoffs --- */
+  {cat:'trade', flip:false, term:'Describe the tradeoff between <em>economic efficiency</em> and <em>administrative / monitoring ease</em>. Use the gasoline tax.',
+   def:'The ideal instrument taxes emissions, rewarding cleaner cars, maintenance, and gentler driving. But tailpipe emissions are costly to measure, so we tax gasoline: cheap to administer and enforce, but only loosely tied to actual emissions. We deliberately give up efficiency to gain administrability — a balance that could shift as measurement technology improves.'},
+  {cat:'trade', flip:false, term:'Describe the tradeoff between <em>cost certainty</em> and <em>environmental certainty</em> (prices vs. quantities).',
+   def:'A tax caps the marginal cost of compliance but leaves the amount of pollution uncertain; a permit cap guarantees the quantity but leaves compliance costs uncertain. Gradual damages (hazier views) → fix the price. Catastrophic thresholds (deaths in a temperature inversion) → fix the quantity. One instrument cannot deliver both certainties.'},
+  {cat:'trade', flip:false, term:'Describe the tradeoff between <em>political feasibility</em> and <em>distribution / revenue</em>.',
+   def:'The easiest policies to pass — grandfathered permits, CAC quantity limits — are exactly the ones that hand rectangle 2+3 to firms as rents, building an industry–environmentalist coalition while consumers quietly pay more. The policies best for the treasury (tax, auctioned permits) collect 2+3 as revenue that could offset other taxes, but "tax" is politically toxic. Feasibility is often bought with the rents.'},
+  {cat:'trade', flip:false, term:'Describe the tradeoff between <em>flexibility / innovation</em> and <em>certainty of compliance</em>.',
+   def:'Incentive policies (taxes, permits) keep rewarding firms for inventing cheaper abatement, but the outcome depends on firms\' responses. A technology mandate is easy to verify — inspect whether the equipment is installed — but gives zero incentive to beat the mandate and locks in today\'s technology.'},
+  {cat:'trade', flip:false, term:'Damages have a catastrophic threshold and abatement costs are gradual. Price instrument or quantity instrument — and why?',
+   def:'Quantity instrument (permits or a standard). When marginal damage is steep, being wrong on quantity is very costly, so fix Z and let compliance cost float. Weitzman: steep MED relative to the abatement-cost slope favors quantities.'},
+  {cat:'trade', flip:false, term:'Abatement costs are steep and damages are gradual. Price or quantity — and why?',
+   def:'Price instrument (tax). When abatement costs are steep, being wrong on quantity could impose runaway compliance costs, so fix the price and let pollution float within a range of mild damage. Weitzman: steep abatement-cost slope relative to MED favors prices.'},
+  {cat:'trade', flip:false, term:'If Section 3 shows every policy is equally efficient, why does Section 4 matter?',
+   def:'Section 3 proves equivalence on the blackboard under perfect information. Section 4 shows why the instruments are not equivalent in the world: administrative cost, monitoring, uncertainty, politics, equity, other distortions, and flexibility each break the tie differently. Every real choice trades one criterion against another — no instrument wins on all eight.'},
+
+  /* --- Core concepts (Q1–4) --- */
+  {cat:'core', flip:true, term:'The x-axis of Figure 1 (Z)',
+   def:'Quantity of pollution — emissions — treated as an input to production, so it has a downward-sloping marginal product that becomes the demand (marginal benefit) curve for pollution. Not output of the dirty good, except in the special case of fixed emissions per unit of output.'},
+  {cat:'core', flip:true, term:'PMC (private marginal cost)',
+   def:'The firm\'s own cost of removing and disposing of one more unit of waste — fixed at P&#8304; per unit, so PMC is a flat horizontal line.'},
+  {cat:'core', flip:true, term:'MED (marginal environmental damage)',
+   def:'The dollar value of lost utility to everyone else from one more unit of emissions — the external cost. Small for the first units, rising as pollution accumulates; it is the vertical gap between SMC and PMC.'},
+  {cat:'core', flip:true, term:'SMC (social marginal cost)',
+   def:'The full cost to society of one more unit of emissions: SMC = PMC + MED. Starts just above PMC and slopes upward because MED rises.'},
+  {cat:'core', flip:true, term:'Z&#8304; vs. Z&prime;',
+   def:'Z&#8304; is the unregulated pollution level, where MB = PMC (firms ignore damages). Z&prime; is the socially optimal level, where MB = SMC. Every policy in the paper aims to cut pollution from Z&#8304; to Z&prime;.'},
+  {cat:'core', flip:true, term:'P&prime;',
+   def:'The full social price of a unit of emissions at the optimum: P&prime; = P&#8304; + t*. Every price instrument (tax, subsidy, permit price) is set to the gap P&prime; &minus; P&#8304; so the all-in cost of polluting lands on P&prime;.'},
+  {cat:'core', flip:true, term:'Efficient Pigouvian tax level',
+   def:'t* = P&prime; &minus; P&#8304;, equal to marginal environmental damage at the optimum. It raises the firm\'s cost of polluting from P&#8304; to P&prime;, so firms stop at Z&prime;.'},
+  {cat:'core', flip:true, term:'Efficient pollution standard',
+   def:'Z&prime; — the quantity instrument sets the quantity directly ("pollution shall not exceed Z&prime;") and lets the implicit price rise to P&prime; on its own. Not Z&#8304;, which is the unregulated level.'},
+  {cat:'core', flip:true, term:'Efficient permit price',
+   def:'P&prime; &minus; P&#8304;. With Z&prime; permits issued, firms bid until a permit is worth what a unit of pollution earns above its disposal cost, so total marginal cost of polluting = P&#8304; + permit price = P&prime;.'},
+  {cat:'core', flip:true, term:'Scarcity rents (rectangle 2+3)',
+   def:'The rectangle (P&prime; &minus; P&#8304;) × Z&prime; created whenever pollution is restricted to Z&prime;. Fullerton\'s thesis: the policies differ only in who gets it — government (tax, auction), firms (free permits, quota, subsidy), consumers at best (price cap), or the bargaining parties (Coase).'},
+  {cat:'core', flip:true, term:'Net efficiency gain to society (area 5+6)',
+   def:'The welfare gain from cutting pollution Z&#8304; → Z&prime;: the wedge between SMC and MB over the eliminated units. Identical under every efficient policy in Table 1.'},
+  {cat:'core', flip:true, term:'Identical twins #1 (government gets 2+3)',
+   def:'Pigouvian tax (1a) ≡ auctioned permits (2b). Every Table 1 cell matches: consumers −(2+3+4), firms 0, gov\'t +(2+3), victims +(4+5+6).'},
+  {cat:'core', flip:true, term:'Identical twins #2 (firms get 2+3)',
+   def:'Grandfathered permits (2a) ≡ CAC quantity restriction (3a). Both restrict quantity to Z&prime; and let firms keep the scarcity rents; tradeability changes nothing in this model. The abatement subsidy (1b) is the cousin — firms also get 4+5.'},
+  {cat:'core', flip:true, term:'Coase theorem (as used in Fullerton)',
+   def:'With well-defined property rights, low bargaining costs, and few parties, private bargaining reaches Z&prime; regardless of who holds the rights. The rights assignment changes only the distribution: victims\' rights → firms pay B (3 ≤ B ≤ 2+3); polluter\'s rights → victims pay C (C ≤ 4+5+6).'}
+];
+
+var FC = { deck: [], idx: 0, pile: new Set(), pileMode: false, revealed: false };
+
+function fcRandDir() { return Math.random() < 0.5 ? 't2d' : 'd2t'; }
+
+function fcBuild(forceShuffle) {
+    var cat = document.getElementById('fc-cat').value;
+    var mode = document.getElementById('fc-mode').value;
+    var order = document.getElementById('fc-order').value;
+    var cats = cat === 'all' ? null : cat.split(',');
+    var items = [];
+    FC_DECK.forEach(function(c, i) {
+        if (cats && cats.indexOf(c.cat) === -1) return;
+        if (FC.pileMode && !FC.pile.has(i)) return;
+        var dir = c.flip ? (mode === 'mixed' ? fcRandDir() : mode) : 't2d';
+        items.push({ i: i, dir: dir });
+    });
+    if (order === 'shuf' || forceShuffle) {
+        for (var k = items.length - 1; k > 0; k--) {
+            var j = Math.floor(Math.random() * (k + 1));
+            var tmp = items[k]; items[k] = items[j]; items[j] = tmp;
+        }
+    }
+    FC.deck = items; FC.idx = 0;
+    fcRender();
+}
+
+function fcRender() {
+    var front = document.getElementById('fc-front');
+    var label = document.getElementById('fc-label');
+    var back = document.getElementById('fc-back');
+    var input = document.getElementById('fc-input');
+    var badge = document.getElementById('fc-catbadge');
+    back.classList.remove('open'); back.innerHTML = ''; input.value = '';
+    FC.revealed = false;
+    document.getElementById('fc-reveal-btn').textContent = 'Reveal answer';
+    if (!FC.deck.length) {
+        document.getElementById('fc-progress').textContent = FC.pileMode ? 'Review pile is empty' : 'No cards in this deck';
+        label.textContent = ''; badge.innerHTML = '';
+        front.innerHTML = FC.pileMode ? 'Nothing left to review — nice work. Hit <em>Back to full deck</em> to keep going.' : 'Choose a deck above.';
+        document.getElementById('fc-inpile').style.display = 'none';
+        return;
+    }
+    var item = FC.deck[FC.idx], c = FC_DECK[item.i];
+    document.getElementById('fc-progress').textContent = 'Card ' + (FC.idx + 1) + ' of ' + FC.deck.length + (FC.pileMode ? ' (review pile)' : '');
+    var catName = {crit:'Q5 · Criterion', trade:'Q6 · Tradeoff', core:'Core concept'}[c.cat];
+    badge.innerHTML = '<span class="fc-cat ' + c.cat + '">' + catName + '</span>';
+    if (!c.flip) { label.textContent = 'Question'; front.innerHTML = c.term; }
+    else if (item.dir === 't2d') { label.textContent = 'Term — write the definition'; front.innerHTML = c.term; }
+    else { label.textContent = 'Definition — write the term'; front.innerHTML = c.def; }
+    input.placeholder = (!c.flip || item.dir === 't2d') ? 'Type your answer here, then Reveal…' : 'Which term/criterion is this? Type it, then Reveal…';
+    document.getElementById('fc-inpile').style.display = FC.pile.has(item.i) ? 'block' : 'none';
+    document.getElementById('fc-pile-btn').textContent = FC.pile.has(item.i) ? '− Remove from pile' : '+ Review pile';
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 30);
+}
+
+function fcReveal() {
+    if (!FC.deck.length) return;
+    var item = FC.deck[FC.idx], c = FC_DECK[item.i];
+    var back = document.getElementById('fc-back');
+    var yours = document.getElementById('fc-input').value.trim();
+    var answer = (!c.flip || item.dir === 't2d') ? c.def : '<strong>' + c.term + '</strong>';
+    back.innerHTML = '<div><strong>Model answer:</strong> ' + answer + '</div>' +
+        (yours ? '<div class="fc-yours"><strong>You wrote:</strong> ' + yours.replace(/</g,'&lt;') + '</div>' : '');
+    back.classList.add('open');
+    FC.revealed = true;
+    document.getElementById('fc-reveal-btn').textContent = 'Revealed';
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 30);
+}
+
+function fcNext() { if (!FC.deck.length) return; FC.idx = (FC.idx + 1) % FC.deck.length; fcRender(); }
+function fcPrev() { if (!FC.deck.length) return; FC.idx = (FC.idx - 1 + FC.deck.length) % FC.deck.length; fcRender(); }
+
+function fcGotIt() {
+    if (!FC.deck.length) return;
+    var item = FC.deck[FC.idx];
+    if (FC.pileMode) {
+        FC.pile.delete(item.i);
+        FC.deck.splice(FC.idx, 1);
+        if (FC.idx >= FC.deck.length) FC.idx = 0;
+        fcUpdatePileBox(); fcRender();
+    } else {
+        fcNext();
+    }
+}
+
+function fcTogglePile() {
+    if (!FC.deck.length) return;
+    var item = FC.deck[FC.idx];
+    if (FC.pile.has(item.i)) {
+        FC.pile.delete(item.i);
+        if (FC.pileMode) { FC.deck.splice(FC.idx, 1); if (FC.idx >= FC.deck.length) FC.idx = 0; }
+    } else {
+        FC.pile.add(item.i);
+    }
+    fcUpdatePileBox(); fcRender();
+}
+
+function fcRemoveFromPile(i) {
+    FC.pile.delete(i);
+    if (FC.pileMode) fcBuild(); else fcUpdatePileBox(), fcRender();
+}
+
+function fcUpdatePileBox() {
+    document.getElementById('fc-pile-count').textContent = FC.pile.size;
+    var list = document.getElementById('fc-pile-list');
+    list.innerHTML = '';
+    FC.pile.forEach(function(i) {
+        var c = FC_DECK[i];
+        var name = c.flip ? c.term : c.term.replace(/<[^>]+>/g,'').slice(0, 70) + '…';
+        list.innerHTML += '<li>' + name + '<a href="javascript:void(0)" onclick="fcRemoveFromPile(' + i + ')">remove</a></li>';
+    });
+    document.getElementById('fc-study-pile').disabled = FC.pile.size === 0;
+    document.getElementById('fc-study-pile').style.display = FC.pileMode ? 'none' : 'inline-block';
+    document.getElementById('fc-exit-pile').style.display = FC.pileMode ? 'inline-block' : 'none';
+}
+
+function fcStudyPile() { if (!FC.pile.size) return; FC.pileMode = true; fcUpdatePileBox(); fcBuild(); }
+function fcExitPile() { FC.pileMode = false; fcUpdatePileBox(); fcBuild(); }
+function fcClearPile() { FC.pile.clear(); FC.pileMode = false; fcUpdatePileBox(); fcBuild(); }
+
+function initFlash() { if (document.getElementById('fc-card')) { fcUpdatePileBox(); fcBuild(); } }
+document.addEventListener('DOMContentLoaded', initFlash);
+initFlash();
 </script>
 
 </body>
