@@ -432,6 +432,16 @@ li { margin-bottom: 10px; }
 .model-toggle { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
 .model-toggle button { font-family: 'Switzer','Space Grotesk',sans-serif; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 6px; border: 1.5px solid var(--green-dark); background: white; color: var(--green-dark); cursor: pointer; }
 .model-toggle button.active { background: var(--green-dark); color: white; }
+/* --- Area quiz --- */
+.qfig { max-width: 640px; margin: 12px 0 4px 0; }
+.qfig svg { width: 100%; height: auto; display: block; }
+.qarea { cursor: pointer; stroke: transparent; stroke-width: 2.5; transition: all 0.12s ease; }
+.qarea:hover { opacity: 0.75; }
+.qarea.sel { stroke: var(--copper); stroke-width: 3.5; stroke-linejoin: round; }
+.clear-link { margin-left: 12px; font-size: 12.5px; color: var(--text-medium); text-decoration: underline; }
+.qfb { margin-top: 10px; }
+.qfb .fb-good { background: rgba(57,134,78,0.10); border-left: 4px solid var(--green-light); border-radius: 6px; padding: 12px 16px; font-size: 14.5px; }
+.qfb .fb-bad { background: rgba(188,108,38,0.10); border-left: 4px solid var(--copper); border-radius: 6px; padding: 12px 16px; font-size: 14.5px; }
 /* --- Flashcards --- */
 .fc-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
 .fc-controls label { font-size: 13.5px; color: var(--text-medium); font-weight: 600; }
@@ -483,6 +493,7 @@ li { margin-bottom: 10px; }
         <button class="tab-button" data-group="core" onclick="switchTab('model', this)">The Model</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('part1', this)">Part 1 · Quiz</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('part2', this)">Part 2 · Exam</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('areaquiz', this)">Area Quiz</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('flash', this)">Flashcards</button>
         <button class="tab-button" data-group="techniques" onclick="switchTab('cheat', this)">6 vs 9 Cheat Sheet</button>
     </div>
@@ -808,6 +819,108 @@ li { margin-bottom: 10px; }
         </div>
     </div>
 
+    <!-- ═══ AREA QUIZ ═══ -->
+    <div id="tab-areaquiz" class="tab-content">
+        <div class="section-header"><div class="section-number">&#63;</div><h2>Area Selection Quiz</h2></div>
+        <div class="idea-box">
+            <p><strong>How it works:</strong> each question has its own figure with the regions lettered. <strong>Tap or click the region(s)</strong> that answer the question (selected areas get a copper outline — tap again to deselect), then hit <em>Check my areas</em>. Three figures rotate through: the base tax/cap model, a Weitzman panel with steep MD, and the two-firm box diagram — the three graphs you'll be asked to draw in Part 2.</p>
+            <button class="example-toggle" style="margin-top: 8px;" onclick="shuffleAreaQuiz()"><span class="arrow" style="transform:none;">&#8646;</span> Shuffle questions</button>
+        </div>
+        <div id="aq-container">
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">1</div><div style="flex:1;">
+                <p class="qa-question">Under the <strong>carbon tax</strong>: select the area that is <strong>government revenue</strong>.</p>
+                <div class="qfig" id="fig-aq1" data-fig="base"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq1')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq1')">clear</a>
+                <div class="qfb" id="fb-aq1"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">2</div><div style="flex:1;">
+                <p class="qa-question">Select the area that is the <strong>firm's abatement cost</strong> — the same under a tax or a cap.</p>
+                <div class="qfig" id="fig-aq2" data-fig="base"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq2')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq2')">clear</a>
+                <div class="qfb" id="fb-aq2"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">3</div><div style="flex:1;">
+                <p class="qa-question">Under a tax <em>or</em> an <strong>auctioned</strong> cap: select the area(s) that make up the <strong>firm's total cost</strong> (similarity #4).</p>
+                <div class="qfig" id="fig-aq3" data-fig="base"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq3')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq3')">clear</a>
+                <div class="qfb" id="fb-aq3"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">4</div><div style="flex:1;">
+                <p class="qa-question">Select the <strong>deadweight loss</strong> if there is <em>no</em> policy and firms emit to E&#8304;.</p>
+                <div class="qfig" id="fig-aq4" data-fig="base"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq4')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq4')">clear</a>
+                <div class="qfb" id="fb-aq4"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">5</div><div style="flex:1;">
+                <p class="qa-question">Under a cap with <strong>free allocation</strong>: select the area equal to the <strong>windfall value handed to firms</strong>.</p>
+                <div class="qfig" id="fig-aq5" data-fig="base"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq5')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq5')">clear</a>
+                <div class="qfb" id="fb-aq5"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">6</div><div style="flex:1;">
+                <p class="qa-question">True MAC turned out higher than expected. Select the <strong>deadweight loss under the tax</strong>.</p>
+                <div class="qfig" id="fig-aq6" data-fig="weitz"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq6')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq6')">clear</a>
+                <div class="qfb" id="fb-aq6"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">7</div><div style="flex:1;">
+                <p class="qa-question">Same situation: select the <strong>deadweight loss under the cap</strong>.</p>
+                <div class="qfig" id="fig-aq7" data-fig="weitz"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq7')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq7')">clear</a>
+                <div class="qfb" id="fb-aq7"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">8</div><div style="flex:1;">
+                <p class="qa-question">MD is <strong>steep</strong> in this panel. Select the DWL of the instrument that <strong>fares better</strong> here.</p>
+                <div class="qfig" id="fig-aq8" data-fig="weitz"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq8')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq8')">clear</a>
+                <div class="qfb" id="fb-aq8"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">9</div><div style="flex:1;">
+                <p class="qa-question">Select the <strong>wasted cost</strong> of a <strong>uniform standard</strong> that makes each firm cut the same amount.</p>
+                <div class="qfig" id="fig-aq9" data-fig="box"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq9')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq9')">clear</a>
+                <div class="qfb" id="fb-aq9"></div>
+            </div></div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">10</div><div style="flex:1;">
+                <p class="qa-question">Select the area(s) that make up <strong>total abatement cost at the cost-effective split</strong>.</p>
+                <div class="qfig" id="fig-aq10" data-fig="box"></div>
+                <button class="solution-toggle" onclick="checkAreas(this,'aq10')"><span class="arrow" style="transform:none;">&#10003;</span> Check my areas</button>
+                <a href="javascript:void(0)" class="clear-link" onclick="clearAreas('aq10')">clear</a>
+                <div class="qfb" id="fb-aq10"></div>
+            </div></div>
+        </div>
+        </div><!-- /aq-container -->
+        <div class="warning-box"><p><strong>Letters are only for the quiz.</strong> On the exam you'd label these by meaning — "tax revenue," "abatement cost," "DWL under tax" — so after each check, say the region's name out loud before moving on.</p></div>
+    </div>
+
     <!-- ═══ CHEAT SHEET ═══ -->
     <div id="tab-cheat" class="tab-content">
         <div class="section-header"><div class="section-number">=</div><h2>Cheat sheet: the one line to remember</h2></div>
@@ -968,11 +1081,18 @@ function mkFig(spec) {
     var s = '<svg viewBox="0 0 700 ' + (spec.h || 400) + '" xmlns="http://www.w3.org/2000/svg">';
     var F = 'font-family="Inter, sans-serif"';
     // polygons first (behind curves)
+    var PE = spec.quiz ? ' pointer-events="none"' : '';
     (spec.polys || []).forEach(function(p) {
         var d = p.pts.map(function(pt, i){ return (i ? 'L ' : 'M ') + px(pt[0]).toFixed(1) + ' ' + py(pt[1]).toFixed(1); }).join(' ') + ' Z';
-        s += '<path d="' + d + '" fill="' + p.fill + '"' + (p.stroke ? ' stroke="' + p.stroke + '" stroke-width="1.5" stroke-dasharray="5,4"' : '') + '/>';
-        if (p.label) s += '<text x="' + px(p.label[0]) + '" y="' + py(p.label[1]) + '" ' + F + ' font-size="12.5" font-weight="700" fill="' + (p.labelColor || '#2D2D2D') + '" text-anchor="middle">' + p.label[2] + '</text>';
+        if (p.area) {
+            s += '<path class="qarea" data-area="' + p.area + '" onclick="toggleArea(this)" d="' + d + '" fill="' + p.fill + '"/>';
+            if (p.label) s += '<text x="' + px(p.label[0]) + '" y="' + py(p.label[1]) + '" ' + F + ' font-size="17" font-weight="700" fill="#FFFFFF" stroke="#2D2D2D" stroke-width="0.7" paint-order="stroke" text-anchor="middle" pointer-events="none">' + p.label[2] + '</text>';
+            return;
+        }
+        s += '<path d="' + d + '" fill="' + p.fill + '"' + (p.stroke ? ' stroke="' + p.stroke + '" stroke-width="1.5" stroke-dasharray="5,4"' : '') + PE + '/>';
+        if (p.label) s += '<text x="' + px(p.label[0]) + '" y="' + py(p.label[1]) + '" ' + F + ' font-size="12.5" font-weight="700" fill="' + (p.labelColor || '#2D2D2D') + '" text-anchor="middle"' + PE + '>' + p.label[2] + '</text>';
     });
+    if (spec.quiz) s += '<g pointer-events="none">';
     // guide lines (dashed drops to axes)
     (spec.guides || []).forEach(function(g) {
         if (g.v !== undefined) s += '<line x1="' + px(g.v) + '" y1="' + py(g.top || 0) + '" x2="' + px(g.v) + '" y2="' + G.y1 + '" stroke="' + (g.color || C.gray) + '" stroke-width="1.2" stroke-dasharray="5,4"/>';
@@ -1002,6 +1122,7 @@ function mkFig(spec) {
         s += '<text x="' + px(n[0]) + '" y="' + py(n[1]) + '" ' + F + ' font-size="12" font-weight="600" fill="' + (n[3] || '#4A4A4A') + '"' + (n[4] ? ' text-anchor="' + n[4] + '"' : '') + '>' + n[2] + '</text>';
     });
     if (spec.extra) s += spec.extra(px, py);
+    if (spec.quiz) s += '</g>';
     return s + '</svg>';
 }
 
@@ -1312,6 +1433,84 @@ function initFigs() {
 }
 
 /* ============================================================
+   Area quiz figures (lettered, clickable regions)
+   ============================================================ */
+function aqBase() {
+    var spec = figBase('none'); spec.quiz = true; spec.polys = []; spec.notes = [];
+    var E = M.Es, P = M.Ps, E0 = M.E0, a = M.a;
+    spec.curves.push({ pts: [[0, P], [XM, P]], color: C.tax, w: 2.5, dash: '7,5', label: [XM - 0.1, P - 0.55, 'tax t*'], anchor: 'end' });
+    spec.curves.push({ pts: [[E, 0], [E, YM - 0.4]], color: C.cap, w: 2.5, dash: '7,5', label: [E + 0.15, YM - 0.6, 'cap = E*'] });
+    spec.polys.push({ area: 'A', pts: [[0,0],[E,0],[E,P],[0,P]], fill: 'rgba(221,162,94,0.45)', label: [E/2, P/2, 'A'] });
+    spec.polys.push({ area: 'B', pts: [[E,0],[E0,0],[E,P]], fill: 'rgba(57,134,78,0.40)', label: [(2*E + E0)/3, P/3, 'B'] });
+    spec.polys.push({ area: 'C', pts: [[E,P],[E0, M.md(E0)],[E0,0]], fill: 'rgba(188,108,38,0.40)', label: [(E + 2*E0)/3, (P + M.md(E0))/3, 'C'] });
+    spec.polys.push({ area: 'D', pts: [[0,P],[0,a],[E,P]], fill: 'rgba(94,108,57,0.35)', label: [E/3, (2*P + a)/3, 'D'] });
+    spec.yticks = [[P, 't* = p*']];
+    return spec;
+}
+function aqWeitz() {
+    var spec = figWeitz(5, 0.5, 0.3, 1.3, 1.4, 'Steep MD panel'); spec.quiz = true;
+    spec.polys[0].area = 'T'; spec.polys[0].fill = 'rgba(33,68,43,0.40)';
+    spec.polys[1].area = 'K'; spec.polys[1].fill = 'rgba(139,94,60,0.50)';
+    // letter labels at centroids
+    var t = spec.polys[0].pts, k = spec.polys[1].pts;
+    spec.polys[0].label = [(t[0][0]+t[1][0]+t[2][0])/3, (t[0][1]+t[1][1]+t[2][1])/3, 'T'];
+    spec.polys[1].label = [(k[0][0]+k[1][0]+k[2][0])/3 - 0.25, (k[0][1]+k[1][1]+k[2][1])/3, 'K'];
+    spec.notes = spec.notes.filter(function(n){ return n[2] !== 'DWL tax'; });
+    spec.points = [];
+    return spec;
+}
+function aqBox() {
+    var A = 10, k1 = 0.9, k2 = 0.45, xs = k2*A/(k1+k2), p = k1*xs, half = A/2;
+    var spec = figEqui(); spec.quiz = true;
+    spec.polys = [];
+    spec.polys.push({ area: 'X', pts: [[0,0],[xs,0],[xs,p]], fill: 'rgba(57,134,78,0.35)', label: [2*xs/3, p/3, 'X'] });
+    spec.polys.push({ area: 'Y', pts: [[xs,0],[A,0],[xs,p]], fill: 'rgba(221,162,94,0.45)', label: [(2*xs + A)/3, p/3, 'Y'] });
+    spec.polys.push({ area: 'W', pts: [[half, k1*half], [xs, p], [half, k2*(A-half)]], fill: 'rgba(188,108,38,0.45)', label: [(2*half + xs)/3 + 0.05, (k1*half + p + k2*(A-half))/3, 'W'] });
+    return spec;
+}
+var AQ_FIGS = { base: aqBase, weitz: aqWeitz, box: aqBox };
+var AQ = {
+    aq1: { ans: ['A'], why: 'Revenue = t* × E*, the rectangle under the tax line out to the remaining emissions. Under an <em>auctioned</em> cap the same rectangle is auction revenue.' },
+    aq2: { ans: ['B'], why: 'Abatement cost is the area under MAC over the tons cut, from E* out to E&#8304;. It is identical under a tax and a cap because both leave the firm at E*.' },
+    aq3: { ans: ['A','B'], why: 'Total cost = abatement (B) + payments on remaining emissions (A). Tax bill or allowance purchases — same picture, which is why similarity #4 holds for revenue-raising versions.' },
+    aq4: { ans: ['C'], why: 'Between E* and E&#8304; every ton does more damage (MD) than it saves in abatement (MAC). The wedge between the curves is the deadweight loss of leaving pollution unpriced.' },
+    aq5: { ans: ['A'], why: 'Free allowances are worth p* each, so E* free allowances are worth p* × E* — the same rectangle the government would otherwise collect. That windfall is why free allocation buys political support.' },
+    aq6: { ans: ['T'], why: 'With a fixed t*, firms abate less than planned and emissions run past the true optimum to E_tax; the DWL is the wedge between MD and true MAC over that overshoot.' },
+    aq7: { ans: ['K'], why: 'With a fixed cap Ē, emissions are held below the true optimum; the DWL is the wedge between true MAC and MD over [Ē, true E*]. Price spikes instead of quantity.' },
+    aq8: { ans: ['K'], why: 'Steep MD means overshooting quantity is very costly, so the tax\'s triangle (T) is large and the cap\'s (K) is small. Quantity instrument wins — Weitzman\'s relative-slopes rule.' },
+    aq9: { ans: ['W'], why: 'Between the standard and the cost-effective split, Firm 1 is doing tons that cost more than p while Firm 2 gave up tons cheaper than p. The gap between the two MAC curves is the extra cost of ignoring the equimarginal principle.' },
+    aq10: { ans: ['X','Y'], why: 'Total cost at the cost-effective split = area under MAC&#8321; up to its abatement (X) + area under MAC&#8322; up to its abatement (Y). Any other split adds a wedge like W on top.' }
+};
+function initAreaQuiz() {
+    for (var qid in AQ) {
+        var holder = document.getElementById('fig-' + qid);
+        if (holder && !holder.innerHTML) holder.innerHTML = mkFig(AQ_FIGS[holder.dataset.fig]());
+    }
+}
+function toggleArea(el) { el.classList.toggle('sel'); }
+function clearAreas(qid) {
+    var holder = document.getElementById('fig-' + qid);
+    holder.querySelectorAll('.qarea.sel').forEach(function(e){ e.classList.remove('sel'); });
+    document.getElementById('fb-' + qid).innerHTML = '';
+}
+function setLabel(areas) { return areas.length ? areas.slice().sort().join(' + ') : '(nothing selected)'; }
+function checkAreas(btn, qid) {
+    var holder = document.getElementById('fig-' + qid);
+    var sel = Array.prototype.map.call(holder.querySelectorAll('.qarea.sel'), function(e){ return e.dataset.area; });
+    var ans = AQ[qid].ans, fb = document.getElementById('fb-' + qid);
+    if (sel.slice().sort().join(',') === ans.slice().sort().join(',')) fb.innerHTML = '<div class="fb-good"><strong>Correct — area ' + setLabel(ans) + '.</strong> ' + AQ[qid].why + '</div>';
+    else fb.innerHTML = '<div class="fb-bad"><strong>Not quite.</strong> You selected ' + setLabel(sel) + '; the answer is <strong>' + setLabel(ans) + '</strong>. ' + AQ[qid].why + '</div>';
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
+}
+function shuffleAreaQuiz() {
+    var container = document.getElementById('aq-container'); if (!container) return;
+    var cards = Array.from(container.querySelectorAll(':scope > .card'));
+    for (var i = cards.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); container.appendChild(cards[j]); cards.splice(j, 1, cards[i]); }
+    container.querySelectorAll(':scope > .card').forEach(function(card, idx) { var circle = card.querySelector('.qnum'); if (circle) circle.textContent = idx + 1; });
+    window.scrollTo({ top: container.offsetTop - 120, behavior: 'smooth' });
+}
+
+/* ============================================================
    Flashcards
    ============================================================ */
 var FC_DECK = [
@@ -1435,7 +1634,7 @@ function fcStudyPile() { if (!FC.pile.size) return; FC.pileMode = true; fcUpdate
 function fcExitPile() { FC.pileMode = false; fcUpdatePileBox(); fcBuild(); }
 function fcClearPile() { FC.pile.clear(); FC.pileMode = false; fcUpdatePileBox(); fcBuild(); }
 
-function initAll() { initFigs(); if (document.getElementById('fc-card')) { fcUpdatePileBox(); fcBuild(); } }
+function initAll() { initFigs(); initAreaQuiz(); if (document.getElementById('fc-card')) { fcUpdatePileBox(); fcBuild(); } }
 document.addEventListener('DOMContentLoaded', initAll);
 initAll();
 </script>
