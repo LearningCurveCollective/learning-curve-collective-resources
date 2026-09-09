@@ -439,7 +439,8 @@ li { margin-bottom: 10px; }
 .qfig svg { width: 100%; height: auto; display: block; }
 .qarea { cursor: pointer; stroke: transparent; stroke-width: 2.5; transition: all 0.12s ease; }
 .qarea:hover { opacity: 0.75; }
-.qarea.sel { stroke: var(--copper); stroke-width: 3.5; stroke-linejoin: round; }
+.qarea.sel { stroke: #8a4a10; stroke-width: 5; stroke-linejoin: round; }
+.qhatch { stroke: none; }
 .clear-link { margin-left: 12px; font-size: 12.5px; color: var(--text-medium); text-decoration: underline; }
 .qfb { margin-top: 10px; }
 .qfb .fb-good {
@@ -1329,6 +1330,7 @@ var AQ = {
 
 function figSVG() {
     return '<svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">' +
+    '<defs><pattern id="selHatch" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="rgba(188,108,38,0.35)"/><line x1="0" y1="0" x2="0" y2="10" stroke="#BC6C26" stroke-width="4"/></pattern></defs>' +
     '<path class="qarea" data-area="1" d="M 70 170 L 70 54 L 100 37 L 330 170 Z" fill="rgba(57,134,78,0.22)" onclick="toggleArea(this)"/>' +
     '<path class="qarea" data-area="2" d="M 70 170 L 330 170 L 70 272 Z" fill="rgba(221,162,94,0.36)" onclick="toggleArea(this)"/>' +
     '<path class="qarea" data-area="3" d="M 70 272 L 330 170 L 330 280 L 70 280 Z" fill="rgba(188,108,38,0.34)" onclick="toggleArea(this)"/>' +
@@ -1371,11 +1373,23 @@ function initAreaQuiz() {
     }
 }
 
-function toggleArea(el) { el.classList.toggle('sel'); }
+function toggleArea(el) {
+    el.classList.toggle('sel');
+    var next = el.nextSibling;
+    if (el.classList.contains('sel')) {
+        var h = el.cloneNode(false);
+        h.removeAttribute('onclick'); h.removeAttribute('class'); h.removeAttribute('data-area');
+        h.setAttribute('class', 'qhatch'); h.setAttribute('fill', 'url(#selHatch)'); h.setAttribute('pointer-events', 'none');
+        el.parentNode.insertBefore(h, next);
+    } else if (next && next.getAttribute && next.getAttribute('class') === 'qhatch') {
+        next.parentNode.removeChild(next);
+    }
+}
 
 function clearAreas(qid) {
     var holder = document.getElementById('fig-' + qid);
     holder.querySelectorAll('.qarea.sel').forEach(function(e){ e.classList.remove('sel'); });
+    holder.querySelectorAll('.qhatch').forEach(function(e){ e.parentNode.removeChild(e); });
     document.getElementById('fb-' + qid).innerHTML = '';
 }
 

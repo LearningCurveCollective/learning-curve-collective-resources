@@ -437,7 +437,8 @@ li { margin-bottom: 10px; }
 .qfig svg { width: 100%; height: auto; display: block; }
 .qarea { cursor: pointer; stroke: transparent; stroke-width: 2.5; transition: all 0.12s ease; }
 .qarea:hover { opacity: 0.75; }
-.qarea.sel { stroke: var(--copper); stroke-width: 3.5; stroke-linejoin: round; }
+.qarea.sel { stroke: #8a4a10; stroke-width: 5; stroke-linejoin: round; }
+.qhatch { stroke: none; }
 .clear-link { margin-left: 12px; font-size: 12.5px; color: var(--text-medium); text-decoration: underline; }
 .qfb { margin-top: 10px; }
 .qfb .fb-good { background: rgba(57,134,78,0.10); border-left: 4px solid var(--green-light); border-radius: 6px; padding: 12px 16px; font-size: 14.5px; }
@@ -636,6 +637,13 @@ li { margin-bottom: 10px; }
                     <p><span class="mini-badge copper">Taxes &larr; Pigou</span> Pollution is a negative externality. For 40 years after Pigou (1920) the only prescribed fix was to <strong>tax the externality</strong>: charge each unit of emissions a tax equal to marginal social damage at the efficient level of control, $t^* = MD(E^*)$. Firms then cut emissions until their marginal abatement cost equals the tax, $MAC_i = t^*$. Because every source faces the same $t^*$, marginal abatement costs are <strong>equalized across sources</strong> — the necessary condition for cost-effectiveness — and the incentive persists over time, driving diffusion and innovation of cheaper abatement technology.</p>
                     <p><span class="mini-badge green">Permits &larr; Coase</span> Coase (1960) reframed pollution as a <strong>public-good / incomplete-property-rights problem</strong>. If clean air were property whose rights could be traded, private actors would allocate it cost-effectively. Crocker (1966) and Dales (1968) turned this into <strong>transferable discharge permits</strong>: the regulator sets the total quantity (the cap), distributes rights summing to that total, and lets sources trade until each one abates to the point where $MAC_i = $ the market allowance price. The environmental constraint is met and marginal costs are again equalized.</p>
                     <div class="highlight-box">$$\text{Tax: fix } p = t^*,\ \text{let } E \text{ adjust} \qquad\qquad \text{Cap: fix } E = E^*,\ \text{let } p \text{ emerge}$$</div>
+                    <div class="given-key">
+                        <p><strong>Point of regulation — where in the fuel chain the tax or cap is applied:</strong></p>
+                        <p><strong>Upstream</strong> &nbsp;=&nbsp; where carbon <em>enters</em> the economy: the carbon content of coal, oil, and gas at the mine, wellhead, refinery, or import terminal. A few thousand producers/importers comply; the price passes down the chain into everything made with that fuel.</p>
+                        <p><strong>Midstream</strong> &nbsp;=&nbsp; in between, e.g., refineries or electric utilities.</p>
+                        <p><strong>Downstream</strong> &nbsp;=&nbsp; where carbon is actually <em>burned</em>: the smokestack or tailpipe. Hundreds of millions of sources, each needing monitoring.</p>
+                        <p style="color: var(--text-medium);">Upstream is cheap to administer (fuel chemistry pins down carbon content) yet covers ~98% of U.S. CO$_2$. Both a tax and a cap can go upstream — so it's a similarity, not a difference.</p>
+                    </div>
                     <p><strong>Shared roots.</strong> Both are &ldquo;missing markets&rdquo; (Arrow 1969), and in the carbon context both would most likely be applied <em>upstream</em> — on the carbon content of coal, oil, and gas as they enter the economy — covering ~98% of U.S. CO$_2$ with a few thousand compliance entities. A tax prices carbon directly with quantity adjusting; an upstream cap constrains quantity with the price emerging from the allowance market. Stavins's point: derived from different theories, the instruments are nonetheless <strong>more similar than different</strong>.</p>
                 </div></div>
             </div></div>
@@ -647,7 +655,33 @@ li { margin-bottom: 10px; }
                 <p class="qa-question">List the six similarities of taxes and permits and discuss at least two.</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>The list (§2.1):</strong> (1) emission reductions, (2) abatement costs, (3) possibilities for raising revenue, (4) costs to regulated firms (with revenue-raising versions), (5) distributional impacts, (6) competitiveness effects. Table 2 grades #1, #2, #6 <em>perfectly equivalent</em>; #3 <em>nearly equivalent</em>; #4, #5 <em>similar</em>.</p>
+                    <p><strong>The list (§2.1):</strong> (1) emission reductions, (2) abatement costs, (3) possibilities for raising revenue, (4) costs to regulated firms (with revenue-raising versions), (5) distributional impacts, (6) competitiveness effects.</p>
+                    <div class="given-key">
+                        <p><strong>What the grades mean (not a graph — a ranking).</strong> Stavins compares the two instruments on 15 things: the 6 similarities here and the 9 differences in Q3. For each one he asks a single question:</p>
+                        <p style="text-align:center; font-weight:600; margin: 8px 0;">&ldquo;If I ran a well-designed carbon tax and a well-designed cap-and-trade side by side, how differently would <em>this</em> come out?&rdquo;</p>
+                        <p>Table 2 answers on a 6-step scale from &ldquo;exactly the same&rdquo; to &ldquo;very different.&rdquo; The badge on each item below is simply where it landed on that scale.</p>
+                    </div>
+                    <table class="t1" style="font-size:13px;">
+                        <tr><th style="width:34%;">Table 2 — Stavins's scale</th><th style="text-align:center;">Perfectly<br>equivalent</th><th style="text-align:center;">Nearly<br>equivalent</th><th style="text-align:center;">Similar</th><th style="text-align:center;">Some<br>distinctions</th><th style="text-align:center;">Differences</th><th style="text-align:center;">Significant<br>differences</th></tr>
+                        <tr class="grp"><td colspan="7">Similarities (this question)</td></tr>
+                        <tr><td>1. Emission reductions</td><td style="text-align:center;">&#10003;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>2. Abatement costs</td><td style="text-align:center;">&#10003;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>3. Raising revenue</td><td></td><td style="text-align:center;">&#10003;</td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>4. Costs to regulated firms</td><td></td><td></td><td style="text-align:center;">&#10003;</td><td></td><td></td><td></td></tr>
+                        <tr><td>5. Distributional impacts</td><td></td><td></td><td style="text-align:center;">&#10003;</td><td></td><td></td><td></td></tr>
+                        <tr><td>6. Competitiveness</td><td style="text-align:center;">&#10003;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr class="grp"><td colspan="7">Differences (Q3 — for comparison)</td></tr>
+                        <tr><td>Transaction costs</td><td></td><td></td><td></td><td style="text-align:center;">&#10003;</td><td></td><td></td></tr>
+                        <tr><td>Uncertainty; linkage</td><td></td><td></td><td></td><td></td><td style="text-align:center;">&#10003;</td><td></td></tr>
+                        <tr><td>Volatility; complementary policies; manipulation; complexity</td><td></td><td></td><td></td><td></td><td></td><td style="text-align:center;">&#10003;</td></tr>
+                    </table>
+                    <div class="given-key">
+                        <p><strong>Rule of thumb for what each grade is really saying:</strong></p>
+                        <p><span class="verdict tie">perfectly equivalent</span> &nbsp;No design choice can pull the two apart. Same emissions, same total abatement cost, same competitiveness hit — always.</p>
+                        <p><span class="verdict tie">nearly equivalent</span> &nbsp;Identical on paper; only real-world implementation differs (which committee writes the bill, what politicians actually do with the money).</p>
+                        <p><span class="verdict tie">similar</span> &nbsp;Close, but <em>one design choice decides it</em>: auction vs. free allocation, or how the revenue is spent. Pick the same design on both sides and they match; pick different designs and they diverge.</p>
+                        <p style="color: var(--text-medium);">Read the whole scale as: the further right an item sits, the less a design element can close the gap. That is the paper's thesis in table form.</p>
+                    </div>
 
                     <p><strong>1. Emission reductions</strong> <span class="verdict tie">perfectly equivalent</span> — Absent uncertainty, setting the time path of the tax rate or of the cap achieves the same reductions. Either can be applied upstream, midstream, or downstream; upstream on fossil-fuel carbon content captures up to 98% of U.S. CO$_2$ with only a few thousand compliance entities instead of hundreds of millions of tailpipes and smokestacks.</p>
                     <p><strong>2. Abatement costs</strong> <span class="verdict tie">perfectly equivalent</span> — Competitive firms minimize abatement cost + tax bill (or + allowance cost), so each abates until $MAC = t^*$ or $= $ allowance price. Every firm controls at the same marginal cost, so aggregate cost is minimized either way. Innovation incentives are equivalent for a tax and an <em>auctioned</em> cap (Milliman &amp; Prince 1989), and offsets can be bolted onto either.</p>
@@ -1079,6 +1113,7 @@ function mkFig(spec) {
     var px = function(x){ return G.x0 + (x / spec.xmax) * (G.x1 - G.x0); };
     var py = function(y){ return G.y1 - (y / spec.ymax) * (G.y1 - G.y0); };
     var s = '<svg viewBox="0 0 700 ' + (spec.h || 400) + '" xmlns="http://www.w3.org/2000/svg">';
+    if (spec.quiz) s += '<defs><pattern id="selHatch" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)"><rect width="10" height="10" fill="rgba(188,108,38,0.35)"/><line x1="0" y1="0" x2="0" y2="10" stroke="#BC6C26" stroke-width="4"/></pattern></defs>';
     var F = 'font-family="Inter, sans-serif"';
     // polygons first (behind curves)
     var PE = spec.quiz ? ' pointer-events="none"' : '';
@@ -1108,7 +1143,7 @@ function mkFig(spec) {
     s += '<line x1="' + G.x0 + '" y1="20" x2="' + G.x0 + '" y2="' + G.y1 + '" stroke="#2D2D2D" stroke-width="2"/>';
     s += '<line x1="' + G.x0 + '" y1="' + G.y1 + '" x2="670" y2="' + G.y1 + '" stroke="#2D2D2D" stroke-width="2"/>';
     s += '<text x="' + (G.x1 - 10) + '" y="' + (G.y1 + 32) + '" ' + F + ' font-size="13" fill="#4A4A4A" text-anchor="end">' + (spec.xlabel !== undefined ? spec.xlabel : 'Emissions (E)') + '</text>';
-    s += '<text x="' + (G.x0 - 6) + '" y="' + (G.y0 - 14) + '" ' + F + ' font-size="13" fill="#4A4A4A" text-anchor="start">' + (spec.ylabel || '$/ton') + '</text>';
+    s += '<text x="' + (G.x0 + 10) + '" y="' + (G.y0 - 14) + '" ' + F + ' font-size="13" fill="#4A4A4A" text-anchor="start">' + (spec.ylabel || '$/ton') + '</text>';
     // axis tick labels
     (spec.xticks || []).forEach(function(t) { s += '<text x="' + px(t[0]) + '" y="' + (G.y1 + 18) + '" ' + F + ' font-size="13" font-weight="600" fill="#2D2D2D" text-anchor="middle">' + t[1] + '</text>'; });
     (spec.yticks || []).forEach(function(t) { s += '<text x="' + (G.x0 - 8) + '" y="' + (py(t[0]) + 4) + '" ' + F + ' font-size="13" font-weight="600" fill="#2D2D2D" text-anchor="end">' + t[1] + '</text>'; });
@@ -1147,7 +1182,7 @@ function figBase(view) {
     spec.yticks.push([M.Ps, view === 'cap' ? 'p*' : 't*']);
     spec.points.push([M.Es, M.Ps, '']);
     if (view === 'base') {
-        spec.polys.push({ pts: [[M.Es, M.Ps], [M.E0, M.md(M.E0)], [M.E0, 0]], fill: 'rgba(188,108,38,0.22)', label: [8.0, 1.3, 'DWL of no policy'], labelColor: '#7a4416' });
+        spec.polys.push({ pts: [[M.Es, M.Ps], [M.E0, M.md(M.E0)], [M.E0, 0]], fill: 'rgba(188,108,38,0.22)', label: [(M.Es + 2*M.E0)/3 + 0.2, (M.Ps + M.md(M.E0))/3, 'DWL of no policy'], labelColor: '#7a4416' });
         spec.notes.push([M.E0, -0.05, '', '#2D2D2D']);
     }
     if (view === 'tax') {
@@ -1487,10 +1522,22 @@ function initAreaQuiz() {
         if (holder && !holder.innerHTML) holder.innerHTML = mkFig(AQ_FIGS[holder.dataset.fig]());
     }
 }
-function toggleArea(el) { el.classList.toggle('sel'); }
+function toggleArea(el) {
+    el.classList.toggle('sel');
+    var next = el.nextSibling;
+    if (el.classList.contains('sel')) {
+        var h = el.cloneNode(false);
+        h.removeAttribute('onclick'); h.removeAttribute('class'); h.removeAttribute('data-area');
+        h.setAttribute('class', 'qhatch'); h.setAttribute('fill', 'url(#selHatch)'); h.setAttribute('pointer-events', 'none');
+        el.parentNode.insertBefore(h, next);
+    } else if (next && next.getAttribute && next.getAttribute('class') === 'qhatch') {
+        next.parentNode.removeChild(next);
+    }
+}
 function clearAreas(qid) {
     var holder = document.getElementById('fig-' + qid);
     holder.querySelectorAll('.qarea.sel').forEach(function(e){ e.classList.remove('sel'); });
+    holder.querySelectorAll('.qhatch').forEach(function(e){ e.parentNode.removeChild(e); });
     document.getElementById('fb-' + qid).innerHTML = '';
 }
 function setLabel(areas) { return areas.length ? areas.slice().sort().join(' + ') : '(nothing selected)'; }
