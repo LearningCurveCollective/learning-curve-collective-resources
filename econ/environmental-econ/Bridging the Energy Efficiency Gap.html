@@ -466,6 +466,16 @@ li { margin-bottom: 10px; }
 .matcher td { vertical-align: middle; }
 .matcher .ok { color: var(--green-light); font-weight:700; }
 .matcher .no { color: var(--copper); font-weight:700; }
+.qc-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+.qc-card { background:white; border:2px solid var(--gold); border-radius:12px; padding:14px 16px; cursor:pointer; min-height: 96px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: border-color 0.15s ease; position:relative; }
+.qc-card:hover { border-color: var(--copper); }
+.qc-card .qc-num { position:absolute; top:8px; right:12px; font-size:11px; font-weight:700; color: var(--gold); letter-spacing:0.4px; }
+.qc-card .qc-front { font-family:'Switzer','Space Grotesk',sans-serif; font-weight:700; font-size:15px; color: var(--text-dark); padding-right: 40px; }
+.qc-card .qc-hint { font-size:12px; color: var(--text-medium); margin-top:6px; }
+.qc-card .qc-back { display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--cream-dark); font-size:13.5px; line-height:1.5; }
+.qc-card.open { border-color: var(--green-light); background: rgba(57,134,78,0.05); }
+.qc-card.open .qc-back { display:block; }
+.qc-card.open .qc-hint { display:none; }
 /* --- Flashcards --- */
 .fc-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
 .fc-controls label { font-size: 13.5px; color: var(--text-medium); font-weight: 600; }
@@ -718,6 +728,25 @@ li { margin-bottom: 10px; }
                     <p><strong>Scorecard:</strong> information alone is weak, except the &ldquo;your neighbors use less&rdquo; letters, which work about as well as a 15% price hike. Rebates are hit-or-miss and pay a lot of people who'd have bought anyway. Standards are popular but a gas tax does the same job for a sixth of the cost — unless people are making real mistakes, in which case standards start to look better.</p>
                 </div></div>
             </div></div>
+        </div>
+
+        <div class="section-header" style="margin-top:30px;"><div class="section-number">&#9829;</div><h2>Quiz yourself — one card per bullet</h2></div>
+        <div class="card">
+            <p style="font-size:14px;">Every bullet in the answers above is a card here, grouped by question. <strong>Tap a card to reveal</strong>; tap again to hide. Say the answer out loud before you flip.</p>
+            <div class="model-toggle" id="qc-tabs">
+                <button class="active" onclick="qcShow(1, this)">Q1 &middot; The gap</button>
+                <button onclick="qcShow(2, this)">Q2 &middot; Five reasons it may be small</button>
+                <button onclick="qcShow(3, this)">Q3 &middot; Five market failures</button>
+                <button onclick="qcShow(4, this)">Q4 &middot; Behavioral</button>
+                <button onclick="qcShow(5, this)">Q5 &middot; Policy &amp; evidence</button>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
+                <button class="fc-btn ghost" onclick="qcShuffle()">&#8646; Shuffle</button>
+                <button class="fc-btn ghost" onclick="qcAll(true)">Reveal all</button>
+                <button class="fc-btn ghost" onclick="qcAll(false)">Hide all</button>
+                <span id="qc-count" style="align-self:center; font-size:13px; color: var(--text-medium);"></span>
+            </div>
+            <div class="qc-grid" id="qc-grid"></div>
         </div>
     </div>
 
@@ -991,6 +1020,78 @@ var FC_DECK = [
   {cat:'les', flip:true, term:'Jacobsen (2013) CAFE result', def:'Modeling new and used vehicle markets and the gasoline market, a gasoline tax achieves the same fuel savings at roughly one-sixth the welfare cost of tightened CAFE standards — the headline evidence that standards are second-best (absent behavioral failures).'},
   {cat:'les', flip:true, term:'Anderson & Newell (2004) energy audits', def:'Free audits for manufacturing plants: about half of recommended projects adopted despite very short paybacks; managers cited economic reasons (often opportunity costs and risk) for up to 93% of rejections. Cited as evidence for hidden costs, uncertainty, and for information strategies working on firms.'}
 ];
+
+/* ============================================================
+   Quiz-yourself: one card per bullet, grouped by question
+   ============================================================ */
+var QC = {
+ 1: [
+  ['Define the energy efficiency gap', 'Consumers and firms fail to make energy-saving investments that appear to have positive net present value — PV of savings exceeds upfront cost, yet the investment isn\'t made. Broadly: efficient products diffuse more slowly than is socially optimal (Jaffe &amp; Stavins 1994).'],
+  ['Evidence usually cited for the gap', 'High implicit discount rates (Hausman 1979; Train 1985); vehicle buyers appear to undervalue fuel savings (Allcott &amp; Wozny 2012; Helfand &amp; Wolverton 2011); McKinsey (2009): 835 Mt CO&#8322;e at a net <em>saving</em> of $45 billion.'],
+  ['Why it matters #1 — policy rests on it', 'Absent a carbon price, efficiency standards and incentives are the main climate tool; regulatory analyses (e.g., NHTSA fuel-economy rule) claim savings exceed costs. If the gap is mis-measured, those benefits are overstated.'],
+  ['Why it matters #2 — the explanation dictates the fix', 'Measurement error → no policy needed. Market failure → fix the failure. Behavioral failure → nudges or standards may be justified on efficiency grounds.'],
+  ['Why it matters #3 — the door to behavioral economics', 'The gap raises the question of whether observed choices reveal true preferences — the entry point for behavioral economics in environmental policy.']
+ ],
+ 2: [
+  ['1. Hidden costs', 'Program administration, search and installation time, and opportunity costs: lower-quality service (harsher light, smaller/slower car), diverted managerial attention. Anderson &amp; Newell (2004): ~half of short-payback audit recommendations rejected; economic reasons cited for up to 93%. Hard to measure.'],
+  ['2. Consumer heterogeneity', 'A product that pays off for the <em>average</em> user may not for a particular one (usage, preferences, borrowing costs) — the summer-home A/C. Bento, Li &amp; Roth (2012): preference heterogeneity → selection bias toward finding undervaluation.'],
+  ['3. Uncertainty', 'Irreversible investment + fluctuating energy prices → option value of waiting. Hassett &amp; Metcalf (1993): required return rises 4–5×. Caveats: Sanstad et al. (can\'t explain all high rates); Baker 2012 (breaks with multiple efficiency levels). Risk still a common reason firms reject audits.'],
+  ['4. Overestimated energy savings', 'Engineering models ignore interactions between investments and assume perfect installation/maintenance. Dubin, Miedema &amp; Chandran (1986), Florida RCT: returns overstated by 8–13%.'],
+  ['5. Rebound effect', 'Engineering assumes constant service demand; cheaper usage → more usage. Two-sided: extra use raises welfare (engineering <em>understates</em> efficient diffusion), but ignoring rebound biases estimates of cost-effective energy savings upward.']
+ ],
+ 3: [
+  ['1. Imperfect / asymmetric information', 'Buyers can\'t verify savings; sellers know more but can\'t credibly convey it (lemons-type failure). Amplifies perceived risk — helps explain firms citing "project risk" when rejecting audit recommendations.'],
+  ['2. Principal–agent (split incentives)', 'One party decides, another pays: landlord pays heat / tenant sets thermostat; landlord picks appliances / tenant pays bills. Evidence of higher use in rentals (Davis 2012; Gillingham, Harding &amp; Rapson 2012) but small losses. Also within organizations — unquantified.'],
+  ['3. Credit constraints', 'High upfront cost + limited borrowing. Credit rationing: lenders can\'t tell good from bad risks, and don\'t know which projects have high savings payoffs, so high-payoff projects by poor-credit borrowers go unfunded (Palmer, Walls &amp; Gerarden 2012).'],
+  ['4. Learning-by-using', 'Early users generate knowledge that spills over to later adopters — a positive externality, so early adoption is below the social optimum. Simulated (Mulder et al. 2003); no empirical evidence for efficiency technologies.'],
+  ['5. Regulatory failures', 'Regulated electricity prices ≠ marginal cost. Price below MC discourages efficiency, but flat prices are above MC most hours (Brennan 2011), so better pricing might <em>reduce</em> demand for efficiency. On net: probably not important.'],
+  ['Link to Jaffe, Newell &amp; Stavins', 'JNS failure 1 = environmental externality; failure 2 = technology innovation &amp; diffusion (spillovers, adoption externalities, information, split incentives). G&amp;P\'s five are all diffusion-side instances of failure 2. The externality is kept outside the gap (fn. 4) and analyzed separately.']
+ ],
+ 4: [
+  ['Anomaly vs. failure', 'Anomaly: any departure from neoclassical assumptions. Failure: an anomaly creating a systematic gap between decision utility and experienced utility. Only failures justify policy; to explain the gap the bias must push toward less efficient products.'],
+  ['Decision utility vs. experienced utility', 'Decision utility = what you maximize at the moment of choice; experienced utility = what you actually get later (Kahneman). Their divergence defines a behavioral failure and undermines revealed preference.'],
+  ['Self-control problems', 'Nonstandard preference; a failure by definition. Time-inconsistent: patient about the distant future, impatient as it nears — β–δ discounting (Laibson) or Gul–Pesendorfer temptation. Tsvetanov &amp; Segerson (2013): refrigerator choices consistent with self-control problems.'],
+  ['Reference dependence / loss aversion', 'Utility relative to a reference point; losses weigh more than equal gains (Tversky &amp; Kahneman 1981). Greene, German &amp; Delucchi (2009): uncertain buyers overweight the downside of an efficient car. No empirical test; may not be a true failure (doesn\'t clearly separate decision from experienced utility).'],
+  ['Limited attention', 'Bounded rationality (Simon 1955): process a subset of information; underweight what is less salient (register sales taxes, left-digit odometer effects, checkout shipping). Car buyers think crudely about fuel savings (Turrentine &amp; Kurani 2007). Core of the undervaluation argument; not yet shown empirically.'],
+  ['Framing of choices', 'Presentation format directs attention to different subsets of information and changes choices (Benartzi &amp; Thaler 2002; Duflo et al. 2006). Regulators already act on it: the 2010 EPA fuel-economy label redesign.'],
+  ['Nonstandard beliefs (extra)', 'Systematically wrong expectations. Allcott (2012): beliefs about fuel savings are inaccurate but not clearly biased; if consumers never learn they were wrong, unclear it\'s a failure.'],
+  ['Suboptimal heuristics (extra)', 'Rules of thumb when there are many variants (vehicles). Turrentine &amp; Kurani hint at it; no energy-efficiency evidence yet.']
+ ],
+ 5: [
+  ['Design principle', 'Tailor the policy to the specific market or behavioral failure; assess benefits and costs as fully as possible. There isn\'t always a first-best.'],
+  ['Externality → ?', 'Pigouvian tax or permit price equal to the external cost — the one clear first-best (but outside the gap).'],
+  ['Imperfect information → ?', 'Information provision (labels, disclosure, audits) — fails if consumers don\'t respond.'],
+  ['Principal–agent → ?', 'Information that lets the parties write better contracts (e.g., reward landlords who insulate).'],
+  ['Credit constraints → ?', 'Government financing programs — feasible only if they can be targeted.'],
+  ['Learning-by-using → ?', 'A subsidy — classic positive externality — to the extent it can be quantified.'],
+  ['Regulatory failure → ?', 'Improve the regulation (e.g., time-varying electricity prices).'],
+  ['Behavioral failures — the sequence', 'Only if decision ≠ experienced utility. Information first (could be first-best if cheap); if ineffective, change the choice setting with a nudge; if neither feasible, second-best standards/subsidies.'],
+  ['Libertarian paternalism / nudge', 'Keep every option available; set defaults, labels, and framing so people make ex-post "good" decisions (Thaler &amp; Sunstein). E.g., default to the efficient option; frame around losses when loss aversion is the failure.'],
+  ['Why standards &amp; subsidies are second-best', 'Heterogeneity: standards force over-investment by low-use consumers (Hausman &amp; Joskow 1982); subsidies over-pay consumers who already optimize → deadweight loss. Fix: behavioral targeting / asymmetric paternalism (Allcott et al.; Camerer et al.).'],
+  ['Comparison with Jaffe, Newell &amp; Stavins', 'Same philosophy: one instrument per failure, a portfolio (price the externality + tools for diffusion failures). G&amp;P keep that and add a third category — behavioral failures → nudges and targeting. Both call blunt standards/subsidies second-best.'],
+  ['Evidence: information strategies', 'Alone, limited effect; firms adopt ~half of audit recommendations; Energy Star crowds out other saving (Houde). Social norms work: OPower −2% ≈ an 11–20% price increase (Allcott 2011); varies by ideology; strongest for heavy users.'],
+  ['Evidence: economic incentives', 'Mixed. Cost per kWh saved above ex-ante estimates but not significantly (Loughran &amp; Kulick; Auffhammer et al.; Arimura et al.); Rivers &amp; Jaccard: no effect on Canadian demand growth. Distortionary funding, rebound, free riders vs. free drivers; feebates in Canada/France.'],
+  ['Evidence: efficiency standards', 'Second-best but most politically feasible. Appliance evidence thin. CAFE: large welfare losses absent behavioral failures; gas tax ≈ 1/6 the welfare cost (Jacobsen 2013); efficiency-improving with enough behavioral failures. Building codes: 0% to 3–5%.'],
+  ['G&amp;P\'s bottom line', 'Behavioral welfare economics isn\'t ready to justify current or proposed policies — but where nudges like OPower\'s are available, "we see no reason not to pursue them."']
+ ]
+};
+var qcState = { q: 1, order: [] };
+function qcShow(q, btn) {
+    if (btn) { btn.parentNode.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); }); btn.classList.add('active'); }
+    qcState.q = q; qcState.order = QC[q].map(function(_, i){ return i; }); qcRender();
+}
+function qcRender() {
+    var g = document.getElementById('qc-grid'); if (!g) return;
+    var cards = QC[qcState.q];
+    g.innerHTML = qcState.order.map(function(i, k) {
+        var c = cards[i];
+        return '<div class="qc-card" onclick="this.classList.toggle(\'open\')"><div class="qc-num">' + (k + 1) + ' / ' + cards.length + '</div><div class="qc-front">' + c[0] + '</div><div class="qc-hint">tap to reveal</div><div class="qc-back">' + c[1] + '</div></div>';
+    }).join('');
+    document.getElementById('qc-count').textContent = cards.length + ' cards';
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 30);
+}
+function qcShuffle() { var o = qcState.order; for (var k = o.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = o[k]; o[k] = o[j]; o[j] = t; } qcRender(); }
+function qcAll(open) { document.querySelectorAll('#qc-grid .qc-card').forEach(function(c){ c.classList.toggle('open', open); }); }
 var FC = { deck: [], idx: 0, pile: new Set(), pileMode: false, revealed: false };
 function fcRandDir() { return Math.random() < 0.5 ? 't2d' : 'd2t'; }
 function fcBuild(forceShuffle) {
@@ -1065,7 +1166,7 @@ function fcExitPile() { FC.pileMode = false; fcUpdatePileBox(); fcBuild(); }
 function fcClearPile() { FC.pile.clear(); FC.pileMode = false; fcUpdatePileBox(); fcBuild(); }
 
 
-function initAll() { npvUpdate(); matchRender(); if (document.getElementById('fc-card')) { fcUpdatePileBox(); fcBuild(); } }
+function initAll() { npvUpdate(); matchRender(); qcShow(1, null); if (document.getElementById('fc-card')) { fcUpdatePileBox(); fcBuild(); } }
 document.addEventListener('DOMContentLoaded', initAll);
 initAll();
 </script>
