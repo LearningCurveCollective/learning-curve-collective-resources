@@ -584,9 +584,11 @@ li { margin-bottom: 10px; }
             <p style="font-size:14px;">With $\$1$ of income, the consumer can reach $(1,0)$ via $c$, $(0,1)$ via $d$, or $(\alpha,\beta)$ via $g$ — and any mix. Slide $\alpha$ and $\beta$ and watch whether the green good <em>bulges</em> the frontier outward (viable) or sits inside it (dominated).</p>
             <div class="slider-row"><label>$\alpha$ (private per $)</label><input type="range" id="sl-a" min="0.05" max="1.2" step="0.05" value="0.7" oninput="ipgUpdate()"><span class="val" id="v-a">0.70</span></div>
             <div class="slider-row"><label>$\beta$ (public per $)</label><input type="range" id="sl-b" min="0.05" max="1.2" step="0.05" value="0.5" oninput="ipgUpdate()"><span class="val" id="v-b">0.50</span></div>
+            <label style="font-size:13.5px; display:inline-flex; align-items:center; gap:8px; margin:4px 0 6px 0;"><input type="checkbox" id="ic-on" onchange="ipgUpdate()"> Show utility: an indifference curve $U(X,Y)$ tangent to the frontier (the consumer's optimum)</label>
             <div class="fig" id="fig-ipg"></div>
             <div class="calc" id="calc-ipg"></div>
             <p class="fig-caption" id="ipg-note"></p>
+            <p style="font-size:13.5px; color: var(--text-medium);"><strong>Where utility comes in:</strong> the frontier is only what's <em>affordable</em>. Tick the box to draw $U(X,Y)$ — the consumer picks the frontier point touching the highest indifference curve. When $\alpha+\beta>1$ the feasible set grows, so a higher curve becomes reachable: that is how $\alpha+\beta$ connects to utility. When $\alpha+\beta\le 1$ the set doesn't change and neither does utility.</p>
         </div>
 
         <div class="section-header"><div class="section-number">3</div><h2>Club theory — the green-club tradeoff (Q4)</h2></div>
@@ -640,7 +642,7 @@ li { margin-bottom: 10px; }
                     <p><strong>Impure public good</strong> (Cornes &amp; Sandler): a single good whose <em>joint production</em> yields two characteristics at once — one private, one public — obtainable together through that good's technology. Shade-grown coffee gives you caffeine (private: rival, excludable) and biodiversity conservation (public: nonrival, nonexcludable to everyone). Kotchen (2005, 2006) applies this to green goods and adds substitutes: the two characteristics can also be bought separately (conventional coffee + a donation) — the <em>mixed bundling</em> case.</p>
                     <p><strong>Characteristics approach</strong> (Lancaster; Gorman): utility comes from a good's <em>characteristics</em>, not the good itself. A car buyer values safety, comfort, fuel efficiency, horsepower; each model is a bundle of levels at a price. Some characteristics are environmental — that's the demand side of green markets.</p>
                     <p><strong>Bundling vs. joint production.</strong> The IO <em>bundling</em> literature is about firms packaging separately produced goods (office suites, season tickets, prix-fixe menus) — pure bundling (all or nothing) vs. mixed bundling (also sold separately). The characteristics literature focuses on consumers and on goods whose characteristics arise from a <em>production technology</em>: a car's size affects its fuel economy; recycled content affects quality. Technology constrains what can be bundled.</p>
-                    <p><strong>How a VIBA is an impure public good — the model.</strong> Three goods: $c \to X$, $d \to Y$, $g \to \alpha X + \beta Y$. Viability requires $\alpha + \beta \ge 1$; otherwise buying $c$ and $d$ separately is cheaper. $\alpha + \beta = 1$ is simple bundling — a green good that changes nothing (Product Red, 1% for the Planet). $\alpha + \beta > 1$ is a <em>technological advantage</em>: the consumer never buys both $c$ and $d$, implicit prices fall, and demand for environmental quality can rise — or, if the consumer pairs $g$ with $d$ and $Y$ is a gross substitute for $X$, fall. On the firm side, joining a voluntary program is also an impure public good: private bottom-line benefits plus shared benefits to other participants.</p>
+                    <p><strong>How a VIBA is an impure public good — the model.</strong> Three goods: $c \to X$, $d \to Y$, $g \to \alpha X + \beta Y$. Viability requires $\alpha + \beta \ge 1$; otherwise buying $c$ and $d$ separately is cheaper. $\alpha + \beta = 1$ is simple bundling — a green good that changes nothing (Product Red, 1% for the Planet). $\alpha + \beta > 1$ is a <em>technological advantage</em>: the consumer never buys both $c$ and $d$, implicit prices fall (price of $Y$ = $(1-\alpha)/\beta$ when pairing $g$ with $c$; price of $X$ = $(1-\beta)/\alpha$ when pairing $g$ with $d$; both $<1$), and demand for environmental quality can rise — or, if the consumer pairs $g$ with $d$ and $Y$ is a gross substitute for $X$, fall. On the firm side, joining a voluntary program is also an impure public good: private bottom-line benefits plus shared benefits to other participants.</p>
                     <p><span class="mini-badge gray">*</span><strong>Consumer vs. producer side.</strong> The literature is mostly consumers; Heal (2003) does the producer side: if a firm can price-discriminate perfectly, bundling the public good with a private good lets it capture the WTP the public good creates, so it provides the public good at the <em>socially optimal</em> level — demand for the private good subsidizes the public one, like Lindahl pricing but through bundling (ecotourism ranchers, smart-growth developers).</p>
                     <p><span class="mini-badge gray">*</span><strong>Valuation is the same idea.</strong> Treating the environment as a characteristic in a bundle underlies nonmarket valuation. <em>Revealed preference:</em> the <strong>hedonic price method</strong> explains house prices by a vector of characteristics (views, open space, pollution) to infer WTP; <strong>multi-site travel cost</strong> uses travel spending to sites with different amenities. <em>Stated preference:</em> choice experiments present hypothetical bundles with attributes at different levels to elicit tradeoffs. Averting expenditures use the same logic as inputs/outputs in household production.</p>
                 </div></div>
@@ -1018,7 +1020,7 @@ function ipgUpdate() {
     else if (b >= 1) poly = [[0,0],[1,0],[a,b],[0,b]];
     spec.polys.push({ pts: poly, fill: 'rgba(57,134,78,0.14)' });
     // c-d frontier (dashed) and green frontier
-    spec.curves.push({ pts: [[1,0],[0,1]], color: C.gray, w: 2, dash: '6,4', label: [0.06, 0.55, 'c–d frontier (buy separately)'] });
+    spec.curves.push({ pts: [[1,0],[0,1]], color: C.gray, w: 2, dash: '6,4', label: [0.06, 0.62, 'c–d frontier (buy separately)'] });
     if (adv || dom) {
         var f = [];
         if (a >= 1 && b >= 1) f = [[a,0],[a,b],[0,b]]; else if (a >= 1) f = [[a,0],[a,b],[0,1]]; else if (b >= 1) f = [[1,0],[a,b],[0,b]]; else f = [[1,0],[a,b],[0,1]];
@@ -1026,14 +1028,32 @@ function ipgUpdate() {
     }
     spec.points.push([1, 0, 'c', '#2D2D2D', 8, -8], [0, 1, 'd', '#2D2D2D', 8, -8], [a, b, 'g = (α, β)', viable ? C.mac : C.md, 8, 18]);
     spec.guides.push({ v: a, top: b }, { h: b, right: a });
-    var pY = adv && a < 1 ? b / (1 - a) : null, pX = adv && b < 1 ? a / (1 - b) : null;
+    var pY = adv && a < 1 ? (1 - a) / b : null, pX = adv && b < 1 ? (1 - b) / a : null;
+    // consumer optimum on the frontier for U = X^0.5 Y^0.5, plus the indifference curve through it
+    var showIC = document.getElementById('ic-on') && document.getElementById('ic-on').checked;
+    if (showIC) {
+        var frontier = (adv || dom) ? ((a >= 1 && b >= 1) ? [[a,0],[a,b],[0,b]] : (a >= 1 ? [[a,0],[a,b],[0,1]] : (b >= 1 ? [[1,0],[a,b],[0,b]] : [[1,0],[a,b],[0,1]]))) : [[1,0],[0,1]];
+        var best = null;
+        for (var k = 0; k < frontier.length - 1; k++) {
+            for (var t = 0; t <= 1.0001; t += 0.01) {
+                var X = frontier[k][0] + t * (frontier[k+1][0] - frontier[k][0]), Y = frontier[k][1] + t * (frontier[k+1][1] - frontier[k][1]);
+                var U = Math.sqrt(Math.max(X, 0) * Math.max(Y, 0));
+                if (!best || U > best.U) best = { X: X, Y: Y, U: U, seg: k };
+            }
+        }
+        var ic = []; for (var x = 0.06; x <= xmax; x += 0.01) { var y = best.U * best.U / x; if (y <= ymax) ic.push([x, y]); }
+        spec.curves.push({ pts: ic, color: C.md, w: 2.5, label: [Math.min(xmax - 0.05, best.U * best.U / 0.22 <= ymax ? 0.22 : 0.4), Math.min(ymax - 0.05, best.U * best.U / (best.U * best.U / 0.22 <= ymax ? 0.22 : 0.4)) + 0.04, 'U (highest reachable)'] });
+        var ic0 = []; var U0 = 0.5; for (var x2 = 0.06; x2 <= xmax; x2 += 0.01) { var y2 = U0 * U0 / x2; if (y2 <= ymax) ic0.push([x2, y2]); }
+        if (adv) spec.curves.push({ pts: ic0, color: C.exp, w: 2, dash: '5,4', label: [xmax - 0.05, U0 * U0 / (xmax - 0.05) + 0.04, 'U without g'], anchor: 'end' });
+        spec.points.push([best.X, best.Y, 'optimum', C.md, 10, 32]);
+    }
     var status = !viable ? 'Inside the c–d line: green good never bought (α + β &lt; 1)' : (!adv ? 'On the line: pure bundling (α + β = 1) — no effect on choices' : (dom ? 'Green good dominates a separate good — crowds it out' : 'Bulges the frontier: technological advantage (α + β &gt; 1)'));
     document.getElementById('fig-ipg').innerHTML = mkFig(spec);
     document.getElementById('calc-ipg').innerHTML =
         '<div class="cell">α + β<br><span class="v ' + (adv ? '' : 'hot') + '">' + (a + b).toFixed(2) + '</span></div>' +
         '<div class="cell">Verdict<br><span style="font-weight:600;">' + status + '</span></div>' +
-        '<div class="cell">Implicit price of Y if pairing g with c<br><span class="v">' + (pY === null ? '—' : pY.toFixed(2) + ' (&lt; 1)') + '</span><br><span style="font-size:12px;">β / (1 − α)</span></div>' +
-        '<div class="cell">Implicit price of X if pairing g with d<br><span class="v">' + (pX === null ? '—' : pX.toFixed(2) + ' (&lt; 1)') + '</span><br><span style="font-size:12px;">α / (1 − β)</span></div>';
+        '<div class="cell">Implicit price of Y if pairing g with c<br><span class="v">' + (pY === null ? '—' : pY.toFixed(2) + ' (&lt; 1)') + '</span><br><span style="font-size:12px;">(1 − α) / β</span></div>' +
+        '<div class="cell">Implicit price of X if pairing g with d<br><span class="v">' + (pX === null ? '—' : pX.toFixed(2) + ' (&lt; 1)') + '</span><br><span style="font-size:12px;">(1 − β) / α</span></div>';
     var note = !viable ? 'Buying conventional coffee plus a donation reaches more of both characteristics for the same dollar, so the green good is inefficient.' :
         (!adv ? 'This is Product Red / 1% for the Planet: a unit of g is a perfect substitute for α of c plus a donation of β. Absent transaction costs, nothing changes.' :
         'Along the green frontier the consumer never buys both c and d — g plus one of them is cheaper. The slope of each segment is an implicit price; when it falls below 1, demand for that characteristic rises (a lower price of Y means more conservation… unless the consumer is on the g–d segment and Y is a gross substitute for X).');
@@ -1177,7 +1197,7 @@ var FC_DECK = [
   {cat:'sim', flip:true, term:'Characteristics approach to consumer behavior', def:'Lancaster (1971), Gorman (1980): individuals obtain utility from characteristics of goods rather than goods themselves; each product is a bundle of characteristic levels at a price. Underlies green markets and nonmarket valuation.'},
   {cat:'sim', flip:false, term:'Distinguish bundling from joint production.', def:'Bundling (IO literature) packages separately produced goods — pure (all or nothing) or mixed (also sold separately); the question is whether/how to bundle. Joint production (characteristics literature) arises from technology — a car\'s size affects fuel economy — so production constrains bundling options.'},
   {cat:'sim', flip:false, term:'State the market-viability condition for a green good and its three cases.', def:'α + β ≥ 1. If < 1, c and d separately are cheaper and g is never bought. If = 1, simple bundling — a perfect substitute for α of c plus β donated; no effect on choices (Product Red, 1% for the Planet). If > 1, technological advantage — the consumer never buys both c and d; implicit prices fall.'},
-  {cat:'sim', flip:false, term:'What are the implicit prices when the green good has an advantage?', def:'Pairing g with c: one more g yields β of Y at a cost of 1 − α of X, so the implicit price of Y = β/(1 − α) < 1 → demand for environmental quality rises. Pairing g with d: implicit price of X = α/(1 − β) < 1 → demand for X rises; Y rises if a gross complement, falls if a gross substitute.'},
+  {cat:'sim', flip:false, term:'What are the implicit prices when the green good has an advantage?', def:'Pairing g with c: one more g yields β of Y at a cost of 1 − α of X, so the implicit price of Y (in units of X) = (1 − α)/β < 1 → demand for environmental quality rises. Pairing g with d: implicit price of X = (1 − β)/α < 1 → demand for X rises; Y rises if a gross complement, falls if a gross substitute.'},
   {cat:'sim', flip:true, term:'Heal (2003) — producer side', def:'If a firm can price-discriminate perfectly, bundling a public good with a private good lets it capture the WTP the public good creates, so it provides the public good at the socially optimal level — Lindahl pricing achieved indirectly through bundling. Applications: ecotourism, smart-growth development.'},
   {cat:'sim', flip:false, term:'How does nonmarket valuation use the characteristics approach?', def:'Hedonic price method: prices explained by a vector of characteristics (views, open space, pollution) → WTP. Multi-site travel cost: travel expenditure to sites with different amenities. Stated preference: hypothetical bundles with attribute levels to elicit tradeoffs. Averting expenditures: inputs/outputs in household production.'},
   {cat:'sim', flip:false, term:'How are transaction costs relevant to VIBAs?', def:'They explain why pure bundling (α + β = 1) exists — donating is a hassle, bundling removes it; they can be built into α, β as effective prices, making α + β > 1; they are the information failure itself (search and verification costs) that labels and certification cut; and they are why Coasean bargaining fails without disclosure.'},
