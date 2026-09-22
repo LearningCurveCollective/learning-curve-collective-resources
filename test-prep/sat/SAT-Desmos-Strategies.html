@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAT Desmos Strategies — Interactive Worksheet</title>
+    <title>SAT Desmos Strategies: Interactive Worksheet</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
@@ -549,6 +549,59 @@ table.ref tr:last-child td { border-bottom: none; }
     .desmos-fab { right: 16px; bottom: 16px; padding: 11px 18px; }
     .mini-desmos .md-calc { height: 320px; }
 }
+
+.tab-rows { flex-direction: column; gap: 6px; align-items: flex-start; }
+.tab-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.ext-link { color: #21442B; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.ext-link:hover { color: #BC6C26; }
+.fmt-grid { grid-template-columns: repeat(3, 1fr); }
+.fmt-tile { text-align: center; }
+.fmt-tile h4 { font-size: 16px; margin-bottom: 8px; }
+.fmt-tile .formula-note { font-size: 14px; line-height: 1.5; }
+@media (max-width: 760px) { .fmt-grid { grid-template-columns: 1fr; } }
+
+.btn-mini { margin-left: 8px; padding: 4px 10px; font-size: 12px; font-family: inherit; border: 1.5px solid var(--green-dark); background: white; color: var(--green-dark); border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-mini:hover { background: var(--green-dark); color: white; }
+.sp-stage { margin-top: 14px; border: 1.5px solid var(--cream-dark); border-radius: 12px; padding: 16px; background: #fafafa; }
+.sp-hud { display: flex; gap: 16px; font-size: 13px; color: var(--text-medium); margin-bottom: 12px; flex-wrap: wrap; }
+.sp-hud b { color: var(--green-dark); }
+.fs-item { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.fs-box { background: white; border: 1.5px solid var(--cream-dark); border-radius: 10px; padding: 12px 14px; }
+.fs-box .fs-lab { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-medium); margin-bottom: 6px; }
+.fs-box .fs-val { font-size: 22px; font-weight: 700; color: var(--brown-dark); font-family: 'Inter', sans-serif; }
+.fs-box.typed .fs-val { font-family: 'Courier New', monospace; background: #fff; border: 2px solid var(--green-dark); border-radius: 6px; padding: 4px 10px; display: inline-block; min-width: 90px; }
+.sp-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.sp-actions button { font-family: inherit; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 10px; border: 2px solid var(--green-dark); background: white; color: var(--green-dark); cursor: pointer; }
+.sp-actions button:hover { background: var(--green-dark); color: white; }
+.sp-actions button.no { border-color: #B23A3A; color: #B23A3A; }
+.sp-actions button.no:hover { background: #B23A3A; color: white; }
+.sp-verdict { margin-top: 12px; font-size: 14px; min-height: 22px; }
+.sp-verdict.ok { color: var(--green-dark); font-weight: 600; }
+.sp-verdict.bad { color: #B23A3A; font-weight: 600; }
+.sp-verdict .rule { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(33,68,43,0.10); color: var(--green-dark); padding: 2px 8px; border-radius: 8px; margin-right: 6px; }
+.sp-verdict .why { color: var(--text-dark); font-weight: 400; }
+.sp-done { font-size: 18px; font-weight: 700; color: var(--green-dark); }
+.sp-done small { display: block; font-size: 13px; font-weight: 400; color: var(--text-medium); margin-top: 4px; }
+.fp-list { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+.fp-item { border: 1.5px solid var(--cream-dark); border-radius: 12px; padding: 14px 16px; background: #fafafa; }
+.fp-item.done { border-color: var(--green-dark); background: rgba(33,68,43,0.05); }
+.fp-q { font-size: 15px; color: var(--text-dark); margin-bottom: 10px; }
+.fp-q .n { display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 12px; margin-right: 8px; }
+.fp-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.fp-input { font-family: 'Courier New', monospace; font-size: 20px; font-weight: 700; width: 150px; padding: 8px 10px; border: 2px solid var(--green-dark); border-radius: 8px; color: var(--brown-dark); background: white; }
+.fp-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(33,68,43,0.18); }
+.fp-check { font-family: inherit; font-weight: 700; font-size: 14px; padding: 9px 16px; border-radius: 8px; border: none; background: var(--gold); color: white; cursor: pointer; }
+.fp-check:hover { background: var(--copper); }
+.fp-preview { font-size: 13px; color: var(--text-medium); }
+.fp-preview .pv { display: inline-block; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: var(--brown-dark); vertical-align: middle; margin-left: 6px; min-width: 40px; }
+.fp-preview .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.05; }
+.fp-preview .frac span:first-child { border-bottom: 2px solid var(--brown-dark); padding: 0 3px; }
+.fp-preview .frac span:last-child { padding: 0 3px; }
+.fp-fb { margin-top: 8px; font-size: 14px; min-height: 20px; }
+.fp-fb.ok { color: var(--green-dark); font-weight: 600; }
+.fp-fb.bad { color: #B23A3A; }
+.fp-fb.bad strong { color: #B23A3A; }
+@media (max-width: 640px) { .fs-item { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -571,15 +624,20 @@ table.ref tr:last-child td { border-bottom: none; }
 
 <!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
 <div class="container">
-    <div class="tab-buttons">
+    <div class="tab-buttons tab-rows">
+        <div class="tab-row">
         <button class="tab-button active" data-group="core" onclick="switchTab('overview', this)">Calculator Basics</button>
-        <button class="tab-button" data-group="techniques" onclick="switchTab('tech1', this)">Techniques 1–7</button>
-        <button class="tab-button" data-group="techniques" onclick="switchTab('tech2', this)">Techniques 8–13</button>
-        <button class="tab-button" data-group="core" onclick="switchTab('fillin', this)">Fill-Ins &amp; Formulas</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('tech1', this)">Techniques 1-7</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('tech2', this)">Techniques 8-13</button>
+        </div>
+        <div class="tab-row">
+        <button class="tab-button" data-group="core" onclick="switchTab('fillin', this)">Formatting Your Answers</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('formulas', this)">Formulas</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Practice</button>
+        </div>
     </div>
 
-    <!-- ═══ TAB 1 — CALCULATOR BASICS ═══ -->
+    <!-- ═══ TAB 1: CALCULATOR BASICS ═══ -->
     <div id="tab-overview" class="tab-content active">
 
         <div class="section-header">
@@ -587,8 +645,8 @@ table.ref tr:last-child td { border-bottom: none; }
             <h2>Can I Use a Calculator?</h2>
         </div>
         <div class="card">
-            <p>Yes — and on the digital SAT you can use one on <strong>every</strong> Math question. There is no longer a no-calculator section. You may bring your own approved scientific or graphing calculator (the College Board keeps the current approved list on its calculator policy page), but a Desmos graphing calculator is also built directly into the Bluebook testing app.</p>
-            <p style="margin-top:10px;">Because the built-in calculator is always one click away, the smartest habit is to know <em>exactly which kinds of problems Desmos handles faster than algebra</em>. That is what this sheet trains. Bring the calculator you are comfortable with, but learn the Desmos moves below — several of them are things a handheld simply can't do.</p>
+            <p>Yes, and on the digital SAT you can use one on <strong>every</strong> Math question. There is no longer a no-calculator section. You may bring your own approved scientific or graphing calculator (the College Board keeps the current approved list on its <a class="ext-link" href="https://satsuite.collegeboard.org/in-school-assessments/calculator-policy" target="_blank" rel="noopener">calculator policy page</a>), but a Desmos graphing calculator is also built directly into the Bluebook testing app.</p>
+            <p style="margin-top:10px;">Because the built-in calculator is always one click away, the smartest habit is to know <em>exactly which kinds of problems Desmos handles faster than algebra</em>. That is what this sheet trains. Bring the calculator you are comfortable with, but learn the Desmos techniques below.</p>
             <div class="idea-box" style="margin-top:12px;">
                 <strong>Two ways to solve is a safety net.</strong> The SAT gives you a fairly generous amount of time per Math question. On a question you're unsure about, solve it algebraically on scratch paper <em>and</em> confirm it on the graph. If the two answers agree, move on with confidence.
             </div>
@@ -599,7 +657,7 @@ table.ref tr:last-child td { border-bottom: none; }
             <h2>What the Test Calculator Looks Like</h2>
         </div>
         <div class="card">
-            <p>The calculator embedded in Bluebook is the standard Desmos graphing calculator: a grid on the top, an expression list underneath, and a keypad. The one below is the real thing, running right on this page — type into it, or scroll to any technique and press <strong>Load into Desmos</strong> to send that problem's equations straight into the floating calculator (bottom-right button).</p>
+            <p>The calculator embedded in Bluebook is the standard Desmos graphing calculator: a grid on the top, an expression list underneath, and a keypad. The one below is the real thing, running right on this page. Type into it, or scroll to any technique and press <strong>Load into Desmos</strong> to send that problem's equations straight into the floating calculator (bottom-right button).</p>
             <div class="mini-desmos">
                 <div class="md-bar">Desmos Graphing Calculator <span class="hint">same engine as the SAT's Bluebook calculator</span></div>
                 <div class="md-calc" id="inline-desmos"></div>
@@ -619,7 +677,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <div class="card">
             <table class="ref">
                 <tr><th style="width:38%;">You want…</th><th>Type this</th></tr>
-                <tr><td>An exponent, e.g. $x^{2}$</td><td><span class="kbd">x</span> <span class="kbd">^</span> <span class="kbd">2</span> — then press <span class="kbd">→</span> to leave the exponent</td></tr>
+                <tr><td>An exponent, e.g. $x^{2}$</td><td><span class="kbd">x</span> <span class="kbd">^</span> <span class="kbd">2</span>, then press <span class="kbd">→</span> to leave the exponent</td></tr>
                 <tr><td>A fraction $\dfrac{3}{4}x$</td><td><span class="kbd">3</span> <span class="kbd">/</span> <span class="kbd">4</span> <span class="kbd">→</span> <span class="kbd">x</span></td></tr>
                 <tr><td>Absolute value $|x-5|$</td><td>type <span class="kbd">abs(</span> or the <span class="kbd">|a|</span> key</td></tr>
                 <tr><td>A square root $\sqrt{x}$</td><td><span class="kbd">sqrt(</span></td></tr>
@@ -629,18 +687,18 @@ table.ref tr:last-child td { border-bottom: none; }
                 <tr><td>An inequality region</td><td>Use <span class="kbd">&lt;</span>, <span class="kbd">&gt;</span>, <span class="kbd">≤</span>, <span class="kbd">≥</span> instead of <span class="kbd">=</span></td></tr>
             </table>
             <div class="warning-box" style="margin-top:12px;">
-                <strong>Variable names matter.</strong> Desmos graphs in $x$ and $y$. If a question uses other letters (like $a$ and $b$, or $t$ and $h$), rewrite the equations with $x$ and $y$ before graphing — otherwise Desmos will just offer you sliders.
+                <strong>Variable names matter.</strong> Desmos graphs in $x$ and $y$. If a question uses other letters (like $a$ and $b$, or $t$ and $h$), rewrite the equations with $x$ and $y$ before graphing; otherwise Desmos will just offer you sliders.
             </div>
         </div>
 
         <div class="section-header">
             <div class="section-number">4</div>
-            <h2>The 13 Moves at a Glance</h2>
+            <h2>The 13 Techniques at a Glance</h2>
         </div>
         <div class="card">
             <p>Each technique on the next two tabs follows the same structure: the concept, a sample question, and exactly how to get the answer out of Desmos. Use this list as a checklist.</p>
             <div class="formula-grid" style="margin-top:14px;">
-                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>1 · Key points on a graph</h4><p class="formula-note">Intercepts, vertices — just hover</p></div>
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>1 · Key points on a graph</h4><p class="formula-note">Intercepts, vertices: just hover</p></div>
                 <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>2 · Solve a system</h4><p class="formula-note">Read the intersection point</p></div>
                 <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>3 · Where a curve crosses an axis</h4><p class="formula-note">Roots without factoring</p></div>
                 <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>4 · Count solutions</h4><p class="formula-note">One crossing, parallel, or same line</p></div>
@@ -657,7 +715,7 @@ table.ref tr:last-child td { border-bottom: none; }
         </div>
     </div>
 
-    <!-- ═══ TAB 2 — TECHNIQUES 1–7 ═══ -->
+    <!-- ═══ TAB 2: TECHNIQUES 1-7 ═══ -->
     <div id="tab-tech1" class="tab-content">
         <div class="section-header">
             <div class="section-number">1</div>
@@ -700,7 +758,7 @@ table.ref tr:last-child td { border-bottom: none; }
                 <div class="highlight-box">
                     <p><strong>Given:</strong></p>
                     <ul class="givens"><li>Line 1: $2x + 5y = 9$</li><li>Line 2: $y = 2x - 3$</li><li>Want the $x$-value of the intersection</li></ul>
-                    <p>Both lines go in exactly as written — Desmos handles standard form and slope-intercept form equally well. The lines cross at $(2,\,1)$, so $x = 2$.</p>
+                    <p>Both lines go in exactly as written; Desmos handles standard form and slope-intercept form equally well. The lines cross at $(2,\,1)$, so $x = 2$.</p>
                     <p>Algebra check: substitute $y = 2x - 3$: $2x + 5(2x-3) = 9 \Rightarrow 12x = 24 \Rightarrow x = 2$.</p>
                     <span class="answer-pill">Answer: 2</span>
                 </div>
@@ -712,7 +770,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
             <h3><span class="tech-num">3</span> Finding Points of Intersection with an Axis</h3>
             <div class="step-concept"><span class="step-label">Concept</span></div>
-            <p>"Where does $f(x)$ cross the $x$-axis?" is the same question as "what are the zeros of $f$?" — and the graph shows every zero at once, including ones that are hard to factor.</p>
+            <p>"Where does $f(x)$ cross the $x$-axis?" is the same question as "what are the zeros of $f$?", and the graph shows every zero at once, including ones that are hard to factor.</p>
             <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
             <div class="q-box"><span class="q-tag">Fill-in</span><br>At what values of $x$ does the function $f(x) = 3x^{2} - 27$ intersect the $x$-axis?</div>
             <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['f(x)=3x^{2}-27'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
@@ -743,7 +801,7 @@ table.ref tr:last-child td { border-bottom: none; }
                     <p><strong>Given:</strong></p>
                     <ul class="givens"><li>$3x + 2y = 7$ and $5x - 4y = 8$</li><li>Want the number of $(x,y)$ pairs satisfying both</li></ul>
                     <p>Type each equation on its own line. The two lines have clearly different slopes and cross exactly once, at $(2,\,0.5)$. One intersection means one solution.</p>
-                    <span class="answer-pill">Answer: B — exactly one</span>
+                    <span class="answer-pill">Answer: B, exactly one</span>
                 </div>
             </div>
             <div class="warning-box" style="margin-top:12px;"><strong>Zoom out before deciding "no solutions."</strong> Two lines with nearly equal slopes can look parallel in the default window but cross far off-screen. Compare the slopes ($-\tfrac{3}{2}$ vs. $\tfrac{5}{4}$ here) if the picture is ambiguous.</div>
@@ -772,7 +830,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
             <h3><span class="tech-num">6</span> Minimum and Maximum</h3>
             <div class="step-concept"><span class="step-label">Concept</span></div>
-            <p>The maximum or minimum of a parabola is its vertex, and Desmos flags the vertex automatically. Hover it and read the coordinates — no completing the square needed.</p>
+            <p>The maximum or minimum of a parabola is its vertex, and Desmos flags the vertex automatically. Hover it and read the coordinates. No completing the square needed.</p>
             <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
             <div class="q-box"><span class="q-tag">Fill-in</span><br>$$f(x) = -(x + 4)(x - 2)$$ The function $f$ is defined above. For which value of $x$ does $f(x)$ reach its maximum?</div>
             <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['f(x)=-(x+4)(x-2)'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
@@ -781,7 +839,7 @@ table.ref tr:last-child td { border-bottom: none; }
                 <div class="highlight-box">
                     <p><strong>Given:</strong></p>
                     <ul class="givens"><li>$f(x) = -(x+4)(x-2)$, a downward-opening parabola</li><li>Want the $x$-value of the vertex</li></ul>
-                    <p>Graph the function and drag the view until the highest point is visible. The vertex dot reads $(-1,\,9)$. The question asks for the $x$-value, so the answer is $-1$ — not $9$.</p>
+                    <p>Graph the function and drag the view until the highest point is visible. The vertex dot reads $(-1,\,9)$. The question asks for the $x$-value, so the answer is $-1$, not $9$.</p>
                     <p>Algebra check: the zeros are $x = -4$ and $x = 2$; the vertex sits at their midpoint, $\dfrac{-4 + 2}{2} = -1$.</p>
                     <span class="answer-pill">Answer: −1</span>
                 </div>
@@ -792,7 +850,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
             <h3><span class="tech-num">7</span> Translation</h3>
             <div class="step-concept"><span class="step-label">Concept</span></div>
-            <p>Shifting a graph up or down moves every point by the same amount. Graph the original, note where the vertex is, and reason about where the shifted vertex would land — or just graph the shifted version too.</p>
+            <p>Shifting a graph up or down moves every point by the same amount. Graph the original, note where the vertex is, and reason about where the shifted vertex would land, or just graph the shifted version too.</p>
             <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
             <div class="q-box"><span class="q-tag">Fill-in</span><br>$$f(x) = 3x^{2} - 12x + 7$$ The function above is translated up 2 units in the $xy$-plane. How many times does the translated function intersect the $x$-axis?</div>
             <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['f(x)=3x^{2}-12x+7','y=f(x)+2'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
@@ -801,7 +859,7 @@ table.ref tr:last-child td { border-bottom: none; }
                 <div class="highlight-box">
                     <p><strong>Given:</strong></p>
                     <ul class="givens"><li>$f(x) = 3x^{2} - 12x + 7$</li><li>Translated graph: $g(x) = f(x) + 2$</li><li>Want the number of $x$-intercepts of $g$</li></ul>
-                    <p>Graph $f$ and hover the vertex: $(2,\,-5)$. Moving up 2 puts the new vertex at $(2,\,-3)$ — still below the axis, and the parabola opens upward, so it must cross the axis twice. Typing $y = f(x) + 2$ as a second line confirms it visually.</p>
+                    <p>Graph $f$ and hover the vertex: $(2,\,-5)$. Moving up 2 puts the new vertex at $(2,\,-3)$, still below the axis, and the parabola opens upward, so it must cross the axis twice. Typing $y = f(x) + 2$ as a second line confirms it visually.</p>
                     <span class="answer-pill">Answer: 2</span>
                 </div>
             </div>
@@ -809,7 +867,7 @@ table.ref tr:last-child td { border-bottom: none; }
         </div>
     </div>
 
-    <!-- ═══ TAB 3 — TECHNIQUES 8–13 ═══ -->
+    <!-- ═══ TAB 3: TECHNIQUES 8-13 ═══ -->
     <div id="tab-tech2" class="tab-content">
         <div class="section-header">
             <div class="section-number">2</div>
@@ -823,7 +881,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
             <h3><span class="tech-num">8</span> Mean and Median</h3>
             <div class="step-concept"><span class="step-label">Concept</span></div>
-            <p>Desmos has list functions built in. Type <span class="kbd">mean(</span> or <span class="kbd">median(</span> followed by the numbers and it evaluates immediately — no sorting, no counting, no arithmetic slips.</p>
+            <p>Desmos has list functions built in. Type <span class="kbd">mean(</span> or <span class="kbd">median(</span> followed by the numbers and it evaluates immediately: no sorting, no counting, no arithmetic slips.</p>
             <div class="step-example" style="margin-top:14px;"><span class="step-label">Example Question</span></div>
             <div class="q-box"><span class="q-tag">Fill-in</span><br>What are the mean and median of the data set below? $$\{3,\ 7,\ 8,\ 12,\ 15,\ 21\}$$</div>
             <div class="tech-actions"><button class="load-btn" onclick="loadIntoDesmos(['\\operatorname{mean}\\left(3,7,8,12,15,21\\right)','\\operatorname{median}\\left(3,7,8,12,15,21\\right)'])"><span class="ico">&#9673;</span> Load into Desmos</button></div>
@@ -872,7 +930,7 @@ table.ref tr:last-child td { border-bottom: none; }
                 <div class="highlight-box">
                     <p><strong>Given:</strong></p>
                     <ul class="givens"><li>$y &lt; x - 2$ and $y &gt; -x + 5$</li><li>The point has $y = 4$; want any valid $x$</li></ul>
-                    <p>Graph both inequalities, then add the line $y = 4$ as a guide. Along $y = 4$, the doubly-shaded region begins just to the right of $x = 6$. So any $x &gt; 6$ works — for example $x = 8$.</p>
+                    <p>Graph both inequalities, then add the line $y = 4$ as a guide. Along $y = 4$, the doubly-shaded region begins just to the right of $x = 6$. So any $x &gt; 6$ works, for example $x = 8$.</p>
                     <p>Algebra check: $4 &lt; x - 2 \Rightarrow x &gt; 6$, and $4 &gt; -x + 5 \Rightarrow x &gt; 1$. Both hold when $x &gt; 6$.</p>
                     <span class="answer-pill">Answer: any x &gt; 6 (e.g. 7, 8, 10)</span>
                 </div>
@@ -893,7 +951,7 @@ table.ref tr:last-child td { border-bottom: none; }
             <div class="example-body">
                 <div class="highlight-box">
                     <p><strong>Given:</strong> the line must pass through $(0,\,8)$ and $(2,\,0)$.</p>
-                    <p>Enter each answer choice on its own line. Hover the intercepts of each. Only choice B passes through both $(0,\,8)$ and $(2,\,0)$. Choice A is the trap — it has the intercepts swapped, $(0,\,2)$ and $(8,\,0)$.</p>
+                    <p>Enter each answer choice on its own line. Hover the intercepts of each. Only choice B passes through both $(0,\,8)$ and $(2,\,0)$. Choice A is the trap: it has the intercepts swapped, $(0,\,2)$ and $(8,\,0)$.</p>
                     <p>Check B: $x=0 \Rightarrow y = 8$ ✓ &nbsp; $y = 0 \Rightarrow 4x = 8 \Rightarrow x = 2$ ✓</p>
                     <span class="answer-pill">Answer: B</span>
                 </div>
@@ -937,7 +995,7 @@ table.ref tr:last-child td { border-bottom: none; }
                     <p><strong>Step 1.</strong> Click the <span class="kbd">+</span> button at the top of the expression list and choose <em>table</em>. Enter the $x$-values in the $x_1$ column and the $y$-values in the $y_1$ column.</p>
                     <p><strong>Step 2.</strong> On a new line type <span class="kbd">y1 ~ m x1 + b</span>. Desmos runs a linear regression and reports:</p>
                     $$m \approx 1.284, \qquad b \approx 2.486$$
-                    <p>Slope about $1.3$, intercept about $2.5$ — that is choice B. (Notice choice C has the two numbers swapped.)</p>
+                    <p>Slope about $1.3$, intercept about $2.5$: that is choice B. (Notice choice C has the two numbers swapped.)</p>
                     <span class="answer-pill">Answer: B</span>
                 </div>
             </div>
@@ -945,45 +1003,60 @@ table.ref tr:last-child td { border-bottom: none; }
         </div>
     </div>
 
-    <!-- ═══ TAB 4 — FILL-INS & FORMULAS ═══ -->
+    <!-- ═══ TAB 4: FORMATTING YOUR ANSWERS ═══ -->
     <div id="tab-fillin" class="tab-content">
         <div class="section-header">
             <div class="section-number">1</div>
-            <h2>How Do the Fill-In Questions Work?</h2>
+            <h2>About a Quarter of Math Questions Have No Answer Choices</h2>
         </div>
         <div class="card">
-            <p>Roughly a quarter of the Math questions are <strong>student-produced responses</strong> — you type an answer instead of picking one. On the digital SAT these are mixed in throughout each module rather than grouped at the end. The rules below prevent avoidable lost points.</p>
-
-            <div class="concept-list" style="margin-top:14px;">
-                <div class="concept-item">
-                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="20" width="48" height="24" rx="4" fill="none" stroke="#21442B" stroke-width="2.5"/><text x="32" y="37" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="#21442B">4.5</text><path d="M12 12 L20 12" stroke="#DDA25E" stroke-width="3" stroke-linecap="round"/><path d="M44 52 L52 52" stroke="#DDA25E" stroke-width="3" stroke-linecap="round"/></svg></div>
-                    <div class="concept-body"><div class="concept-label">More than one right answer is possible</div>Some questions accept a whole range. If any number from 3 to 7 works, entering $4.5$ (or $3$, or $6$) is fully correct. Enter <strong>one</strong> answer — never a list or a range.</div>
-                </div>
-                <div class="concept-item">
-                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><text x="32" y="30" text-anchor="middle" font-size="12" font-family="Inter" font-weight="700" fill="#42260D">.5555</text><text x="32" y="48" text-anchor="middle" font-size="12" font-family="Inter" font-weight="700" fill="#42260D">.5556</text><path d="M8 36 L56 36" stroke="#DDA25E" stroke-width="2" stroke-dasharray="3 3"/></svg></div>
-                    <div class="concept-body"><div class="concept-label">Repeating decimals: fill every space</div>Answers can be at most 5 characters if positive, 6 if negative (the minus sign counts). For $\tfrac{5}{9}$ you may enter <span class="kbd">5/9</span>, <span class="kbd">.5555</span>, or <span class="kbd">.5556</span>. Rounded or truncated <em>short</em> forms like <span class="kbd">.56</span> or <span class="kbd">0.55</span> are marked wrong.</div>
-                </div>
-                <div class="concept-item">
-                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><text x="16" y="38" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="#21442B">3/4</text><text x="32" y="38" text-anchor="middle" font-size="13" font-family="Inter" fill="#DDA25E">=</text><text x="48" y="38" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="#21442B">9/12</text></svg></div>
-                    <div class="concept-body"><div class="concept-label">You don't have to reduce fractions</div>$\tfrac{3}{4}$, $\tfrac{6}{8}$, and $\tfrac{9}{12}$ are all scored the same. Don't waste time simplifying — just make sure it fits in the character limit. Mixed numbers are <em>not</em> allowed: enter $2\tfrac{1}{2}$ as <span class="kbd">5/2</span> or <span class="kbd">2.5</span>.</div>
-                </div>
-                <div class="concept-item">
-                    <div class="concept-visual"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="14" width="44" height="14" rx="3" fill="none" stroke="#21442B" stroke-width="2"/><rect x="10" y="36" width="44" height="14" rx="3" fill="#F5E4CC" stroke="#DDA25E" stroke-width="2"/><path d="M28 30 L32 35 L36 30" fill="none" stroke="#DDA25E" stroke-width="2"/></svg></div>
-                    <div class="concept-body"><div class="concept-label">Use the Answer Preview</div>Bluebook shows a preview of how it read your entry. Glance at it every time — it catches a stray character or a fraction typed as a decimal before you submit.</div>
-                </div>
+            <p>These are called <strong>Student Produced Responses</strong> (AKA grid-ins). You type in the answer yourself. <strong>A right answer typed the wrong way does not earn the point</strong>, so the format is worth two minutes of your life right now.</p>
+            <div class="formula-grid fmt-grid" style="margin-top:14px;">
+                <div class="formula-tile fmt-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Fraction or decimal</h4><p class="formula-note">Either one counts.<br>1/2, .5 and 0.5 are all correct.</p></div>
+                <div class="formula-tile fmt-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Long decimals</h4><p class="formula-note">If it does not fit, fill every space. For two thirds, .6666, .6667, 0.666 or 0.667 count. .67 does not.</p></div>
+                <div class="formula-tile fmt-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>Mixed numbers</h4><p class="formula-note">A whole number plus a fraction, like 3 and one half (written 3&frac12;), is read as 31/2. Type 7/2 or 3.5.</p></div>
+                <div class="formula-tile fmt-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>No symbols</h4><p class="formula-note">No percent % signs, dollar $ signs or commas. If the answer is 25 percent, type 25.</p></div>
+                <div class="formula-tile fmt-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>Negatives</h4><p class="formula-note">Same rules apply. Just be sure to type the minus sign first.</p></div>
+                <div class="formula-tile fmt-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>More than one answer</h4><p class="formula-note">Enter just one of them. Never a list like &ldquo;0.5 or &frac12;&rdquo;. Just pick one!</p></div>
             </div>
-
-            <div class="highlight-box" style="margin-top:16px;">
-                <p><strong>Bottom line:</strong> the SAT is not trying to trick you on formatting. A reasonable form of the correct answer, entered carefully, earns the point. Don't enter units, symbols like $\%$ or $\$$, or spaces.</p>
+            <div class="idea-box" style="margin-top:14px;">
+                <strong>Use the Answer Preview.</strong> Bluebook shows a preview of how it read your entry. Glance at it every time; it catches a stray character or a fraction typed as a decimal before you submit. Answers can be at most 5 characters if positive, 6 if negative (the minus sign counts).
             </div>
         </div>
 
         <div class="section-header">
             <div class="section-number">2</div>
+            <h2>Sprint: Would It Earn the Point?</h2>
+        </div>
+        <div class="card">
+            <p>The correct answer is on the left. A student typed the entry on the right. Tap <strong>Accepted</strong> or <strong>Not accepted</strong>, or press <span class="kbd">A</span> / <span class="kbd">N</span>. Under three seconds an item is test speed.</p>
+            <p style="font-size:13px;color:var(--text-medium);margin:8px 0 0;">Every item is decided by one of the six rules above. <button class="btn-mini" onclick="fsStart()">Reshuffle</button></p>
+            <div class="sp-stage" id="fsStage">
+                <div class="sp-hud" id="fsHud"></div>
+                <div class="fs-item" id="fsItem"></div>
+                <div class="sp-actions" id="fsActions"></div>
+                <div class="sp-verdict" id="fsVerdict"></div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Practice: Type It In</h2>
+        </div>
+        <div class="card">
+            <p>Now the real thing. Each answer is given in words. Type it the way you would in Bluebook, watch the preview, and press <strong>Check</strong>. The checker follows College Board&rsquo;s rules exactly: digits, one decimal point or one fraction bar, a minus sign first if needed, five characters (six with a minus), and nothing else.</p>
+            <div class="fp-list" id="fpList"></div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 5: FORMULAS ═══ -->
+    <div id="tab-formulas" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
             <h2>Do They Provide Any Formulas?</h2>
         </div>
         <div class="card">
-            <p>Yes — Bluebook has a reference sheet you can open and close on any Math question. It covers geometry and basic trig. It does <strong>not</strong> cover algebra, which is most of the test, so the quadratic formula, slope, exponent rules, and the like must be memorized. Here is what the popup contains:</p>
+            <p>Yes. Bluebook has a reference sheet you can open and close on any Math question. It covers geometry and basic trig. It does <strong>not</strong> cover algebra, which is most of the test, so the quadratic formula, slope, exponent rules, and the like must be memorized. Here is what the popup contains:</p>
             <div class="formula-grid" style="margin-top:14px;">
                 <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Circle</h4><p>$$A = \pi r^{2} \qquad C = 2\pi r$$</p></div>
                 <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Rectangle &amp; Triangle</h4><p>$$A = \ell w \qquad A = \tfrac{1}{2}bh$$</p></div>
@@ -995,19 +1068,22 @@ table.ref tr:last-child td { border-bottom: none; }
                 <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>Angle Facts</h4><p>$$360^{\circ} = 2\pi \text{ radians in a circle}$$ $$\text{Triangle angles sum to } 180^{\circ}$$</p></div>
             </div>
             <div class="warning-box" style="margin-top:12px;">
-                <strong>Memorize these — they are NOT on the sheet:</strong> quadratic formula $x = \dfrac{-b \pm \sqrt{b^{2} - 4ac}}{2a}$, vertex $x = -\dfrac{b}{2a}$, slope $m = \dfrac{y_2 - y_1}{x_2 - x_1}$, distance $\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$, midpoint $\left(\dfrac{x_1+x_2}{2}, \dfrac{y_1+y_2}{2}\right)$, exponential growth $A = P(1 + r)^{t}$, circle $(x-h)^2 + (y-k)^2 = r^2$.
+                <strong>Memorize these. They are NOT on the sheet:</strong> quadratic formula $x = \dfrac{-b \pm \sqrt{b^{2} - 4ac}}{2a}$, vertex $x = -\dfrac{b}{2a}$, slope $m = \dfrac{y_2 - y_1}{x_2 - x_1}$, distance $\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$, midpoint $\left(\dfrac{x_1+x_2}{2}, \dfrac{y_1+y_2}{2}\right)$, exponential growth $A = P(1 + r)^{t}$, circle $(x-h)^2 + (y-k)^2 = r^2$.
+            </div>
+            <div class="highlight-box" style="margin-top:12px;">
+                <p><strong>See the official sheet.</strong> Khan Academy posts the exact reference sheet Bluebook shows you: <a class="ext-link" href="https://support.khanacademy.org/hc/en-us/community/posts/30572585915789-Digital-SAT-Math-Official-Formula-Reference-Sheet" target="_blank" rel="noopener">Digital SAT Math Official Formula Reference Sheet</a>.</p>
             </div>
         </div>
     </div>
 
-    <!-- ═══ TAB 5 — PRACTICE ═══ -->
+    <!-- ═══ TAB 6: PRACTICE ═══ -->
     <div id="tab-practice" class="tab-content">
         <div class="section-header">
             <div class="section-number">1</div>
             <h2>Mixed Practice</h2>
         </div>
         <div class="card" style="border-left-color: #8B5E3C;">
-            <p>Twenty-six questions — two for each of the 13 techniques. By default they run in technique order (1, 1, 2, 2, …), so you can drill one move at a time. Flip the switch to shuffle them so you also practice <em>recognizing</em> which move a question calls for. For every one, try to answer it <strong>with Desmos first</strong>, then confirm with algebra.</p>
+            <p>Twenty-six questions, two for each of the 13 techniques. By default they run in technique order (1, 1, 2, 2, …), so you can drill one technique at a time. Flip the switch to shuffle them so you also practice <em>recognizing</em> which technique a question calls for. For every one, try to answer it <strong>with Desmos first</strong>, then confirm with algebra.</p>
             <div class="order-bar">
                 <span class="order-label">Question order:</span>
                 <button class="order-btn active" id="order-seq" onclick="setOrder('seq')">By technique</button>
@@ -1059,7 +1135,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 2 · Solve a system</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> two lines; want $x + y$ at their intersection.</p><p>Graph both; they cross at $(4,\,2)$. So $x + y = 6$. (Read the question twice — it asks for the sum, not $x$.)</p><span class="answer-pill">6</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> two lines; want $x + y$ at their intersection.</p><p>Graph both; they cross at $(4,\,2)$. So $x + y = 6$. (Read the question twice: it asks for the sum, not $x$.)</p><span class="answer-pill">6</span></div>
                             </div>
                         </div>
                     </div>
@@ -1123,7 +1199,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 4 · Count solutions</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> two equations in standard form.</p><p>Graph both — only <em>one</em> line appears, because the first equation is exactly twice the second. Every point on the line satisfies both.</p><span class="answer-pill">D — infinitely many</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> two equations in standard form.</p><p>Graph both: only <em>one</em> line appears, because the first equation is exactly twice the second. Every point on the line satisfies both.</p><span class="answer-pill">D, infinitely many</span></div>
                             </div>
                         </div>
                     </div>
@@ -1139,7 +1215,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 4 · Count solutions</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> two equations in standard form.</p><p>The graphs are parallel: both have slope $-\tfrac{2}{3}$ but different intercepts ($y=2$ vs. $y=1.5$). Parallel lines never meet.</p><span class="answer-pill">A — zero</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> two equations in standard form.</p><p>The graphs are parallel: both have slope $-\tfrac{2}{3}$ but different intercepts ($y=2$ vs. $y=1.5$). Parallel lines never meet.</p><span class="answer-pill">A, zero</span></div>
                             </div>
                         </div>
                     </div>
@@ -1155,7 +1231,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 5 · Graph a circle</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> center $(2,\,3)$, radius $3$.</p><p>The lowest point is at $y = 3 - 3 = 0$ — exactly on the axis. The circle is <em>tangent</em> to the $x$-axis, touching it once at $(2,\,0)$.</p><span class="answer-pill">1</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> center $(2,\,3)$, radius $3$.</p><p>The lowest point is at $y = 3 - 3 = 0$, exactly on the axis. The circle is <em>tangent</em> to the $x$-axis, touching it once at $(2,\,0)$.</p><span class="answer-pill">1</span></div>
                             </div>
                         </div>
                     </div>
@@ -1171,7 +1247,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 5 · Graph a circle</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> center $(-2,\,1)$, radius $5$.</p><p>The center is only 1 unit above the axis and the radius is 5, so the circle dips well below it and crosses twice — at $x \approx 2.90$ and $x \approx -6.90$.</p><span class="answer-pill">2</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> center $(-2,\,1)$, radius $5$.</p><p>The center is only 1 unit above the axis and the radius is 5, so the circle dips well below it and crosses twice, at $x \approx 2.90$ and $x \approx -6.90$.</p><span class="answer-pill">2</span></div>
                             </div>
                         </div>
                     </div>
@@ -1219,7 +1295,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 7 · Translations</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = x^{2} - 6x + 10$; new graph is $f(x) - 4$.</p><p>Vertex of $f$: $(3,\,1)$ — above the axis, so $f$ has no real zeros. Down 4 puts the vertex at $(3,\,-3)$; an upward parabola with vertex below the axis crosses twice.</p><span class="answer-pill">2</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> $f(x) = x^{2} - 6x + 10$; new graph is $f(x) - 4$.</p><p>Vertex of $f$: $(3,\,1)$, above the axis, so $f$ has no real zeros. Down 4 puts the vertex at $(3,\,-3)$; an upward parabola with vertex below the axis crosses twice.</p><span class="answer-pill">2</span></div>
                             </div>
                         </div>
                     </div>
@@ -1299,7 +1375,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 9 · Absolute value</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> $|3x - 4| = 8$.</p><p>Crossings at $x = 4$ and $x = -\dfrac{4}{3}$ (Desmos shows $-1.333$).</p>$$4 + \left(-\dfrac{4}{3}\right) = \dfrac{8}{3}$$<p>Enter <span class="kbd">8/3</span> or <span class="kbd">2.666</span> or <span class="kbd">2.667</span> — not <span class="kbd">2.67</span>.</p><span class="answer-pill">8/3</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> $|3x - 4| = 8$.</p><p>Crossings at $x = 4$ and $x = -\dfrac{4}{3}$ (Desmos shows $-1.333$).</p>$$4 + \left(-\dfrac{4}{3}\right) = \dfrac{8}{3}$$<p>Enter <span class="kbd">8/3</span> or <span class="kbd">2.666</span> or <span class="kbd">2.667</span>, not <span class="kbd">2.67</span>.</p><span class="answer-pill">8/3</span></div>
                             </div>
                         </div>
                     </div>
@@ -1331,7 +1407,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 10 · Inequalities</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> four candidate points; want the one in the doubly-shaded region.</p><p>Plot the points on top of the inequalities — only $(2,\,4)$ lands in the overlap. Check: $4 > 3$ ✓ and $4 < 6$ ✓. $(0,\,12)$ fails the second inequality, the other two fail the first.</p><span class="answer-pill">B</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> four candidate points; want the one in the doubly-shaded region.</p><p>Plot the points on top of the inequalities: only $(2,\,4)$ lands in the overlap. Check: $4 > 3$ ✓ and $4 < 6$ ✓. $(0,\,12)$ fails the second inequality, the other two fail the first.</p><span class="answer-pill">B</span></div>
                             </div>
                         </div>
                     </div>
@@ -1395,7 +1471,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 12 · Unknown constants</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> infinitely many solutions means the two equations describe the <em>same</em> line.</p><p>Slide $k$ until the second line sits exactly on top of the first — that happens at $k = 4$. Check: doubling $2x + 5y = 12$ gives $4x + 10y = 24$.</p><span class="answer-pill">k = 4</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> infinitely many solutions means the two equations describe the <em>same</em> line.</p><p>Slide $k$ until the second line sits exactly on top of the first; that happens at $k = 4$. Check: doubling $2x + 5y = 12$ gives $4x + 10y = 24$.</p><span class="answer-pill">k = 4</span></div>
                             </div>
                         </div>
                     </div>
@@ -1427,7 +1503,7 @@ table.ref tr:last-child td { border-bottom: none; }
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
                                 <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Technique 13 · Line of best fit</span></p>
-                                <div class="highlight-box"><p><strong>Given:</strong> four data points.</p><p>Regression output: $m \approx 1.029$, $b \approx 4.132$. Slope about 1, intercept about 4.1 — choice B. Choice A swaps them.</p><span class="answer-pill">B</span></div>
+                                <div class="highlight-box"><p><strong>Given:</strong> four data points.</p><p>Regression output: $m \approx 1.029$, $b \approx 4.132$. Slope about 1, intercept about 4.1: choice B. Choice A swaps them.</p><span class="answer-pill">B</span></div>
                             </div>
                         </div>
                     </div>
@@ -1515,7 +1591,7 @@ function setOrder(mode) {
     document.getElementById('order-seq').classList.toggle('active', mode === 'seq');
     document.getElementById('order-shuf').classList.toggle('active', mode === 'shuf');
     document.getElementById('order-note').textContent = mode === 'shuf'
-        ? 'Order randomized — press Shuffled again for a new order.'
+        ? 'Order randomized. Press Shuffled again for a new order.'
         : 'Questions 1–2 test technique 1, 3–4 test technique 2, and so on.';
     document.querySelectorAll('#practice-problems .tech-chip').forEach(function(ch){ ch.style.display = mode === 'seq' ? '' : 'none'; });
     window.scrollTo({ top: container.offsetTop - 120, behavior: 'smooth' });
@@ -1739,6 +1815,137 @@ window.addEventListener('resize', function(){
     const panel = document.getElementById('desmos-panel');
     if (panel && panel.classList.contains('open')) { dpClampToViewport(); dpAfterResize(); }
 });
+</script>
+<script>
+
+/* ══════════ Formatting sprint ══════════ */
+var FS = [["2/3", ".67", false, "Long decimals", "Two thirds does not fit, so you have to fill every space: .6666 or .6667 (0.666 and 0.667 also work). .67 is cut short."], ["2/3", ".6667", true, "Long decimals", "Fills all five spaces, rounded at the last digit. Accepted."], ["2/3", "2/3", true, "Fraction or decimal", "The fraction itself is always fine."], ["1/2", "0.5", true, "Fraction or decimal", "1/2, .5 and 0.5 all count."], ["3&frac12;", "31/2", false, "Mixed numbers", "Bluebook reads 31/2 as thirty-one halves. Type 7/2 or 3.5."], ["3&frac12;", "3.5", true, "Mixed numbers", "Convert the mixed number first. 3.5 or 7/2 both work."], ["25%", "25%", false, "No symbols", "No percent signs. If the answer is 25 percent, type 25."], ["25%", "25", true, "No symbols", "Just the number."], ["$1,200", "1,200", false, "No symbols", "No commas and no dollar signs. Type 1200."], ["$1,200", "1200", true, "No symbols", "Digits only."], ["&minus;4.5", "-4.5", true, "Negatives", "Minus sign first, then the number. Accepted."], ["&minus;4.5", "4.5-", false, "Negatives", "The minus sign has to come first."], ["&minus;1/3", "-.3333", true, "Negatives", "A negative answer gets six spaces (the minus sign counts), and -.3333 fills them."], ["&minus;1/3", "-.33", false, "Long decimals", "Cut short. Fill the space: -.3333, -.3334, -0.333 or -0.334."], ["any value from 3 to 7", "5", true, "More than one answer", "Any one value in the range earns the point."], ["any value from 3 to 7", "3 to 7", false, "More than one answer", "Enter just one number. Never a range or a list."], ["0.5 or 1/2", "0.5 or 1/2", false, "More than one answer", "Pick one. Typing both is marked wrong."], ["5/9", ".5556", true, "Long decimals", "Fills the space, rounded at the last digit. Accepted."], ["6/8", "6/8", true, "Fraction or decimal", "You do not have to reduce. 6/8, 3/4 and .75 all count."], ["1.5", "3/2", true, "Fraction or decimal", "A fraction with the same value is fine."], ["7/2", "3 1/2", false, "Mixed numbers", "No spaces and no mixed numbers. Type 7/2 or 3.5."], ["&minus;3/4", "-0.75", true, "Negatives", "Minus first, five characters total. Accepted."], ["12.5", "12.50", true, "Fraction or decimal", "Same value, still five characters. Accepted."], ["1/8", ".125", true, "Fraction or decimal", "Terminates within the space, so the exact decimal works."]];
+var fs = { order: [], i: 0, right: 0, t0: 0, times: [] };
+function fsShuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function fsStart() { fs.order = fsShuffle(FS.map(function(_, i) { return i; })); fs.i = 0; fs.right = 0; fs.times = []; fsShow(); }
+function fsHud() {
+  var avg = fs.times.length ? (fs.times.reduce(function(a, b) { return a + b; }, 0) / fs.times.length / 1000).toFixed(1) : '0.0';
+  document.getElementById('fsHud').innerHTML = '<span>Item <b>' + Math.min(fs.i + 1, fs.order.length) + '</b> of ' + fs.order.length + '</span><span>Right: <b>' + fs.right + '</b></span><span>Avg: <b>' + avg + 's</b></span>';
+}
+function fsShow() {
+  var item = document.getElementById('fsItem'), act = document.getElementById('fsActions'), v = document.getElementById('fsVerdict');
+  v.className = 'sp-verdict'; v.innerHTML = '';
+  if (fs.i >= fs.order.length) {
+    var avg = (fs.times.reduce(function(a, b) { return a + b; }, 0) / fs.times.length / 1000).toFixed(1);
+    item.innerHTML = '<div class="sp-done" style="grid-column:1/-1;">Sprint finished<small>' + fs.right + ' of ' + fs.order.length + ' right &middot; ' + avg + ' seconds per item' + (avg <= 3 ? '. That is test speed.' : '. Aim for under three.') + '</small></div>';
+    act.innerHTML = '<button onclick="fsStart()">Run it again</button>'; fsHud(); return;
+  }
+  var d = FS[fs.order[fs.i]];
+  item.innerHTML = '<div class="fs-box"><div class="fs-lab">Correct answer</div><div class="fs-val">' + d[0] + '</div></div>' +
+                   '<div class="fs-box typed"><div class="fs-lab">Student typed</div><div class="fs-val">' + d[1] + '</div></div>';
+  act.innerHTML = '<button onclick="fsAnswer(true)">&#10003; Accepted <span style="opacity:.6;font-weight:400;">(A)</span></button><button class="no" onclick="fsAnswer(false)">&#10007; Not accepted <span style="opacity:.6;font-weight:400;">(N)</span></button>';
+  fs.t0 = Date.now(); fsHud();
+}
+function fsAnswer(yes) {
+  if (fs.i >= fs.order.length) return;
+  var d = FS[fs.order[fs.i]], ok = (yes === d[2]); fs.times.push(Date.now() - fs.t0); if (ok) fs.right++;
+  var v = document.getElementById('fsVerdict'); v.className = 'sp-verdict ' + (ok ? 'ok' : 'bad');
+  v.innerHTML = (ok ? 'Correct: ' : 'Not quite: ') + (d[2] ? 'accepted. ' : 'not accepted. ') + '<span class="rule">' + d[3] + '</span><span class="why">' + d[4] + '</span>';
+  document.getElementById('fsActions').innerHTML = '<button onclick="fsNext()">Next &rarr;</button>';
+  fs.i++; fsHud();
+}
+function fsNext() { fsShow(); }
+document.addEventListener('keydown', function(e) {
+  var tab = document.getElementById('tab-fillin'); if (!tab || !tab.classList.contains('active')) return;
+  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+  var k = e.key.toLowerCase();
+  var actions = document.getElementById('fsActions');
+  if (actions && actions.textContent.indexOf('Next') >= 0) { if (k === 'enter' || k === ' ' || k === 'a' || k === 'n') { e.preventDefault(); fsNext(); } return; }
+  if (k === 'a') fsAnswer(true); else if (k === 'n') fsAnswer(false);
+});
+
+/* ══════════ Type-it-in practice: College Board SPR rules ══════════ */
+var FP = [["The solution is <strong>three and one quarter</strong>.", {"p": 13, "q": 4}, "mixed"], ["The answer is <strong>45 percent</strong>.", {"p": 45, "q": 1}, "symbol"], ["The answer is <strong>negative one half</strong>.", {"p": -1, "q": 2}, "neg"], ["The answer is <strong>two thirds</strong>.", {"p": 2, "q": 3}, "long"], ["The total cost is <strong>$1,250</strong>.", {"p": 1250, "q": 1}, "symbol"], ["<strong>Any value of x from 2 to 5</strong>, inclusive, is correct.", {"lo": 2, "hi": 5}, "range"], ["The answer is <strong>negative five ninths</strong>.", {"p": -5, "q": 9}, "long"], ["The area is <strong>12.5</strong> square units.", {"p": 25, "q": 2}, "plain"], ["The answer is <strong>seven halves</strong>.", {"p": 7, "q": 2}, "mixed"], ["The answer is <strong>one eighth</strong>.", {"p": 1, "q": 8}, "plain"]];
+function fpGcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a; }
+function fpDecimalString(p, q) {
+  // shortest exact decimal of p/q, or null if it does not terminate
+  var neg = p < 0; p = Math.abs(p); var g = fpGcd(p, q); p /= g; q /= g;
+  var qq = q; while (qq % 2 === 0) qq /= 2; while (qq % 5 === 0) qq /= 5;
+  if (qq !== 1) return null;
+  var s = (p / q).toString(); if (s.indexOf('e') >= 0) return null;
+  return (neg ? '-' : '') + s;
+}
+function fpPreview(e) {
+  if (!e) return '<span class="pv" style="color:#999;font-weight:400;">&nbsp;</span>';
+  var m = e.match(/^(-?)(\d*)\/(\d*)$/);
+  if (m) return '<span class="pv">' + m[1] + '<span class="frac"><span>' + (m[2] || '&nbsp;') + '</span><span>' + (m[3] || '&nbsp;') + '</span></span></span>';
+  return '<span class="pv">' + e.replace(/</g, '&lt;') + '</span>';
+}
+function fpCheck(entry, t, trap) {
+  var e = entry.trim();
+  if (!e) return [false, 'Type something first.'];
+  if (/[%$]/.test(e)) return [false, 'No percent or dollar signs. Enter just the number.'];
+  if (/,/.test(e)) return [false, 'No commas. Enter the digits only.'];
+  if (/\s/.test(e)) return [false, 'No spaces. Bluebook stops at the first one.'];
+  if (/[a-zA-Z]/.test(e) || /\b(or|to)\b/i.test(e)) return [false, 'Only digits, a decimal point, a fraction bar, and a leading minus sign are allowed.'];
+  if (e.indexOf('-') > 0) return [false, 'The minus sign has to come first.'];
+  if (!/^-?(\d+\.?\d*|\.\d+|\d+\/\d+)$/.test(e)) return [false, 'That is not a valid entry: digits, one decimal point or one fraction bar, and a minus sign first if needed.'];
+  var neg = e.charAt(0) === '-', limit = neg ? 6 : 5;
+  if (e.length > limit) return [false, 'Too long: ' + limit + ' characters is the limit' + (neg ? ' for a negative answer (the minus sign counts).' : '.')];
+  var val, isFrac = e.indexOf('/') >= 0, a, b;
+  if (isFrac) { var parts = e.replace('-', '').split('/'); a = parseInt(parts[0], 10); b = parseInt(parts[1], 10); if (b === 0) return [false, 'You cannot divide by zero.']; val = (neg ? -1 : 1) * a / b; }
+  else val = parseFloat(e);
+  if (t.lo !== undefined) {
+    if (val >= t.lo && val <= t.hi) return [true, 'Any single value from ' + t.lo + ' to ' + t.hi + ' earns the point, and ' + e + ' is one of them.'];
+    return [false, 'That equals ' + val + ', which is outside ' + t.lo + ' to ' + t.hi + '. Enter one value inside the range.'];
+  }
+  var p = t.p, q = t.q, target = p / q;
+  if (isFrac) {
+    if ((neg ? -a : a) * q === p * b) return [true, 'Exactly right: ' + e + ' equals ' + p + '/' + q + (fpGcd(a, b) !== 1 ? '. You did not need to reduce it.' : '.')];
+    if (trap === 'mixed' && !neg && a > b && Math.abs(val - target) > 1) return [false, 'Bluebook reads ' + e + ' as ' + a + ' over ' + b + ' (' + val + '), not a mixed number. Convert first: ' + p + '/' + q + ' or ' + (p / q) + '.'];
+    return [false, 'That equals ' + val + ', but the answer is ' + p + '/' + q + ' (' + target + ').'];
+  }
+  var exact = fpDecimalString(p, q);
+  if (exact !== null && exact.length <= limit) {
+    if (Math.abs(val - target) < 1e-9) return [true, 'Correct. ' + e + ' is exactly ' + target + '.'];
+    return [false, 'That equals ' + val + ', but the answer is ' + target + '.'];
+  }
+  // non-terminating (or too long): must fill the space, truncated or rounded
+  var digits = (e.split('.')[1] || '').length;
+  var scale = Math.pow(10, digits);
+  var trunc = (neg ? -1 : 1) * Math.floor(Math.abs(target) * scale + 1e-9) / scale;
+  var round = (neg ? -1 : 1) * Math.round(Math.abs(target) * scale) / scale;
+  var fills = e.length === limit;
+  var matches = Math.abs(val - trunc) < 1e-9 || Math.abs(val - round) < 1e-9;
+  var ex = fpFillExamples(p, q);
+  if (fills && matches) return [true, 'Correct. ' + p + '/' + q + ' does not fit, and ' + e + ' fills every space. ' + ex + ' all work.'];
+  if (matches && !fills) return [false, 'Cut short. ' + p + '/' + q + ' does not fit, so fill every space: ' + ex + '.'];
+  return [false, 'That equals ' + val + ', but the answer is ' + p + '/' + q + '. Enter the fraction, or fill every space: ' + ex + '.'];
+}
+function fpFillExamples(p, q) {
+  var neg = p < 0, v = Math.abs(p) / q, out = [];
+  var d4 = neg ? 4 : 4, d3 = 3;
+  var tr = Math.floor(v * 10000 + 1e-9) / 10000, ro = Math.round(v * 10000) / 10000;
+  var s1 = tr.toFixed(4).replace(/^0/, ''), s2 = ro.toFixed(4).replace(/^0/, '');
+  out.push((neg ? '-' : '') + s1); if (s2 !== s1) out.push((neg ? '-' : '') + s2);
+  var t3 = Math.floor(v * 1000 + 1e-9) / 1000, r3 = Math.round(v * 1000) / 1000;
+  out.push((neg ? '-' : '') + t3.toFixed(3)); if (r3 !== t3) out.push((neg ? '-' : '') + r3.toFixed(3));
+  return out.join(', ');
+}
+function fpRender() {
+  var list = document.getElementById('fpList'); if (!list) return;
+  list.innerHTML = FP.map(function(it, i) {
+    return '<div class="fp-item" id="fp' + i + '"><div class="fp-q"><span class="n">' + (i + 1) + '</span>' + it[0] + '</div>' +
+      '<div class="fp-row"><input class="fp-input" id="fpi' + i + '" maxlength="12" autocomplete="off" spellcheck="false" oninput="fpLive(' + i + ')" onkeydown="if(event.key===\'Enter\'){fpGo(' + i + ');}">' +
+      '<button class="fp-check" onclick="fpGo(' + i + ')">Check</button>' +
+      '<span class="fp-preview">Answer preview: <span id="fpp' + i + '">' + fpPreview('') + '</span></span></div>' +
+      '<div class="fp-fb" id="fpf' + i + '"></div></div>';
+  }).join('');
+}
+function fpLive(i) { document.getElementById('fpp' + i).innerHTML = fpPreview(document.getElementById('fpi' + i).value); }
+function fpGo(i) {
+  var it = FP[i], e = document.getElementById('fpi' + i).value, r = fpCheck(e, it[1], it[2]);
+  var fb = document.getElementById('fpf' + i); fb.className = 'fp-fb ' + (r[0] ? 'ok' : 'bad');
+  fb.innerHTML = (r[0] ? '&#10003; ' : '<strong>&#10007; Not accepted.</strong> ') + r[1];
+  document.getElementById('fp' + i).classList.toggle('done', r[0]);
+}
+document.addEventListener('DOMContentLoaded', function() { fpRender(); if (document.getElementById('fsStage')) fsStart(); });
+
 </script>
 </body>
 </html>
