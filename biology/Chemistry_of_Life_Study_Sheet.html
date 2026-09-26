@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Chemistry of Life — Atoms, Bonds &amp; Water</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- MathJax 3.2.2 -->
+    <script>
+    window.MathJax = {
+        tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+    <style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+
+/* ─── Header ─── */
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+/* ─── Container ─── */
+.container { max-width: 1150px; margin: 0 auto; padding: 40px 20px; }
+
+/* ─── Tab System ─── */
+.tab-buttons { display: flex; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="techniques"] { border-color: #21442B; }
+.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Headers ─── */
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+
+/* ─── Cards & Boxes ─── */
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.idea-box p:last-child, .warning-box p:last-child, .highlight-box p:last-child, .card p:last-child { margin-bottom: 0; }
+
+/* ─── Concept List ─── */
+.concept-list { background-color: var(--cream-dark); border-radius: 8px; padding: 20px; margin: 15px 0; }
+.concept-item { margin-bottom: 12px; padding: 16px 18px; border-radius: 8px; border-bottom: none; display: flex; gap: 16px; align-items: flex-start; }
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) { background-color: rgba(59, 83, 35, 0.08); border-left: 4px solid #21442B; }
+.concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
+.concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
+.concept-visual { flex-shrink: 0; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; }
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+.concept-body p { margin-bottom: 0; line-height: 1.6; }
+
+/* ─── Formula Tiles ─── */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin-bottom: 8px; }
+.formula-tile p { margin-bottom: 6px; line-height: 1.6; }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; }
+
+/* ─── Collapsible Toggles ─── */
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* ─── Technique Sections ─── */
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+.technique-section .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.practice-box { background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3); border-radius: 8px; padding: 14px 18px; margin-top: 10px; }
+
+/* ─── Footer ─── */
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+.footer p { margin-bottom: 0; }
+
+/* ─── Misc ─── */
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 8px; line-height: 1.7; }
+.mjx-container { overflow-x: auto; }
+h3.sub { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin: 6px 0 10px; }
+.term { color: var(--green-dark); font-weight: 700; }
+.pill { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 2px 10px; border-radius: 4px; background: var(--gold); color: white; margin-right: 6px; vertical-align: middle; }
+.pill.green { background: var(--green-dark); }
+.pill.brown { background: #8B5E3C; }
+.fig { background: white; border: 2px solid var(--gold-light); border-radius: 10px; padding: 16px; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.fig svg { width: 100%; height: auto; display: block; }
+.fig .caption { font-size: 13px; color: var(--text-medium); text-align: center; margin: 10px 0 0; line-height: 1.5; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+.compare-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+.compare-table th { background: var(--green-dark); color: white; padding: 10px 12px; text-align: left; font-family: 'Switzer', 'Space Grotesk', sans-serif; }
+.compare-table td { padding: 9px 12px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; line-height: 1.55; }
+.compare-table tr:nth-child(even) td { background: rgba(221,162,94,0.07); }
+.compare-table td:first-child { font-weight: 600; color: var(--brown-dark); white-space: nowrap; }
+.compare-table.wrap td:first-child { white-space: normal; width: 62%; }
+.num-table td, .num-table th { text-align: center; }
+.num-table td:first-child { text-align: left; }
+.hl { background: rgba(221,162,94,0.28); padding: 0 4px; border-radius: 3px; }
+.mini-btn { padding: 7px 14px; border: 2px solid var(--gold-light); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; background: var(--cream); color: var(--text-medium); transition: all 0.2s; }
+.mini-btn:hover { border-color: var(--gold); color: var(--brown-dark); }
+.mini-btn.active, .mini-btn.primary { background: var(--gold); color: white; border-color: var(--gold); }
+.mini-btn.green { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+.mini-btn.green:hover { background: var(--green-medium); }
+.mini-btn.red { background: #C0392B; color: white; border-color: #C0392B; }
+.mini-btn.red:hover { background: #A93226; }
+.mini-btn:disabled { opacity: 0.45; cursor: default; }
+
+/* ─── Flashcards ─── */
+.fc-wrap { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.fc-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--cream-dark); }
+.fc-controls .spacer { flex: 1; }
+.fc-controls select { padding: 7px 10px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; background: var(--cream); color: var(--text-dark); }
+.fc-progress { font-size: 13px; color: var(--text-medium); font-weight: 600; }
+.fc-stage { perspective: 1400px; margin: 10px auto; max-width: 720px; }
+.fc-card { position: relative; width: 100%; min-height: 280px; transition: transform 0.55s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; cursor: pointer; }
+.fc-card.flipped { transform: rotateY(180deg); }
+.fc-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 28px 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+.fc-front { background: linear-gradient(135deg, var(--green-dark), #2f5c3b); color: white; }
+.fc-back { background: linear-gradient(135deg, #fff9ef, #f5e4cc); color: var(--text-dark); transform: rotateY(180deg); border: 2px solid var(--gold); }
+.fc-front .fc-term { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; line-height: 1.25; }
+.fc-back .fc-def { font-size: 17px; line-height: 1.6; }
+.fc-back .fc-def strong { color: var(--green-dark); }
+.fc-cat { position: absolute; top: 14px; left: 18px; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: rgba(255,255,255,0.18); }
+.fc-back .fc-cat { background: var(--gold); color: white; }
+.fc-hint { position: absolute; bottom: 12px; font-size: 12px; opacity: 0.7; }
+.fc-status { position: absolute; top: 14px; right: 18px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
+.fc-status.known { background: #39864E; color: white; }
+.fc-status.learning { background: #C0392B; color: white; }
+.fc-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 18px; }
+.fc-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
+.stat { background: var(--cream); border-radius: 8px; padding: 12px 16px; text-align: center; border: 1px solid var(--gold-pale); }
+.stat .lbl { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.stat .val { font-size: 22px; font-weight: 700; color: var(--gold); }
+.stat .val.g { color: var(--green-light); }
+.stat .val.r { color: #C0392B; }
+.fc-list-btn { margin-top: 14px; }
+.fc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 12px; }
+.fc-grid .gi { background: var(--cream); border-radius: 8px; padding: 10px 12px; font-size: 13px; border-left: 4px solid var(--gold); }
+.fc-grid .gi.known { border-left-color: #39864E; }
+.fc-grid .gi.learning { border-left-color: #C0392B; }
+.fc-grid .gi b { display: block; color: var(--brown-dark); margin-bottom: 3px; }
+
+/* ─── Term sheet (by category) ─── */
+.sheet-cat { border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; border-left: 4px solid; }
+.sheet-green { background: rgba(33,68,43,0.06); border-color: #21442B; }
+.sheet-gold { background: rgba(221,162,94,0.10); border-color: #DDA25E; }
+.sheet-brown { background: rgba(66,38,13,0.06); border-color: #8B5E3C; }
+.sheet-title { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; color: var(--brown-dark); margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid rgba(66,38,13,0.15); }
+.sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sheet-item { background: white; border-radius: 8px; padding: 10px 14px; border-left: 4px solid var(--cream-dark); cursor: pointer; transition: box-shadow 0.15s, transform 0.15s; }
+.sheet-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); transform: translateY(-1px); }
+.sheet-item.known { border-left-color: #39864E; }
+.sheet-item.learning { border-left-color: #C0392B; }
+.sheet-term { font-weight: 700; color: var(--green-dark); font-size: 14px; margin-bottom: 4px; display: flex; justify-content: space-between; gap: 8px; }
+.sheet-mark { font-size: 12px; font-weight: 700; }
+.sheet-item.known .sheet-mark { color: #39864E; }
+.sheet-item.learning .sheet-mark { color: #C0392B; }
+.sheet-def { font-size: 13px; line-height: 1.55; color: var(--text-medium); }
+.sheet-def strong { color: var(--text-dark); }
+
+/* ─── Quiz ─── */
+.quiz-q { background: white; border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.quiz-q .qnum { display: inline-flex; width: 30px; height: 30px; background: #8B5E3C; color: white; border-radius: 50%; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; margin-right: 10px; }
+.quiz-q .qtext { font-weight: 600; margin-bottom: 12px; line-height: 1.6; }
+.opt { display: block; width: 100%; text-align: left; padding: 10px 14px; margin-bottom: 8px; border: 2px solid var(--cream-dark); border-radius: 8px; background: var(--cream); font-family: 'Inter', sans-serif; font-size: 14px; cursor: pointer; transition: all 0.2s; line-height: 1.5; }
+.opt:hover { border-color: var(--gold); background: rgba(221,162,94,0.1); }
+.opt.correct { border-color: #39864E; background: #E8F5E9; font-weight: 600; }
+.opt.wrong { border-color: #E57373; background: #FFEBEE; }
+.opt:disabled { cursor: default; color: var(--text-dark); opacity: 1; }
+.opt.wrong:disabled { color: #8B1A1A; }
+.opt.correct:disabled { color: var(--green-dark); }
+.opt .letter { display: inline-block; width: 22px; font-weight: 700; color: var(--brown-dark); }
+.explain { display: none; margin-top: 10px; padding: 12px 14px; border-radius: 8px; font-size: 14px; line-height: 1.6; }
+.explain.show { display: block; }
+.explain.ok { background: #E8F5E9; border-left: 4px solid #39864E; }
+.explain.bad { background: #FFEBEE; border-left: 4px solid #E57373; }
+.score-bar { background: white; border-radius: 10px; padding: 16px 20px; margin: 14px 0; border: 2px solid var(--gold-light); display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.score-bar .big { font-size: 26px; font-weight: 700; color: var(--gold); }
+
+/* ─── Variable drill ─── */
+.drill-wrap { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.drill-scn { background: rgba(33,68,43,0.06); border-left: 4px solid var(--green-dark); border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; font-size: 15px; line-height: 1.7; }
+.drill-row { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+.drill-row label { font-weight: 700; color: var(--brown-dark); font-size: 14px; }
+.drill-row select { padding: 9px 12px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background: var(--cream); width: 100%; }
+.drill-row select.ok { border-color: #39864E; background: #E8F5E9; }
+.drill-row select.bad { border-color: #E57373; background: #FFEBEE; }
+.drill-row select:disabled { color: var(--text-dark); opacity: 1; }
+.drill-fb { margin-top: 12px; }
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid, .two-col, .sheet-grid { grid-template-columns: 1fr; }
+    .drill-row { grid-template-columns: 1fr; }
+    .fc-front .fc-term { font-size: 24px; }
+    .compare-table td:first-child { white-space: normal; }
+}
+
+/* ─── Atom visualizer ─── */
+.atom-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.atom-svg { background: white; border-radius: 10px; border: 2px solid var(--gold-light); padding: 10px; }
+.atom-svg svg { width: 100%; height: auto; display: block; }
+.el-btn { padding: 6px 10px; border: 2px solid var(--gold-light); border-radius: 6px; background: var(--cream); font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; min-width: 44px; transition: all 0.15s; }
+.el-btn:hover { border-color: var(--gold); }
+.el-btn.active { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+.el-btn small { display: block; font-weight: 400; font-size: 10px; }
+.el-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.fact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fact { background: var(--cream); border-radius: 8px; padding: 10px 12px; border: 1px solid var(--gold-pale); }
+.fact .lbl { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.fact .val { font-size: 18px; font-weight: 700; color: var(--brown-dark); }
+.fact .val small { font-size: 12px; font-weight: 400; color: var(--text-medium); }
+.drill-in { display: grid; grid-template-columns: 170px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+.drill-in label { font-weight: 700; color: var(--brown-dark); font-size: 14px; }
+.drill-in input { padding: 9px 12px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background: var(--cream); width: 100%; }
+.drill-in input.ok { border-color: #39864E; background: #E8F5E9; }
+.drill-in input.bad { border-color: #E57373; background: #FFEBEE; }
+.drill-in input:disabled { color: var(--text-dark); opacity: 1; }
+.elcard { display: inline-block; border: 3px solid var(--green-dark); border-radius: 10px; padding: 10px 18px; background: white; text-align: center; margin: 6px 0; min-width: 110px; }
+.elcard .z { font-size: 13px; color: var(--text-medium); text-align: left; }
+.elcard .sym { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--green-dark); line-height: 1.1; }
+.elcard .mass { font-size: 13px; color: var(--text-medium); }
+.fib input { padding: 4px 8px; border: none; border-bottom: 2px solid var(--gold); background: rgba(221,162,94,0.08); font-family: 'Inter', sans-serif; font-size: 14px; width: 140px; margin: 0 4px; }
+.fib input.ok { border-bottom-color: #39864E; background: #E8F5E9; }
+.fib input.bad { border-bottom-color: #E57373; background: #FFEBEE; }
+.fib input:disabled { color: var(--text-dark); opacity: 1; }
+.tf-btns { display: flex; gap: 8px; margin-top: 8px; }
+.sa-prompt { font-weight: 600; margin-bottom: 8px; }
+.qtype { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: var(--cream-dark); color: var(--text-medium); margin-left: 8px; vertical-align: middle; }
+@media (max-width: 768px) { .atom-wrap, .fact-row, .drill-in { grid-template-columns: 1fr; } .formula-grid[style] { grid-template-columns: 1fr !important; } }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>The Chemistry of Life</h1>
+            <div class="subtitle">ATOMS &bull; BONDS &bull; WATER &mdash; STUDY SHEET WITH FLASHCARDS &amp; SELF-QUIZ</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">INTRO BIOLOGY &bull; Basic chemistry</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+<div class="container">
+    <div class="tab-buttons">
+        <button class="tab-button active" data-group="core" onclick="switchTab('plan', this)">Overview</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('atoms', this)">Atoms &amp; Shells</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('bonds', this)">Bonds</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('water', this)">Water</button>
+        <button class="tab-button" data-group="techniques" onclick="switchTab('terms', this)">Key Terms</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('flashcards', this)">Flashcards</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('builder', this)">Atom Builder</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('quiz', this)">Self-Quiz</button>
+    </div>
+
+    <!-- ═══ TAB: TEST GAME PLAN ═══ -->
+    <div id="tab-plan" class="tab-content active">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Why a biology class starts with chemistry</h2>
+        </div>
+
+        <div class="two-col">
+            <div class="card" style="border-left-color:var(--green-dark);">
+                <h3 class="sub">The short version</h3>
+                <p>Every living thing is built from atoms, and everything a cell does &mdash; storing energy, copying DNA, moving muscles &mdash; is atoms making and breaking bonds. Most of that happens in water. So before biology can talk about cells, it needs three ideas: <strong>how atoms are put together</strong>, <strong>how atoms bond</strong>, and <strong>why water behaves the way it does</strong>.</p>
+                <p style="margin-bottom:0;">Almost every question on this material is one of those three in disguise.</p>
+            </div>
+            <div class="card">
+                <h3 class="sub">What you should be able to do</h3>
+                <table class="compare-table wrap" style="font-size:13px;">
+                    <tr><th>Skill</th><th>Where to practice</th></tr>
+                    <tr><td>Find protons, electrons, neutrons for any element from its periodic-table box</td><td>Atoms &amp; Shells &rarr; Atom Builder</td></tr>
+                    <tr><td>Draw electron shells and count valence electrons</td><td>Atoms &amp; Shells &rarr; Atom Builder</td></tr>
+                    <tr><td>Predict whether an atom forms a cation, an anion, or shares</td><td>Atoms &amp; Shells &sect;3</td></tr>
+                    <tr><td>Tell ionic, covalent (polar / nonpolar), and hydrogen bonds apart</td><td>Bonds</td></tr>
+                    <tr><td>Explain water's structure, its properties, and why they matter for life</td><td>Water</td></tr>
+                    <tr><td>Use the vocabulary precisely (cation, solute, polar...)</td><td>Key Terms &rarr; Flashcards</td></tr>
+                    <tr><td>Answer in every format: multiple choice, true/false, fill-in, short paragraph</td><td>Self-Quiz</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>The whole topic in one picture</h2>
+        </div>
+
+        <div class="fig">
+            <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+                <defs><marker id="pa" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#42260D"/></marker></defs>
+                <g font-size="13" text-anchor="middle">
+                    <rect x="20" y="90" width="190" height="110" rx="12" fill="#E8F5E9" stroke="#21442B" stroke-width="2"/>
+                    <text x="115" y="118" font-weight="700" font-size="15" fill="#21442B">ATOMS</text>
+                    <text x="115" y="140" fill="#21442B">protons = atomic #</text>
+                    <text x="115" y="158" fill="#21442B">electrons fill shells (2n&#178;)</text>
+                    <text x="115" y="176" fill="#21442B">valence shell wants to be full</text>
+                    <text x="115" y="194" fill="#21442B" font-size="11">unfilled valence shell &rarr; reactive</text>
+
+                    <rect x="260" y="90" width="200" height="110" rx="12" fill="#FFF3E0" stroke="#BC6C26" stroke-width="2"/>
+                    <text x="360" y="118" font-weight="700" font-size="15" fill="#BC6C26">BONDS</text>
+                    <text x="360" y="140" fill="#42260D">ionic: transfer e&#8315;</text>
+                    <text x="360" y="158" fill="#42260D">covalent: share e&#8315;</text>
+                    <text x="360" y="176" fill="#42260D">(polar = unequal, nonpolar = equal)</text>
+                    <text x="360" y="194" fill="#42260D">hydrogen: &delta;+ H attracted to &delta;&minus; O</text>
+
+                    <rect x="510" y="90" width="180" height="110" rx="12" fill="#F5E4CC" stroke="#DDA25E" stroke-width="2"/>
+                    <text x="600" y="118" font-weight="700" font-size="15" fill="#42260D">WATER</text>
+                    <text x="600" y="140" fill="#42260D">polar covalent H&ndash;O bonds</text>
+                    <text x="600" y="158" fill="#42260D">&rarr; partial charges</text>
+                    <text x="600" y="176" fill="#42260D">&rarr; hydrogen bonds between</text>
+                    <text x="600" y="194" fill="#42260D">molecules</text>
+
+                    <rect x="740" y="60" width="140" height="170" rx="12" fill="#21442B"/>
+                    <text x="810" y="88" font-weight="700" font-size="15" fill="#F5E4CC">LIFE</text>
+                    <text x="810" y="112" fill="#E6BC84" font-size="12">universal solvent</text>
+                    <text x="810" y="130" fill="#E6BC84" font-size="12">cohesion &amp; adhesion</text>
+                    <text x="810" y="148" fill="#E6BC84" font-size="12">surface tension</text>
+                    <text x="810" y="166" fill="#E6BC84" font-size="12">high specific heat</text>
+                    <text x="810" y="184" fill="#E6BC84" font-size="12">ice floats</text>
+                    <text x="810" y="202" fill="#E6BC84" font-size="12">stabilizes DNA &amp; proteins</text>
+                    <text x="810" y="220" fill="#E6BC84" font-size="11">"life wouldn't exist without it"</text>
+                </g>
+                <g stroke="#42260D" stroke-width="2.5" fill="none" marker-end="url(#pa)">
+                    <line x1="210" y1="145" x2="258" y2="145"/>
+                    <line x1="460" y1="145" x2="508" y2="145"/>
+                    <line x1="690" y1="145" x2="738" y2="145"/>
+                </g>
+                <text x="450" y="40" text-anchor="middle" font-size="14" fill="#42260D" font-weight="700">Why atoms bond explains why water is polar, which explains every property that makes life possible.</text>
+                <text x="450" y="270" text-anchor="middle" font-size="12" fill="#4A4A4A">If a short-paragraph question asks "why is water important for life," walk left to right across this chain.</text>
+            </svg>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>The one sentence to memorize:</strong> Oxygen pulls the shared electrons harder than hydrogen does, so water is a <em>polar</em> molecule (O is partially negative, each H partially positive); the partial charges let water molecules <em>hydrogen-bond</em> to each other and to other charged or polar things, and that is the source of every property that makes water essential for life.</p>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: ATOMS & SHELLS ═══ -->
+    <div id="tab-atoms" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Reading an element: protons, electrons, neutrons</h2>
+        </div>
+
+        <div class="card">
+            <div class="two-col">
+                <div>
+                    <p>An atom has a <span class="term">nucleus</span> (protons + neutrons) with <span class="term">electrons</span> orbiting in shells. Two numbers on the periodic table tell you everything:</p>
+                    <div class="highlight-box">
+                        <p><strong>Atomic number</strong> <em>Z</em> = number of <strong>protons</strong>. This defines the element. In a neutral atom, <strong>electrons = protons</strong>.</p>
+                        <p><strong>Atomic weight / mass number</strong> <em>A</em> = protons + neutrons (rounded to a whole number).</p>
+                        <p style="font-size:18px; text-align:center;"><strong>neutrons = <em>A</em> &minus; <em>Z</em></strong></p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <div class="elcard"><div class="z">7</div><div class="sym">N</div><div class="mass">14.007</div></div>
+                    <p style="font-size:13px; margin:6px 0 0;">Nitrogen: p = 7, e&#8315; = 7, n = 14 &minus; 7 = 7</p>
+                    <div class="elcard" style="border-color:#BC6C26;"><div class="z">27</div><div class="sym" style="color:#BC6C26;">Co</div><div class="mass">58.93</div></div>
+                    <p style="font-size:13px; margin:6px 0 0;">Cobalt: p = 27, e&#8315; = 27, n = 59 &minus; 27 = 32</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="sub">Three particles, three jobs</h3>
+        <div class="formula-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Protons decide <em>which element</em> it is</h4>
+                <p style="font-size:14px;">Change the proton count and you have a different element. 6 protons is always carbon; 7 is always nitrogen. That's why the atomic number is the element's ID.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>Electrons decide the <em>charge</em></h4>
+                <p style="font-size:14px;">Same element, different electron count = same element with a charge (an ion). Na and Na&#8314; are both sodium; one has 11 electrons, the other 10.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Neutrons decide the <em>isotope</em> (mass)</h4>
+                <p style="font-size:14px;">Same element, different neutron count = a heavier or lighter version (isotope). Carbon-12 and carbon-14 are both carbon. This is why the table shows 15.999 for oxygen &mdash; it's an average over isotopes.</p>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Worked examples</h3>
+            <table class="compare-table num-table">
+                <tr><th style="text-align:left">Element</th><th>Atomic # (<em>Z</em>)</th><th>Mass # (<em>A</em>)</th><th>Protons</th><th>Electrons</th><th>Neutrons (<em>A</em> &minus; <em>Z</em>)</th></tr>
+                <tr><td>Hydrogen (H)</td><td>1</td><td>1 (1.008)</td><td>1</td><td>1</td><td>1 &minus; 1 = <strong>0</strong></td></tr>
+                <tr><td>Oxygen (O)</td><td>8</td><td>16 (15.999)</td><td>8</td><td>8</td><td>16 &minus; 8 = <strong>8</strong></td></tr>
+                <tr><td>Nitrogen (N)</td><td>7</td><td>14</td><td>7</td><td>7</td><td>14 &minus; 7 = <strong>7</strong></td></tr>
+                <tr><td>Silicon (Si)</td><td>14</td><td>28</td><td>14</td><td>14</td><td>28 &minus; 14 = <strong>14</strong></td></tr>
+                <tr><td>Sodium (Na)</td><td>11</td><td>23</td><td>11</td><td>11</td><td>23 &minus; 11 = <strong>12</strong></td></tr>
+                <tr><td>Chlorine (Cl)</td><td>17</td><td>35</td><td>17</td><td>17</td><td>35 &minus; 17 = <strong>18</strong></td></tr>
+                <tr><td>Cobalt (Co)</td><td>27</td><td>59</td><td>27</td><td>27</td><td>59 &minus; 27 = <strong>32</strong></td></tr>
+            </table>
+            <div class="warning-box">
+                <p><strong>Trap:</strong> hydrogen has <strong>zero</strong> neutrons (that's why its atomic weight is 1.008, barely above 1). Also, the periodic table's atomic weight is a decimal average (15.999) &mdash; round it to the nearest whole number before subtracting. And the electron count only equals the proton count for a <em>neutral atom</em>; ions are different (next section).</p>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Electron shells and the 2<em>n</em>&#178; rule</h2>
+        </div>
+
+        <div class="card">
+            <p>Electrons don't orbit randomly &mdash; they fill <span class="term">shells</span> from the inside out. The maximum number of electrons a shell can hold is</p>
+            <div class="highlight-box">
+                <p style="font-size:17px; text-align:center;"><strong>capacity of shell <em>n</em> = 2<em>n</em>&#178;</strong> &nbsp;&rArr;&nbsp; 1st: 2(1)&#178; = 2, &nbsp; 2nd: 2(2)&#178; = 8, &nbsp; 3rd: 2(3)&#178; = 18</p>
+            </div>
+            <p>The outermost occupied shell is the <span class="term">valence shell</span>, and the electrons in it are <span class="term">valence electrons</span>. <strong>Valence electrons are the only ones that matter for bonding.</strong> Atoms "want" a full valence shell (8 for most elements, 2 for H and He) &mdash; that's the octet rule, and it's the reason atoms bond at all.</p>
+            <div class="idea-box">
+                <p><strong>A subtlety that trips people up:</strong> the 3rd shell <em>can</em> hold 18, but for the elements you'll be asked about (up to calcium, #20) it takes only <strong>8</strong> before the 4th shell starts. So the filling pattern to use is <strong>2, 8, 8, 2</strong>. Sodium is 2-8-1, chlorine is 2-8-7, argon is 2-8-8, potassium is 2-8-8-1. Use 2<em>n</em>&#178; for "how many <em>can</em> fit"; use 2-8-8 for "how do I draw it."</p>
+            </div>
+        </div>
+
+        <div class="fig">
+            <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+                <!-- H -->
+                <g transform="translate(90,130)">
+                    <circle r="60" fill="none" stroke="#DDA25E" stroke-width="2"/>
+                    <circle r="22" fill="#21442B"/><text y="5" text-anchor="middle" fill="white" font-size="14" font-weight="700">H</text>
+                    <circle cx="0" cy="-60" r="6" fill="#BC6C26"/>
+                    <text y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#42260D">Hydrogen (1)</text>
+                    <text y="112" text-anchor="middle" font-size="12" fill="#4A4A4A">1 &mdash; valence 1</text>
+                </g>
+                <!-- O -->
+                <g transform="translate(300,130)">
+                    <circle r="40" fill="none" stroke="#DDA25E" stroke-width="2"/><circle r="75" fill="none" stroke="#DDA25E" stroke-width="2"/>
+                    <circle r="22" fill="#21442B"/><text y="5" text-anchor="middle" fill="white" font-size="14" font-weight="700">O</text>
+                    <circle cx="0" cy="-40" r="6" fill="#BC6C26"/><circle cx="0" cy="40" r="6" fill="#BC6C26"/>
+                    <g fill="#BC6C26"><circle cx="0" cy="-75" r="6"/><circle cx="53" cy="-53" r="6"/><circle cx="75" cy="0" r="6"/><circle cx="53" cy="53" r="6"/><circle cx="0" cy="75" r="6"/><circle cx="-53" cy="53" r="6"/></g>
+                    <text y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#42260D">Oxygen (8)</text>
+                    <text y="127" text-anchor="middle" font-size="12" fill="#4A4A4A">2, 6 &mdash; valence 6 (needs 2)</text>
+                </g>
+                <!-- Na -->
+                <g transform="translate(540,130)">
+                    <circle r="32" fill="none" stroke="#DDA25E" stroke-width="2"/><circle r="60" fill="none" stroke="#DDA25E" stroke-width="2"/><circle r="88" fill="none" stroke="#DDA25E" stroke-width="2"/>
+                    <circle r="22" fill="#21442B"/><text y="5" text-anchor="middle" fill="white" font-size="13" font-weight="700">Na</text>
+                    <circle cx="0" cy="-32" r="5" fill="#BC6C26"/><circle cx="0" cy="32" r="5" fill="#BC6C26"/>
+                    <g fill="#BC6C26"><circle cx="0" cy="-60" r="5"/><circle cx="42" cy="-42" r="5"/><circle cx="60" cy="0" r="5"/><circle cx="42" cy="42" r="5"/><circle cx="0" cy="60" r="5"/><circle cx="-42" cy="42" r="5"/><circle cx="-60" cy="0" r="5"/><circle cx="-42" cy="-42" r="5"/></g>
+                    <circle cx="0" cy="-88" r="6" fill="#C0392B"/>
+                    <text y="112" text-anchor="middle" font-size="13" font-weight="700" fill="#42260D">Sodium (11)</text>
+                    <text y="129" text-anchor="middle" font-size="12" fill="#4A4A4A">2, 8, 1 &mdash; valence 1 (gives 1)</text>
+                </g>
+                <!-- Cl -->
+                <g transform="translate(780,130)">
+                    <circle r="32" fill="none" stroke="#DDA25E" stroke-width="2"/><circle r="60" fill="none" stroke="#DDA25E" stroke-width="2"/><circle r="88" fill="none" stroke="#DDA25E" stroke-width="2"/>
+                    <circle r="22" fill="#21442B"/><text y="5" text-anchor="middle" fill="white" font-size="13" font-weight="700">Cl</text>
+                    <circle cx="0" cy="-32" r="5" fill="#BC6C26"/><circle cx="0" cy="32" r="5" fill="#BC6C26"/>
+                    <g fill="#BC6C26"><circle cx="0" cy="-60" r="5"/><circle cx="42" cy="-42" r="5"/><circle cx="60" cy="0" r="5"/><circle cx="42" cy="42" r="5"/><circle cx="0" cy="60" r="5"/><circle cx="-42" cy="42" r="5"/><circle cx="-60" cy="0" r="5"/><circle cx="-42" cy="-42" r="5"/></g>
+                    <g fill="#BC6C26"><circle cx="0" cy="-88" r="6"/><circle cx="62" cy="-62" r="6"/><circle cx="88" cy="0" r="6"/><circle cx="62" cy="62" r="6"/><circle cx="0" cy="88" r="6"/><circle cx="-62" cy="62" r="6"/><circle cx="-88" cy="0" r="6"/></g>
+                    <circle cx="-62" cy="-62" r="6" fill="none" stroke="#C0392B" stroke-width="2" stroke-dasharray="3 2"/>
+                    <text y="112" text-anchor="middle" font-size="13" font-weight="700" fill="#42260D">Chlorine (17)</text>
+                    <text y="129" text-anchor="middle" font-size="12" fill="#4A4A4A">2, 8, 7 &mdash; valence 7 (needs 1)</text>
+                </g>
+            </svg>
+            <p class="caption">Bohr models. Sodium's lone valence electron (red) is easy to give away; chlorine's empty slot (dashed) is easy to fill. That mismatch is the whole story of ionic bonding. The <strong>Atom Builder</strong> tab draws any of the first 20 elements like this.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Ions: when electrons &ne; protons</h2>
+        </div>
+
+        <div class="card">
+            <p>An <span class="term">ion</span> is an atom that has gained or lost electrons, so it carries a net charge. <strong>Protons never change</strong> &mdash; only electrons move.</p>
+            <div class="two-col">
+                <div class="highlight-box">
+                    <p><strong>Cation = positive ion.</strong> The atom <em>loses</em> electrons. Sodium: 11 p&#8314;, 10 e&#8315; &rarr; net +1 &rarr; Na&#8314;. (Memory hook: ca<strong>t</strong>ion has a "t" that looks like a plus sign.)</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Anion = negative ion.</strong> The atom <em>gains</em> electrons. Chlorine: 17 p&#8314;, 18 e&#8315; &rarr; net &minus;1 &rarr; Cl&#8315;. (A <strong>n</strong>egative <strong>ion</strong>.)</p>
+                </div>
+            </div>
+            <table class="compare-table num-table">
+                <tr><th style="text-align:left">Atom</th><th>Shells</th><th>Valence e&#8315;</th><th>Easiest path to a full shell</th><th>Ion formed</th><th>p&#8314; / e&#8315;</th></tr>
+                <tr><td>Sodium Na</td><td>2, 8, 1</td><td>1</td><td>lose 1</td><td><strong>Na&#8314;</strong> (cation)</td><td>11 / 10</td></tr>
+                <tr><td>Chlorine Cl</td><td>2, 8, 7</td><td>7</td><td>gain 1</td><td><strong>Cl&#8315;</strong> (anion)</td><td>17 / 18</td></tr>
+                <tr><td>Magnesium Mg</td><td>2, 8, 2</td><td>2</td><td>lose 2</td><td><strong>Mg&#178;&#8314;</strong></td><td>12 / 10</td></tr>
+                <tr><td>Oxygen O</td><td>2, 6</td><td>6</td><td>gain 2</td><td><strong>O&#178;&#8315;</strong></td><td>8 / 10</td></tr>
+                <tr><td>Fluorine F</td><td>2, 7</td><td>7</td><td>gain 1</td><td><strong>F&#8315;</strong></td><td>9 / 10</td></tr>
+                <tr><td>Potassium K</td><td>2, 8, 8, 1</td><td>1</td><td>lose 1</td><td><strong>K&#8314;</strong></td><td>19 / 18</td></tr>
+                <tr><td>Neon Ne</td><td>2, 8</td><td>8 (full)</td><td>already full</td><td>none &mdash; inert</td><td>10 / 10</td></tr>
+            </table>
+            <div class="idea-box">
+                <p><strong>Pattern:</strong> metals (left side of the table, 1&ndash;3 valence electrons) lose electrons and become cations. Nonmetals (right side, 5&ndash;7 valence electrons) gain electrons and become anions. Elements with 4 valence electrons (carbon, silicon) are in the middle and prefer to <em>share</em> &mdash; that's covalent bonding. Noble gases (8) don't react.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: BONDS ═══ -->
+    <div id="tab-bonds" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Three bonds, one idea: atoms want full valence shells</h2>
+        </div>
+
+        <div class="card">
+            <p>Every bond type is a different way of getting a full outer shell. The question to ask about any bond is: <strong>are the electrons transferred, shared equally, shared unequally, or is this just an attraction between molecules?</strong></p>
+        </div>
+
+        <table class="compare-table">
+            <tr><th></th><th>Ionic</th><th>Covalent</th><th style="background:#39864E;">Hydrogen <span style="font-weight:400; font-size:12px; opacity:0.9;">(the odd one out)</span></th></tr>
+            <tr><td>What kind of link is it?</td><td><strong>A true chemical bond</strong> &mdash; holds <em>atoms</em> together</td><td><strong>A true chemical bond</strong> &mdash; holds <em>atoms</em> together</td><td style="background:#E8F5E9;"><strong>Not a bond between atoms.</strong> An <em>attraction</em> between two already-formed molecules (or parts of one big molecule). "Bond" is just the name.</td></tr>
+            <tr><td>What happens to electrons</td><td><strong>Complete transfer</strong> of one or more valence electrons from one atom to another</td><td>Two atoms <strong>share</strong> a pair (or pairs) of electrons</td><td>Nothing transfers or shares &mdash; it's an <strong>attraction</strong> between a &delta;+ hydrogen and a &delta;&minus; atom (O, N, F) on a <em>different</em> molecule</td></tr>
+            <tr><td>Between</td><td>A <strong>metal</strong> and a <strong>nonmetal</strong> (Na + Cl)</td><td>Two <strong>nonmetals</strong> (H + O, C + O, Cl + Cl)</td><td>Molecules that already have polar H&ndash;O, H&ndash;N or H&ndash;F bonds (water!)</td></tr>
+            <tr><td>Result</td><td>Oppositely charged <strong>ions</strong> (cation + anion) held together by electrostatic attraction; <strong>full charges</strong></td><td>A <strong>molecule</strong>; no charge (nonpolar) or <strong>partial charges</strong> (polar)</td><td>Molecules stick to each other; weak individually, strong in numbers</td></tr>
+            <tr><td>Strength</td><td>Strong (in the solid); breaks apart in water</td><td>Strongest &mdash; holds molecules together</td><td>Weak and easily broken (about 1/20 of a covalent bond)</td></tr>
+            <tr><td>Examples</td><td>NaCl (table salt), NaF, MgO</td><td>H&#8322;O, O&#8322;, CO&#8322;, N&#8322;, CH&#8324;, Cl&#8322;, all the bonds inside DNA and proteins</td><td>Between water molecules; between the two strands of DNA; folding of proteins</td></tr>
+        </table>
+        <div class="idea-box">
+            <p><strong>Ionic and covalent bonds <em>make</em> substances</strong> (they're how atoms join into NaCl or H&#8322;O). <strong>Hydrogen bonds make substances <em>stick to each other</em></strong> &mdash; a water molecule is complete before any hydrogen bond forms. Break every hydrogen bond in a glass of water and you still have water; break the covalent bonds and you have hydrogen and oxygen gas.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Ionic bonds &mdash; give and take</h2>
+        </div>
+
+        <div class="card">
+            <p>An <span class="term">ionic bond</span> is the <strong>complete transfer of one or more electrons</strong> from one atom to another. This creates oppositely charged ions that are attracted to each other by electrostatic forces. The atom that loses electrons is the <span class="term">cation</span> (positive); the one that gains is the <span class="term">anion</span> (negative). Ionic bonds form between <strong>metals and nonmetals</strong>.</p>
+        </div>
+
+        <div class="fig">
+            <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+                <defs><marker id="ba" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker></defs>
+                <!-- before -->
+                <g transform="translate(130,120)">
+                    <circle r="28" fill="none" stroke="#DDA25E" stroke-width="1.5"/><circle r="52" fill="none" stroke="#DDA25E" stroke-width="1.5"/><circle r="76" fill="none" stroke="#DDA25E" stroke-width="1.5"/>
+                    <circle r="20" fill="#21442B"/><text y="5" text-anchor="middle" fill="white" font-size="12" font-weight="700">Na</text>
+                    <g fill="#BC6C26"><circle cx="0" cy="-28" r="4"/><circle cx="0" cy="28" r="4"/><circle cx="0" cy="-52" r="4"/><circle cx="37" cy="-37" r="4"/><circle cx="52" cy="0" r="4"/><circle cx="37" cy="37" r="4"/><circle cx="0" cy="52" r="4"/><circle cx="-37" cy="37" r="4"/><circle cx="-52" cy="0" r="4"/><circle cx="-37" cy="-37" r="4"/></g>
+                    <circle cx="76" cy="0" r="6" fill="#C0392B"/>
+                    <text y="-90" text-anchor="middle" font-size="12" fill="#42260D">2, 8, <tspan fill="#C0392B" font-weight="700">1</tspan></text>
+                </g>
+                <path d="M 215 112 Q 265 70 315 108" stroke="#C0392B" stroke-width="2.5" fill="none" marker-end="url(#ba)"/>
+                <text x="265" y="66" text-anchor="middle" font-size="12" fill="#C0392B" font-weight="700">1 e&#8315; moves</text>
+                <g transform="translate(400,120)">
+                    <circle r="28" fill="none" stroke="#DDA25E" stroke-width="1.5"/><circle r="52" fill="none" stroke="#DDA25E" stroke-width="1.5"/><circle r="76" fill="none" stroke="#DDA25E" stroke-width="1.5"/>
+                    <circle r="20" fill="#21442B"/><text y="5" text-anchor="middle" fill="white" font-size="12" font-weight="700">Cl</text>
+                    <g fill="#BC6C26"><circle cx="0" cy="-28" r="4"/><circle cx="0" cy="28" r="4"/><circle cx="0" cy="-52" r="4"/><circle cx="37" cy="-37" r="4"/><circle cx="52" cy="0" r="4"/><circle cx="37" cy="37" r="4"/><circle cx="0" cy="52" r="4"/><circle cx="-37" cy="37" r="4"/><circle cx="-52" cy="0" r="4"/><circle cx="-37" cy="-37" r="4"/></g>
+                    <g fill="#BC6C26"><circle cx="0" cy="-76" r="5"/><circle cx="54" cy="-54" r="5"/><circle cx="76" cy="0" r="5"/><circle cx="54" cy="54" r="5"/><circle cx="0" cy="76" r="5"/><circle cx="-54" cy="54" r="5"/><circle cx="-54" cy="-54" r="5"/></g>
+                    <circle cx="-76" cy="0" r="6" fill="none" stroke="#C0392B" stroke-width="2" stroke-dasharray="3 2"/>
+                    <text y="-90" text-anchor="middle" font-size="12" fill="#42260D">2, 8, <tspan fill="#C0392B" font-weight="700">7</tspan></text>
+                </g>
+                <text x="265" y="225" text-anchor="middle" font-size="13" fill="#42260D" font-weight="700">BEFORE: two neutral atoms, both with unfilled shells</text>
+                <!-- after -->
+                <line x1="530" y1="30" x2="530" y2="230" stroke="#E2E2E2" stroke-width="2"/>
+                <g transform="translate(640,120)">
+                    <circle r="50" fill="#FFEBEE" stroke="#C0392B" stroke-width="2.5"/>
+                    <text y="-4" text-anchor="middle" font-size="18" font-weight="700" fill="#C0392B">Na&#8314;</text>
+                    <text y="16" text-anchor="middle" font-size="11" fill="#42260D">11 p&#8314; / 10 e&#8315;</text>
+                    <text y="30" text-anchor="middle" font-size="11" fill="#42260D">2, 8 (full!)</text>
+                    <text y="-62" text-anchor="middle" font-size="12" fill="#C0392B" font-weight="700">CATION</text>
+                </g>
+                <text x="720" y="127" text-anchor="middle" font-size="22" fill="#42260D">&#8596;</text>
+                <g transform="translate(805,120)">
+                    <circle r="62" fill="#E8EAF6" stroke="#3949AB" stroke-width="2.5"/>
+                    <text y="-4" text-anchor="middle" font-size="18" font-weight="700" fill="#3949AB">Cl&#8315;</text>
+                    <text y="16" text-anchor="middle" font-size="11" fill="#42260D">17 p&#8314; / 18 e&#8315;</text>
+                    <text y="30" text-anchor="middle" font-size="11" fill="#42260D">2, 8, 8 (full!)</text>
+                    <text y="-74" text-anchor="middle" font-size="12" fill="#3949AB" font-weight="700">ANION</text>
+                </g>
+                <text x="720" y="225" text-anchor="middle" font-size="13" fill="#42260D" font-weight="700">AFTER: opposite charges attract = ionic bond (NaCl)</text>
+            </svg>
+            <p class="caption">Sodium ends up more positive because it still has 11 protons but only 10 electrons. Chlorine ends up negative: 17 protons, 18 electrons. Both now have full outer shells. Same story for Na + F &rarr; NaF.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Covalent bonds &mdash; sharing</h2>
+        </div>
+
+        <div class="card">
+            <p>A <span class="term">covalent bond</span> forms when <strong>two atoms share electrons</strong> so that both get a full valence shell. This makes a <strong>molecule</strong>. Covalent bonds happen between nonmetals, and they're the strongest bonds in biology &mdash; the backbone of every biomolecule. Two things to classify about any covalent bond: <em>how many pairs are shared</em> and <em>how fairly they're shared</em>.</p>
+        </div>
+
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Single bond &mdash; share 2 electrons (1 pair)</h4>
+                <p style="font-size:14px;"><strong>Water, H&#8322;O: H&ndash;O&ndash;H.</strong> Each H shares its 1 electron with O; O shares one of its 6 with each H. H gets 2 (full), O gets 8 (full). Also Cl&#8322;: Cl&ndash;Cl.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>Double bond &mdash; share 4 electrons (2 pairs)</h4>
+                <p style="font-size:14px;"><strong>Carbon dioxide, CO&#8322;: O=C=O.</strong> Carbon has 4 valence electrons and needs 4 more; each oxygen needs 2. Two double bonds fix everyone. Also O&#8322;: O=O.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Triple bond &mdash; share 6 electrons (3 pairs)</h4>
+                <p style="font-size:14px;"><strong>Nitrogen gas, N&#8322;: N&equiv;N.</strong> Each N has 5 valence electrons and needs 3 more, so they share 3 pairs. Extremely strong, which is why N&#8322; in the air is so unreactive.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Counting rule</h4>
+                <p style="font-size:14px;">Each line in a structural formula = one shared pair = 2 electrons. Count the lines, multiply by 2. Each atom needs (8 &minus; valence electrons) more, except H needs 1.</p>
+            </div>
+        </div>
+
+        <h3 class="sub">Polar vs. nonpolar covalent</h3>
+        <div class="fig">
+            <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+                <!-- nonpolar Cl2 -->
+                <g transform="translate(150,110)">
+                    <ellipse rx="110" ry="55" fill="#E2E2E2" stroke="#4A4A4A" stroke-width="1.5"/>
+                    <circle cx="-55" cy="0" r="26" fill="#21442B"/><text x="-55" y="5" text-anchor="middle" fill="white" font-size="13" font-weight="700">Cl</text>
+                    <circle cx="55" cy="0" r="26" fill="#21442B"/><text x="55" y="5" text-anchor="middle" fill="white" font-size="13" font-weight="700">Cl</text>
+                    <circle cx="-6" cy="0" r="5" fill="#BC6C26"/><circle cx="6" cy="0" r="5" fill="#BC6C26"/>
+                    <text x="-55" y="-38" text-anchor="middle" font-size="11" fill="#4A4A4A">&larr; equal pull &rarr;</text>
+                    <text y="85" text-anchor="middle" font-size="14" font-weight="700" fill="#21442B">NONPOLAR covalent</text>
+                    <text y="103" text-anchor="middle" font-size="12" fill="#4A4A4A">shared equally &bull; no charges</text>
+                    <text y="119" text-anchor="middle" font-size="12" fill="#4A4A4A">Cl&#8322;, O&#8322;, H&#8322;, CO&#8322;, CH&#8324;, lipids</text>
+                </g>
+                <!-- polar HCl -->
+                <g transform="translate(450,110)">
+                    <defs><linearGradient id="pol" x1="0" x2="1"><stop offset="0" stop-color="#FFEBEE"/><stop offset="1" stop-color="#C5CAE9"/></linearGradient></defs>
+                    <ellipse rx="110" ry="55" fill="url(#pol)" stroke="#4A4A4A" stroke-width="1.5"/>
+                    <circle cx="-60" cy="0" r="18" fill="#BC6C26"/><text x="-60" y="5" text-anchor="middle" fill="white" font-size="13" font-weight="700">H</text>
+                    <circle cx="45" cy="0" r="30" fill="#21442B"/><text x="45" y="5" text-anchor="middle" fill="white" font-size="13" font-weight="700">Cl</text>
+                    <circle cx="6" cy="0" r="5" fill="#BC6C26"/><circle cx="18" cy="0" r="5" fill="#BC6C26"/>
+                    <text x="-95" y="-40" text-anchor="middle" font-size="16" fill="#C0392B" font-weight="700">&delta;+</text>
+                    <text x="100" y="-40" text-anchor="middle" font-size="16" fill="#3949AB" font-weight="700">&delta;&minus;</text>
+                    <text x="-10" y="-38" text-anchor="middle" font-size="11" fill="#4A4A4A">Cl pulls harder &rarr;</text>
+                    <text y="85" text-anchor="middle" font-size="14" font-weight="700" fill="#BC6C26">POLAR covalent</text>
+                    <text y="103" text-anchor="middle" font-size="12" fill="#4A4A4A">shared unequally &bull; partial charges (&delta;)</text>
+                    <text y="119" text-anchor="middle" font-size="12" fill="#4A4A4A">H&ndash;Cl, H&ndash;O in water, H&ndash;N, H&ndash;F</text>
+                </g>
+                <!-- ionic -->
+                <g transform="translate(750,110)">
+                    <circle cx="-55" cy="0" r="32" fill="#FFEBEE" stroke="#C0392B" stroke-width="2"/><text x="-55" y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#C0392B">Na&#8314;</text>
+                    <circle cx="45" cy="0" r="45" fill="#E8EAF6" stroke="#3949AB" stroke-width="2"/><text x="45" y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#3949AB">Cl&#8315;</text>
+                    <text y="85" text-anchor="middle" font-size="14" font-weight="700" fill="#C0392B">IONIC</text>
+                    <text y="103" text-anchor="middle" font-size="12" fill="#4A4A4A">transferred &bull; full charges</text>
+                    <text y="119" text-anchor="middle" font-size="12" fill="#4A4A4A">NaCl, NaF, MgO</text>
+                </g>
+                <text x="450" y="30" text-anchor="middle" font-size="13" fill="#42260D" font-weight="700">A spectrum of "how unequal is the sharing?" &mdash; equal &rarr; unequal &rarr; completely taken</text>
+            </svg>
+            <p class="caption">"Polar" just means one end is a little positive and the other a little negative. The lowercase delta (&delta;) means <em>partial</em> charge, as opposed to the full +/&minus; charge on an ion.</p>
+        </div>
+
+        <div class="idea-box">
+            <p><strong>How do you know which atom pulls harder?</strong> Oxygen, nitrogen, and fluorine are electron hogs (high electronegativity). Hydrogen and carbon are weak pullers. So: H&ndash;O, H&ndash;N, H&ndash;F are polar. Two of the same atom (Cl&ndash;Cl, O=O) are always nonpolar &mdash; identical atoms pull identically. C&ndash;H is close enough to equal that it counts as nonpolar, which is why CH&#8324; and lipids (fats) are nonpolar and won't dissolve in water.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <h2>Hydrogen bonds &mdash; attraction between molecules</h2>
+        </div>
+
+        <div class="card">
+            <p>A <span class="term">hydrogen bond</span> is not a bond <em>inside</em> a molecule. It's an <strong>attraction between the &delta;+ hydrogen of one molecule and the &delta;&minus; oxygen (or nitrogen or fluorine) of another</strong>. It can only happen if the molecules already have polar H&ndash;O, H&ndash;N or H&ndash;F covalent bonds. In water: the hydrogen on one H&#8322;O is attracted to the oxygen on the next H&#8322;O.</p>
+            <table class="compare-table">
+                <tr><th>Key fact</th><th>Why it's true</th></tr>
+                <tr><td>Occurs between water molecules</td><td>Each H&#8322;O can form up to 4 hydrogen bonds (2 via its H's, 2 via its O's lone pairs)</td></tr>
+                <tr><td>The hydrogen has a slightly positive charge</td><td>Its one electron is pulled toward the oxygen (polarity), leaving the proton exposed</td></tr>
+                <tr><td>Individual hydrogen bonds are weak and easily broken</td><td>Roughly 1/20 the strength of a covalent bond; they constantly break and re-form (trillions of times a second in liquid water)</td></tr>
+                <tr><td>Stabilize the structures of proteins and DNA</td><td>Hydrogen bonds hold the two DNA strands together (A&ndash;T, G&ndash;C) and fold proteins into their working shapes &mdash; weak enough to open, strong enough in numbers to hold</td></tr>
+                <tr><td>"Life wouldn't exist without this bond"</td><td>Every special property of water in the next tab comes from hydrogen bonding</td></tr>
+            </table>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>The classic trick question:</strong> "What kind of bond holds the H to the O <em>inside</em> a water molecule?" &rarr; <strong>polar covalent</strong>. "What kind of bond holds one water molecule to <em>another</em>?" &rarr; <strong>hydrogen bond</strong>. In diagrams, solid lines are the H&ndash;O covalent bonds within a molecule and dotted lines are the hydrogen bonds between molecules.</p>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: WATER ═══ -->
+    <div id="tab-water" class="tab-content">
+
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Structure of a water molecule</h2>
+        </div>
+
+        <div class="card">
+            <div class="two-col">
+                <div>
+                    <p>H&#8322;O: one oxygen atom covalently bonded to two hydrogen atoms. Oxygen has 8 protons; hydrogen has 1. The oxygen nucleus pulls the shared electrons much harder, so the electrons spend more time near the O.</p>
+                    <div class="highlight-box">
+                        <p><strong>Result:</strong> a <strong>partial negative charge</strong> (&delta;&minus;) on the oxygen and a <strong>partial positive charge</strong> (&delta;+) on each hydrogen. A difference in charge between parts of a molecule is called <strong>polarity</strong>. Water is a <strong>polar molecule</strong>.</p>
+                    </div>
+                    <p>The molecule is <strong>bent</strong>, not straight (about 104.5&deg; between the H's), because oxygen's two unshared electron pairs push the hydrogens to one side. That bend is what makes one end negative and the other positive &mdash; a straight H&ndash;O&ndash;H would cancel out.</p>
+                </div>
+                <div class="fig" style="margin:0;">
+                    <svg viewBox="0 0 360 325" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+                        <!-- molecule 1 -->
+                        <g transform="translate(180,90)">
+                            <circle r="42" fill="#E8EAF6" stroke="#3949AB" stroke-width="2.5"/><text y="6" text-anchor="middle" font-size="20" font-weight="700" fill="#3949AB">O</text>
+                            <text x="0" y="-52" text-anchor="middle" font-size="16" fill="#3949AB" font-weight="700">&delta;&minus;</text>
+                            <line x1="-30" y1="30" x2="-70" y2="70" stroke="#42260D" stroke-width="3"/>
+                            <line x1="30" y1="30" x2="70" y2="70" stroke="#42260D" stroke-width="3"/>
+                            <circle cx="-80" cy="80" r="22" fill="#FFEBEE" stroke="#C0392B" stroke-width="2.5"/><text x="-80" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#C0392B">H</text>
+                            <circle cx="80" cy="80" r="22" fill="#FFEBEE" stroke="#C0392B" stroke-width="2.5"/><text x="80" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#C0392B">H</text>
+                            <text x="-112" y="86" text-anchor="middle" font-size="14" fill="#C0392B" font-weight="700">&delta;+</text>
+                            <text x="112" y="86" text-anchor="middle" font-size="14" fill="#C0392B" font-weight="700">&delta;+</text>
+                            <path d="M -28 44 A 40 40 0 0 0 28 44" fill="none" stroke="#DDA25E" stroke-width="1.5"/>
+                            <text y="66" text-anchor="middle" font-size="11" fill="#BC6C26">104.5&deg;</text>
+                            <text x="-58" y="34" text-anchor="end" font-size="10" fill="#42260D">polar covalent</text>
+                        </g>
+                        <!-- H-bond to molecule 2 -->
+                        <line x1="260" y1="192" x2="260" y2="232" stroke="#39864E" stroke-width="3" stroke-dasharray="6 5"/>
+                        <text x="300" y="216" font-size="11" fill="#39864E" font-weight="700">hydrogen</text>
+                        <text x="300" y="229" font-size="11" fill="#39864E" font-weight="700">bond</text>
+                        <g transform="translate(260,262)">
+                            <circle r="26" fill="#E8EAF6" stroke="#3949AB" stroke-width="2"/><text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#3949AB">O</text>
+                            <text x="-36" y="-8" text-anchor="middle" font-size="12" fill="#3949AB" font-weight="700">&delta;&minus;</text>
+                            <line x1="-18" y1="18" x2="-40" y2="30" stroke="#42260D" stroke-width="2.5"/><line x1="18" y1="18" x2="40" y2="30" stroke="#42260D" stroke-width="2.5"/>
+                            <circle cx="-50" cy="34" r="13" fill="#FFEBEE" stroke="#C0392B" stroke-width="2"/><text x="-50" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#C0392B">H</text>
+                            <circle cx="50" cy="34" r="13" fill="#FFEBEE" stroke="#C0392B" stroke-width="2"/><text x="50" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#C0392B">H</text>
+                        </g>
+                        <text x="60" y="270" text-anchor="middle" font-size="10" fill="#4A4A4A">&delta;+ H of one molecule</text>
+                        <text x="60" y="283" text-anchor="middle" font-size="10" fill="#4A4A4A">&harr; &delta;&minus; O of the next</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Properties of water &mdash; and the scientific explanation for each</h2>
+        </div>
+
+        <div class="card">
+            <p>Every row below is the same argument: <em>polarity &rarr; hydrogen bonds &rarr; property &rarr; why life needs it</em>. If a short-paragraph question asks you to explain a property, give all four links in the chain.</p>
+        </div>
+
+        <div class="concept-list">
+            <div class="concept-item">
+                <div class="concept-visual"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#21442B"/><g fill="#E6BC84"><circle cx="20" cy="20" r="6"/><circle cx="44" cy="20" r="6"/><circle cx="32" cy="40" r="6"/><circle cx="14" cy="46" r="6"/><circle cx="50" cy="46" r="6"/></g><g stroke="#E6BC84" stroke-width="1.5" stroke-dasharray="2 2"><line x1="20" y1="20" x2="44" y2="20"/><line x1="20" y1="20" x2="32" y2="40"/><line x1="44" y1="20" x2="32" y2="40"/><line x1="32" y1="40" x2="14" y2="46"/><line x1="32" y1="40" x2="50" y2="46"/></g></svg></div>
+                <div class="concept-body"><div class="concept-label">Cohesion (water sticks to water) &rarr; surface tension</div><p>Hydrogen bonds pull water molecules toward each other, so the surface behaves like a stretched skin. <strong>Why it matters:</strong> insects walk on ponds; water moves up a plant as a continuous column (each molecule drags the next one up) &mdash; that's how trees get water to their leaves.</p></div>
+            </div>
+            <div class="concept-item">
+                <div class="concept-visual"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#DDA25E"/><rect x="26" y="8" width="12" height="48" fill="#F5E4CC" stroke="#42260D" stroke-width="2"/><path d="M 28 30 Q 32 22 36 30" fill="#3949AB"/><rect x="28" y="30" width="8" height="24" fill="#3949AB"/></svg></div>
+                <div class="concept-body"><div class="concept-label">Adhesion (water sticks to other things) &rarr; capillary action</div><p>Polar water molecules are attracted to other polar or charged surfaces (glass, cellulose in plant cell walls). <strong>Why it matters:</strong> water climbs narrow tubes against gravity &mdash; the meniscus in a straw, water moving through soil and through the xylem of plants.</p></div>
+            </div>
+            <div class="concept-item">
+                <div class="concept-visual"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#8B5E3C"/><circle cx="32" cy="32" r="9" fill="#F5E4CC"/><text x="32" y="36" text-anchor="middle" font-size="10" font-weight="700" fill="#8B5E3C">Na+</text><g fill="#E8EAF6"><circle cx="32" cy="12" r="5"/><circle cx="50" cy="22" r="5"/><circle cx="50" cy="42" r="5"/><circle cx="32" cy="52" r="5"/><circle cx="14" cy="42" r="5"/><circle cx="14" cy="22" r="5"/></g></svg></div>
+                <div class="concept-body"><div class="concept-label">Universal solvent</div><p>Water dissolves ionic and polar substances because its charged ends pull them apart and surround them (see the NaCl diagram below). <strong>Why it matters:</strong> every chemical reaction in a cell happens in water; blood carries dissolved nutrients, gases, and waste; the cell's interior is a water-based solution.</p></div>
+            </div>
+            <div class="concept-item">
+                <div class="concept-visual"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#21442B"/><rect x="14" y="14" width="36" height="36" rx="4" fill="none" stroke="#E6BC84" stroke-width="2"/><path d="M 20 44 L 28 30 L 36 38 L 44 22" stroke="#E6BC84" stroke-width="2.5" fill="none"/></svg></div>
+                <div class="concept-body"><div class="concept-label">High specific heat (resists temperature change)</div><p>To warm water you first have to break hydrogen bonds, which absorbs a lot of energy; to cool it, bonds re-form and release energy. <strong>Why it matters:</strong> oceans and lakes stay at stable temperatures, organisms (which are mostly water) don't overheat or freeze easily, and sweating cools you because evaporating water carries away lots of heat.</p></div>
+            </div>
+            <div class="concept-item">
+                <div class="concept-visual"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#DDA25E"/><rect x="8" y="36" width="48" height="20" fill="#3949AB"/><rect x="14" y="22" width="36" height="16" rx="3" fill="#F5E4CC" stroke="#42260D" stroke-width="2"/></svg></div>
+                <div class="concept-body"><div class="concept-label">Ice is less dense than liquid water (ice floats)</div><p>When water freezes, hydrogen bonds lock the molecules into a rigid hexagonal lattice that holds them <em>farther apart</em> than in the liquid. <strong>Why it matters:</strong> ice floats and insulates the water below, so lakes don't freeze solid and aquatic life survives winter. Almost every other substance is denser as a solid.</p></div>
+            </div>
+            <div class="concept-item">
+                <div class="concept-visual"><svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#8B5E3C"/><path d="M 16 10 C 30 20, 34 44, 48 54 M 48 10 C 34 20, 30 44, 16 54" stroke="#F5E4CC" stroke-width="3" fill="none"/><g stroke="#F5E4CC" stroke-width="1.5" stroke-dasharray="2 2"><line x1="24" y1="22" x2="40" y2="22"/><line x1="28" y1="32" x2="36" y2="32"/><line x1="24" y1="42" x2="40" y2="42"/></g></svg></div>
+                <div class="concept-body"><div class="concept-label">Stabilizes the structures of proteins and DNA</div><p>Hydrogen bonds between bases hold the two strands of DNA together, and hydrogen bonds fold proteins into their functional shapes. Because each bond is weak, the strands can unzip for copying and proteins can flex &mdash; but many bonds together are strong. <strong>Why it matters:</strong> proteins and DNA are "the building blocks of cells."</p></div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>How water dissolves salt (solvent, solute, solution)</h2>
+        </div>
+
+        <div class="card">
+            <div class="highlight-box">
+                <p><strong>Solvent</strong> = the substance doing the dissolving (H&#8322;O). &nbsp;<strong>Solute</strong> = the substance being dissolved (NaCl, sugar). &nbsp;<strong>Solution</strong> = solute evenly mixed in solvent (salt water).</p>
+            </div>
+            <p>Table salt is an ionic compound: Na&#8314; ions and Cl&#8315; ions locked together. Drop it in water and water's partial charges pull the crystal apart: the <strong>&delta;&minus; oxygen ends</strong> of water surround each <strong>Na&#8314;</strong>, and the <strong>&delta;+ hydrogen ends</strong> surround each <strong>Cl&#8315;</strong>. Each ion ends up in a shell of water molecules (a "hydration shell"), and the salt has dissolved. Sugar dissolves the same way &mdash; it's not ionic, but its many polar O&ndash;H groups hydrogen-bond with water. Oils and fats won't dissolve because they're nonpolar: nothing for water to grab.</p>
+        </div>
+
+        <div class="fig">
+            <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+                <!-- beaker -->
+                <path d="M 60 40 L 60 290 Q 60 305 75 305 L 425 305 Q 440 305 440 290 L 440 40" fill="#EEF2FA" stroke="#4A4A4A" stroke-width="2.5"/>
+                <line x1="60" y1="70" x2="440" y2="70" stroke="#3949AB" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <!-- Na+ surrounded by O ends -->
+                <g transform="translate(170,150)">
+                    <circle r="26" fill="#FFEBEE" stroke="#C0392B" stroke-width="2.5"/><text y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#C0392B">Na&#8314;</text>
+                    <g font-size="12" font-weight="700" fill="#3949AB" text-anchor="middle">
+                        <text x="0" y="-42">O&delta;&minus;</text><text x="44" y="-18">O&delta;&minus;</text><text x="44" y="30">O&delta;&minus;</text><text x="0" y="56">O&delta;&minus;</text><text x="-44" y="30">O&delta;&minus;</text><text x="-44" y="-18">O&delta;&minus;</text>
+                    </g>
+                    <g font-size="9" fill="#C0392B" text-anchor="middle"><text x="0" y="-58">H H</text><text x="58" y="-30">H H</text><text x="58" y="44">H H</text><text x="0" y="70">H H</text><text x="-58" y="44">H H</text><text x="-58" y="-30">H H</text></g>
+                </g>
+                <!-- Cl- surrounded by H ends -->
+                <g transform="translate(330,205)">
+                    <circle r="30" fill="#E8EAF6" stroke="#3949AB" stroke-width="2.5"/><text y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#3949AB">Cl&#8315;</text>
+                    <g font-size="12" font-weight="700" fill="#C0392B" text-anchor="middle">
+                        <text x="0" y="-46">H&delta;+</text><text x="46" y="-20">H&delta;+</text><text x="46" y="32">H&delta;+</text><text x="0" y="60">H&delta;+</text><text x="-46" y="32">H&delta;+</text><text x="-46" y="-20">H&delta;+</text>
+                    </g>
+                    <g font-size="9" fill="#3949AB" text-anchor="middle"><text x="0" y="-62">O</text><text x="62" y="-32">O</text><text x="62" y="46">O</text><text x="0" y="74">O</text><text x="-62" y="46">O</text><text x="-62" y="-32">O</text></g>
+                </g>
+                <text x="250" y="60" text-anchor="middle" font-size="12" fill="#3949AB">solvent = H&#8322;O</text>
+                <text x="130" y="280" text-anchor="middle" font-size="11" fill="#4A4A4A">&delta;&minus; oxygen ends face Na&#8314;</text>
+                <text x="330" y="297" text-anchor="middle" font-size="11" fill="#4A4A4A">&delta;+ hydrogen ends face Cl&#8315;</text>
+                <!-- right side text -->
+                <g font-size="13" fill="#42260D">
+                    <text x="490" y="70" font-weight="700" font-size="15">Solute = NaCl (or sugar)</text>
+                    <text x="490" y="100">1. NaCl crystal = Na&#8314; and Cl&#8315; held by ionic bonds</text>
+                    <text x="490" y="128">2. Water's &delta;&minus; O is attracted to Na&#8314;</text>
+                    <text x="490" y="156">3. Water's &delta;+ H is attracted to Cl&#8315;</text>
+                    <text x="490" y="184">4. Attractions outcompete the ionic bond;</text>
+                    <text x="510" y="204">ions separate and get surrounded</text>
+                    <text x="490" y="232">5. Result: a solution &mdash; ions spread evenly</text>
+                    <text x="490" y="272" font-weight="700" fill="#21442B">Na&#8314; 2, 8 &nbsp;&nbsp; Cl&#8315; 2, 8, 8 &mdash; both full shells</text>
+                    <text x="490" y="298" font-size="12" fill="#4A4A4A">"Like dissolves like": polar dissolves polar/ionic; nonpolar (oil) does not.</text>
+                </g>
+            </svg>
+            <p class="caption">Each dissolved ion ends up in a "hydration shell" of water molecules: Na&#8314; among the oxygen ends, Cl&#8315; among the hydrogen ends.</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <h2>Model short-paragraph answers</h2>
+        </div>
+
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>"Explain why water is a polar molecule and why that matters for life."</h3>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Model answer</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p>Water (H&#8322;O) is made of one oxygen atom covalently bonded to two hydrogen atoms. Oxygen's nucleus (8 protons) attracts the shared electrons much more strongly than hydrogen's (1 proton), so the electrons spend more time near the oxygen. This gives the oxygen a partial negative charge and each hydrogen a partial positive charge; because the molecule is bent, the charges don't cancel, so water is polar. The partial charges let water molecules form hydrogen bonds with each other and with other polar or charged substances. Hydrogen bonding gives water the properties life depends on: it dissolves the ions and polar molecules cells need (universal solvent), it resists temperature change so organisms and oceans stay stable (high specific heat), it is cohesive and adhesive so it moves up through plants, and ice floats so lakes don't freeze solid. Hydrogen bonds also hold DNA strands together and fold proteins. Without polarity, none of this would happen &mdash; life wouldn't exist without this bond.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>"Compare ionic, covalent, and hydrogen bonds."</h3>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Model answer</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p>An ionic bond forms when one atom completely transfers one or more electrons to another, usually a metal giving to a nonmetal. The atom that loses electrons becomes a positive cation and the one that gains becomes a negative anion, and the opposite charges attract (NaCl). A covalent bond forms when two nonmetal atoms share electrons so both fill their valence shells, making a molecule. If the electrons are shared equally the bond is nonpolar (Cl&#8322;, O&#8322;); if one atom pulls harder the bond is polar and the atoms carry partial charges (the H&ndash;O bonds in water). A hydrogen bond is not a bond within a molecule but a weak attraction between the partially positive hydrogen of one polar molecule and the partially negative oxygen, nitrogen, or fluorine of another. Individually hydrogen bonds are weak and easily broken, but together they hold water molecules to each other and stabilize DNA and proteins.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>"Explain what happens when salt dissolves in water."</h3>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Model answer</button>
+            <div class="example-body">
+                <div class="highlight-box">
+                    <p>Salt (NaCl) is an ionic compound made of Na&#8314; and Cl&#8315; ions. Water is the solvent and salt is the solute. Because water is polar, the partially negative oxygen ends of water molecules are attracted to the positive sodium ions and the partially positive hydrogen ends are attracted to the negative chloride ions. These attractions pull the ions away from the crystal, and each ion becomes surrounded by a shell of water molecules. The ions spread evenly through the water, forming a solution. This works because water is polar; a nonpolar liquid like oil could not pull the ions apart.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: KEY TERMS ═══ -->
+    <div id="tab-terms" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Glossary</h2>
+        </div>
+        <div class="card"><p>Fill-in-the-blank questions want these exact words. The Flashcards tab drills them.</p></div>
+
+        <h3 class="sub">Atomic structure</h3>
+        <table class="compare-table">
+            <tr><th style="width:220px">Term</th><th>Definition</th></tr>
+            <tr><td>Atom</td><td>The smallest unit of an element; a nucleus of protons and neutrons surrounded by electrons.</td></tr>
+            <tr><td>Proton</td><td>Positively charged particle in the nucleus. The number of protons = the atomic number and defines the element.</td></tr>
+            <tr><td>Neutron</td><td>Neutral (uncharged) particle in the nucleus. Neutrons = mass number &minus; atomic number.</td></tr>
+            <tr><td>Electron</td><td>Negatively charged particle orbiting the nucleus in shells. In a neutral atom, electrons = protons.</td></tr>
+            <tr><td>Atomic number</td><td>Number of protons in an atom.</td></tr>
+            <tr><td>Atomic weight / mass number</td><td>Protons + neutrons (electrons weigh almost nothing).</td></tr>
+            <tr><td>Electron shell</td><td>An energy level around the nucleus; shell <em>n</em> holds at most 2<em>n</em>&#178; electrons (2, 8, 18...).</td></tr>
+            <tr><td>Valence shell / valence electrons</td><td>The outermost occupied shell and the electrons in it; the only electrons involved in bonding.</td></tr>
+            <tr><td>Octet rule</td><td>Atoms react so as to end up with 8 electrons in the valence shell (2 for H and He).</td></tr>
+            <tr><td>Ion</td><td>An atom that has gained or lost electrons and therefore has a net charge.</td></tr>
+            <tr><td>Cation</td><td>A positively charged ion; formed when an atom loses electrons (Na&#8314;).</td></tr>
+            <tr><td>Anion</td><td>A negatively charged ion; formed when an atom gains electrons (Cl&#8315;).</td></tr>
+        </table>
+
+        <h3 class="sub">Bonding</h3>
+        <table class="compare-table">
+            <tr><th style="width:220px">Term</th><th>Definition</th></tr>
+            <tr><td>Chemical bond</td><td>An attraction that holds atoms together, formed so that atoms achieve full valence shells.</td></tr>
+            <tr><td>Ionic bond</td><td>The complete transfer of one or more electrons from one atom to another, producing oppositely charged ions that attract; metal + nonmetal.</td></tr>
+            <tr><td>Electrostatic force</td><td>The attraction between opposite charges (or repulsion between like charges) that holds an ionic bond together.</td></tr>
+            <tr><td>Covalent bond</td><td>A bond in which two atoms share one or more pairs of electrons; forms molecules; nonmetal + nonmetal.</td></tr>
+            <tr><td>Single / double / triple bond</td><td>Covalent bonds sharing 1 / 2 / 3 pairs, i.e. 2 / 4 / 6 electrons (H&ndash;O&ndash;H; O=C=O; N&equiv;N).</td></tr>
+            <tr><td>Nonpolar covalent bond</td><td>Electrons shared equally between two atoms; no charges (Cl&#8322;, O&#8322;, H&#8322;, CO&#8322;, CH&#8324;, lipids).</td></tr>
+            <tr><td>Polar covalent bond</td><td>Electrons shared unequally &mdash; one atom pulls them closer; partial charges (&delta;+ and &delta;&minus;) on the atoms (H&ndash;O in water).</td></tr>
+            <tr><td>Polarity / polar molecule</td><td>A difference in electrical charge between different parts of a molecule; a molecule with a partially positive part and a partially negative part.</td></tr>
+            <tr><td>Partial charge (&delta;)</td><td>A charge smaller than a full +1 or &minus;1, caused by unequal sharing rather than transfer.</td></tr>
+            <tr><td>Electronegativity</td><td>How strongly an atom pulls shared electrons toward itself. O, N, F are strong; H, C are weak.</td></tr>
+            <tr><td>Hydrogen bond</td><td>A weak attraction between the &delta;+ hydrogen of one polar molecule and the &delta;&minus; O, N or F of another molecule; between water molecules; stabilizes DNA and proteins.</td></tr>
+            <tr><td>Molecule</td><td>Two or more atoms held together by covalent bonds (H&#8322;O, O&#8322;, CO&#8322;).</td></tr>
+            <tr><td>Compound</td><td>A substance made of two or more different elements bonded together (H&#8322;O, NaCl). O&#8322; is a molecule but not a compound.</td></tr>
+        </table>
+
+        <h3 class="sub">Water and solutions</h3>
+        <table class="compare-table">
+            <tr><th style="width:220px">Term</th><th>Definition</th></tr>
+            <tr><td>Cohesion</td><td>Attraction between molecules of the same substance (water to water) via hydrogen bonds.</td></tr>
+            <tr><td>Adhesion</td><td>Attraction between water molecules and a different substance (water to glass, to plant cell walls).</td></tr>
+            <tr><td>Surface tension</td><td>The "skin" on water's surface caused by cohesion; lets insects walk on water.</td></tr>
+            <tr><td>Capillary action</td><td>Water climbing a narrow tube due to adhesion + cohesion; moves water through plants and soil.</td></tr>
+            <tr><td>Specific heat</td><td>The energy needed to raise a substance's temperature; water's is very high because hydrogen bonds must be broken first.</td></tr>
+            <tr><td>Density of ice</td><td>Ice is less dense than liquid water because hydrogen bonds hold frozen molecules in an open lattice; ice floats and insulates.</td></tr>
+            <tr><td>Solvent</td><td>The substance that does the dissolving (water, the "universal solvent").</td></tr>
+            <tr><td>Solute</td><td>The substance that gets dissolved (NaCl, sugar).</td></tr>
+            <tr><td>Solution</td><td>A uniform mixture of solute dissolved in solvent (salt water).</td></tr>
+            <tr><td>Hydroxyl group (&minus;OH)</td><td>An oxygen&ndash;hydrogen group; polar; found on sugars and alcohols, which is why they dissolve in water.</td></tr>
+            <tr><td>Hydrophilic / hydrophobic</td><td>"Water-loving" (polar or charged; dissolves) / "water-fearing" (nonpolar like oils and lipids; does not dissolve).</td></tr>
+        </table>
+    </div>
+
+    <!-- ═══ TAB: FLASHCARDS ═══ -->
+    <div id="tab-flashcards" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Flashcards</h2>
+        </div>
+        <div class="card">
+            <p>Click the card (or press <strong>space</strong>) to flip. <strong>&larr; &rarr;</strong> to move. Mark each card <strong>Got it</strong> or <strong>Still learning</strong>, then filter to drill the misses. <strong>Definition first</strong> reverses the deck for fill-in-the-blank practice.</p>
+        </div>
+        <div class="fc-wrap">
+            <div class="fc-controls">
+                <select id="fc-cat" onchange="fcRebuild()"><option value="all">All categories</option></select>
+                <select id="fc-filter" onchange="fcRebuild()">
+                    <option value="all">All cards</option>
+                    <option value="learning">Still learning only</option>
+                    <option value="unmarked">Unmarked only</option>
+                    <option value="known">Got it only</option>
+                </select>
+                <button class="mini-btn" onclick="fcShuffle()">&#128256; Shuffle</button>
+                <button class="mini-btn" id="fc-reverse-btn" onclick="fcToggleReverse()">&#8644; Definition first</button>
+                <div class="spacer"></div>
+                <span class="fc-progress" id="fc-progress">Card 1 of 1</span>
+            </div>
+            <div class="fc-stage">
+                <div class="fc-card" id="fc-card" onclick="fcFlip()">
+                    <div class="fc-face fc-front">
+                        <span class="fc-cat" id="fc-front-cat"></span><span class="fc-status" id="fc-front-status"></span>
+                        <div class="fc-term" id="fc-front-text"></div>
+                        <span class="fc-hint">click or press space to flip</span>
+                    </div>
+                    <div class="fc-face fc-back">
+                        <span class="fc-cat" id="fc-back-cat"></span><span class="fc-status" id="fc-back-status"></span>
+                        <div class="fc-def" id="fc-back-text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="fc-nav">
+                <button class="mini-btn" onclick="fcPrev()">&#9664; Prev</button>
+                <button class="mini-btn red" onclick="fcMark('learning')">&#10007; Still learning</button>
+                <button class="mini-btn green" onclick="fcMark('known')">&#10003; Got it</button>
+                <button class="mini-btn" onclick="fcNext()">Next &#9654;</button>
+            </div>
+            <div class="fc-summary">
+                <div class="stat"><div class="lbl">In this deck</div><div class="val" id="st-total">0</div></div>
+                <div class="stat"><div class="lbl">Got it</div><div class="val g" id="st-known">0</div></div>
+                <div class="stat"><div class="lbl">Still learning</div><div class="val r" id="st-learning">0</div></div>
+                <div class="stat"><div class="lbl">Unmarked</div><div class="val" id="st-unmarked">0</div></div>
+            </div>
+            <div style="margin-top:14px;"><button class="mini-btn" onclick="fcReset()">Reset marks</button></div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>All terms, organized by category</h2>
+        </div>
+        <div class="card"><p>Click any term to jump to its card. Marked cards show a green (got it) or red (still learning) edge.</p></div>
+        <div id="fc-sheet"></div>
+    </div>
+
+    <!-- ═══ TAB: ATOM BUILDER ═══ -->
+    <div id="tab-builder" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Atom visualizer</h2>
+        </div>
+        <div class="card"><p>Pick an element. The Bohr model draws itself, and the panel shows the numbers you'd be asked for. Toggle the ion button to see what happens to the electrons when it reaches a full shell.</p></div>
+        <div class="drill-wrap">
+            <div class="el-grid" id="el-grid"></div>
+            <div class="atom-wrap">
+                <div class="atom-svg" id="atom-svg"></div>
+                <div>
+                    <div class="fact-row" id="atom-facts"></div>
+                    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="mini-btn" id="ion-btn" onclick="atomToggleIon()">Show as ion</button>
+                    </div>
+                    <div id="atom-note" class="idea-box" style="margin-top:12px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Find p, e, n &mdash; drill</h2>
+        </div>
+        <div class="card"><p>You're shown a periodic-table box (atomic number top-left, mass number bottom). Fill in protons, electrons, neutrons, the shell arrangement, and the number of valence electrons. Type shells as numbers separated by commas, like <code>2,8,1</code>.</p></div>
+        <div class="drill-wrap">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                <span class="fc-progress" id="dr-progress">Element 1 of 10</span>
+                <span class="fc-progress" id="dr-score">Score: 0 / 0</span>
+            </div>
+            <div class="two-col" style="align-items:center;">
+                <div style="text-align:center;" id="dr-card"></div>
+                <div>
+                    <div class="drill-in"><label>Protons</label><input id="dr-p" type="number" placeholder="?"></div>
+                    <div class="drill-in"><label>Electrons (neutral)</label><input id="dr-e" type="number" placeholder="?"></div>
+                    <div class="drill-in"><label>Neutrons</label><input id="dr-n" type="number" placeholder="?"></div>
+                    <div class="drill-in"><label>Shells (e.g. 2,8,1)</label><input id="dr-sh" type="text" placeholder="?"></div>
+                    <div class="drill-in"><label>Valence electrons</label><input id="dr-v" type="number" placeholder="?"></div>
+                </div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+                <button class="mini-btn primary" id="dr-check" onclick="drCheck()">Check</button>
+                <button class="mini-btn" id="dr-next" onclick="drNext()" disabled>Next element &#9654;</button>
+                <button class="mini-btn" onclick="drRestart()">Restart</button>
+            </div>
+            <div class="drill-fb" id="dr-fb"></div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB: SELF-QUIZ ═══ -->
+    <div id="tab-quiz" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>Self-quiz &mdash; four question formats</h2>
+        </div>
+        <div class="card"><p>Multiple choice, true/false, fill-in-the-blank (type the word and press Check &mdash; spelling counts, capitalization doesn't), and short-paragraph prompts with a checklist of points a full-credit answer should hit. Shuffled on load.</p></div>
+        <div class="score-bar">
+            <span>Score:</span><span class="big" id="quiz-score">0 / 0</span>
+            <span id="quiz-pct" style="color:var(--text-medium);"></span>
+            <div style="flex:1"></div>
+            <button class="mini-btn" onclick="quizReset()">Reset quiz</button>
+        </div>
+        <div id="quiz-container"></div>
+    </div>
+
+</div><!-- end container -->
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: The Chemistry of Life &mdash; Atoms, Bonds &amp; Water</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+/* ───────────── Tabs & toggles ───────────── */
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0 });
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function() { MathJax.typeset(); }, 50);
+}
+function toggleSolution(btn) { toggleExample(btn); }
+function shuffleArr(a){ for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+/* ───────────── Element data ───────────── */
+var ELEMENTS = [
+  {sym:"H", name:"Hydrogen", z:1, a:1, w:"1.008", ion:0, type:"nonmetal", note:"1 electron, 0 neutrons. Shares its electron in covalent bonds (H&#8322;O, CH&#8324;). Its valence shell is full at 2, not 8."},
+  {sym:"He", name:"Helium", z:2, a:4, w:"4.003", ion:0, type:"noble", note:"First shell full with 2 electrons. Noble gas: does not bond."},
+  {sym:"Li", name:"Lithium", z:3, a:7, w:"6.94", ion:1, type:"metal", note:"2, 1. Loses its single valence electron to become Li&#8314;."},
+  {sym:"C", name:"Carbon", z:6, a:12, w:"12.011", ion:0, type:"nonmetal", note:"2, 4. Halfway to a full shell, so it shares: four covalent bonds. The backbone of every biomolecule."},
+  {sym:"N", name:"Nitrogen", z:7, a:14, w:"14.007", ion:-3, type:"nonmetal", note:"2, 5. Needs 3 more; in N&#8322; two nitrogens share 3 pairs (triple bond). In biology it's usually covalent (proteins, DNA)."},
+  {sym:"O", name:"Oxygen", z:8, a:16, w:"15.999", ion:-2, type:"nonmetal", note:"2, 6. Needs 2 more: forms two covalent bonds (H&#8322;O) or gains 2 to become O&#178;&#8315;. A strong electron puller &mdash; the reason water is polar."},
+  {sym:"F", name:"Fluorine", z:9, a:19, w:"18.998", ion:-1, type:"nonmetal", note:"2, 7. Needs 1: gains an electron to become F&#8315; (as in NaF) or shares one (H&ndash;F, a polar bond that can hydrogen-bond)."},
+  {sym:"Ne", name:"Neon", z:10, a:20, w:"20.180", ion:0, type:"noble", note:"2, 8. Full octet. Noble gas: does not react. Na&#8314;, F&#8315; and O&#178;&#8315; all have neon's electron arrangement."},
+  {sym:"Na", name:"Sodium", z:11, a:23, w:"22.990", ion:1, type:"metal", note:"2, 8, 1. Gives away 1 electron &rarr; Na&#8314; (11 p&#8314;, 10 e&#8315;). Metal + nonmetal Cl &rarr; ionic NaCl."},
+  {sym:"Mg", name:"Magnesium", z:12, a:24, w:"24.305", ion:2, type:"metal", note:"2, 8, 2. Loses 2 electrons &rarr; Mg&#178;&#8315;... careful: Mg&#178;&#8314;. Center of the chlorophyll molecule."},
+  {sym:"Al", name:"Aluminum", z:13, a:27, w:"26.982", ion:3, type:"metal", note:"2, 8, 3. Loses 3 &rarr; Al&#179;&#8314;."},
+  {sym:"Si", name:"Silicon", z:14, a:28, w:"28.086", ion:0, type:"nonmetal", note:"2, 8, 4. Like carbon, shares 4 electrons in covalent bonds. p = 14, e = 14, n = 28 &minus; 14 = 14."},
+  {sym:"P", name:"Phosphorus", z:15, a:31, w:"30.974", ion:-3, type:"nonmetal", note:"2, 8, 5. Covalent in biology: the phosphate groups in DNA's backbone and in ATP."},
+  {sym:"S", name:"Sulfur", z:16, a:32, w:"32.06", ion:-2, type:"nonmetal", note:"2, 8, 6. Gains 2 &rarr; S&#178;&#8315;, or shares 2. Found in some amino acids."},
+  {sym:"Cl", name:"Chlorine", z:17, a:35, w:"35.45", ion:-1, type:"nonmetal", note:"2, 8, 7. Gains 1 &rarr; Cl&#8315; (17 p&#8314;, 18 e&#8315;). Two chlorines share equally &rarr; nonpolar Cl&#8322;."},
+  {sym:"Ar", name:"Argon", z:18, a:40, w:"39.948", ion:0, type:"noble", note:"2, 8, 8. Full. Noble gas &mdash; K&#8314;, Ca&#178;&#8314; and Cl&#8315; all have argon's arrangement."},
+  {sym:"K", name:"Potassium", z:19, a:39, w:"39.098", ion:1, type:"metal", note:"2, 8, 8, 1. The 4th shell starts before the 3rd reaches 18. Loses 1 &rarr; K&#8314; (nerve signals!)."},
+  {sym:"Ca", name:"Calcium", z:20, a:40, w:"40.078", ion:2, type:"metal", note:"2, 8, 8, 2. Loses 2 &rarr; Ca&#178;&#8314; (bones, muscle contraction)."},
+  {sym:"Co", name:"Cobalt", z:27, a:59, w:"58.933", ion:2, type:"metal", note:"p = 27, e = 27, n = 59 &minus; 27 = 32. Its shells fill in a more complicated order (a transition metal), so the drill only asks p/e/n for it."}
+];
+ELEMENTS[9].note = "2, 8, 2. Loses 2 electrons &rarr; Mg&#178;&#8314; (12 p&#8314;, 10 e&#8315;). At the center of the chlorophyll molecule.";
+function shellsFor(z){ var caps=[2,8,8,2], out=[]; caps.forEach(function(c){ if (z>0){ out.push(Math.min(c,z)); z-=c; } }); return out; }
+function sup(n){ var map={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}; return String(n).split('').map(function(c){return map[c]||c;}).join(''); }
+function ionLabel(el){ if (!el.ion) return el.sym; var n=Math.abs(el.ion); return el.sym + (n>1?sup(n):'') + (el.ion>0?'⁺':'⁻'); }
+
+/* ───────────── Atom visualizer ───────────── */
+var atomIdx = 8, atomIon = false;
+function atomInit(){
+    var g = document.getElementById('el-grid');
+    ELEMENTS.forEach(function(el, i){
+        var b = document.createElement('button'); b.className = 'el-btn' + (i===atomIdx?' active':'');
+        b.innerHTML = el.sym + '<small>' + el.z + '</small>'; b.onclick = function(){ atomIdx = i; atomIon = false; atomRender(); };
+        g.appendChild(b);
+    });
+    atomRender();
+}
+function atomToggleIon(){ atomIon = !atomIon; atomRender(); }
+function atomRender(){
+    var el = ELEMENTS[atomIdx];
+    document.querySelectorAll('.el-btn').forEach(function(b,i){ b.classList.toggle('active', i===atomIdx); });
+    var ionBtn = document.getElementById('ion-btn');
+    ionBtn.style.display = (el.ion && el.z<=20) ? '' : 'none';
+    ionBtn.textContent = atomIon ? 'Show neutral atom' : 'Show as ion (' + ionLabel(el) + ')';
+    ionBtn.classList.toggle('green', atomIon);
+    var e = el.z - (atomIon ? el.ion : 0);
+    var sh = el.z<=20 ? shellsFor(e) : null;
+    // SVG
+    var R = 138, svg = '<svg viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">';
+    var nShells = sh ? sh.length : 4, radii = [];
+    for (var i=0;i<nShells;i++) radii.push(38 + i*((R-38)/Math.max(nShells-1,1)));
+    if (nShells===1) radii=[70];
+    svg += '<g transform="translate(160,152)">';
+    radii.forEach(function(r){ svg += '<circle r="'+r+'" fill="none" stroke="#DDA25E" stroke-width="2"/>'; });
+    svg += '<circle r="28" fill="#21442B"/><text y="6" text-anchor="middle" fill="white" font-size="16" font-weight="700">'+ (atomIon?ionLabel(el):el.sym) +'</text>';
+    if (sh){
+        sh.forEach(function(cnt, si){
+            var r = radii[si], isLast = (si===sh.length-1);
+            var showSlots = isLast && !atomIon && el.type!=='noble';
+            var cap = (si===0?2:8), slots = showSlots ? cap : cnt;
+            for (var k=0;k<slots;k++){
+                var ang = -Math.PI/2 + k*(2*Math.PI/slots);
+                var cx=(r*Math.cos(ang)).toFixed(1), cy=(r*Math.sin(ang)).toFixed(1);
+                if (k<cnt) svg += '<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="'+((isLast && !atomIon)?'#C0392B':'#BC6C26')+'"/>';
+                else svg += '<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="none" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="3 2"/>';
+            }
+        });
+    } else {
+        svg += '<text y="60" text-anchor="middle" font-size="12" fill="#4A4A4A">' + el.z + ' electrons in 4 shells</text><text y="78" text-anchor="middle" font-size="11" fill="#4A4A4A">(transition metal &mdash; filling order beyond this unit)</text>';
+    }
+    svg += '</g><text x="160" y="326" text-anchor="middle" font-size="12" fill="#42260D" font-weight="700">' + el.name + (atomIon?' ion':'') + (sh? ' &mdash; ' + sh.join(', ') : '') + '</text></svg>';
+    document.getElementById('atom-svg').innerHTML = svg;
+    // facts
+    var n = el.a - el.z, charge = atomIon ? el.ion : 0;
+    var val = sh ? sh[sh.length-1] : '&mdash;';
+    var shN = el.z<=20 ? shellsFor(el.z) : null, valN = shN ? shN[shN.length-1] : '&mdash;';
+    var f = '';
+    f += '<div class="fact"><div class="lbl">Atomic number</div><div class="val">' + el.z + '</div></div>';
+    f += '<div class="fact"><div class="lbl">Mass number</div><div class="val">' + el.a + ' <small>(' + el.w + ')</small></div></div>';
+    f += '<div class="fact"><div class="lbl">Protons</div><div class="val">' + el.z + '</div></div>';
+    f += '<div class="fact"><div class="lbl">Neutrons = ' + el.a + ' &minus; ' + el.z + '</div><div class="val">' + n + '</div></div>';
+    f += '<div class="fact"><div class="lbl">Electrons</div><div class="val">' + e + (atomIon ? ' <small>(' + (el.ion>0?'lost ':'gained ') + Math.abs(el.ion) + ')</small>' : '') + '</div></div>';
+    f += '<div class="fact"><div class="lbl">Net charge</div><div class="val">' + (charge===0?'0 (neutral)':(charge>0?'+':'')+charge) + '</div></div>';
+    f += '<div class="fact"><div class="lbl">Shells</div><div class="val">' + (sh? sh.join(', ') : 'complex') + '</div></div>';
+    f += '<div class="fact"><div class="lbl">Valence electrons</div><div class="val">' + (atomIon ? '8 (full)' : val) + '</div></div>';
+    document.getElementById('atom-facts').innerHTML = f;
+    var tendency = el.type==='noble' ? 'Full valence shell &rarr; does not bond.' : (el.ion>0 ? 'Metal with ' + valN + ' valence electron' + (valN>1?'s':'') + ' &rarr; loses ' + el.ion + ' &rarr; <strong>cation ' + ionLabel(el) + '</strong> (ionic bonds with nonmetals).' : (el.ion<0 ? 'Nonmetal with ' + valN + ' valence electrons &rarr; gains ' + (-el.ion) + ' &rarr; <strong>anion ' + ionLabel(el) + '</strong>, or shares ' + (-el.ion) + ' pair' + (el.ion<-1?'s':'') + ' covalently.' : 'Shares electrons in covalent bonds.'));
+    document.getElementById('atom-note').innerHTML = '<p><strong>' + el.name + ':</strong> ' + el.note + '</p><p>' + tendency + '</p>';
+}
+
+/* ───────────── p/e/n drill ───────────── */
+var drOrder=[], drPos=0, drScore=0, drAsked=0;
+function drRestart(){ drOrder = shuffleArr(ELEMENTS.map(function(_,i){return i;})).slice(0,10); drPos=0; drScore=0; drAsked=0; drRender(); }
+function drRender(){
+    var el = ELEMENTS[drOrder[drPos]];
+    document.getElementById('dr-progress').textContent = 'Element ' + (drPos+1) + ' of ' + drOrder.length;
+    document.getElementById('dr-score').textContent = 'Score: ' + drScore + ' / ' + drAsked;
+    document.getElementById('dr-card').innerHTML = '<div class="elcard"><div class="z">' + el.z + '</div><div class="sym">' + el.sym + '</div><div class="mass">' + el.w + '</div></div><p style="font-size:13px; margin:6px 0 0;">' + el.name + ' &mdash; round the mass to <strong>' + el.a + '</strong></p>';
+    ['dr-p','dr-e','dr-n','dr-sh','dr-v'].forEach(function(id){ var i=document.getElementById(id); i.value=''; i.className=''; i.disabled=false; });
+    var shellsAsk = el.z<=20;
+    document.getElementById('dr-sh').disabled = !shellsAsk; document.getElementById('dr-v').disabled = !shellsAsk;
+    document.getElementById('dr-sh').placeholder = shellsAsk ? '?' : 'not asked for this element';
+    document.getElementById('dr-v').placeholder = shellsAsk ? '?' : 'n/a';
+    document.getElementById('dr-fb').innerHTML=''; document.getElementById('dr-check').disabled=false; document.getElementById('dr-next').disabled=true;
+}
+function drCheck(){
+    var el = ELEMENTS[drOrder[drPos]], sh = el.z<=20 ? shellsFor(el.z) : null;
+    var checks = [['dr-p', String(el.z), 'Protons = atomic number = ' + el.z],
+                  ['dr-e', String(el.z), 'Electrons = protons = ' + el.z + ' (neutral atom)'],
+                  ['dr-n', String(el.a-el.z), 'Neutrons = ' + el.a + ' &minus; ' + el.z + ' = ' + (el.a-el.z)]];
+    if (sh){ checks.push(['dr-sh', sh.join(','), 'Shells: ' + sh.join(', ') + ' (fill 2, then 8, then 8)']); checks.push(['dr-v', String(sh[sh.length-1]), 'Valence electrons = electrons in the last shell = ' + sh[sh.length-1]]); }
+    var right=0, lines=[];
+    checks.forEach(function(c){
+        var inp = document.getElementById(c[0]); var v = (inp.value||'').replace(/\s+/g,'');
+        var ok = v === c[1]; inp.className = ok?'ok':'bad'; inp.disabled = true;
+        if (ok) right++; else lines.push(c[2] + (v ? ' &mdash; you wrote ' + v : ' &mdash; blank'));
+    });
+    document.getElementById('dr-sh').disabled = true; document.getElementById('dr-v').disabled = true;
+    drAsked += checks.length; drScore += right;
+    document.getElementById('dr-score').textContent = 'Score: ' + drScore + ' / ' + drAsked;
+    var tend = el.type==='noble' ? 'Full shell &mdash; no ion.' : (el.ion ? 'Likely ion: <strong>' + ionLabel(el) + '</strong> (' + (el.ion>0?'loses ':'gains ') + Math.abs(el.ion) + ').' : 'Shares electrons (covalent).');
+    document.getElementById('dr-fb').innerHTML = '<div class="' + (right===checks.length?'idea-box':'warning-box') + '"><p><strong>' + right + ' of ' + checks.length + ' correct.</strong>' + (lines.length ? '<br>' + lines.join('<br>') : '') + '<br>' + tend + '</p></div>';
+    document.getElementById('dr-check').disabled = true; document.getElementById('dr-next').disabled = false;
+}
+function drNext(){
+    drPos++;
+    if (drPos >= drOrder.length){
+        var pct = drAsked ? Math.round(100*drScore/drAsked) : 0;
+        document.getElementById('dr-card').innerHTML = '<div class="idea-box"><p><strong>Round complete:</strong> ' + drScore + ' / ' + drAsked + ' (' + pct + '%). Restart for a new set of 10.</p></div>';
+        ['dr-p','dr-e','dr-n','dr-sh','dr-v'].forEach(function(id){ var i=document.getElementById(id); i.value=''; i.className=''; i.disabled=true; });
+        document.getElementById('dr-fb').innerHTML=''; document.getElementById('dr-next').disabled=true; document.getElementById('dr-check').disabled=true;
+        document.getElementById('dr-progress').textContent='Done'; return;
+    }
+    drRender();
+}
+
+/* ───────────── Flashcards ───────────── */
+var FC = [
+  {c:"Atoms", t:"Atomic number", d:"The number of <strong>protons</strong> in an atom. It defines the element. In a neutral atom it also equals the number of electrons."},
+  {c:"Atoms", t:"Atomic weight / mass number", d:"<strong>Protons + neutrons.</strong> Electrons weigh almost nothing. Round the decimal on the periodic table to the nearest whole number."},
+  {c:"Atoms", t:"How do you find the number of neutrons?", d:"<strong>Mass number &minus; atomic number.</strong> Nitrogen: 14 &minus; 7 = 7. Silicon: 28 &minus; 14 = 14. Cobalt: 59 &minus; 27 = 32. Hydrogen: 1 &minus; 1 = 0."},
+  {c:"Atoms", t:"What does each particle determine?", d:"<strong>Protons</strong> &rarr; which element it is (atomic number). <strong>Electrons</strong> &rarr; the charge (neutral atom vs. ion). <strong>Neutrons</strong> &rarr; the isotope / mass. Changing protons makes a different element; changing electrons makes an ion; changing neutrons makes an isotope of the same element."},
+  {c:"Atoms", t:"Proton / neutron / electron charges", d:"Proton <strong>+1</strong> (in nucleus), neutron <strong>0</strong> (in nucleus), electron <strong>&minus;1</strong> (in shells around the nucleus)."},
+  {c:"Atoms", t:"Electron shell formula", d:"Shell <em>n</em> holds at most <strong>2<em>n</em>&#178;</strong> electrons: 1st = 2, 2nd = 8, 3rd = 18. For elements up to #20, draw them as 2, 8, 8, 2 (the 3rd shell takes 8 before the 4th starts)."},
+  {c:"Atoms", t:"Valence shell / valence electrons", d:"The <strong>outermost occupied shell</strong> and the electrons in it. These are the only electrons involved in bonding. Na has 1, Cl has 7, O has 6, C has 4."},
+  {c:"Atoms", t:"Octet rule", d:"Atoms react so as to end up with <strong>8 valence electrons</strong> (a full outer shell); H and He are full at 2. This is <em>why</em> atoms bond."},
+  {c:"Atoms", t:"Shell arrangements: Na, Cl, O, C, N, Ne", d:"Na <strong>2, 8, 1</strong> &bull; Cl <strong>2, 8, 7</strong> &bull; O <strong>2, 6</strong> &bull; C <strong>2, 4</strong> &bull; N <strong>2, 5</strong> &bull; Ne <strong>2, 8</strong>"},
+  {c:"Atoms", t:"Ion", d:"An atom that has <strong>gained or lost electrons</strong> and so has a net charge. Protons never change; only electrons move."},
+  {c:"Atoms", t:"Cation", d:"A <strong>positive</strong> ion, formed when an atom <strong>loses</strong> electrons. Na &rarr; Na&#8314; (11 p&#8314;, 10 e&#8315;). Metals form cations. (The \"t\" in ca<strong>t</strong>ion looks like a +.)"},
+  {c:"Atoms", t:"Anion", d:"A <strong>negative</strong> ion, formed when an atom <strong>gains</strong> electrons. Cl &rarr; Cl&#8315; (17 p&#8314;, 18 e&#8315;). Nonmetals form anions. (<strong>A n</strong>egative ion.)"},
+  {c:"Atoms", t:"Why does sodium end up positive?", d:"It gives away its 1 valence electron to get a full shell (2, 8). It still has <strong>11 protons but only 10 electrons</strong> &rarr; net charge +1."},
+  {c:"Atoms", t:"Metals vs. nonmetals in bonding", d:"<strong>Metals</strong> (1&ndash;3 valence e&#8315;) lose electrons &rarr; cations. <strong>Nonmetals</strong> (5&ndash;7 valence e&#8315;) gain or share &rarr; anions or covalent bonds. 4 valence e&#8315; (C, Si) share. Noble gases (8) don't react."},
+  {c:"Bonds", t:"Ionic bond", d:"The <strong>complete transfer</strong> of one or more electrons from one atom to another, creating oppositely charged ions that attract each other by electrostatic force. <strong>Metal + nonmetal.</strong> Full charges. NaCl, NaF."},
+  {c:"Bonds", t:"Covalent bond", d:"Two atoms <strong>share</strong> one or more pairs of electrons so both fill their valence shells. <strong>Nonmetal + nonmetal.</strong> Makes molecules. Strongest bond in biology. H&#8322;O, O&#8322;, CO&#8322;, CH&#8324;."},
+  {c:"Bonds", t:"Single, double, triple covalent bonds", d:"Share <strong>2 / 4 / 6</strong> electrons (1 / 2 / 3 pairs). Water H&ndash;O&ndash;H (single), carbon dioxide O=C=O (double), nitrogen N&equiv;N (triple)."},
+  {c:"Bonds", t:"Nonpolar covalent bond", d:"Electrons shared <strong>equally</strong>; <strong>no charges</strong> on the atoms. Identical atoms are always nonpolar: Cl&#8322;, O&#8322;, H&#8322;. Also CO&#8322;, CH&#8324;, lipids."},
+  {c:"Bonds", t:"Polar covalent bond", d:"Electrons shared <strong>unequally</strong> &mdash; one atom pulls them closer &mdash; giving <strong>partial charges</strong> (&delta;+ and &delta;&minus;). H&ndash;O in water, H&ndash;Cl, H&ndash;N, H&ndash;F."},
+  {c:"Bonds", t:"What does &delta; (delta) mean?", d:"A <strong>partial charge</strong> &mdash; less than a full +1 or &minus;1. It comes from unequal sharing in a polar covalent bond, not from transfer. Oxygen in water is &delta;&minus;; each hydrogen is &delta;+."},
+  {c:"Bonds", t:"Which atoms pull electrons hardest?", d:"<strong>Oxygen, nitrogen, fluorine</strong> (high electronegativity). Hydrogen and carbon are weak pullers. So H&ndash;O, H&ndash;N, H&ndash;F are polar; C&ndash;H is essentially nonpolar."},
+  {c:"Bonds", t:"Hydrogen bond", d:"A <strong>weak attraction between molecules</strong>: the &delta;+ hydrogen of one polar molecule is attracted to the &delta;&minus; oxygen (or N, F) of another. Between water molecules. Individually weak and easily broken; strong in numbers. Stabilizes DNA and proteins."},
+  {c:"Bonds", t:"Bond INSIDE a water molecule vs. bond BETWEEN water molecules", d:"Inside: <strong>polar covalent</strong> (H&ndash;O). Between: <strong>hydrogen bond</strong> (&delta;+ H of one molecule to &delta;&minus; O of the next)."},
+  {c:"Bonds", t:"Rank the three bonds by strength", d:"<strong>Covalent</strong> (strongest) &gt; <strong>ionic</strong> (strong, but falls apart in water) &gt; <strong>hydrogen</strong> (weak; about 1/20 of a covalent bond)."},
+  {c:"Bonds", t:"Molecule vs. compound", d:"<strong>Molecule</strong>: atoms held by covalent bonds (O&#8322;, H&#8322;O). <strong>Compound</strong>: two or more <em>different</em> elements bonded (H&#8322;O, NaCl). O&#8322; is a molecule but not a compound; NaCl is a compound but not a molecule (it's ionic)."},
+  {c:"Water", t:"Why is water polar?", d:"Oxygen (8 protons) pulls the shared electrons much harder than hydrogen (1 proton), so O is <strong>&delta;&minus;</strong> and each H is <strong>&delta;+</strong>. The molecule is <strong>bent</strong> (~104.5&deg;), so the charges don't cancel."},
+  {c:"Water", t:"Polarity / polar molecule", d:"A <strong>difference in electrical charge</strong> between different parts of a molecule. A polar molecule has a partially positive part and a partially negative part. Water is the classic example."},
+  {c:"Water", t:"Cohesion", d:"Water molecules <strong>stick to each other</strong> via hydrogen bonds. Causes <strong>surface tension</strong> (insects walk on water) and lets water move up plants as a continuous column."},
+  {c:"Water", t:"Adhesion", d:"Water <strong>sticks to other polar or charged surfaces</strong> (glass, plant cell walls). With cohesion it causes <strong>capillary action</strong> &mdash; water climbing narrow tubes against gravity."},
+  {c:"Water", t:"Universal solvent", d:"Water dissolves <strong>ionic and polar</strong> substances because its partial charges pull them apart and surround them. Every cellular reaction happens in water; blood carries dissolved nutrients and wastes."},
+  {c:"Water", t:"High specific heat", d:"Water <strong>resists temperature change</strong> because energy must first break hydrogen bonds. Oceans and body temperatures stay stable; sweating cools you because evaporating water carries away lots of heat."},
+  {c:"Water", t:"Why does ice float?", d:"Hydrogen bonds lock frozen water into an open <strong>lattice that holds molecules farther apart</strong> than in the liquid, so ice is <strong>less dense</strong>. Floating ice insulates the water below and lakes don't freeze solid."},
+  {c:"Water", t:"How do hydrogen bonds matter for DNA and proteins?", d:"Hydrogen bonds hold the <strong>two strands of DNA</strong> together and <strong>fold proteins</strong> into their working shapes. Weak enough to open (DNA unzips to copy), strong enough in numbers to hold."},
+  {c:"Water", t:"Solvent / solute / solution", d:"<strong>Solvent</strong> does the dissolving (H&#8322;O). <strong>Solute</strong> gets dissolved (NaCl, sugar). <strong>Solution</strong> = solute evenly spread in solvent (salt water)."},
+  {c:"Water", t:"How does salt dissolve in water?", d:"Water's <strong>&delta;&minus; oxygen ends surround Na&#8314;</strong> and its <strong>&delta;+ hydrogen ends surround Cl&#8315;</strong>. The attractions pull the ions off the crystal and each ion ends up in a shell of water molecules."},
+  {c:"Water", t:"Why won't oil dissolve in water?", d:"Oils and lipids are <strong>nonpolar</strong> (C&ndash;H bonds share almost equally), so water has no charges to grab onto. \"Like dissolves like\": polar dissolves polar and ionic; nonpolar dissolves nonpolar."},
+  {c:"Water", t:"Hydroxyl group (&minus;OH)", d:"An <strong>O&ndash;H group</strong> on a molecule. It's polar, so molecules with &minus;OH groups (sugar, alcohols) hydrogen-bond with water and dissolve."},
+  {c:"Water", t:"Hydrophilic vs. hydrophobic", d:"<strong>Hydrophilic</strong> = water-loving: polar or charged, dissolves (salt, sugar). <strong>Hydrophobic</strong> = water-fearing: nonpolar, doesn't dissolve (oil, fats)."},
+  {c:"Water", t:"\"Life wouldn't exist without this bond\" &mdash; which bond and why?", d:"The <strong>hydrogen bond</strong>. It gives water cohesion, adhesion, surface tension, high specific heat, floating ice, and solvent power, and it stabilizes DNA and proteins."},
+  {c:"Water", t:"Water molecule numbers", d:"H: 1 proton, 1 electron, 0 neutrons, weight 1.008. O: 8 protons, 8 electrons, 8 neutrons, weight 15.999. H&#8322;O shares <strong>2 electrons per H&ndash;O bond</strong> (single bonds)."}
+];
+var fcMarks = {}, fcDeck = [], fcPos = 0, fcReverse = false, fcFlipped = false;
+function fcInitCats(){ var sel=document.getElementById('fc-cat'), cats=[]; FC.forEach(function(c){ if (cats.indexOf(c.c)<0) cats.push(c.c); }); cats.forEach(function(c){ var o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); }); }
+function fcRebuild(){ var cat=document.getElementById('fc-cat').value, filt=document.getElementById('fc-filter').value; fcDeck=[]; FC.forEach(function(c,i){ if (cat!=='all' && c.c!==cat) return; var m=fcMarks[i]||'unmarked'; if (filt!=='all' && m!==filt) return; fcDeck.push(i); }); fcPos=0; fcFlipped=false; fcRender(); }
+function fcShuffle(){ shuffleArr(fcDeck); fcPos=0; fcFlipped=false; fcRender(); }
+function fcToggleReverse(){ fcReverse=!fcReverse; var b=document.getElementById('fc-reverse-btn'); b.textContent = fcReverse?'⇄ Term first':'⇄ Definition first'; b.classList.toggle('active', fcReverse); fcFlipped=false; fcRender(); }
+function fcRender(){
+    var card=document.getElementById('fc-card'); card.classList.remove('flipped');
+    var total=fcDeck.length, prog=document.getElementById('fc-progress'), ft=document.getElementById('fc-front-text'), bt=document.getElementById('fc-back-text'), fcat=document.getElementById('fc-front-cat'), bcat=document.getElementById('fc-back-cat'), fst=document.getElementById('fc-front-status'), bst=document.getElementById('fc-back-status');
+    if (!total){ prog.textContent='No cards match this filter'; ft.innerHTML='Nothing here &mdash; change the filter'; bt.innerHTML=''; fcat.textContent=''; bcat.textContent=''; fst.className='fc-status'; bst.className='fc-status'; fst.textContent=''; bst.textContent=''; fcStats(); return; }
+    var idx=fcDeck[fcPos], c=FC[idx]; prog.textContent='Card '+(fcPos+1)+' of '+total;
+    var front=fcReverse?c.d:c.t, back=fcReverse?c.t:c.d; ft.innerHTML=front; bt.innerHTML=back;
+    ft.style.fontSize = fcReverse?'17px':(front.length>60?'22px':'30px'); ft.style.fontWeight=fcReverse?'400':'700'; ft.style.fontFamily=fcReverse?"'Inter', sans-serif":"'Switzer', 'Space Grotesk', sans-serif";
+    bt.style.fontSize = fcReverse?'28px':'17px'; bt.style.fontWeight=fcReverse?'700':'400'; bt.style.fontFamily=fcReverse?"'Switzer', 'Space Grotesk', sans-serif":"'Inter', sans-serif";
+    fcat.textContent=c.c; bcat.textContent=c.c; var m=fcMarks[idx];
+    fst.className='fc-status'+(m?' '+m:''); bst.className=fst.className; fst.textContent = m==='known'?'✓ got it':(m==='learning'?'✗ still learning':''); bst.textContent=fst.textContent;
+    fcStats(); if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([card]); }, 30);
+}
+function fcFlip(){ fcFlipped=!fcFlipped; document.getElementById('fc-card').classList.toggle('flipped', fcFlipped); }
+function fcNext(){ if (!fcDeck.length) return; fcPos=(fcPos+1)%fcDeck.length; fcFlipped=false; fcRender(); }
+function fcPrev(){ if (!fcDeck.length) return; fcPos=(fcPos-1+fcDeck.length)%fcDeck.length; fcFlipped=false; fcRender(); }
+function fcMark(m){ if (!fcDeck.length) return; fcMarks[fcDeck[fcPos]]=m; var filt=document.getElementById('fc-filter').value; if (filt!=='all' && filt!==m){ fcDeck.splice(fcPos,1); if (fcPos>=fcDeck.length) fcPos=0; fcFlipped=false; fcRender(); } else fcNext(); fcGridRefresh(); }
+function fcStats(){ var k=0,l=0,u=0; fcDeck.forEach(function(i){ var m=fcMarks[i]; if (m==='known') k++; else if (m==='learning') l++; else u++; }); document.getElementById('st-total').textContent=fcDeck.length; document.getElementById('st-known').textContent=k; document.getElementById('st-learning').textContent=l; document.getElementById('st-unmarked').textContent=u; }
+function fcReset(){ fcMarks={}; fcRebuild(); fcGridRefresh(); }
+function fcGridRefresh(){
+    var sheet=document.getElementById('fc-sheet'); if (!sheet) return; var cats=[]; FC.forEach(function(c){ if (cats.indexOf(c.c)<0) cats.push(c.c); }); var html='';
+    cats.forEach(function(cat,ci){ var tone=['green','gold','brown'][ci%3]; html+='<div class="sheet-cat sheet-'+tone+'"><h3 class="sheet-title">'+cat+'</h3><div class="sheet-grid">';
+        FC.forEach(function(c,i){ if (c.c!==cat) return; var m=fcMarks[i]||''; html+='<div class="sheet-item '+m+'" onclick="fcJumpTo('+i+')"><div class="sheet-term">'+c.t+(m?'<span class="sheet-mark">'+(m==='known'?'✓':'✗')+'</span>':'')+'</div><div class="sheet-def">'+c.d+'</div></div>'; });
+        html+='</div></div>'; });
+    sheet.innerHTML=html; if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([sheet]); }, 30);
+}
+function fcJumpTo(i){ var pos=fcDeck.indexOf(i); if (pos<0){ document.getElementById('fc-cat').value='all'; document.getElementById('fc-filter').value='all'; fcRebuild(); pos=fcDeck.indexOf(i); } fcPos=pos; fcFlipped=false; fcRender(); window.scrollTo({top: document.querySelector('.fc-wrap').offsetTop-80, behavior:'smooth'}); }
+document.addEventListener('keydown', function(e){ if (!document.getElementById('tab-flashcards').classList.contains('active')) return; var tag=(e.target.tagName||'').toLowerCase(); if (tag==='select'||tag==='input'||tag==='textarea') return; if (e.code==='Space'){ e.preventDefault(); fcFlip(); } else if (e.key==='ArrowRight') fcNext(); else if (e.key==='ArrowLeft') fcPrev(); else if (e.key==='1') fcMark('learning'); else if (e.key==='2') fcMark('known'); });
+
+/* ───────────── Quiz (MC, T/F, fill-in, short answer) ───────────── */
+var QUIZ = [
+  // Multiple choice
+  {k:'mc', q:"The atomic number of an element tells you the number of:", o:["neutrons","protons","electron shells","protons + neutrons"], a:1, ex:"Atomic number = protons. It defines the element."},
+  {k:'mc', q:"If an atom gains or loses a proton, what changes?", o:["Its charge only","It becomes a different element","It becomes an isotope","Nothing"], a:1, ex:"Protons define the element. Electrons change the charge (ion); neutrons change the isotope."},
+  {k:'mc', q:"Silicon has atomic number 14 and mass number 28. How many neutrons does it have?", o:["14","28","42","7"], a:0, ex:"Neutrons = mass number &minus; atomic number = 28 &minus; 14 = 14."},
+  {k:'mc', q:"Cobalt: atomic number 27, mass number 59. Protons, electrons, neutrons?", o:["27, 27, 32","27, 32, 27","59, 27, 32","27, 27, 59"], a:0, ex:"p = 27, e = 27 (neutral), n = 59 &minus; 27 = 32."},
+  {k:'mc', q:"The maximum number of electrons in the 2nd shell is:", o:["2","8","18","32"], a:1, ex:"2<em>n</em>&#178; with <em>n</em> = 2: 2 &times; 4 = 8."},
+  {k:'mc', q:"Sodium's electron arrangement is 2, 8, 1. To get a full outer shell it will most likely:", o:["gain 7 electrons","share 1 electron","lose 1 electron","gain 1 electron"], a:2, ex:"Losing 1 is far easier than gaining 7. Na becomes Na&#8314; with 2, 8."},
+  {k:'mc', q:"An atom that has gained electrons and carries a negative charge is called a(n):", o:["cation","anion","isotope","molecule"], a:1, ex:"Anion = negative ion (gains electrons). Cation = positive (loses)."},
+  {k:'mc', q:"Na&#8314; has how many protons and electrons?", o:["11 and 11","10 and 11","11 and 10","12 and 11"], a:2, ex:"Protons never change (11). It lost one electron: 10. Net +1."},
+  {k:'mc', q:"Which bond involves the complete transfer of electrons from one atom to another?", o:["covalent","hydrogen","ionic","polar covalent"], a:2, ex:"Ionic = transfer; covalent = share; hydrogen = attraction between molecules."},
+  {k:'mc', q:"Ionic bonds typically form between:", o:["two nonmetals","two metals","a metal and a nonmetal","two noble gases"], a:2, ex:"A metal gives electrons, a nonmetal takes them (Na + Cl)."},
+  {k:'mc', q:"In a covalent bond, atoms:", o:["transfer electrons","share electrons","lose protons","gain neutrons"], a:1, ex:"Covalent = sharing pairs of electrons so both atoms fill their valence shells."},
+  {k:'mc', q:"A double covalent bond shares how many electrons?", o:["1","2","4","6"], a:2, ex:"Single = 2, double = 4, triple = 6. CO&#8322; (O=C=O) has two double bonds."},
+  {k:'mc', q:"Which molecule contains a triple bond?", o:["H&#8322;O","CO&#8322;","N&#8322;","Cl&#8322;"], a:2, ex:"N&equiv;N shares 6 electrons. Each nitrogen has 5 valence electrons and needs 3 more."},
+  {k:'mc', q:"Which is an example of a NONPOLAR covalent bond?", o:["H&ndash;O in water","H&ndash;Cl","Cl&ndash;Cl","H&ndash;F"], a:2, ex:"Two identical atoms pull equally &rarr; nonpolar. The others involve a strong puller (O, Cl, F) and hydrogen."},
+  {k:'mc', q:"In a polar covalent bond, electrons are:", o:["transferred completely","shared equally","shared unequally","not shared at all"], a:2, ex:"Unequal sharing gives partial charges (&delta;+ and &delta;&minus;)."},
+  {k:'mc', q:"The bond that holds one water molecule to another water molecule is a(n):", o:["ionic bond","polar covalent bond","hydrogen bond","nonpolar covalent bond"], a:2, ex:"Between molecules = hydrogen bond. The H&ndash;O bond <em>inside</em> a molecule is polar covalent."},
+  {k:'mc', q:"Why is the hydrogen in a water molecule slightly positive?", o:["It gained an electron","Its electron is pulled toward the oxygen","It has an extra proton","It lost a neutron"], a:1, ex:"Oxygen pulls the shared electron away from hydrogen (polarity), exposing hydrogen's positive nucleus."},
+  {k:'mc', q:"Which is the weakest type of bond?", o:["ionic","covalent","hydrogen","double covalent"], a:2, ex:"Individual hydrogen bonds are weak and easily broken &mdash; about 1/20 of a covalent bond."},
+  {k:'mc', q:"Hydrogen bonds are important to life because they:", o:["hold protons in the nucleus","stabilize the structures of DNA and proteins","form the backbone of carbohydrates","are the strongest bonds in cells"], a:1, ex:"Hydrogen bonds stabilize DNA and proteins, and life wouldn't exist without them."},
+  {k:'mc', q:"When NaCl dissolves in water, the Na&#8314; ions are surrounded by:", o:["the &delta;+ hydrogen ends of water","the &delta;&minus; oxygen ends of water","Cl&#8315; ions","other Na&#8314; ions"], a:1, ex:"Opposites attract: the partially negative oxygen faces the positive sodium ion; the &delta;+ hydrogens face Cl&#8315;."},
+  {k:'mc', q:"In salt water, water is the ____ and salt is the ____.", o:["solute; solvent","solvent; solute","solution; solute","solvent; solution"], a:1, ex:"Solvent does the dissolving; solute gets dissolved; the mix is the solution."},
+  {k:'mc', q:"Ice floats because:", o:["ice has fewer hydrogen bonds than liquid water","hydrogen bonds hold frozen molecules farther apart, making ice less dense","ice contains more oxygen","cold water is heavier"], a:1, ex:"The rigid hydrogen-bonded lattice in ice spaces molecules farther apart than in the liquid."},
+  {k:'mc', q:"Water resists temperature change (high specific heat) because:", o:["it is a nonpolar molecule","energy must first break hydrogen bonds","it has a low mass","oxygen is a heavy atom"], a:1, ex:"Heat goes into breaking hydrogen bonds before the temperature rises."},
+  {k:'mc', q:"Which of these will NOT dissolve in water?", o:["NaCl","sugar","olive oil","NaF"], a:2, ex:"Oil is nonpolar &mdash; water's charges have nothing to grab. Like dissolves like."},
+  {k:'mc', q:"Insects can walk on water because of:", o:["adhesion","surface tension from cohesion","low specific heat","the density of ice"], a:1, ex:"Hydrogen bonds pull surface molecules together into a 'skin'."},
+  // True / false
+  {k:'tf', q:"In a neutral atom, the number of electrons equals the number of protons.", a:true, ex:"True. Charges cancel. Only ions have unequal numbers."},
+  {k:'tf', q:"Two atoms with the same number of protons but different numbers of neutrons are different elements.", a:false, ex:"False. Same protons = same element; different neutrons = different isotopes of that element."},
+  {k:'tf', q:"A hydrogen atom has one neutron.", a:false, ex:"False. Hydrogen has 1 proton, 1 electron, and 0 neutrons (mass 1.008)."},
+  {k:'tf', q:"The third electron shell can hold a maximum of 18 electrons.", a:true, ex:"True: 2(3)&#178; = 18. (For elements up to #20 it takes 8 before the 4th shell starts.)"},
+  {k:'tf', q:"A cation is formed when an atom gains electrons.", a:false, ex:"False. Cations form when atoms LOSE electrons (positive). Gaining electrons makes an anion."},
+  {k:'tf', q:"When sodium becomes Na&#8314;, it loses a proton.", a:false, ex:"False. Protons never change in bonding &mdash; it loses an electron."},
+  {k:'tf', q:"Covalent bonds form between a metal and a nonmetal.", a:false, ex:"False. That's ionic. Covalent bonds form between nonmetals."},
+  {k:'tf', q:"In a nonpolar covalent bond, electrons are shared equally and the atoms carry no charge.", a:true, ex:"True. Cl&#8322;, O&#8322;, H&#8322; are examples."},
+  {k:'tf', q:"Oxygen carries a partial negative charge in a water molecule.", a:true, ex:"True. Oxygen pulls the shared electrons closer (&delta;&minus;); the hydrogens are &delta;+."},
+  {k:'tf', q:"A hydrogen bond is the bond between the hydrogen and oxygen inside a single water molecule.", a:false, ex:"False. That's a polar covalent bond. Hydrogen bonds are between molecules."},
+  {k:'tf', q:"A single hydrogen bond is stronger than a covalent bond.", a:false, ex:"False. Individual hydrogen bonds are weak and easily broken; covalent bonds are the strongest."},
+  {k:'tf', q:"Water is called the universal solvent because it dissolves ionic and polar substances.", a:true, ex:"True. Its partial charges pull ions and polar molecules apart and surround them."},
+  {k:'tf', q:"Ice is denser than liquid water.", a:false, ex:"False. Ice is LESS dense (open hydrogen-bonded lattice), which is why it floats."},
+  {k:'tf', q:"Lipids are nonpolar and do not dissolve in water.", a:true, ex:"True. C&ndash;H bonds share nearly equally, so fats are nonpolar (hydrophobic)."},
+  // Fill in the blank
+  {k:'fib', q:"The number of protons in an atom is its ______ number.", a:["atomic"], ex:"Atomic number = protons."},
+  {k:'fib', q:"The outermost shell of an atom is called the ______ shell.", a:["valence"], ex:"Valence shell; its electrons are the valence electrons."},
+  {k:'fib', q:"A positively charged ion is a ______.", a:["cation"], ex:"Cation (loses electrons). Think ca-t-ion: the t is a plus sign."},
+  {k:'fib', q:"A negatively charged ion is an ______.", a:["anion"], ex:"Anion (gains electrons): a negative ion."},
+  {k:'fib', q:"The formula for the maximum number of electrons in shell <em>n</em> is ______.", a:["2n^2","2n2","2n²","2 n^2","2*n^2"], ex:"2<em>n</em>&#178;: 2, 8, 18, ..."},
+  {k:'fib', q:"An ______ bond is the complete transfer of electrons from one atom to another.", a:["ionic"], ex:"Ionic bond &mdash; metal to nonmetal, producing a cation and an anion."},
+  {k:'fib', q:"A ______ bond forms when two atoms share electrons.", a:["covalent"], ex:"Covalent bond &mdash; nonmetal + nonmetal, makes a molecule."},
+  {k:'fib', q:"A covalent bond in which electrons are shared unequally is called ______ covalent.", a:["polar"], ex:"Polar covalent gives partial charges. Equal sharing = nonpolar."},
+  {k:'fib', q:"The weak attraction between the &delta;+ hydrogen of one water molecule and the &delta;&minus; oxygen of another is a ______ bond.", a:["hydrogen"], ex:"Hydrogen bond."},
+  {k:'fib', q:"A molecule with a partially positive end and a partially negative end is called a ______ molecule.", a:["polar"], ex:"Polar molecule &mdash; water is the classic example."},
+  {k:'fib', q:"A triple covalent bond shares ______ electrons.", a:["6","six"], ex:"Three pairs = 6 electrons (N&equiv;N)."},
+  {k:'fib', q:"In salt water, the water is the ______.", a:["solvent"], ex:"Solvent does the dissolving; NaCl is the solute."},
+  {k:'fib', q:"In salt water, the salt is the ______.", a:["solute"], ex:"Solute = substance being dissolved."},
+  {k:'fib', q:"Water molecules sticking to each other is called ______.", a:["cohesion"], ex:"Cohesion (water to water). Adhesion is water to other things."},
+  {k:'fib', q:"Water molecules sticking to a different surface, like glass, is called ______.", a:["adhesion"], ex:"Adhesion. Cohesion + adhesion = capillary action."},
+  {k:'fib', q:"Oxygen (atomic number 8, mass number 16) has ______ neutrons.", a:["8","eight"], ex:"16 &minus; 8 = 8."},
+  {k:'fib', q:"Chlorine's electron shells are 2, 8, ______.", a:["7","seven"], ex:"Cl has 17 electrons: 2 + 8 + 7."},
+  {k:'fib', q:"Cl&#8315; has 17 protons and ______ electrons.", a:["18","eighteen"], ex:"It gained one: 18 electrons, net charge &minus;1."},
+  // Short answer
+  {k:'sa', q:"Explain why water is a polar molecule.", pts:["Water is H&#8322;O: one oxygen covalently bonded to two hydrogens","Oxygen's nucleus (8 protons) pulls the shared electrons more strongly than hydrogen's (1 proton)","So oxygen is partially negative (&delta;&minus;) and each hydrogen is partially positive (&delta;+)","The molecule is bent, so the charges don't cancel &mdash; one end is + and the other is &minus;"]},
+  {k:'sa', q:"Why are hydrogen bonds important for life on Earth? Give at least three reasons.", pts:["Hydrogen bonds form between water molecules because water is polar","They make water a solvent that dissolves the ions and polar molecules cells need","They give water high specific heat, so oceans and organisms resist temperature change","They cause cohesion/adhesion &rarr; surface tension and water transport in plants","They make ice less dense so it floats and insulates lakes","They stabilize the structure of DNA (holding strands together) and proteins (folding)"]},
+  {k:'sa', q:"Compare ionic and covalent bonds. Include what happens to the electrons, which kinds of atoms are involved, and one example of each.", pts:["Ionic: electrons are completely transferred from one atom to another","Ionic: metal + nonmetal; produces a cation and an anion that attract (e.g., NaCl)","Covalent: electrons are shared between atoms","Covalent: nonmetal + nonmetal; produces a molecule (e.g., H&#8322;O, O&#8322;, CO&#8322;)","Bonus: covalent can be polar (unequal sharing) or nonpolar (equal sharing)"]},
+  {k:'sa', q:"Explain, using sodium and chlorine, how an ionic bond forms and why the ions have the charges they do.", pts:["Na is 2, 8, 1 and Cl is 2, 8, 7","Na gives its 1 valence electron to Cl so both get full outer shells","Na now has 11 protons but 10 electrons &rarr; +1 (cation Na&#8314;)","Cl now has 17 protons but 18 electrons &rarr; &minus;1 (anion Cl&#8315;)","The opposite charges attract each other (electrostatic force) = ionic bond"]},
+  {k:'sa', q:"Describe what happens when table salt (NaCl) is added to water.", pts:["Water is the solvent, NaCl the solute","NaCl is ionic: Na&#8314; and Cl&#8315;","Water is polar: the &delta;&minus; oxygen ends are attracted to Na&#8314;","The &delta;+ hydrogen ends are attracted to Cl&#8315;","The ions are pulled apart and each is surrounded by water molecules, forming a solution"]},
+  {k:'sa', q:"What is the difference between the bond inside a water molecule and the bond between water molecules?", pts:["Inside: H&ndash;O bonds are polar covalent (shared electrons, shared unequally)","Between: hydrogen bonds (attraction of &delta;+ H on one molecule to &delta;&minus; O on another)","Covalent bonds are strong; hydrogen bonds are weak individually but strong in numbers"]}
+];
+var quizScore=0, quizAnswered=0;
+function quizBuild(){
+    var order = shuffleArr(QUIZ.map(function(_,i){return i;}));
+    // keep short-answer prompts at the end, in their own block
+    order = order.filter(function(i){return QUIZ[i].k!=='sa';}).concat(order.filter(function(i){return QUIZ[i].k==='sa';}));
+    var box=document.getElementById('quiz-container'); box.innerHTML=''; quizScore=0; quizAnswered=0; quizUpdate();
+    var labels={mc:'Multiple choice', tf:'True / false', fib:'Fill in the blank', sa:'Short paragraph'};
+    order.forEach(function(qi,n){
+        var q=QUIZ[qi], div=document.createElement('div'); div.className='quiz-q';
+        var html='<div class="qtext"><span class="qnum">'+(n+1)+'</span>'+q.q+'<span class="qtype">'+labels[q.k]+'</span></div>';
+        if (q.k==='mc'){ var L='ABCDE'; q.o.forEach(function(opt,oi){ html+='<button class="opt" onclick="quizAnswer(this,'+qi+','+oi+')"><span class="letter">'+L[oi]+'.</span> '+opt+'</button>'; }); }
+        else if (q.k==='tf'){ html+='<div class="tf-btns"><button class="opt" style="width:auto; padding:10px 28px;" onclick="quizTF(this,'+qi+',true)">True</button><button class="opt" style="width:auto; padding:10px 28px;" onclick="quizTF(this,'+qi+',false)">False</button></div>'; }
+        else if (q.k==='fib'){ html+='<div class="fib"><input type="text" id="fib-'+qi+'" placeholder="type your answer" onkeydown="if(event.key===\'Enter\')quizFIB('+qi+')"> <button class="mini-btn primary" id="fibbtn-'+qi+'" onclick="quizFIB('+qi+')">Check</button></div>'; }
+        else if (q.k==='sa'){ html+='<textarea id="sa-'+qi+'" rows="5" style="width:100%; padding:10px; border:2px solid var(--gold-light); border-radius:8px; font-family:Inter, sans-serif; font-size:14px; background:var(--cream);" placeholder="Write your answer here, then compare to the checklist."></textarea><button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show checklist</button><div class="solution-body"><p style="margin-bottom:6px;"><strong>A full-credit answer should include:</strong></p><ul style="margin-bottom:0;">'+q.pts.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>'; }
+        html+='<div class="explain"></div>'; div.innerHTML=html; box.appendChild(div);
+    });
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 50);
+}
+function quizFinish(wrap, ok, ex){ var e=wrap.querySelector('.explain'); e.className='explain show '+(ok?'ok':'bad'); e.innerHTML=(ok?'<strong>Correct.</strong> ':'<strong>Not quite.</strong> ')+ex; quizAnswered++; if (ok) quizScore++; quizUpdate(); if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([e]); }, 30); }
+function quizAnswer(btn, qi, oi){ var q=QUIZ[qi], wrap=btn.parentElement, opts=wrap.querySelectorAll('.opt'); opts.forEach(function(b){b.disabled=true;}); var ok=oi===q.a; if (ok) btn.classList.add('correct'); else { btn.classList.add('wrong'); opts[q.a].classList.add('correct'); } quizFinish(wrap, ok, q.ex); }
+function quizTF(btn, qi, val){ var q=QUIZ[qi], row=btn.parentElement, wrap=row.parentElement, opts=row.querySelectorAll('.opt'); opts.forEach(function(b){b.disabled=true;}); var ok=val===q.a; if (ok) btn.classList.add('correct'); else { btn.classList.add('wrong'); opts[q.a?0:1].classList.add('correct'); } quizFinish(wrap, ok, q.ex); }
+function norm(s){ return (s||'').toLowerCase().replace(/[^a-z0-9^*²]/g,''); }
+function quizFIB(qi){ var q=QUIZ[qi], inp=document.getElementById('fib-'+qi); if (inp.disabled) return; var v=norm(inp.value); if (!v) return; var ok=q.a.some(function(a){return norm(a)===v;}); inp.className=ok?'ok':'bad'; inp.disabled=true; document.getElementById('fibbtn-'+qi).disabled=true; var wrap=inp.parentElement.parentElement; quizFinish(wrap, ok, (ok?'':'Answer: <strong>'+q.a[0]+'</strong>. ')+q.ex); }
+function quizUpdate(){ var gradable=QUIZ.filter(function(q){return q.k!=='sa';}).length; document.getElementById('quiz-score').textContent=quizScore+' / '+quizAnswered; document.getElementById('quiz-pct').textContent = quizAnswered ? '('+Math.round(100*quizScore/quizAnswered)+'% of answered, '+gradable+' auto-graded + '+(QUIZ.length-gradable)+' short answer)' : '('+gradable+' auto-graded questions + '+(QUIZ.length-gradable)+' short-answer prompts)'; }
+function quizReset(){ quizBuild(); window.scrollTo({top:0}); }
+
+window.addEventListener('DOMContentLoaded', function(){ fcInitCats(); fcRebuild(); fcShuffle(); fcGridRefresh(); atomInit(); drRestart(); quizBuild(); });
+</script>
+</body>
+</html>
