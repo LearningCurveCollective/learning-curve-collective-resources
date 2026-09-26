@@ -295,6 +295,16 @@ h3.sub { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green
 .sa-prompt { font-weight: 600; margin-bottom: 8px; }
 .qtype { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: var(--cream-dark); color: var(--text-medium); margin-left: 8px; vertical-align: middle; }
 @media (max-width: 768px) { .atom-wrap, .fact-row, .drill-in { grid-template-columns: 1fr; } .formula-grid[style] { grid-template-columns: 1fr !important; } }
+
+/* ─── Next / Back navigation at the bottom of every tab ─── */
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+@media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+@media print { .tab-nav { display: none !important; } }
     </style>
 </head>
 <body>
@@ -1434,7 +1444,29 @@ function quizFIB(qi){ var q=QUIZ[qi], inp=document.getElementById('fib-'+qi); if
 function quizUpdate(){ var gradable=QUIZ.filter(function(q){return q.k!=='sa';}).length; document.getElementById('quiz-score').textContent=quizScore+' / '+quizAnswered; document.getElementById('quiz-pct').textContent = quizAnswered ? '('+Math.round(100*quizScore/quizAnswered)+'% of answered, '+gradable+' auto-graded + '+(QUIZ.length-gradable)+' short answer)' : '('+gradable+' auto-graded questions + '+(QUIZ.length-gradable)+' short-answer prompts)'; }
 function quizReset(){ quizBuild(); window.scrollTo({top:0}); }
 
-window.addEventListener('DOMContentLoaded', function(){ fcInitCats(); fcRebuild(); fcShuffle(); fcGridRefresh(); atomInit(); drRestart(); quizBuild(); });
+
+/* ── Next / Back navigation at the bottom of every tab ── */
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', function(){ fcInitCats(); fcRebuild(); fcShuffle(); fcGridRefresh(); atomInit(); drRestart(); quizBuild(); addTabNav(); });
 </script>
 </body>
 </html>
