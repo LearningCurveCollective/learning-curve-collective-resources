@@ -676,7 +676,7 @@ li { margin-bottom: 8px; }
         <div class="section-header"><div class="section-number">&#9998;</div><h2>Flashcard Studier</h2></div>
 
         <div class="card" style="border-left-color:var(--green-dark);">
-            <p style="margin-bottom:12px; font-size:14.5px;"><strong>How it works.</strong> Pick a deck, read the term, say the answer out loud, flip, mark yourself. Anything you miss is saved to the <strong>Missed</strong> deck (it stays saved next time you open this file) until you get it right there. Click any term in the list to jump straight to that card.</p>
+            <p style="margin-bottom:12px; font-size:14.5px;"><strong>How it works.</strong> Pick a deck, read the term, say the answer out loud, flip, mark yourself. Anything you miss is saved to the <strong>Missed</strong> deck (it stays saved next time you open this file) until you get it right there. Click any term in the list to jump straight to that card. Any deck &mdash; including My deck and Missed &mdash; can be downloaded as an Anki file.</p>
             <div class="fc-controls">
                 <div class="fc-ctl-group"><span class="fc-ctl-label">Deck</span>
                     <button class="fc-chip on" data-filter="all" onclick="fcSetFilter('all',this)">All <span class="fc-n" id="fcn-all"></span></button>
@@ -703,6 +703,21 @@ li { margin-bottom: 8px; }
                     <button class="btn-small" onclick="fcRestart()">Restart deck</button>
                     <button class="btn-small" style="background:#8B5E3C;" onclick="fcClearMissed()">Clear missed list</button>
                 </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Anki</span>
+                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('deck')">&#11015; Download this deck for Anki</button>
+                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('all')">&#11015; Download all cards for Anki</button>
+                    <button class="fc-chip" onclick="fcToggleAnkiHelp()">How do I import?</button>
+                </div>
+            </div>
+            <div id="fc-anki-help" style="display:none; margin-top:12px;" class="idea-box">
+                <p style="margin-bottom:8px;"><strong>Importing into Anki (desktop app, free at apps.ankiweb.net).</strong> The download is a plain text file Anki reads directly; formatting and formulas come through.</p>
+                <ol style="margin-bottom:6px;">
+                    <li>Download a deck above. &ldquo;This deck&rdquo; exports whatever is currently selected &mdash; a topic, your <strong>My deck</strong> picks, or just your <strong>Missed</strong> cards.</li>
+                    <li>In Anki: <strong>File &rarr; Import&hellip;</strong> and choose the file.</li>
+                    <li>Anki should auto-detect the tab separator, the deck name, and that HTML is allowed. If it asks: note type <strong>Basic</strong>, field 1 &rarr; Front, field 2 &rarr; Back, field 3 &rarr; Tags, and tick <strong>Allow HTML in fields</strong>.</li>
+                    <li>Click Import. Cards land in a deck called <em>CPSY 1900 :: Lecture 2 Observational Research</em>, tagged by topic so you can filter later.</li>
+                </ol>
+                <p style="margin:0; font-size:13px;">On mobile: import the file on desktop once and sync, or use AnkiDroid&rsquo;s import from a text file. Re-importing the same file later updates rather than duplicates the cards.</p>
             </div>
         </div>
 
@@ -1069,6 +1084,27 @@ function fcPickOne(id, on){ if (on) fcCustomSet[id] = 1; else delete fcCustomSet
 function fcPickTopic(t, on){ FC.filter(function(c){ return c.t===t; }).forEach(function(c){ if (on) fcCustomSet[c.id] = 1; else delete fcCustomSet[c.id]; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
 function fcPickAll(on){ fcCustomSet = {}; if (on) FC.forEach(function(c){ fcCustomSet[c.id] = 1; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
 function fcStudyCustom(){ var btn = document.querySelector('.fc-chip[data-filter="custom"]'); fcSetFilter('custom', btn); document.getElementById('fc-pick-panel').style.display='none'; document.getElementById('fc-pick-btn').classList.remove('on'); }
+/* Anki export: tab-separated text with Anki file headers; $..$ math -> \( .. \) which Anki's MathJax renders */
+var FC_ANKI_DECK = 'CPSY 1900::Lecture 2 Observational Research';
+function fcAnkiField(s){
+    s = String(s).replace(/\$\$([\s\S]+?)\$\$/g, function(_, m){ return '\\[' + m + '\\]'; });
+    s = s.replace(/\$([^$]+?)\$/g, function(_, m){ return '\\(' + m + '\\)'; });
+    return s.replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim();
+}
+function fcExportAnki(scope){
+    var ids = scope === 'all' ? FC.map(function(c){ return c.id; }) : fcDeck.slice();
+    if (!ids.length){ alert('This deck is empty — pick a deck with cards in it first.'); return; }
+    var lines = ['#separator:tab', '#html:true', '#tags column:3', '#deck:' + FC_ANKI_DECK, '#notetype:Basic'];
+    ids.forEach(function(id){ var c = FC[id];
+        var tags = 'CPSY1900 Lec2_Observational ' + (FC_TOPIC[c.t] || c.t).replace(/[^A-Za-z0-9]+/g, '_') + (fcMissedSet[id] ? ' missed' : '');
+        lines.push(fcAnkiField(c.f) + '\t' + fcAnkiField(c.b) + '\t' + tags); });
+    var label = scope === 'all' ? 'all' : (FC_TOPIC[fcFilter] || fcFilter).replace(/[^A-Za-z0-9]+/g, '_');
+    var blob = new Blob([lines.join('\n') + '\n'], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'CPSY1900_Lec2_Observational_anki_' + label + '.txt';
+    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500); fcHaptic();
+}
+function fcToggleAnkiHelp(){ var h = document.getElementById('fc-anki-help'); h.style.display = h.style.display === 'none' ? 'block' : 'none'; }
 document.addEventListener('keydown', function(e) {
     if (!document.getElementById('tab-flash').classList.contains('active')) return;
     if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
