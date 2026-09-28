@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Algebra for Precalc — Interactive Worksheet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <script>
+    window.MathJax = {
+        tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+    <style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC; --copper: #BC6C26;
+    --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+
+/* Header */
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* Tabs — three labeled rows */
+.tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
+.tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.tab-row-label { width:92px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); opacity:0.75; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="study"] { border-color: #21442B; }
+.tab-button[data-group="study"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="study"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="sprint"] { border-color: #BC6C26; }
+.tab-button[data-group="sprint"].active { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="sprint"]:hover { border-color: #BC6C26; background: rgba(188,108,38,0.12); }
+.tab-button[data-group="sprint"].active:hover { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sections */
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+
+/* Cards */
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+
+/* Formula tiles */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin-bottom: 8px; }
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; }
+
+/* Toggles */
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* Technique sections */
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+.technique-section .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.practice-box { background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3); border-radius: 8px; padding: 14px 18px; margin-top: 10px; }
+
+/* Step tables in worked examples */
+.steps { width: 100%; border-collapse: collapse; margin: 8px 0; }
+.steps td { padding: 6px 8px; vertical-align: top; border-bottom: 1px dashed rgba(33,68,43,0.15); }
+.steps td:first-child { width: 44%; color: var(--text-medium); font-size: 13.5px; }
+.steps tr:last-child td { border-bottom: none; }
+
+/* Practice utilities */
+.practice-toolbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.util-btn { border:2px solid var(--gold-light); background:white; color:var(--brown-dark); border-radius:8px; padding:7px 14px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; cursor:pointer; }
+.util-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
+.tech-badge { background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+
+/* Footer */
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 10px; }
+.mjx-container { overflow-x: auto; }
+
+/* Next / Back nav */
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+@media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+@media print { .tab-nav { display: none !important; } }
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-row-label { width:100%; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid { grid-template-columns: 1fr; }
+    .steps td:first-child { width: 40%; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Procedural Algebra for Precalc</h1>
+            <div class="subtitle">INTERACTIVE WORKSHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+           style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">Precalculus &bull; Factoring, Fractions &amp; Exponents</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="tab-row-label">Reference</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Study guide</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('fact', this)">1 Factoring</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('frac', this)">2 Splitting Fractions</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('expo', this)">3 Exponents</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('rat', this)">4 Rational &amp; Radical Expressions</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('calc', this)">5 Calc-Prep Moves</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Practice</span>
+            <button class="tab-button" data-group="sprint" onclick="switchTab('sprint', this)">&#9889; Sprint</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('setA', this)">Set A &middot; Factoring</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('setB', this)">Set B &middot; Fractions</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('setC', this)">Set C &middot; Exponents</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('setD', this)">Set D &middot; Rational</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('setE', this)">Set E &middot; Calc-Prep</button>
+        </div>
+    </div>
+
+<!-- ═══════════════════════ CHEAT SHEET ═══════════════════════ -->
+<div id="tab-cheat" class="tab-content active">
+
+    <!-- === section 1 — Factoring patterns === -->
+    <div class="section-header"><div class="section-number">1</div><h2>Factoring Patterns</h2></div>
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Step 0 — GCF first, always</h4>
+            <p>$$ab + ac = a(b + c)$$</p>
+            <p class="formula-note">Pull out the greatest common factor before looking for any pattern. $3x^3 - 12x = 3x(x^2-4) = 3x(x-2)(x+2)$.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Difference of Squares</h4>
+            <p>$$a^2 - b^2 = (a-b)(a+b)$$</p>
+            <p class="formula-note">Two perfect squares, subtracted. A <em>sum</em> of squares $a^2+b^2$ does not factor over the reals.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Difference of Cubes</h4>
+            <p>$$a^3 - b^3 = (a-b)(a^2 + ab + b^2)$$</p>
+            <p class="formula-note">Short factor keeps the sign; long factor flips it. The trinomial does not factor further.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Sum of Cubes</h4>
+            <p>$$a^3 + b^3 = (a+b)(a^2 - ab + b^2)$$</p>
+            <p class="formula-note"><strong>SOAP:</strong> Same sign, Opposite sign, Always Positive.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Factoring by Grouping (4 terms)</h4>
+            <p>$$ax + ay + bx + by = a(x+y) + b(x+y) = (a+b)(x+y)$$</p>
+            <p class="formula-note">Factor each pair; if the leftover binomials match, pull it out. Check whether the result factors again.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>AC Method (trinomial, $a \ne 1$)</h4>
+            <p>$$ax^2 + bx + c \;\to\; \text{find } m,n:\; mn = ac,\; m+n = b$$</p>
+            <p class="formula-note">Split $bx$ into $mx + nx$, then factor by grouping. Turns any trinomial into a grouping problem.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Perfect Square Trinomials</h4>
+            <p>$$a^2 \pm 2ab + b^2 = (a \pm b)^2$$</p>
+            <p class="formula-note">Check: are the outer terms squares, and is the middle term twice their product?</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Nested patterns</h4>
+            <p>$$x^4 - 16 = (x^2-4)(x^2+4) = (x-2)(x+2)(x^2+4)$$</p>
+            <p class="formula-note">"Completely factored" means keep going until nothing else factors.</p>
+        </div>
+    </div>
+
+    <!-- === section 2 — Fractions === -->
+    <div class="section-header"><div class="section-number">2</div><h2>Splitting &amp; Simplifying Fractions</h2></div>
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Split over a monomial denominator</h4>
+            <p>$$\frac{a + b - c}{d} = \frac{a}{d} + \frac{b}{d} - \frac{c}{d}$$</p>
+            <p class="formula-note">Every term in the numerator gets its own copy of the denominator.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Rewrite as powers of $x$</h4>
+            <p>$$\frac{c}{x^n} = c\,x^{-n} \qquad \sqrt[m]{x^n} = x^{n/m}$$</p>
+            <p class="formula-note">The end goal is a sum of $c\,x^{p}$ terms — the form calculus wants.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Simplify by factoring</h4>
+            <p>$$\frac{x^2 - 9}{x^2 + 5x + 6} = \frac{(x-3)\cancel{(x+3)}}{(x+2)\cancel{(x+3)}} = \frac{x-3}{x+2}$$</p>
+            <p class="formula-note">Factor top and bottom fully, cancel common <em>factors</em>, note the restriction ($x \ne -3$).</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Combine back (common denominator)</h4>
+            <p>$$\frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd}$$</p>
+            <p class="formula-note">Splitting in reverse. Use the LCD when the denominators share factors.</p>
+        </div>
+    </div>
+    <div class="warning-box">
+        <p><strong>Two illegal moves.</strong></p>
+        <p>You can split the <em>numerator</em>, never the denominator: $\dfrac{1}{x+1} \ne \dfrac{1}{x} + 1$.</p>
+        <p>You cancel <em>factors</em>, never terms: $\dfrac{x^2 + 4}{x} \ne x + 4$. (The $x$ divides $x^2$, but it also has to divide $4$.)</p>
+    </div>
+
+    <!-- === section 3 — Exponents === -->
+    <div class="section-header"><div class="section-number">3</div><h2>Rational &amp; Radical Expressions</h2></div>
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Add / subtract with an LCD</h4>
+            <p>$$\frac{3}{x-2} + \frac{2}{x+1} = \frac{3(x+1) + 2(x-2)}{(x-2)(x+1)}$$</p>
+            <p class="formula-note">Factor every denominator first. The LCD is each distinct factor to its highest power — don't just multiply them all.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Complex fraction: clear with the LCD</h4>
+            <p>$$\frac{\frac{1}{x} + \frac{1}{y}}{\frac{1}{x} - \frac{1}{y}} \cdot \frac{xy}{xy} = \frac{y + x}{y - x}$$</p>
+            <p class="formula-note">Multiply top and bottom by the LCD of every small fraction. One step, no stacking.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Conjugates</h4>
+            <p>$$(\sqrt{a} - \sqrt{b})(\sqrt{a} + \sqrt{b}) = a - b$$</p>
+            <p class="formula-note">Multiply by the conjugate over itself to rationalize a denominator — or a numerator (the limit trick).</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Rationalize a numerator</h4>
+            <p>$$\frac{\sqrt{x+h} - \sqrt{x}}{h} = \frac{1}{\sqrt{x+h} + \sqrt{x}}$$</p>
+            <p class="formula-note">The $h$ in the numerator appears after the conjugate multiply and cancels. This is the whole point.</p>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">4</div><h2>Exponent Rules</h2></div>
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Product &amp; Quotient</h4>
+            <p>$$x^m \cdot x^n = x^{m+n} \qquad \frac{x^m}{x^n} = x^{m-n}$$</p>
+            <p class="formula-note">Same base required. $x^2 \cdot y^3$ cannot be combined.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Power rules</h4>
+            <p>$$(x^m)^n = x^{mn} \qquad (xy)^n = x^n y^n \qquad \left(\tfrac{x}{y}\right)^n = \tfrac{x^n}{y^n}$$</p>
+            <p class="formula-note">Powers distribute over multiplication and division — never over $+$ or $-$.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Zero &amp; Negative</h4>
+            <p>$$x^0 = 1 \qquad x^{-n} = \frac{1}{x^n} \qquad \frac{1}{x^{-n}} = x^n$$</p>
+            <p class="formula-note">A negative exponent means "flip it" — it does <em>not</em> make the value negative.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Rational exponents</h4>
+            <p>$$x^{m/n} = \sqrt[n]{x^m} = \left(\sqrt[n]{x}\right)^m$$</p>
+            <p class="formula-note">Root first, then power, for numbers: $27^{2/3} = (\sqrt[3]{27})^2 = 3^2 = 9$.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Same-base equations</h4>
+            <p>$$b^{u} = b^{v} \;\Rightarrow\; u = v \quad (b > 0,\ b \ne 1)$$</p>
+            <p class="formula-note">Rewrite both sides with one base ($4 = 2^2$, $8 = 2^3$, $\tfrac19 = 3^{-2}$), then set exponents equal.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Factor out the lowest power</h4>
+            <p>$$x^{-2} + x^{1} = x^{-2}\left(1 + x^{3}\right)$$</p>
+            <p class="formula-note">Pull out the smallest (most negative) exponent; subtract it from each term. Standard calc-cleanup move.</p>
+        </div>
+    </div>
+
+    <!-- === section 4 — Decision tree === -->
+    <div class="section-header"><div class="section-number">5</div><h2>Calc-Prep Moves</h2></div>
+    <div class="formula-grid">
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Difference quotient</h4>
+            <p>$$\frac{f(x+h) - f(x)}{h}$$</p>
+            <p class="formula-note">Expand $f(x+h)$, subtract <em>all</em> of $f(x)$, factor $h$ out of what's left, cancel. Every term without an $h$ must vanish.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+            <h4>Completing the square</h4>
+            <p>$$x^2 + bx = \left(x + \tfrac{b}{2}\right)^2 - \left(\tfrac{b}{2}\right)^2$$</p>
+            <p class="formula-note">Half the middle coefficient, square it, add and subtract. If $a \ne 1$, factor $a$ out of the $x$-terms first.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+            <h4>Synthetic division by $x - k$</h4>
+            <p>$$\text{bring down, } \times k, \text{ add, repeat}$$</p>
+            <p class="formula-note">Use $k$ (the root), not $-k$. Fill missing powers with $0$. Last number is the remainder; the rest are the quotient's coefficients, one degree lower.</p>
+        </div>
+        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+            <h4>Remainder &amp; Factor Theorems</h4>
+            <p>$$f(x) \div (x - k) \text{ leaves remainder } f(k)$$</p>
+            <p class="formula-note">So $f(k) = 0 \iff (x - k)$ is a factor. Fast way to check a candidate root.</p>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">6</div><h2>Which Factoring Move?</h2></div>
+    <div class="card" style="border-left-color: var(--green-dark); padding: 24px;">
+        <div style="position: relative; padding-left: 28px;">
+            <div style="position: absolute; left: 13px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--green-dark));"></div>
+            <div style="margin-bottom: 14px; background: rgba(221,162,94,0.10); border-radius: 8px; padding: 12px 16px; border-left: 3px solid var(--gold);"><strong>1. GCF?</strong> Pull it out. Then look at what's left.</div>
+            <div style="margin-bottom: 14px; background: rgba(33,68,43,0.06); border-radius: 8px; padding: 12px 16px; border-left: 3px solid var(--green-dark);"><strong>2. Two terms?</strong> Difference of squares $\to$ $(a-b)(a+b)$. Difference / sum of cubes $\to$ SOAP. Sum of squares $\to$ stop.</div>
+            <div style="margin-bottom: 14px; background: rgba(66,38,13,0.06); border-radius: 8px; padding: 12px 16px; border-left: 3px solid #8B5E3C;"><strong>3. Three terms?</strong> Perfect-square check first. Otherwise $a = 1$: find two numbers with product $c$, sum $b$. $a \ne 1$: AC method, then group.</div>
+            <div style="margin-bottom: 14px; background: rgba(221,162,94,0.10); border-radius: 8px; padding: 12px 16px; border-left: 3px solid var(--gold);"><strong>4. Four terms?</strong> Group in pairs (try reordering if the first pairing fails).</div>
+            <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 12px 16px; border-left: 3px solid var(--green-dark);"><strong>5. Done?</strong> Look at each factor again. A leftover $x^2 - 9$ or $x^3 + 8$ still needs factoring.</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ TAB 1 — FACTORING ═══════════════════════ -->
+<div id="tab-fact" class="tab-content">
+
+    <div class="section-header"><div class="section-number">1</div><h2>Difference of Squares</h2></div>
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>$a^2 - b^2 = (a-b)(a+b)$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Identify $a$ and $b$ by taking the square root of each term. Coefficients and variables both count: $9x^2 = (3x)^2$, $25y^2 = (5y)^2$, $x^4 = (x^2)^2$.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Factor completely: $\;9x^2 - 25y^2$ &nbsp;and&nbsp; $x^4 - 16$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Identify $a$ and $b$</td><td>$a = 3x,\; b = 5y$</td></tr>
+                    <tr><td>Apply the pattern</td><td>$$9x^2 - 25y^2 = (3x - 5y)(3x + 5y)$$</td></tr>
+                </table>
+            </div>
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Identify $a$ and $b$</td><td>$a = x^2,\; b = 4$</td></tr>
+                    <tr><td>Apply the pattern</td><td>$x^4 - 16 = (x^2 - 4)(x^2 + 4)$</td></tr>
+                    <tr><td>Check each factor again — $x^2 - 4$ is another difference of squares</td><td>$$\boxed{(x-2)(x+2)(x^2+4)}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">$x^2 + 4$ is a <em>sum</em> of squares — it stays.</p>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Factor completely: $\;(x+1)^2 - 9$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$a = x+1,\; b = 3$. So $(x+1-3)(x+1+3) = \boxed{(x-2)(x+4)}$.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">2</div><h2>Sum &amp; Difference of Cubes</h2></div>
+    <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+        <h3>$a^3 \pm b^3 = (a \pm b)(a^2 \mp ab + b^2)$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Take the cube root of each term to get $a$ and $b$. Then write the two factors using <strong>SOAP</strong>: the binomial has the <strong>S</strong>ame sign as the original, the middle term of the trinomial has the <strong>O</strong>pposite sign, and the last term is <strong>A</strong>lways <strong>P</strong>ositive.</p>
+        <div class="idea-box">Perfect cubes to recognize on sight: $1, 8, 27, 64, 125, 216, 343, 512, 729, 1000$ and $x^3, x^6, x^9$.</div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Factor: $\;8x^3 - 125$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Cube roots</td><td>$a = \sqrt[3]{8x^3} = 2x,\quad b = \sqrt[3]{125} = 5$</td></tr>
+                    <tr><td>Binomial: <strong>S</strong>ame sign</td><td>$(2x - 5)$</td></tr>
+                    <tr><td>Trinomial: $a^2$, <strong>O</strong>pposite sign on $ab$, $b^2$ <strong>A</strong>lways <strong>P</strong>ositive</td><td>$(2x)^2 + (2x)(5) + 5^2 = 4x^2 + 10x + 25$</td></tr>
+                    <tr><td>Result</td><td>$$\boxed{(2x-5)(4x^2+10x+25)}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">Quick check: FOIL-expanding, the middle terms $10x^2 \cdot 2x$-type products cancel, leaving $8x^3 - 125$. ✓</p>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Factor completely: $\;2x^3 + 54$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">GCF first: $2(x^3 + 27)$. Then sum of cubes with $a = x, b = 3$: $\boxed{2(x+3)(x^2 - 3x + 9)}$.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">3</div><h2>Factoring by Grouping</h2></div>
+    <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+        <h3>Four terms: pair, factor, match</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Split the four terms into two pairs. Factor the GCF out of each pair. If both pairs leave the <em>same</em> binomial, factor that binomial out. If they don't match, try a different pairing — or check whether a minus sign needs to be factored out of the second pair.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Factor completely: $\;x^3 + 2x^2 - 9x - 18$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Pair the terms</td><td>$(x^3 + 2x^2) + (-9x - 18)$</td></tr>
+                    <tr><td>Factor each pair (note the $-9$, so the binomial matches)</td><td>$x^2(x + 2) - 9(x + 2)$</td></tr>
+                    <tr><td>Common binomial $\to$ factor it out</td><td>$(x+2)(x^2 - 9)$</td></tr>
+                    <tr><td>Keep going: $x^2 - 9$ is a difference of squares</td><td>$$\boxed{(x+2)(x-3)(x+3)}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — AC method</span></div>
+        <p>Factor: $\;6x^2 + 7x - 20$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>$a = 6,\; b = 7,\; c = -20$</td><td>$ac = -120$</td></tr>
+                    <tr><td>Find $m, n$ with $mn = -120$ and $m + n = 7$</td><td>$m = 15,\; n = -8$</td></tr>
+                    <tr><td>Split the middle term</td><td>$6x^2 + 15x - 8x - 20$</td></tr>
+                    <tr><td>Group and factor each pair</td><td>$3x(2x + 5) - 4(2x + 5)$</td></tr>
+                    <tr><td>Factor out the common binomial</td><td>$$\boxed{(3x-4)(2x+5)}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Factor completely: $\;2x^3 - 3x^2 + 8x - 12$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$x^2(2x - 3) + 4(2x - 3) = \boxed{(2x-3)(x^2+4)}$. The $x^2 + 4$ is a sum of squares — done.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Common slips.</strong></p>
+        <ul style="margin-bottom:0;">
+            <li>Forgetting the GCF, then getting a "wrong" answer that is actually just not finished: $3x^3 - 12x \to 3x(x-2)(x+2)$, not $(3x^2)(x-2)(x+2)$-ish leftovers.</li>
+            <li>Writing $a^3 - b^3 = (a - b)^3$ or $(a-b)(a^2 - ab + b^2)$. The middle sign is <em>opposite</em> the binomial's sign.</li>
+            <li>Trying to factor $x^2 + 9$ as $(x+3)(x-3)$ — that expands to $x^2 - 9$.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════════════════════ TAB 2 — SPLITTING FRACTIONS ═══════════════════════ -->
+<div id="tab-frac" class="tab-content">
+
+    <div class="section-header"><div class="section-number">1</div><h2>Split the Numerator</h2></div>
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>$\dfrac{a + b}{c} = \dfrac{a}{c} + \dfrac{b}{c}$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>When the denominator is a single term (a monomial), every term in the numerator can be written over its own copy of that denominator. Then reduce each piece separately using the quotient rule $\frac{x^m}{x^n} = x^{m-n}$.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Rewrite as a sum of terms: $\;\dfrac{4x^3 - 6x^2 + 2x}{2x^2}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>One denominator per term</td><td>$\dfrac{4x^3}{2x^2} - \dfrac{6x^2}{2x^2} + \dfrac{2x}{2x^2}$</td></tr>
+                    <tr><td>Reduce coefficients, subtract exponents</td><td>$2x^{1} - 3x^{0} + x^{-1}$</td></tr>
+                    <tr><td>Clean up</td><td>$$\boxed{2x - 3 + \frac{1}{x}}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Rewrite as a sum of terms: $\;\dfrac{x^2 + 3x - 5}{x}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$\dfrac{x^2}{x} + \dfrac{3x}{x} - \dfrac{5}{x} = \boxed{x + 3 - \dfrac{5}{x}}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">2</div><h2>Convert to $c\,x^{p}$ Form</h2></div>
+    <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+        <h3>Negative and fractional exponents replace fractions and radicals</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Calculus (and a lot of precalc simplification) wants every term shaped like <em>coefficient × $x$ to a power</em>. Two conversions do all the work:</p>
+        <div class="highlight-box">$$\frac{c}{x^n} = c\,x^{-n} \qquad\qquad \sqrt[m]{x^n} = x^{n/m}$$</div>
+        <p>Only the thing being divided or rooted gets the negative/fractional exponent. In $\dfrac{3}{x^4}$, the $3$ stays a $3$: $3x^{-4}$, not $(3x)^{-4}$.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Rewrite with no fractions or radicals: $\;\dfrac{x^2 + 1}{\sqrt{x}}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Rewrite the radical</td><td>$\sqrt{x} = x^{1/2}$</td></tr>
+                    <tr><td>Split the numerator</td><td>$\dfrac{x^2}{x^{1/2}} + \dfrac{1}{x^{1/2}}$</td></tr>
+                    <tr><td>Quotient rule: $2 - \tfrac12 = \tfrac32$; and $\tfrac{1}{x^{1/2}} = x^{-1/2}$</td><td>$$\boxed{x^{3/2} + x^{-1/2}}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Rewrite with no fractions or radicals: $\;\dfrac{3}{x^4} - \dfrac{2}{\sqrt[3]{x}}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$\boxed{3x^{-4} - 2x^{-1/3}}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">3</div><h2>Simplify by Factoring</h2></div>
+    <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+        <h3>Factor top and bottom, cancel common factors</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>When the denominator is <em>not</em> a monomial, you can't split. Instead, factor numerator and denominator completely and cancel any factor that appears in both. Record the restriction from the cancelled factor — the original expression was undefined there.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Simplify: $\;\dfrac{x^2 - 9}{x^2 + 5x + 6}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Factor numerator (difference of squares)</td><td>$(x-3)(x+3)$</td></tr>
+                    <tr><td>Factor denominator (product $6$, sum $5$)</td><td>$(x+2)(x+3)$</td></tr>
+                    <tr><td>Cancel the shared factor</td><td>$$\boxed{\frac{x-3}{x+2}},\quad x \ne -3$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Simplify: $\;\dfrac{x^3 + 8}{x^2 - 4}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$\dfrac{(x+2)(x^2 - 2x + 4)}{(x-2)(x+2)} = \boxed{\dfrac{x^2 - 2x + 4}{x - 2}},\quad x \ne -2$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>The number-one error on this topic:</strong> cancelling a term instead of a factor.</p>
+        <p>$\dfrac{x + 4}{x} \ne 4$ &nbsp;&nbsp;and&nbsp;&nbsp; $\dfrac{x^2 + 4}{x} \ne x + 4$. &nbsp; Correct: $\dfrac{x^2 + 4}{x} = x + \dfrac{4}{x} = x + 4x^{-1}$.</p>
+        <p style="margin-bottom:0;">Test it with a number: at $x = 2$, $\dfrac{2^2 + 4}{2} = 4$, but $2 + 4 = 6$. If plugging in a value breaks your "simplification," it was never equal.</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════ TAB 3 — EXPONENTS ═══════════════════════ -->
+<div id="tab-expo" class="tab-content">
+
+    <div class="section-header"><div class="section-number">1</div><h2>Simplifying with the Rules</h2></div>
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>Product, quotient, power, negative</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Work outside-in: distribute any outer power onto every factor inside first, then combine like bases by adding/subtracting exponents, then move negative exponents across the fraction bar at the very end.</p>
+        <div class="highlight-box">$$x^m x^n = x^{m+n} \qquad \frac{x^m}{x^n} = x^{m-n} \qquad (x^m)^n = x^{mn} \qquad (xy)^n = x^n y^n \qquad x^{-n} = \frac{1}{x^n}$$</div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Simplify, positive exponents only: $\;\left(2x^3y^{-2}\right)^3$ &nbsp;and&nbsp; $\left(\dfrac{4x^2}{y^{-3}}\right)^{-2}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Distribute the outer power to each factor</td><td>$2^3 \, x^{3\cdot3} \, y^{-2\cdot3} = 8x^9 y^{-6}$</td></tr>
+                    <tr><td>Move the negative exponent</td><td>$$\boxed{\frac{8x^9}{y^6}}$$</td></tr>
+                </table>
+            </div>
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Clean the inside first: $\frac{1}{y^{-3}} = y^3$</td><td>$\left(4x^2y^3\right)^{-2}$</td></tr>
+                    <tr><td>Distribute $-2$</td><td>$4^{-2} x^{-4} y^{-6}$</td></tr>
+                    <tr><td>Flip everything with a negative exponent</td><td>$$\boxed{\frac{1}{16x^4y^6}}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Simplify: $\;\dfrac{x^5 \cdot x^{-2}}{x^4}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$x^{5 + (-2) - 4} = x^{-1} = \boxed{\dfrac{1}{x}}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">2</div><h2>Rational Exponents &amp; Radicals</h2></div>
+    <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+        <h3>$x^{m/n} = \left(\sqrt[n]{x}\right)^m$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>The denominator of the exponent is the root; the numerator is the power. With numbers, take the root <em>first</em> to keep the arithmetic small. A negative rational exponent means root, power, then flip.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Evaluate: $\;27^{2/3}$, $\;16^{-3/4}$. &nbsp; Simplify: $\;\sqrt{x^3}\cdot\sqrt[3]{x}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Root first, then power</td><td>$27^{2/3} = \left(\sqrt[3]{27}\right)^2 = 3^2 = \boxed{9}$</td></tr>
+                    <tr><td>Root, power, flip</td><td>$16^{-3/4} = \dfrac{1}{\left(\sqrt[4]{16}\right)^3} = \dfrac{1}{2^3} = \boxed{\dfrac{1}{8}}$</td></tr>
+                    <tr><td>Convert radicals to exponents, then add</td><td>$x^{3/2}\cdot x^{1/3} = x^{\frac{9}{6} + \frac{2}{6}} = \boxed{x^{11/6}}$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Evaluate $\;8^{4/3}$ &nbsp;and&nbsp; $(-32)^{3/5}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$8^{4/3} = (\sqrt[3]{8})^4 = 2^4 = \boxed{16}$. &nbsp; $(-32)^{3/5} = (\sqrt[5]{-32})^3 = (-2)^3 = \boxed{-8}$ (odd roots of negatives are fine).</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">3</div><h2>Same-Base Exponential Equations</h2></div>
+    <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+        <h3>If $b^u = b^v$ then $u = v$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Rewrite both sides as powers of the same base, then equate the exponents and solve the resulting linear equation. Useful base facts: $4, 8, 16, 32 = 2^2, 2^3, 2^4, 2^5$; $9, 27, 81 = 3^2, 3^3, 3^4$; $\tfrac{1}{b^n} = b^{-n}$.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Solve: $\;9^x = 27$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Common base $3$</td><td>$(3^2)^x = 3^3$</td></tr>
+                    <tr><td>Power rule</td><td>$3^{2x} = 3^3$</td></tr>
+                    <tr><td>Equate exponents</td><td>$2x = 3 \;\Rightarrow\; \boxed{x = \tfrac{3}{2}}$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Solve: $\;2^{x+1} = 32$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$2^{x+1} = 2^5 \Rightarrow x + 1 = 5 \Rightarrow \boxed{x = 4}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">4</div><h2>Factoring Out the Lowest Power</h2></div>
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>The GCF can have a negative or fractional exponent</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>When terms share a base with different exponents, factor out the <em>smallest</em> exponent. Inside the parentheses, each term's exponent is (original) − (the one you pulled out). This is how derivatives get cleaned up later, so it's worth making automatic now.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Factor: $\;3x^{-2} + 6x^{-1}$ &nbsp;and&nbsp; $x^{1/2} + x^{3/2}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Lowest power is $x^{-2}$; numeric GCF is $3$</td><td>$3x^{-2}(\;?\;)$</td></tr>
+                    <tr><td>Subtract exponents: $-2-(-2) = 0$, $-1-(-2) = 1$</td><td>$$\boxed{3x^{-2}(1 + 2x)}$$</td></tr>
+                </table>
+            </div>
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Lowest power is $x^{1/2}$</td><td>$x^{1/2}(\;?\;)$</td></tr>
+                    <tr><td>Subtract: $\tfrac12 - \tfrac12 = 0$, $\tfrac32 - \tfrac12 = 1$</td><td>$$\boxed{x^{1/2}(1 + x)}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">Check by distributing: $x^{1/2}\cdot x = x^{3/2}$. ✓</p>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Factor: $\;4x^{1/2} - 2x^{-1/2}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">Lowest power $x^{-1/2}$, numeric GCF $2$: $\boxed{2x^{-1/2}(2x - 1)}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Watch for these.</strong></p>
+        <ul style="margin-bottom:0;">
+            <li>$(x + y)^2 \ne x^2 + y^2$. Powers don't distribute over addition.</li>
+            <li>$x^{-2} \ne -x^2$. Negative exponent = reciprocal, not negative value.</li>
+            <li>$2^3 \cdot 2^4 = 2^7$, not $4^7$. The base stays put; only exponents add.</li>
+            <li>$\sqrt{x^2} = |x|$ in general. On this sheet, assume variables are positive unless told otherwise.</li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════ TAB 4 — RATIONAL & RADICAL ═══════════════════════ -->
+<div id="tab-rat" class="tab-content">
+
+    <div class="section-header"><div class="section-number">1</div><h2>Combining with an LCD</h2></div>
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>Factor denominators, build the LCD, rewrite, combine</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Factor every denominator completely. The LCD contains each distinct factor to the highest power it appears anywhere. Multiply each fraction's top and bottom by whatever its denominator is missing, then add the numerators over the single LCD. Simplify the numerator, then check whether it factors and cancels.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Combine: $\;\dfrac{x}{x^2 - 4} - \dfrac{1}{x+2}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Factor denominators</td><td>$\dfrac{x}{(x-2)(x+2)} - \dfrac{1}{x+2}$</td></tr>
+                    <tr><td>LCD is $(x-2)(x+2)$; second fraction is missing $(x-2)$</td><td>$\dfrac{x}{(x-2)(x+2)} - \dfrac{1\cdot(x-2)}{(x+2)(x-2)}$</td></tr>
+                    <tr><td>Combine numerators — distribute the minus sign</td><td>$\dfrac{x - (x - 2)}{(x-2)(x+2)} = \dfrac{x - x + 2}{(x-2)(x+2)}$</td></tr>
+                    <tr><td>Simplify</td><td>$$\boxed{\frac{2}{(x-2)(x+2)}}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Combine: $\;\dfrac{3}{x-2} + \dfrac{2}{x+1}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$\dfrac{3(x+1) + 2(x-2)}{(x-2)(x+1)} = \dfrac{3x + 3 + 2x - 4}{(x-2)(x+1)} = \boxed{\dfrac{5x - 1}{(x-2)(x+1)}}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">2</div><h2>Complex Fractions</h2></div>
+    <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+        <h3>Multiply top and bottom by the LCD of every small fraction</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>A fraction with fractions inside it. Find the LCD of <em>all</em> the little denominators (top and bottom together), multiply the big numerator and big denominator by that LCD, and every small fraction clears at once. Then factor and cancel as usual.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Simplify: $\;\dfrac{1 - \frac{4}{x^2}}{1 + \frac{2}{x}}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Little denominators: $x^2$ and $x$. LCD $= x^2$</td><td>$\dfrac{\left(1 - \frac{4}{x^2}\right)\cdot x^2}{\left(1 + \frac{2}{x}\right)\cdot x^2}$</td></tr>
+                    <tr><td>Distribute — every small fraction clears</td><td>$\dfrac{x^2 - 4}{x^2 + 2x}$</td></tr>
+                    <tr><td>Factor and cancel</td><td>$\dfrac{(x-2)(x+2)}{x(x+2)} = \boxed{\dfrac{x-2}{x}}$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Simplify: $\;\dfrac{\frac{1}{x} + \frac{1}{y}}{\frac{1}{x} - \frac{1}{y}}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">Multiply by $\dfrac{xy}{xy}$: $\dfrac{y + x}{y - x} = \boxed{\dfrac{x+y}{y-x}}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">3</div><h2>Rationalizing with Conjugates</h2></div>
+    <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+        <h3>$(\sqrt{a} - \sqrt{b})(\sqrt{a} + \sqrt{b}) = a - b$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>The conjugate of $\sqrt{a} - \sqrt{b}$ is $\sqrt{a} + \sqrt{b}$. Multiplying them is a difference of squares, and the radicals disappear. Multiply the fraction by $\dfrac{\text{conjugate}}{\text{conjugate}}$ — it's just multiplying by $1$. Rationalizing the <em>numerator</em> uses the identical move and is what makes limits work later.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — denominator</span></div>
+        <p>Rationalize: $\;\dfrac{6}{\sqrt{5} - \sqrt{2}}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Multiply by the conjugate over itself</td><td>$\dfrac{6}{\sqrt5 - \sqrt2}\cdot\dfrac{\sqrt5 + \sqrt2}{\sqrt5 + \sqrt2}$</td></tr>
+                    <tr><td>Denominator becomes $a - b$</td><td>$\dfrac{6(\sqrt5 + \sqrt2)}{5 - 2} = \dfrac{6(\sqrt5 + \sqrt2)}{3}$</td></tr>
+                    <tr><td>Reduce</td><td>$$\boxed{2\sqrt5 + 2\sqrt2}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — numerator</span></div>
+        <p>Rationalize the numerator: $\;\dfrac{\sqrt{x+h} - \sqrt{x}}{h}$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Multiply by the conjugate of the numerator</td><td>$\dfrac{\sqrt{x+h} - \sqrt{x}}{h}\cdot\dfrac{\sqrt{x+h} + \sqrt{x}}{\sqrt{x+h} + \sqrt{x}}$</td></tr>
+                    <tr><td>Numerator becomes $a - b$</td><td>$\dfrac{(x + h) - x}{h\left(\sqrt{x+h} + \sqrt{x}\right)} = \dfrac{h}{h\left(\sqrt{x+h} + \sqrt{x}\right)}$</td></tr>
+                    <tr><td>Cancel $h$</td><td>$$\boxed{\frac{1}{\sqrt{x+h} + \sqrt{x}}}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">Leave the denominator unexpanded — the whole point was to get rid of the $h$ on top.</p>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Simplify: $\;\dfrac{x - 4}{\sqrt{x} - 2}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$\dfrac{(x-4)(\sqrt x + 2)}{(\sqrt x - 2)(\sqrt x + 2)} = \dfrac{(x-4)(\sqrt x + 2)}{x - 4} = \boxed{\sqrt{x} + 2}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Common slips.</strong></p>
+        <ul style="margin-bottom:0;">
+            <li>Subtracting fractions: the minus sign applies to the <em>entire</em> second numerator. $x - (x - 2) = 2$, not $-2$.</li>
+            <li>Building the LCD by multiplying all denominators together: $\frac{1}{x^2-4} + \frac{1}{x+2}$ has LCD $(x-2)(x+2)$, not $(x^2-4)(x+2)$.</li>
+            <li>Conjugate of $\sqrt{a} + b$ is $\sqrt{a} - b$ — flip only the sign between the two terms, nothing else.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════════════════════ TAB 5 — CALC-PREP MOVES ═══════════════════════ -->
+<div id="tab-calc" class="tab-content">
+
+    <div class="section-header"><div class="section-number">1</div><h2>The Difference Quotient</h2></div>
+    <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+        <h3>$\dfrac{f(x+h) - f(x)}{h}$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>This is the slope of the line through $(x, f(x))$ and $(x+h, f(x+h))$; calculus will send $h \to 0$. Procedure: (1) write $f(x+h)$ by replacing every $x$ with $(x+h)$ and expand; (2) subtract the <em>entire</em> $f(x)$ in parentheses; (3) every term without an $h$ must cancel — if one survives, there's an algebra error; (4) factor $h$ out of the numerator and cancel it.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — polynomial</span></div>
+        <p>$f(x) = x^2 - 3x$. Simplify $\dfrac{f(x+h) - f(x)}{h}$.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Build $f(x+h)$</td><td>$(x+h)^2 - 3(x+h) = x^2 + 2xh + h^2 - 3x - 3h$</td></tr>
+                    <tr><td>Subtract all of $f(x)$</td><td>$x^2 + 2xh + h^2 - 3x - 3h - (x^2 - 3x)$</td></tr>
+                    <tr><td>The $h$-free terms cancel</td><td>$2xh + h^2 - 3h$</td></tr>
+                    <tr><td>Factor out $h$, divide</td><td>$\dfrac{h(2x + h - 3)}{h} = \boxed{2x + h - 3}$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — rational</span></div>
+        <p>$f(x) = \dfrac{1}{x}$. Simplify $\dfrac{f(x+h) - f(x)}{h}$.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Set up — a complex fraction</td><td>$\dfrac{\frac{1}{x+h} - \frac{1}{x}}{h}$</td></tr>
+                    <tr><td>Combine the top over LCD $x(x+h)$</td><td>$\dfrac{\frac{x - (x+h)}{x(x+h)}}{h} = \dfrac{\frac{-h}{x(x+h)}}{h}$</td></tr>
+                    <tr><td>Dividing by $h$ = multiplying by $\frac1h$; cancel $h$</td><td>$$\boxed{\frac{-1}{x(x+h)}}$$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>$f(x) = 2x^2 - x$. Simplify $\dfrac{f(x+h) - f(x)}{h}$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$\dfrac{2(x+h)^2 - (x+h) - 2x^2 + x}{h} = \dfrac{4xh + 2h^2 - h}{h} = \boxed{4x + 2h - 1}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">2</div><h2>Completing the Square</h2></div>
+    <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+        <h3>$x^2 + bx + c = \left(x + \tfrac{b}{2}\right)^2 - \left(\tfrac{b}{2}\right)^2 + c$</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p>Take half the $x$-coefficient, square it, add it and subtract it. The first three terms are now a perfect square. If there's a leading coefficient $a \ne 1$, factor $a$ out of the $x^2$ and $x$ terms only, complete the square inside, then remember the subtracted piece gets multiplied by $a$ when it comes back out.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
+        <p>Write in vertex form: $\;2x^2 - 12x + 5$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Factor $a = 2$ out of the $x$-terms</td><td>$2(x^2 - 6x) + 5$</td></tr>
+                    <tr><td>Half of $-6$ is $-3$; square is $9$. Add and subtract inside</td><td>$2(x^2 - 6x + 9 - 9) + 5$</td></tr>
+                    <tr><td>Perfect square; the $-9$ leaves the parentheses multiplied by $2$</td><td>$2(x - 3)^2 - 18 + 5$</td></tr>
+                    <tr><td>Result</td><td>$$\boxed{2(x-3)^2 - 13}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">Vertex $(3, -13)$. Check: $2(3)^2 - 12(3) + 5 = 18 - 36 + 5 = -13$. ✓</p>
+            </div>
+        </div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — circle</span></div>
+        <p>Find center and radius: $\;x^2 + y^2 - 4x + 6y = 3$</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>Group by variable</td><td>$(x^2 - 4x) + (y^2 + 6y) = 3$</td></tr>
+                    <tr><td>Complete both squares — add $4$ and $9$ to <em>both</em> sides</td><td>$(x^2 - 4x + 4) + (y^2 + 6y + 9) = 3 + 4 + 9$</td></tr>
+                    <tr><td>Result</td><td>$(x-2)^2 + (y+3)^2 = 16$ &nbsp; $\Rightarrow$ &nbsp; $\boxed{\text{center } (2,-3),\ r = 4}$</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Write in vertex form: $\;x^2 + 6x - 7$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$(x^2 + 6x + 9) - 9 - 7 = \boxed{(x+3)^2 - 16}$</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">3</div><h2>Polynomial Division</h2></div>
+    <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+        <h3>Synthetic division for $x - k$; long division for everything else</h3>
+        <div class="step-concept"><span class="step-label">Concept</span></div>
+        <p><strong>Synthetic division</strong> only works for a linear divisor $x - k$. Write the coefficients (put $0$ for any missing power), put $k$ in the corner, bring down the first coefficient, then repeat: multiply by $k$, add to the next coefficient. The last number is the remainder $= f(k)$; the others are the quotient, one degree lower.</p>
+        <p><strong>Long division</strong> works for any divisor. Divide leading terms, multiply back, subtract (distribute the minus!), bring down, repeat until the remainder's degree is less than the divisor's.</p>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — synthetic</span></div>
+        <p>Divide $x^3 - 2x^2 - 5x + 6$ by $x - 1$, then factor completely.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>$k = 1$. Coefficients: $1,\ -2,\ -5,\ 6$</td><td>
+$$\begin{array}{c|rrrr} 1 & 1 & -2 & -5 & 6 \\ & & 1 & -1 & -6 \\ \hline & 1 & -1 & -6 & 0 \end{array}$$</td></tr>
+                    <tr><td>Read off: quotient $x^2 - x - 6$, remainder $0$</td><td>$x^3 - 2x^2 - 5x + 6 = (x-1)(x^2 - x - 6)$</td></tr>
+                    <tr><td>Factor the quotient</td><td>$$\boxed{(x-1)(x-3)(x+2)}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">Remainder $0$ confirms $x = 1$ is a root — the Factor Theorem in action.</p>
+            </div>
+        </div>
+
+        <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example — long division</span></div>
+        <p>Divide $2x^3 + 3x^2 - x + 4$ by $x^2 + 1$.</p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
+        <div class="example-body">
+            <div class="highlight-box">
+                <table class="steps">
+                    <tr><td>$2x^3 \div x^2 = 2x$. Multiply back, subtract</td><td>$(2x^3 + 3x^2 - x + 4) - (2x^3 + 2x) = 3x^2 - 3x + 4$</td></tr>
+                    <tr><td>$3x^2 \div x^2 = 3$. Multiply back, subtract</td><td>$(3x^2 - 3x + 4) - (3x^2 + 3) = -3x + 1$</td></tr>
+                    <tr><td>Degree of $-3x + 1$ is below $2$ — stop</td><td>$$\boxed{2x + 3 + \frac{-3x + 1}{x^2 + 1}}$$</td></tr>
+                </table>
+                <p style="margin:6px 0 0;">Quotient $2x + 3$, remainder $-3x + 1$. Check: $(x^2+1)(2x+3) + (-3x+1) = 2x^3 + 3x^2 + 2x + 3 - 3x + 1$. ✓</p>
+            </div>
+        </div>
+
+        <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
+        <div class="practice-box">
+            <p>Use the Remainder Theorem: what is the remainder when $x^3 - 2x^2 - 5x + 6$ is divided by $x - 2$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
+            <div class="solution-body">
+                <div class="highlight-box">$f(2) = 8 - 8 - 10 + 6 = \boxed{-4}$. No division needed.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <p><strong>Common slips.</strong></p>
+        <ul style="margin-bottom:0;">
+            <li>$f(x+h) \ne f(x) + h$. You replace $x$ with $(x+h)$ everywhere, then expand — $(x+h)^2 = x^2 + 2xh + h^2$.</li>
+            <li>Completing the square with $a \ne 1$: the number you subtract inside the parentheses is worth $a$ times that outside.</li>
+            <li>Synthetic division by $x + 5$ uses $k = -5$. And a missing $x^2$ term still needs its $0$ placeholder.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ═══════════════════════ SPRINT ═══════════════════════ -->
+<div id="tab-sprint" class="tab-content">
+    <div class="section-header"><div class="section-number">&#9889;</div><h2>Sprint — 16 mixed, no scratch paper</h2></div>
+    <p>Quick recall across all five topics. Aim for under 8 minutes. Answers are behind each button.</p>
+    <div class="practice-toolbar">
+        <span style="font-size:13px;color:var(--text-medium);">Assume all variables are positive.</span>
+        <div><button class="util-btn" onclick="revealAll('sprint-problems', true)">Show all answers</button> <button class="util-btn" onclick="revealAll('sprint-problems', false)">Hide all</button></div>
+    </div>
+    <div id="sprint-problems"></div>
+</div>
+
+<!-- ═══════════════════════ SET A ═══════════════════════ -->
+<div id="tab-setA" class="tab-content">
+    <div class="section-header"><div class="section-number">A</div><h2>Problem Set A — Factor Completely</h2></div>
+    <p>Fourteen problems: GCF, difference of squares, cubes, grouping, AC method, and nested patterns. "Completely" means every factor is checked again.</p>
+    <div class="practice-toolbar">
+        <span style="font-size:13px;color:var(--text-medium);">Problems shuffle each time the page loads.</span>
+        <div><button class="util-btn" onclick="revealAll('setA-problems', true)">Show all answers</button> <button class="util-btn" onclick="revealAll('setA-problems', false)">Hide all</button></div>
+    </div>
+    <div id="setA-problems"></div>
+</div>
+
+<!-- ═══════════════════════ SET B ═══════════════════════ -->
+<div id="tab-setB" class="tab-content">
+    <div class="section-header"><div class="section-number">B</div><h2>Problem Set B — Fractions</h2></div>
+    <p>Problems 1–7: rewrite as a sum of $c\,x^p$ terms (no fractions, no radicals). Problems 8–10: simplify by factoring and state the restriction.</p>
+    <div class="practice-toolbar">
+        <span style="font-size:13px;color:var(--text-medium);">Assume $x > 0$.</span>
+        <div><button class="util-btn" onclick="revealAll('setB-problems', true)">Show all answers</button> <button class="util-btn" onclick="revealAll('setB-problems', false)">Hide all</button></div>
+    </div>
+    <div id="setB-problems"></div>
+</div>
+
+<!-- ═══════════════════════ SET C ═══════════════════════ -->
+<div id="tab-setC" class="tab-content">
+    <div class="section-header"><div class="section-number">C</div><h2>Problem Set C — Exponents</h2></div>
+    <p>Simplify with positive exponents, evaluate rational exponents, solve same-base equations, and factor out lowest powers.</p>
+    <div class="practice-toolbar">
+        <span style="font-size:13px;color:var(--text-medium);">Assume all variables are positive.</span>
+        <div><button class="util-btn" onclick="revealAll('setC-problems', true)">Show all answers</button> <button class="util-btn" onclick="revealAll('setC-problems', false)">Hide all</button></div>
+    </div>
+    <div id="setC-problems"></div>
+</div>
+
+
+<!-- ═══════════════════════ SET D ═══════════════════════ -->
+<div id="tab-setD" class="tab-content">
+    <div class="section-header"><div class="section-number">D</div><h2>Problem Set D — Rational &amp; Radical</h2></div>
+    <p>Combine over an LCD, clear complex fractions, rationalize with conjugates. Leave denominators factored.</p>
+    <div class="practice-toolbar">
+        <span style="font-size:13px;color:var(--text-medium);">Assume all variables are positive.</span>
+        <div><button class="util-btn" onclick="revealAll('setD-problems', true)">Show all answers</button> <button class="util-btn" onclick="revealAll('setD-problems', false)">Hide all</button></div>
+    </div>
+    <div id="setD-problems"></div>
+</div>
+
+<!-- ═══════════════════════ SET E ═══════════════════════ -->
+<div id="tab-setE" class="tab-content">
+    <div class="section-header"><div class="section-number">E</div><h2>Problem Set E — Calc-Prep Moves</h2></div>
+    <p>Difference quotients, completing the square, synthetic and long division, Remainder Theorem.</p>
+    <div class="practice-toolbar">
+        <span style="font-size:13px;color:var(--text-medium);">For difference quotients, simplify until $h$ is cancelled.</span>
+        <div><button class="util-btn" onclick="revealAll('setE-problems', true)">Show all answers</button> <button class="util-btn" onclick="revealAll('setE-problems', false)">Hide all</button></div>
+    </div>
+    <div id="setE-problems"></div>
+</div>
+
+</div><!-- end container -->
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Procedural Algebra for Precalc</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener"
+          style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0 });
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function goTab(name) {
+    var btn = Array.from(document.querySelectorAll('.tab-button')).find(function(b){ return (b.getAttribute('onclick')||'').indexOf("'" + name + "'") >= 0; });
+    switchTab(name, btn);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
+}
+function revealAll(containerId, open) {
+    var c = document.getElementById(containerId); if (!c) return;
+    c.querySelectorAll('.solution-toggle').forEach(function(btn){
+        var body = btn.nextElementSibling;
+        body.classList.toggle('open', open); btn.classList.toggle('open', open);
+    });
+    if (open && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
+}
+
+/* ── Problem banks: [instruction, problem TeX, technique label, solution HTML] ── */
+var R = String.raw;
+var SPRINT = [
+    ["Factor", R`x^2 - 1`, "Difference of squares", R`$\boxed{(x-1)(x+1)}$`],
+    ["Factor", R`x^3 - 1`, "Difference of cubes", R`$\boxed{(x-1)(x^2+x+1)}$`],
+    ["Simplify", R`\dfrac{x^2 + x}{x}`, "Split the numerator", R`$\dfrac{x^2}{x} + \dfrac{x}{x} = \boxed{x + 1}$`],
+    ["Rewrite with a positive exponent", R`x^{-2}`, "Negative exponent", R`$\boxed{\dfrac{1}{x^2}}$`],
+    ["Evaluate", R`64^{1/2}`, "Rational exponent", R`$\sqrt{64} = \boxed{8}$`],
+    ["Factor", R`x^3 + 3x^2 + 2x + 6`, "Grouping", R`$x^2(x+3) + 2(x+3) = \boxed{(x+3)(x^2+2)}$`],
+    ["Rewrite as powers of $x$", R`\dfrac{1}{x^3} + \dfrac{4}{x}`, "Negative exponents", R`$\boxed{x^{-3} + 4x^{-1}}$`],
+    ["Simplify", R`\left(x^2\right)^5`, "Power rule", R`$x^{2\cdot5} = \boxed{x^{10}}$`],
+    ["Factor", R`49 - y^2`, "Difference of squares", R`$\boxed{(7-y)(7+y)}$`],
+    ["Simplify", R`\dfrac{3x^2 - 6x}{3x}`, "Split the numerator", R`$\dfrac{3x^2}{3x} - \dfrac{6x}{3x} = \boxed{x - 2}$`],
+    ["Solve", R`2^{x} = \dfrac{1}{8}`, "Same base", R`$2^x = 2^{-3} \Rightarrow \boxed{x = -3}$`],
+    ["Factor", R`8x^3 - 27`, "Difference of cubes", R`$a = 2x,\ b = 3$: $\boxed{(2x-3)(4x^2+6x+9)}$`],
+    ["Difference quotient of $f(x) = x^2$", R`\dfrac{f(x+h) - f(x)}{h}`, "Difference quotient", R`$\dfrac{2xh + h^2}{h} = \boxed{2x + h}$`],
+    ["Complete the square", R`x^2 + 4x`, "Completing the square", R`$\boxed{(x+2)^2 - 4}$`],
+    ["Combine", R`\dfrac{1}{x} + \dfrac{1}{2x}`, "LCD", R`$\dfrac{2}{2x} + \dfrac{1}{2x} = \boxed{\dfrac{3}{2x}}$`],
+    ["Rationalize", R`\dfrac{1}{\sqrt{x}}`, "Rationalize the denominator", R`$\dfrac{\sqrt x}{\sqrt x \cdot \sqrt x} = \boxed{\dfrac{\sqrt{x}}{x}}$`]
+];
+var SETA = [
+    ["Factor completely", R`x^2 - 121`, "Difference of squares", R`$\boxed{(x-11)(x+11)}$`],
+    ["Factor completely", R`4x^2 - 81`, "Difference of squares", R`$a = 2x,\ b = 9$: $\boxed{(2x-9)(2x+9)}$`],
+    ["Factor completely", R`x^3 - 64`, "Difference of cubes", R`$a = x,\ b = 4$: $\boxed{(x-4)(x^2+4x+16)}$`],
+    ["Factor completely", R`27x^3 + 8`, "Sum of cubes", R`$a = 3x,\ b = 2$. SOAP: $\boxed{(3x+2)(9x^2-6x+4)}$`],
+    ["Factor completely", R`x^3 + 5x^2 - 4x - 20`, "Grouping, then difference of squares", R`$x^2(x+5) - 4(x+5) = (x+5)(x^2-4) = \boxed{(x+5)(x-2)(x+2)}$`],
+    ["Factor completely", R`2x^3 - 3x^2 + 8x - 12`, "Grouping", R`$x^2(2x-3) + 4(2x-3) = \boxed{(2x-3)(x^2+4)}$ &nbsp;($x^2+4$ is a sum of squares — stop.)`],
+    ["Factor completely", R`5x^2 - 45`, "GCF, then difference of squares", R`$5(x^2-9) = \boxed{5(x-3)(x+3)}$`],
+    ["Factor completely", R`x^4 - 81`, "Nested difference of squares", R`$(x^2-9)(x^2+9) = \boxed{(x-3)(x+3)(x^2+9)}$`],
+    ["Factor completely", R`16x^4 - y^4`, "Nested difference of squares", R`$(4x^2-y^2)(4x^2+y^2) = \boxed{(2x-y)(2x+y)(4x^2+y^2)}$`],
+    ["Factor completely", R`2x^3 + 54`, "GCF, then sum of cubes", R`$2(x^3+27) = \boxed{2(x+3)(x^2-3x+9)}$`],
+    ["Factor completely", R`x^6 - 1`, "Difference of squares, then both cube patterns", R`$(x^3-1)(x^3+1) = \boxed{(x-1)(x^2+x+1)(x+1)(x^2-x+1)}$`],
+    ["Factor completely", R`6x^2 + 11x - 10`, "AC method", R`$ac = -60$; $15 + (-4) = 11$. $6x^2 + 15x - 4x - 10 = 3x(2x+5) - 2(2x+5) = \boxed{(3x-2)(2x+5)}$`],
+    ["Factor completely", R`x^2y - 4y + 3x^2 - 12`, "Grouping, then difference of squares", R`$y(x^2-4) + 3(x^2-4) = (x^2-4)(y+3) = \boxed{(x-2)(x+2)(y+3)}$`],
+    ["Factor completely", R`(x+1)^2 - 9`, "Difference of squares (with a binomial as $a$)", R`$(x+1-3)(x+1+3) = \boxed{(x-2)(x+4)}$`]
+];
+var SETB = [
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{x^3 - 4x^2 + 7}{x^2}`, "Split the numerator", R`$x - 4 + 7x^{-2}$, i.e. $\boxed{x - 4 + \dfrac{7}{x^2}}$`],
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{6x^4 + 9x^2 - 3x}{3x}`, "Split the numerator", R`$\boxed{2x^3 + 3x - 1}$`],
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{x^2 + 5}{x^3}`, "Split, negative exponents", R`$\boxed{x^{-1} + 5x^{-3}}$`],
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{2x - 1}{\sqrt{x}}`, "Split, rational exponents", R`$2x^{1 - 1/2} - x^{-1/2} = \boxed{2x^{1/2} - x^{-1/2}}$`],
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{x^3 + \sqrt{x}}{x^2}`, "Split, rational exponents", R`$x^{3-2} + x^{1/2 - 2} = \boxed{x + x^{-3/2}}$`],
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{(x+2)^2}{x}`, "Expand first, then split", R`$\dfrac{x^2 + 4x + 4}{x} = \boxed{x + 4 + 4x^{-1}}$`],
+    ["Rewrite as a sum of $c\,x^p$ terms", R`\dfrac{5}{x^2} + \dfrac{1}{\sqrt[3]{x^2}}`, "Negative and rational exponents", R`$\boxed{5x^{-2} + x^{-2/3}}$`],
+    ["Simplify and state the restriction", R`\dfrac{x^2 - 16}{x^2 - 2x - 8}`, "Factor and cancel", R`$\dfrac{(x-4)(x+4)}{(x-4)(x+2)} = \boxed{\dfrac{x+4}{x+2}},\ x \ne 4$`],
+    ["Simplify and state the restriction", R`\dfrac{x^3 + 8}{x^2 - 4}`, "Sum of cubes over difference of squares", R`$\dfrac{(x+2)(x^2-2x+4)}{(x-2)(x+2)} = \boxed{\dfrac{x^2-2x+4}{x-2}},\ x \ne -2$`],
+    ["Simplify and state the restriction", R`\dfrac{4x^2 - 9}{2x^2 + 3x}`, "Factor and cancel", R`$\dfrac{(2x-3)(2x+3)}{x(2x+3)} = \boxed{\dfrac{2x-3}{x}},\ x \ne -\tfrac{3}{2}$`]
+];
+var SETC = [
+    ["Simplify (positive exponents)", R`\dfrac{x^7}{x^{-3}}`, "Quotient rule", R`$x^{7-(-3)} = \boxed{x^{10}}$`],
+    ["Simplify (positive exponents)", R`\left(3x^2y^{-1}\right)^2 \left(xy^3\right)`, "Power, then product", R`$9x^4y^{-2}\cdot xy^3 = \boxed{9x^5y}$`],
+    ["Simplify (positive exponents)", R`\left(\dfrac{a^3}{b^2}\right)^{-3}`, "Negative outer power", R`$\dfrac{a^{-9}}{b^{-6}} = \boxed{\dfrac{b^6}{a^9}}$`],
+    ["Evaluate", R`8^{4/3}`, "Rational exponent", R`$(\sqrt[3]{8})^4 = 2^4 = \boxed{16}$`],
+    ["Evaluate", R`25^{-1/2}`, "Negative rational exponent", R`$\dfrac{1}{\sqrt{25}} = \boxed{\dfrac{1}{5}}$`],
+    ["Evaluate", R`(-32)^{3/5}`, "Odd root of a negative", R`$(\sqrt[5]{-32})^3 = (-2)^3 = \boxed{-8}$`],
+    ["Simplify as a single power of $x$", R`\dfrac{\sqrt{x}\cdot x^2}{\sqrt[4]{x}}`, "Rational exponents", R`$x^{\frac12 + 2 - \frac14} = \boxed{x^{9/4}}$`],
+    ["Simplify", R`\left(16x^8\right)^{3/4}`, "Distribute a rational power", R`$16^{3/4}\,x^{8\cdot 3/4} = 2^3 x^6 = \boxed{8x^6}$`],
+    ["Solve", R`4^{x} = 8^{x-1}`, "Same base", R`$2^{2x} = 2^{3x-3} \Rightarrow 2x = 3x - 3 \Rightarrow \boxed{x = 3}$`],
+    ["Solve", R`\left(\dfrac{1}{3}\right)^{x} = 81`, "Same base", R`$3^{-x} = 3^4 \Rightarrow \boxed{x = -4}$`],
+    ["Factor out the lowest power", R`x^{-3} + x^{-1}`, "Lowest-power GCF", R`$\boxed{x^{-3}(1 + x^2)}$`],
+    ["Factor out the lowest power", R`4x^{1/2} - 2x^{-1/2}`, "Lowest-power GCF", R`$\boxed{2x^{-1/2}(2x - 1)}$`],
+    ["Simplify (positive exponents)", R`\dfrac{(2x)^{-2}}{x^{-5}}`, "Distribute, then quotient rule", R`$\dfrac{x^5}{4x^2} = \boxed{\dfrac{x^3}{4}}$`]
+];
+
+var SETD = [
+    ["Combine", R`\dfrac{2}{x} + \dfrac{3}{x^2}`, "LCD $x^2$", R`$\dfrac{2x}{x^2} + \dfrac{3}{x^2} = \boxed{\dfrac{2x+3}{x^2}}$`],
+    ["Combine", R`\dfrac{1}{x-1} - \dfrac{1}{x+1}`, "LCD $(x-1)(x+1)$", R`$\dfrac{(x+1) - (x-1)}{(x-1)(x+1)} = \boxed{\dfrac{2}{(x-1)(x+1)}}$`],
+    ["Combine", R`\dfrac{x}{x+3} + \dfrac{2}{x-3}`, "LCD $(x+3)(x-3)$", R`$\dfrac{x(x-3) + 2(x+3)}{(x+3)(x-3)} = \boxed{\dfrac{x^2 - x + 6}{(x-3)(x+3)}}$`],
+    ["Combine", R`\dfrac{4}{x^2 - 9} + \dfrac{1}{x-3}`, "Factor first — LCD is $(x-3)(x+3)$", R`$\dfrac{4 + (x+3)}{(x-3)(x+3)} = \boxed{\dfrac{x+7}{(x-3)(x+3)}}$`],
+    ["Simplify", R`\dfrac{\frac{1}{x} - \frac{1}{3}}{x - 3}`, "Complex fraction — LCD $3x$", R`$\dfrac{3 - x}{3x(x-3)} = \dfrac{-(x-3)}{3x(x-3)} = \boxed{-\dfrac{1}{3x}}$`],
+    ["Simplify", R`\dfrac{\frac{x}{y} + 1}{\frac{x}{y} - 1}`, "Complex fraction — multiply by $y$", R`$\boxed{\dfrac{x+y}{x-y}}$`],
+    ["Simplify", R`\dfrac{1 - \frac{9}{x^2}}{1 - \frac{3}{x}}`, "Complex fraction — LCD $x^2$, then factor", R`$\dfrac{x^2 - 9}{x^2 - 3x} = \dfrac{(x-3)(x+3)}{x(x-3)} = \boxed{\dfrac{x+3}{x}}$`],
+    ["Rationalize the denominator", R`\dfrac{4}{\sqrt{7} + \sqrt{3}}`, "Conjugate", R`$\dfrac{4(\sqrt7 - \sqrt3)}{7 - 3} = \boxed{\sqrt{7} - \sqrt{3}}$`],
+    ["Simplify", R`\dfrac{x - 4}{\sqrt{x} - 2}`, "Conjugate of the denominator", R`$\dfrac{(x-4)(\sqrt x + 2)}{x - 4} = \boxed{\sqrt{x} + 2}$`],
+    ["Rationalize the numerator", R`\dfrac{\sqrt{x} - 3}{x - 9}`, "Conjugate of the numerator", R`$\dfrac{x - 9}{(x-9)(\sqrt x + 3)} = \boxed{\dfrac{1}{\sqrt{x} + 3}}$`],
+    ["Rationalize the numerator", R`\dfrac{\sqrt{x+4} - 2}{x}`, "Conjugate of the numerator", R`$\dfrac{(x+4) - 4}{x(\sqrt{x+4} + 2)} = \boxed{\dfrac{1}{\sqrt{x+4} + 2}}$`]
+];
+var SETE = [
+    ["Difference quotient, $f(x) = 3x + 2$", R`\dfrac{f(x+h) - f(x)}{h}`, "Linear", R`$\dfrac{3x + 3h + 2 - 3x - 2}{h} = \boxed{3}$`],
+    ["Difference quotient, $f(x) = x^2 + 5x - 1$", R`\dfrac{f(x+h) - f(x)}{h}`, "Quadratic", R`$\dfrac{2xh + h^2 + 5h}{h} = \boxed{2x + h + 5}$`],
+    ["Difference quotient, $f(x) = 2x^2 - x$", R`\dfrac{f(x+h) - f(x)}{h}`, "Quadratic", R`$\dfrac{4xh + 2h^2 - h}{h} = \boxed{4x + 2h - 1}$`],
+    ["Difference quotient, $f(x) = \dfrac{2}{x}$", R`\dfrac{f(x+h) - f(x)}{h}`, "Rational — combine over $x(x+h)$", R`$\dfrac{2x - 2(x+h)}{h\,x(x+h)} = \dfrac{-2h}{h\,x(x+h)} = \boxed{\dfrac{-2}{x(x+h)}}$`],
+    ["Difference quotient, $f(x) = x^3$", R`\dfrac{f(x+h) - f(x)}{h}`, "Cubic — $(x+h)^3 = x^3 + 3x^2h + 3xh^2 + h^3$", R`$\dfrac{3x^2h + 3xh^2 + h^3}{h} = \boxed{3x^2 + 3xh + h^2}$`],
+    ["Write in vertex form", R`x^2 - 8x + 3`, "Completing the square", R`$(x^2 - 8x + 16) - 16 + 3 = \boxed{(x-4)^2 - 13}$`],
+    ["Write in vertex form", R`x^2 + 5x`, "Completing the square (odd $b$)", R`$\left(x + \tfrac52\right)^2 - \tfrac{25}{4}$, i.e. $\boxed{\left(x + \tfrac{5}{2}\right)^2 - \tfrac{25}{4}}$`],
+    ["Write in vertex form", R`3x^2 + 12x - 1`, "Completing the square, $a \ne 1$", R`$3(x^2 + 4x + 4) - 12 - 1 = \boxed{3(x+2)^2 - 13}$`],
+    ["Find the center and radius", R`x^2 + y^2 + 8x - 2y - 8 = 0`, "Complete both squares", R`$(x+4)^2 + (y-1)^2 = 8 + 16 + 1 = 25$, so $\boxed{\text{center } (-4, 1),\ r = 5}$`],
+    ["Divide and factor completely", R`\left(x^3 + 4x^2 - 7x - 10\right) \div (x + 5)`, "Synthetic, $k = -5$", R`Row: $1,\ -1,\ -2,\ 0$. Quotient $x^2 - x - 2$, remainder $0$. $\boxed{(x+5)(x-2)(x+1)}$`],
+    ["Divide", R`\left(2x^3 - 5x + 1\right) \div (x - 2)`, "Synthetic, $k = 2$, with a $0$ placeholder for $x^2$", R`Coefficients $2,\ 0,\ -5,\ 1$ $\to$ row $2,\ 4,\ 3,\ 7$. $\boxed{2x^2 + 4x + 3 + \dfrac{7}{x-2}}$`],
+    ["Divide", R`\left(x^3 + 2x^2 - 3\right) \div \left(x^2 - 1\right)`, "Long division", R`Quotient $x + 2$, remainder $x - 1$: $\boxed{x + 2 + \dfrac{x - 1}{x^2 - 1}}$`],
+    ["Find the remainder", R`\left(x^4 - 3x^2 + 2x - 1\right) \div (x + 1)`, "Remainder Theorem, $k = -1$", R`$f(-1) = 1 - 3 - 2 - 1 = \boxed{-5}$`]
+];
+
+function buildProblems(containerId, bank) {
+    var c = document.getElementById(containerId); if (!c) return;
+    var html = '';
+    bank.forEach(function(p, i) {
+        html += '<div class="card" style="margin-bottom: 16px;">' +
+          '<div style="display: flex; align-items: flex-start; gap: 14px;">' +
+            '<div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">' + (i+1) + '</div>' +
+            '<div style="flex: 1;">' +
+              '<p style="margin-bottom:6px;"><strong>' + p[0] + ':</strong> &nbsp; $\\displaystyle ' + p[1] + '$</p>' +
+              '<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>' +
+              '<div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">' +
+                '<p style="margin-bottom:8px;"><span class="tech-badge">' + p[2] + '</span></p>' +
+                '<div class="highlight-box">' + p[3] + '</div>' +
+              '</div></div>' +
+            '</div></div></div>';
+    });
+    c.innerHTML = html;
+}
+function shuffleProblems(containerId) {
+    var container = document.getElementById(containerId); if (!container) return;
+    var cards = Array.from(container.querySelectorAll(':scope > .card'));
+    for (var i = cards.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        container.appendChild(cards[j]);
+        cards.splice(j, 1, cards[i]);
+    }
+    container.querySelectorAll(':scope > .card').forEach(function(card, idx) {
+        var circle = card.querySelector('div[style*="border-radius: 50%"]');
+        if (circle) circle.textContent = idx + 1;
+    });
+}
+
+/* ── Next / Back navigation at the bottom of every tab ── */
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    buildProblems('sprint-problems', SPRINT);
+    buildProblems('setA-problems', SETA);
+    buildProblems('setB-problems', SETB);
+    buildProblems('setC-problems', SETC);
+    buildProblems('setD-problems', SETD);
+    buildProblems('setE-problems', SETE);
+    shuffleProblems('setA-problems');
+    shuffleProblems('setC-problems');
+    addTabNav();
+});
+</script>
+
+</body>
+</html>
