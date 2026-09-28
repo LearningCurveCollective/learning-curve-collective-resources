@@ -145,6 +145,9 @@ body { font-family:'Inter',sans-serif; background-color:var(--cream); color:var(
 .vf-face img { max-width:100%; max-height:520px; height:auto; border-radius:8px; background:white; border:1px solid var(--cream-dark); }
 .vf-note { font-size:14px; line-height:1.7; text-align:left; margin-top:10px; padding:10px 14px; background:rgba(255,255,255,0.6); border-radius:8px; }
 .vf-note p { margin:0; }
+/* flashcard worked example */
+.fc-ex { margin-top:12px; text-align:left; font-size:14px; line-height:1.65; background:rgba(255,255,255,0.75); border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:8px 12px; }
+.fc-ex-k { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#8B6914; margin-right:6px; }
 /* flashcards */
 .fc-controls { display:flex; flex-direction:column; gap:10px; }
 .fc-ctl-group { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
@@ -367,7 +370,7 @@ li { margin-bottom:10px; }
     <div class="cs-tile"><div class="cs-name">Cobb&ndash;Douglas demand</div>$$x^* = \frac{\alpha}{\alpha+\beta}\frac{M}{p_x},\qquad y^* = \frac{\beta}{\alpha+\beta}\frac{M}{p_y}$$<div class="cs-note">Fixed spending shares.</div></div>
     <div class="cs-tile"><div class="cs-name">Perfect substitutes $ax + by$</div>$$\frac{a}{b} \gtrless \frac{p_x}{p_y} \;\Rightarrow\; \text{all } x \ /\ \text{all } y$$<div class="cs-note">Corner: $x^* = M/p_x$ or $y^* = M/p_y$; equal &rArr; any point.</div></div>
     <div class="cs-tile"><div class="cs-name">Perfect complements $\min\{ax, by\}$</div>$$ax = by:\quad x^* = \frac{bM}{bp_x + ap_y},\quad y^* = \frac{aM}{bp_x + ap_y}$$<div class="cs-note">Kink plus budget; never differentiate.</div></div>
-    <div class="cs-tile"><div class="cs-name">Quasilinear $v(x) + y$</div>$$v'(x^*) = \frac{p_x}{p_y},\qquad y^* = \frac{M - p_x x^*}{p_y} \ (\ge 0)$$<div class="cs-note">$x^*$ ignores income.</div></div>
+    <div class="cs-tile"><div class="cs-name">Quasilinear $v(x) + \beta y$</div>$$\text{MRS} = -\frac{v'(x)}{\beta},\qquad v'(x^*) = \beta\frac{p_x}{p_y},\qquad y^* = \frac{M - p_x x^*}{p_y}\ (\ge 0)$$<div class="cs-note">$x^*$ ignores income. Usually $\beta = 1$.</div></div>
     <div class="cs-tile"><div class="cs-name">Net demand &amp; autarky</div>$$\begin{gathered} z_x = x^* - \omega_x \\ \text{autarky: } x^*(p) = \omega_x,\ \ -p = \text{MRS}(\omega)\end{gathered}$$<div class="cs-note">$z_x &gt; 0$ buyer, $&lt; 0$ seller.</div></div>
     <div class="cs-tile"><div class="cs-name">Homogeneity of degree 0</div>$$x^*(tp_x, tp_y, tM) = x^*(p_x, p_y, M)$$<div class="cs-note">So normalize $p_y = 1$, $p_x = p$.</div></div>
 </div></div>
@@ -454,61 +457,61 @@ li { margin-bottom:10px; }
 </div>
 
 <script type="text/plain" id="fc-data">
-pu ||| MRS &mdash; definition and sign ||| $\text{MRS} = \dfrac{dy}{dx}\Big|_{u} = -\dfrac{MU_x}{MU_y}$. Slope of the indifference curve (negative); $|\text{MRS}|$ = units of $y$ given up for one more $x$.
+pu ||| MRS &mdash; definition and sign ||| $\text{MRS} = \dfrac{dy}{dx}\Big|_{u} = -\dfrac{MU_x}{MU_y}$. Slope of the indifference curve (negative); $|\text{MRS}|$ = units of $y$ given up for one more $x$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = xy$ at $(2,4)$: $MU_x = y = 4$, $MU_y = x = 2$, so $\text{MRS} = -\tfrac{4}{2} = -2$ &mdash; give up 2 units of $y$ for one more $x$.</div>
 ---
-pu ||| MRS of Cobb&ndash;Douglas $u = x^\alpha y^\beta$ ||| $\text{MRS} = -\dfrac{\alpha}{\beta}\dfrac{y}{x}$
+pu ||| MRS of Cobb&ndash;Douglas $u = x^\alpha y^\beta$ ||| $\text{MRS} = -\dfrac{\alpha}{\beta}\dfrac{y}{x}$ <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = x^2y$ ($\alpha=2,\beta=1$) at $(3,6)$: $\text{MRS} = -\tfrac{2}{1}\cdot\tfrac{6}{3} = -4$. Check by hand: $MU_x = 2xy = 36$, $MU_y = x^2 = 9$, $-36/9 = -4$. &#10003;</div>
 ---
-pu ||| MRS of perfect substitutes $u = ax + by$ ||| $\text{MRS} = -\dfrac{a}{b}$, constant &mdash; straight-line curves.
+pu ||| MRS of perfect substitutes $u = ax + by$ ||| $\text{MRS} = -\dfrac{a}{b}$, constant &mdash; straight-line curves. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = 3x + y$: $MU_x = 3$, $MU_y = 1$, $\text{MRS} = -3$ everywhere &mdash; always 3 units of $y$ per $x$, no matter the bundle.</div>
 ---
-pu ||| MRS of quasilinear $u = v(x) + y$ ||| $\text{MRS} = -v'(x)$ &mdash; no $y$, so curves are vertical shifts of one another.
+pu ||| MRS of quasilinear $u = v(x) + \beta y$ ||| $\text{MRS} = -\dfrac{v'(x)}{\beta}$ &mdash; no $y$ in it, so curves are vertical shifts of one another. (With $\beta = 1$: $\text{MRS} = -v'(x)$.) <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = \ln x + 2y$: $v'(x) = 1/x$, $\beta = 2$, so $\text{MRS} = -\dfrac{1}{2x}$. At $x = 4$: $-\tfrac18$ &mdash; the same at $(4,1)$, $(4,5)$, $(4,50)$.</div>
 ---
-pu ||| Positive monotonic transformation ||| $V = f(u)$ with $f'(u) &gt; 0$ represents the same preferences (same MRS). E.g. $\ln u$, $u^2$ ($u\ge0$), $3u + 5$. Not $-u$ or $1/u$.
+pu ||| Positive monotonic transformation ||| $V = f(u)$ with $f\prime(u) &gt; 0$ represents the same preferences (same MRS). E.g. $\ln u$, $u^2$ ($u\ge0$), $3u + 5$. Not $-u$ or $1/u$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = xy$ and $V = \ln x + \ln y = \ln u$: both give $\text{MRS} = -y/x$ &rArr; same preferences. $T = -xy$ ranks every pair backwards &rArr; different.</div>
 ---
 pu ||| Completeness ||| For any $A, B$: $A \succsim B$ or $B \succsim A$. Every bundle lies on some indifference curve.
 ---
 pu ||| Transitivity ||| $A \succsim B$ and $B \succsim C \Rightarrow A \succsim C$. Indifference curves cannot cross.
 ---
-pu ||| Strict (strong) monotonicity ||| More of any good, no less of the others, is strictly better. Curves slope down; higher is better. ($\min\{x,y\}$ is only weakly monotone.)
+pu ||| Strict (strong) monotonicity ||| More of any good, no less of the others, is strictly better. Curves slope down; higher is better. ($\min\{x,y\}$ is only weakly monotone.) <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = \min\{x,y\}$ at $(3,3)$: raise $x$ to $4$ &rarr; $u$ still $3$ (strict fails). $u = xy$ at $(3,3)$: raise $x$ to $4$ &rarr; $u = 12 &gt; 9$ (strict holds).</div>
 ---
-pu ||| Convexity of preferences ||| If $A \succsim C$ and $B \succsim C$ then $tA + (1-t)B \succsim C$: averages are at least as good as extremes. Curves bow toward the origin; $|\text{MRS}|$ diminishes.
+pu ||| Convexity of preferences ||| If $A \succsim C$ and $B \succsim C$ then $tA + (1-t)B \succsim C$: averages are at least as good as extremes. Curves bow toward the origin; $|\text{MRS}|$ diminishes. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = xy$: $(1,9)$ and $(9,1)$ both give $9$; the average $(5,5)$ gives $25$ &mdash; better, convex. $u = x^2+y^2$: $(4,0),(0,4)$ give $16$; $(2,2)$ gives $8$ &mdash; worse, not convex.</div>
 ---
 pu ||| Why can&rsquo;t indifference curves cross? ||| Crossing at $A$: pick $B$ (curve 1), $C$ (curve 2) with $C$ having more of both than $B$. Monotonicity: $C \succ B$. Transitivity via $A$: $B \sim C$. Contradiction.
 ---
-pu ||| Homothetic preferences ||| $\text{MRS}(tx,ty) = \text{MRS}(x,y)$: MRS depends only on $y/x$; demand scales with income. CD, substitutes, complements yes; quasilinear no.
+pu ||| Homothetic preferences ||| $\text{MRS}(tx,ty) = \text{MRS}(x,y)$: MRS depends only on $y/x$; demand scales with income. CD, substitutes, complements yes; quasilinear no. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = xy$: $\text{MRS}(2,4) = -2$ and $\text{MRS}(4,8) = -2$ &#10003; homothetic. $u = \ln x + y$: $\text{MRS}(1,1) = -1$ but $\text{MRS}(2,2) = -\tfrac12$ &#10007;.</div>
 ---
-pu ||| Diminishing MRS ||| $|\text{MRS}|$ falls as $x$ rises along one curve &mdash; the curve flattens. The calculus face of convexity.
+pu ||| Diminishing MRS ||| $|\text{MRS}|$ falls as $x$ rises along one curve &mdash; the curve flattens. The calculus face of convexity. <div class="fc-ex"><span class="fc-ex-k">Example</span> Along $xy = 16$: at $(2,8)$ $\text{MRS} = -4$; at $(4,4)$ it is $-1$; at $(8,2)$ it is $-\tfrac14$. Magnitude $4 \to 1 \to \tfrac14$: diminishing.</div>
 ---
-bd ||| Budget line with income $M$ ||| $p_x x + p_y y = M$; slope $-p_x/p_y$; intercepts $M/p_x$, $M/p_y$.
+bd ||| Budget line with income $M$ ||| $p_x x + p_y y = M$; slope $-p_x/p_y$; intercepts $M/p_x$, $M/p_y$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $p_x = 2$, $p_y = 4$, $M = 40$: $2x + 4y = 40$. Intercepts $x = 20$, $y = 10$; slope $-\tfrac12$.</div>
 ---
-bd ||| Budget line with endowment $\omega$ ||| $p_x x + p_y y = p_x\omega_x + p_y\omega_y$. Always passes through $\omega$; price changes pivot around $\omega$.
+bd ||| Budget line with endowment $\omega$ ||| $p_x x + p_y y = p_x\omega_x + p_y\omega_y$. Always passes through $\omega$; price changes pivot around $\omega$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $\omega = (5,10)$, $p_x = 2$, $p_y = 1$: $M = 2(5) + 1(10) = 20$, so $2x + y = 20$. Check: $(5,10)$ is on it. Double $p_x$ to 4: $M = 30$, line $4x + y = 30$ &mdash; still through $(5,10)$.</div>
 ---
-bd ||| Tangency condition ||| $\text{MRS} = -\dfrac{p_x}{p_y}$, i.e. $\dfrac{MU_x}{MU_y} = \dfrac{p_x}{p_y}$ (equal bang per buck). Then substitute into the budget.
+bd ||| Tangency condition ||| $\text{MRS} = -\dfrac{p_x}{p_y}$, i.e. $\dfrac{MU_x}{MU_y} = \dfrac{p_x}{p_y}$ (equal bang per buck). Then substitute into the budget. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = xy$, $p_x = 2$, $p_y = 4$, $M = 40$: $-\tfrac{y}{x} = -\tfrac{2}{4} \Rightarrow x = 2y$. Budget: $2(2y) + 4y = 40 \Rightarrow y = 5$, $x = 10$.</div>
 ---
-bd ||| Cobb&ndash;Douglas demand ||| $x^* = \dfrac{\alpha}{\alpha+\beta}\dfrac{M}{p_x}$, $\ y^* = \dfrac{\beta}{\alpha+\beta}\dfrac{M}{p_y}$ &mdash; fixed spending shares.
+bd ||| Cobb&ndash;Douglas demand ||| $x^* = \dfrac{\alpha}{\alpha+\beta}\dfrac{M}{p_x}$, $\ y^* = \dfrac{\beta}{\alpha+\beta}\dfrac{M}{p_y}$ &mdash; fixed spending shares. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = x^{1/3}y^{2/3}$, $M = 90$, $p_x = 3$, $p_y = 5$: $x^* = \tfrac13\cdot\tfrac{90}{3} = 10$, $y^* = \tfrac23\cdot\tfrac{90}{5} = 12$. Check: $30 + 60 = 90$. &#10003;</div>
 ---
-bd ||| Perfect substitutes: how to find demand ||| Compare $a/b$ with $p_x/p_y$ (or $a/p_x$ vs $b/p_y$). Larger bang per buck gets all income: $x^* = M/p_x$ or $y^* = M/p_y$. Equal &rArr; any bundle on the budget line.
+bd ||| Perfect substitutes: how to find demand ||| Compare $a/b$ with $p_x/p_y$ (or $a/p_x$ vs $b/p_y$). Larger bang per buck gets all income: $x^* = M/p_x$ or $y^* = M/p_y$. Equal &rArr; any bundle on the budget line. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = 2x + y$, $p_x = 4$, $p_y = 3$, $M = 30$: $\tfrac{2}{4} = 0.5 &gt; \tfrac{1}{3}$ &rArr; all on $x$: $x^* = 7.5$, $y^* = 0$. If $p_x$ were $8$: $\tfrac28 = 0.25 &lt; \tfrac13$ &rArr; $y^* = 10$, $x^* = 0$.</div>
 ---
-bd ||| Perfect complements $\min\{ax, by\}$: demand ||| Kink $ax = by$ plus budget: $x^* = \dfrac{bM}{bp_x + ap_y}$, $\ y^* = \dfrac{aM}{bp_x + ap_y}$.
+bd ||| Perfect complements $\min\{ax, by\}$: demand ||| Kink $ax = by$ plus budget: $x^* = \dfrac{bM}{bp_x + ap_y}$, $\ y^* = \dfrac{aM}{bp_x + ap_y}$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = \min\{x, 3y\}$ ($a=1,b=3$), $p_x = 2$, $p_y = 3$, $M = 18$: kink $x = 3y$; budget $2(3y) + 3y = 18 \Rightarrow y^* = 2$, $x^* = 6$.</div>
 ---
-bd ||| Quasilinear $v(x)+y$: demand ||| $x^*$ solves $v'(x) = p_x/p_y$ (no $M$); $y^* = (M - p_x x^*)/p_y$ if $\ge 0$, else spend everything on $x$.
+bd ||| Quasilinear $v(x) + \beta y$: demand ||| $x^*$ solves $v'(x) = \beta\,\dfrac{p_x}{p_y}$ (no $M$ in it); $y^* = (M - p_x x^*)/p_y$ if $\ge 0$, else spend everything on $x$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = 2\sqrt{x} + y$ ($\beta = 1$), $p_y = 1$, $p_x = \tfrac12$, $M = 20$: $\tfrac{1}{\sqrt x} = \tfrac12 \Rightarrow x^* = 4$; $y^* = 20 - \tfrac12(4) = 18$. With $M = 50$: $x^*$ still $4$, $y^* = 48$.</div>
 ---
-pu ||| Writing $\min$ from &ldquo;$a$ of $x$ with $b$ of $y$&rdquo; ||| $u = \min\{bx,\ ay\}$ &mdash; coefficients swapped so both arguments are equal at $(a, b)$.
+pu ||| Writing $\min$ from &ldquo;$a$ of $x$ with $b$ of $y$&rdquo; ||| $u = \min\{bx,\ ay\}$ &mdash; coefficients swapped so both arguments are equal at $(a, b)$. <div class="fc-ex"><span class="fc-ex-k">Example</span> &ldquo;3 cups of flour ($x$) per 2 eggs ($y$)&rdquo; &rarr; $u = \min\{2x, 3y\}$. Check at $(3,2)$: $\min\{6,6\}$, balanced. &#10003; ($\min\{3x,2y\}$ would want 2 flour per 3 eggs.)</div>
 ---
-bd ||| Homogeneity of degree zero ||| Scaling all prices and income by $t$ leaves the budget set, hence demand, unchanged. So only relative prices matter: set $p_y = 1$, $p_x = p$.
+bd ||| Homogeneity of degree zero ||| Scaling all prices and income by $t$ leaves the budget set, hence demand, unchanged. So only relative prices matter: set $p_y = 1$, $p_x = p$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = xy$, $(p_x,p_y,M) = (2,4,40)$: $x^* = \tfrac{40}{2\cdot2} = 10$. Triple everything to $(6,12,120)$: $x^* = \tfrac{120}{2\cdot6} = 10$. Same.</div>
 ---
-bd ||| Net demand / net buyer / autarky price ||| $z_x = x^* - \omega_x$; $z_x &gt; 0$ net buyer, $&lt; 0$ net seller. Autarky: $x^*(p) = \omega_x$, where $-p = \text{MRS}(\omega)$.
+bd ||| Net demand / net buyer / autarky price ||| $z_x = x^* - \omega_x$; $z_x &gt; 0$ net buyer, $&lt; 0$ net seller. Autarky: $x^*(p) = \omega_x$, where $-p = \text{MRS}(\omega)$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u = x^2y$, $\omega = (6,4)$, $p_y = 1$, $p_x = 2$: $x^* = 4 + \tfrac{8}{3\cdot2} = \tfrac{16}{3}$, so $z_x = \tfrac{16}{3} - 6 = -\tfrac23$ &rarr; net seller. Autarky: $4 + \tfrac{8}{3p} = 6 \Rightarrow p = \tfrac43 = |\text{MRS}(6,4)|$.</div>
 ---
-ex ||| Feasible allocation ||| $x_1 + x_2 \le X$ and $y_1 + y_2 \le Y$ (equality if nothing is thrown away). One point in the box fixes both bundles.
+ex ||| Feasible allocation ||| $x_1 + x_2 \le X$ and $y_1 + y_2 \le Y$ (equality if nothing is thrown away). One point in the box fixes both bundles. <div class="fc-ex"><span class="fc-ex-k">Example</span> $E = (10,10)$: $\{(6,6),(4,4)\}$ sums to $(10,10)$ &#10003; feasible. $\{(7,7),(4,4)\}$ needs $11$ units of $x$ &#10007;.</div>
 ---
-ex ||| Pareto dominates ||| $Z$ Pareto dominates $W$ if every consumer is at least as well off at $Z$ and at least one is strictly better off. &ldquo;One up, one down&rdquo; = neither.
+ex ||| Pareto dominates ||| $Z$ Pareto dominates $W$ if every consumer is at least as well off at $Z$ and at least one is strictly better off. &ldquo;One up, one down&rdquo; = neither. <div class="fc-ex"><span class="fc-ex-k">Example</span> Utilities $(u_1,u_2)$: $A = (4,10)$, $C = (4,12)$ &rArr; $C$ dominates $A$ (1 same, 2 better). $B = (6,9)$ vs $A = (4,10)$: 1 up, 2 down &rArr; neither dominates.</div>
 ---
-ex ||| Pareto optimal ||| Feasible and not Pareto dominated by any feasible allocation. Interior, smooth: $\text{MRS}_A = \text{MRS}_B$. Otherwise: no idle goods and no mutually beneficial trade.
+ex ||| Pareto optimal ||| Feasible and not Pareto dominated by any feasible allocation. Interior, smooth: $\text{MRS}_A = \text{MRS}_B$. Otherwise: no idle goods and no mutually beneficial trade. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u_1 = \min\{x_1, 2y_1\}$ holding $(4,4)$: only $2$ of the $4$ units of $y$ are used. Hand the idle $2$ to consumer 2 &rarr; 2 gains, 1 unchanged &rArr; the original was <em>not</em> PO.</div>
 ---
-ex ||| Contract curve / Pareto set ||| The set of all Pareto-optimal allocations; runs from $O_A$ to $O_B$. Smooth: $\text{MRS}_A = \text{MRS}_B$. Leontief: kink ray. Linear vs linear: edges.
+ex ||| Contract curve / Pareto set ||| The set of all Pareto-optimal allocations; runs from $O_A$ to $O_B$. Smooth: $\text{MRS}_A = \text{MRS}_B$. Leontief: kink ray. Linear vs linear: edges. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u_A = x_Ay_A$, $u_B = 3x_B + y_B$ in a $3\times3$ box: $-\tfrac{y_A}{x_A} = -3 \Rightarrow y_A = 3x_A$ from $O_A$ to $(1,3)$, then along the top edge to $O_B$.</div>
 ---
-ex ||| Lens and core ||| Lens: allocations with $u_A \ge u_A(\omega)$ and $u_B \ge u_B(\omega)$ (between the two curves through $\omega$). Core = contract curve $\cap$ lens; endpoints from $u_i(\text{CC}) = u_i(\omega)$.
+ex ||| Lens and core ||| Lens: allocations with $u_A \ge u_A(\omega)$ and $u_B \ge u_B(\omega)$ (between the two curves through $\omega$). Core = contract curve $\cap$ lens; endpoints from $u_i(\text{CC}) = u_i(\omega)$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u_A = x_Ay_A$, $u_B = x_B + 2y_B$, $\omega_A = (3, 0.5)$ in a $4\times4$ box: CC is $y_A = \tfrac12 x_A$. $u_A \ge 1.5 \Rightarrow \tfrac12 x_A^2 \ge 1.5 \Rightarrow x_A \ge \sqrt3$; $u_B \ge 8 \Rightarrow 12 - 2x_A \ge 8 \Rightarrow x_A \le 2$. Core: $x_A \in [\sqrt3, 2]$.</div>
 ---
-ex ||| Cobb&ndash;Douglas contract curve (general) ||| $y_A = \dfrac{r_B\,Y\,x_A}{r_A X - (r_A - r_B)x_A}$ with $r_i = \alpha_i/\beta_i$; the diagonal iff $r_A = r_B$; below it if $r_A &gt; r_B$.
+ex ||| Cobb&ndash;Douglas contract curve (general) ||| $y_A = \dfrac{r_B\,Y\,x_A}{r_A X - (r_A - r_B)x_A}$ with $r_i = \alpha_i/\beta_i$; the diagonal iff $r_A = r_B$; below it if $r_A &gt; r_B$. <div class="fc-ex"><span class="fc-ex-k">Example</span> $u_A = x_Ay_A$ ($r_A = 1$), $u_B = x_By_B^2$ ($r_B = \tfrac12$), $X = Y = 8$: $y_A = \dfrac{\tfrac12\cdot 8\,x_A}{8 - \tfrac12 x_A} = \dfrac{8x_A}{16 - x_A}$. At $x_A = 4$: $y_A = \tfrac{32}{12} \approx 2.67 &lt; 4$ &rarr; below the diagonal.</div>
 </script>
 
 
@@ -735,12 +738,12 @@ $u_1=2x_1+3y_1$, $u_2=3x_2+2y_2$<br>$\omega_1=(2,0)$, $\omega_2=(0,2)$ ||| Strai
 
 <div class="card">
     <table class="ax tour">
-        <tr><th style="width:120px;"></th><th>Cobb&ndash;Douglas<br>$u = x^\alpha y^\beta$</th><th>Perfect substitutes<br>$u = ax + by$</th><th>Perfect complements<br>$u = \min\{ax,\, by\}$</th><th>Quasilinear<br>$u = v(x) + y$</th></tr>
-        <tr><td>$MU_x,\ MU_y$</td><td>$\alpha x^{\alpha-1}y^{\beta},\ \ \beta x^{\alpha}y^{\beta-1}$</td><td>$a,\ \ b$</td><td>undefined at the kink</td><td>$v'(x),\ \ 1$</td></tr>
-        <tr><td>MRS $= -MU_x/MU_y$</td><td>$-\dfrac{\alpha}{\beta}\dfrac{y}{x}$</td><td>$-\dfrac{a}{b}$ (constant)</td><td>vertical arm: $-\infty$; horizontal arm: $0$</td><td>$-v'(x)$ (no $y$)</td></tr>
+        <tr><th style="width:120px;"></th><th>Cobb&ndash;Douglas<br>$u = x^\alpha y^\beta$</th><th>Perfect substitutes<br>$u = ax + by$</th><th>Perfect complements<br>$u = \min\{ax,\, by\}$</th><th>Quasilinear<br>$u = v(x) + \beta y$</th></tr>
+        <tr><td>$MU_x,\ MU_y$</td><td>$\alpha x^{\alpha-1}y^{\beta},\ \ \beta x^{\alpha}y^{\beta-1}$</td><td>$a,\ \ b$</td><td>undefined at the kink</td><td>$v'(x),\ \ \beta$</td></tr>
+        <tr><td>MRS $= -MU_x/MU_y$</td><td>$-\dfrac{\alpha}{\beta}\dfrac{y}{x}$</td><td>$-\dfrac{a}{b}$ (constant)</td><td>vertical arm: $-\infty$; horizontal arm: $0$</td><td>$-v'(x)/\beta$ (no $y$)</td></tr>
         <tr><td>IC shape</td><td>smooth, bowed in, never touch axes</td><td>straight lines, slope $-a/b$</td><td>L-shaped, kinks on the ray $ax = by$</td><td>vertical shifts of one curve</td></tr>
-        <tr><td>Optimum rule</td><td>tangency $\dfrac{\alpha}{\beta}\dfrac{y}{x} = \dfrac{p_x}{p_y}$</td><td>compare $\dfrac{a}{b}$ with $\dfrac{p_x}{p_y}$ (bang-per-buck: $a/p_x$ vs $b/p_y$)</td><td>kink: $ax = by$ plus the budget</td><td>tangency $v'(x) = \dfrac{p_x}{p_y}$, then check $y \ge 0$</td></tr>
-        <tr><td>Marshallian demand (income $M$)</td><td>$x^* = \dfrac{\alpha}{\alpha+\beta}\dfrac{M}{p_x},\ \ y^* = \dfrac{\beta}{\alpha+\beta}\dfrac{M}{p_y}$</td><td>$a/b &gt; p_x/p_y$: $x^*=M/p_x,\ y^*=0$<br>$a/b &lt; p_x/p_y$: $x^*=0,\ y^*=M/p_y$<br>equal: any point on the budget line</td><td>$x^* = \dfrac{bM}{b p_x + a p_y},\ \ y^* = \dfrac{aM}{b p_x + a p_y}$</td><td>$x^*$ solves $v'(x)=p_x/p_y$ (no $M$!); $y^* = \dfrac{M - p_x x^*}{p_y}$ if $\ge 0$, else $y^*=0,\ x^*=M/p_x$</td></tr>
+        <tr><td>Optimum rule</td><td>tangency $\dfrac{\alpha}{\beta}\dfrac{y}{x} = \dfrac{p_x}{p_y}$</td><td>compare $\dfrac{a}{b}$ with $\dfrac{p_x}{p_y}$ (bang-per-buck: $a/p_x$ vs $b/p_y$)</td><td>kink: $ax = by$ plus the budget</td><td>tangency $v'(x) = \beta\dfrac{p_x}{p_y}$, then check $y \ge 0$</td></tr>
+        <tr><td>Marshallian demand (income $M$)</td><td>$x^* = \dfrac{\alpha}{\alpha+\beta}\dfrac{M}{p_x},\ \ y^* = \dfrac{\beta}{\alpha+\beta}\dfrac{M}{p_y}$</td><td>$a/b &gt; p_x/p_y$: $x^*=M/p_x,\ y^*=0$<br>$a/b &lt; p_x/p_y$: $x^*=0,\ y^*=M/p_y$<br>equal: any point on the budget line</td><td>$x^* = \dfrac{bM}{b p_x + a p_y},\ \ y^* = \dfrac{aM}{b p_x + a p_y}$</td><td>$x^*$ solves $v'(x)=\beta p_x/p_y$ (no $M$!); $y^* = \dfrac{M - p_x x^*}{p_y}$ if $\ge 0$, else $y^*=0,\ x^*=M/p_x$</td></tr>
         <tr><td>Homothetic?</td><td>yes</td><td>yes</td><td>yes</td><td><strong>no</strong></td></tr>
         <tr><td>Convex?</td><td>strictly</td><td>weakly (not strictly)</td><td>weakly</td><td>strictly if $v''&lt;0$</td></tr>
         <tr><td>Watch for</td><td>spending share on $x$ is $\alpha/(\alpha+\beta)$ regardless of prices</td><td>never set MRS = price ratio; it&rsquo;s a corner</td><td>never differentiate; use the ratio</td><td>income drops out of $x^*$; corner if income is too small</td></tr>
