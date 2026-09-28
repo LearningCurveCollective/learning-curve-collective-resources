@@ -943,13 +943,22 @@ $u_1=2x_1+3y_1$, $u_2=3x_2+2y_2$<br>$\omega_1=(2,0)$, $\omega_2=(0,2)$ ||| Strai
 <div class="card" style="border-left-color:var(--green-dark);">
     <div class="mock-head">
         <div style="flex:1; min-width:260px;">
-            <p style="margin-bottom:6px;"><strong>Twelve descriptions, six minutes.</strong> For each one write $u(x,y)$, name the type, and give the MRS (or the kink ratio). Then check, and mark yourself.</p>
-            <p class="meta" style="margin:0;">Four patterns cover almost everything: <span class="chip g">substitutes $ax+by$</span> <span class="chip o">complements $\min\{ax,by\}$</span> <span class="chip b">Cobb&ndash;Douglas $x^\alpha y^\beta$</span> <span class="chip g">quasilinear $v(x)+y$</span> &mdash; plus two curveballs at the end.</p>
+            <p style="margin-bottom:6px;"><strong>Ten descriptions, six minutes.</strong> Each deal pulls 10 at random from a bank of 50. For each one write $u(x,y)$, name the type, and give the MRS (or the kink ratio). Then check, and mark yourself.</p>
+            <p class="meta" style="margin-bottom:10px;">Four patterns cover almost everything: <span class="chip g">substitutes $ax+by$</span> <span class="chip o">complements $\min\{ax,by\}$</span> <span class="chip b">Cobb&ndash;Douglas $x^\alpha y^\beta$</span> <span class="chip g">quasilinear $v(x)+\beta y$</span> &mdash; plus a few curveballs.</p>
+            <div class="fc-ctl-group"><span class="fc-ctl-label">Pull from</span>
+                <button class="fc-chip on" data-sptype="subs" onclick="spToggleType(this)">Substitutes <span class="fc-n">(12)</span></button>
+                <button class="fc-chip on" data-sptype="comp" onclick="spToggleType(this)">Complements <span class="fc-n">(12)</span></button>
+                <button class="fc-chip on" data-sptype="cd" onclick="spToggleType(this)">Cobb&ndash;Douglas <span class="fc-n">(10)</span></button>
+                <button class="fc-chip on" data-sptype="ql" onclick="spToggleType(this)">Quasilinear <span class="fc-n">(8)</span></button>
+                <button class="fc-chip on" data-sptype="other" onclick="spToggleType(this)">Curveballs <span class="fc-n">(8)</span></button>
+                <button class="btn-small" style="margin-left:6px;" onclick="spDeal()">&#127922; Deal 10</button>
+            </div>
+            <p class="meta" id="sp-pool" style="margin:6px 0 0; font-size:12.5px;"></p>
         </div>
         <div class="sprint-panel">
             <div class="sprint-timer" id="sp-timer">06:00</div>
             <div><button class="btn-small" onclick="spStart()">Start</button> <button class="btn-small" style="background:#8B5E3C;" onclick="spReset()">Reset</button></div>
-            <div class="sprint-score">Score: <span id="sp-score">0</span> / 12</div>
+            <div class="sprint-score">Score: <span id="sp-score">0</span> / <span id="sp-total">10</span></div>
             <div><button class="btn-small" style="background:var(--gold); color:var(--brown-dark);" onclick="toggleAll('tab-sprint', true)">Reveal all</button> <button class="btn-small" style="background:#8B5E3C;" onclick="toggleAll('tab-sprint', false)">Hide all</button></div>
         </div>
     </div>
@@ -957,93 +966,7 @@ $u_1=2x_1+3y_1$, $u_2=3x_2+2y_2$<br>$\omega_1=(2,0)$, $\omega_2=(0,2)$ ||| Strai
 
 <div class="idea-box"><p style="margin:0;"><strong>How to read a story.</strong> &ldquo;Only cares about the total of&hellip;&rdquo; / &ldquo;one is worth $k$ of the other&rdquo; &rarr; substitutes. &ldquo;Uses them together in a fixed ratio&rdquo; / &ldquo;$a$ of $x$ with $b$ of $y$&rdquo; &rarr; complements, and the coefficients go on <em>opposite</em> sides: $x{:}y = a{:}b \Rightarrow \min\{bx,\ ay\}$. &ldquo;Spends a fixed share of income on $x$&rdquo; &rarr; Cobb&ndash;Douglas with that share as the exponent. &ldquo;Extra $y$ is always worth the same, extra $x$ is worth less and less&rdquo; &rarr; quasilinear.</p></div>
 
-<div id="sprint-list">
-
-<div class="sp-item"><div class="sp-num">1</div><div class="sp-body">
-    <p><strong>Dev only cares about protein.</strong> A steak ($x$) has four times the protein of an egg ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip g">substitutes</span> $u = 4x + y$ (any positive multiple works). $\text{MRS} = -4$: he gives up 4 eggs for a steak. Straight-line curves, slope $-4$.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">2</div><div class="sp-body">
-    <p><strong>Priya takes exactly two sugar cubes per cup of tea.</strong> Cups ($x$), sugar cubes ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip o">complements</span> $u = \min\{2x,\ y\}$. Ideal ratio $x{:}y = 1{:}2$, kink on the ray $y = 2x$. Sanity check at $(1, 2)$: $\min\{2, 2\}$ &mdash; balanced. &#10003; The MRS is undefined at the kink (vertical arm $-\infty$, horizontal arm $0$).</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">3</div><div class="sp-body">
-    <p><strong>Leo is indifferent between three apples and one orange.</strong> Apples ($x$), oranges ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip g">substitutes</span> One orange is worth three apples, so $u = x + 3y$ &mdash; <em>not</em> $3x + y$. Check: $(3, 0)$ and $(0, 1)$ both give $3$. &#10003; $\text{MRS} = -1/3$: he gives up only a third of an orange for one more apple.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">4</div><div class="sp-body">
-    <p><strong>Maya always spends a quarter of her income on books and the rest on clothes,</strong> whatever the prices. Books ($x$), clothes ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip b">Cobb&ndash;Douglas</span> Constant expenditure shares are the Cobb&ndash;Douglas signature: $u = x^{1/4}y^{3/4}$ (or $xy^3$ &mdash; same preferences, ratio $\alpha/\beta = 1/3$). $\text{MRS} = -\dfrac{1}{3}\dfrac{y}{x}$. Demand: $x^* = \tfrac14 M/p_x$, $y^* = \tfrac34 M/p_y$.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">5</div><div class="sp-body">
-    <p><strong>Sam builds shelves; each shelf needs four screws and two brackets.</strong> Screws ($x$), brackets ($y$). He only cares about finished shelves.</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip o">complements</span> Shelves $= \min\{x/4,\ y/2\}$, which is the same preferences as $u = \min\{x,\ 2y\}$ (multiply by 4). Ideal ratio $x{:}y = 4{:}2 = 2{:}1$, kink ray $x = 2y$. Check $(4, 2)$: $\min\{4, 4\}$. &#10003; Trap: $\min\{4x, 2y\}$ would say he wants <em>more</em> brackets than screws.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">6</div><div class="sp-body">
-    <p><strong>Each extra hour of gaming gives Jun the same kick, but each extra coffee gives less and less.</strong> Coffee ($x$), gaming hours ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip g">quasilinear</span> Constant $MU_y$ and diminishing $MU_x$: $u = v(x) + y$ with $v$ concave, e.g. $u = \sqrt{x} + y$ or $u = \ln x + y$. $\text{MRS} = -v'(x)$, e.g. $-\dfrac{1}{2\sqrt x}$ &mdash; no $y$ in it, so the curves are vertical shifts of one another.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">7</div><div class="sp-body">
-    <p><strong>Omar likes both goods, and a unit of $x$ always gives him twice the satisfaction of a unit of $y$,</strong> no matter how much of each he already has.</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip g">substitutes</span> Constant marginal utilities in a 2:1 ratio: $u = 2x + y$. $\text{MRS} = -2$. (&ldquo;No matter how much he already has&rdquo; is the giveaway for linear preferences.)</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">8</div><div class="sp-body">
-    <p><strong>A recipe needs three cups of flour for every two eggs,</strong> and Rosa only cares about how many batches she can make. Flour ($x$), eggs ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip o">complements</span> $u = \min\{2x,\ 3y\}$. Ratio $x{:}y = 3{:}2$ &rArr; coefficients swap: $2x = 3y$ on the kink ray. Check $(3, 2)$: $\min\{6, 6\}$. &#10003; (Batches $= \min\{x/3, y/2\}$, the same preferences.)</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">9</div><div class="sp-body">
-    <p><strong>Ella spends twice as much on $x$ as on $y$ at any prices,</strong> and she likes more of both with a smooth, bowed-in indifference map.</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip b">Cobb&ndash;Douglas</span> Shares $2/3$ on $x$, $1/3$ on $y$: $u = x^{2/3}y^{1/3}$, or equivalently $x^2y$. $\text{MRS} = -\dfrac{2y}{x}$. Demand: $x^* = \tfrac23 M/p_x$, $y^* = \tfrac13 M/p_y$ &mdash; spending $\tfrac23 M$ vs $\tfrac13 M$, twice as much. &#10003;</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">10</div><div class="sp-body">
-    <p><strong>Ravi thinks smoothies and juices are the same drink</strong> &mdash; he&rsquo;ll swap one for one without a second thought. Smoothies ($x$), juices ($y$).</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip g">substitutes</span> $u = x + y$. $\text{MRS} = -1$. Curves are $45^\circ$ lines; compare $MU_x/p_x = 1/p_x$ with $MU_y/p_y = 1/p_y$ &mdash; he buys whichever is cheaper, and is indifferent along the whole budget line if $p_x = p_y$.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">11</div><div class="sp-body">
-    <p><strong>Curveball: Nadia doesn&rsquo;t care about $y$ at all</strong> &mdash; more of it neither helps nor hurts. More $x$ is always better.</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip b">neutral good</span> $u = x$ (or $u = 2x$, $\sqrt{x}$&hellip;). $MU_y = 0$, so indifference curves are <strong>vertical lines</strong>: she will not give up any $x$ for $y$ ($|\text{MRS}| \to \infty$). Demand: $x^* = M/p_x$, $y^* = 0$ whenever $p_y &gt; 0$. Monotonicity holds only weakly in $y$.</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-<div class="sp-item"><div class="sp-num">12</div><div class="sp-body">
-    <p><strong>Curveball: Kai likes income ($x$) and dislikes noise ($y$)</strong> &mdash; each extra decibel costs him as much as one extra dollar helps.</p>
-    <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>
-    <div class="solution-body"><p><span class="chip b">good vs bad</span> $u = x - y$. $MU_y = -1 &lt; 0$, so monotonicity fails in $y$: $y$ is a <em>bad</em>. $\text{MRS} = -\dfrac{MU_x}{MU_y} = -\dfrac{1}{-1} = +1$: indifference curves slope <strong>upward</strong> &mdash; to accept more noise he must be paid more income. &ldquo;Better&rdquo; is down-right (more $x$, less $y$).</p></div>
-    <div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div>
-</div></div>
-
-</div>
+<div id="sprint-list"></div>
 
 <div class="card" style="margin-top:20px;">
     <h3 class="h3s">The pattern table (memorize this, not the twelve answers)</h3>
@@ -1059,6 +982,109 @@ $u_1=2x_1+3y_1$, $u_2=3x_2+2y_2$<br>$\omega_1=(2,0)$, $\omega_2=(0,2)$ ||| Strai
 </div>
 
 <div class="card" style="border-left-color:var(--green-dark); margin-top:16px;"><p style="margin:0;"><strong>Box sprint.</strong> Same idea for the Edgeworth box: drag each pair of preference functions onto the box it produces &mdash; the <a href="#" onclick="goTab('match');return false;" style="color:var(--green-dark); font-weight:600;">&#9635; Box Match tab</a>.</p></div>
+
+<script type="text/plain" id="sp-data">
+subs ||| <strong>Dev only cares about protein.</strong> A steak ($x$) has four times the protein of an egg ($y$). ||| $u = 4x + y$ (any positive multiple works). $\text{MRS} = -4$: he gives up 4 eggs for a steak. Straight-line curves, slope $-4$.
+---
+subs ||| <strong>Leo is indifferent between three apples and one orange.</strong> Apples ($x$), oranges ($y$). ||| One orange is worth three apples: $u = x + 3y$ &mdash; <em>not</em> $3x+y$. Check: $(3,0)$ and $(0,1)$ both give $3$. $\text{MRS} = -1/3$.
+---
+subs ||| <strong>A unit of $x$ always gives Omar twice the satisfaction of a unit of $y$,</strong> no matter how much of each he already has. ||| Constant marginal utilities in a 2:1 ratio: $u = 2x + y$, $\text{MRS} = -2$. &ldquo;No matter how much he already has&rdquo; = linear.
+---
+subs ||| <strong>Ravi thinks smoothies and juices are the same drink</strong> &mdash; he swaps one for one without a second thought. Smoothies ($x$), juices ($y$). ||| $u = x + y$, $\text{MRS} = -1$; $45^\circ$ lines. Compare $MU_x/p_x = 1/p_x$ with $MU_y/p_y = 1/p_y$: buy whichever is cheaper.
+---
+subs ||| <strong>Mia only cares about total caffeine.</strong> An espresso ($x$) has 80 mg, a tea ($y$) has 40 mg. ||| $u = 80x + 40y$, or equivalently $u = 2x + y$ (same preferences). $\text{MRS} = -2$: two teas per espresso.
+---
+subs ||| <strong>Nina is indifferent between two bus rides and one train ride.</strong> Bus rides ($x$), train rides ($y$). ||| One train = two buses, so $u = x + 2y$. Check: $(2,0)$ and $(0,1)$ both give $2$. $\text{MRS} = -1/2$: she gives up only half a train ride for one more bus ride.
+---
+subs ||| <strong>Theo only cares about total liters of water.</strong> Small bottles ($x$) hold 0.5 L, large bottles ($y$) hold 1.5 L. ||| $u = 0.5x + 1.5y \equiv x + 3y$. $\text{MRS} = -1/3$: a small bottle is worth a third of a large one.
+---
+subs ||| <strong>Gift cards:</strong> Ana only cares about total dollar value. $x$ = \$10 cards, $y$ = \$25 cards. ||| $u = 10x + 25y \equiv 2x + 5y$. $\text{MRS} = -2/5$: she gives up 0.4 of a \$25 card for one \$10 card.
+---
+subs ||| <strong>Blue pens ($x$) and black pens ($y$):</strong> Sam cannot tell them apart and never cares which he uses. ||| $u = x + y$, $\text{MRS} = -1$. Perfect substitutes one-for-one; he buys the cheaper colour.
+---
+subs ||| <strong>Jess would trade five stickers for one trading card, every time.</strong> Cards ($x$), stickers ($y$). ||| $u = 5x + y$. $\text{MRS} = -5$: five stickers given up per card. Check: $(1,0)$ and $(0,5)$ give the same $u$.
+---
+subs ||| <strong>Ben only counts calories.</strong> A cookie ($x$) is 200 kcal, a cracker ($y$) is 50 kcal. ||| $u = 200x + 50y \equiv 4x + y$. $\text{MRS} = -4$.
+---
+subs ||| <strong>A large log ($x$) burns exactly as long as three small logs ($y$),</strong> and Ida only cares about hours of fire. ||| $u = 3x + y$, $\text{MRS} = -3$. Linear curves with slope $-3$.
+---
+comp ||| <strong>Priya takes exactly two sugar cubes per cup of tea.</strong> Cups ($x$), sugar cubes ($y$). ||| $u = \min\{2x,\ y\}$. Ratio $x{:}y = 1{:}2$, kink ray $y = 2x$. Check $(1,2)$: $\min\{2,2\}$ &#10003;. MRS undefined at the kink.
+---
+comp ||| <strong>Each shelf Sam builds needs four screws and two brackets;</strong> he only cares about finished shelves. Screws ($x$), brackets ($y$). ||| Shelves $= \min\{x/4, y/2\}$ &equiv; $u = \min\{x,\ 2y\}$. Ratio $4{:}2 = 2{:}1$, kink ray $x = 2y$. Check $(4,2)$: $\min\{4,4\}$ &#10003;.
+---
+comp ||| <strong>Rosa&rsquo;s recipe needs three cups of flour for every two eggs.</strong> Flour ($x$), eggs ($y$). ||| $u = \min\{2x,\ 3y\}$ &mdash; coefficients swapped. Check $(3,2)$: $\min\{6,6\}$ &#10003;.
+---
+comp ||| <strong>Left shoes ($x$) and right shoes ($y$).</strong> ||| $u = \min\{x,\ y\}$. One-to-one; extra of either is useless. Kink on the diagonal $x = y$.
+---
+comp ||| <strong>A bicycle needs one frame and two wheels.</strong> Frames ($x$), wheels ($y$); Kai only cares about complete bikes. ||| Bikes $= \min\{x, y/2\}$ &equiv; $u = \min\{2x,\ y\}$. Check $(1,2)$: $\min\{2,2\}$ &#10003;. Kink ray $y = 2x$.
+---
+comp ||| <strong>Hot dogs ($x$) and buns ($y$),</strong> one bun per hot dog, nothing else matters. ||| $u = \min\{x,\ y\}$. Same as left/right shoes: ratio 1:1.
+---
+comp ||| <strong>Zoe puts exactly half a lemon in each cup of tea.</strong> Cups ($x$), lemons ($y$). ||| Ratio $x{:}y = 2{:}1$ (two cups per lemon) $\Rightarrow u = \min\{x,\ 2y\}$. Check $(2,1)$: $\min\{2,2\}$ &#10003;.
+---
+comp ||| <strong>One ink cartridge prints exactly 500 pages.</strong> Pages ($x$), cartridges ($y$); Ali only cares about printed pages. ||| Ratio $x{:}y = 500{:}1 \Rightarrow u = \min\{x,\ 500y\}$. Check $(500,1)$: $\min\{500,500\}$ &#10003;.
+---
+comp ||| <strong>Pancake mix: one cup of mix ($x$) needs three-quarters of a cup of milk ($y$).</strong> ||| Ratio $x{:}y = 4{:}3 \Rightarrow u = \min\{3x,\ 4y\}$. Check $(4,3)$: $\min\{12,12\}$ &#10003;.
+---
+comp ||| <strong>A dining set is one table with four chairs.</strong> Chairs ($x$), tables ($y$). ||| Ratio $x{:}y = 4{:}1 \Rightarrow u = \min\{x,\ 4y\}$. Check $(4,1)$: $\min\{4,4\}$ &#10003;.
+---
+comp ||| <strong>Two chopsticks per bowl of rice.</strong> Chopsticks ($x$), bowls ($y$). ||| Ratio $2{:}1 \Rightarrow u = \min\{x,\ 2y\}$. Check $(2,1)$: $\min\{2,2\}$ &#10003;.
+---
+comp ||| <strong>A toy car needs one body and four wheels.</strong> Bodies ($x$), wheels ($y$). ||| Ratio $x{:}y = 1{:}4 \Rightarrow u = \min\{4x,\ y\}$. Check $(1,4)$: $\min\{4,4\}$ &#10003;. Kink ray $y = 4x$.
+---
+cd ||| <strong>Maya always spends a quarter of her income on books and the rest on clothes,</strong> whatever the prices. Books ($x$), clothes ($y$). ||| Constant spending shares = Cobb&ndash;Douglas: $u = x^{1/4}y^{3/4}$ (or $xy^3$). $\text{MRS} = -\tfrac13\tfrac{y}{x}$; $x^* = \tfrac14 M/p_x$.
+---
+cd ||| <strong>Ella spends twice as much on $x$ as on $y$ at any prices,</strong> with smooth, bowed-in curves. ||| Shares $2/3$ and $1/3$: $u = x^{2/3}y^{1/3}$ (or $x^2y$). $\text{MRS} = -\tfrac{2y}{x}$.
+---
+cd ||| <strong>Noah splits his budget evenly between food ($x$) and rent ($y$)</strong> no matter what prices do, and likes variety. ||| $u = x^{1/2}y^{1/2}$ (or $xy$). $\text{MRS} = -y/x$; $x^* = \tfrac12 M/p_x$, $y^* = \tfrac12 M/p_y$.
+---
+cd ||| <strong>Whatever the prices, 60% of Lucia&rsquo;s spending goes to $x$.</strong> ||| $u = x^{0.6}y^{0.4}$ (or $x^3y^2$). $\text{MRS} = -\tfrac{0.6}{0.4}\tfrac{y}{x} = -\tfrac32\tfrac{y}{x}$.
+---
+cd ||| <strong>Marcus&rsquo;s spending on $y$ is always three times his spending on $x$.</strong> ||| Shares $1/4$ on $x$, $3/4$ on $y$: $u = x^{1/4}y^{3/4}$. $\text{MRS} = -\tfrac13\tfrac{y}{x}$.
+---
+cd ||| <strong>Kim&rsquo;s preferences are $u = 2\ln x + \ln y$.</strong> What type is this, and what is the MRS? ||| $2\ln x + \ln y = \ln(x^2y)$: Cobb&ndash;Douglas with $\alpha=2,\beta=1$. $\text{MRS} = -\dfrac{2/x}{1/y} = -\dfrac{2y}{x}$. Spends $2/3$ on $x$.
+---
+cd ||| <strong>At every bundle Dana&rsquo;s MRS equals $-y/x$.</strong> Write a utility function. ||| $u = xy$ (any $x^\alpha y^\alpha$, equal exponents). Homothetic, spends half on each good.
+---
+cd ||| <strong>Reverse-engineer:</strong> a consumer&rsquo;s demands are $x^* = \dfrac{M}{3p_x}$ and $y^* = \dfrac{2M}{3p_y}$. ||| Shares $1/3$ and $2/3$ &rArr; Cobb&ndash;Douglas $u = x^{1/3}y^{2/3}$ (or $xy^2$). $\text{MRS} = -\tfrac{1}{2}\tfrac{y}{x}$.
+---
+cd ||| <strong>Lena spends one fifth of her income on concerts ($x$)</strong> and the rest on everything else ($y$), at any prices. ||| $u = x^{1/5}y^{4/5}$ (or $xy^4$). $\text{MRS} = -\tfrac14\tfrac{y}{x}$.
+---
+cd ||| <strong>Doubling both goods leaves Owen&rsquo;s MRS unchanged; he likes both, and 3/4 of his spending goes to $x$.</strong> ||| Homothetic with fixed share $3/4$: $u = x^{3/4}y^{1/4}$ (or $x^3y$). $\text{MRS} = -3\,\tfrac{y}{x}$.
+---
+ql ||| <strong>Each extra hour of gaming ($y$) gives Jun the same kick, but each extra coffee ($x$) gives less and less.</strong> ||| Quasilinear $u = v(x) + y$ with $v$ concave, e.g. $\sqrt{x} + y$ or $\ln x + y$. $\text{MRS} = -v\'(x)$, no $y$ in it.
+---
+ql ||| <strong>Every extra dollar of other goods ($y$) is worth the same to Ava, but each extra concert ($x$) is worth less than the last.</strong> ||| $u = v(x) + y$ with $v\'\' &lt; 0$, e.g. $u = 10\sqrt{x} + y$ or $\ln x + y$. Curves are vertical shifts of one another.
+---
+ql ||| <strong>Tomas&rsquo;s MRS is $-1/x$ at every bundle.</strong> Write a utility function. ||| $u = \ln x + y$ (quasilinear): $MU_x = 1/x$, $MU_y = 1$. Not homothetic &mdash; the MRS changes along a ray.
+---
+ql ||| <strong>A consumer&rsquo;s MRS is $-\dfrac{1}{2\sqrt{x}}$ everywhere.</strong> Write $u$. ||| $u = \sqrt{x} + y$: $MU_x = \tfrac{1}{2\sqrt x}$, $MU_y = 1$.
+---
+ql ||| <strong>Once Hana buys any $y$ at all, her demand for $x$ stops depending on her income.</strong> What type of preferences? ||| Quasilinear $u = v(x) + \beta y$: $x^*$ solves $v\'(x) = \beta p_x/p_y$ with no $M$ in it; income spills into $y$.
+---
+ql ||| <strong>All of Ravi&rsquo;s indifference curves are vertical copies of one another.</strong> What form does $u$ take, and what does that say about the MRS? ||| $u = v(x) + \beta y$; the MRS $= -v\'(x)/\beta$ depends on $x$ only, so at a given $x$ every curve has the same slope.
+---
+ql ||| <strong>$u = 4\sqrt{x} + 2y$.</strong> Write it in the form $v(x) + \beta y$ and find the MRS. ||| $v(x) = 4\sqrt{x}$, $\beta = 2$. $\text{MRS} = -\dfrac{v\'(x)}{\beta} = -\dfrac{2/\sqrt{x}}{2} = -\dfrac{1}{\sqrt{x}}$.
+---
+ql ||| <strong>Nora values each extra hour of sleep ($x$) less and less, and treats money ($y$) as worth the same per dollar.</strong> ||| $u = v(x) + y$ with $v$ concave, e.g. $\ln x + y$. Quasilinear in $y$.
+---
+other ||| <strong>Curveball: Nadia doesn&rsquo;t care about $y$ at all</strong> &mdash; more of it neither helps nor hurts; more $x$ is always better. ||| Neutral good: $u = x$. $MU_y = 0$, vertical indifference curves; $x^* = M/p_x$, $y^* = 0$ when $p_y &gt; 0$.
+---
+other ||| <strong>Curveball: Kai likes income ($x$) and dislikes noise ($y$)</strong> &mdash; each extra decibel costs him as much as an extra dollar helps. ||| A bad: $u = x - y$. $\text{MRS} = -\dfrac{1}{-1} = +1$: curves slope <em>upward</em>; better is down-right.
+---
+other ||| <strong>Curveball: pollution ($y$) hurts Mo twice as much as income ($x$) helps.</strong> ||| $u = x - 2y$. $MU_y = -2 &lt; 0$: $y$ is a bad. $\text{MRS} = -\dfrac{1}{-2} = +\tfrac12$ (upward-sloping curves).
+---
+other ||| <strong>Curveball: which of these represent the same preferences as $u = xy$?</strong> $\ \ln x + \ln y,\quad -xy,\quad (xy)^2$ ||| $\ln x + \ln y = \ln u$ &#10003; and $(xy)^2 = u^2$ &#10003; (increasing transformations). $-xy$ reverses the ranking &#10007;.
+---
+other ||| <strong>Curveball: Vera loves pizza ($x$) up to three slices, but a fourth makes her worse off;</strong> $y$ is always good. ||| A bliss point in $x$: e.g. $u = -(x-3)^2 + y$. Monotonicity fails beyond $x = 3$; indifference curves bend back.
+---
+other ||| <strong>Curveball: Iris will trade a hundred $y$ for a single $x$.</strong> ||| Still perfect substitutes, just extreme: $u = 100x + y$, $\text{MRS} = -100$. Straight lines, very steep.
+---
+other ||| <strong>Curveball: Al&rsquo;s utility is $u = x^2 + y^2$.</strong> What shape are his indifference curves, and are his preferences convex? ||| Quarter-circles bowed <em>away</em> from the origin: the average of $(4,0)$ and $(0,4)$ gives $8 &lt; 16$. <strong>Not convex</strong>; he specializes in one good.
+---
+other ||| <strong>Curveball: Finn ranks bundles by $x$ first and looks at $y$ only to break ties.</strong> Can we write a utility function? ||| Lexicographic preferences: complete and transitive but <strong>not continuous</strong>, so no utility function represents them (the curves would be single points).
+</script>
+
 </div>
 
 <!-- ===================== MOCK TEST A ===================== -->
@@ -1372,17 +1398,38 @@ function toggleExample(btn) {
     body.classList.toggle('open'); btn.classList.toggle('open');
     if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50);
 }
-/* ── Sprint timer + score ── */
-var spSecs = 360, spHandle = null;
+/* ── Sprint: 50-item bank, deal 10 by type ── */
+var spSecs = 360, spHandle = null, SP = [], spTypes = {subs:1, comp:1, cd:1, ql:1, other:1}, spDealt = [];
+var SP_LABEL = { subs:'substitutes', comp:'complements', cd:'Cobb&ndash;Douglas', ql:'quasilinear', other:'curveball' };
+var SP_CHIP = { subs:'g', comp:'o', cd:'b', ql:'g', other:'b' };
+function spInit(){ var el = document.getElementById('sp-data'); if (!el) return;
+    SP = el.textContent.trim().split(/\n---\n/).map(function(s,i){ var p = s.split('|||'); return { id:i, t:p[0].trim(), q:p[1].trim(), a:p[2].trim() }; });
+    spDeal(); }
+function spPool(){ return SP.filter(function(c){ return spTypes[c.t]; }); }
+function spToggleType(btn){ var t = btn.dataset.sptype; spTypes[t] = !spTypes[t]; btn.classList.toggle('on', !!spTypes[t]); fcHaptic();
+    var n = spPool().length; document.getElementById('sp-pool').innerHTML = n ? n + ' in the pool &mdash; hit <strong>Deal 10</strong> for a fresh set.' : 'Nothing selected &mdash; turn a type back on.'; }
+function spDeal(){ var pool = spPool(); if (!pool.length){ document.getElementById('sp-pool').textContent = 'Nothing selected — turn a type back on.'; return; }
+    for (var i = pool.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = pool[i]; pool[i] = pool[j]; pool[j] = t; }
+    spDealt = pool.slice(0, 10); var html = '';
+    spDealt.forEach(function(c, k){ html += '<div class="sp-item"><div class="sp-num">' + (k+1) + '</div><div class="sp-body"><p>' + c.q + '</p>'
+        + '<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check</button>'
+        + '<div class="solution-body"><p><span class="chip ' + SP_CHIP[c.t] + '">' + SP_LABEL[c.t] + '</span> ' + c.a + '</p></div>'
+        + '<div class="sp-mark"><button class="mk yes" onclick="spMark(this,1)">&#10003; got it</button><button class="mk no" onclick="spMark(this,0)">&#10007; missed</button></div></div></div>'; });
+    var list = document.getElementById('sprint-list'); list.innerHTML = html;
+    document.getElementById('sp-total').textContent = spDealt.length; document.getElementById('sp-score').textContent = '0';
+    document.getElementById('sp-pool').innerHTML = spDealt.length + ' dealt from a pool of ' + spPool().length + '.';
+    if (spHandle){ clearInterval(spHandle); spHandle = null; } spSecs = 360; spRender();
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([list]); }, 30); }
 function spRender(){ var m = Math.floor(spSecs/60), s = spSecs%60; var el = document.getElementById('sp-timer'); el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s; el.classList.toggle('done', spSecs===0); }
 function spStart(){ if (spHandle) return; spHandle = setInterval(function(){ if (spSecs>0){ spSecs--; spRender(); } if (spSecs===0){ clearInterval(spHandle); spHandle=null; } }, 1000); }
 function spReset(){ if (spHandle){ clearInterval(spHandle); spHandle=null; } spSecs = 360; spRender();
     document.querySelectorAll('#sprint-list .mk').forEach(function(b){ b.classList.remove('on'); });
     document.querySelectorAll('#sprint-list .sp-item').forEach(function(i){ i.classList.remove('ok','miss'); });
+    document.querySelectorAll('#sprint-list .solution-body.open').forEach(function(b){ b.classList.remove('open'); b.previousElementSibling.classList.remove('open'); });
     document.getElementById('sp-score').textContent = '0'; }
 function spMark(btn, ok){ var wrap = btn.parentElement, item = btn.closest('.sp-item');
     wrap.querySelectorAll('.mk').forEach(function(b){ b.classList.remove('on'); }); btn.classList.add('on');
-    item.classList.remove('ok','miss'); item.classList.add(ok ? 'ok' : 'miss');
+    item.classList.remove('ok','miss'); item.classList.add(ok ? 'ok' : 'miss'); fcHaptic();
     document.getElementById('sp-score').textContent = document.querySelectorAll('#sprint-list .mk.yes.on').length; }
 function goTab(name){ var btn = document.querySelector('.tab-buttons .tab-button[onclick*="\'' + name + '\'"]'); switchTab(name, btn); }
 /* ── Flashcards: decks, term list, persisted missed set ── */
@@ -1557,7 +1604,7 @@ function addTabNav() {
         pane.appendChild(nav);
     });
 }
-window.addEventListener('DOMContentLoaded', function(){ fcInit(); bmInit(); tileHaptic(); addTabNav(); });
+window.addEventListener('DOMContentLoaded', function(){ fcInit(); bmInit(); spInit(); tileHaptic(); addTabNav(); });
 </script>
 </body>
 </html>
