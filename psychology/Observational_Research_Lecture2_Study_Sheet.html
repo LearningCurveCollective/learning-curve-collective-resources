@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observational Research — Lecture 2 Study Sheet</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <script>
+    window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC; --copper: #BC6C26;
+    --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+
+/* Header */
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* Tab system — three labeled rows */
+.tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
+.tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.tab-row-label { width:92px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); opacity:0.75; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="study"] { border-color: #21442B; }
+.tab-button[data-group="study"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="study"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="sprint"] { border-color: #BC6C26; }
+.tab-button[data-group="sprint"].active { background: linear-gradient(135deg, #BC6C26, #D48A48); }
+.tab-button[data-group="sprint"]:hover { border-color: #BC6C26; background: rgba(188,108,38,0.1); }
+.tab-button[data-group="sprint"].active:hover { background: linear-gradient(135deg, #BC6C26, #D48A48); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sections, cards */
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.card h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px; }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.slide-ref { display:inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; background: rgba(33,68,43,0.10); color: var(--green-dark); padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+.beyond-badge { display: inline-block; font-size: 11px; font-weight: 600; background: rgba(221,162,94,0.18); color: #8B5E3C; padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+
+/* Concept list */
+.concept-list { background-color: var(--cream-dark); border-radius: 8px; padding: 20px; margin: 15px 0; }
+.concept-item { margin-bottom: 12px; padding: 16px 18px; border-radius: 8px; display: flex; gap: 16px; align-items: flex-start; }
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) { background-color: rgba(59, 83, 35, 0.08); border-left: 4px solid #21442B; }
+.concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
+.concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
+.concept-visual { flex-shrink: 0; width: 56px; height: 56px; border-radius: 6px; overflow: hidden; }
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-body p { margin-bottom: 6px; line-height: 1.6; }
+.concept-label { font-weight: 700; color: var(--brown-dark); margin-bottom: 4px; font-size: 15px; }
+
+/* Formula tiles */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin-bottom: 8px; }
+.formula-tile p { margin-bottom: 6px; line-height: 1.55; font-size: 14px; }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; }
+
+/* Technique sections */
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+.step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+
+/* Collapsibles */
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+
+/* Tables */
+table.cmp { width: 100%; border-collapse: collapse; margin: 14px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 14px; }
+table.cmp th { background: var(--green-dark); color: white; text-align: left; padding: 10px 12px; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 600; }
+table.cmp td { padding: 10px 12px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; line-height: 1.55; }
+table.cmp tr:nth-child(even) td { background: rgba(221,162,94,0.06); }
+table.cmp td:first-child { font-weight: 600; color: var(--brown-dark); white-space: nowrap; }
+.tbl-wrap { overflow-x: auto; }
+
+/* Timeline SVG figures */
+.figure { background: white; border-radius: 8px; padding: 14px 16px; border: 1px solid var(--cream-dark); margin: 12px 0; }
+.figure > svg { width: 100%; height: auto; display: block; }
+.figure .cap { font-size: 12.5px; color: var(--text-medium); margin-top: 8px; margin-bottom: 0; }
+
+/* Quiz */
+.quiz-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 18px; }
+.score-pill { background: var(--green-dark); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 14px; }
+.quiz-btn { border:none; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; font-size:13px; padding:8px 14px; border-radius:8px; background: var(--gold); color: var(--brown-dark); }
+.quiz-btn:hover { background: var(--gold-light); }
+.q-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 16px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.q-head { display:flex; gap:14px; align-items:flex-start; }
+.q-num { width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.q-text { font-weight: 600; margin-bottom: 12px; line-height: 1.6; }
+.opt { display:block; width:100%; text-align:left; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; cursor:pointer; font-family:'Inter',sans-serif; font-size:14px; color: var(--text-dark); transition: all 0.15s; line-height:1.5; }
+.opt:hover { border-color: var(--gold); background: rgba(221,162,94,0.10); }
+.opt .ltr { display:inline-block; width:22px; font-weight:700; color: var(--green-dark); }
+.opt.correct { background: #E8F5E9; border-color: var(--green-light); }
+.opt.wrong { background: #FFEBEE; border-color: #E57373; }
+.opt.dim { opacity: 0.55; cursor: default; }
+.opt.locked { cursor: default; }
+.q-exp { display:none; margin-top: 10px; padding: 12px 16px; border-radius: 6px; background: rgba(33,68,43,0.06); border-left: 4px solid var(--green-dark); font-size: 14px; line-height: 1.65; }
+.q-exp.show { display:block; }
+.q-exp .verdict { font-weight: 700; margin-bottom: 4px; }
+.q-exp .verdict.ok { color: var(--green-dark); }
+.q-exp .verdict.no { color: #C62828; }
+
+/* Flashcards (ported Flashcard Studier) */
+.btn-small { border:none; background:var(--green-dark); color:white; border-radius:6px; padding:7px 12px; font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer; }
+.btn-small:hover { background:var(--green-medium); }
+.fc-controls { display:flex; flex-direction:column; gap:10px; }
+.fc-ctl-group { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.fc-ctl-label { width:78px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); }
+.fc-chip { border:1.5px solid var(--cream-dark); background:var(--cream); border-radius:20px; padding:5px 13px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--text-medium); cursor:pointer; transition:all 0.15s; }
+.fc-chip:hover { border-color:var(--green-light); color:var(--green-dark); }
+.fc-chip.on { background:var(--green-dark); border-color:var(--green-dark); color:white; }
+.fc-chip.miss.on { background:#C0392B; border-color:#C0392B; }
+.fc-chip.custom.on { background:var(--gold); border-color:var(--gold); color:var(--brown-dark); }
+.fc-chip.pick { border-style:dashed; }
+.fc-chip.pick.on { background:var(--gold-pale); border-color:var(--gold); color:var(--brown-dark); }
+.fc-pick-group { margin-bottom:10px; }
+.fc-pick-head { display:flex; align-items:center; gap:10px; font-weight:700; font-size:13px; color:var(--green-dark); margin-bottom:6px; }
+.fc-pick-head button { border:none; background:rgba(33,68,43,0.10); color:var(--green-dark); border-radius:10px; padding:2px 9px; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; cursor:pointer; }
+.fc-pick-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:5px; }
+.fc-pick { display:flex; align-items:flex-start; gap:8px; background:white; border:1.5px solid var(--cream-dark); border-radius:6px; padding:6px 10px; font-size:12.5px; cursor:pointer; line-height:1.4; transition:all 0.15s; }
+.fc-pick:hover { border-color:var(--green-light); }
+.fc-pick.on { background:var(--gold-pale); border-color:var(--gold); }
+.fc-pick input { margin-top:3px; accent-color:var(--green-dark); }
+.fc-n { font-size:11px; opacity:0.8; margin-left:2px; }
+.fc-list-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.fc-legend { font-size:12px; color:var(--text-medium); display:flex; align-items:center; gap:4px; }
+.lg { display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:3px; vertical-align:middle; }
+.lg.unseen { background:#E2E2E2; } .lg.got { background:var(--green-light); } .lg.miss { background:#E57373; }
+.fc-list { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:6px; }
+.fc-term { text-align:left; border:1.5px solid var(--cream-dark); border-left:5px solid #E2E2E2; background:white; border-radius:6px; padding:6px 10px; font-family:'Inter',sans-serif; font-size:12.5px; font-weight:500; color:var(--text-dark); cursor:pointer; transition:all 0.15s; line-height:1.4; }
+.fc-term:hover { border-color:var(--green-light); box-shadow:0 0 0 2px rgba(57,134,78,0.18); }
+.fc-term.got { border-left-color:var(--green-light); background:#F3F9F4; }
+.fc-term.miss { border-left-color:#E57373; background:#FFF3F3; }
+.fc-term.current { outline:2px solid var(--gold); outline-offset:1px; font-weight:700; }
+.fc-term .fc-term-n { color:var(--text-medium); font-weight:700; margin-right:5px; font-size:11px; }
+.fc-deckname { font-size:12px; font-weight:700; color:var(--green-dark); background:rgba(33,68,43,0.10); padding:2px 10px; border-radius:10px; }
+.fc-wrap { max-width:720px; margin:0 auto; }
+.fc-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:13.5px; color:var(--text-medium); margin-bottom:10px; }
+.fc-card { background:linear-gradient(160deg, #FBF1E1 0%, var(--gold-pale) 100%); border:2px solid var(--gold); border-radius:14px; min-height:210px; padding:22px 26px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.08); position:relative; display:flex; flex-direction:column; justify-content:center; transition:border-color 0.15s; }
+.fc-card.flipped { border-color:var(--green-dark); background:linear-gradient(160deg, #EAF3EC 0%, #DCEBE0 100%); }
+.fc-label { position:absolute; top:10px; left:14px; font-size:10.5px; font-weight:700; letter-spacing:1.2px; color:#8B6914; }
+.fc-card.flipped .fc-label { color:var(--green-dark); }
+.fc-front { font-family:'Switzer','Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:var(--brown-dark); text-align:center; line-height:1.4; }
+.fc-card.flipped .fc-front { font-size:14px; font-weight:600; color:var(--text-medium); margin-bottom:10px; }
+.fc-back { display:none; font-size:16px; text-align:center; line-height:1.7; color:var(--text-dark); }
+.fc-card.flipped .fc-back { display:block; }
+.fc-back strong { color:var(--green-dark); }
+.fc-hint { position:absolute; bottom:8px; right:14px; font-size:11px; color:#999; }
+.fc-actions { display:flex; justify-content:center; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.fc-actions .btn-small { padding:9px 18px; font-size:13.5px; }
+.h3s { font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); font-size:19px; margin-bottom:10px; }
+
+/* Next / Back nav */
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+@media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+@media print { .tab-nav { display: none !important; } }
+
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 8px; }
+.mjx-container { overflow-x: auto; }
+.two-col { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-row-label { width:100%; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid, .two-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Observational Research — Lecture 2</h1>
+            <div class="subtitle">CPSY 1900 &bull; CONCEPTS, EXAMPLES, QUIZ &amp; FLASHCARDS</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">Research Methods &bull; Observational Design</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="tab-row-label">Reference</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Study guide</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 What Observational Research Is</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 Types, Ethics &amp; Trade-offs</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 Sampling, Recording &amp; Data Quality</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t4', this)">4 Examples &amp; Classic Studies</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Practice</span>
+            <button class="tab-button" data-group="sprint" onclick="switchTab('flash', this)">&#9998; Flashcards</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('quiza', this)">Quiz A &middot; Overview</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('quizb', this)">Quiz B &middot; Apply It</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════ CHEAT SHEET ═══════════════ -->
+    <div id="tab-cheat" class="tab-content active">
+        <div class="section-header"><div class="section-number">&#9733;</div><h2>One-Page Cheat Sheet</h2></div>
+        <p>Everything from Lecture 2 compressed. Slide numbers in the green pills refer to the lecture PDF. If you can explain every tile below in your own words, you know this lecture.</p>
+
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>The Big Trade-off <span class="slide-ref">slide 7</span></h4>
+                <p><strong>Ecological validity</strong> (behavior is real, in its natural setting) <em>vs</em> <strong>reactivity</strong> (people change behavior when observed &mdash; the Hawthorne effect). More naturalistic &rarr; more valid but harder to control; more control/visibility &rarr; more reactivity.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>Covert observation is OK only if&hellip; <span class="slide-ref">slide 6</span></h4>
+                <p>(1) setting is <strong>genuinely public</strong>, (2) participants are <strong>anonymous</strong>, (3) <strong>no expectation of harm</strong>, (4) <strong>no feasible way</strong> to answer the question with consent in advance. All four.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Three settings, three flavors <span class="slide-ref">slides 3, 6, 8</span></h4>
+                <p><strong>Public / naturalistic</strong> &rarr; no interference, high ecological validity.<br><strong>Participant</strong> &rarr; researcher joins the group, rich data, loses objectivity.<br><strong>Controlled / overt</strong> &rarr; lab or private setting, gatekeeper, can manipulate.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Sampling rules (WHAT you watch) <span class="slide-ref">slide 9</span></h4>
+                <p><strong>Ad libitum</strong> &ndash; anything that happens.<br><strong>Behavior</strong> &ndash; one specific behavior of interest.<br><strong>Scan</strong> &ndash; whatever is happening at a set instant.<br><strong>Focal</strong> &ndash; one individual in the group.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>Recording rules (HOW you log it) <span class="slide-ref">slide 9</span></h4>
+                <p><strong>Scan sampling</strong> &ndash; check at fixed intervals &rarr; <em>frequency</em> (how often).<br><strong>Continuous sampling</strong> &ndash; record start/stop of every bout &rarr; <em>duration</em> (how long).</p>
+                <p class="formula-note">$\text{Proportion of time} = \dfrac{\sum \text{bout durations}}{\text{observation period}} = \dfrac{650\text{ s}}{1200\text{ s}} = 0.54$</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Three analysis questions <span class="slide-ref">slide 10</span></h4>
+                <p><strong>Who</strong> showed the behavior?<br><strong>How often</strong> did it occur? (frequency)<br><strong>How long</strong> did it last? (duration)</p>
+                <p class="formula-note">Structured (checklists, pre-defined categories, tally tables) vs unstructured (field notes).</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Data-quality toolkit <span class="slide-ref">slide 11</span></h4>
+                <p><strong>Audit trail</strong> &middot; <strong>Triangulation</strong> (researcher / data / method) &middot; <strong>Thick description</strong> &middot; <strong>Reflexivity</strong> &middot; <strong>Inter-rater reliability</strong> &middot; <strong>Member checking</strong></p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>Inter-rater reliability stats <span class="slide-ref">slide 11</span></h4>
+                <p>Percent agreement &middot; Cohen&rsquo;s $\kappa$ &middot; Pearson&rsquo;s $r$ &middot; intraclass correlation (ICC).</p>
+                <p class="formula-note"><span class="beyond-badge">beyond lecture</span> $\kappa = \dfrac{p_o - p_e}{1 - p_e}$ &mdash; agreement corrected for chance. Lecture only names it; the formula is context.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Why no causal claims <span class="slide-ref">slides 6, 8</span></h4>
+                <p>No manipulation and no control over extraneous variables &rarr; you can describe and correlate, and <em>generate</em> hypotheses, but you cannot say X <em>caused</em> Y.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Other standing limits <span class="slide-ref">slide 6</span></h4>
+                <p><strong>Convenience sampling</strong> (whoever is there, not a statistical sample) &middot; findings are <strong>time- and context-specific</strong> &middot; <strong>observer bias</strong> &middot; <strong>reactivity</strong>.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>APA research standards <span class="slide-ref">slide 5</span></h4>
+                <p>Institutional approval (IRB humans / IACUC animals) &middot; informed consent &middot; avoid deception &middot; voluntary, no coercion &middot; debriefing &middot; anonymity/confidentiality &middot; validity &amp; reliability &middot; researcher assumes responsibility &middot; no plagiarism/fabrication.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Qualitative research vocabulary <span class="slide-ref">slide 3</span></h4>
+                <p><strong>Subjectivity</strong> (positionality, reflexivity) &middot; <strong>naturalistic setting</strong> &middot; <strong>contextualization</strong> &middot; <strong>inductive reasoning</strong> &middot; <strong>flexibility</strong> &middot; <strong>richness &amp; depth</strong> &middot; <strong>interpretation / meaning-making</strong> &middot; thick description &middot; &ldquo;small worlds.&rdquo;</p>
+            </div>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin-bottom:0;"><strong>Numbers to know.</strong> Continuous-sampling example: bouts of 225 + 120 + 70 + 235 = <strong>650 s</strong> out of a <strong>1200 s</strong> (20 min) period = <strong>54%</strong>. Scan-sampling example: checks every <strong>2 min for 20 min</strong> = 10 checkpoints; the behavior was present at <strong>4 of 10</strong>. Sample headphone figure: N = <strong>804</strong> (103 headphones, 247 earphones, 454 none). Horse ethogram video: timer every <strong>30 s</strong>.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 1 ═══════════════ -->
+    <div id="tab-t1" class="tab-content">
+        <div class="section-header"><div class="section-number">1</div><h2>What Qualitative &amp; Observational Research Is</h2></div>
+
+        <div class="card">
+            <h3>The seven spokes of qualitative research <span class="slide-ref">slide 3</span></h3>
+            <p>The lecture opens with a hub-and-spoke diagram. The center is &ldquo;Qualitative Research&rdquo;; the spokes are the properties that distinguish it from a tightly controlled experiment.</p>
+            <div class="concept-list">
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="22" fill="none" stroke="#21442B" stroke-width="3"/><circle cx="28" cy="20" r="6" fill="#21442B"/><path d="M16 42 Q28 30 40 42" fill="none" stroke="#21442B" stroke-width="3"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Subjectivity &rarr; positionality &amp; reflexivity</div><p>The researcher is a person with a background and a viewpoint. <strong>Positionality</strong> = where you stand relative to what you study (insider/outsider, identity, assumptions). <strong>Reflexivity</strong> = actively documenting and examining those biases so they don&rsquo;t quietly steer the interpretation.</p></div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><path d="M6 44 L20 22 L30 34 L38 26 L50 44 Z" fill="#DDA25E"/><circle cx="42" cy="14" r="5" fill="#E6BC84"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Naturalistic setting &rarr; public, controlled, or participant</div><p>You study behavior where it normally happens. The lecture then splits this into three settings: <strong>public</strong> (open, no expectation of privacy), <strong>controlled</strong> (lab or private, with a gatekeeper), and <strong>participant</strong> (you join the group).</p></div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><rect x="8" y="8" width="40" height="40" rx="6" fill="none" stroke="#8B5E3C" stroke-width="3"/><rect x="18" y="18" width="20" height="20" rx="3" fill="#8B5E3C"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Contextualization</div><p>Meaning depends on context. The same behavior (a smile, a fast walk) is interpreted differently in a bowling alley vs a lab, in Switzerland vs Mexico. Findings are reported <em>with</em> their setting, not stripped of it.</p></div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><path d="M10 46 L18 30 L26 38 L34 18 L46 10" fill="none" stroke="#21442B" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="10" r="4" fill="#21442B"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Inductive reasoning</div><p>Observation first, theory second. You watch, notice patterns, then build hypotheses to test later under controlled conditions. The lecture calls this <em>&ldquo;the watching and the wondering.&rdquo;</em> Contrast with deductive: start from a theory and test a prediction.</p></div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><path d="M10 28 C18 8 38 48 46 28" fill="none" stroke="#DDA25E" stroke-width="4" stroke-linecap="round"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Flexibility</div><p>The plan can adapt as you learn. A coding scheme or focus can be revised mid-study when the field shows you something you didn&rsquo;t anticipate. (This is a strength for discovery and a threat to reliability &mdash; that&rsquo;s why audit trails matter, see Tab 3.)</p></div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><rect x="8" y="34" width="8" height="14" fill="#8B5E3C"/><rect x="20" y="24" width="8" height="24" fill="#8B5E3C"/><rect x="32" y="14" width="8" height="34" fill="#8B5E3C"/><rect x="44" y="6" width="6" height="42" fill="#8B5E3C"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Richness and depth &rarr; thick description, &ldquo;small worlds&rdquo;</div><p>Deep detail about a narrow slice of life rather than shallow data on a huge sample. <strong>Thick description</strong> = a detailed enough account of context and participants that a reader can judge whether the findings would transfer elsewhere.</p></div>
+                </div>
+                <div class="concept-item">
+                    <div class="concept-visual"><svg viewBox="0 0 56 56"><circle cx="20" cy="28" r="12" fill="none" stroke="#21442B" stroke-width="3"/><circle cx="36" cy="28" r="12" fill="none" stroke="#21442B" stroke-width="3"/><circle cx="28" cy="28" r="4" fill="#21442B"/></svg></div>
+                    <div class="concept-body"><div class="concept-label">Interpretation and meaning-making</div><p>Data are non-numerical (notes, descriptions) and the researcher&rsquo;s job is to interpret them. But they <em>can</em> be numerically coded &mdash; e.g. tally headphones / earphones / none, or code smiles as social vs non-social.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>What it demands of the observer <span class="slide-ref">slide 3</span></h3>
+            <ul>
+                <li><strong>Strong observational skills</strong> and <strong>detailed note-taking</strong> &mdash; the notes <em>are</em> the data.</li>
+                <li>Comfort with data that start out as words and get coded into numbers only later.</li>
+                <li>Self-awareness (reflexivity) about how your own position shapes what you notice and how you read it.</li>
+            </ul>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin-bottom:0;"><strong>Exam framing.</strong> If asked &ldquo;why do observational research at all when experiments give causation?&rdquo; the lecture&rsquo;s three answers (slide 6) are: (1) it captures behavior that would not occur, or would occur differently, in a lab; (2) it works where manipulation would be unethical or impractical; (3) it generates hypotheses for later controlled testing.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 2 ═══════════════ -->
+    <div id="tab-t2" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>Types of Observation, Ethics &amp; the Trade-offs</h2></div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>A. Naturalistic observation in public places <span class="slide-ref">slide 6</span></h3>
+            <div class="step-concept"><span class="step-label">Defining features</span></div>
+            <ul>
+                <li>Public setting with <strong>no expectation of privacy</strong>.</li>
+                <li><strong>No manipulation</strong> or researcher interference.</li>
+                <li><strong>High ecological validity</strong>: captures behavior that wouldn&rsquo;t occur (or would occur differently) under lab conditions.</li>
+                <li>Useful where manipulation is unethical or impractical; generates hypotheses (inductive, exploratory).</li>
+            </ul>
+            <div class="step-concept"><span class="step-label">Limitations to always list</span></div>
+            <ul>
+                <li><strong>Convenience sampling</strong> &mdash; whoever happens to be there, not a statistically representative sample.</li>
+                <li><strong>No control over extraneous variables</strong> &rarr; no causal claims.</li>
+                <li>Findings can be <strong>time- and context-specific</strong>.</li>
+                <li><strong>Observer bias</strong> and <strong>reactivity</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>B. Participant observation <span class="slide-ref">slide 8</span></h3>
+            <div class="step-concept"><span class="step-label">Defining features</span></div>
+            <p>The researcher becomes part of the group and observes from inside its natural daily environment. Can be <strong>covert</strong> (the group doesn&rsquo;t know) or <strong>overt</strong> (they do). Usually needs a <strong>gatekeeper</strong> &mdash; someone who controls access to the group.</p>
+            <div class="step-concept"><span class="step-label">Strengths</span></div>
+            <ul><li>In-depth understanding, rich data, natural setting.</li></ul>
+            <div class="step-concept"><span class="step-label">Costs and risks (the lecture lists many &mdash; know them)</span></div>
+            <ul>
+                <li>Observer bias and reactivity; <strong>loss of objectivity</strong> (you start seeing things the group&rsquo;s way).</li>
+                <li><strong>Not generalizable</strong>; time-consuming and expensive.</li>
+                <li>Hard to maintain <strong>privacy and confidentiality</strong>.</li>
+                <li><strong>Power dynamics and exploitation</strong>; could involve <strong>deception</strong>.</li>
+                <li>Cannot establish cause and effect.</li>
+            </ul>
+            <p style="margin-bottom:0;">Lecture examples: Rosenhan&rsquo;s <em>&ldquo;On being sane in insane places&rdquo;</em> and Festinger, Riecken &amp; Schachter&rsquo;s <em>When Prophecy Fails</em> (1956).</p>
+        </div>
+
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>C. Overt observation in private or laboratory settings <span class="slide-ref">slide 8</span></h3>
+            <ul>
+                <li>Requires a <strong>gatekeeper</strong> (school, clinic, parent).</li>
+                <li><strong>Not unobtrusive</strong> &mdash; participants know they&rsquo;re watched, so reactivity is the price.</li>
+                <li><strong>May involve manipulations</strong> and allows <strong>experimental control</strong> &mdash; the one setting where you can start moving toward causal inference.</li>
+            </ul>
+            <p style="margin-bottom:0;">Lecture image: two observers with clipboards watching a preschool story-time.</p>
+        </div>
+
+        <div class="card">
+            <h3>Side-by-side</h3>
+            <div class="tbl-wrap">
+            <table class="cmp">
+                <tr><th></th><th>Naturalistic / public</th><th>Participant</th><th>Overt / controlled</th></tr>
+                <tr><td>Where</td><td>Public space</td><td>Inside the group&rsquo;s daily life</td><td>Lab or private setting</td></tr>
+                <tr><td>Know they&rsquo;re observed?</td><td>Usually not (covert)</td><td>Covert or overt</td><td>Yes</td></tr>
+                <tr><td>Manipulation?</td><td>None</td><td>None</td><td>Possible</td></tr>
+                <tr><td>Ecological validity</td><td>High</td><td>High</td><td>Lower</td></tr>
+                <tr><td>Reactivity</td><td>Low</td><td>Moderate (you&rsquo;re there)</td><td>High</td></tr>
+                <tr><td>Gatekeeper needed?</td><td>No</td><td>Usually</td><td>Yes</td></tr>
+                <tr><td>Signature risk</td><td>Convenience sample, context-specific</td><td>Loss of objectivity, deception, power dynamics</td><td>Not unobtrusive</td></tr>
+                <tr><td>Causal claims?</td><td>No</td><td>No</td><td>Only with experimental control</td></tr>
+            </table>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2b</div><h2>The Major Trade-off</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <div class="highlight-box"><p style="margin-bottom:0; font-size:17px;"><strong>Ecological validity</strong> &nbsp;vs&nbsp; <strong>Reactivity</strong> <span class="slide-ref">slide 7</span></p></div>
+            <p><strong>Ecological validity</strong>: how well the observed behavior represents behavior in real life. Highest when nobody interferes and nobody knows they&rsquo;re being watched.</p>
+            <p><strong>Reactivity</strong>: people (and animals) change their behavior because they are being observed. The lecture&rsquo;s label for this is the <strong>Hawthorne effect</strong> &mdash; &ldquo;observation changes behavior.&rdquo;</p>
+            <p>Every design choice slides along this line. Making yourself visible (overt), entering a lab, or using a clipboard buys control and consent but costs naturalness. Staying hidden buys naturalness but raises the ethical bar (see below) and forfeits control.</p>
+            <div class="figure">
+                <svg viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#21442B"/><stop offset="1" stop-color="#DDA25E"/></linearGradient></defs>
+                    <rect x="40" y="52" width="620" height="10" rx="5" fill="url(#g1)"/>
+                    <text x="40" y="30" font-family="Inter" font-size="13" font-weight="700" fill="#21442B">High ecological validity</text>
+                    <text x="40" y="90" font-family="Inter" font-size="12" fill="#4A4A4A">covert naturalistic</text>
+                    <text x="290" y="30" font-family="Inter" font-size="13" font-weight="700" fill="#5E6C39">participant</text>
+                    <text x="660" y="30" text-anchor="end" font-family="Inter" font-size="13" font-weight="700" fill="#BC6C26">High reactivity</text>
+                    <text x="660" y="90" text-anchor="end" font-family="Inter" font-size="12" fill="#4A4A4A">overt lab observation</text>
+                    <circle cx="90" cy="57" r="9" fill="#21442B"/><circle cx="330" cy="57" r="9" fill="#5E6C39"/><circle cx="610" cy="57" r="9" fill="#BC6C26"/>
+                </svg>
+                <p class="cap">Where the three observation types sit on the validity&ndash;reactivity line. Control and consent increase left-to-right; naturalness decreases.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2c</div><h2>Ethics</h2></div>
+        <div class="two-col">
+            <div class="card">
+                <h3>APA standards for conducting research <span class="slide-ref">slide 5</span></h3>
+                <ol>
+                    <li><strong>Institutional approval</strong> &mdash; IRB (humans) or IACUC (animals)</li>
+                    <li><strong>Informed consent</strong></li>
+                    <li><strong>Avoid deception</strong></li>
+                    <li><strong>Voluntary participation</strong>; no coercion</li>
+                    <li><strong>Debriefing</strong></li>
+                    <li><strong>Anonymity / confidentiality</strong></li>
+                    <li>Meet standards of <strong>validity and reliability</strong></li>
+                    <li><strong>Researcher assumes responsibility</strong></li>
+                    <li><strong>No plagiarism or fabrication</strong></li>
+                </ol>
+            </div>
+            <div class="card" style="border-left-color: #E57373;">
+                <h3>When is covert observation permissible? <span class="slide-ref">slide 6</span></h3>
+                <p>Covert observation skips informed consent, so it is allowed <em>only</em> when <strong>all four</strong> hold:</p>
+                <ol>
+                    <li>The setting is <strong>genuinely public</strong>.</li>
+                    <li>Participants are <strong>anonymous</strong> &mdash; no personal identification.</li>
+                    <li>There is <strong>no expectation of harm</strong> to participants.</li>
+                    <li>There is <strong>no feasible way</strong> to answer the research question with consent obtained in advance.</li>
+                </ol>
+                <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam trap:</strong> a study that meets three of the four is not &ldquo;mostly fine.&rdquo; Filming identifiable faces, or observing in a semi-private space (dorm lounge, locker room), breaks the conditions even if nobody is harmed.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 3 ═══════════════ -->
+    <div id="tab-t3" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Sampling, Recording &amp; Data Quality</h2></div>
+
+        <div class="card">
+            <h3>Two separate decisions <span class="slide-ref">slide 9</span></h3>
+            <p>The lecture splits &ldquo;how to make observations&rdquo; into a <strong>sampling rule</strong> (what/whom you watch) and a <strong>recording rule</strong> (how you log it over time). Keep them separate on the exam &mdash; the word &ldquo;scan&rdquo; appears in both lists and students mix them up.</p>
+            <div class="two-col">
+                <div class="highlight-box">
+                    <p><strong>Sampling rules &mdash; WHAT you watch</strong></p>
+                    <ol style="color: var(--text-dark);">
+                        <li><strong>Ad libitum</strong> &mdash; note anything that occurs during the period.</li>
+                        <li><strong>Behavior sampling</strong> &mdash; watch for one specific behavior of interest, whoever does it.</li>
+                        <li><strong>Scan</strong> &mdash; what is everyone doing at a specific instant.</li>
+                        <li><strong>Focal</strong> &mdash; follow only one individual in the group.</li>
+                    </ol>
+                </div>
+                <div class="highlight-box" style="border-left-color: var(--gold);">
+                    <p><strong>Recording rules &mdash; HOW you log it</strong></p>
+                    <ol style="color: var(--text-dark);">
+                        <li><strong>Scan sampling</strong> &mdash; check at predetermined intervals; tick if present.</li>
+                        <li><strong>Continuous sampling</strong> &mdash; record every occurrence from start to stop.</li>
+                    </ol>
+                    <p style="margin-bottom:0; font-size:13px;">Horse ethogram video in the course files uses a timer every 30 s &mdash; that&rsquo;s scan sampling.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Scan sampling &rarr; frequency</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Observe at fixed time points (every 2 min for 20 min in the lecture example). At each mark, record whether the behavior is happening. You get <strong>how often</strong> the behavior occurs &mdash; a count out of the number of checkpoints &mdash; but not how long any bout lasted.</p>
+            <div class="figure">
+                <svg viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="40" y1="50" x2="660" y2="50" stroke="#2D2D2D" stroke-width="5"/>
+                    <polygon points="660,42 676,50 660,58" fill="#2D2D2D"/>
+                    <g font-family="Inter" font-size="12" fill="#4A4A4A">
+                        <text x="24" y="55" text-anchor="end" font-weight="700" font-size="14">0</text>
+                        <text x="690" y="55" font-weight="700" font-size="14">20</text>
+                    </g>
+                    <g stroke="#2D2D2D" stroke-width="4">
+                        <line x1="100" y1="40" x2="100" y2="60"/><line x1="160" y1="40" x2="160" y2="60"/><line x1="220" y1="40" x2="220" y2="60"/><line x1="280" y1="40" x2="280" y2="60"/><line x1="340" y1="40" x2="340" y2="60"/><line x1="400" y1="40" x2="400" y2="60"/><line x1="460" y1="40" x2="460" y2="60"/><line x1="520" y1="40" x2="520" y2="60"/><line x1="580" y1="40" x2="580" y2="60"/><line x1="640" y1="40" x2="640" y2="60"/>
+                    </g>
+                    <g font-family="Inter" font-size="18" font-weight="700" fill="#BC6C26" text-anchor="middle">
+                        <text x="160" y="90">x</text><text x="280" y="90">x</text><text x="460" y="90">x</text><text x="520" y="90">x</text>
+                    </g>
+                    <text x="40" y="24" font-family="Inter" font-size="12" fill="#4A4A4A">checkpoint every 2 min &rarr; 10 checkpoints; behavior present at 4</text>
+                </svg>
+                <p class="cap">Slide 9 scan-sampling example. Analysis = number of intervals in which the behavior occurred: $4/10 = 0.40$ of checkpoints.</p>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>Continuous sampling &rarr; duration (and frequency)</h3>
+            <div class="step-concept"><span class="step-label">Concept</span></div>
+            <p>Record the behavior the whole time: when each bout starts, when it stops. You get <strong>when and for how long</strong> &mdash; duration &mdash; and you can still count bouts for frequency. More information, more labor.</p>
+            <div class="figure">
+                <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="40" y1="90" x2="660" y2="90" stroke="#2D2D2D" stroke-width="5"/>
+                    <polygon points="660,82 676,90 660,98" fill="#2D2D2D"/>
+                    <text x="24" y="95" text-anchor="end" font-family="Inter" font-weight="700" font-size="14" fill="#4A4A4A">0</text>
+                    <text x="690" y="95" font-family="Inter" font-weight="700" font-size="14" fill="#4A4A4A">20</text>
+                    <g stroke="#2D2D2D" stroke-width="3">
+                        <line x1="70" y1="82" x2="70" y2="98"/><line x1="100" y1="82" x2="100" y2="98"/><line x1="130" y1="82" x2="130" y2="98"/><line x1="160" y1="82" x2="160" y2="98"/><line x1="190" y1="82" x2="190" y2="98"/><line x1="220" y1="82" x2="220" y2="98"/><line x1="250" y1="82" x2="250" y2="98"/><line x1="280" y1="82" x2="280" y2="98"/><line x1="310" y1="82" x2="310" y2="98"/><line x1="340" y1="82" x2="340" y2="98"/><line x1="370" y1="82" x2="370" y2="98"/><line x1="400" y1="82" x2="400" y2="98"/><line x1="430" y1="82" x2="430" y2="98"/><line x1="460" y1="82" x2="460" y2="98"/><line x1="490" y1="82" x2="490" y2="98"/><line x1="520" y1="82" x2="520" y2="98"/><line x1="550" y1="82" x2="550" y2="98"/><line x1="580" y1="82" x2="580" y2="98"/><line x1="610" y1="82" x2="610" y2="98"/><line x1="640" y1="82" x2="640" y2="98"/>
+                    </g>
+                    <g fill="#21442B" opacity="0.85">
+                        <rect x="70" y="52" width="112" height="22" rx="3"/><rect x="230" y="52" width="60" height="22" rx="3"/><rect x="330" y="52" width="35" height="22" rx="3"/><rect x="420" y="52" width="118" height="22" rx="3"/>
+                    </g>
+                    <g font-family="Inter" font-size="12" fill="#4A4A4A" text-anchor="middle">
+                        <text x="126" y="42">225 s</text><text x="260" y="42">120 s</text><text x="347" y="42">70 s</text><text x="479" y="42">235 s</text>
+                    </g>
+                    <text x="600" y="42" font-family="Inter" font-size="13" font-weight="700" fill="#BC6C26">650 s / 1200 s = 54%</text>
+                    <text x="40" y="118" font-family="Inter" font-size="12" fill="#4A4A4A">bars = when the behavior occurred and for how long</text>
+                </svg>
+                <p class="cap">Slide 9 continuous-sampling example. Analysis = proportion of the observation period spent in the behavior.</p>
+            </div>
+            <div class="highlight-box">
+                $$\text{Proportion of time} = \frac{225 + 120 + 70 + 235}{20 \times 60} = \frac{650}{1200} = 0.5417 \approx 54\%$$
+                <p style="margin-bottom:0; font-size:13.5px;">Frequency from the same record = 4 bouts. Mean bout length = $650/4 = 162.5$ s. Scan sampling could never give you that last number.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Recording and analyzing <span class="slide-ref">slide 10</span></h3>
+            <p><strong>Structured</strong> recording = checklists, rating scales, behavior categories defined <em>in advance</em> (e.g. the tally table: headphones / earphones / none &times; wireless / wired). <strong>Unstructured</strong> recording = open field notes.</p>
+            <p>Whatever you record, the analysis answers three questions:</p>
+            <div class="formula-grid">
+                <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;"><h4>Who?</h4><p>Who showed the behavior &mdash; which individuals, groups, categories.</p></div>
+                <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;"><h4>How often?</h4><p>Frequency of the behavior &mdash; counts, proportions of people or of checkpoints.</p></div>
+                <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;"><h4>How long?</h4><p>Duration of the behavior &mdash; only available with continuous recording.</p></div>
+            </div>
+            <p style="margin-bottom:0;">The sample figure (N = 804 walkers: 103 headphones, 247 earphones, 454 none) is a &ldquo;who / how often&rdquo; result presented as a bar chart with a full caption &mdash; that is the model for your Project 1 figure.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">3b</div><h2>Data Quality in Qualitative Research</h2></div>
+        <div class="card">
+            <p>Qualitative work can&rsquo;t lean on p-values to prove it&rsquo;s trustworthy, so it uses these practices instead <span class="slide-ref">slide 11</span>:</p>
+            <div class="concept-list">
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Audit trail (careful note-taking)</div><p>A detailed log of how data were collected, coded, and analyzed, so another researcher could retrace every step.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Triangulation &mdash; three kinds</div><p><strong>Researcher</strong> triangulation: the team cross-checks each other&rsquo;s data. <strong>Data</strong> triangulation: multiple informants (children <em>plus</em> teachers) or multiple measures. <strong>Method</strong> triangulation: multiple data sources (observation <em>plus</em> interview).</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Thick description</div><p>Deeply detailed accounts of the context and participants so readers can judge <strong>transferability</strong> to other settings.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Reflexivity</div><p>Researchers actively document and examine their own biases, background, and assumptions to stop them skewing interpretation.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Inter-rater reliability</div><p>Do two coders see the same thing? Reported as percent agreement, Cohen&rsquo;s $\kappa$, Pearson&rsquo;s $r$, or intraclass correlation.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Member checking</div><p>Return transcripts, notes, or initial findings to participants to verify their experiences or words were represented accurately.</p></div></div>
+            </div>
+        </div>
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Memory hook:</strong> the six practices map onto the threats. Observer bias &rarr; reflexivity + inter-rater reliability. &ldquo;Did you just make this up?&rdquo; &rarr; audit trail + member checking. &ldquo;Is it just your one angle?&rdquo; &rarr; triangulation. &ldquo;Would it hold anywhere else?&rdquo; &rarr; thick description.</p></div>
+    </div>
+
+    <!-- ═══════════════ TAB 4 ═══════════════ -->
+    <div id="tab-t4" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>Examples &amp; Classic Studies as Illustrations</h2></div>
+        <p>Each example below is tagged with the concept it illustrates. The point is not the details of the studies but recognizing <em>which type of observation</em>, <em>which ethical situation</em>, and <em>which limitation</em> each one represents.</p>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Geller, Russ &amp; Altomari (1986) &mdash; beer drinking among college students <span class="slide-ref">slide 4</span></h3>
+            <p><span class="step-label" style="background: rgba(33,68,43,0.12); color: var(--green-dark);">Naturalistic &middot; covert &middot; public setting</span></p>
+            <p>Observers in bars recording drinking behavior without announcing themselves. Check it against the four covert-observation conditions: public setting (bar), anonymous patrons, no harm, and no way to get consent without changing the behavior. High ecological validity &mdash; you could not stage &ldquo;realistic&rdquo; bar drinking in a lab. Uses <strong>behavior sampling</strong> (the target behavior is drinking) and a structured, quantitative record.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Which limitations apply?</button>
+            <div class="solution-body"><p style="margin-bottom:0;">Convenience sample (whoever was in those bars, those nights); time- and context-specific (one campus, one era); no causal claims (you can describe that group drinking is heavier, not why); possible observer bias in judging what counts as a &ldquo;drink.&rdquo;</p></div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--gold);">
+            <h3>Kraut &amp; Johnston (1979) &mdash; social and emotional messages of smiling <span class="slide-ref">slide 4</span></h3>
+            <p><span class="step-label" style="background: rgba(221,162,94,0.15); color: #8B6914;">Naturalistic &middot; ethological &middot; hypothesis-testing in the field</span></p>
+            <p>An &ldquo;ethological approach&rdquo; means observing behavior in its natural habitat the way an animal behaviorist would. Smiles were coded by whether the person was facing others (social context) vs. facing the pins (emotional context). Illustrates <strong>contextualization</strong> (the same smile means different things depending on who it is directed at) and <strong>numerically coding non-numerical data</strong>. Also a nice case of high ecological validity: bowling-alley smiles would not look the same in a lab.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Data-quality connection</button>
+            <div class="solution-body"><p style="margin-bottom:0;">Coding smiles from a distance is exactly where <strong>inter-rater reliability</strong> matters &mdash; two observers must agree on what counts as a smile and whether the bowler was facing friends. Any such study should report percent agreement or Cohen&rsquo;s $\kappa$.</p></div>
+        </div>
+
+        <div class="card" style="border-left-color: #8B5E3C;">
+            <h3>Levine &amp; Norenzayan (1999) &mdash; pace of life in 31 countries <span class="slide-ref">slides 4, 12</span></h3>
+            <p><span class="step-label" style="background: rgba(66,38,13,0.12); color: var(--brown-medium);">Naturalistic &middot; cross-cultural &middot; unobtrusive measures</span></p>
+            <p>Three unobtrusive field measures per country &mdash; walking speed, postal clerk speed, and public clock accuracy &mdash; combined into an overall pace index by averaging <strong>$z$-scores</strong>. Switzerland ranked fastest overall; Mexico slowest. Walking speed is a textbook covert public observation (a pedestrian on a street has no expectation of privacy and is anonymous). Shows how observational data can be made fully quantitative and compared across contexts.</p>
+            <div class="highlight-box">
+                <p style="margin-bottom:6px;"><strong>Reading the index (Table 1):</strong> smaller numbers = faster. The overall index is the mean of the three $z$-scores, so a negative index means faster than the 31-country average.</p>
+                $$\text{Pace index}_{c} = \frac{z_{\text{walk},c} + z_{\text{postal},c} + z_{\text{clock},c}}{3}$$
+            </div>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Which limitations apply?</button>
+            <div class="solution-body"><p style="margin-bottom:0;"><strong>Convenience sampling</strong> (one or a few cities stand in for a whole country); <strong>time- and context-specific</strong> (one season, one downtown block, weather); no causal claims about <em>why</em> pace differs; possible reactivity if pedestrians noticed a stopwatch. Note how the table&rsquo;s ranks disagree across measures (Netherlands: 2nd in walking, 25th in clock accuracy) &mdash; a reason to triangulate with several measures rather than trust one.</p></div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Rosenhan (1973) &mdash; &ldquo;On being sane in insane places&rdquo; <span class="slide-ref">slide 8</span></h3>
+            <p><span class="step-label" style="background: rgba(33,68,43,0.12); color: var(--green-dark);">Participant observation &middot; covert &middot; deception</span></p>
+            <p>Pseudo-patients were admitted to psychiatric hospitals and observed from inside as patients. The lecture&rsquo;s example of <strong>covert participant observation</strong>. Ticks nearly every risk on the participant-observation list: deception, privacy/confidentiality of real patients, power dynamics, loss of objectivity, not generalizable, and no causal claim. Also the clearest case of why the four covert-observation conditions exist &mdash; a hospital ward is not a genuinely public setting.</p>
+        </div>
+
+        <div class="card" style="border-left-color: var(--gold);">
+            <h3>Festinger, Riecken &amp; Schachter (1956) &mdash; <em>When Prophecy Fails</em> <span class="slide-ref">slide 8</span></h3>
+            <p><span class="step-label" style="background: rgba(221,162,94,0.15); color: #8B6914;">Participant observation &middot; covert &middot; reactivity</span></p>
+            <p>Researchers joined a small doomsday group to watch what happened when the prophecy did not come true. Illustrates the <strong>gatekeeper</strong> problem (getting in), <strong>deception</strong>, and a subtle form of <strong>reactivity</strong>: when several new &ldquo;believers&rdquo; join a tiny group, the observers themselves change the group they are observing.</p>
+        </div>
+
+        <div class="card" style="border-left-color: #8B5E3C;">
+            <h3>Jane Goodall and the Hawthorne cartoon <span class="slide-ref">slides 6, 7</span></h3>
+            <p><span class="step-label" style="background: rgba(66,38,13,0.12); color: var(--brown-medium);">Ecological validity vs reactivity</span></p>
+            <p>The slides pair Goodall sitting among chimpanzees with the Hawthorne cartoon (people behave normally until a telescope points at them, then start juggling). Goodall&rsquo;s method is the ideal of naturalistic observation &mdash; but her presence, and later provisioning with bananas (the box in the photo), is the textbook illustration of an observer altering what is observed. The two images <em>are</em> the trade-off.</p>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Preschool story-time with clipboards <span class="slide-ref">slide 8</span></h3>
+            <p><span class="step-label" style="background: rgba(33,68,43,0.12); color: var(--green-dark);">Overt observation &middot; private setting &middot; gatekeeper</span></p>
+            <p>Two adults with clipboards watching children being read to. Children are minors in a private setting, so this <em>must</em> be overt with consent from a gatekeeper (school and parents). It is not unobtrusive, but it permits control &mdash; you could vary the story or the reader and compare. This is the setting where the design starts to look experimental.</p>
+        </div>
+
+        <div class="card" style="border-left-color: var(--gold);">
+            <h3>Headphones on campus (N = 804) <span class="slide-ref">slide 10</span></h3>
+            <p><span class="step-label" style="background: rgba(221,162,94,0.15); color: #8B6914;">Structured recording &middot; scan sampling &middot; Project 1 model</span></p>
+            <p>A tally table with categories fixed in advance (headphones / earphones / none &times; wireless / wired) filled in from walkers passing a spot &mdash; a scan-style count of who showed the behavior and how often. The bar chart with a numbered, captioned figure is the format your group report should copy.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════ FLASHCARDS ═══════════════ -->
+    <div id="tab-flash" class="tab-content">
+        <div class="section-header"><div class="section-number">&#9998;</div><h2>Flashcard Studier</h2></div>
+
+        <div class="card" style="border-left-color:var(--green-dark);">
+            <p style="margin-bottom:12px; font-size:14.5px;"><strong>How it works.</strong> Pick a deck, read the term, say the answer out loud, flip, mark yourself. Anything you miss is saved to the <strong>Missed</strong> deck (it stays saved next time you open this file) until you get it right there. Click any term in the list to jump straight to that card.</p>
+            <div class="fc-controls">
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Deck</span>
+                    <button class="fc-chip on" data-filter="all" onclick="fcSetFilter('all',this)">All <span class="fc-n" id="fcn-all"></span></button>
+                    <button class="fc-chip" data-filter="ct" onclick="fcSetFilter('ct',this)">Concepts &amp; Types <span class="fc-n" id="fcn-ct"></span></button>
+                    <button class="fc-chip" data-filter="et" onclick="fcSetFilter('et',this)">Ethics <span class="fc-n" id="fcn-et"></span></button>
+                    <button class="fc-chip" data-filter="sr" onclick="fcSetFilter('sr',this)">Sampling &amp; Recording <span class="fc-n" id="fcn-sr"></span></button>
+                    <button class="fc-chip" data-filter="dq" onclick="fcSetFilter('dq',this)">Data Quality <span class="fc-n" id="fcn-dq"></span></button>
+                    <button class="fc-chip" data-filter="ex" onclick="fcSetFilter('ex',this)">Studies <span class="fc-n" id="fcn-ex"></span></button>
+                    <button class="fc-chip miss" data-filter="missed" onclick="fcSetFilter('missed',this)">&#10007; Missed <span class="fc-n" id="fcn-missed"></span></button>
+                    <button class="fc-chip custom" data-filter="custom" onclick="fcSetFilter('custom',this)">&#9733; My deck <span class="fc-n" id="fcn-custom"></span></button>
+                    <button class="fc-chip pick" id="fc-pick-btn" onclick="fcTogglePick()">Pick cards&hellip;</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Show first</span>
+                    <button class="fc-chip on" data-side="term" onclick="fcSetSide('term',this)">Term first</button>
+                    <button class="fc-chip" data-side="def" onclick="fcSetSide('def',this)">Definition first</button>
+                    <button class="fc-chip" data-side="random" onclick="fcSetSide('random',this)">Random</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Order</span>
+                    <button class="fc-chip on" data-order="inorder" onclick="fcSetOrder('inorder',this)">In order</button>
+                    <button class="fc-chip" data-order="shuffle" onclick="fcSetOrder('shuffle',this)">Shuffle</button>
+                    <button class="fc-chip" data-order="quick" onclick="fcSetOrder('quick',this)">&#9889; Quick test (10 random)</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">&nbsp;</span>
+                    <button class="btn-small" onclick="fcRestart()">Restart deck</button>
+                    <button class="btn-small" style="background:#8B5E3C;" onclick="fcClearMissed()">Clear missed list</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card fc-pick-panel" id="fc-pick-panel" style="display:none; border-left-color:var(--gold);">
+            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Build my own deck</span><span class="fc-legend"><strong id="fc-pick-count">0</strong>&nbsp;selected &nbsp;<button class="btn-small" style="background:#E2E2E2; color:var(--text-medium); padding:4px 10px;" onclick="fcPickAll(false)">Clear</button></span></div>
+            <p style="font-size:13.5px; color:var(--text-medium); margin-bottom:10px;">Tick the cards you want, then hit <strong>Study my deck</strong>. Your picks are remembered next time you open this file.</p>
+            <div id="fc-pick-groups"></div>
+            <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;"><button class="btn-small" onclick="fcStudyCustom()">&#9733; Study my deck</button><button class="btn-small" style="background:#8B5E3C;" onclick="fcTogglePick()">Close</button></div>
+        </div>
+
+        <div class="card">
+            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Terms in this deck</span><span class="fc-legend"><span class="lg unseen"></span>not yet &nbsp;<span class="lg got"></span>got it &nbsp;<span class="lg miss"></span>missed</span></div>
+            <div class="fc-list" id="fc-list"></div>
+        </div>
+
+        <div class="card" style="border-left-color:var(--green-dark);">
+            <div class="fc-wrap">
+                <div class="fc-top"><span id="fc-count">Card 1</span><span>Got: <strong id="fc-got">0</strong> &nbsp; Missed: <strong id="fc-miss">0</strong></span><span id="fc-deckname" class="fc-deckname">All terms</span></div>
+                <div class="fc-card" id="fc-card" onclick="fcFlip()">
+                    <div class="fc-label" id="fc-label">TERM</div>
+                    <div class="fc-front" id="fc-front"></div>
+                    <div class="fc-back" id="fc-back"></div>
+                    <div class="fc-hint" id="fc-hint">click to flip</div>
+                </div>
+                <div class="fc-actions">
+                    <button class="btn-small" style="background:var(--gold); color:var(--brown-dark);" onclick="fcFlip()">Flip</button>
+                    <button class="btn-small" onclick="fcMark(true)">&#10003; Got it</button>
+                    <button class="btn-small" style="background:#C0392B;" onclick="fcMark(false)">&#10007; Missed</button>
+                    <button class="btn-small" style="background:#E2E2E2; color:var(--text-medium);" onclick="fcSkip()">Skip &rarr;</button>
+                </div>
+                <div id="fc-done" class="idea-box" style="display:none; margin-top:14px;"></div>
+            </div>
+        </div>
+
+<script type="text/plain" id="fc-data">
+ct ||| Ecological validity ||| How well observed behavior represents behavior in <strong>real life</strong>. Highest in naturalistic settings with no interference. One side of the major trade-off.
+---
+ct ||| Reactivity ||| Participants <strong>change their behavior because they are being observed</strong>. The other side of the major trade-off. The lecture's name for it is the Hawthorne effect.
+---
+ct ||| Hawthorne effect ||| <strong>Observation changes behavior.</strong> The cartoon: people act normally until a telescope points at them, then they start juggling.
+---
+ct ||| The major trade-off ||| <strong>Ecological validity vs reactivity.</strong> More natural and unobtrusive &rarr; more valid but less control; more visible and controlled &rarr; more reactivity.
+---
+ct ||| Naturalistic observation ||| Observing in a <strong>public setting with no expectation of privacy</strong>, with no manipulation or interference. High ecological validity; convenience sample; no causal claims.
+---
+ct ||| Participant observation ||| The researcher <strong>joins the group</strong> and observes from inside its daily life. Covert or overt. Rich data; risks loss of objectivity, deception, power dynamics; not generalizable; time-consuming.
+---
+ct ||| Overt observation (private / lab setting) ||| Participants <strong>know</strong> they are observed; requires a <strong>gatekeeper</strong>; not unobtrusive; may involve manipulation and experimental control.
+---
+ct ||| Covert vs overt ||| <strong>Covert</strong>: participants do not know they are observed. <strong>Overt</strong>: they do. Covert lowers reactivity but raises the ethical bar.
+---
+ct ||| Convenience sampling ||| <strong>Not statistical</strong> &mdash; you observe whoever is available. A standing limitation of naturalistic observation; limits generalizability.
+---
+ct ||| Why observational research can't make causal claims ||| No manipulation and <strong>no control over extraneous variables</strong>. It describes, correlates, and generates hypotheses &mdash; it cannot establish cause and effect.
+---
+ct ||| Three reasons to observe instead of experiment ||| (1) captures behavior that <strong>would not occur, or would occur differently, in a lab</strong>; (2) works where manipulation is <strong>unethical or impractical</strong>; (3) <strong>generates hypotheses</strong> for later controlled testing.
+---
+ct ||| Inductive reasoning ||| Observation first, theory second: patterns noticed in the field <strong>generate hypotheses</strong> for later controlled testing. &ldquo;The watching and the wondering.&rdquo;
+---
+ct ||| Thick description ||| Deeply detailed accounts of context and participants so readers can judge <strong>transferability</strong> of findings to other settings.
+---
+ct ||| Reflexivity ||| The researcher <strong>documents and examines their own biases</strong>, background and assumptions so they do not skew interpretation.
+---
+ct ||| Positionality ||| Where the researcher <strong>stands relative to what they study</strong> &mdash; insider/outsider status, identity, assumptions. Paired with reflexivity under &ldquo;subjectivity.&rdquo;
+---
+ct ||| Contextualization ||| Meaning depends on <strong>context</strong>; the same behavior is interpreted with its setting, not stripped of it.
+---
+ct ||| &ldquo;Small worlds&rdquo; ||| Qualitative research studies a <strong>narrow slice of life in depth</strong> rather than shallow data on a huge sample. Goes with thick description and richness/depth.
+---
+ct ||| Loss of objectivity ||| A participant-observation risk: after long immersion the observer starts <strong>seeing things the group's way</strong>. Opposite direction from reactivity.
+---
+ct ||| Observer bias ||| The observer's expectations or position <strong>shape what is noticed and how it is coded</strong>. Countered by reflexivity and inter-rater reliability.
+---
+ct ||| Findings are time- and context-specific ||| A standing limitation: what you saw in <strong>this place at this time</strong> may not hold elsewhere or later. Report the context with the finding.
+---
+et ||| Four conditions for covert observation ||| (1) setting is <strong>genuinely public</strong>; (2) participants are <strong>anonymous</strong>; (3) <strong>no expectation of harm</strong>; (4) <strong>no feasible way</strong> to answer the question with consent in advance. All four must hold.
+---
+et ||| Gatekeeper ||| The person or institution that <strong>controls access</strong> to a group or private setting (school, clinic, group leader). Needed for participant and overt private-setting observation.
+---
+et ||| IRB vs IACUC ||| Institutional approval bodies. <strong>IRB</strong> reviews research with <strong>humans</strong>; <strong>IACUC</strong> reviews research with <strong>animals</strong>.
+---
+et ||| APA research standards (the list) ||| Institutional approval &middot; informed consent &middot; avoid deception &middot; voluntary, no coercion &middot; debriefing &middot; anonymity/confidentiality &middot; validity &amp; reliability &middot; researcher assumes responsibility &middot; no plagiarism or fabrication.
+---
+et ||| Informed consent vs debriefing ||| <strong>Consent</strong> = agreement <em>before</em> participating, knowing what is involved. <strong>Debriefing</strong> = explanation <em>after</em>, especially if any deception was used.
+---
+et ||| Anonymity vs confidentiality ||| <strong>Anonymity</strong>: no one, not even the researcher, can identify participants. <strong>Confidentiality</strong>: the researcher can, but protects the identity. Covert public observation requires anonymity.
+---
+et ||| Participant-observation ethical risks ||| <strong>Deception</strong>, hard-to-maintain <strong>privacy/confidentiality</strong>, <strong>power dynamics and exploitation</strong>. Plus the methodological risks: loss of objectivity, reactivity, not generalizable.
+---
+sr ||| Sampling rule vs recording rule ||| <strong>Sampling rule</strong> = WHAT/WHOM you watch (ad libitum, behavior, scan, focal). <strong>Recording rule</strong> = HOW you log it over time (scan sampling, continuous sampling).
+---
+sr ||| Ad libitum sampling ||| Sampling rule: record <strong>anything</strong> that occurs during the observation period.
+---
+sr ||| Behavior sampling ||| Sampling rule: observe only <strong>one specific behavior of interest</strong>, whoever performs it.
+---
+sr ||| Scan sampling (as a sampling rule) ||| Sampling rule: record <strong>whatever everyone is doing at a specific instant</strong>.
+---
+sr ||| Focal sampling ||| Sampling rule: follow <strong>only one individual</strong> in the group.
+---
+sr ||| Scan sampling (as a recording rule) ||| Check at <strong>predetermined intervals</strong> and tick if the behavior is present. Gives <strong>frequency</strong> (count of intervals), not duration. Lecture example: every 2 min for 20 min.
+---
+sr ||| Continuous sampling ||| Record <strong>every bout from start to stop</strong>. Gives <strong>when and for how long</strong> (duration) plus frequency. Lecture example: 650 s / 1200 s = 54%.
+---
+sr ||| Proportion of time in a behavior ||| $\text{proportion} = \dfrac{\sum \text{bout durations}}{\text{observation period}}$. Lecture: $\dfrac{225+120+70+235}{1200} = \dfrac{650}{1200} = 0.54$.
+---
+sr ||| Structured vs unstructured recording ||| <strong>Structured</strong>: checklists, rating scales, categories defined in advance (tally table). <strong>Unstructured</strong>: open field notes.
+---
+sr ||| Three analysis questions ||| <strong>Who</strong> showed the behavior? <strong>How often</strong> (frequency)? <strong>How long</strong> (duration)?
+---
+sr ||| Frequency vs duration ||| <strong>Frequency</strong> = how often (a count) &mdash; available from scan or continuous recording. <strong>Duration</strong> = how long &mdash; only from continuous recording.
+---
+sr ||| Numerically coding non-numerical data ||| Qualitative data start as words or observations but can be <strong>coded into categories and counted</strong> (e.g. headphones / earphones / none; social vs non-social smile).
+---
+dq ||| Audit trail ||| A <strong>detailed log</strong> of how data were collected, coded and analyzed, so every step can be retraced.
+---
+dq ||| Triangulation (three kinds) ||| <strong>Researcher</strong>: team cross-checks data. <strong>Data</strong>: multiple informants or measures (children + teachers). <strong>Method</strong>: multiple data sources (observation + interview).
+---
+dq ||| Researcher triangulation ||| The <strong>research team cross-checks</strong> each other's data and coding.
+---
+dq ||| Data triangulation ||| <strong>Multiple informants</strong> (children plus teachers) or <strong>multiple measures</strong> of the same thing.
+---
+dq ||| Method triangulation ||| <strong>Multiple data sources</strong> &mdash; e.g. observation <em>plus</em> interview.
+---
+dq ||| Inter-rater reliability ||| Agreement between coders. Measured by <strong>percent agreement, Cohen's $\kappa$, Pearson's $r$, intraclass correlation</strong>.
+---
+dq ||| Cohen's kappa ||| An inter-rater reliability statistic: agreement between two coders <strong>corrected for chance agreement</strong>. $\kappa = \dfrac{p_o - p_e}{1-p_e}$ (formula is beyond the lecture; the name is not).
+---
+dq ||| Member checking ||| <strong>Return</strong> transcripts, notes or initial findings to participants to verify they were represented accurately.
+---
+dq ||| Which practice answers which threat? ||| Observer bias &rarr; <strong>reflexivity + inter-rater reliability</strong>. &ldquo;Did you make it up?&rdquo; &rarr; <strong>audit trail + member checking</strong>. One angle only? &rarr; <strong>triangulation</strong>. Would it hold elsewhere? &rarr; <strong>thick description</strong>.
+---
+ex ||| Geller, Russ &amp; Altomari (1986) ||| Beer drinking among college students. <strong>Naturalistic, covert, public setting</strong> (bars); behavior sampling of drinking; convenience sample; no causal claims.
+---
+ex ||| Kraut &amp; Johnston (1979) ||| Social vs emotional messages of smiling, <strong>ethological approach</strong> (bowlers). Naturalistic; shows <strong>contextualization</strong> and coding smiles numerically; needs inter-rater reliability.
+---
+ex ||| Levine &amp; Norenzayan (1999) ||| Pace of life in 31 countries: <strong>walking speed, postal speed, clock accuracy</strong> averaged as $z$-scores. Naturalistic, cross-cultural, unobtrusive; convenience and context-specific limits. Switzerland fastest, Mexico slowest.
+---
+ex ||| Rosenhan (1973) ||| &ldquo;On being sane in insane places.&rdquo; <strong>Covert participant observation</strong> inside psychiatric hospitals. Deception, privacy, power dynamics, loss of objectivity; ward is not a public setting.
+---
+ex ||| Festinger, Riecken &amp; Schachter (1956) ||| <em>When Prophecy Fails.</em> <strong>Covert participant observation</strong> of a doomsday group. Gatekeeper, deception, and observers changing the tiny group they joined (reactivity).
+---
+ex ||| Jane Goodall ||| The ideal of <strong>naturalistic observation</strong> &mdash; and the textbook case of an observer <strong>altering what is observed</strong> (presence, provisioning). The images on slides 6&ndash;7 are the trade-off itself.
+---
+ex ||| Preschool story-time with clipboards ||| <strong>Overt observation in a private setting</strong>: minors, gatekeeper (school/parents), not unobtrusive, but permits manipulation and control.
+---
+ex ||| Headphones on campus (N = 804) ||| Structured <strong>tally table</strong> with categories set in advance &rarr; bar chart with numbered, captioned figure. The model for the Project 1 figure. 103 / 247 / 454.
+</script>
+    </div>
+
+    <!-- ═══════════════ QUIZ A ═══════════════ -->
+    <div id="tab-quiza" class="tab-content">
+        <div class="section-header"><div class="section-number">A</div><h2>Quiz A &middot; Overview (10 questions)</h2></div>
+        <p>Gist-level check: definitions, the trade-off, ethics conditions, sampling vs recording. Answer options are shuffled every time the page loads.</p>
+        <div class="quiz-top"><span class="score-pill" id="score-qa">Score: 0 / 10</span><button class="quiz-btn" onclick="buildQuiz('qa')">Reset &amp; reshuffle</button></div>
+        <div id="quiz-qa"></div>
+    </div>
+
+    <!-- ═══════════════ QUIZ B ═══════════════ -->
+    <div id="tab-quizb" class="tab-content">
+        <div class="section-header"><div class="section-number">B</div><h2>Quiz B &middot; Apply It (10 questions)</h2></div>
+        <p>Scenario-based: read a mini study description and identify the design, the ethical issue, the data-quality practice, or the right analysis. Harder than Quiz A.</p>
+        <div class="quiz-top"><span class="score-pill" id="score-qb">Score: 0 / 10</span><button class="quiz-btn" onclick="buildQuiz('qb')">Reset &amp; reshuffle</button></div>
+        <div id="quiz-qb"></div>
+    </div>
+
+</div><!-- end container -->
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Observational Research &mdash; Lecture 2 Study Sheet</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0 });
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function goTab(name) {
+    var btn = Array.from(document.querySelectorAll('.tab-button')).find(function(b){ return (b.getAttribute('onclick')||'').indexOf("'" + name + "'") >= 0; });
+    switchTab(name, btn);
+}
+function toggleExample(btn) { var body = btn.nextElementSibling; body.classList.toggle('open'); btn.classList.toggle('open'); if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50); }
+function toggleSolution(btn) { var body = btn.nextElementSibling; body.classList.toggle('open'); btn.classList.toggle('open'); if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50); }
+
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+/* ───────── QUIZ DATA ───────── */
+/* Each question: q, opts (first option is correct — shuffled on render), exp, ref */
+var QUIZ = {
+qa: [
+ { q: "The lecture calls this the major trade-off in observational research.",
+   opts: ["Ecological validity versus reactivity", "Internal validity versus external validity", "Sample size versus depth of description", "Structured recording versus field notes"],
+   exp: "Slide 7 states it directly: the more natural and unobtrusive the observation, the more valid it is — but the moment people know they are watched, reactivity kicks in.", ref: "Slide 7" },
+ { q: "The Hawthorne effect, as used in this lecture, refers to what?",
+   opts: ["People change their behavior because they are being observed", "Observers gradually lose objectivity toward the group", "Researchers see what they expect to see in the data", "Findings from one context fail to transfer elsewhere"],
+   exp: "The cartoon slide is titled \"Observation Changes Behavior.\" That is reactivity. Loss of objectivity and expectancy are observer-side problems; transferability is a separate issue.", ref: "Slide 7" },
+ { q: "Which of the following is NOT one of the four conditions under which covert observation is ethically permissible?",
+   opts: ["Participants gave verbal consent to a gatekeeper", "The setting is genuinely public", "Participants remain anonymous and unidentified", "The question cannot feasibly be answered with prior consent"],
+   exp: "The four conditions are: public setting, anonymity, no expectation of harm, and no feasible way to get consent in advance. Consent via a gatekeeper belongs to overt/private-setting observation, not the covert list.", ref: "Slide 6" },
+ { q: "\"Convenience sampling\" in naturalistic observation means the sample is:",
+   opts: ["Whoever happens to be available, not a statistical sample", "Drawn at random from a list of eligible people", "Selected so each subgroup is proportionally represented", "Limited to one focal individual followed over time"],
+   exp: "Slide 6: \"not statistical, what is available.\" Random and stratified sampling are the statistical alternatives; following one individual is focal sampling, a different concept.", ref: "Slide 6" },
+ { q: "The purpose of thick description is to let readers judge:",
+   opts: ["How transferable the findings are to other settings", "Whether two coders agreed on the same behaviors", "Whether participants recognized their own words", "How the researcher's own background shaped the study"],
+   exp: "Slide 11 ties thick description to transferability. Coder agreement is inter-rater reliability; participants checking their words is member checking; the researcher's background is reflexivity.", ref: "Slide 11" },
+ { q: "Reflexivity in qualitative research means the researcher:",
+   opts: ["Documents and examines their own biases and assumptions", "Returns initial findings to participants for verification", "Keeps a log of how the data were collected and coded", "Cross-checks the data with a second research team member"],
+   exp: "Reflexivity is about the researcher's own position. The other three options are member checking, the audit trail, and researcher triangulation respectively.", ref: "Slides 3, 11" },
+ { q: "Which recording rule tells you how LONG a behavior lasted, not just whether it occurred?",
+   opts: ["Continuous sampling", "Scan sampling", "Behavior sampling", "Ad libitum sampling"],
+   exp: "Continuous sampling logs start and stop times of every bout, giving duration (\"when and for how long\"). Scan sampling only checks presence at fixed intervals. Behavior and ad libitum are sampling rules, not recording rules.", ref: "Slide 9" },
+ { q: "Under which sampling rule does the observer follow only one individual within a group?",
+   opts: ["Focal sampling", "Scan sampling", "Behavior sampling", "Ad libitum sampling"],
+   exp: "Focal = one individual. Scan = what everyone is doing at an instant. Behavior sampling = one target behavior regardless of who does it. Ad libitum = anything that happens.", ref: "Slide 9" },
+ { q: "Observational research is described as inductive. In this lecture, that means it primarily:",
+   opts: ["Generates hypotheses for later controlled testing", "Tests a prediction derived from an existing theory", "Estimates the causal effect of a manipulated variable", "Confirms that lab findings replicate in the field"],
+   exp: "Slide 6: \"can generate hypotheses for later controlled testing (inductive, exploratory). 'the watching and the wondering.'\" Testing predictions is deductive; causal estimates need manipulation.", ref: "Slide 6" },
+ { q: "The main reason observational studies cannot make causal claims is that they:",
+   opts: ["Have no control over extraneous variables", "Rely on non-numerical data that cannot be analyzed", "Always use samples that are too small", "Are conducted in settings that lack ecological validity"],
+   exp: "Slide 6 lists \"no control over extraneous variables (can't make causal claims)\" as one item. The data can be coded numerically, sample size is not the issue, and ecological validity is typically high.", ref: "Slide 6" }
+],
+qb: [
+ { q: "A researcher gets admitted to a psychiatric hospital as a patient and takes notes on staff behavior from inside the ward without telling anyone. What is this design?",
+   opts: ["Covert participant observation", "Naturalistic observation in a public place", "Overt observation in a private setting", "Structured scan sampling of a focal individual"],
+   exp: "This is Rosenhan's \"On being sane in insane places\" — the lecture's example of participant observation. It is covert (no one knows), and a hospital ward is not a genuinely public setting, so it does not qualify as naturalistic public observation.", ref: "Slide 8" },
+ { q: "Two students stand across from a bar with a stopwatch and note each patron's drinks and time inside without interacting with anyone. A reviewer asks about the biggest ethical question. Which condition is most at issue?",
+   opts: ["Whether patrons could be personally identified from the notes", "Whether the students obtained IRB approval for deception", "Whether patrons were debriefed after leaving the bar", "Whether the students manipulated how much people drank"],
+   exp: "There is no deception and no manipulation, and debriefing does not apply to anonymous covert observation. The live question is anonymity — one of the four covert conditions. If notes could identify people, the design fails.", ref: "Slide 6" },
+ { q: "A report says: \"Two independent coders rated each smile as social or non-social; Cohen's kappa = 0.87.\" What data-quality practice is this?",
+   opts: ["Inter-rater reliability", "Researcher triangulation", "Member checking", "Audit trail"],
+   exp: "Kappa is one of the four statistics slide 11 lists for inter-rater reliability. Researcher triangulation is close but refers to the team cross-checking data more broadly; kappa is the specific agreement statistic.", ref: "Slide 11" },
+ { q: "A team observes children in a classroom AND interviews their teachers about the same behaviors. Which type of triangulation is this?",
+   opts: ["Method triangulation", "Researcher triangulation", "Data triangulation", "Reflexive triangulation"],
+   exp: "Slide 11 defines method triangulation as multiple data sources such as observation plus interview. Note the trap: if the team had interviewed both children AND teachers, that would be data triangulation (multiple informants).", ref: "Slide 11" },
+ { q: "After coding field notes, the researcher sends a summary back to the people observed and asks whether it captures their experience. This is:",
+   opts: ["Member checking", "Thick description", "Reflexivity", "Debriefing"],
+   exp: "Member checking = returning transcripts, notes, or findings to participants to verify accuracy. Debriefing is an APA ethical step after participation, not a data-quality check.", ref: "Slide 11" },
+ { q: "Over a 20-minute session an observer records a behavior in bouts of 225 s, 120 s, 70 s and 235 s. Which statement is correct?",
+   opts: ["The behavior occupied about 54% of the period", "The behavior occurred at 4 of 10 checkpoints", "The behavior occupied about 33% of the period", "The behavior's mean bout length was 325 s"],
+   exp: "This is continuous sampling, so the analysis is duration: (225+120+70+235)/1200 = 650/1200 = 0.54. Checkpoints belong to scan sampling. Mean bout length is 650/4 = 162.5 s.", ref: "Slide 9" },
+ { q: "An observer glances at a horse every 30 seconds and ticks whether it is grazing. What can this record tell you, and what can it NOT tell you?",
+   opts: ["Frequency of grazing across checkpoints; not how long each grazing bout lasted", "Duration of each grazing bout; not how often grazing occurred", "Both frequency and exact duration of every bout", "Only whether the horse grazed at all during the session"],
+   exp: "Fixed-interval checks are scan sampling: you get a count of intervals in which the behavior was present (frequency), but nothing about bout length. Continuous sampling would be needed for duration.", ref: "Slide 9" },
+ { q: "Which project plan would violate the conditions for covert observation even though no one is harmed?",
+   opts: ["Video-recording faces in a dorm lounge to code who checks their phone", "Counting how many walkers on a public path wear headphones", "Timing how fast pedestrians cross a downtown crosswalk", "Tallying smiles of bowlers from across a public bowling alley"],
+   exp: "A dorm lounge is semi-private and video of faces makes participants identifiable — two conditions fail at once. The other three are anonymous counts in genuinely public settings, like the lecture's own examples.", ref: "Slide 6" },
+ { q: "A researcher wants to observe preschoolers during story time and vary which book is read. Which statement about this design is correct?",
+   opts: ["It is overt, needs a gatekeeper, and allows some experimental control", "It is covert, needs no consent, and has high ecological validity", "It is participant observation and risks loss of objectivity", "It is naturalistic and therefore cannot involve any manipulation"],
+   exp: "Minors in a private setting require overt observation with a gatekeeper (school, parents). Slide 8 notes overt private/lab observation is not unobtrusive but may involve manipulations and experimental control — here, varying the book.", ref: "Slide 8" },
+ { q: "After months living with a group, a participant observer begins defending the group's practices in her notes and stops recording behaviors that reflect badly on it. The lecture's name for this risk is:",
+   opts: ["Loss of objectivity", "Reactivity", "Convenience sampling", "Fabrication"],
+   exp: "Slide 8 lists loss of objectivity as a specific participant-observation risk. Reactivity is participants changing because of the observer, the reverse direction. Selectively not recording is a bias problem, not fabrication (inventing data).", ref: "Slide 8" }
+]
+};
+
+var quizState = {};
+function buildQuiz(id) {
+    var data = QUIZ[id]; var wrap = document.getElementById('quiz-' + id); wrap.innerHTML = '';
+    quizState[id] = { score: 0, answered: 0 };
+    document.getElementById('score-' + id).textContent = 'Score: 0 / ' + data.length;
+    data.forEach(function(item, qi) {
+        var opts = item.opts.map(function(o, i){ return { t: o, correct: i === 0 }; });
+        shuffle(opts);
+        var card = document.createElement('div'); card.className = 'q-card';
+        var html = '<div class="q-head"><div class="q-num">' + (qi+1) + '</div><div style="flex:1;"><div class="q-text">' + item.q + '</div>';
+        opts.forEach(function(o, oi) {
+            html += '<button class="opt" data-correct="' + (o.correct?1:0) + '" onclick="answer(this,\'' + id + '\')"><span class="ltr">' + String.fromCharCode(65+oi) + '</span>' + o.t + '</button>';
+        });
+        html += '<div class="q-exp"><div class="verdict"></div>' + item.exp + ' <span class="slide-ref">' + item.ref + '</span></div></div></div>';
+        card.innerHTML = html; wrap.appendChild(card);
+    });
+    setTimeout(function(){ if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 80);
+}
+function answer(btn, id) {
+    if (btn.classList.contains('locked')) return;
+    var box = btn.parentElement; var opts = box.querySelectorAll('.opt'); var correct = btn.getAttribute('data-correct') === '1';
+    opts.forEach(function(o){ o.classList.add('locked'); if (o.getAttribute('data-correct') === '1') o.classList.add('correct'); else o.classList.add('dim'); });
+    if (!correct) btn.classList.add('wrong');
+    var exp = box.querySelector('.q-exp'); var v = exp.querySelector('.verdict');
+    v.textContent = correct ? 'Correct.' : 'Not quite.'; v.className = 'verdict ' + (correct ? 'ok' : 'no'); exp.classList.add('show');
+    var s = quizState[id]; s.answered++; if (correct) s.score++;
+    document.getElementById('score-' + id).textContent = 'Score: ' + s.score + ' / ' + QUIZ[id].length + (s.answered === QUIZ[id].length ? '  ·  done' : '');
+}
+
+/* ── Flashcards: decks, term list, custom deck, persisted missed set ── */
+var FC = [], fcDeck = [], fcIdx = 0, fcGot = 0, fcMiss = 0, fcRunMissed = [], fcFlipped = false, fcRound = 1;
+var fcFilter = 'all', fcOrder = 'inorder', fcSide = 'term', fcStatus = {}, fcMissedSet = {}, fcCustomSet = {}, fcDefFirst = false;
+var FC_TOPICS = ['ct','et','sr','dq','ex'];
+var FC_TOPIC = { ct: 'Concepts & Types', et: 'Ethics', sr: 'Sampling & Recording', dq: 'Data Quality', ex: 'Studies', all: 'All terms', missed: 'Missed cards', custom: 'My deck' };
+var FC_CKEY = 'lcc-cpsy1900-lec2-flashcards-custom';
+var FC_KEY = 'lcc-cpsy1900-lec2-flashcards-missed';
+function fcLoadMissed(){ try { var v = localStorage.getItem(FC_KEY); if (v) fcMissedSet = JSON.parse(v) || {}; var c = localStorage.getItem(FC_CKEY); if (c) fcCustomSet = JSON.parse(c) || {}; } catch(e){} }
+function fcSaveCustom(){ try { localStorage.setItem(FC_CKEY, JSON.stringify(fcCustomSet)); } catch(e){} }
+function fcSaveMissed(){ try { localStorage.setItem(FC_KEY, JSON.stringify(fcMissedSet)); } catch(e){} }
+function fcHaptic(){ try { if (navigator.vibrate) navigator.vibrate(12); } catch(e){} }
+function fcInit(){ var raw = document.getElementById('fc-data').textContent.trim();
+    FC = raw.split(/\n---\n/).map(function(s, i){ var p = s.split('|||'); return { id: i, t: p[0].trim(), f: p[1].trim(), b: p[2].trim() }; });
+    fcLoadMissed(); fcCounts(); fcRenderPick(); fcBuildDeck(); }
+function fcCounts(){ ['all'].concat(FC_TOPICS).forEach(function(k){ var n = k==='all' ? FC.length : FC.filter(function(c){ return c.t===k; }).length; var el=document.getElementById('fcn-'+k); if (el) el.textContent='('+n+')'; });
+    var el=document.getElementById('fcn-missed'); if (el) el.textContent='('+Object.keys(fcMissedSet).length+')';
+    var ec=document.getElementById('fcn-custom'); if (ec) ec.textContent='('+Object.keys(fcCustomSet).length+')';
+    var pc=document.getElementById('fc-pick-count'); if (pc) pc.textContent=Object.keys(fcCustomSet).length; }
+function fcSetFilter(f, btn){ fcFilter = f; document.querySelectorAll('.fc-chip[data-filter]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
+function fcSetOrder(o, btn){ fcOrder = o; document.querySelectorAll('.fc-chip[data-order]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
+function fcBuildDeck(){ var ids = FC.filter(function(c){ return fcFilter==='all' || (fcFilter==='missed' ? !!fcMissedSet[c.id] : fcFilter==='custom' ? !!fcCustomSet[c.id] : c.t===fcFilter); }).map(function(c){ return c.id; });
+    if (fcOrder !== 'inorder'){ for (var i = ids.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; } }
+    if (fcOrder === 'quick') ids = ids.slice(0, 10);
+    fcDeck = ids; fcIdx = 0; fcGot = 0; fcMiss = 0; fcRunMissed = []; fcStatus = {}; fcRound = 1;
+    document.getElementById('fc-done').style.display='none';
+    var nm = FC_TOPIC[fcFilter] + (fcOrder==='quick' ? ' · quick test' : fcOrder==='shuffle' ? ' · shuffled' : '');
+    document.getElementById('fc-deckname').textContent = nm;
+    fcRenderList(); fcRender(); }
+function fcRestart(){ fcBuildDeck(); }
+function fcClearMissed(){ fcMissedSet = {}; fcSaveMissed(); fcCounts(); if (fcFilter==='missed') fcBuildDeck(); else fcRenderList(); }
+function fcRenderList(){ var box = document.getElementById('fc-list'); if (!box) return; var html = '';
+    if (!fcDeck.length){ box.innerHTML = '<p style="margin:0; color:var(--text-medium); font-size:13.5px;">Nothing in this deck yet' + (fcFilter==='missed' ? ' &mdash; cards you mark &#10007; Missed land here.' : fcFilter==='custom' ? ' &mdash; use <strong>Pick cards&hellip;</strong> above to choose some.' : '.') + '</p>'; return; }
+    fcDeck.forEach(function(id, k){ var c = FC[id]; var st = fcStatus[id] || (fcMissedSet[id] ? 'miss' : '');
+        html += '<button class="fc-term ' + st + (k===fcIdx ? ' current' : '') + '" onclick="fcJump(' + k + ')"><span class="fc-term-n">' + (k+1) + '</span>' + c.f + '</button>'; });
+    box.innerHTML = html; if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
+function fcJump(k){ fcIdx = k; document.getElementById('fc-done').style.display='none'; fcHaptic(); fcRender(); }
+function fcRender(){ var card = document.getElementById('fc-card'); fcFlipped = false; card.classList.remove('flipped');
+    document.getElementById('fc-got').textContent = fcGot; document.getElementById('fc-miss').textContent = fcMiss;
+    document.querySelectorAll('#fc-list .fc-term').forEach(function(b, k){ b.classList.toggle('current', k===fcIdx); });
+    if (!fcDeck.length){ document.getElementById('fc-count').textContent = 'Empty deck'; document.getElementById('fc-front').innerHTML = 'Pick another deck above.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent=''; return; }
+    if (fcIdx >= fcDeck.length){ fcFinish(); return; }
+    var c = FC[fcDeck[fcIdx]];
+    fcDefFirst = (fcSide === 'def') || (fcSide === 'random' && Math.random() < 0.5);
+    document.getElementById('fc-count').textContent = (fcRound > 1 ? 'Review round · ' : '') + 'Card ' + (fcIdx+1) + ' / ' + fcDeck.length;
+    document.getElementById('fc-label').textContent = fcDefFirst ? 'DEFINITION — name the term' : 'TERM';
+    document.getElementById('fc-front').innerHTML = fcDefFirst ? c.b : c.f; document.getElementById('fc-back').innerHTML = fcDefFirst ? c.f : c.b;
+    document.getElementById('fc-hint').textContent = 'click to flip';
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([card]); }, 30); }
+function fcFlip(){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; var card = document.getElementById('fc-card'); fcFlipped = !fcFlipped; card.classList.toggle('flipped', fcFlipped); fcHaptic();
+    document.getElementById('fc-label').textContent = fcFlipped ? (fcDefFirst ? 'TERM' : 'ANSWER') : (fcDefFirst ? 'DEFINITION — name the term' : 'TERM'); document.getElementById('fc-hint').textContent = fcFlipped ? 'mark yourself below' : 'click to flip'; }
+function fcMark(ok){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; if (!fcFlipped){ fcFlip(); return; }
+    var id = fcDeck[fcIdx];
+    if (ok){ fcGot++; fcStatus[id] = 'got'; delete fcMissedSet[id]; }
+    else { fcMiss++; fcStatus[id] = 'miss'; fcMissedSet[id] = 1; fcRunMissed.push(id); }
+    fcSaveMissed(); fcCounts(); fcHaptic();
+    var b = document.querySelectorAll('#fc-list .fc-term')[fcIdx]; if (b){ b.classList.remove('got','miss'); b.classList.add(ok ? 'got' : 'miss'); }
+    fcIdx++; fcRender(); }
+function fcSkip(){ if (!fcDeck.length) return; fcIdx = (fcIdx + 1) % fcDeck.length; fcHaptic(); fcRender(); }
+function fcFinish(){ var d = document.getElementById('fc-done'); d.style.display='block';
+    document.getElementById('fc-count').textContent = 'Deck complete';
+    document.getElementById('fc-front').innerHTML = 'Round done: ' + fcGot + ' got, ' + fcMiss + ' missed.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent='';
+    if (fcRunMissed.length){ d.innerHTML = '<p style="margin-bottom:8px;"><strong>' + fcRunMissed.length + ' missed this round.</strong> They are saved in the Missed deck; review them now or come back later.</p><button class="btn-small" onclick="fcReview()">Review ' + fcRunMissed.length + ' missed now</button>';
+    } else { d.innerHTML = '<p style="margin:0;"><strong>Clean sweep.</strong> Try the shuffled or quick-test order next time.</p>'; } }
+function fcReview(){ fcDeck = fcRunMissed.slice(); fcRunMissed = []; fcIdx = 0; fcRound++; fcStatus = {}; document.getElementById('fc-done').style.display='none'; fcRenderList(); fcRender(); }
+function fcSetSide(s, btn){ fcSide = s; document.querySelectorAll('.fc-chip[data-side]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcRender(); }
+/* custom deck picker */
+function fcTogglePick(){ var p = document.getElementById('fc-pick-panel'), b = document.getElementById('fc-pick-btn'); var open = p.style.display === 'none'; p.style.display = open ? 'block' : 'none'; b.classList.toggle('on', open); fcHaptic(); if (open && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([p]); }, 30); }
+function fcRenderPick(){ var box = document.getElementById('fc-pick-groups'); if (!box) return; var html = '';
+    FC_TOPICS.forEach(function(t){ html += '<div class="fc-pick-group"><div class="fc-pick-head">' + FC_TOPIC[t] + ' <button onclick="fcPickTopic(\'' + t + '\',true)">select all</button><button onclick="fcPickTopic(\'' + t + '\',false)">none</button></div><div class="fc-pick-grid">';
+        FC.filter(function(c){ return c.t===t; }).forEach(function(c){ var on = !!fcCustomSet[c.id]; html += '<label class="fc-pick' + (on ? ' on' : '') + '"><input type="checkbox" ' + (on ? 'checked' : '') + ' onchange="fcPickOne(' + c.id + ', this.checked)"><span>' + c.f + '</span></label>'; });
+        html += '</div></div>'; });
+    box.innerHTML = html; fcCounts(); if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
+function fcPickOne(id, on){ if (on) fcCustomSet[id] = 1; else delete fcCustomSet[id]; fcSaveCustom(); fcHaptic();
+    var inp = document.querySelector('#fc-pick-groups input[onchange*="fcPickOne(' + id + ',"]'); if (inp) inp.parentElement.classList.toggle('on', on);
+    fcCounts(); if (fcFilter==='custom') fcBuildDeck(); }
+function fcPickTopic(t, on){ FC.filter(function(c){ return c.t===t; }).forEach(function(c){ if (on) fcCustomSet[c.id] = 1; else delete fcCustomSet[c.id]; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
+function fcPickAll(on){ fcCustomSet = {}; if (on) FC.forEach(function(c){ fcCustomSet[c.id] = 1; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
+function fcStudyCustom(){ var btn = document.querySelector('.fc-chip[data-filter="custom"]'); fcSetFilter('custom', btn); document.getElementById('fc-pick-panel').style.display='none'; document.getElementById('fc-pick-btn').classList.remove('on'); }
+document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('tab-flash').classList.contains('active')) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (e.key === 'ArrowRight') fcSkip(); else if (e.key === ' ') { e.preventDefault(); fcFlip(); }
+    else if (e.key === 'g' || e.key === 'G') fcMark(true); else if (e.key === 'm' || e.key === 'M') fcMark(false);
+});
+
+/* ── Next / Back navigation at the bottom of every tab ── */
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+window.addEventListener('DOMContentLoaded', function() {
+    buildQuiz('qa'); buildQuiz('qb');
+    fcInit();
+    addTabNav();
+});
+</script>
+</body>
+</html>
