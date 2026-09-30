@@ -222,7 +222,7 @@ body {
 .pillar p { margin: 0; font-size: 14px; color: var(--text-medium); line-height: 1.55; }
 
 /* ============ Resources ============ */
-.container { max-width: 1100px; margin: auto; padding: 64px 24px 30px; }
+.container { max-width: 960px; margin: auto; padding: 64px 24px 30px; }
 .section-header {
     display: flex;
     align-items: center;
@@ -248,94 +248,106 @@ body {
     letter-spacing: -.3px;
 }
 .section-sub {
-    margin: 6px 0 34px 54px;
+    margin: 6px 0 24px 54px;
     color: var(--text-medium);
     font-size: 15px;
 }
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 22px;
+
+/* toolbar: search + expand/collapse */
+.toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
+.search-wrap {
+    flex: 1; min-width: 240px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--white); border: 2px solid var(--cream-dark); border-radius: 999px;
+    padding: 9px 16px; color: var(--text-medium);
+    transition: border-color .2s, box-shadow .2s;
 }
-.card {
+.search-wrap:focus-within { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(221,162,94,.18); }
+.search-wrap input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-dark); min-width: 0;
+}
+.toolbar-btns { display: flex; gap: 8px; }
+.tb-btn {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
+    color: var(--green-dark); background: var(--white);
+    border: 2px solid var(--cream-dark); border-radius: 999px; padding: 8px 16px; cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+.tb-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
+.no-results { margin: 0 0 18px; color: var(--copper); font-weight: 600; }
+
+/* accordion */
+.accordion { display: flex; flex-direction: column; gap: 10px; }
+.group-label {
+    font-size: 11.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--brown-accent); margin: 22px 0 4px 6px;
+}
+.group-label:first-child { margin-top: 0; }
+.subject {
     background: var(--white);
     border-radius: 14px;
-    padding: 26px 26px 22px;
-    text-decoration: none;
-    color: var(--text-dark);
-    box-shadow: 0 4px 14px rgba(33,68,43,.08);
     border-left: 5px solid var(--green-dark);
-    transition: transform .2s, box-shadow .2s;
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 4px 14px rgba(33,68,43,.08);
+    overflow: hidden;
+    transition: box-shadow .2s;
 }
-.grid .card:nth-child(3n+2) { border-left-color: var(--gold); }
-.grid .card:nth-child(3n)   { border-left-color: var(--brown-accent); }
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(33,68,43,.16);
+.subject:nth-of-type(3n+2) { border-left-color: var(--gold); }
+.subject:nth-of-type(3n)   { border-left-color: var(--brown-accent); }
+.subject:hover { box-shadow: 0 10px 24px rgba(33,68,43,.14); }
+.subject.open { box-shadow: 0 10px 28px rgba(33,68,43,.16); }
+.subject-toggle {
+    width: 100%; text-align: left; cursor: pointer;
+    display: flex; align-items: center; gap: 16px;
+    background: none; border: none; padding: 18px 20px 18px 22px;
+    font-family: 'Inter', sans-serif; color: var(--text-dark);
 }
+.subject-toggle:hover .subject-name { color: var(--green-light); }
 .card-icon {
-    width: 52px; height: 52px;
+    width: 48px; height: 48px; flex-shrink: 0;
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 14px;
     background: rgba(33,68,43,.08);
     color: var(--green-dark);
 }
-.grid .card:nth-child(3n+2) .card-icon { background: rgba(221,162,94,.16); color: var(--copper); }
-.grid .card:nth-child(3n) .card-icon   { background: rgba(139,94,60,.13); color: var(--brown-accent); }
-.card h3 {
-    margin: 0 0 6px;
+.subject:nth-of-type(3n+2) .card-icon { background: rgba(221,162,94,.16); color: var(--copper); }
+.subject:nth-of-type(3n) .card-icon   { background: rgba(139,94,60,.13); color: var(--brown-accent); }
+.subject-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.subject-name {
     font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-size: 1.15rem;
-    color: var(--green-dark);
+    font-size: 1.15rem; font-weight: 700; color: var(--green-dark);
+    transition: color .15s;
 }
-.card p { margin: 0; font-size: 14px; color: var(--text-medium); line-height: 1.55; flex: 1; }
-.card-go {
-    margin-top: 16px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--copper);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: gap .2s;
-}
-.card:hover .card-go { gap: 10px; }
-
-
-/* ============ Subject cards with link lists ============ */
-.grid { grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); align-items: start; }
-.subject-head {
-    display: flex; align-items: center; gap: 12px;
-    text-decoration: none;
-}
-.subject-head .card-icon { margin-bottom: 0; }
-.subject-head h3 { margin: 0; }
-.subject-head:hover h3 { color: var(--green-light); }
-.subject-desc { margin: 10px 0 0; font-size: 13.5px; color: var(--text-medium); line-height: 1.5; }
+.subject-desc { font-size: 13.5px; color: var(--text-medium); line-height: 1.45; }
 .ws-count {
-    margin-left: auto; flex-shrink: 0;
+    flex-shrink: 0;
     font-size: 11px; font-weight: 700;
     background: var(--gold-pale); color: var(--copper);
     border-radius: 999px; padding: 3px 10px;
 }
-.ws-list {
-    list-style: none;
-    margin: 14px 0 0; padding: 10px 0 0;
-    border-top: 1px dashed var(--cream-dark);
+.chev { flex-shrink: 0; color: var(--text-medium); transition: transform .25s; display: flex; }
+.subject.open .chev { transform: rotate(180deg); color: var(--green-dark); }
+.subject-panel { border-top: 1px dashed var(--cream-dark); }
+.panel-inner { padding: 14px 22px 20px 86px; animation: panelIn .22s ease; }
+@keyframes panelIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.folder-link { font-size: 12.5px; font-weight: 600; color: var(--copper); text-decoration: none; display: inline-block; margin-bottom: 6px; }
+.folder-link:hover { text-decoration: underline; }
+.topic-group { margin-top: 12px; }
+.topic-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+    color: var(--green-dark); opacity: .8; margin-bottom: 4px; padding-left: 8px;
 }
+.ws-list { list-style: none; margin: 0; padding: 0; counter-reset: ws; }
 .ws-list li { margin: 0; }
 .ws-list a {
-    display: flex; align-items: baseline; gap: 9px;
+    display: flex; align-items: baseline; gap: 10px;
     padding: 7px 8px; border-radius: 8px;
     text-decoration: none;
-    font-size: 14px; font-weight: 500; line-height: 1.4;
+    font-size: 14.5px; font-weight: 500; line-height: 1.4;
     color: var(--text-dark);
     transition: background .15s, color .15s;
 }
-.ws-list a::before { content: "\25B8"; color: var(--gold); font-size: 11px; flex-shrink: 0; }
+.ws-list a::before { counter-increment: ws; content: counter(ws); font-size: 11px; font-weight: 700; color: var(--gold); min-width: 16px; text-align: right; flex-shrink: 0; }
 .ws-list a:hover { background: rgba(221,162,94,.13); color: var(--green-dark); }
 .badge-new {
     font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
@@ -343,6 +355,8 @@ body {
     border-radius: 4px; padding: 2px 6px; margin-left: 6px;
     text-transform: uppercase; align-self: center; flex-shrink: 0;
 }
+.hit { background: rgba(221,162,94,.35); border-radius: 3px; padding: 0 1px; }
+[hidden] { display: none !important; }
 
 /* ============ Mission band ============ */
 .mission {
@@ -407,6 +421,9 @@ body {
     .hero { padding: 60px 20px 84px; }
     .container { padding: 48px 18px 20px; }
     .section-sub { margin-left: 0; }
+    .panel-inner { padding-left: 22px; }
+    .subject-toggle { padding: 14px 14px 14px 16px; gap: 12px; }
+    .subject-desc { display: none; }
     .mission-inner { padding: 30px 26px; }
 }
 </style>
@@ -478,166 +495,466 @@ body {
         <div class="section-number">&darr;</div>
         <h2>Browse Resources</h2>
     </div>
-    <p class="section-sub">Every worksheet is one click away &mdash; new resources are detected automatically when we publish them.</p>
+    <p class="section-sub">Click a subject to open it. Within each subject, worksheets are listed in the order you would meet them in a course.</p>
 
-    <div class="grid">
-        <div class="card subject-card" data-folder="algebra">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l6 6-6 6"/><path d="M14 18h6"/><path d="M14 12h3"/></svg></div>
-                <h3>Algebra</h3>
+    <div class="toolbar">
+        <label class="search-wrap" for="ws-search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="ws-search" type="search" placeholder="Search worksheets (e.g. &ldquo;chain rule&rdquo;, &ldquo;elasticity&rdquo;, &ldquo;ACT science&rdquo;)" autocomplete="off" oninput="filterResources(this.value)">
+        </label>
+        <div class="toolbar-btns">
+            <button class="tb-btn" type="button" onclick="setAll(true)">Expand all</button>
+            <button class="tb-btn" type="button" onclick="setAll(false)">Collapse all</button>
+        </div>
+    </div>
+    <p class="no-results" id="no-results" hidden>No worksheets match that search.</p>
+
+    <div class="accordion" id="accordion">
+        <div class="group-label">Mathematics</div>
+        <section class="subject" data-folder="algebra" id="subj-algebra">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-algebra" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l6 6-6 6"/><path d="M14 18h6"/><path d="M14 12h3"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Algebra</span>
+                    <span class="subject-desc">Foundations, functions, and symbolic reasoning.</span>
+                </span>
                 <span class="ws-count">5</span>
-            </a>
-            <p class="subject-desc">Foundations, functions, and symbolic reasoning.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/algebra-review-solving-systems-and-quadratics.html">Algebra Review: Solving Systems &amp; Quadratics</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/asymptotes_discontinuities_worksheet.html">Asymptotes &amp; Discontinuities</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/parent_functions_transformations_worksheet.html">Parent Functions &amp; Transformations</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/polynomials_rational_functions_worksheet.html">Polynomials &amp; Rational Functions</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/walkthrough-proof-rational-roots-theorem.html">Rational Root Theorem — Proof Walkthrough</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="geometry">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/geometry/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L3 20h18L12 4z"/><circle cx="12" cy="14" r="2.5"/></svg></div>
-                <h3>Geometry</h3>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-algebra" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/">Open the Algebra folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Foundations</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/factoring-worksheet.html">Factoring</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/algebra-review-solving-systems-and-quadratics.html">Algebra Review: Solving Systems &amp; Quadratics</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Functions</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/parent_functions_transformations_worksheet.html">Parent Functions &amp; Transformations</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/polynomials_rational_functions_worksheet.html">Polynomials &amp; Rational Functions</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Proofs</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/walkthrough-proof-rational-roots-theorem.html">Rational Root Theorem — Proof Walkthrough</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="geometry" id="subj-geometry">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-geometry" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 18H3z"/><circle cx="12" cy="15" r="3"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Geometry</span>
+                    <span class="subject-desc">Shapes, proofs, and spatial reasoning.</span>
+                </span>
                 <span class="ws-count">1</span>
-            </a>
-            <p class="subject-desc">Shapes, proofs, and spatial reasoning.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/geometry/triangle_centers.html">Triangle Centers</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="precalc">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20c4 0 5-14 9-14s5 10 9 10"/><path d="M3 4v16h18"/></svg></div>
-                <h3>Precalculus</h3>
-                <span class="ws-count">4</span>
-            </a>
-            <p class="subject-desc">Functions, trig, and the bridge to calculus.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/conic_sections_worksheet.html">Conic Sections</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/exponential-logarithmic-worksheet.html">Exponential &amp; Logarithmic Functions</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/polar_and_parametric_equations.html">Polar Graphs &amp; Parametric Equations</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/sequences_series_worksheet.html">Sequences &amp; Series</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="calculus">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3c-3 0-3 4-3 9s0 9-3 9"/><path d="M7 8h8"/><path d="M7 16h8"/></svg></div>
-                <h3>Calculus</h3>
-                <span class="ws-count">12</span>
-            </a>
-            <p class="subject-desc">From limits and integrals to multivariable ideas.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/differentiation-part-1.html">Differentiation Part 1 — Rules &amp; Toolkit</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/differentiation-part-2.html">Differentiation Part 2</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/applications_of_differentiation.html">Applications of Differentiation</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/integration_methods_and_practice.html">Integration: Methods &amp; Practice</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/disk-washer-method-practice.html">Disk vs Washer Method Organizer</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/double_integrals.html">Double Integrals: Theory &amp; Visualization</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/line_integral_worksheet.html">Line Integrals — Three Types</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/directional_derivative_worksheet.html">Gradient &amp; Directional Derivatives</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/lagrange_multiplier_worksheet.html">Lagrange Multipliers — Complete Guide</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/moments-physics-and-probability.html">Moments, Center of Mass &amp; Expected Value</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/numerical-integration-convergence-with-taylor-series.html">Midpoint Rule Convergence — Taylor Proof</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/projection-to-gradient-descent-conceptual-map.html">From Projection to Gradient Descent</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="stats">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/stats/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 21V13"/><path d="M10 21V7"/><path d="M15 21v-9"/><path d="M20 21V4"/></svg></div>
-                <h3>Statistics</h3>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-geometry" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/geometry/">Open the Geometry folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Triangles</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/geometry/triangle_centers.html">Triangle Centers</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="precalc" id="subj-precalc">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-precalc" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18c4 0 5-12 9-12s5 12 9 12"/><path d="M3 12h18"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Precalculus</span>
+                    <span class="subject-desc">Functions, trig, and the bridge to calculus.</span>
+                </span>
+                <span class="ws-count">5</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-precalc" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/">Open the Precalculus folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Functions &amp; their graphs</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/exponential-logarithmic-worksheet.html">Exponential &amp; Logarithmic Functions</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/asymptotes-discontinuities-worksheet.html">Asymptotes &amp; Discontinuities</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Analytic geometry</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/conic_sections_worksheet.html">Conic Sections</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/polar_and_parametric_equations.html">Polar Graphs &amp; Parametric Equations</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Sequences</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/sequences_series_worksheet.html">Sequences &amp; Series</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="calculus" id="subj-calculus">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-calculus" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3c-3 0-3 4-3 9s0 9-3 9"/><path d="M7 8h8"/><path d="M7 16h8"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Calculus</span>
+                    <span class="subject-desc">From rates of change and integrals to multivariable ideas.</span>
+                </span>
+                <span class="ws-count">15</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-calculus" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/">Open the Calculus folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Limits &amp; derivatives</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/average-and-instantaneous-rate-of-change.html">Average &amp; Instantaneous Rate of Change</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/differentiation-part-1.html">Derivatives Part 1 — Rules &amp; Toolkit</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/differentiation-part-2.html">Derivatives Part 2 — Chain Rule &amp; Beyond</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Applications of derivatives</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/IVT_EVT_MVT_Extrema_Sheet.html">IVT, EVT, MVT &amp; Extrema — Existence Theorems</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/practice-extrema-mvt-worksheet.html">Extrema &amp; the Mean Value Theorem — Practice</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/applications_of_differentiation.html">Applications of Differentiation</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Integration</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/integration_methods_and_practice.html">Integration: Methods &amp; Practice</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/disk-washer-method-practice.html">Disk vs Washer Method Organizer</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/moments-physics-and-probability.html">Moments, Center of Mass &amp; Expected Value</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/numerical-integration-convergence-with-taylor-series.html">Midpoint Rule Convergence — Taylor Proof</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Multivariable</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/directional_derivative_worksheet.html">Gradient &amp; Directional Derivatives</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/lagrange_multiplier_worksheet.html">Lagrange Multipliers — Complete Guide</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/double_integrals.html">Double Integrals: Theory &amp; Visualization</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/line_integral_worksheet.html">Line Integrals — Three Types</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/projection-to-gradient-descent-conceptual-map.html">From Projection to Gradient Descent</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="stats" id="subj-stats">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-stats" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Statistics</span>
+                    <span class="subject-desc">Probability, inference, and data analysis.</span>
+                </span>
                 <span class="ws-count">1</span>
-            </a>
-            <p class="subject-desc">Probability, inference, and data analysis.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/stats/variance-standard-deviation-standard-error-organizer.html">Variance, SD, SE + Covariance &amp; Correlation</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="econ">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5v14"/><path d="M4 19h16"/><path d="M6 15c3 0 4-8 7-8 2.5 0 3 5 7 5"/></svg></div>
-                <h3>Economics</h3>
-                <span class="ws-count">11</span>
-            </a>
-            <p class="subject-desc">Micro, macro, and econometrics made intuitive.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/econ-graphs-master-cheatsheet.html">The Ultimate Econ Graph Cheat Sheet</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/market_structure_organizer.html">Market Structure Organizer</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/econometrics/econometrics_cheat_sheet.html">Econometrics Master Cheat Sheet</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/consumer-optimum-micro.html">Solving the Consumer&rsquo;s Problem</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/demand-curves-micro.html">From Optimum to Demand</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/elasticity-micro.html">Elasticity &amp; Market Demand</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/income-substitution-effects-micro.html">Income &amp; Substitution Effects</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/cost-curves-profit-max-micro.html">Cost Curves, Revenue &amp; Profit Maximization</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/game-theory/game-theory-micro.html">Game Theory</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/exchange-economy-ge-micro.html">General Equilibrium in an Exchange Economy</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Comparing%20Environmental%20Policies.html">Comparing Environmental Policies (Fullerton 2001)</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="machine-learning">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 11l10-4.5"/><path d="M7 13l10 4.5"/></svg></div>
-                <h3>Machine Learning</h3>
-                <span class="ws-count">7</span>
-            </a>
-            <p class="subject-desc">Core algorithms, stepped through by hand.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Decision_Tree_Step_Through.html">Growing a Decision Tree</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Neural_Network_Step_Through.html">Inside a Simple Neural Network</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/kmeans_image_compression_worksheet.html">K-Means Image Compression</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/semi_supervised_em_step_through.html">Semi-Supervised EM &amp; Gaussian Mixtures</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Stats-for-ML-Cheat-Sheet.html">Statistics for ML — Formula Cheat Sheet</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/matrix-calculus-worksheet.html">Matrix Calculus: Gradients &amp; Shapes</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/ml_study_guide.html">ML Study Guide</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="physics">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></div>
-                <h3>Physics</h3>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-stats" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/stats/">Open the Statistics folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Descriptive statistics</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/stats/variance-standard-deviation-standard-error-organizer.html">Variance, SD, SE + Covariance &amp; Correlation</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="group-label">Sciences &amp; Social Sciences</div>
+        <section class="subject" data-folder="physics" id="subj-physics">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-physics" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Physics</span>
+                    <span class="subject-desc">Interactive electricity &amp; magnetism labs.</span>
+                </span>
                 <span class="ws-count">2</span>
-            </a>
-            <p class="subject-desc">Interactive mechanics, circuits, and fields.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/circuits-interactive.html">Circuits — Interactive Worksheet</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/electric_fields_interactive.html">Electric Fields — Interactive Worksheet</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="test-prep">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12.5V17c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></svg></div>
-                <h3>College Test Prep</h3>
-                <span class="ws-count">6</span>
-            </a>
-            <p class="subject-desc">SAT &amp; ACT practice with strategy built in.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/Practice-SAT-Full-Test.html">Full-Length Practice SAT</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Geometry-Review.html">ACT Geometry Review</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Stats-Probability-Review.html">ACT Statistics &amp; Probability Review</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/SAT-Tutor-Evaluation.html">Tutor Evaluation Form</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Desmos-Strategies.html">SAT Desmos Strategies</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Science-1-CHART-Core-Data-Skills.html">ACT Science 1 — Core Data Skills (Charts)</a></li>
-            </ul>
-        </div>
-        <div class="card subject-card" data-folder="gre">
-            <a class="subject-head" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/">
-                <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l1 2h3v14H5V6h3l1-2z"/><path d="M8.5 13l2.5 2.5 4.5-5"/></svg></div>
-                <h3>GRE</h3>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-physics" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/">Open the Physics folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Electricity &amp; magnetism</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/electric_fields_interactive.html">Electric Fields — Interactive Worksheet</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/circuits-interactive.html">Circuits — Interactive Lab</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="biology" id="subj-biology">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-biology" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6"/><path d="M17 3c0 6-10 6-10 12s10 6 10 6"/><path d="M8 8h8"/><path d="M8 16h8"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Biology</span>
+                    <span class="subject-desc">Cells, chemistry, and life science study sheets.</span>
+                </span>
+                <span class="ws-count">1</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-biology" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/biology/">Open the Biology folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Foundations</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/biology/Chemistry_of_Life_Study_Sheet.html">The Chemistry of Life — Atoms, Bonds &amp; Water</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="econ" id="subj-econ">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-econ" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/><path d="M3 21h18"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Economics</span>
+                    <span class="subject-desc">Micro, environmental econ, and econometrics made intuitive.</span>
+                </span>
+                <span class="ws-count">19</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-econ" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/">Open the Economics folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Reference sheets</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/econ-graphs-master-cheatsheet.html">The Ultimate Econ Graph Cheat Sheet</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/market_structure_organizer.html">Market Structure Organizer</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Microeconomics — in course order</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/Micro_Module0_Math_Foundations.html">Module 0: Math Foundations for Micro</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/preferences-utility-budget-micro.html">Preferences, Utility &amp; the Budget</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/consumer-optimum-micro.html">Solving the Consumer&rsquo;s Problem</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/demand-curves-micro.html">From Optimum to Demand</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/elasticity-micro.html">Elasticity &amp; Market Demand</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/income-substitution-effects-micro.html">Income &amp; Substitution Effects</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/midterm1-review-micro.html">Micro Unit 1 Study Sheet (Midterm Review)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/cost-curves-profit-max-micro.html">Cost Curves, Revenue &amp; Profit Maximization</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/game-theory/game-theory-micro.html">Game Theory</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/exchange-economy-ge-micro.html">General Equilibrium in an Exchange Economy</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Environmental economics</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Evolution%20of%20Environmental%20Economics.html">The Evolution of Environmental Economics</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Comparing%20Environmental%20Policies.html">Comparing Environmental Policies (Fullerton 2001)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Carbon%20Taxes%20vs%20Cap%20and%20Trade.html">Carbon Taxes vs. Cap and Trade</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Voluntary%20and%20Information-Based%20Approaches.html">Voluntary &amp; Information-Based Approaches</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Bridging%20the%20Energy%20Efficiency%20Gap.html">Bridging the Energy Efficiency Gap</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Rebound%20Effect%20and%20Efficiency%20Standards.html">The Rebound Effect &amp; Efficiency Standards</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Econometrics</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/econometrics/econometrics_cheat_sheet.html">Econometrics Master Cheat Sheet</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="psychology" id="subj-psychology">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-psychology" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a5 5 0 0 0-5 5v3l-2 3h2v3a3 3 0 0 0 3 3h3v2h5v-5a7 7 0 0 0 0-14z"/><path d="M12 8v4"/><circle cx="12" cy="14.5" r=".5"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Psychology</span>
+                    <span class="subject-desc">Research methods and study sheets.</span>
+                </span>
+                <span class="ws-count">1</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-psychology" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/psychology/">Open the Psychology folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Research methods</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/psychology/Observational_Research_Lecture2_Study_Sheet.html">Observational Research — Lecture 2 Study Sheet</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="machine-learning" id="subj-machine-learning">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-machine-learning" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><path d="M7 7l3 4M7 17l3-4M14 12h3"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Machine Learning</span>
+                    <span class="subject-desc">Core algorithms, stepped through by hand.</span>
+                </span>
+                <span class="ws-count">7</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-machine-learning" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/">Open the Machine Learning folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Math &amp; stats foundations</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Stats-for-ML-Cheat-Sheet.html">Statistics for ML — Formula Cheat Sheet</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/matrix-calculus-worksheet.html">Matrix Calculus: Gradients &amp; Shapes</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Algorithms, step by step</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Decision_Tree_Step_Through.html">Growing a Decision Tree</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Neural_Network_Step_Through.html">Inside a Simple Neural Network</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/kmeans_image_compression_worksheet.html">K-Means Image Compression</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/semi_supervised_em_step_through.html">Semi-Supervised EM &amp; Gaussian Mixtures</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Review</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/ml_study_guide.html">ML Study Guide</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="medical study sheets" id="subj-medical-study-sheets">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-medical-study-sheets" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M4 12h16"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">Medical Study Sheets</span>
+                    <span class="subject-desc">Board-style review sheets by specialty.</span>
+                </span>
+                <span class="ws-count">1</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-medical-study-sheets" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/medical%20study%20sheets/">Open the Medical Study Sheets folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Hematology</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/medical%20study%20sheets/hematology/Inherited_Thrombophilias_ASHSAP_Ch19_Study_Sheet.html">Inherited Thrombophilias (ASH-SAP Ch. 19)</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="group-label">Test Prep</div>
+        <section class="subject" data-folder="test-prep" id="subj-test-prep">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-test-prep" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">SAT, PSAT &amp; ACT</span>
+                    <span class="subject-desc">Diagnostics, section-by-section skills, and full-length practice.</span>
+                </span>
+                <span class="ws-count">18</span>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-test-prep" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/">Open the SAT, PSAT &amp; ACT folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Start here</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/SAT-PSAT-Diagnostic.html">PSAT / SAT Diagnostic</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html">Test Day Playbook: SAT, PSAT &amp; ACT</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">SAT &amp; PSAT</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Reading-1-Student-Notes.html">SAT Reading 1: Student Notes (SCORE)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Grammar-1-Transitions.html">SAT Grammar 1: Transitions (LINK)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Grammar-2-Sentence-Boundaries.html">SAT Grammar 2: Sentence Boundaries</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Words-in-Context-1-Words-1-40.html">SAT Words in Context — Set 1 (Words 1&ndash;40)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Words-in-Context-2-Words-41-80.html">SAT Words in Context — Set 2 (Words 41&ndash;80)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Words-in-Context-3-Words-81-120.html">SAT Words in Context — Set 3 (Words 81&ndash;120)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Desmos-Strategies.html">SAT Math: Desmos Strategies</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/Practice-SAT-Full-Test.html">Full-Length Practice SAT</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/Test-Day-Playbook-SAT-PSAT.html">Test Day Playbook: SAT &amp; PSAT</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">ACT</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Grammar-1-Transitions.html">ACT Grammar 1: Transitions (LINK)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Grammar-2-Sentence-Boundaries.html">ACT Grammar 2: Sentence Boundaries</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Geometry-Review.html">ACT Math: Geometry Review</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Stats-Probability-Review.html">ACT Math: Statistics &amp; Probability Review</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Science-1-CHART-Core-Data-Skills.html">ACT Science 1: Core Data Skills (CHART)</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Science-2-IMPACT-Advanced-Question-Types.html">ACT Science 2: Advanced Question Types (IMPACT)</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">For tutors</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/SAT-Tutor-Evaluation.html">Tutor Skills Evaluation</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="subject" data-folder="gre" id="subj-gre">
+            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-gre" onclick="toggleSubject(this)">
+                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+                <span class="subject-text">
+                    <span class="subject-name">GRE</span>
+                    <span class="subject-desc">Quant, essay, and full-length practice for grad school admissions.</span>
+                </span>
                 <span class="ws-count">8</span>
-            </a>
-            <p class="subject-desc">Quant, essay, and full-length practice for grad school admissions.</p>
-            <ul class="ws-list">
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-quant-formula-cards.html">GRE Quant: Formula Sheet &amp; Flash Cards</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-exponents-sheet.html">GRE Quant: Simplifying Exponents</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-sequences-sheet.html">GRE Quant: Sequences</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-interest-sheet.html">GRE Quant: Interest &amp; Percent Change</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-circles-sheet.html">GRE Quant: Circles</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-triangles-sheet.html">GRE Quant: Triangles</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/GRE-Essay-Sheet.html">GRE Essay — The Issue Essay Roadmap</a></li>
-                <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/GRE_Practice_Test_Full.html">Full-Length GRE Practice Test</a></li>
-            </ul>
-        </div>
+                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="subject-panel" id="panel-gre" hidden>
+                <div class="panel-inner">
+                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/">Open the GRE folder &rarr;</a>
+                    <div class="topic-group">
+                        <div class="topic-label">Quant — reference</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-quant-formula-cards.html">GRE Quant: Formula Sheet &amp; Flash Cards</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Quant — topic sheets</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-exponents-sheet.html">GRE Quant: Simplifying Exponents</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-sequences-sheet.html">GRE Quant: Sequences</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-interest-sheet.html">GRE Quant: Interest &amp; Percent Change</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-circles-sheet.html">GRE Quant: Circles</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-triangles-sheet.html">GRE Quant: Triangles</a></li>
+                        </ol>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-label">Writing &amp; full practice</div>
+                        <ol class="ws-list">
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/GRE-Essay-Sheet.html">GRE Essay — The Issue Essay Roadmap</a></li>
+                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/GRE_Practice_Test_Full.html">Full-Length GRE Practice Test</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </main>
 
@@ -662,75 +979,136 @@ body {
 
 
 <script>
-/* Auto-detect newly published worksheets from the GitHub repo.
-   - New .html files in existing subject folders are appended to that card with a "new" badge.
-   - A brand-new subject folder gets its own card created automatically.
-   Fails silently if offline (hard-coded lists still work). */
+/* ---------- accordion ---------- */
+function toggleSubject(btn, force) {
+    var sec = btn.closest('.subject'), panel = document.getElementById(btn.getAttribute('aria-controls'));
+    var open = (force === undefined) ? !sec.classList.contains('open') : force;
+    sec.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    panel.hidden = !open;
+}
+function setAll(open) {
+    document.querySelectorAll('.subject-toggle').forEach(function (b) { toggleSubject(b, open); });
+}
+/* open a subject when the URL has #subj-xxx, e.g. index.html#subj-calculus */
+function openFromHash() {
+    var id = (location.hash || '').replace('#', '');
+    if (!id) return;
+    var sec = document.getElementById(id);
+    if (sec && sec.classList.contains('subject')) {
+        toggleSubject(sec.querySelector('.subject-toggle'), true);
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+window.addEventListener('hashchange', openFromHash);
+window.addEventListener('DOMContentLoaded', openFromHash);
+
+/* ---------- search ---------- */
+var _origText = new WeakMap();
+function filterResources(q) {
+    q = (q || '').trim().toLowerCase();
+    var any = false;
+    document.querySelectorAll('.subject').forEach(function (sec) {
+        var secHit = 0;
+        sec.querySelectorAll('.topic-group').forEach(function (g) {
+            var gHit = 0;
+            g.querySelectorAll('.ws-list li').forEach(function (li) {
+                var a = li.querySelector('a');
+                if (!_origText.has(a)) _origText.set(a, a.innerHTML);
+                var text = a.textContent.replace(/\s*new$/i, '').toLowerCase();
+                var hit = !q || text.indexOf(q) !== -1;
+                li.hidden = !hit;
+                if (hit) gHit++;
+                // highlight
+                if (q && hit) {
+                    var raw = _origText.get(a), badge = '';
+                    var m = raw.match(/<span class="badge-new">.*?<\/span>/); if (m) { badge = m[0]; raw = raw.replace(m[0], ''); }
+                    var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+                    a.innerHTML = raw.replace(re, '<span class="hit">$1</span>') + badge;
+                } else {
+                    a.innerHTML = _origText.get(a);
+                }
+            });
+            g.hidden = gHit === 0;
+            secHit += gHit;
+        });
+        var lbl = sec.previousElementSibling;
+        sec.hidden = secHit === 0;
+        if (secHit) any = true;
+        toggleSubject(sec.querySelector('.subject-toggle'), q ? true : false);
+    });
+    // hide group labels whose subjects are all hidden
+    document.querySelectorAll('.group-label').forEach(function (gl) {
+        var n = gl.nextElementSibling, visible = false;
+        while (n && !n.classList.contains('group-label')) { if (!n.hidden) visible = true; n = n.nextElementSibling; }
+        gl.hidden = !visible;
+    });
+    document.getElementById('no-results').hidden = any || !q;
+}
+
+/* ---------- auto-detect newly published worksheets ----------
+   Asks the GitHub API for the repo tree. Any .html file not in KNOWN is appended
+   to its subject under a "Recently added" heading with a "new" badge; a brand-new
+   folder gets its own subject. Fails silently if offline. */
 (function () {
-    var KNOWN = new Set(["algebra/algebra-review-solving-systems-and-quadratics.html", "algebra/asymptotes_discontinuities_worksheet.html", "algebra/parent_functions_transformations_worksheet.html", "algebra/polynomials_rational_functions_worksheet.html", "algebra/walkthrough-proof-rational-roots-theorem.html", "geometry/triangle_centers.html", "precalc/conic_sections_worksheet.html", "precalc/exponential-logarithmic-worksheet.html", "precalc/polar_and_parametric_equations.html", "precalc/sequences_series_worksheet.html", "calculus/differentiation-part-1.html", "calculus/differentiation-part-2.html", "calculus/applications_of_differentiation.html", "calculus/integration_methods_and_practice.html", "calculus/disk-washer-method-practice.html", "calculus/double_integrals.html", "calculus/line_integral_worksheet.html", "calculus/directional_derivative_worksheet.html", "calculus/lagrange_multiplier_worksheet.html", "calculus/moments-physics-and-probability.html", "calculus/numerical-integration-convergence-with-taylor-series.html", "calculus/projection-to-gradient-descent-conceptual-map.html", "stats/variance-standard-deviation-standard-error-organizer.html", "econ/econ-graphs-master-cheatsheet.html", "econ/market_structure_organizer.html", "econ/econometrics/econometrics_cheat_sheet.html", "econ/consumer-optimum-micro.html", "econ/demand-curves-micro.html", "econ/elasticity-micro.html", "econ/income-substitution-effects-micro.html", "econ/cost-curves-profit-max-micro.html", "econ/game-theory/game-theory-micro.html", "econ/micro/exchange-economy-ge-micro.html", "econ/environmental-econ/Comparing Environmental Policies.html", "machine-learning/Decision_Tree_Step_Through.html", "machine-learning/Neural_Network_Step_Through.html", "machine-learning/kmeans_image_compression_worksheet.html", "machine-learning/semi_supervised_em_step_through.html", "machine-learning/Stats-for-ML-Cheat-Sheet.html", "machine-learning/matrix-calculus-worksheet.html", "machine-learning/ml_study_guide.html", "physics/circuits-interactive.html", "physics/electric_fields_interactive.html", "test-prep/sat/Practice-SAT-Full-Test.html", "test-prep/act/ACT-Geometry-Review.html", "test-prep/act/ACT-Stats-Probability-Review.html", "test-prep/SAT-Tutor-Evaluation.html", "test-prep/sat/SAT-Desmos-Strategies.html", "test-prep/act/ACT-Science-1-CHART-Core-Data-Skills.html", "gre/gre-quant-formula-cards.html", "gre/gre-exponents-sheet.html", "gre/gre-sequences-sheet.html", "gre/gre-interest-sheet.html", "gre/gre-circles-sheet.html", "gre/gre-triangles-sheet.html", "gre/GRE-Essay-Sheet.html", "gre/GRE_Practice_Test_Full.html"]);
+    var KNOWN = new Set(["algebra/factoring-worksheet.html", "algebra/algebra-review-solving-systems-and-quadratics.html", "algebra/parent_functions_transformations_worksheet.html", "algebra/polynomials_rational_functions_worksheet.html", "algebra/walkthrough-proof-rational-roots-theorem.html", "geometry/triangle_centers.html", "precalc/exponential-logarithmic-worksheet.html", "precalc/asymptotes-discontinuities-worksheet.html", "precalc/conic_sections_worksheet.html", "precalc/polar_and_parametric_equations.html", "precalc/sequences_series_worksheet.html", "calculus/average-and-instantaneous-rate-of-change.html", "calculus/differentiation-part-1.html", "calculus/differentiation-part-2.html", "calculus/IVT_EVT_MVT_Extrema_Sheet.html", "calculus/practice-extrema-mvt-worksheet.html", "calculus/applications_of_differentiation.html", "calculus/integration_methods_and_practice.html", "calculus/disk-washer-method-practice.html", "calculus/moments-physics-and-probability.html", "calculus/numerical-integration-convergence-with-taylor-series.html", "calculus/directional_derivative_worksheet.html", "calculus/lagrange_multiplier_worksheet.html", "calculus/double_integrals.html", "calculus/line_integral_worksheet.html", "calculus/projection-to-gradient-descent-conceptual-map.html", "stats/variance-standard-deviation-standard-error-organizer.html", "physics/electric_fields_interactive.html", "physics/circuits-interactive.html", "biology/Chemistry_of_Life_Study_Sheet.html", "econ/econ-graphs-master-cheatsheet.html", "econ/market_structure_organizer.html", "econ/micro/Micro_Module0_Math_Foundations.html", "econ/micro/preferences-utility-budget-micro.html", "econ/micro/consumer-optimum-micro.html", "econ/demand-curves-micro.html", "econ/elasticity-micro.html", "econ/income-substitution-effects-micro.html", "econ/micro/midterm1-review-micro.html", "econ/cost-curves-profit-max-micro.html", "econ/game-theory/game-theory-micro.html", "econ/micro/exchange-economy-ge-micro.html", "econ/environmental-econ/Evolution of Environmental Economics.html", "econ/environmental-econ/Comparing Environmental Policies.html", "econ/environmental-econ/Carbon Taxes vs Cap and Trade.html", "econ/environmental-econ/Voluntary and Information-Based Approaches.html", "econ/environmental-econ/Bridging the Energy Efficiency Gap.html", "econ/environmental-econ/Rebound Effect and Efficiency Standards.html", "econ/econometrics/econometrics_cheat_sheet.html", "psychology/Observational_Research_Lecture2_Study_Sheet.html", "machine-learning/Stats-for-ML-Cheat-Sheet.html", "machine-learning/matrix-calculus-worksheet.html", "machine-learning/Decision_Tree_Step_Through.html", "machine-learning/Neural_Network_Step_Through.html", "machine-learning/kmeans_image_compression_worksheet.html", "machine-learning/semi_supervised_em_step_through.html", "machine-learning/ml_study_guide.html", "medical study sheets/hematology/Inherited_Thrombophilias_ASHSAP_Ch19_Study_Sheet.html", "test-prep/SAT-PSAT-Diagnostic.html", "test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html", "test-prep/sat/SAT-Reading-1-Student-Notes.html", "test-prep/sat/SAT-Grammar-1-Transitions.html", "test-prep/sat/SAT-Grammar-2-Sentence-Boundaries.html", "test-prep/sat/SAT-Words-in-Context-1-Words-1-40.html", "test-prep/sat/SAT-Words-in-Context-2-Words-41-80.html", "test-prep/sat/SAT-Words-in-Context-3-Words-81-120.html", "test-prep/sat/SAT-Desmos-Strategies.html", "test-prep/sat/Practice-SAT-Full-Test.html", "test-prep/sat/Test-Day-Playbook-SAT-PSAT.html", "test-prep/act/ACT-Grammar-1-Transitions.html", "test-prep/act/ACT-Grammar-2-Sentence-Boundaries.html", "test-prep/act/ACT-Geometry-Review.html", "test-prep/act/ACT-Stats-Probability-Review.html", "test-prep/act/ACT-Science-1-CHART-Core-Data-Skills.html", "test-prep/act/ACT-Science-2-IMPACT-Advanced-Question-Types.html", "test-prep/SAT-Tutor-Evaluation.html", "gre/gre-quant-formula-cards.html", "gre/gre-exponents-sheet.html", "gre/gre-sequences-sheet.html", "gre/gre-interest-sheet.html", "gre/gre-circles-sheet.html", "gre/gre-triangles-sheet.html", "gre/GRE-Essay-Sheet.html", "gre/GRE_Practice_Test_Full.html"]);
     var BASE = 'https://learningcurvecollective.github.io/learning-curve-collective-resources/';
     var API = 'https://api.github.com/repos/LearningCurveCollective/learning-curve-collective-resources/git/trees/main?recursive=1';
-    var ACRO = { sat:'SAT', act:'ACT', gre:'GRE', ap:'AP', em:'EM', sd:'SD', se:'SE', kmeans:'K-Means', vs:'vs', and:'&', to:'to', of:'of', a:'a', the:'the', ml:'ML' };
+    var ACRO = { sat:'SAT', psat:'PSAT', act:'ACT', gre:'GRE', ap:'AP', em:'EM', sd:'SD', se:'SE', kmeans:'K-Means', vs:'vs', and:'&', to:'to', of:'of', a:'a', the:'the', ml:'ML', ivt:'IVT', evt:'EVT', mvt:'MVT' };
     function prettify(name) {
-        return name.replace(/\.html$/, '').split(/[-_\s]+/).map(function (w, i) {
+        return name.replace(/\.html$/, '').split(/[-_\s]+/).map(function (w) {
             var lw = w.toLowerCase();
             if (ACRO[lw]) return ACRO[lw];
             return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
         }).join(' ');
     }
+    function encPath(p) { return p.split('/').map(encodeURIComponent).join('/'); }
     var GENERIC_ICON = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
-    function getOrCreateCard(folder) {
-        var card = document.querySelector('.subject-card[data-folder="' + folder + '"]');
-        if (card) return card;
-        var grid = document.querySelector('.grid');
-        if (!grid) return null;
-        card = document.createElement('div');
-        card.className = 'card subject-card';
-        card.setAttribute('data-folder', folder);
-        var head = document.createElement('a');
-        head.className = 'subject-head';
-        head.href = BASE + folder + '/';
-        var icon = document.createElement('div');
-        icon.className = 'card-icon';
-        icon.innerHTML = GENERIC_ICON;
-        var h3 = document.createElement('h3');
-        h3.textContent = prettify(folder);
-        var count = document.createElement('span');
-        count.className = 'ws-count';
-        count.textContent = '0';
-        head.appendChild(icon); head.appendChild(h3); head.appendChild(count);
-        var desc = document.createElement('p');
-        desc.className = 'subject-desc';
-        desc.textContent = 'New subject — just published.';
-        var ul = document.createElement('ul');
-        ul.className = 'ws-list';
-        card.appendChild(head); card.appendChild(desc); card.appendChild(ul);
-        grid.appendChild(card);
-        return card;
+    function getOrCreateSubject(folder) {
+        var sec = document.querySelector('.subject[data-folder="' + folder.replace(/"/g, '\\"') + '"]');
+        if (sec) return sec;
+        var acc = document.getElementById('accordion'); if (!acc) return null;
+        var sid = 'auto-' + folder.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        sec = document.createElement('section');
+        sec.className = 'subject'; sec.setAttribute('data-folder', folder); sec.id = 'subj-' + sid;
+        sec.innerHTML =
+            '<button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-' + sid + '" onclick="toggleSubject(this)">' +
+            '<span class="card-icon">' + GENERIC_ICON + '</span>' +
+            '<span class="subject-text"><span class="subject-name"></span><span class="subject-desc">New subject &mdash; just published.</span></span>' +
+            '<span class="ws-count">0</span>' +
+            '<span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>' +
+            '<div class="subject-panel" id="panel-' + sid + '" hidden><div class="panel-inner"><a class="folder-link" href="' + BASE + encPath(folder) + '/">Open the folder &rarr;</a></div></div>';
+        sec.querySelector('.subject-name').textContent = prettify(folder);
+        acc.appendChild(sec);
+        return sec;
+    }
+    function recentList(sec) {
+        var inner = sec.querySelector('.panel-inner');
+        var g = inner.querySelector('.topic-group.recent');
+        if (!g) {
+            g = document.createElement('div'); g.className = 'topic-group recent';
+            g.innerHTML = '<div class="topic-label">Recently added</div><ol class="ws-list"></ol>';
+            inner.appendChild(g);
+        }
+        return g.querySelector('.ws-list');
     }
     fetch(API).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
         if (!data || !data.tree) return;
         data.tree.forEach(function (node) {
             if (node.type !== 'blob') return;
             var p = node.path;
-            if (!/\.html$/.test(p) || p === 'index.html' || KNOWN.has(p)) return;
-            if (p.indexOf('/') === -1) return; // top-level html files other than index are skipped
+            if (!/\.html$/i.test(p) || p === 'index.html' || KNOWN.has(p)) return;
+            if (p.indexOf('/') === -1) return;
             var folder = p.split('/')[0];
-            var card = getOrCreateCard(folder);
-            if (!card) return;
-            var list = card.querySelector('.ws-list');
-            var li = document.createElement('li');
-            var a = document.createElement('a');
-            a.href = BASE + p;
+            var sec = getOrCreateSubject(folder); if (!sec) return;
+            var list = recentList(sec);
+            var li = document.createElement('li'), a = document.createElement('a');
+            a.href = BASE + encPath(p);
             a.textContent = prettify(p.split('/').pop());
-            var badge = document.createElement('span');
-            badge.className = 'badge-new';
-            badge.textContent = 'new';
-            a.appendChild(badge);
-            li.appendChild(a);
-            list.appendChild(li);
-            var count = card.querySelector('.ws-count');
-            if (count) count.textContent = list.querySelectorAll('li').length;
+            var badge = document.createElement('span'); badge.className = 'badge-new'; badge.textContent = 'new';
+            a.appendChild(badge); li.appendChild(a); list.appendChild(li);
+            var count = sec.querySelector('.ws-count');
+            if (count) count.textContent = sec.querySelectorAll('.ws-list li').length;
         });
     }).catch(function () {});
 })();
