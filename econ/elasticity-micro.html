@@ -264,7 +264,9 @@ li { margin-bottom: 10px; }
         $$\frac{\Delta \ln x}{\Delta x} \approx \frac{1}{x}$$
         <p>Multiply both sides by $\Delta x$:</p>
         $$\Delta \ln x \approx \frac{\Delta x}{x}$$
-        <p>The right-hand side is the fractional change in $x$: a percent change, written as a decimal. So &ldquo;the change in the log&rdquo; and &ldquo;the percent change&rdquo; are the same thing for small moves. For example $\ln 102 - \ln 100 = 0.0198$, and $2/100 = 0.02$. The gap is the second-order term, which is why it is an approximation for finite steps and exact in the limit.</p>
+        <p>The right-hand side is the fractional change in $x$: a percent change, written as a decimal. So &ldquo;the change in the log&rdquo; and &ldquo;the percent change&rdquo; are the same thing for small moves. For example $\ln 102 - \ln 100 = 0.0198$, and $2/100 = 0.02$. The gap is the second-order term, which is why it is an approximation for finite steps and exact in the limit. Take that limit and the approximation becomes a definition:</p>
+        $$\lim_{\Delta x \to 0}\frac{\Delta \ln x}{\Delta x} = \frac{d\ln x}{dx} = \frac{1}{x} \qquad\Longrightarrow\qquad d\ln x = \frac{dx}{x}$$
+        <p>In words: an infinitesimal change in the log <em>is</em> the fractional change, exactly. Everything below the arrow is now an equality, not an estimate.</p>
         <p style="margin-bottom:4px;"><strong>Step 2: apply Step 1 to both variables</strong></p>
         <p>Elasticity is defined as percent change in $A$ over percent change in $B$:</p>
         $$\varepsilon_{A,B} = \frac{\Delta A / A}{\Delta B / B}$$
@@ -273,12 +275,15 @@ li { margin-bottom: 10px; }
         <p>Let the steps shrink to zero and the approximation becomes exact:</p>
         <div class="highlight-box">$$\varepsilon_{A,B} = \frac{\partial \ln A}{\partial \ln B}$$</div>
         <p>That is the log form, reached entirely from &ldquo;log change equals percent change.&rdquo; Nothing else was used.</p>
-        <p style="margin-bottom:4px;"><strong>Step 3: check it against the ratio form with the chain rule</strong></p>
+        <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 3 (pure calculus): check it against the ratio form with the chain rule</button>
+        <div class="example-body"><div style="padding:12px 16px 4px;">
+        <p>The first route built intuition through finite steps. This one never leaves calculus: three exact facts and no $\Delta$'s, which is why it is a proof that the log form and the ratio form are the <em>same definition</em>, not approximations of each other.</p>
         <p>Start from the log form and insert $A$ and $B$ as intermediate variables:</p>
         $$\frac{\partial \ln A}{\partial \ln B} = \frac{\partial \ln A}{\partial A}\cdot\frac{\partial A}{\partial B}\cdot\frac{\partial B}{\partial \ln B}$$
         <p>The first factor is the log derivative, $\dfrac{\partial \ln A}{\partial A} = \dfrac{1}{A}$. The third factor is the same fact upside down: since $\dfrac{\partial \ln B}{\partial B} = \dfrac{1}{B}$, its reciprocal is $\dfrac{\partial B}{\partial \ln B} = B$. Substitute both:</p>
         $$\frac{\partial \ln A}{\partial \ln B} = \frac{1}{A}\cdot\frac{\partial A}{\partial B}\cdot B = \frac{\partial A}{\partial B}\cdot\frac{B}{A} = \varepsilon_{A,B} \quad\checkmark$$
         <p>Same number, so the ratio form at the top of this page and the log form are interchangeable. The two evaluated factors are Step 1 in disguise: $\tfrac{1}{A}\,\partial A$ is the percent change in $A$ and $\tfrac{1}{B}\,\partial B$ is the percent change in $B$; the chain rule just does the bookkeeping.</p>
+        </div></div>
         <p style="margin-bottom:4px;"><strong>Why you will like it: elasticities become coefficients</strong></p>
         <p>Cobb&ndash;Douglas demand is $x^* = \dfrac{m}{2p_x}$. Take logs: $\ln x^* = \ln m - \ln 2 - \ln p_x$. Now every elasticity is just the coefficient on the matching log:</p>
         $$\varepsilon_{x,m} = \frac{\partial \ln x}{\partial \ln m} = 1, \qquad \varepsilon_{x,p_x} = \frac{\partial \ln x}{\partial \ln p_x} = -1$$
