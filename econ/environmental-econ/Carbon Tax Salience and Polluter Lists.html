@@ -636,7 +636,8 @@ li { margin-bottom: 10px; }
 .keynote { font-size: 13.5px; }
 .keynote li { margin: 5px 0 5px 18px; }
 
-    </style>
+    mjx-container[display="true"] { display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; }
+</style>
 </head>
 <body>
 
@@ -772,6 +773,7 @@ li { margin-bottom: 10px; }
                 <div class="stat"><div class="lbl">Tax in $ per tonne CO<sub>2</sub>e</div><div class="v" id="sal-tonne">&asymp; $22</div></div>
                 <div class="stat"><div class="lbl">Coefficients (price, tax)</div><div class="v" id="sal-coef" style="font-size:17px;">&minus;0.0035, &minus;0.0247</div></div>
             </div>
+            <div class="given-key" id="sal-line" style="margin-top:12px;"></div>
             <p id="sal-note" class="tex2jax_ignore" style="font-size:13.5px; margin-top:10px; color: var(--text-medium);"></p>
             <p class="fig-caption" style="margin-top:6px;">Bars use the quick reading (coefficient &times; cents); the exact log-linear change $1-e^{\beta\Delta}$ is shown in the note. Tonne conversion uses BC's rate from Table 1 (\$30/t = 6.67&cent;/L).</p>
         </div>
@@ -822,6 +824,29 @@ li { margin-bottom: 10px; }
             <p><strong>Why interact with BC.</strong> The preferred model uses $\alpha\,(p_{it}\times BC_i)$ and $\beta\,(\tau_{it}\times BC_i)$. BC drivers are more price-sensitive than the national average; without the interaction the tax coefficient soaks up BC's extra price sensitivity (national tax coefficient $-0.0457$ falls to $-0.0247$ once BC gets its own price slope). <span class="pg">R&amp;S pp. 8, 13</span></p>
             <p style="font-size:14px;"><strong>Data:</strong> Statistics Canada monthly litres by province, Kent Marketing prices, all deflated by provincial CPI; Jan 1990 to Dec 2011; <strong>2,580</strong> province-month observations (216 province-years in annual models). Newey-West (HAC) standard errors. <span class="pg">R&amp;S pp. 6, 12</span></p>
             <p style="font-size:14px;"><strong>Figure 1's eyeball evidence:</strong> when the tax started in July 2008, pump prices fell sharply in both BC and Ontario. Ontario demand rose, as a demand curve predicts. BC demand kept <em>falling</em>. The tax looked like a demand <em>shifter</em>, not just a price. <span class="pg">R&amp;S p. 7</span></p>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color: var(--green-dark); margin-bottom: 6px;">From the equation to a line: the implied regression line for BC</h3>
+            <div class="given-key">
+                <p><strong>Givens.</strong> Preferred model (Table 2, col. 2): $\alpha = -0.0035$ (market price &times; BC), $\beta = -0.0247$ (carbon tax &times; BC), both per &cent;/L. The fixed effects $\delta_i + \gamma_t$ and controls sit in the intercept, so anchor the line at BC's sample means from Table A1: $\bar y = 114.94$ litres per adult per month, $\bar p = 78.28$&cent;/L, and $\tau_0 = 0$ (no tax). <span class="pg">R&amp;S Table 2, Table A1</span></p>
+            </div>
+            <p style="margin-bottom:4px;"><strong>Step 1: point-slope form in logs.</strong> A line through $(\bar p, \tau_0, \ln \bar y)$ with slopes $\alpha$ and $\beta$:</p>
+            $$\ln y - \ln 114.94 = -0.0035\,(p - 78.28) - 0.0247\,(\tau - 0)$$
+            <p style="margin-bottom:4px;"><strong>Step 2: read it in percent</strong> ($\ln y - \ln \bar y \approx \%\Delta y / 100$):</p>
+            $$\%\Delta y \approx -0.35\,\Delta p \;-\; 2.47\,\Delta \tau$$
+            <p>Each 1&cent; of market price cuts gasoline use about <strong>0.35%</strong>; each 1&cent; of carbon tax about <strong>2.47%</strong>.</p>
+            <p style="margin-bottom:4px;"><strong>Step 3: in litres</strong> (the tangent line at the anchor; slope $= $ coefficient $\times \bar y$, since $dy/dp = \alpha y$):</p>
+            $$y - 114.94 = -0.4023\,(p - 78.28) - 2.8390\,(\tau - 0)$$
+            <p style="margin-bottom:4px;"><strong>Step 4: the exact curve</strong> (undo the log):</p>
+            $$y = 114.94\, e^{-0.0035\,(p - 78.28)\, -\, 0.0247\,\tau}$$
+            <div class="tbl-wrap"><table class="regtab">
+                <tr><th>Increase</th><th>Market price: quick / exact</th><th>Carbon tax: quick / exact</th><th>Litres per adult (exact): price / tax</th></tr>
+                <tr><td>1&cent;/L</td><td>&minus;0.35% / &minus;0.3494%</td><td>&minus;2.47% / &minus;2.4397%</td><td>&minus;0.4016 / &minus;2.8042</td></tr>
+                <tr><td>4.5&cent;/L</td><td>&minus;1.575% / &minus;1.5627%</td><td>&minus;11.115% / &minus;10.5195%</td><td>&minus;1.7961 / &minus;12.0912</td></tr>
+                <tr><td>5&cent;/L</td><td>&minus;1.75% / &minus;1.7348%</td><td>&minus;12.35% / &minus;11.6178%</td><td>&minus;1.9940 / &minus;13.3535</td></tr>
+            </table></div>
+            <p style="font-size:14px; margin-top:10px;"><strong>What the line tells you.</strong> The slopes carry the economics: $\beta/\alpha = 0.0247/0.0035 \approx 7.0571$, the salience ratio. At the mean price the market-price elasticity is $\alpha\bar p = -0.0035 \times 78.28 = -0.2740$ (inelastic, inside Gillingham, Rapson &amp; Wagner's &minus;0.05 to &minus;0.40 range). The anchor is illustrative: the regression pins down the slopes, while the level also contains the fixed effects. The paper's 1.8% and 12.5% for 5&cent; are the quick readings, rounded.</p>
         </div>
 
         <div class="section-header"><div class="section-number">5</div><h2>Why would a tax cent bite harder?</h2></div>
@@ -1689,6 +1714,16 @@ function salUpdate() {
     document.getElementById('sal-ratio').textContent = (m.b / m.a).toFixed(1) + '×';
     document.getElementById('sal-tonne').textContent = '≈ $' + Math.round(c * 30 / 6.67);
     document.getElementById('sal-coef').textContent = '−' + (-m.a).toFixed(4) + ', −' + (-m.b).toFixed(4);
+    var Y0 = 114.94, P0 = 78.28, el = document.getElementById('sal-line');
+    if (el) {
+        var sa = (-m.a).toFixed(4), sb = (-m.b).toFixed(4), la = (-m.a * Y0).toFixed(4), lb = (-m.b * Y0).toFixed(4);
+        var yp = Y0 * Math.exp(m.a * c), yt = Y0 * Math.exp(m.b * c);
+        el.innerHTML = '<p style="margin-bottom:2px;"><strong>Implied regression line for this model</strong> (anchored at BC means: $\\bar y = 114.94$ L, $\\bar p = 78.28$&cent;, $\\tau_0 = 0$):</p>' +
+            '$$\\ln y - \\ln 114.94 = -' + sa + '\\,(p - 78.28) - ' + sb + '\\,\\tau$$' +
+            '<p style="margin-bottom:2px;">Percent: $\\%\\Delta y \\approx -' + (-m.a * 100).toFixed(2) + '\\,\\Delta p - ' + (-m.b * 100).toFixed(2) + '\\,\\Delta\\tau$ &nbsp;&bull;&nbsp; Litres: $y - 114.94 = -' + la + '\\,(p - 78.28) - ' + lb + '\\,\\tau$</p>' +
+            '<p style="margin:0;">At $' + c.toFixed(1) + '$&cent;: market price &rarr; $y = ' + yp.toFixed(2) + '$ L; carbon tax &rarr; $y = ' + yt.toFixed(2) + '$ L (from 114.94).</p>';
+        typeset(el);
+    }
     document.getElementById('sal-note').textContent = m.note + '  Exact log-linear drops at ' + c.toFixed(1) + '¢: price ' + ep.toFixed(1) + '%, tax ' + et.toFixed(1) + '%.';
 }
 
