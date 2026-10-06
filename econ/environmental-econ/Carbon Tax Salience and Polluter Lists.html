@@ -639,6 +639,8 @@ li { margin-bottom: 10px; }
     mjx-container[display="true"] { display:block; overflow-x:auto; overflow-y:hidden; max-width:100%; }
 
 #sal-line mjx-container:not([display]) { display:inline-block; max-width:100%; overflow-x:auto; overflow-y:hidden; vertical-align:middle; }
+.qcard > div { min-width: 0; }
+#tab-gqrs .regtab td { white-space: normal; }
 /* ===== Article pages + clickable page cites ===== */
 a.pgl { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; }
 a.pgl:hover { color: var(--copper); text-decoration-style: solid; }
@@ -703,7 +705,7 @@ a.pgl:hover { color: var(--copper); text-decoration-style: solid; }
             <button class="tab-button" data-group="techniques" onclick="switchTab('compare', this)">5 Compare &amp; Connect</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Practice</span>
-            <button class="tab-button" data-group="practice" onclick="switchTab('gqrs', this)">Rivers &amp; Schaufele Q1&ndash;7</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('gqrs', this)">Rivers &amp; Schaufele GQs</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('gqfl', this)">Foulon et al. Q1&ndash;7</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('flash', this)">&#9998; Flashcards</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('drill', this)">Table Drill</button>
@@ -715,6 +717,7 @@ a.pgl:hover { color: var(--copper); text-decoration-style: solid; }
     <!-- ═══ OVERVIEW ═══ -->
     <div id="tab-overview" class="tab-content active">
         <div class="highlight-box" style="border-left-color: var(--copper); background: rgba(188,108,38,0.08);"><p style="margin:0;"><strong>Quiz prep: Foulon et al.</strong> The course guide questions are in the <a href="javascript:void(0)" onclick="switchTab('gqfl', document.querySelector('.tab-button[onclick*=&quot;gqfl&quot;]'))">Foulon et al. Q1&ndash;7</a> tab. Fast route: read tabs 3 and 4, do the guide questions and their quiz-yourself cards, then the Foulon flashcard decks.</p></div>
+        <div class="highlight-box" style="border-left-color: var(--green-dark); background: rgba(33,68,43,0.06);"><p style="margin:0;"><strong>Quiz prep: Rivers &amp; Schaufele.</strong> The course guide questions (6.2a) are in the <a href="javascript:void(0)" onclick="switchTab('gqrs', document.querySelector('.tab-button[onclick*=&quot;gqrs&quot;]'))">Rivers &amp; Schaufele GQs</a> tab: Q1 to Q7 for the homework, Q9 and Q10 for class. Fast route: read tabs 1 and 2, then the guide questions and their quiz-yourself cards.</p></div>
         <div class="section-header"><div class="section-number">1</div><h2>What this worksheet covers</h2></div>
         <div class="card">
             <p>Two empirical papers, one province. British Columbia ran two unusual policy experiments: in <strong>1990</strong> it started publishing a public <strong>list of polluters</strong>, and in <strong>2008</strong> it launched North America's first broad <strong>carbon tax</strong>. Both papers ask the same underlying question: <em>does the way a policy reaches people change behavior beyond its dollar size?</em> Both answer yes.</p>
@@ -738,21 +741,23 @@ a.pgl:hover { color: var(--copper); text-decoration-style: solid; }
         <div class="section-header"><div class="section-number">3</div><h2>How to use this page</h2></div>
         <div class="card">
             <p>Read the tabs in order with the <strong>Next</strong> button at the bottom of each one. <strong>Study</strong> tabs 1 and 2 are Rivers &amp; Schaufele, 3 and 4 are Foulon et al., and 5 puts them side by side and links them to earlier readings. Each study tab opens with an <strong>interactive</strong> piece: play with it first, read second. The <strong>&#9733; Cheat Sheet</strong> is the one-page review. Under <strong>Practice</strong>: guide questions with detailed answers and Plain English toggles, flashcards (now with an Anki export), a Table Drill for reading regression output, and two auto-graded quizzes.</p>
-            <div class="idea-box" style="margin-top:10px;"><p><strong>About the guide questions:</strong> the <strong>Foulon et al. Q1&ndash;7</strong> tab uses the course's own guide sheet (EC 4800, &ldquo;6.1a Foulon et al.&rdquo;), numbered exactly as handed out: these are what John needs for the quiz. No guide sheet has come in yet for Rivers &amp; Schaufele, so its Q1&ndash;7 follow the pattern of the earlier ones (starred <span class="mini-badge gray">*</span> = longer, exam-style).</p></div>
+            <div class="idea-box" style="margin-top:10px;"><p><strong>About the guide questions:</strong> both guide-question tabs use the course's own sheets (EC 4800, &ldquo;6.1a Foulon et al.&rdquo; and &ldquo;6.2a Rivers and Schaufele&rdquo;), numbered exactly as handed out. On the Rivers &amp; Schaufele sheet, Q9 and Q10 are starred: the professor will discuss them in class.</p></div>
         </div>
 
         <div class="section-header"><div class="section-number">4</div><h2>Where each answer lives</h2></div>
         <div class="card">
             <div class="tbl-wrap"><table class="t1">
                 <tr><th>Guide question</th><th>Source section</th></tr>
-                <tr class="grp"><td colspan="2">Rivers &amp; Schaufele (page numbers are the draft's)</td></tr>
-                <tr><td>Q1: Tax salience; main result; why theory says it shouldn't happen</td><td>&sect;1 Introduction (pp. 1&ndash;3); &sect;5.1 (p. 19)</td></tr>
-                <tr><td>Q2: Design of the BC carbon tax; revenue neutrality</td><td>&sect;2 (pp. 3&ndash;5); Table 1 (p. 34)</td></tr>
-                <tr><td>Q3: Data and estimating equation; fixed effects; log-linear reading</td><td>&sect;3.1&ndash;3.2 (pp. 5&ndash;8); Table 2 (p. 35)</td></tr>
-                <tr><td>Q4*: Identification: exogeneity arguments, instruments, diagnostics</td><td>&sect;3.3 (pp. 8&ndash;12); &sect;4.3; Table 3 (pp. 14&ndash;16, 36)</td></tr>
-                <tr><td>Q5*: Robustness checks and alternative explanations</td><td>&sect;4.4 (pp. 16&ndash;19); Table 4 (p. 37); &sect;5.3 (pp. 23&ndash;25)</td></tr>
-                <tr><td>Q6: Why is the tax more salient? Resentment vs. guilt</td><td>&sect;5.1 (pp. 19&ndash;22)</td></tr>
-                <tr><td>Q7*: Emission reductions and policy implications</td><td>&sect;5.2 (pp. 22&ndash;23); &sect;6 (pp. 25&ndash;26)</td></tr>
+                <tr class="grp"><td colspan="2">Rivers &amp; Schaufele: course guide questions (page numbers are the draft's)</td></tr>
+                <tr><td>Q1: Define salience; why it matters for price vs. tax responses</td><td>&sect;1 Introduction (pp. 1&ndash;3); &sect;5.1 (p. 20)</td></tr>
+                <tr><td>Q2: Unit of observation</td><td>&sect;3.1 Data (p. 6)</td></tr>
+                <tr><td>Q3: Dependent variable and its measure</td><td>&sect;3.1&ndash;3.2 (pp. 6&ndash;8)</td></tr>
+                <tr><td>Q4: Main explanatory variables, measures, expected signs</td><td>&sect;3.1&ndash;3.2 (pp. 6&ndash;8); Table 2 (p. 35)</td></tr>
+                <tr><td>Q5: Price vs. tax: which is more salient, by how much</td><td>&sect;4.2 text on Table 2 (pp. 13&ndash;14); Table 2 (p. 35)</td></tr>
+                <tr><td>Q6: Behavioral explanation for tax salience</td><td>&sect;5.1 (pp. 19&ndash;22)</td></tr>
+                <tr><td>Q7: Your own research question</td><td>Any concept in the paper; ideas in the answer</td></tr>
+                <tr><td>Q9*: Relevance for a revenue-neutral tax (in class)</td><td>&sect;2 (pp. 4&ndash;5); pp. 13, 25&ndash;26</td></tr>
+                <tr><td>Q10*: Robustness checks (in class)</td><td>Draft: &sect;4.4 (pp. 16&ndash;19); Table 4 (p. 37). Published: <span class="nolink">Table 3, pp. 29&ndash;32</span></td></tr>
                 <tr class="grp"><td colspan="2">Foulon, Lanoie &amp; Laplante: course guide questions (journal pages)</td></tr>
                 <tr><td>Q1: Main research question; why it matters</td><td>&sect;1 (pp. 169&ndash;171); &sect;2 Regulatory Context (pp. 171&ndash;174)</td></tr>
                 <tr><td>Q2: The 4 dependent variables</td><td>Table III (p. 177); &sect;3 (p. 176)</td></tr>
@@ -767,7 +772,7 @@ a.pgl:hover { color: var(--copper); text-decoration-style: solid; }
         <div class="section-header"><div class="section-number">!</div><h2>Notes on the numbers (read before a session)</h2></div>
         <div class="warning-box">
             <ul class="keynote">
-                <li><strong>Draft vs. published.</strong> The Rivers &amp; Schaufele file is the June 2013 working-paper draft. The published journal version may report slightly different estimates. Everything here uses the draft's numbers.</li>
+                <li><strong>Draft vs. published.</strong> The Rivers &amp; Schaufele file is the June 2013 working-paper draft; the course guide sheet cites the published <em>JEEM</em> 74 (2015): 23&ndash;36. The published version reports different numbers in places: its abstract gives <strong>2.4</strong> Mt of CO&#8322; saved (the draft says 3.61 Mt), and its robustness table is <span class="nolink">Table 3</span> with 12 columns (the draft's is Table 4 with 10). Everything here uses the draft's numbers; if the professor quotes a different figure, go with hers.</li>
                 <li><strong>The 12.5%.</strong> The BC carbon-tax coefficient is $-0.0247$ per cent/litre. The quick reading gives $5 \times 2.47\% = 12.35\%$; the paper's own footnote-10 formula gives $1 - e^{-5 \times 0.0247} = 11.6\%$. The paper rounds to 12.5%. Either &ldquo;about 12%&rdquo; answer is fine; the ratio of about 7 is what matters.</li>
                 <li><strong>&ldquo;5&cent; is about \$25/tonne.&rdquo;</strong> BC's own conversion (Table 1) puts \$25/t at 5.56&cent;/L, so 5&cent; is closer to \$22.50/t. The paper uses the round number.</li>
                 <li><strong>A likely typo in Foulon et al.</strong> Footnote b under Table IV reads &ldquo;We <em>can</em> reject&rdquo; that the fine and list effects are equal, but the $t$-statistics are 0.364 and 0.466 and the text (p. 184) says the difference is <em>not</em> significant. Read it as &ldquo;cannot.&rdquo;</li>
@@ -1323,151 +1328,211 @@ a.pgl:hover { color: var(--copper); text-decoration-style: solid; }
     <!-- ═══ GUIDE QUESTIONS: RIVERS & SCHAUFELE ═══ -->
     <div id="tab-gqrs" class="tab-content">
         <div class="section-header"><div class="section-number">R</div><h2>Rivers &amp; Schaufele: guide questions</h2></div>
-        <div class="idea-box"><p><strong>Answer first, then reveal.</strong> Starred questions <span class="mini-badge gray">*</span> are the longer exam-style ones. Each answer has a Plain English toggle; the per-bullet &ldquo;quiz yourself&rdquo; cards are at the bottom of this tab.</p></div>
+        <div class="highlight-box"><p style="margin:0;"><strong>These are the course's own guide questions</strong> (EC 4800, &ldquo;6.2a Rivers and Schaufele&rdquo;), numbered exactly as on the sheet: Q1 to Q7 for the homework, then the starred Q9 and Q10 that will be discussed in class. The sheet's tip: Q5 comes from the <em>text</em> discussing <strong>Table 2</strong>. The sheet cites the published version (<em>JEEM</em> 74: 23&ndash;36); page pills here point to John's 2013 draft, which the Article Pages tab shows.</p></div>
+        <div class="idea-box"><p><strong>Answer first, then reveal.</strong> Each answer has a Plain English toggle; the per-bullet &ldquo;quiz yourself&rdquo; cards are at the bottom of this tab. On the quiz, lead with the short answer, then back it up with one number or reason.</p></div>
 
-        <!-- R1 -->
+        <!-- R1-R7: course guide sheet -->
         <div class="card" style="margin-bottom:16px;">
             <div class="qcard"><div class="qnum" style="background: var(--green-light);">1</div><div style="flex:1;">
-                <p class="qa-question">What is <em>tax salience</em>? State the paper's main result with numbers, and explain why standard consumer theory says it shouldn't happen.</p>
+                <p class="qa-question">Define salience. Why is this important in terms of defining consumer response to market price versus tax changes in the gasoline market?</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>Definition.</strong> Tax salience is the hypothesis that a price change caused by a <em>tax</em> produces a different demand response than an equal price change caused by the <em>market</em> (supply shocks, crude prices). A tax is &ldquo;more salient&rdquo; if demand responds more to it. <span class="pg">p. 1</span></p>
-                    <p><strong>Main result.</strong> In the preferred model (Table 2, column 2), a 5&cent;/L increase in the market price lowers BC's short-run gasoline demand by about <strong>1.8%</strong>; a 5&cent;/L increase in the carbon tax (about \$25/t) lowers it by about <strong>12.5%</strong>. The response to the tax is <strong>7.1 times</strong> larger, and an F-test rejects equal coefficients at 1%. <span class="pg">pp. 2, 13&ndash;14</span></p>
-                    <p><strong>Why theory says no.</strong> A consumer facing pump price $q = p + t$ should care only about $q$, so $\partial y^*/\partial p = \partial y^*/\partial t$: a cent is a cent. Here the posted price already includes all taxes, so there isn't even a hidden-tax excuse. <span class="pg">pp. 3, 20</span></p>
-                    <p><strong>Context.</strong> Consistent with Li, Linn &amp; Muehlegger (2012), who find gasoline <em>excise</em> taxes have a salience ratio of 8.1, and with Chetty, Looney &amp; Kroft (2009) and Finkelstein (2009). New here: first evidence for an <em>environmental</em> tax, whose only purpose is to cut fuel use. <span class="pg">pp. 1&ndash;3</span></p>
+
+                    <p><strong>Definition.</strong> <em>Tax salience</em> is the hypothesis that a price change caused by a <strong>tax</strong> produces a different demand response than an equal-sized price change caused by the <strong>market</strong> (crude prices, supply shocks). A tax is <em>more salient</em> if demand responds more to it, <em>less salient</em> if it responds less. <span class="pg">R&amp;S p. 1</span></p>
+                    <p><strong>Why it matters.</strong> Standard theory says drivers only see the pump price $q = p + t$, so $\partial y/\partial p = \partial y/\partial t$: a cent is a cent. If that's wrong, then demand elasticities estimated from ordinary price movements <strong>mis-predict</strong> what a carbon tax will do to gasoline use, emissions and tax revenue. <span class="pg">R&amp;S pp. 1, 20</span></p>
+                    <p><strong>Why gasoline is a clean test.</strong> Pump prices are posted <em>tax-inclusive</em>, so there is no hidden tax to miscalculate at the register, and the carbon tax's only purpose is to cut fossil-fuel use (unlike excise taxes that fund roads). <span class="pg">R&amp;S pp. 2&ndash;3</span></p>
+                    <p><strong>Answer in one line:</strong> salience = tax-driven and market-driven price changes of the same size trigger different responses; it matters because policymakers forecast a carbon tax's effects with elasticities from market price changes.</p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>If gas goes up a nickel because oil got pricier, BC drivers barely change how much they buy (about 2% less). If gas goes up a nickel because of the carbon tax, they buy about 12% less. Econ 101 says a nickel is a nickel. BC drivers disagreed, by a factor of about 7.</p>
+                    <p>Econ 101 says a nickel is a nickel. Salience asks: do people react differently when the extra nickel comes from a tax instead of from oil getting pricier? If they do, you can't predict a carbon tax's effect from how people reacted to past oil-price swings.</p>
                 </div></div>
             </div></div>
         </div>
 
-        <!-- R2 -->
         <div class="card" style="margin-bottom:16px;">
             <div class="qcard"><div class="qnum" style="background: var(--green-light);">2</div><div style="flex:1;">
-                <p class="qa-question">Describe the design of the BC carbon tax: timing, rate path and revenue neutrality. Why does revenue neutrality matter, both for the policy and for the paper's identification?</p>
+                <p class="qa-question">What is the unit of observation in the empirical analysis? (Firm? Country? State? Province?)</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>Timing.</strong> Hinted at only in late 2007, announced in the February 2008 budget, in force <strong>July 1, 2008</strong>: North America's first broad carbon tax on all fossil fuels (77% of BC emissions). A surprise to most residents. <span class="pg">pp. 3&ndash;4</span></p>
-                    <p><strong>Gradual path.</strong> \$10/tCO<sub>2</sub>e (2.34&cent;/L) in 2008, up \$5 each July 1 to \$30/t (6.67&cent;/L) in 2012, to ease adjustment. <span class="pg">p. 4; Table 1</span></p>
-                    <p><strong>Revenue neutrality.</strong> All revenue returned: lower personal income tax on the bottom two brackets (average rate on \$100k: 8.74% &rarr; 8.02%), corporate rate 12% &rarr; 10% in steps, small-business rate cut, low-income quarterly rebate (~\$300/yr for a family of four), and up to \$200 for northern and rural homeowners from 2011. <span class="pg">pp. 4&ndash;5</span></p>
-                    <p><strong>Why it matters for policy.</strong> (1) Acceptability: a &ldquo;tax shift,&rdquo; not a tax increase. (2) Efficiency: cutting distortionary income taxes lowers the marginal cost of public funds (double dividend, Goulder 1995). (3) Commitment: once income taxes were cut the province needed the carbon revenue (\$741M in 2011), so delaying the increases during the recession would mean deficits. <span class="pg">p. 5</span></p>
-                    <p><strong>Why it matters for identification.</strong> By design, carbon-tax increases move <em>opposite</em> to personal and corporate income-tax revenue, so those revenues are natural <strong>instruments</strong> for the carbon tax. <span class="pg">pp. 5, 11</span></p>
-                    <p><span class="mini-badge gray">*</span><strong>Also useful:</strong> it came in revenue-<em>negative</em> (83% of forecast), itself evidence of the larger-than-expected demand response. <span class="pg">p. 13</span></p>
+
+                    <p><strong>Province-month.</strong> Each observation is one Canadian <strong>province</strong> in one <strong>month</strong>: 10 provinces, January 1990 to December 2011, giving <strong>2,580 province-month observations</strong> (Nova Scotia and New Brunswick data start in 1992). <span class="pg">R&amp;S p. 6</span></p>
+                    <p>Some robustness and IV models use <strong>province-years</strong> instead (216 observations), because the income-tax instruments and some controls exist only annually. <span class="pg">R&amp;S p. 6</span></p>
+                    <p style="font-size:13.5px;">It's a <strong>panel</strong>: the same provinces followed over time. That is what makes province and month-year fixed effects possible. BC is the &ldquo;treated&rdquo; province (Quebec's small tax is also in the data).</p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>BC started small and raised the tax a bit every summer. Every dollar collected went back to people and businesses as income-tax cuts and rebates, so it was sold as a swap, not a new tax. That swap is handy for the researchers too: when the carbon tax goes up, income-tax money goes down, so they can use one to track the other.</p>
+                    <p>Each data point is "one province in one month," for example British Columbia in March 2009. They have every province for every month from 1990 to 2011.</p>
                 </div></div>
             </div></div>
         </div>
 
-        <!-- R3 -->
         <div class="card" style="margin-bottom:16px;">
             <div class="qcard"><div class="qnum" style="background: var(--green-light);">3</div><div style="flex:1;">
-                <p class="qa-question">Write down the estimating equation. What do the fixed effects absorb, how do you read a coefficient in the log-linear model, and why interact prices and taxes with a BC dummy?</p>
+                <p class="qa-question">What is the dependent variable? How is it measured?</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    $$\ln y_{it} = \alpha\, p_{it} + \beta\, \tau_{it} + X_{it}\theta + \delta_i + \gamma_t + \varepsilon_{it}$$
-                    <p>$y_{it}$: per-adult litres in province $i$, month $t$; $p_{it}$: real price <em>excluding</em> the carbon tax; $\tau_{it}$: real carbon tax (&cent;/L); $X_{it}$: income, small-car share. <span class="pg">pp. 7&ndash;8</span></p>
-                    <p><strong>Fixed effects.</strong> $\delta_i$ absorbs time-invariant province traits (geography); $\gamma_t$ absorbs shocks common to all provinces in a month (world oil prices, national business cycle, trade policy). <span class="pg">p. 8</span></p>
-                    <p><strong>Reading coefficients.</strong> Log-linear, so $100\beta$ &asymp; % change in demand per 1&cent; (a semi-elasticity); exactly $e^{\beta}-1$ (fn. 10). $\beta = -0.0247$ &rarr; about 2.5% less gasoline per cent of tax. <span class="pg">p. 8</span></p>
-                    <p><strong>BC interaction.</strong> BC demand is more price-elastic than the national average. Without $p \times BC$, the tax coefficient picks up BC's extra price sensitivity: the national model gives $-0.0457$ (ratio 33.4); with interactions the BC tax coefficient is $-0.0247$ and the BC price coefficient $-0.0035$ (ratio 7.1). <span class="pg">p. 13</span></p>
-                    <p><span class="mini-badge gray">*</span><strong>Data details:</strong> Jan 1990 to Dec 2011, 2,580 province-months; annual models (216 obs.) for variables only available yearly; HAC (Newey-West) standard errors; first-difference versions as checks. <span class="pg">pp. 6, 12</span></p>
+
+                    <p><strong>Per-capita gasoline consumption:</strong> litres of gasoline sold in the province that month (premium, mid-grade and regular combined, from Statistics Canada), <strong>divided by the population aged 15 and older</strong>, so it is litres per adult per month. <span class="pg">R&amp;S p. 6</span></p>
+                    <p><strong>Form in the regression:</strong> entered in <strong>logs</strong> (a log-linear model), so each coefficient reads as an approximate <em>percent</em> change in consumption per 1&cent;/L change in price or tax. <span class="pg">R&amp;S pp. 7&ndash;8</span></p>
+                    <p style="font-size:13.5px;">BC's average is about <strong>115 litres per adult per month</strong> (Table A1). Annual models sum the months to litres per adult per year. <span class="pg">R&amp;S p. 6</span></p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>They explain gas use with the price, the tax, and two sets of &ldquo;catch-all&rdquo; dummies: one for each province (so BC's mountains don't get blamed on the tax) and one for each month (so a global oil spike doesn't either). Because gas use is in logs, each coefficient is basically &ldquo;percent change per cent.&rdquo; They give BC its own price and tax slopes because BC drivers react to prices more than other Canadians.</p>
+                    <p>How much gas the average adult in a province buys in a month, measured in litres. They take the log so the results come out as percentages.</p>
                 </div></div>
             </div></div>
         </div>
 
-        <!-- R4 -->
         <div class="card" style="margin-bottom:16px;">
-            <div class="qcard"><div class="qnum" style="background: var(--gold);">4</div><div style="flex:1;">
-                <p class="qa-question"><span class="mini-badge gray">*</span> Identification. Why do the authors believe least squares is already unbiased? What instruments do they use, what must a good instrument satisfy, and what do the first-stage F, Sargan and Wu-Hausman results in Table 3 tell you?</p>
+            <div class="qcard"><div class="qnum" style="background: var(--green-light);">4</div><div style="flex:1;">
+                <p class="qa-question">What are the main explanatory variables of interest? How is each measured? What do you expect the sign (positive or negative) of the coefficients of this variable to be? Explain briefly.</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>Exogeneity arguments.</strong> Gasoline markets are competitive (wholesale set in the West Coast market; thin retail margins); taxes are fully and immediately passed through (Marion &amp; Muehlegger); the carbon tax was fast, surprising, comprehensive and single-purpose. Remaining worries: province-specific omitted factors like bike lanes or uneven recession effects. <span class="pg">p. 9</span></p>
-                    <p><strong>Instruments.</strong> Market price &larr; provincial <strong>excise taxes</strong> (big share of price; legislated with a long lag, so not driven by short-run demand; Davis &amp; Kilian). Carbon tax &larr; provincial <strong>personal and corporate income-tax revenues</strong> (move inversely with the carbon tax because of revenue neutrality; no obvious direct link to gasoline use). <span class="pg">p. 11</span></p>
-                    <p><strong>Requirements</strong> (Murray 2006): excluded from the demand equation (argued, not tested); <strong>relevant</strong> (first-stage F on excluded instruments); <strong>valid</strong>, uncorrelated with the error (Sargan test, possible only when over-identified). Wu-Hausman asks whether IV differs from OLS by more than noise. <span class="pg">pp. 10&ndash;11</span></p>
-                    <p><strong>Table 3.</strong> (1) Monthly, price instrumented: F = <strong>435.52</strong> (very strong); exactly identified, so no Sargan; coefficients $-0.0033$ / $-0.0257$, ratio 7.9; equality rejected at 5%; Wu-Hausman 0.12 (p = 0.73), so OLS is consistent and more efficient. (2) Annual, tax instrumented: F = 13.36; Sargan p = 0.98 (valid); but tax coefficient $-0.0054$ is insignificant and equality can't be rejected (ratio 1.3). (3) Annual, both instrumented: Angrist-Pischke F 15.95 and 6.55; Sargan <strong>rejects</strong> (27.00, p = 0.00); ratio 18.8. <span class="pg">pp. 14&ndash;16</span></p>
-                    <p><strong>Their reading.</strong> The monthly IV confirms OLS; the annual models are imprecise (IV inflates standard errors) and can't confirm salience statistically. Wu-Hausman never rejects, so the preferred OLS model stands, but &ldquo;the inability to fully uphold the finding in Table 2 must be noted.&rdquo; <span class="pg">p. 16</span></p>
+
+                    <div class="tbl-wrap"><table class="regtab">
+                        <tr><th>Variable</th><th>How it's measured</th><th>Expected sign</th></tr>
+                        <tr><td><strong>Market price of gasoline</strong> ($p_{it}$)</td><td>Retail price in the province's largest city (Kent Marketing), <em>excluding</em> the carbon tax but including provincial and federal excise taxes; &cent;/litre, inflation-adjusted with provincial CPI</td><td><strong>Negative</strong>: law of demand, a higher price means less gasoline bought</td></tr>
+                        <tr><td><strong>Carbon tax</strong> ($\tau_{it}$)</td><td>BC's carbon tax converted to &cent;/litre of gasoline (2.34&cent; in 2008 rising to 6.67&cent; in 2012), inflation-adjusted; zero before July 2008 and in other provinces (Quebec's small tax aside)</td><td><strong>Negative</strong>: it also raises the pump price. Salience hypothesis: <strong>more negative</strong> than the price coefficient</td></tr>
+                    </table></div>
+                    <p style="margin-top:8px;"><strong>In the preferred model</strong> both are interacted with a BC dummy ($p \times BC$, $\tau \times BC$), so they measure BC's own responses. <span class="pg">R&amp;S pp. 6&ndash;8</span></p>
+                    <p><strong>Controls</strong> (not the variables of interest): after-tax income (expected <strong>positive</strong>, gasoline is a normal good) and the small-car share of vehicle sales (expected <strong>negative</strong>, smaller cars use less fuel), plus province and month-year fixed effects. <span class="pg">R&amp;S pp. 7&ndash;8, 19</span></p>
+                    <p style="font-size:13.5px;"><strong>The test:</strong> both signs negative is just the law of demand; the paper's question is whether $|\beta_\tau| &gt; |\beta_p|$.</p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>They're fairly sure the plain regression is fine, but they double-check with &ldquo;instruments&rdquo;: things that push the price or the tax around for reasons unrelated to driving. Excise taxes push the pump price; income-tax revenue drops whenever the carbon tax rises. The monthly double-check gives the same answer (about 8&times;). The yearly ones are too noisy to prove much. A test says the plain regression was good enough all along.</p>
+                    <p>Two things they think drive gas buying: the regular price of gas and the carbon tax, both in cents per litre. Both should lower gas use (negative signs). The interesting part is whether the tax lowers it by more than the same cents of regular price.</p>
                 </div></div>
             </div></div>
         </div>
 
-        <!-- R5 -->
         <div class="card" style="margin-bottom:16px;">
-            <div class="qcard"><div class="qnum" style="background: var(--gold);">5</div><div style="flex:1;">
-                <p class="qa-question"><span class="mini-badge gray">*</span> Robustness. For each alternative explanation, name the check that addresses it and the result: income effects of the tax shift; announcement or storage effects; a structural break in preferences; misreading inflation; expecting the maximum tax; province seasonality; the vehicle stock; cross-border shopping; SCRAP-IT and hybrid subsidies.</p>
+            <div class="qcard"><div class="qnum" style="background: var(--green-light);">5</div><div style="flex:1;">
+                <p class="qa-question">What are their main findings regarding the impact of gasoline price on consumption as compared to the impact of gasoline tax on consumption? In other words, is the gasoline tax more or less salient than gasoline price? By what magnitude is one stronger than the other? (Focus on the text discussing Table 2.)</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>Income (Table 4, 1&ndash;2).</strong> The tax shift raised after-tax income; adding after-tax income (levels and first differences) barely moves the price coefficient and trims the tax effect only a little. Ratio still 5.5. <span class="pg">pp. 16&ndash;17</span></p>
-                    <p><strong>Nominal illusion (3).</strong> Instrument the real tax with the nominal tax, identifying off the discrete July jumps: $-0.0036$ / $-0.0239$, same story. <span class="pg">p. 17</span></p>
-                    <p><strong>Announcement / storage (4&ndash;5).</strong> Drop June&ndash;July, then May&ndash;August. A temporary effect would shrink the tax coefficient toward the price one; it doesn't. Storage capacity is also tiny (about a month). <span class="pg">pp. 17&ndash;18</span></p>
-                    <p><strong>Structural break (6).</strong> Restrict to 2007&ndash;2011: ratio 8.5 at the mean. <span class="pg">p. 18</span></p>
-                    <p><strong>Expecting the \$30 maximum (7).</strong> Set the tax at its max throughout: gives an upper bound on the tax elasticity; tax about half the preferred estimate but still about 3&times; the price effect. <span class="pg">pp. 18&ndash;19</span></p>
-                    <p><strong>Province seasonality (8).</strong> Province &times; month fixed effects plus a trend: coefficients in the same neighborhood. <strong>Vehicle stock (9&ndash;10).</strong> Small-car shares have the right sign, little effect. <span class="pg">p. 19</span></p>
-                    <p><strong>Not testable (&sect;5.3).</strong> Cross-border shopping: neighbors were already cheaper for years, most residents are far from Alberta, Washington is across an international border. SCRAP-IT (18,000 cars, under 1% of the fleet) and hybrid subsidies (1.1% of 2006 sales) are too small; short-run analysis means little fleet turnover. <span class="pg">pp. 23&ndash;24</span></p>
+
+                    <p><strong>Short answer:</strong> the carbon tax is <strong>more salient</strong>. In the preferred model, a carbon-tax increase cuts gasoline demand about <strong>7.1 times</strong> as much as an equal market-price increase. <span class="pg">R&amp;S pp. 13&ndash;14</span></p>
+                    <div class="tbl-wrap"><table class="regtab">
+                        <tr><th>Table 2</th><th>Price coefficient</th><th>Tax coefficient</th><th>5&cent; price rise</th><th>5&cent; tax rise</th><th>Ratio</th></tr>
+                        <tr><td>(1) National slopes</td><td>&minus;0.0014 (not sig.)</td><td>&minus;0.0457***</td><td>&minus;0.7%</td><td>&minus;23.4%</td><td>33.4</td></tr>
+                        <tr><td><strong>(2) BC-specific (preferred)</strong></td><td><strong>&minus;0.0035***</strong></td><td><strong>&minus;0.0247***</strong></td><td><strong>&minus;1.8%</strong></td><td><strong>&minus;12.5%</strong></td><td><strong>7.1</strong></td></tr>
+                    </table></div>
+                    <p style="margin-top:8px;"><strong>How to read it.</strong> Log-linear, so each coefficient &times; 100 is the % change per 1&cent;/L: &minus;0.35% per cent of market price vs. &minus;2.47% per cent of tax. Both are significant at 1%, and the F-test of equal coefficients (23.07) <strong>rejects</strong> that the two responses are the same. <span class="pg">R&amp;S p. 13; Table 2</span></p>
+                    <p><strong>Why (2), not (1).</strong> BC drivers are more price-sensitive than the national average (the BC price coefficient is nearly 3&times; the national one). Without the BC interaction, the tax coefficient soaks up that extra sensitivity, inflating the ratio to 33.4. <span class="pg">R&amp;S p. 13</span></p>
+                    <p style="font-size:13.5px;"><strong>Sanity check:</strong> the price response matches the literature (Barla et al.'s &minus;0.1 elasticity implies about &minus;0.8% for 5&cent;), so the price result isn't odd; the tax response is what stands out. 5&cent;/L is roughly a \$25/t carbon tax. <span class="pg">R&amp;S p. 13</span></p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>Every &ldquo;but maybe it was really...&rdquo; gets its own test. Maybe people just had more money? Control for income. Maybe they filled up before the tax started? Drop those months. Maybe BC was already changing? Look only at recent years. Every version still says the tax hit harder than price, somewhere between 3&times; and 8.5&times;. Two stories (driving to Alberta, the car-scrapping program) can't be tested, so they argue those are too small to matter.</p>
+                    <p>A nickel more at the pump from regular price changes cut BC gas use about 2%. A nickel of carbon tax cut it about 12.5%. So the tax hit about 7 times harder, and the statistics say that gap is real, not luck.</p>
                 </div></div>
             </div></div>
         </div>
 
-        <!-- R6 -->
         <div class="card" style="margin-bottom:16px;">
             <div class="qcard"><div class="qnum" style="background: var(--green-light);">6</div><div style="flex:1;">
-                <p class="qa-question">Why might a carbon tax be more salient than a price change? Explain the resentment-of-free-ridership and relief-of-guilt mechanisms using $u = x + v(y, t)$, the sign each predicts, and how this differs from inattention explanations.</p>
+                <p class="qa-question">What is the behavioral economics explanation for tax salience?</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>Setup</strong> (after Chetty 2009): clean numeraire $x$, gasoline $y$, pump price $q = p + t$, utility $u = x + v(y,t)$, so the tax enters utility directly. Differentiating optimal demand: <span class="pg">p. 20</span></p>
-                    $$\frac{dy^*}{dt} = \left.\frac{\partial y}{\partial t}\right|_q + \frac{\partial y}{\partial q}\frac{\partial q}{\partial t}$$
-                    <p>A <strong>direct effect</strong> plus the usual <strong>price effect</strong>. If the direct effect is zero, $\partial y/\partial p = \partial y/\partial t$.</p>
-                    <p><strong>Resentment of free-ridership</strong> ($\left.\partial y/\partial t\right|_q &lt; 0$): an environmentally conscious driver who cuts back lowers the cost of driving for others, who drive more (leakage). Resenting that, she contributes less than she would if free-riding were impossible. A carbon tax makes every driver pay the environmental cost, ending the free-riding and the resentment, so she cuts back beyond the price effect. The tax acts as a <strong>focal point / coordinating mechanism</strong>. Predicts tax <em>more</em> salient. <span class="pg">pp. 20&ndash;21</span></p>
-                    <p><strong>Relief of guilt</strong> ($\left.\partial y/\partial t\right|_q &gt; 0$): she drove less from guilt; paying the tax &ldquo;covers&rdquo; her damage, so she drives more. Predicts tax <em>less</em> salient. Which dominates is empirical; BC's data point to resentment. <span class="pg">pp. 21&ndash;22</span></p>
-                    <p><strong>Versus inattention.</strong> Chetty, Looney &amp; Kroft, Finkelstein, and Goldin &amp; Homonoff explain salience by irrationality: inattention or cognitive costs lead to misoptimization. R&amp;S instead invoke <strong>non-standard, other-regarding preferences</strong> (Congdon, Kling &amp; Mullainathan). Gasoline prices are posted tax-inclusive, so inattention is less plausible here. <span class="pg">pp. 3, 19&ndash;20</span></p>
-                    <p><span class="mini-badge gray">*</span><strong>Versus warm glow / impure public goods</strong> (fn. 15): in those models taxes still act only through prices; here the tax itself is an argument of utility.</p>
+
+                    <p><strong>Two families of explanation:</strong></p>
+                    <p><strong>1. Inattention / cognitive costs</strong> (the usual one: Chetty, Looney &amp; Kroft; Finkelstein; Goldin &amp; Homonoff). People don't notice or don't compute taxes properly and use rules of thumb, so they misoptimize. Weak here: gasoline prices are posted tax-inclusive. <span class="pg">R&amp;S pp. 19&ndash;20</span></p>
+                    <p><strong>2. Non-standard, other-regarding preferences</strong> (Rivers &amp; Schaufele's story, after Congdon, Kling &amp; Mullainathan). People care about their own and others' contribution to an environmental public good, so the tax enters utility <em>directly</em>, $u = x + v(y,t)$, not just through the price. Then <span class="pg">R&amp;S p. 20</span></p>
+                    $$\frac{dy^*}{dt} = \underbrace{\left.\frac{\partial y}{\partial t}\right|_q}_{\text{direct effect}} + \underbrace{\frac{\partial y}{\partial q}\frac{\partial q}{\partial t}}_{\text{price effect}}$$
+                    <ul class="keynote" style="font-size:14.5px;">
+                        <li><strong>Resentment of free-ridership</strong> (direct effect &lt; 0): a green driver who cuts back alone just lowers costs for others, who drive more (leakage); resenting that, she holds back. A carbon tax makes <em>everyone</em> pay, removes the resentment, and she cuts back more. The tax acts as a <strong>focal point / coordinating mechanism</strong>. Predicts tax <strong>more</strong> salient. <span class="pg">R&amp;S pp. 20&ndash;21</span></li>
+                        <li><strong>Relief of guilt</strong> (direct effect &gt; 0): once she &ldquo;pays the full environmental cost,&rdquo; guilt eases and she drives more than the price alone implies. Predicts tax <strong>less</strong> salient. <span class="pg">R&amp;S pp. 21&ndash;22</span></li>
+                    </ul>
+                    <p><strong>Verdict:</strong> which dominates is empirical; BC's 7&times; result points to <strong>resentment of free-ridership</strong>. <span class="pg">R&amp;S p. 22</span></p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>&ldquo;Why should I bike to work so my neighbor can enjoy an emptier highway in his truck?&rdquo; That's resentment. A carbon tax makes the neighbor pay too, so biking no longer feels like being the sucker, and people cut back more than the price alone would cause. The opposite story (&ldquo;I paid my carbon tax, so I've done my bit&rdquo;) would make the tax <em>weaker</em>. BC's data look like the first story.</p>
+                    <p>"Why should I bike to work so my neighbor can drive his truck on an emptier road?" That's resentment. Once a carbon tax makes the neighbor pay too, cutting back stops feeling like being the sucker, so people cut back more than the price alone would cause.</p>
                 </div></div>
             </div></div>
         </div>
 
-        <!-- R7 -->
         <div class="card" style="margin-bottom:16px;">
-            <div class="qcard"><div class="qnum" style="background: var(--gold);">7</div><div style="flex:1;">
-                <p class="qa-question"><span class="mini-badge gray">*</span> How much CO<sub>2</sub> did the tax save, and how much of that is due to salience? What evidence supports external validity, and what are the policy implications?</p>
-                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">7</div><div style="flex:1;">
+                <p class="qa-question">Identify at least one topic or develop one research question that is of interest to you after reading this paper. You may build from any concept(s) covered in this paper. (Designed to help you craft your research question the way you did for Lab 1.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show example research questions</button>
                 <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
-                    <p><strong>Three scenarios</strong> from the preferred model: (1) no carbon tax (baseline); (2) &ldquo;equivalent response,&rdquo; the tax treated like any price increase; (3) &ldquo;salient carbon tax,&rdquo; the model's actual prediction. Per-capita litres &times; population &rarr; provincial litres &rarr; CO<sub>2</sub>e at 2.47 kg/L. <span class="pg">pp. 22&ndash;23</span></p>
-                    <p><strong>Result.</strong> <strong>3.61 MtCO<sub>2</sub>e</strong> saved from gasoline over the first four years; about <strong>85%</strong> (~3.1 Mt) comes from salience, an &ldquo;environmental bonus&rdquo; that the equivalent-response scenario would miss. By 2011 predicted demand is 13.5 L per person per month below baseline, and it keeps falling while the other two scenarios rise. <span class="pg">pp. 2, 22&ndash;23</span></p>
-                    <p><strong>External validity.</strong> Designed revenue-neutral, the tax turned out revenue-negative: 83% of forecast revenue, \$510M (16.7%) short over four years, too big for forecast error. Demand fell more than standard elasticities predicted. <span class="pg">pp. 13, 25</span></p>
-                    <p><strong>Policy implications.</strong> (1) People don't respond to tax increases the way they respond to supply shocks, so using ordinary gasoline elasticities mis-forecasts emissions cuts and revenue. (2) A new wrinkle in the tax vs. cap-and-trade debate: if consumers see a carbon tax as an environmental price but an allowance price as a supply shock, equal carbon prices may produce different behavior. (3) Evidence that behavioral economics, including non-standard preferences, belongs in tax and environmental policy. <span class="pg">pp. 25&ndash;26</span></p>
-                    <p><span class="mini-badge gray">*</span><strong>Limits:</strong> one province, short run, gasoline only (the tax covers all fuels), and the annual IV models don't confirm salience statistically.</p>
+
+                    <p><strong>A template that keeps it focused</strong> (like Lab 1): <em>Does [policy or price change] affect [measurable outcome] for [who / where / when]?</em> Then one line each for why it matters, the data, and the comparison that identifies the effect.</p>
+                    <ol style="margin-left:20px; font-size:14px;">
+                        <li><strong>Is removing a carbon tax as salient as adding one?</strong> BC and the rest of Canada eliminated their consumer carbon charges on April 1, 2025. Did gasoline demand rise by more than an equal market-price drop would predict? (Salience, asymmetry.) Data: Statistics Canada monthly gasoline sales by province; comparison: before vs. after, BC vs. a province with no change in pump price.</li>
+                        <li><strong>Other fuels.</strong> Is the carbon tax also more salient for diesel or natural-gas heating than for gasoline? (The tax covered all fossil fuels; the paper only studies gasoline.)</li>
+                        <li><strong>Who resents free-riders?</strong> Is the salience effect larger in greener, more urban areas with transit options? (Tests the other-regarding-preference mechanism.) Data: municipal fuel sales or household survey data with location.</li>
+                        <li><strong>Taxes vs. permits.</strong> Do households respond more to a visible carbon tax than to the equivalent price pass-through from a cap-and-trade system (e.g., California or Quebec)? (Links to Stavins.)</li>
+                        <li><strong>Revenue forecasting.</strong> How much would a jurisdiction mis-forecast carbon-tax revenue using ordinary price elasticities instead of tax elasticities? (Links to revenue neutrality and Q9.)</li>
+                    </ol>
+                    <p style="font-size:13.5px;">Pick one you can defend in two sentences. The marks are for a clear, specific, answerable question tied to a concept from the paper (salience, elasticity, revenue neutrality, other-regarding preferences).</p>
                 </div></div>
                 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
                 <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
-                    <p>About 3.6 million tonnes of CO<sub>2</sub> were avoided in four years, and most of that came from the &ldquo;it's a carbon tax&rdquo; effect, not the nickel itself. The best reality check: the government collected less money than planned, because people bought less gas than the usual formulas said they would.</p>
+                    <p>Have one "what I'd study next" question ready. Easiest move: take the finding (a carbon tax bites harder than a price change) and ask whether it holds somewhere else, for another fuel, or in reverse. Example: "When BC scrapped its carbon tax in 2025, did people start buying a lot more gas?"</p>
                 </div></div>
             </div></div>
         </div>
 
-        <div class="section-header" style="margin-top:30px;"><div class="section-number">&#9829;</div><h2>Quiz yourself: one card per bullet (Rivers &amp; Schaufele)</h2></div>
+        <div class="section-header" style="margin-top:30px;"><div class="section-number">*</div><h2>Discussed in class (starred on the sheet)</h2></div>
+        <p style="font-size:14px;">The course sheet says to ignore these for the homework because they'll be covered in class; they're here so the flow of the paper makes sense and for exam prep. The sheet numbers them 9 and 10 (there is no 8).</p>
+
+        <div class="card" style="margin-bottom:16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">9</div><div style="flex:1;">
+                <p class="qa-question"><span class="mini-badge gray">*</span> What is the relevance of this paper's findings in the context of the BC carbon tax, which was intended to be revenue neutral?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+
+                    <p><strong>Revenue neutrality</strong> means every dollar of carbon-tax revenue was returned through income-tax cuts and rebates, so the province planned its tax cuts around a <strong>revenue forecast</strong>. <span class="pg">R&amp;S pp. 4&ndash;5</span></p>
+                    <p><strong>Revenue = tax rate &times; quantity.</strong> Forecasters used ordinary (market-price) elasticities to predict gasoline sales. Because the tax was about 7&times; more salient, sales fell much more than forecast, so revenue came in low: only <strong>83%</strong> of forecast, about <strong>\$510 million (16.7%) short</strong> over the first four years. Designed revenue-neutral, the tax ended up <strong>revenue-negative</strong>: the tax cuts gave back more than the tax collected. <span class="pg">R&amp;S pp. 13, 25</span></p>
+                    <p><strong>Two implications.</strong> (1) The shortfall is itself <strong>evidence for salience</strong> (external validity): too large to blame on forecasting error. (2) For <strong>policy design</strong>, a government promising a revenue-neutral tax shift must use the right (tax) elasticity, or it underfunds the promised cuts; the same error mis-forecasts emissions cuts. <span class="pg">R&amp;S pp. 25&ndash;26</span></p>
+                    <p style="font-size:13.5px;">Also: revenue neutrality is what lets the authors use income-tax revenues as an <strong>instrument</strong> for the carbon tax (they move in opposite directions by design). <span class="pg">R&amp;S pp. 5, 11</span></p>
+                </div></div>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
+                <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
+                    <p>BC promised to give back every carbon-tax dollar as income-tax cuts, based on a guess of how much gas people would buy. People cut back way more than the usual formulas predicted, so the tax brought in about \$510 million less than planned, and the province ended up giving back more than it took in.</p>
+                </div></div>
+            </div></div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px;">
+            <div class="qcard"><div class="qnum" style="background: #8B5E3C;">10</div><div style="flex:1;">
+                <p class="qa-question"><span class="mini-badge gray">*</span> Their results could be sensitive to a number of factors, so they undertook robustness checks (the course sheet lists <span class="nolink">Table 3, columns (1) to (12), text pp. 29&ndash;32</span> of the published version; columns (4), (5) and (11) are the easiest). What does each check rule out?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show detailed answer</button>
+                <div class="solution-body"><div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
+
+                    <div class="warning-box" style="margin:0 0 10px;"><p style="margin:0; font-size:13.5px;"><strong>Version note.</strong> The course sheet cites the <em>published</em> JEEM version, where the robustness table is <span class="nolink">Table 3</span> with 12 columns. John's PDF is the 2013 working draft, where it is <strong>Table 4</strong> with 10 columns and some checks are missing or numbered differently. Numbers below are the draft's; checks marked &ldquo;published only&rdquo; aren't in the draft, so they get the logic only.</p></div>
+                    <p><strong>The common logic:</strong> each column changes one thing to rule out a rival explanation for the big tax coefficient. If salience is real, the tax coefficient should stay well above the price coefficient every time. It does.</p>
+                    <div class="tbl-wrap"><table class="regtab">
+                        <tr><th>Col.</th><th>Check</th><th>What it rules out</th><th>Draft result</th></tr>
+                        <tr><td>(1)</td><td>Add after-tax income</td><td>The tax shift raised take-home pay; maybe income, not salience, drives the change</td><td>&minus;0.0035 / &minus;0.0192; ratio about 5.5 <span class="pg">p. 17</span></td></tr>
+                        <tr><td>(2)</td><td>First differences (drops province fixed effects)</td><td>Results driven by the fixed-effects levels specification</td><td>&minus;0.0017 / &minus;0.0216 <span class="pg">p. 17</span></td></tr>
+                        <tr><td>(3)</td><td>Nominal carbon tax</td><td>Mis-measurement from deflating the tax; uses the July jumps in the legislated tax</td><td>&minus;0.0036 / &minus;0.0239 <span class="pg">p. 17</span></td></tr>
+                        <tr><td><strong>(4)</strong></td><td><strong>Drop June&ndash;July</strong></td><td><strong>Announcement or stockpiling effect</strong>: filling up before each July 1 increase, or a short-lived burst of attention</td><td>&minus;0.0034 / &minus;0.0243: tax effect doesn't shrink <span class="pg">pp. 17&ndash;18</span></td></tr>
+                        <tr><td><strong>(5)</strong></td><td><strong>Drop May&ndash;August</strong></td><td>Same, with a wider window (and summer driving season)</td><td>&minus;0.0034 / &minus;0.0270: still holds <span class="pg">pp. 17&ndash;18</span></td></tr>
+                        <tr><td>(6)</td><td>Structural break: Jan 2007 to Dec 2011 only</td><td>BC demand became more elastic for other reasons around the same time (a preference change)</td><td>Ratio about 8.5 at the mean <span class="pg">p. 18</span></td></tr>
+                        <tr><td>(7)</td><td>Remove business-cycle variables</td><td>Results depend on how the economy is controlled for</td><td><em>Published only</em></td></tr>
+                        <tr><td>(8)</td><td>Exclude recessionary periods</td><td>The 2008&ndash;09 recession began just as the tax started; maybe the recession cut BC driving</td><td><em>Published only</em></td></tr>
+                        <tr><td>(9)</td><td>Time-inconsistent consumers</td><td>Consumers misjudge the future tax path; the draft's closest check sets the tax at its \$30 maximum throughout (upper bound)</td><td>Draft max-tax check: &minus;0.0035 / &minus;0.0130, still about 3&times; <span class="pg">pp. 18&ndash;19</span></td></tr>
+                        <tr><td>(10)</td><td>Province &times; month interactions</td><td>Province-specific seasonality (BC's own summer/winter pattern)</td><td>Coefficients in the same range <span class="pg">p. 19</span></td></tr>
+                        <tr><td><strong>(11)</strong></td><td><strong>Vancouver Winter Olympics</strong></td><td><strong>A one-off BC demand shock</strong> in February 2010 (visitors, traffic and transit changes) during the tax period being mistaken for a tax effect</td><td><em>Published only</em>: dropping or controlling for it, salience survives (the published abstract calls the result &ldquo;robust to a range of specifications&rdquo;)</td></tr>
+                        <tr><td>(12)</td><td>Endogeneity of the gasoline price</td><td>Price responds to demand (simultaneity), biasing OLS</td><td>Draft does this as IV: price instrumented with excise taxes, &minus;0.0033 / &minus;0.0257, ratio 7.9 <span class="pg">pp. 14&ndash;15</span></td></tr>
+                    </table></div>
+                    <p style="margin-top:8px; font-size:13.5px;"><strong>The &ldquo;all other things held constant&rdquo; point</strong> (from the course sheet's skills list): each column holds one more thing constant or removes one more confounder, and the tax effect stays several times the price effect, so it isn't an artifact of any one omitted factor.</p>
+                </div></div>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Plain English</button>
+                <div class="example-body"><div style="background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 16px; font-size: 14px;">
+                    <p>They poke at the result from every angle: maybe people just had more money, maybe they filled up right before each tax increase, maybe the recession or the Olympics did it. Each time they adjust for that one thing, and each time the tax still hits several times harder than the price.</p>
+                </div></div>
+            </div></div>
+        </div>
+
+<div class="section-header" style="margin-top:30px;"><div class="section-number">&#9829;</div><h2>Quiz yourself: one card per bullet (Rivers &amp; Schaufele)</h2></div>
         <div class="card">
             <p style="font-size:14px;">Every bullet in the answers above, as a tap-to-reveal card. Say the answer before you flip.</p>
             <div class="model-toggle" id="qc-tabs-R">
-                <button class="active" onclick="qcShow('R',1, this)">Q1</button><button onclick="qcShow('R',2, this)">Q2</button><button onclick="qcShow('R',3, this)">Q3</button><button onclick="qcShow('R',4, this)">Q4*</button><button onclick="qcShow('R',5, this)">Q5*</button><button onclick="qcShow('R',6, this)">Q6</button><button onclick="qcShow('R',7, this)">Q7*</button>
+                <button class="active" onclick="qcShow('R',1, this)">Q1</button><button onclick="qcShow('R',2, this)">Q2</button><button onclick="qcShow('R',3, this)">Q3</button><button onclick="qcShow('R',4, this)">Q4</button><button onclick="qcShow('R',5, this)">Q5</button><button onclick="qcShow('R',6, this)">Q6</button><button onclick="qcShow('R',7, this)">Q7</button><button onclick="qcShow('R',9, this)">Q9*</button><button onclick="qcShow('R',10, this)">Q10*</button>
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
                 <button class="fc-btn ghost" onclick="qcShuffle('R')">&#8646; Shuffle</button><button class="fc-btn ghost" onclick="qcAll('R', true)">Reveal all</button><button class="fc-btn ghost" onclick="qcAll('R', false)">Hide all</button>
@@ -2217,59 +2282,63 @@ function csRender() {
 var QC = {
  R: {
   1: [
-   ['Define tax salience', 'The hypothesis that a price change caused by a tax produces a different demand response than an equal price change caused by the market. "More salient" = bigger response.'],
-   ['State the main result with numbers', 'Preferred model: 5\u00a2 of market price \u2192 about 1.8% less gasoline; 5\u00a2 of carbon tax (about \\$25/t) \u2192 about 12.5% less. Ratio 7.1; F-test rejects equality at 1%.'],
+   ['Define tax salience', 'A tax-driven price change and an equal market-driven price change trigger different demand responses. More salient = bigger response.'],
    ['What does standard theory predict?', 'Only the pump price $q = p + t$ matters, so $\\partial y/\\partial p = \\partial y/\\partial t$: a cent is a cent.'],
-   ['Why is inattention a weak story for gasoline?', 'Pump prices are posted tax-inclusive; there is no hidden tax to miscalculate at the register.'],
-   ['What is new relative to earlier salience work?', 'First evidence for an environmental tax (single purpose: cut fuel use); Li, Linn & Muehlegger found a ratio of 8.1 for gasoline excise taxes.']
+   ['Why does salience matter for policy?', 'Elasticities from market price changes would mis-predict a carbon tax\u2019s effect on gasoline use, emissions and revenue.'],
+   ['Why is gasoline a clean test?', 'Prices are posted tax-inclusive (no hidden tax), and the carbon tax\u2019s only purpose is to cut fuel use.']
   ],
   2: [
-   ['Timing of the BC tax', 'Announced in the February 2008 budget (a surprise), in force July 1, 2008; all fossil fuels, 77% of provincial emissions.'],
-   ['Rate path', '\\$10/t (2.34\u00a2/L) in 2008, +\\$5 every July 1, to \\$30/t (6.67\u00a2/L) in 2012. Gradual to limit adjustment costs.'],
-   ['How was revenue returned?', 'Lower personal income tax (bottom two brackets), corporate and small-business rate cuts, low-income quarterly rebate (~\\$300/yr, family of four), up to \\$200 for northern/rural homeowners from 2011.'],
-   ['Three policy benefits of revenue neutrality', 'Public acceptability ("tax shift"); lower marginal cost of public funds (double dividend); a commitment device (the budget needs the revenue).'],
-   ['Why revenue neutrality helps identification', 'Carbon-tax increases move inversely with personal and corporate income-tax revenue by design, so those revenues can instrument for the tax.']
+   ['Unit of observation', 'Province-month: 10 provinces, Jan 1990 to Dec 2011.'],
+   ['How many observations?', '2,580 province-months (216 province-years in annual models).'],
+   ['Why annual models too?', 'Income-tax instruments and some controls exist only yearly.'],
+   ['What kind of data structure?', 'A panel: the same provinces over time, allowing province and month-year fixed effects.']
   ],
   3: [
-   ['Write the estimating equation', '$\\ln y_{it} = \\alpha p_{it} + \\beta \\tau_{it} + X_{it}\\theta + \\delta_i + \\gamma_t + \\varepsilon_{it}$'],
-   ['What do $\\delta_i$ and $\\gamma_t$ absorb?', 'Province FE: time-invariant traits like geography. Month-year FE: shocks common to all provinces (oil prices, national cycle).'],
-   ['How do you read $\\beta$ in the log-linear model?', '$100\\beta$ \u2248 percent change in demand per 1\u00a2/L (semi-elasticity); exactly $e^{\\beta}-1$.'],
-   ['Why interact price and tax with BC?', 'BC is more price-elastic than the national average; otherwise the tax coefficient soaks up that sensitivity (national \u22120.0457, ratio 33.4 vs. BC \u22120.0247, ratio 7.1).'],
-   ['Data facts', 'StatCan monthly litres per adult, Kent Marketing prices, provincial CPI; Jan 1990 to Dec 2011; 2,580 province-months; Newey-West errors.']
+   ['Dependent variable', 'Per-capita gasoline consumption: monthly litres sold in the province \u00f7 population aged 15+.'],
+   ['Source', 'Statistics Canada monthly sales of premium, mid-grade and regular gasoline.'],
+   ['Functional form', 'In logs (log-linear), so 100 \u00d7 coefficient \u2248 % change per 1\u00a2/L.'],
+   ['BC\u2019s average', 'About 115 litres per adult per month (Table A1).']
   ],
   4: [
-   ['Why might OLS already be unbiased?', 'Competitive gasoline market; full, immediate tax pass-through; a surprise, comprehensive, single-purpose carbon tax.'],
-   ['What omitted factors still worry them?', 'Province-specific shocks like new bike lanes or uneven recession effects.'],
-   ['Instrument for the market price', 'Provincial excise taxes: large share of price, legislated with a long lag (Davis & Kilian).'],
-   ['Instrument for the carbon tax', 'Personal and corporate income-tax revenues, which fall as the carbon tax rises because of revenue neutrality.'],
-   ['Three instrument requirements', 'Excluded (argued), relevant (first-stage F), valid (Sargan, if over-identified). Wu-Hausman: is IV needed?'],
-   ['Monthly IV results', 'F = 435.5; exactly identified; \u22120.0033 / \u22120.0257; ratio 7.9; equality rejected at 5%; Wu-Hausman p = 0.73 so OLS preferred.'],
-   ['Annual IV results', '(2): F 13.36, Sargan p 0.98, tax insignificant, ratio 1.3, equality not rejected. (3): weak PIT/CIT instruments (6.55), Sargan rejects, ratio 18.8.']
+   ['Variable 1 and its measure', 'Market price of gasoline excluding the carbon tax (includes excise taxes), \u00a2/L, real (provincial CPI), Kent Marketing retail price.'],
+   ['Variable 2 and its measure', 'BC carbon tax in \u00a2/L of gasoline (2.34\u00a2 in 2008 to 6.67\u00a2 in 2012), real.'],
+   ['Expected signs', 'Both negative (law of demand). Salience: tax coefficient more negative than price coefficient.'],
+   ['Control signs', 'After-tax income positive (normal good); small-car share negative.'],
+   ['Why interact with BC?', 'So the coefficients measure BC\u2019s own price and tax responses.']
   ],
   5: [
-   ['Income effect check', 'Add after-tax income (levels, first differences): ratio still 5.5.'],
-   ['Nominal illusion check', 'Instrument the real tax with the nominal tax, using the July jumps: \u22120.0036 / \u22120.0239.'],
-   ['Announcement or storage check', 'Drop June\u2013July and May\u2013August: tax coefficient doesn\u2019t shrink toward the price one. Storage lasts at most a month.'],
-   ['Structural break check', '2007\u20132011 only: ratio 8.5 at the mean.'],
-   ['"Expected the max tax" check', 'Set the tax at \\$30 throughout: an upper bound on the tax elasticity; still about 3\u00d7 the price effect.'],
-   ['Seasonality and vehicle checks', 'Province \u00d7 month FE plus trend; small-car sales shares: coefficients barely move.'],
-   ['Untestable alternatives and rebuttals', 'Cross-border shopping (neighbors already cheaper; distances; international border). SCRAP-IT (18,000 cars, <1%) and hybrids (1.1% of sales) too small.']
+   ['More or less salient?', 'More salient: the tax cuts demand far more than an equal market-price rise.'],
+   ['Preferred coefficients (Table 2, col. 2)', 'Price \u00d7 BC \u22120.0035***; tax \u00d7 BC \u22120.0247***.'],
+   ['Effect of 5\u00a2', 'Market price: about \u22121.8%. Carbon tax: about \u221212.5%.'],
+   ['By what magnitude?', 'About 7.1 times; F-test (23.07) rejects equal coefficients.'],
+   ['Why not the national model?', 'Col. 1 (\u22120.0014 / \u22120.0457, ratio 33.4) lets the tax soak up BC\u2019s extra price sensitivity.']
   ],
   6: [
-   ['The utility function', '$u = x + v(y, t)$: the tax enters utility directly (after Chetty 2009).'],
-   ['Decompose $dy^*/dt$', 'Direct effect $\\left.\\partial y/\\partial t\\right|_q$ plus price effect $(\\partial y/\\partial q)(\\partial q/\\partial t)$.'],
-   ['Resentment of free-ridership', 'Cutting back just lets others drive more (leakage); a tax makes everyone pay, ending the resentment. Direct effect < 0: tax more salient.'],
-   ['Relief of guilt', 'Paying the tax eases guilt, so people drive more. Direct effect > 0: tax less salient.'],
-   ['The rival explanation', 'Inattention or cognitive costs (Chetty, Looney & Kroft; Finkelstein): irrational misoptimization rather than preferences.'],
-   ['How is this different from warm glow?', 'In warm-glow / impure public good models, taxes still act only through prices; here the tax itself is in utility (fn. 15).']
+   ['Explanation 1 (rivals)', 'Inattention or cognitive costs: people misoptimize (Chetty, Looney & Kroft; Finkelstein).'],
+   ['Explanation 2 (the authors\u2019)', 'Other-regarding preferences: the tax enters utility directly, $u = x + v(y,t)$.'],
+   ['Decompose $dy^*/dt$', 'Direct effect $\\left.\\partial y/\\partial t\\right|_q$ plus price effect.'],
+   ['Resentment of free-ridership', 'A tax makes everyone pay, so green drivers cut back more. Direct effect < 0: more salient.'],
+   ['Relief of guilt', 'Paying the tax eases guilt, so people drive more. Direct effect > 0: less salient.'],
+   ['Which wins in BC?', 'Resentment, given the 7\u00d7 result.']
   ],
   7: [
-   ['The three scenarios', '(1) no tax; (2) tax treated like any price rise; (3) salient tax (model prediction).'],
-   ['Emissions saved', '3.61 MtCO\u2082e from gasoline in four years; about 85% (~3.1 Mt) due to salience.'],
-   ['Conversion factor', '1 litre of gasoline \u2248 2.47 kg CO\u2082e.'],
-   ['External validity evidence', 'Revenue came in at 83% of forecast, \\$510M (16.7%) short: demand fell more than standard elasticities predicted.'],
-   ['Policy implications', 'Standard elasticities mis-forecast emissions and revenue; taxes vs. permits may differ in salience; behavioral economics belongs in tax policy.'],
-   ['Limitations', 'One province, short run, gasoline only; annual IV models don\u2019t confirm salience statistically.']
+   ['A research-question template', 'Does [policy] affect [measurable outcome] for [who / where / when]?'],
+   ['Example', 'Was BC\u2019s 2025 removal of the consumer carbon tax as salient as its introduction?'],
+   ['What earns the marks?', 'A clear, specific, answerable question tied to a concept from the paper.']
+  ],
+  9: [
+   ['What is revenue neutrality?', 'All carbon-tax revenue returned via income-tax cuts and rebates.'],
+   ['What went wrong?', 'Revenue came in at 83% of forecast, about \\$510M (16.7%) short: revenue-negative.'],
+   ['Why?', 'Forecasts used market-price elasticities; the salient tax cut gasoline sales more than predicted.'],
+   ['Two implications', 'The shortfall is evidence for salience; tax-shift design must use the tax elasticity.']
+  ],
+  10: [
+   ['Common logic of the checks', 'Change one thing at a time to rule out a rival explanation; the tax effect stays several times the price effect.'],
+   ['Columns (4) and (5)', 'Drop June\u2013July, then May\u2013August: rules out stockpiling or announcement effects; the tax effect doesn\u2019t shrink.'],
+   ['Column (11)', 'Vancouver Winter Olympics (Feb 2010): rules out a one-off BC demand shock being mistaken for the tax.'],
+   ['Income check', 'Add after-tax income: ratio still about 5.5.'],
+   ['Recession checks', 'Remove business-cycle variables; exclude recessionary periods (2008\u201309 coincided with the tax start).'],
+   ['Endogenous price', 'Instrument the price with excise taxes: \u22120.0033 / \u22120.0257, ratio 7.9.']
   ]
  },
  F: {
@@ -2719,7 +2788,7 @@ function pgGoBox() {
     goPage(p, n, true);
 }
 function pgClick(ev, paper, n) { ev.preventDefault(); ev.stopPropagation(); goPage(paper, n); }
-var PG_SKIP = 'script,style,textarea,button,select,option,input,a,svg,code,mjx-container,.seg,#tab-pages,#pg-back,.tab-buttons,.tab-nav';
+var PG_SKIP = '.nolink,script,style,textarea,button,select,option,input,a,svg,code,mjx-container,.seg,#tab-pages,#pg-back,.tab-buttons,.tab-nav';
 var PG_RE = /(R&S|FLL|Foulon(?: et al\.?)?)?(\s*)(?<![A-Za-z])(pp?\.)(\s*)(\d+(?:\s*[–-]\s*\d+)?(?:\s*,\s*\d+(?:\s*[–-]\s*\d+)?)*)|\b(Tables?)(\s+)(A1|IV|V|I{1,3}|[1-4])\b/g;
 function pgLink(n, paper, text) { var a = document.createElement('a'); a.className = 'pgl'; a.href = '#'; a.textContent = text;
     a.title = (paper === 'rs' ? 'Rivers & Schaufele ' : 'Foulon et al. ') + (n === 0 ? 'title page' : 'p. ' + n) + ' (click to view)';
