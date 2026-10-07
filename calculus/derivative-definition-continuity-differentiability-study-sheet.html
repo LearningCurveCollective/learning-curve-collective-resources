@@ -374,7 +374,7 @@ li { margin-bottom: 8px; }
     </div>
     <div class="header-right">
         <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
-        <div class="subtitle" style="margin-top: 4px;">Calculus &bull; Definition of the Derivative, Continuity &amp; Differentiability</div>
+        <div class="subtitle" style="margin-top: 4px;">Calculus &bull; Definition of the Derivative, Continuity, IVT &amp; Differentiability</div>
     </div>
 </div>
 
@@ -384,10 +384,11 @@ li { margin-bottom: 8px; }
             <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Formula Cheat Sheet</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Study guide</span>
-            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 Rate of Change to Derivative</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 The Derivative</button>
             <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 Using the Derivative</button>
             <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 Continuity &amp; Differentiability</button>
-            <button class="tab-button" data-group="study" onclick="switchTab('t4', this)">4 Worked Review Problems</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('tivt', this)">4 IVT</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t4', this)">5 Worked Problems</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Practice</span>
             <button class="tab-button" data-group="sprint" onclick="switchTab('flash', this)">&#9998; Flashcards</button>
@@ -400,7 +401,7 @@ li { margin-bottom: 8px; }
     <!-- ═══════════════ CHEAT SHEET ═══════════════ -->
     <div id="tab-cheat" class="tab-content active">
         <div class="section-header"><div class="section-number">&#9733;</div><h2>Formula Cheat Sheet</h2></div>
-        <p>Every formula and rule your test covers (the <strong>Chapter 2 Review</strong> and the <strong>Continuity &amp; Differentiability</strong> homework), one row each. <strong>Hover over a row</strong> (or tap it on a phone) and the picture acts out the formula: secants shrink into tangents, holes fill in, corners rock. Colors in each formula match the colors in its picture. Pills like <span class="slide-ref">Review #2</span> point to the problem that uses it.</p>
+        <p>Every formula and rule your test covers (the <strong>Chapter 2 Review</strong>, the <strong>Continuity &amp; Differentiability</strong> homework and the <strong>IVT review</strong>), one row each. <strong>Hover over a row</strong> (or tap it on a phone) and the picture acts out the formula: secants shrink into tangents, holes fill in, corners rock. Colors in each formula match the colors in its picture. Pills like <span class="slide-ref">Review #2</span> point to the problem that uses it.</p>
         <div class="cs-tools"><span class="lbl">Hover feel</span>
             <button class="hap-chip on" data-hap="buzz" onclick="setHap('buzz',this)">Buzz</button>
             <button class="hap-chip" data-hap="tick" onclick="setHap('tick',this)">Buzz + click sound</button>
@@ -534,6 +535,26 @@ li { margin-bottom: 8px; }
             </div>
         </div>
 
+        <div class="cs-row" data-fig="ivt">
+            <div class="cs-fig"><svg viewBox="0 0 220 150"></svg><div class="hint">hover to animate</div></div>
+            <div class="cs-body">
+                <h4>Intermediate Value Theorem (IVT) <span class="slide-ref">CA #2 #1, #5, #9, #10</span></h4>
+                <div class="cs-formula">$$f\text{ continuous on }[a,b]\ \text{ and }\ \color{#DDA25E}{k}\text{ between }f(a)\text{ and }f(b)\;\Longrightarrow\;\text{at least one }\color{#BC6C26}{c}\in(a,b)\text{ with }f(\color{#BC6C26}{c})=\color{#DDA25E}{k}$$</div>
+                <p class="cs-econ"><span class="cs-k">Key</span>$[a,b]$ = the interval; $k$ = the target output; $c$ = the input the theorem promises exists. It never tells you <em>where</em> $c$ is or <em>how many</em> there are, only "at least one."</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>A continuous graph can't skip heights. If it starts below $k$ and ends above it (or the reverse), it has to cross $k$ somewhere in between.</p>
+            </div>
+        </div>
+
+        <div class="cs-row" data-fig="ivtcount">
+            <div class="cs-fig"><svg viewBox="0 0 220 150"></svg><div class="hint">hover to animate</div></div>
+            <div class="cs-body">
+                <h4>Fewest possible solutions from a table <span class="slide-ref">CA #2 #2&ndash;4, #6&ndash;8</span></h4>
+                <div class="cs-formula">$$\text{fewest times }f(x)=k\;=\;\#\,\text{switches across }k\;+\;\#\,\text{table values equal to }k$$</div>
+                <p class="cs-econ"><span class="cs-k">Key</span>Mark each table value $+$ (above $k$) or $-$ (below $k$). Each switch between <strong>neighboring</strong> columns is one guaranteed crossing. "Zeros" means $k=0$, so you're counting sign changes.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>Count how many times the table jumps across the line. The real graph could cross more often, never less. No switches means the answer is 0.</p>
+            </div>
+        </div>
+
         <div class="cs-row" data-fig="lr">
             <div class="cs-fig"><svg viewBox="0 0 220 150"></svg><div class="hint">hover to animate</div></div>
             <div class="cs-body">
@@ -582,7 +603,7 @@ li { margin-bottom: 8px; }
                 <li>Perpendicular slopes multiply to $-1$: $m_{\text{tan}}\cdot m_{\text{norm}}=-1$.</li>
                 <li>$\sin 0=0$, $\cos 0=1$, $\cos\!\left(-\tfrac{2\pi}{3}\right)=-\tfrac12$, $\sin\tfrac{\pi}{2}=1$.</li>
                 <li>Units always: rate = (output unit)/(input unit), e.g. <strong>ft/s</strong>.</li>
-                <li>Test covers: <strong>Chapter 2 Review</strong> (10 problems) and <strong>Continuity &amp; Differentiability</strong> homework (4 problems). All of them are worked in tab 4.</li>
+                <li>Test covers: <strong>Chapter 2 Review</strong> (10 problems), <strong>Continuity &amp; Differentiability</strong> homework (4 problems) and the <strong>IVT review, CA #2</strong> (10 problems). All of them are worked in tab 5.</li>
             </ul>
         </div>
     </div>
@@ -881,10 +902,101 @@ li { margin-bottom: 8px; }
         <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> "Numerically" means show numbers, not a picture: "$\lim_{x\to0^-}f(x)=0=\lim_{x\to0^+}f(x)=f(0)$, so $f$ is continuous at 0. Left slope $=1$, right slope $=0$, so $f$ is not differentiable at 0." Conclusion word last: <strong>continuous, not differentiable</strong>.</p></div>
     </div>
 
+
+    <!-- ═══════════════ TAB IVT ═══════════════ -->
+    <div id="tab-tivt" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>Intermediate Value Theorem (IVT)</h2></div>
+        <p>The IVT is the payoff for continuity. If a function is continuous, its graph can't skip any heights, so every output between the two ends has to happen somewhere in between. On the test it shows up as "must there be&hellip;?" and "what is the fewest possible number of times&hellip;?"</p>
+
+        <div class="why hap"><div><span class="why-k">Why care?</span>
+            <p><strong>Temperature and hiking.</strong> If it's 50&deg;F at 7 am and 80&deg;F at 2 pm, then at some moment in between it was exactly 65&deg;F. You don't know <em>when</em>, but you know it happened, because temperature changes continuously and can't jump past 65. Same with a hike from 2,000 ft up to 5,000 ft: at some point you stood at exactly 3,500 ft. Now compare the shipping prices from tab 3. They <em>jump</em>, so a price in between the steps might never be charged.</p>
+            <p class="tie">Continuous + start below $k$ + end above $k$ means you must pass through $k$. That's the whole theorem.</p></div>
+            <svg viewBox="0 0 200 124"><line x1="22" y1="106" x2="194" y2="106" stroke="#9C8B74"/><line x1="22" y1="106" x2="22" y2="8" stroke="#9C8B74"/>
+            <line x1="22" y1="58" x2="194" y2="58" stroke="#DDA25E" stroke-width="1.8" stroke-dasharray="5 4"/><text x="192" y="53" font-size="8.5" font-weight="700" fill="#A9772F" text-anchor="end">65&#176;F</text>
+            <path d="M28 92 C 60 92, 70 70, 96 74 S 130 30, 150 40 S 176 22, 188 20" fill="none" stroke="#21442B" stroke-width="2.4"/>
+            <circle cx="28" cy="92" r="3.5" fill="#21442B"/><circle cx="188" cy="20" r="3.5" fill="#21442B"/><circle cx="114" cy="58" r="4" fill="#BC6C26"/>
+            <text x="30" y="102" font-size="8.5" font-weight="700" fill="#21442B">50&#176; at 7 am</text><text x="186" y="14" font-size="8.5" font-weight="700" fill="#21442B" text-anchor="end">80&#176; at 2 pm</text>
+            <text x="116" y="74" font-size="8.5" font-weight="700" fill="#BC6C26">hit 65&#176; here</text><text x="192" y="118" font-size="8" fill="#8C7B64" text-anchor="end">time</text></svg></div>
+
+        <div class="card ifig">
+            <span class="lead-tag">Play first</span>
+            <h3>IVT Table Explorer: how many times <em>must</em> $h(x)=k$? <span class="slide-ref">CA #2 (same idea, new numbers)</span></h3>
+            <div class="wgrid">
+                <div class="wplot"><svg id="w5svg" viewBox="0 0 520 330"></svg></div>
+                <div class="wpanel">
+                    <div class="givens"><span class="gk">Givens</span>
+                        <p style="margin-bottom:6px;">$h$ is continuous on $[0,10]$.</p>
+                        <div class="tbl-wrap"><table class="cmp" style="margin:4px 0; font-size:13px;"><tr><th>$x$</th><td>0</td><td>2</td><td>5</td><td>7</td><td>10</td></tr><tr><th>$h(x)$</th><td>3</td><td>$-2$</td><td>6</td><td>9</td><td>1</td></tr></table></div>
+                        <ul><li>$k$ = the output you're asking about (the gold line)</li></ul></div>
+                    <div class="row"><label for="w5k">$k$</label><input type="range" id="w5k" min="-4" max="11" step="0.5" value="4" oninput="w5Draw()"><span id="w5kv" style="width:34px; font-weight:700;"></span></div>
+                    <div class="cls-btns" id="w5mode">
+                        <button class="cls-btn" data-m="dots" onclick="w5Mode('dots',this)">Table only</button>
+                        <button class="cls-btn right" data-m="simple" onclick="w5Mode('simple',this)">Simplest graph</button>
+                        <button class="cls-btn" data-m="wiggly" onclick="w5Mode('wiggly',this)">A wiggly graph</button>
+                        <button class="cls-btn" data-m="jump" onclick="w5Mode('jump',this)">Break continuity</button>
+                    </div>
+                    <div class="readout" id="w5out"></div>
+                    <p style="font-size:13px; margin-bottom:0;">The green bands are the intervals where $k$ sits between two neighboring table values, so the graph must cross the line there. "Wiggly" crosses more often, which is allowed: the IVT promises <strong>at least</strong>, never exactly. "Break continuity" shows why the theorem needs it.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>The theorem <span class="slide-ref">CA #2</span></h3>
+            <div class="highlight-box hap"><p style="margin-bottom:6px; font-size:16px;">If $f$ is <strong>continuous on $[a,b]$</strong> and $k$ is <strong>between $f(a)$ and $f(b)$</strong>, then there is <strong>at least one</strong> $c$ in $(a,b)$ with $f(c)=k$.</p>
+                <p style="margin-bottom:0; font-size:13.5px;"><strong>Key:</strong> $[a,b]$ = the interval; $f(a), f(b)$ = the outputs at its ends; $k$ = the target output; $c$ = the input the theorem guarantees.</p></div>
+            <div class="two-col">
+                <div class="concept-list" style="margin:0;"><div class="concept-item"><div class="concept-body"><div class="concept-label">Both conditions are required</div><p style="margin-bottom:0;">1. $f$ is continuous on the <em>closed</em> interval $[a,b]$ (given in the problem, or because $f$ is a polynomial).<br>2. $k$ is strictly between $f(a)$ and $f(b)$ (or equal to one of them, which is trivial).</p></div></div></div>
+                <div class="concept-list" style="margin:0;"><div class="concept-item"><div class="concept-body"><div class="concept-label">What it does NOT tell you</div><p style="margin-bottom:0;">It doesn't say <strong>where</strong> $c$ is, and it doesn't say <strong>how many</strong> there are, only "at least one." If a condition fails, the IVT says <strong>nothing</strong>: $f(c)=k$ might still happen, there's just no guarantee.</p></div></div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Why continuity is required</h3>
+            <div class="two-col" style="align-items:center;">
+                <p style="margin-bottom:0;">A jump lets the function leap over a height without ever landing on it. In the picture, $f(a)=1$ and $f(b)=5$, so 3 is between them, but the graph jumps from 2 straight to 4 and never equals 3. That's exactly why every IVT answer has to say "<strong>because $f$ is continuous</strong>."</p>
+                <svg viewBox="0 0 260 130" style="width:100%; background:#FBF8F2; border:1px solid #EFE6D6; border-radius:8px;"><line x1="20" y1="116" x2="250" y2="116" stroke="#9C8B74"/><line x1="20" y1="116" x2="20" y2="8" stroke="#9C8B74"/>
+                    <line x1="20" y1="64" x2="250" y2="64" stroke="#DDA25E" stroke-width="1.8" stroke-dasharray="5 4"/><text x="246" y="58" font-size="10" font-weight="700" fill="#A9772F" text-anchor="end" font-family="Inter, sans-serif">k = 3</text>
+                    <line x1="30" y1="99" x2="130" y2="82" stroke="#21442B" stroke-width="2.6"/><circle cx="130" cy="82" r="4" fill="#fff" stroke="#21442B" stroke-width="1.6"/>
+                    <line x1="130" y1="47" x2="236" y2="30" stroke="#21442B" stroke-width="2.6"/><circle cx="130" cy="47" r="4" fill="#21442B"/>
+                    <circle cx="30" cy="99" r="3.5" fill="#21442B"/><circle cx="236" cy="30" r="3.5" fill="#21442B"/>
+                    <text x="34" y="112" font-size="9.5" font-weight="700" fill="#21442B" font-family="Inter, sans-serif">f(a) = 1</text><text x="236" y="22" font-size="9.5" font-weight="700" fill="#21442B" text-anchor="end" font-family="Inter, sans-serif">f(b) = 5</text>
+                    <text x="138" y="88" font-size="9.5" font-weight="700" fill="#BC6C26" font-family="Inter, sans-serif">jumps over 3</text></svg>
+            </div>
+        </div>
+
+        <div class="technique-section hap" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>To answer "must there be an $x$ with $f(x)=k$?" <span class="slide-ref">CA #2 #1, #5, #9, #10</span></h3>
+            <p style="font-size:13.5px;"><strong>Trigger words:</strong> "must there be," "explain," "justify," "does the IVT hold / apply," "guarantee."</p>
+            <ol>
+                <li><strong>Continuity:</strong> state that $f$ is continuous on $[a,b]$. Either it's given ("a continuous function $g$") or $f$ is a polynomial.</li>
+                <li><strong>Endpoints:</strong> find $f(a)$ and $f(b)$ from the table or by plugging in.</li>
+                <li><strong>Between?</strong> Check whether $k$ is between them. Write it as a chain of inequalities.</li>
+                <li><strong>Sentence:</strong> conclude with the theorem's name.</li>
+            </ol>
+            <div class="highlight-box" style="margin-bottom:0;"><p style="margin-bottom:0;"><strong>Full-credit template:</strong> "Since $f$ is continuous on $[a,b]$ and $f(a) < k < f(b)$ (or $f(a)>k>f(b)$), by the Intermediate Value Theorem there is at least one $c$ in $(a,b)$ with $f(c)=k$."<br><span style="font-size:13.5px;">Example with new numbers: $p(x)=x^2+1$ on $[0,3]$, $k=6$. $p$ is a polynomial, so it's continuous; $p(0)=1<6<10=p(3)$; so by the IVT some $c$ in $(0,3)$ has $p(c)=6$.</span></p></div>
+        </div>
+
+        <div class="technique-section hap" style="background: rgba(221,162,94,0.07); border-left: 4px solid #DDA25E;">
+            <h3>To find the fewest possible solutions from a table <span class="slide-ref">CA #2 #2&ndash;4, #6&ndash;8</span></h3>
+            <p style="font-size:13.5px;"><strong>Trigger words:</strong> "minimum number of zeros," "fewest possible times $f(x)=k$," "at least how many."</p>
+            <ol>
+                <li><strong>Trim the table</strong> to the interval asked about. Use only those columns.</li>
+                <li><strong>Mark each value</strong> as above ($+$) or below ($-$) $k$. For zeros, $k=0$, so this is just the sign of each value.</li>
+                <li><strong>Count the switches</strong> between neighboring columns. Each switch is a guaranteed crossing (IVT on that little interval). Add 1 for any table value that equals $k$ exactly.</li>
+                <li><strong>No switches?</strong> Then the answer is <strong>0</strong>. That doesn't mean "impossible," just that nothing is guaranteed.</li>
+            </ol>
+            <p style="margin-bottom:0;"><strong>Example (explorer table, $k=4$):</strong> values $3, -2, 6, 9, 1$ become $-,\,-,\,+,\,+,\,-$. That's 2 switches (between $x=2$ and $5$, and between $7$ and $10$), so $h(x)=4$ <strong>at least 2 times</strong>.</p>
+        </div>
+
+        <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam traps:</strong> (1) Checking only the two outer endpoints. In CA #2's first table, $g(0)=-4$ and $g(50)=-15$ are both negative, but the values in between flip sign twice. Always walk through <strong>neighboring</strong> columns. (2) Saying "exactly 2." The IVT only gives "at least." (3) Forgetting to say "continuous." The explanation loses the point without it. (4) Thinking the IVT tells you what $c$ is. It doesn't; you only know $c$ is in $(a,b)$. (5) If $k$ is outside every neighboring pair, the fewest possible is 0, not "it can't happen."</p></div>
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> "Must there be&hellip;? Explain." is graded on the sentence: it has to name <strong>continuity</strong>, show the <strong>between-ness</strong> with actual numbers, and name the <strong>Intermediate Value Theorem</strong>. A bare "yes" earns nothing. "Fewest possible" questions want a number plus, ideally, which intervals the crossings are in.</p></div>
+    </div>
+
     <!-- ═══════════════ TAB 4 ═══════════════ -->
     <div id="tab-t4" class="tab-content">
-        <div class="section-header"><div class="section-number">4</div><h2>Worked Review Problems</h2></div>
-        <p>Every problem from both packets, in order. Try each one on paper first, then open the solution. Givens are listed before each solution.</p>
+        <div class="section-header"><div class="section-number">5</div><h2>Worked Review Problems</h2></div>
+        <p>Every problem from all three review sheets, in order. Try each one on paper first, then open the solution. Givens are listed before each solution.</p>
 
         <div class="why hap"><div><span class="why-k">Why care?</span><p><strong>Where $16t^2$ comes from.</strong> Gravity speeds a falling object up by about 32 ft/s every second, and 16 is half of 32. So the gumball's speed is $v(t)=s'(t)=32t$. Your Review #1c answer, 64 ft/s at $t=2$, is just that formula at $t=2$. Carry it to the water: $16t^2=220$ gives $t\approx3.7$ s, so the gumball hits at about 119 ft/s, roughly 81 mph.</p>
             <p class="tie">A derivative turns "where is it?" into "how fast is it going?" Every rate problem on this test works that way.</p></div><svg viewBox="0 0 200 124"><rect x="8" y="10" width="70" height="7" fill="#BC6C26"/><line x1="16" y1="17" x2="16" y2="120" stroke="#8B5E3C" stroke-width="3"/><line x1="70" y1="17" x2="70" y2="120" stroke="#8B5E3C" stroke-width="3"/>
@@ -1034,6 +1146,58 @@ li { margin-bottom: 8px; }
                 $$\begin{aligned}\text{Slopes match: } R'(2)&=L'(2) &\;\; 4a&=-2 &\Rightarrow\; a&=-\tfrac12\\ \text{Values match: } R(2)&=L(2) &\;\; 4a+10&=4-12+b &\Rightarrow\; 8&=b-8 \;\Rightarrow\; b=16\end{aligned}$$
                 <p style="margin-bottom:0;">$\boxed{a=-\tfrac12,\; b=16}$. Check: both pieces give $f(2)=8$ and slope $-2$ at $x=2$.</p>
             </div></div>
+
+        <h3 class="h3s" style="margin-top:26px;">Part C: Intermediate Value Theorem review (CA #2)</h3>
+        <div class="two-col">
+            <div class="givens"><span class="gk">Table 1: $g$ is continuous</span><div class="tbl-wrap"><table class="cmp" style="margin:4px 0;"><tr><th>$x$</th><td>0</td><td>5</td><td>13</td><td>28</td><td>50</td></tr><tr><th>$g(x)$</th><td>$-4$</td><td>8</td><td>20</td><td>11</td><td>$-15$</td></tr></table></div></div>
+            <div class="givens"><span class="gk">Table 2: $f$ is continuous</span><div class="tbl-wrap"><table class="cmp" style="margin:4px 0;"><tr><th>$x$</th><td>$-12$</td><td>$-6$</td><td>$-1$</td><td>30</td><td>40</td></tr><tr><th>$f(x)$</th><td>6</td><td>30</td><td>$-40$</td><td>$-10$</td><td>10</td></tr></table></div></div>
+        </div>
+
+        <div class="prob"><h3>#1 Must $g(x)=-10$ on $[28,50]$? <span class="slide-ref">CA #2 #1</span></h3>
+            <p class="ask">On the interval $28\le x\le 50$, must there be a value of $x$ for which $g(x)=-10$? Explain.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$g$ continuous; $g(28)=11$, $g(50)=-15$; $k=-10$</li></ul></div>
+                <p style="margin-bottom:0;"><strong>Yes.</strong> Since $g$ is continuous on $[28,50]$ and $g(28)=11>-10>-15=g(50)$, by the Intermediate Value Theorem there is at least one $c$ in $(28,50)$ with $g(c)=-10$.</p></div></div>
+
+        <div class="prob"><h3>#2&ndash;4 Fewest possible times for $g$ <span class="slide-ref">CA #2 #2, #3, #4</span></h3>
+            <p class="ask">(#2) Minimum number of zeros on $0\le x\le50$? (#3) Fewest possible times $g(x)=10$ on $5\le x\le28$? (#4) Fewest possible times $g(x)=5$ on $0\le x\le28$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Solution</button>
+            <div class="solution-body"><div class="tbl-wrap"><table class="cmp">
+                <tr><th></th><th>Values used</th><th>Above (+) / below (&minus;) $k$</th><th>Switches</th><th>Answer</th></tr>
+                <tr><td>#2, $k=0$</td><td>$-4, 8, 20, 11, -15$</td><td>$-,+,+,+,-$</td><td>$(0,5)$ and $(28,50)$</td><td><strong>2</strong></td></tr>
+                <tr><td>#3, $k=10$</td><td>$8, 20, 11$</td><td>$-,+,+$</td><td>$(5,13)$</td><td><strong>1</strong></td></tr>
+                <tr><td>#4, $k=5$</td><td>$-4, 8, 20, 11$</td><td>$-,+,+,+$</td><td>$(0,5)$</td><td><strong>1</strong></td></tr>
+            </table></div>
+            <p style="margin-bottom:0; font-size:13.5px;">#3 trap: $20\to11$ stays above 10 (11 is still bigger), so there's no guaranteed second crossing. #2 trap: the outer values $-4$ and $-15$ are both negative, yet there are 2 zeros.</p></div></div>
+
+        <div class="prob"><h3>#5 Must $f(x)=9$ on $[-1,40]$? <span class="slide-ref">CA #2 #5</span></h3>
+            <p class="ask">On the interval $-1\le x\le 40$, must there be a value of $x$ for which $f(x)=9$? Explain.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f$ continuous; $f(-1)=-40$, $f(30)=-10$, $f(40)=10$; $k=9$</li></ul></div>
+                <p style="margin-bottom:0;"><strong>Yes.</strong> Since $f$ is continuous on $[-1,40]$ and $f(-1)=-40<9<10=f(40)$, by the Intermediate Value Theorem there is a $c$ in $(-1,40)$ with $f(c)=9$. (More precisely, the crossing happens in $(30,40)$, where $-10<9<10$.)</p></div></div>
+
+        <div class="prob"><h3>#6&ndash;8 Fewest possible times for $f$ <span class="slide-ref">CA #2 #6, #7, #8</span></h3>
+            <p class="ask">(#6) Minimum number of zeros on $-12\le x\le40$? (#7) Fewest possible times $f(x)=15$ on $-1\le x\le40$? (#8) Fewest possible times $f(x)=3$ on $-12\le x\le-1$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Solution</button>
+            <div class="solution-body"><div class="tbl-wrap"><table class="cmp">
+                <tr><th></th><th>Values used</th><th>Above (+) / below (&minus;) $k$</th><th>Switches</th><th>Answer</th></tr>
+                <tr><td>#6, $k=0$</td><td>$6, 30, -40, -10, 10$</td><td>$+,+,-,-,+$</td><td>$(-6,-1)$ and $(30,40)$</td><td><strong>2</strong></td></tr>
+                <tr><td>#7, $k=15$</td><td>$-40, -10, 10$</td><td>$-,-,-$</td><td>none</td><td><strong>0</strong></td></tr>
+                <tr><td>#8, $k=3$</td><td>$6, 30, -40$</td><td>$+,+,-$</td><td>$(-6,-1)$</td><td><strong>1</strong></td></tr>
+            </table></div>
+            <p style="margin-bottom:0; font-size:13.5px;">#7: every value on that interval is below 15, so nothing is guaranteed. The answer is 0. $f$ <em>might</em> still reach 15 between table points; the IVT just can't promise it.</p></div></div>
+
+        <div class="prob"><h3>#9 Does the IVT hold? $f(x)=3x^2-5x-2$, $[0,3]$, $k=-1$ <span class="slide-ref">CA #2 #9</span></h3>
+            <p class="ask">Determine if the Intermediate Value Theorem holds for the given value of $k$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f(x)=3x^2-5x-2$ is a polynomial, so it's continuous on $[0,3]$</li><li>$f(0)=-2$, $\;f(3)=27-15-2=10$; $\;k=-1$</li></ul></div>
+                <p style="margin-bottom:0;"><strong>Yes.</strong> $f$ is continuous on $[0,3]$ and $f(0)=-2<-1<10=f(3)$, so by the IVT there is a $c$ in $(0,3)$ with $f(c)=-1$. (Check: solving $3x^2-5x-1=0$ gives $c=\tfrac{5+\sqrt{37}}{6}\approx1.85$, which is in $(0,3)$.)</p></div></div>
+
+        <div class="prob"><h3>#10 Does the IVT hold? $g(x)=7x^3-5x$, $[-1,2]$, $k=20$ <span class="slide-ref">CA #2 #10</span></h3>
+            <p class="ask">Determine if the Intermediate Value Theorem holds for the given value of $k$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$g(x)=7x^3-5x$ is a polynomial, so it's continuous on $[-1,2]$</li><li>$g(-1)=-7+5=-2$, $\;g(2)=56-10=46$; $\;k=20$</li></ul></div>
+                <p style="margin-bottom:0;"><strong>Yes.</strong> $g$ is continuous on $[-1,2]$ and $g(-1)=-2<20<46=g(2)$, so by the IVT there is a $c$ in $(-1,2)$ with $g(c)=20$. (It's about $c\approx1.59$.)</p></div></div>
     </div>
 
     <!-- ═══════════════ FLASHCARDS ═══════════════ -->
@@ -1049,6 +1213,7 @@ li { margin-bottom: 8px; }
                     <button class="fc-chip" data-filter="ud" onclick="fcSetFilter('ud',this)">Using f&prime; <span class="fc-n" id="fcn-ud"></span></button>
                     <button class="fc-chip" data-filter="cd" onclick="fcSetFilter('cd',this)">Continuity &amp; differentiability <span class="fc-n" id="fcn-cd"></span></button>
                     <button class="fc-chip" data-filter="lr" onclick="fcSetFilter('lr',this)">Reading limits <span class="fc-n" id="fcn-lr"></span></button>
+                    <button class="fc-chip" data-filter="iv" onclick="fcSetFilter('iv',this)">IVT <span class="fc-n" id="fcn-iv"></span></button>
                     <button class="fc-chip" data-filter="ex" onclick="fcSetFilter('ex',this)">Review problems <span class="fc-n" id="fcn-ex"></span></button>
                     <button class="fc-chip miss" data-filter="missed" onclick="fcSetFilter('missed',this)">&#10007; Missed <span class="fc-n" id="fcn-missed"></span></button>
                     <button class="fc-chip custom" data-filter="custom" onclick="fcSetFilter('custom',this)">&#9733; My deck <span class="fc-n" id="fcn-custom"></span></button>
@@ -1233,6 +1398,28 @@ ex ||| $g(x)=3x^2+5x$: $g'(x)$, tangent and normal at $x=-2$ ||| $g'(x)=6x+5$; p
 ex ||| C&amp;D #4: $a,b$ for $ax^2+10$ ($x\ge2$), $x^2-6x+b$ ($x<2$) ||| Slopes: $4a=-2$; values: $4a+10=b-8$. <strong>$a=-\tfrac12$, $b=16$</strong>.
 ---
 ex ||| C&amp;D #3a: $x^2$ ($x\ge0$), $x$ ($x<0$) ||| Values $0=0$, slopes $0\ne1$: <strong>continuous only</strong> (corner).
+---
+iv ||| Intermediate Value Theorem (IVT) ||| If $f$ is <strong>continuous on $[a,b]$</strong> and $k$ is <strong>between $f(a)$ and $f(b)$</strong>, then there is <strong>at least one</strong> $c$ in $(a,b)$ with $f(c)=k$.
+---
+iv ||| The two conditions for the IVT ||| (1) $f$ <strong>continuous</strong> on the closed interval $[a,b]$; (2) $k$ <strong>between</strong> $f(a)$ and $f(b)$.
+---
+iv ||| What the IVT does NOT tell you ||| <strong>Where</strong> $c$ is, or <strong>how many</strong> there are. Only "at least one."
+---
+iv ||| Why the IVT needs continuity ||| A <strong>jump</strong> can leap over $k$ without ever equaling it, like shipping prices that jump at each pound.
+---
+iv ||| Fewest possible solutions of $f(x)=k$ from a table ||| Mark each value above ($+$) or below ($-$) $k$. <strong>Count switches between neighboring columns</strong>, plus any value exactly equal to $k$.
+---
+iv ||| Minimum number of zeros from a table ||| Same method with $k=0$: <strong>count sign changes</strong> between neighboring values.
+---
+iv ||| No switches across the line: fewest possible times? ||| <strong>0.</strong> Nothing is guaranteed (it's not "impossible," just not promised).
+---
+iv ||| Full-credit IVT sentence ||| "Since $f$ is <strong>continuous</strong> on $[a,b]$ and $f(a)<k<f(b)$, by the <strong>Intermediate Value Theorem</strong> there is a $c$ in $(a,b)$ with $f(c)=k$."
+---
+iv ||| Outer values both negative: zero zeros? ||| <strong>Not necessarily.</strong> Check the middle columns: $-4, 8, 20, 11, -15$ has <strong>2</strong> sign changes.
+---
+ex ||| CA #2 #1: $g(28)=11$, $g(50)=-15$. Must $g(x)=-10$? ||| <strong>Yes</strong>: $g$ continuous and $11>-10>-15$, so by the IVT.
+---
+ex ||| CA #2 #9: $f(x)=3x^2-5x-2$ on $[0,3]$, $k=-1$ ||| Polynomial, so continuous; $f(0)=-2<-1<10=f(3)$, so <strong>yes, the IVT holds</strong>.
 </script>
     </div>
 
@@ -1290,9 +1477,9 @@ function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floo
 /* ───────── QUIZ DATA: opts[0] is always correct; options are shuffled on render ───────── */
 var QUIZ = {
 qa: [
- { q: "The average rate of change of $f$ on $[a,b]$ is&hellip;",
-   opts: ["$\\dfrac{f(b)-f(a)}{b-a}$", "$\\dfrac{f(b)+f(a)}{b-a}$", "$\\dfrac{b-a}{f(b)-f(a)}$", "$\\dfrac{f(b)-f(a)}{2}$"],
-   exp: "Average rate of change is rise over run between the two endpoints: the slope of the secant line. Adding the outputs, flipping the fraction, or dividing by 2 (that is an average of something else) are not slopes.", ref: "Review #1b" },
+ { q: "Which conditions does the Intermediate Value Theorem need on $[a,b]$?",
+   opts: ["$f$ continuous on $[a,b]$, $k$ between $f(a)$ and $f(b)$", "$f$ differentiable on $[a,b]$, and $f(a)$ less than $f(b)$", "$f$ continuous on $[a,b]$, and $f(a)$ equal to $f(b)$", "$f$ defined at $a$ and $b$, and $k$ greater than 0"],
+   exp: "The IVT needs continuity on the closed interval and a target $k$ between the endpoint outputs. Differentiability is stronger than needed, $f(a)=f(b)$ is a different setup, and the sign of $k$ is irrelevant.", ref: "CA #2" },
  { q: "Which limit is the definition of $f'(a)$?",
    opts: ["$\\displaystyle\\lim_{h\\to0}\\frac{f(a+h)-f(a)}{h}$", "$\\displaystyle\\lim_{h\\to0}\\frac{f(a+h)-f(h)}{h}$", "$\\displaystyle\\lim_{h\\to0}\\frac{f(a)+h-f(a)}{h}$", "$\\displaystyle\\lim_{h\\to0}\\frac{f(a+h)-f(a)}{a}$"],
    exp: "Secant slope from $(a,f(a))$ to $(a+h,f(a+h))$, with $h\\to0$. Subtracting $f(h)$ uses the wrong point, $f(a)+h$ is not $f(a+h)$, and dividing by $a$ is not the run.", ref: "Review #2" },
@@ -1314,9 +1501,9 @@ qa: [
  { q: "The graph of $y=f'(x)$ is above the x-axis on $(-3,2)$. So on $(-3,2)$&hellip;",
    opts: ["$f$ is increasing", "$f$ is positive", "$f$ is decreasing", "$f$ is constant"],
    exp: "$f'>0$ means positive tangent slopes, so $f$ goes up. It says nothing about the sign of $f$ itself.", ref: "Review #10" },
- { q: "Position $s$ is in feet and time $t$ in seconds. Units of $s'(2)$?",
-   opts: ["feet per second", "feet", "seconds per foot", "feet times seconds"],
-   exp: "A derivative is a rate: output units per input unit, so ft/s. Feet alone is a position; the others invert or multiply the units.", ref: "Review #1c" },
+ { q: "When its conditions hold, the IVT guarantees&hellip;",
+   opts: ["at least one $c$ in $(a,b)$ with $f(c)=k$", "exactly one $c$ in $(a,b)$ with $f(c)=k$", "the exact value of the $c$ with $f(c)=k$", "some $c$ in $(a,b)$ where $f'(c)$ equals $k$"],
+   exp: "Only existence, and only \"at least one.\" It never says how many or where. A statement about $f'(c)$ is a different theorem.", ref: "CA #2" },
  { q: "How do $\\displaystyle\\lim_{h\\to0}\\frac{f(a+h)-f(a)}{h}$ and $\\displaystyle\\lim_{x\\to a}\\frac{f(x)-f(a)}{x-a}$ compare?",
    opts: ["Both give the same number, $f'(a)$", "The first gives $f'(x)$, the second $f'(a)$", "The first gives $f'(a)$, the second $f(a)$", "They agree only for polynomial functions"],
    exp: "They are the same secant slope written two ways ($x$ plays the role of $a+h$), so both equal $f'(a)$ for any function where the derivative exists.", ref: "Review #2, #3" }
@@ -1331,9 +1518,9 @@ qb: [
  { q: "For $g(x)=x^2+4x$, the tangent line at $x=1$ is&hellip;",
    opts: ["$y-5=6(x-1)$", "$y-6=5(x-1)$", "$y-5=-\\tfrac16(x-1)$", "$y-1=6(x-5)$"],
    exp: "Point: $g(1)=5$. Slope: $g'(x)=2x+4$, so $g'(1)=6$. Swapping point and slope, using the normal slope, or swapping $x$ and $y$ in the point all break it.", ref: "Review #9b" },
- { q: "Same $g(x)=x^2+4x$. The normal line at $x=1$ is&hellip;",
-   opts: ["$y-5=-\\tfrac16(x-1)$", "$y-5=-6(x-1)$", "$y-5=\\tfrac16(x-1)$", "$y-5=6(x-1)$"],
-   exp: "Normal slope is the negative reciprocal of $6$: $-\\tfrac16$. $-6$ only negates, $\\tfrac16$ only flips, and $6$ is the tangent.", ref: "Review #9c" },
+ { q: "$h$ is continuous with $h(1)=5$, $h(4)=-3$, $h(6)=2$, $h(9)=7$. Minimum number of zeros on $[1,9]$?",
+   opts: ["2", "1", "3", "0"],
+   exp: "Signs $+,-,+,+$: switches on $(1,4)$ and $(4,6)$, so at least 2 zeros. 0 comes from checking only the outer values 5 and 7 (both positive); 3 would need another sign change, and $2\to7$ stays positive.", ref: "CA #2 #2" },
  { q: "$f(x)=x^2$ for $x\\ge1$ and $f(x)=3x-2$ for $x<1$. At $x=1$, $f$ is&hellip;",
    opts: ["continuous only", "both", "neither", "differentiable only"],
    exp: "Values: $1=3(1)-2=1$, so continuous. Slopes: $2(1)=2$ vs $3$, not equal, so a corner. Continuous only. \"Differentiable only\" can never happen.", ref: "C&amp;D #3" },
@@ -1343,9 +1530,9 @@ qb: [
  { q: "An object's position is $s(t)=16t^2$ ft. Average velocity on $[1,3]$?",
    opts: ["64 ft/s", "32 ft/s", "128 ft/s", "96 ft/s"],
    exp: "$\\dfrac{s(3)-s(1)}{3-1}=\\dfrac{144-16}{2}=64$ ft/s. 128 forgets to divide by 2; 96 is the instantaneous velocity at $t=3$; 32 is the average on $[0,2]$.", ref: "Review #1b" },
- { q: "Same $s(t)=16t^2$. Instantaneous velocity at $t=3$?",
-   opts: ["96 ft/s", "144 ft/s", "64 ft/s", "48 ft/s"],
-   exp: "$\\lim_{h\\to0}\\frac{16(3+h)^2-144}{h}=\\lim(96+16h)=96$ ft/s. 144 is the position $s(3)$; 64 is the average on $[1,3]$; 48 is half of the right answer.", ref: "Review #1c" },
+ { q: "$p(x)=x^3-4x+1$ on $[0,2]$, $k=3$. Does the IVT guarantee some $c$ with $p(c)=3$?",
+   opts: ["No: $p(0)=p(2)=1$, so 3 isn't between them", "Yes: $p$ is a polynomial, so it is continuous", "Yes: $p(1)=-2$, and 3 is above that value", "No: $p$ fails to be continuous on $[0,2]$"],
+   exp: "Continuity is fine (polynomial), but $p(0)=1$ and $p(2)=1$, so $k=3$ is not between the endpoint values and the IVT gives no guarantee. Being a polynomial alone isn't enough, and $p(1)$ is an interior value, not an endpoint.", ref: "CA #2 #9" },
  { q: "A graph is smooth everywhere except at $x=c$, where there is an open circle on the curve and a filled dot two units above it. At $c$, $f$ is&hellip;",
    opts: ["neither continuous nor differentiable", "continuous but not differentiable", "both continuous and differentiable", "differentiable but not continuous"],
    exp: "The limit (the open circle's height) does not equal $f(c)$ (the dot), so condition 3 fails: not continuous, hence not differentiable. A smooth look elsewhere doesn't matter.", ref: "C&amp;D #1" },
@@ -1387,8 +1574,8 @@ function answer(btn, id) {
 /* ── Flashcards: decks, term list, custom deck, persisted missed set ── */
 var FC = [], fcDeck = [], fcIdx = 0, fcGot = 0, fcMiss = 0, fcRunMissed = [], fcFlipped = false, fcRound = 1;
 var fcFilter = 'all', fcOrder = 'inorder', fcSide = 'term', fcStatus = {}, fcMissedSet = {}, fcCustomSet = {}, fcDefFirst = false;
-var FC_TOPICS = ['rc','ud','cd','lr','ex'];   // must match the fc-data codes and the deck chips
-var FC_TOPIC = { rc: 'Rates & definition', ud: 'Using the derivative', cd: 'Continuity & differentiability', lr: 'Reading limits', ex: 'Review problems', all: 'All terms', missed: 'Missed cards', custom: 'My deck' };
+var FC_TOPICS = ['rc','ud','cd','lr','iv','ex'];   // must match the fc-data codes and the deck chips
+var FC_TOPIC = { rc: 'Rates & definition', ud: 'Using the derivative', cd: 'Continuity & differentiability', lr: 'Reading limits', iv: 'Intermediate Value Theorem', ex: 'Review problems', all: 'All terms', missed: 'Missed cards', custom: 'My deck' };
 var FC_CKEY = 'lcc-calc-ch2-derivative-flashcards-custom';   // unique per sheet so decks don't collide in localStorage
 var FC_KEY = 'lcc-calc-ch2-derivative-flashcards-missed';
 function fcLoadMissed(){ try { var v = localStorage.getItem(FC_KEY); if (v) fcMissedSet = JSON.parse(v) || {}; var c = localStorage.getItem(FC_CKEY); if (c) fcCustomSet = JSON.parse(c) || {}; } catch(e){} }
@@ -1514,7 +1701,7 @@ window.addEventListener('DOMContentLoaded', function() {
     buildQuiz('qa'); buildQuiz('qb');
     fcInit();
     addTabNav();
-    initFigs(); w1Draw(); w2Draw(); w3Init(); w4Draw(); hwDraw(); drLoad(); drRender();
+    initFigs(); w1Draw(); w2Draw(); w3Init(); w4Draw(); w5Draw(); hwDraw(); drLoad(); drRender();
 });
 
 /* ───────── Cheat-sheet figures: each draw(svg, t, time, uid) redraws for hover progress t in [0,1] ───────── */
@@ -1841,6 +2028,36 @@ function initFigs(){
     document.querySelectorAll('.hap').forEach(function(n){ n.addEventListener('mouseenter', function(e){ hapticPulse(n, e); }); });
 }
 
+/* ── IVT figures ── */
+function ivtCross(f, k, a, b){ var pts = [], n = 300, prev = f(a) - k; for (var i = 1; i <= n; i++){ var x = a + (b-a)*i/n, s = f(x) - k; if (prev * s < 0) pts.push(x - (b-a)/n * s/(s - prev)); prev = s; } return pts; }
+FIGS.ivt = { draw: function(svg, t, time, uid){
+    var tt = ease(t), m = M(0,10,0,7, 22,210,10,128), f = function(x){ return 1 + 0.55*x + 0.9*Math.sin(1.1*x); }, a = 1, b = 9, fa = f(a), fb = f(b);
+    var g = frame(svg, m, uid);
+    el('rect', { x: m.L - 3, y: m.Y(fb), width: 6, height: m.Y(fa) - m.Y(fb), fill: 'rgba(221,162,94,0.45)', rx: 2 }, svg);
+    LN(svg, m.X(a), m.Y(fa), m.L, m.Y(fa), '#B9A88F', 1, '2 2'); LN(svg, m.X(b), m.Y(fb), m.L, m.Y(fb), '#B9A88F', 1, '2 2');
+    el('path', { d: pth(m, f, a, b, 120), fill:'none', stroke: CL.g, 'stroke-width': 2.4 }, g);
+    var k = fa + (fb - fa)*(0.12 + 0.76*tt);
+    LN(svg, m.L, m.Y(k), m.R, m.Y(k), CL.au, 2, '6 4');
+    T(svg, m.L - 5, m.Y(k) + 3, 'k', { anchor:'end', fill:'#A9772F', w:700, fs:10, style:'italic' });
+    var hits = ivtCross(f, k, a, b); hits.forEach(function(x){ DOT(svg, m.X(x), m.Y(k), CL.cu, false, 3.6); });
+    DOT(svg, m.X(a), m.Y(fa), CL.g); DOT(svg, m.X(b), m.Y(fb), CL.g);
+    T(svg, m.X(a), 140, 'a', { anchor:'middle', w:700, style:'italic', fs:10 }); T(svg, m.X(b), 140, 'b', { anchor:'middle', w:700, style:'italic', fs:10 });
+    T(svg, m.X(a) + 5, m.Y(fa) + 13, 'f(a)', { fill: CL.g, w:700, fs:9 }); T(svg, m.X(b) - 4, m.Y(fb) - 7, 'f(b)', { anchor:'end', fill: CL.g, w:700, fs:9 });
+    T(svg, 30, 20, 'hits k: ' + hits.length + (hits.length > 1 ? ' times (at least 1 promised)' : ' time (at least 1 promised)'), { fill: CL.cu, w:700, fs:9 });
+}};
+FIGS.ivtcount = { loop: true, draw: function(svg, t, time, uid){
+    var tt = ease(t), m = M(0,10,0,7, 22,210,24,128), xs = [1,3,5,7,9], ys = [1.5,5,4.2,1.2,5.5];
+    var k = 3 + 2.3*Math.sin(time*1.3) * tt;
+    var n = 0;
+    for (var i = 0; i < 4; i++){ var lo = Math.min(ys[i], ys[i+1]), hi = Math.max(ys[i], ys[i+1]);
+        if (k > lo && k < hi){ n++; el('rect', { x: m.X(xs[i]), y: m.T, width: m.X(xs[i+1]) - m.X(xs[i]), height: m.B - m.T, fill:'rgba(57,134,78,0.13)' }, svg); } }
+    LN(svg, m.L - 4, m.B, m.R, m.B, '#9C8B74', 1); LN(svg, m.L, m.B + 3, m.L, m.T - 2, '#9C8B74', 1);
+    LN(svg, m.L, m.Y(k), m.R, m.Y(k), CL.au, 2, '6 4'); T(svg, m.L - 5, m.Y(k) + 3, 'k', { anchor:'end', fill:'#A9772F', w:700, fs:10, style:'italic' });
+    xs.forEach(function(x, i){ var up = ys[i] > k; DOT(svg, m.X(x), m.Y(ys[i]), up ? CL.lg : CL.cu, false, 4); T(svg, m.X(x), m.Y(ys[i]) + (up ? -7 : 13), up ? '+' : '−', { anchor:'middle', fill: up ? CL.lg : CL.cu, w:700, fs:11 }); });
+    T(svg, 30, 16, 'switches = ' + n + '  →  at least ' + n + ' solution' + (n === 1 ? '' : 's'), { fill: CL.g, w:700, fs:9.5 });
+    T(svg, 116, 146, 'table values only (no graph needed)', { anchor:'middle', fill: CL.mid, fs:8.5 });
+}};
+
 /* ───────── Study-tab widgets ───────── */
 function nf(v, d){ d = d == null ? 2 : d; var r = Math.round(v * Math.pow(10, d)) / Math.pow(10, d); if (Object.is(r, -0)) r = 0; var s = String(r); return s.replace('-', '−'); }
 function xMinus(x0){ if (Math.abs(x0) < 1e-9) return 'x'; return x0 < 0 ? '(x + ' + nf(-x0) + ')' : '(x − ' + nf(x0) + ')'; }
@@ -2028,6 +2245,44 @@ function drScore(){ var got = 0, miss = 0; Object.keys(drState).forEach(function
     var el2 = document.getElementById('dr-score'); if (el2) el2.textContent = 'Had it: ' + got + '  ·  Missed: ' + miss + '  ·  Saved missed: ' + Object.keys(drMissed).length; }
 function drToggleMissed(btn){ drOnlyMissed = !drOnlyMissed; btn.textContent = drOnlyMissed ? 'Show all prompts' : 'Only my missed prompts'; drRender(); }
 function drReset(){ drState = {}; drMissed = {}; drSave(); drOnlyMissed = false; var b = document.getElementById('dr-missbtn'); if (b) b.textContent = 'Only my missed prompts'; drRender(); }
+
+/* W5: IVT table explorer */
+var W5X = [0,2,5,7,10], W5Y = [3,-2,6,9,1], w5m = 'simple';
+function w5Seg(x, wig){ for (var i = 0; i < 4; i++){ if (x <= W5X[i+1] + 1e-9){ var u = (x - W5X[i])/(W5X[i+1] - W5X[i]), y = W5Y[i] + (W5Y[i+1] - W5Y[i])*(1 - Math.cos(Math.PI*u))/2; return y + (wig ? 1.7*Math.sin(4*Math.PI*u) : 0); } } return W5Y[4]; }
+function w5Mode(m, btn){ w5m = m; document.querySelectorAll('#w5mode .cls-btn').forEach(function(b){ b.classList.toggle('right', b === btn); }); fcHaptic(); w5Draw(); }
+function w5Draw(){
+    var svg = document.getElementById('w5svg'); if (!svg) return; clearSvg(svg);
+    var k = parseFloat(document.getElementById('w5k').value); document.getElementById('w5kv').textContent = nf(k, 1);
+    var m = M(-0.5, 10.5, -4, 11, 40, 508, 12, 304);
+    var exact = [], between = [];
+    W5Y.forEach(function(y, i){ if (Math.abs(y - k) < 1e-9) exact.push(W5X[i]); });
+    var lostJump = false; for (var i = 0; i < 4; i++){ var lo = Math.min(W5Y[i], W5Y[i+1]), hi = Math.max(W5Y[i], W5Y[i+1]); if (k > lo && k < hi){ if (w5m === 'jump' && i === 1){ lostJump = true; el('rect', { x: m.X(2), y: m.T, width: m.X(5) - m.X(2), height: m.B - m.T, fill: 'rgba(229,115,115,0.12)' }, svg); } else between.push(i); } }
+    between.forEach(function(i){ el('rect', { x: m.X(W5X[i]), y: m.T, width: m.X(W5X[i+1]) - m.X(W5X[i]), height: m.B - m.T, fill: (w5m === 'jump' && i === 1) ? 'rgba(229,115,115,0.12)' : 'rgba(57,134,78,0.12)' }, svg); });
+    gridAxes(svg, m, 1, 1);
+    var g = frame(svg, m, 'w5', { noAxes: true }), actual = null;
+    if (w5m !== 'dots'){
+        var fn, wig = w5m === 'wiggly';
+        if (w5m === 'jump'){
+            fn = function(x){ if (x > 2 && x < 5){ return x < 3.5 ? -2 + 2.5*(x - 2)/1.5 : 4.5 + 1.5*(x - 3.5)/1.5; } return w5Seg(x, false); };
+            el('path', { d: pth(m, fn, 0, 3.499, 120), fill:'none', stroke: CL.g, 'stroke-width': 3 }, g);
+            el('path', { d: pth(m, fn, 3.501, 10, 160), fill:'none', stroke: CL.g, 'stroke-width': 3 }, g);
+            DOT(svg, m.X(3.5), m.Y(0.5), CL.g, true, 5); DOT(svg, m.X(3.5), m.Y(4.5), CL.g, false, 5);
+        } else { fn = function(x){ return w5Seg(x, wig); }; el('path', { d: pth(m, fn, 0, 10, 300), fill:'none', stroke: CL.g, 'stroke-width': 3 }, g); }
+        var c = 0, n = 2000, prev = fn(0) - k; if (Math.abs(prev) < 1e-9) c++;
+        for (var j = 1; j <= n; j++){ var x = 10*j/n, s = fn(x) - k; if (Math.abs(s) < 1e-9){ if (Math.abs(prev) >= 1e-9) c++; } else if (prev * s < 0 && Math.abs(prev) >= 1e-9 && !(w5m === 'jump' && x > 3.49 && x < 3.51)) c++; prev = s; }
+        actual = c;
+    }
+    LN(svg, m.L, m.Y(k), m.R, m.Y(k), CL.au, 2.4, '8 5');
+    T(svg, m.R - 2, m.Y(k) - 6, 'k = ' + nf(k, 1), { anchor:'end', fill:'#A9772F', w:700, fs:12 });
+    W5X.forEach(function(x, i){ DOT(svg, m.X(x), m.Y(W5Y[i]), Math.abs(W5Y[i] - k) < 1e-9 ? CL.cu : CL.g, false, 5.5); });
+    var guar = exact.length + between.length;
+    var where = between.map(function(i){ return '(' + W5X[i] + ', ' + W5X[i+1] + ')'; }).concat(exact.map(function(x){ return 'x = ' + x; })).join(', ');
+    var html = '<b>IVT guarantees</b> h(x) = ' + nf(k, 1) + ' <b>at least ' + guar + ' time' + (guar === 1 ? '' : 's') + '</b>' + (guar ? ': ' + where + '.' : '. k is not between any neighboring values, so nothing is promised.');
+    if (w5m === 'simple' && actual != null) html += '<br>This simplest graph hits it exactly ' + actual + ' time' + (actual === 1 ? '' : 's') + ': the minimum.';
+    if (w5m === 'wiggly' && actual != null) html += '<br>This wiggly graph hits it ' + actual + ' time' + (actual === 1 ? '' : 's') + '. More than the minimum is allowed; fewer never is.';
+    if (w5m === 'jump') html += '<br><span style="color:#C62828;"><b>Not continuous on [2, 5].</b></span> The IVT says nothing there' + (lostJump ? ', so that interval no longer counts (red band).' : '.') + (k > 0.5 && k < 4.5 ? ' At k = ' + nf(k, 1) + ' this graph jumps right over the line on (2, 5), even though −2 &lt; k &lt; 6.' : ' Try k between 0.5 and 4.5 to see it skip.');
+    document.getElementById('w5out').innerHTML = html;
+}
 
 </script>
 </body>
