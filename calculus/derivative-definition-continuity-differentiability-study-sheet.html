@@ -360,6 +360,19 @@ li { margin-bottom: 8px; }
 .why > svg text { font-family:Inter, sans-serif; }
 @media (max-width: 768px) { .why { grid-template-columns: 1fr; } .why > svg { max-width:300px; margin:0 auto; } }
 
+/* ===== Try it: worked examples under each theory block ===== */
+.tryit { background:#FFFFFF; border:1.5px solid #E2D7C3; border-left:5px solid #39864E; border-radius:8px; padding:14px 18px; margin:-4px 0 22px; box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+.tryit .try-k { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; background:#39864E; color:#FFFFFF; padding:2px 9px; border-radius:9px; margin-right:8px; }
+.tryit .try-q { font-weight:600; margin-bottom:4px; line-height:1.7; }
+.tryit + .tryit { margin-top:-12px; }
+/* long display equations scroll inside their box on small screens */
+mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; overflow-y:hidden; }
+.solution-body, .tryit, .prob, .card { min-width:0; }
+.tryit .tbl-wrap, .solution-body .tbl-wrap { max-width:100%; }
+.wgrid > *, .cs-row > *, .two-col > *, .ix-grid > * { min-width:0; }
+.concept-body { min-width:0; }
+.concept-body p, .tryit p, .solution-body p { overflow-x:auto; overflow-y:hidden; }
+
 </style>
 </head>
 <body>
@@ -644,6 +657,10 @@ li { margin-bottom: 8px; }
             <p><strong>Example (Review #1b).</strong> Givens: $s(t)=16t^2$ feet, $t$ in seconds, interval $[0,2]$. Then $\dfrac{s(2)-s(0)}{2-0}=\dfrac{64-0}{2}=32$ ft/s. Always attach units; "32" alone loses points.</p>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>A balloon's height is $H(t)=3t^2+2$ feet after $t$ seconds. Find its average rate of change on $[1,4]$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$H(t)=3t^2+2$ (feet), $t$ in seconds</li><li>$a=1$, $b=4$</li></ul></div>
+$$\frac{H(4)-H(1)}{4-1}=\frac{(48+2)-(3+2)}{3}=\frac{50-5}{3}=\boxed{15\text{ ft/s}}$$<p style="margin-bottom:0;">On average the balloon rose 15 feet per second over those 3 seconds.</p></div></div>
         <div class="card">
             <h3>Instantaneous rate of change = the derivative at a point</h3>
             <p>An average rate needs two points. An <strong>instantaneous</strong> rate (velocity at exactly $t=2$, slope at exactly $x=4$) only has one point, so we take the average rate over a tiny interval and let the interval shrink to zero. That limit is the derivative. There are two ways to write it:</p>
@@ -676,6 +693,14 @@ li { margin-bottom: 8px; }
             <p style="margin-bottom:0;">Step 3 becomes "write $f(x)-f(a)$," and step 5 becomes "<strong>factor the numerator</strong> so an $(x-a)$ appears, then cancel." Example: $x^2-3x-4=(x-4)(x+1)$.</p>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Use the h form to find $f'(3)$ for $f(x)=2x^2+x$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f(x)=2x^2+x$, $a=3$</li><li>$f(3)=18+3=21$</li></ul></div>
+$$\begin{aligned}f'(3)&=\lim_{h\to0}\frac{f(3+h)-f(3)}{h}=\lim_{h\to0}\frac{2(3+h)^2+(3+h)-21}{h}\\&=\lim_{h\to0}\frac{18+12h+2h^2+3+h-21}{h}=\lim_{h\to0}\frac{2h^2+13h}{h}\\&=\lim_{h\to0}(2h+13)=\boxed{13}\end{aligned}$$<p style="margin-bottom:0; font-size:13.5px;">Notice the constant terms ($18+3-21$) cancelled, just like step 4 says they should.</p></div></div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Use the x &rarr; a form to find $g'(2)$ for $g(x)=x^2-5x$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$g(x)=x^2-5x$, $a=2$</li><li>$g(2)=4-10=-6$</li></ul></div>
+$$\begin{aligned}g'(2)&=\lim_{x\to2}\frac{g(x)-g(2)}{x-2}=\lim_{x\to2}\frac{x^2-5x+6}{x-2}\\&=\lim_{x\to2}\frac{(x-2)(x-3)}{x-2}=\lim_{x\to2}(x-3)=\boxed{-1}\end{aligned}$$<p style="margin-bottom:0; font-size:13.5px;">Subtracting $g(2)=-6$ turns into $+6$. That's what makes the numerator factor with an $(x-2)$.</p></div></div>
         <div class="card">
             <h3>The three algebra moves that get rid of $\tfrac{0}{0}$</h3>
             <div class="concept-list">
@@ -685,6 +710,14 @@ li { margin-bottom: 8px; }
             </div>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Evaluate $\displaystyle\lim_{h\to0}\frac{\sqrt{16+h}-4}{h}$. Which derivative is it?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Plugging in $h=0$ gives $\tfrac00$</li><li>Conjugate: $\sqrt{16+h}+4$</li></ul></div>
+$$\lim_{h\to0}\frac{\sqrt{16+h}-4}{h}\cdot\frac{\sqrt{16+h}+4}{\sqrt{16+h}+4}=\lim_{h\to0}\frac{h}{h(\sqrt{16+h}+4)}=\frac{1}{4+4}=\boxed{\tfrac18}$$<p style="margin-bottom:0;">It's $f'(16)$ for $f(x)=\sqrt{x}$: the slope of $y=\sqrt{x}$ at $x=16$.</p></div></div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Find the derivative function $f'(x)$ for $f(x)=x^2+4x$ using the definition.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f(x)=x^2+4x$; keep $x$ as a letter</li></ul></div>
+$$\begin{aligned}f'(x)&=\lim_{h\to0}\frac{(x+h)^2+4(x+h)-(x^2+4x)}{h}=\lim_{h\to0}\frac{2xh+h^2+4h}{h}\\&=\lim_{h\to0}(2x+h+4)=\boxed{2x+4}\end{aligned}$$<p style="margin-bottom:0; font-size:13.5px;">The answer is a formula. For example, $f'(1)=6$ is the slope at $x=1$.</p></div></div>
         <div class="card">
             <h3>Notation: all of these mean "the derivative"</h3>
             <p style="margin-bottom:0;">$f'(x)$ &nbsp;&middot;&nbsp; $y'$ &nbsp;&middot;&nbsp; $\dfrac{dy}{dx}$ &nbsp;&middot;&nbsp; $\dfrac{dg}{dx}$ (when the function is named $g$) &nbsp;&middot;&nbsp; $\dfrac{d}{dx}\big[f(x)\big]$. With a number in it, $f'(4)$ is the slope at $x=4$ only. Review #9a's "Find $\dfrac{dg}{dx}$" wants the whole formula $g'(x)$.</p>
@@ -733,6 +766,10 @@ li { margin-bottom: 8px; }
         </div>
 
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>A cart's position is $s(t)$ meters at $t$ seconds, and $s'(4)=-3$. What does that mean?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$s$ in meters, $t$ in seconds</li><li>$s'(4)=-3$</li></ul></div>
+<p style="margin-bottom:0;">At $t=4$ seconds the cart's velocity is $-3$ m/s: it's moving at 3 meters per second in the <strong>negative</strong> direction. Graphically, the tangent line to the graph of $s$ at $t=4$ has slope $-3$, so $s$ is decreasing there. The units come from (output unit)/(input unit) = m/s.</p></div></div>
         <div class="why hap"><div><span class="why-k">Why care?</span><p><strong>The hammer throw.</strong> An athlete spins a heavy ball on a wire in a circle. The wire pulls the ball straight toward the center, along the <strong>normal line</strong> (perpendicular to the path). The instant they let go, the ball doesn't fly outward. It flies off along the <strong>tangent line</strong>, the direction it was already moving.</p>
             <p class="tie">The tangent line is the direction of motion right now; the normal line is the perpendicular direction. Review #9 asks for both.</p></div><svg viewBox="0 0 200 124"><circle cx="66" cy="68" r="40" fill="none" stroke="#21442B" stroke-width="2" stroke-dasharray="5 4"/>
 <circle cx="66" cy="68" r="3" fill="#8C7B64"/><line x1="66" y1="68" x2="66" y2="28" stroke="#BC6C26" stroke-width="2.4"/>
@@ -752,6 +789,10 @@ li { margin-bottom: 8px; }
         </div>
 
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>For $f(x)=x^2-4x+1$, find the tangent and normal lines at $x=3$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f(x)=x^2-4x+1$, $a=3$</li><li>Point: $f(3)=9-12+1=-2$, so $(3,-2)$</li></ul></div>
+$$f'(x)=\lim_{h\to0}\frac{(x+h)^2-4(x+h)+1-(x^2-4x+1)}{h}=\lim_{h\to0}(2x+h-4)=2x-4,\qquad f'(3)=2$$<p>Tangent (slope 2): $\boxed{y+2=2(x-3)}$, i.e. $y=2x-8$.</p><p style="margin-bottom:0;">Normal (slope $-\tfrac12$): $\boxed{y+2=-\tfrac12(x-3)}$, i.e. $y=-\tfrac12x-\tfrac12$.</p></div></div>
         <div class="why hap"><div><span class="why-k">Why care?</span><p><strong>Your GPA.</strong> Think of your GPA as $f$ and how much it changes with each new class as $f'$. If your next grade is <em>above</em> your current GPA, the change is positive and your GPA goes up, even if that grade isn't an A. If it's <em>below</em>, the change is negative and your GPA drops, even if it's a B+. What sets the direction is the <strong>sign of the change</strong>, not how high the GPA already is.</p>
             <p class="tie">Same rule for any function: $f'>0$ means $f$ is increasing, and $f'<0$ means it's decreasing. That is all Review #10 is asking.</p></div><svg viewBox="0 0 200 124"><line x1="18" y1="108" x2="194" y2="108" stroke="#9C8B74"/><line x1="18" y1="108" x2="18" y2="8" stroke="#9C8B74"/>
 <line x1="140" y1="62" x2="194" y2="62" stroke="#B9A88F" stroke-dasharray="4 3"/><text x="138" y="78" font-size="8" fill="#8C7B64" text-anchor="end">current GPA</text>
@@ -771,6 +812,10 @@ li { margin-bottom: 8px; }
             <p style="margin-bottom:0;"><strong>Model answer, Review #10:</strong> "Since $f'(x)>0$ for $-3 \lt x \lt 2$, every tangent line to $f$ on that interval has positive slope, so $f$ is increasing on $(-3,2)$."</p>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>The graph of $f'$ is below the x-axis on $(1,6)$ and above it on $(6,9)$. Describe the graph of $f$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f'<0$ on $(1,6)$</li><li>$f'>0$ on $(6,9)$</li></ul></div>
+<p style="margin-bottom:0;">$f$ is <strong>decreasing on $(1,6)$</strong> and <strong>increasing on $(6,9)$</strong>, so the graph of $f$ goes downhill, bottoms out at $x=6$, then climbs. As a sentence: "Since $f'(x)<0$ on $(1,6)$, $f$ is decreasing there; since $f'(x)>0$ on $(6,9)$, $f$ is increasing there."</p></div></div>
         <div class="card">
             <h3>Reading a limit backwards <span class="slide-ref">Review #6, #7</span></h3>
             <p style="font-size:13.5px;"><strong>Trigger words:</strong> "identify $f(x)$," "what does the limit represent," "do NOT evaluate," "write a limit expression that gives $f'(\ldots)$."</p>
@@ -784,6 +829,10 @@ li { margin-bottom: 8px; }
             <p style="margin-bottom:0;"><strong>Going forwards (Review #7):</strong> to get $f'(\tfrac{\pi}{2})$ for $f(x)=\sin x$, fill in the template: $\displaystyle\lim_{h\to0}\frac{\sin(\frac{\pi}{2}+h)-\sin\frac{\pi}{2}}{h}$, which you may also write as $\displaystyle\lim_{h\to0}\frac{\sin(\frac{\pi}{2}+h)-1}{h}$.</p>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Name $f$ and what each limit represents (don't evaluate): (a) $\displaystyle\lim_{h\to0}\frac{(5+h)^3-125}{h}$ &nbsp; (b) $\displaystyle\lim_{x\to\pi}\frac{\cos x+1}{x-\pi}$ &nbsp; (c) $\displaystyle\lim_{h\to0}\frac{\sqrt{x+h}-\sqrt{x}}{h}$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Letter $x$ next to $h$: $f'(x)$. Number next to $h$, or $x\to$ number: $f'(\text{number})$</li></ul></div>
+<p>(a) $f(x)=x^3$, represents $f'(5)$. Check: $f(5)=125$.</p><p>(b) $f(x)=\cos x$, represents $f'(\pi)$. Check: $f(\pi)=\cos\pi=-1$, so subtracting it shows up as $+1$.</p><p style="margin-bottom:0;">(c) $f(x)=\sqrt{x}$, represents the derivative function $f'(x)$.</p></div></div>
         <div class="card">
             <h3>Position, height, and velocity <span class="slide-ref">Review #1</span></h3>
             <p>Review #1 gives $s(t)=16t^2$ as <strong>distance fallen</strong>, not height. The gumball starts 220 ft up, so its <strong>height</strong> is $H(t)=220-16t^2$.</p>
@@ -793,6 +842,10 @@ li { margin-bottom: 8px; }
             </ul>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>A rock is dropped from a 144 ft cliff; it has fallen $s(t)=16t^2$ feet after $t$ seconds. When does it land, what's its average velocity on the way down, and how fast is it going when it lands?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$s(t)=16t^2$ = feet fallen</li><li>Cliff height 144 ft</li></ul></div>
+<p>Lands when $16t^2=144$, so $t^2=9$ and $\boxed{t=3\text{ s}}$.</p><p>Average velocity on $[0,3]$: $\dfrac{144-0}{3-0}=\boxed{48\text{ ft/s}}$.</p>$$v(3)=\lim_{h\to0}\frac{16(3+h)^2-144}{h}=\lim_{h\to0}\frac{96h+16h^2}{h}=\lim_{h\to0}(96+16h)=\boxed{96\text{ ft/s}}$$</div></div>
         <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam traps:</strong> (1) Normal slope is the <strong>negative reciprocal</strong>, not just the negative: $-7\to\tfrac17$, not $7$. (2) Using the formula $f'(x)$ as the slope instead of the number $f'(a)$. (3) Using $f'(a)$ as the y-value of the point; the point uses $f(a)$. (4) Reading "graph of $f'$ above the x-axis" as "$f$ is positive." It means $f$ is <strong>increasing</strong>. (5) In a "do NOT evaluate" table, evaluating anyway wastes time and may not get credit.</p></div>
         <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> Explanation questions (#5, #10) want three things: name the derivative fact ("slope of the tangent line" or "$f'>0$"), connect it to the graph of $f$ ("increasing"), and give the interval or point ("on $(-3,2)$", "at $x=3$"). One sentence with all three is full credit.</p></div>
     </div>
@@ -841,6 +894,10 @@ li { margin-bottom: 8px; }
             </div>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Let $f(x)=\dfrac{x^2-9}{x-3}$ for $x\ne3$ and $f(3)=5$. Is $f$ continuous at $x=3$? If not, how would you fix it?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$c=3$</li><li>$f(3)=5$ (given)</li></ul></div>
+<p>(1) $f(3)=5$ is defined. &#10003;</p>$$\text{(2) }\lim_{x\to3}\frac{x^2-9}{x-3}=\lim_{x\to3}\frac{(x-3)(x+3)}{x-3}=\lim_{x\to3}(x+3)=6\text{ exists. }\checkmark$$<p style="margin-bottom:0;">(3) $6\ne5$. &#10007; So $f$ is <strong>not continuous</strong> at 3. It's a hole with the dot in the wrong place (removable). Fix: redefine $f(3)=6$.</p></div></div>
         <div class="card">
             <h3>Differentiability at $x=c$, and the ways it fails <span class="slide-ref">C&amp;D #1, #2</span></h3>
             <p>$f$ is differentiable at $c$ when $f'(c)$ exists: the function is continuous at $c$ <strong>and</strong> the slope coming in from the left equals the slope coming in from the right (and that slope is not infinite).</p>
@@ -858,6 +915,14 @@ li { margin-bottom: 8px; }
         </div>
 
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Continuous, differentiable, both or neither? (a) $|x+2|$ at $x=-2$ &nbsp; (b) $\sqrt[3]{x-1}$ at $x=1$ &nbsp; (c) $x^2+1$ at $x=0$ &nbsp; (d) $\dfrac{1}{x-4}$ at $x=4$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Match each to a feature: corner, cusp, vertical tangent, smooth, or a break</li></ul></div>
+<div class="tbl-wrap"><table class="cmp"><tr><th></th><th>Feature at the point</th><th>Answer</th></tr>
+<tr><td>(a)</td><td>corner (V shape): slopes $-1$ and $1$</td><td><strong>Continuous only</strong></td></tr>
+<tr><td>(b)</td><td>vertical tangent: slope is infinite</td><td><strong>Continuous only</strong></td></tr>
+<tr><td>(c)</td><td>smooth parabola</td><td><strong>Both</strong></td></tr>
+<tr><td>(d)</td><td>vertical asymptote: $f(4)$ undefined</td><td><strong>Neither</strong></td></tr></table></div></div></div>
         <div class="why hap"><div><span class="why-k">Why care?</span><p><strong>Roller coasters and highway ramps.</strong> Where a straight piece of track meets a curved piece, the designers need the two pieces to meet at the <strong>same height</strong> (no gap) and with the <strong>same slope</strong> (no kink). A kink would jolt every rider the moment the car hits it. On-ramps are designed the same way so you don't have to jerk the wheel.</p>
             <p class="tie">That's exactly C&amp;D #4: choose $a$ and $b$ so the pieces match in value (continuous) and in slope (differentiable).</p></div><svg viewBox="0 0 200 124"><text x="50" y="14" font-size="9" font-weight="700" fill="#BC6C26" text-anchor="middle">kink: jolt &#10007;</text>
 <line x1="8" y1="96" x2="50" y2="70" stroke="#BC6C26" stroke-width="3"/><line x1="50" y1="70" x2="92" y2="66" stroke="#BC6C26" stroke-width="3"/><circle cx="50" cy="70" r="3.2" fill="#fff" stroke="#BC6C26" stroke-width="1.6"/>
@@ -893,6 +958,14 @@ li { margin-bottom: 8px; }
             <p style="margin-bottom:0; font-size:13.5px;">Write it as a mini table so the grader sees your evidence: $L(c)=\_\_$, $R(c)=\_\_$, $L'(c)=\_\_$, $R'(c)=\_\_$, conclusion.</p>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Is $f(x)=\begin{cases}x^2+2, & x<1\\ 2x+1, & x\ge1\end{cases}$ continuous? differentiable? (at $x=1$)</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$c=1$; left $L(x)=x^2+2$, right $R(x)=2x+1$</li><li>$L'(x)=2x$, $R'(x)=2$</li></ul></div>
+<p>Values: $L(1)=3$, $R(1)=3$. Equal, so <strong>continuous</strong>.</p><p style="margin-bottom:0;">Slopes: $L'(1)=2$, $R'(1)=2$. Equal, so <strong>differentiable</strong>. Answer: <strong>both</strong>.</p></div></div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Find $k$ so $f(x)=\begin{cases}kx+3, & x<2\\ x^2+1, & x\ge2\end{cases}$ is continuous. Is it then differentiable at $x=2$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$c=2$; left $L(x)=kx+3$, right $R(x)=x^2+1$</li><li>$R(2)=5$</li></ul></div>
+<p>Continuous: $L(2)=R(2)$, so $2k+3=5$ and $\boxed{k=1}$.</p><p style="margin-bottom:0;">Slopes with $k=1$: $L'(2)=1$ but $R'(2)=2(2)=4$. Not equal, so it's a corner: <strong>continuous but not differentiable</strong>. Only one unknown means you can only force one condition.</p></div></div>
         <div class="card">
             <h3>To sketch a function with a given feature <span class="slide-ref">C&amp;D #2</span></h3>
             <p style="margin-bottom:0;">Start from the parent shape and slide it so the feature lands on the given point $(h,k)$: a corner comes from $y=|x-h|+k$; a cusp from $y=(x-h)^{2/3}+k$; a vertical tangent from $y=\sqrt[3]{x-h}+k$. Then label the point on your sketch.</p>
@@ -914,9 +987,9 @@ li { margin-bottom: 8px; }
             <svg viewBox="0 0 200 124"><line x1="22" y1="106" x2="194" y2="106" stroke="#9C8B74"/><line x1="22" y1="106" x2="22" y2="8" stroke="#9C8B74"/>
             <line x1="22" y1="58" x2="194" y2="58" stroke="#DDA25E" stroke-width="1.8" stroke-dasharray="5 4"/><text x="192" y="53" font-size="8.5" font-weight="700" fill="#A9772F" text-anchor="end">65&#176;F</text>
             <path d="M28 92 C 60 92, 70 70, 96 74 S 130 30, 150 40 S 176 22, 188 20" fill="none" stroke="#21442B" stroke-width="2.4"/>
-            <circle cx="28" cy="92" r="3.5" fill="#21442B"/><circle cx="188" cy="20" r="3.5" fill="#21442B"/><circle cx="114" cy="58" r="4" fill="#BC6C26"/>
+            <circle cx="28" cy="92" r="3.5" fill="#21442B"/><circle cx="188" cy="20" r="3.5" fill="#21442B"/><circle cx="122.8" cy="58" r="4" fill="#BC6C26"/>
             <text x="30" y="102" font-size="8.5" font-weight="700" fill="#21442B">50&#176; at 7 am</text><text x="186" y="14" font-size="8.5" font-weight="700" fill="#21442B" text-anchor="end">80&#176; at 2 pm</text>
-            <text x="116" y="74" font-size="8.5" font-weight="700" fill="#BC6C26">hit 65&#176; here</text><text x="192" y="118" font-size="8" fill="#8C7B64" text-anchor="end">time</text></svg></div>
+            <text x="126" y="72" font-size="8.5" font-weight="700" fill="#BC6C26">hit 65&#176; here</text><text x="192" y="118" font-size="8" fill="#8C7B64" text-anchor="end">time</text></svg></div>
 
         <div class="card ifig">
             <span class="lead-tag">Play first</span>
@@ -965,6 +1038,12 @@ li { margin-bottom: 8px; }
             </div>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Determine whether the Intermediate Value Theorem guarantees that $f(x)=k$ for some $x$ in the interval: $\;f(x)=\dfrac{1}{x-2}$, $\;[1,3]$, $\;k=0$.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f(x)=\dfrac{1}{x-2}$ on $[1,3]$, $k=0$</li><li>$f(1)=\dfrac{1}{-1}=-1$, $\;f(3)=\dfrac{1}{1}=1$</li></ul></div>
+            <p><strong>Check continuity first.</strong> $f$ is undefined at $x=2$ (vertical asymptote), and $x=2$ is inside $[1,3]$. So $f$ is <strong>not continuous on $[1,3]$</strong>.</p>
+            <p><strong>Conclusion:</strong> the IVT does <strong>not</strong> apply, so it does not guarantee any $c$ with $f(c)=0$. This is true even though $f(1)=-1<0<1=f(3)$ looks like it passes the "between" test.</p>
+            <p style="margin-bottom:0; font-size:13.5px;">In fact $\dfrac{1}{x-2}$ is <em>never</em> 0 (a fraction with numerator 1 can't equal 0). The graph jumps from $-\infty$ to $+\infty$ at the asymptote and skips 0 entirely. This is the trap: <strong>always check continuity on the whole interval before checking the endpoints.</strong></p></div></div>
         <div class="technique-section hap" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
             <h3>To answer "must there be an $x$ with $f(x)=k$?" <span class="slide-ref">CA #2 #1, #5, #9, #10</span></h3>
             <p style="font-size:13.5px;"><strong>Trigger words:</strong> "must there be," "explain," "justify," "does the IVT hold / apply," "guarantee."</p>
@@ -977,6 +1056,14 @@ li { margin-bottom: 8px; }
             <div class="highlight-box" style="margin-bottom:0;"><p style="margin-bottom:0;"><strong>Full-credit template:</strong> "Since $f$ is continuous on $[a,b]$ and $f(a) < k < f(b)$ (or $f(a)>k>f(b)$), by the Intermediate Value Theorem there is at least one $c$ in $(a,b)$ with $f(c)=k$."<br><span style="font-size:13.5px;">Example with new numbers: $p(x)=x^2+1$ on $[0,3]$, $k=6$. $p$ is a polynomial, so it's continuous; $p(0)=1<6<10=p(3)$; so by the IVT some $c$ in $(0,3)$ has $p(c)=6$.</span></p></div>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>$f$ is continuous on $[1,6]$ with $f(1)=-3$ and $f(6)=4$. Must $f(c)=0$ for some $c$ in $(1,6)$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$f$ continuous on $[1,6]$</li><li>$f(1)=-3$, $f(6)=4$, $k=0$</li></ul></div>
+<p style="margin-bottom:0;"><strong>Yes.</strong> Since $f$ is continuous on $[1,6]$ and $f(1)=-3<0<4=f(6)$, by the Intermediate Value Theorem there is at least one $c$ in $(1,6)$ with $f(c)=0$.</p></div></div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Does the IVT guarantee $q(c)=1$ for $q(x)=x^2-6x+10$ on $[0,5]$?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$q$ is a polynomial, so it's continuous</li><li>$q(0)=10$, $q(5)=25-30+10=5$, $k=1$</li></ul></div>
+<p><strong>No guarantee.</strong> $1$ is not between $q(5)=5$ and $q(0)=10$, so the IVT doesn't apply.</p><p style="margin-bottom:0;">Twist: $q(3)=9-18+10=1$, so $q$ <em>does</em> hit 1. "The IVT doesn't apply" means "no promise," not "never."</p></div></div>
         <div class="technique-section hap" style="background: rgba(221,162,94,0.07); border-left: 4px solid #DDA25E;">
             <h3>To find the fewest possible solutions from a table <span class="slide-ref">CA #2 #2&ndash;4, #6&ndash;8</span></h3>
             <p style="font-size:13.5px;"><strong>Trigger words:</strong> "minimum number of zeros," "fewest possible times $f(x)=k$," "at least how many."</p>
@@ -989,7 +1076,15 @@ li { margin-bottom: 8px; }
             <p style="margin-bottom:0;"><strong>Example (explorer table, $k=4$):</strong> values $3, -2, 6, 9, 1$ become $-,\,-,\,+,\,+,\,-$. That's 2 switches (between $x=2$ and $5$, and between $7$ and $10$), so $h(x)=4$ <strong>at least 2 times</strong>.</p>
         </div>
 
-        <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam traps:</strong> (1) Checking only the two outer endpoints. In CA #2's first table, $g(0)=-4$ and $g(50)=-15$ are both negative, but the values in between flip sign twice. Always walk through <strong>neighboring</strong> columns. (2) Saying "exactly 2." The IVT only gives "at least." (3) Forgetting to say "continuous." The explanation loses the point without it. (4) Thinking the IVT tells you what $c$ is. It doesn't; you only know $c$ is in $(a,b)$. (5) If $k$ is outside every neighboring pair, the fewest possible is 0, not "it can't happen."</p></div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>$p$ is continuous. Using the table, find the fewest possible (a) zeros, (b) solutions of $p(x)=3$, (c) solutions of $p(x)=-3$ on $[0,12]$.<div class='tbl-wrap'><table class='cmp' style='margin:8px 0 0; font-weight:400;'><tr><th>$x$</th><td>0</td><td>3</td><td>6</td><td>9</td><td>12</td></tr><tr><th>$p(x)$</th><td>4</td><td>$-1$</td><td>$-5$</td><td>2</td><td>8</td></tr></table></div></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Values in order: $4,-1,-5,2,8$</li></ul></div>
+<div class="tbl-wrap"><table class="cmp"><tr><th></th><th>Above (+) / below (&minus;) $k$</th><th>Switches</th><th>Answer</th></tr>
+<tr><td>(a) $k=0$</td><td>$+,-,-,+,+$</td><td>$(0,3)$, $(6,9)$</td><td><strong>2</strong></td></tr>
+<tr><td>(b) $k=3$</td><td>$+,-,-,-,+$</td><td>$(0,3)$, $(9,12)$</td><td><strong>2</strong></td></tr>
+<tr><td>(c) $k=-3$</td><td>$+,+,-,+,+$</td><td>$(3,6)$, $(6,9)$</td><td><strong>2</strong></td></tr></table></div>
+<p style="margin-bottom:0; font-size:13.5px;">Same answer three times, but the crossings are in different places. Always say where.</p></div></div>
+        <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam traps:</strong> (1) Checking only the two outer endpoints. In CA #2's first table, $g(0)=-4$ and $g(50)=-15$ are both negative, but the values in between flip sign twice. Always walk through <strong>neighboring</strong> columns. (2) Saying "exactly 2." The IVT only gives "at least." (3) Forgetting to say "continuous." The explanation loses the point without it. (4) Thinking the IVT tells you what $c$ is. It doesn't; you only know $c$ is in $(a,b)$. (5) If $k$ is outside every neighboring pair, the fewest possible is 0, not "it can't happen." (6) Check continuity on the <em>whole</em> interval first. $\frac{1}{x-2}$ on $[1,3]$ passes the endpoint test but breaks at $x=2$, so the IVT doesn't apply.</p></div>
         <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> "Must there be&hellip;? Explain." is graded on the sentence: it has to name <strong>continuity</strong>, show the <strong>between-ness</strong> with actual numbers, and name the <strong>Intermediate Value Theorem</strong>. A bare "yes" earns nothing. "Fewest possible" questions want a number plus, ideally, which intervals the crossings are in.</p></div>
     </div>
 
@@ -1420,6 +1515,8 @@ iv ||| Outer values both negative: zero zeros? ||| <strong>Not necessarily.</str
 ex ||| CA #2 #1: $g(28)=11$, $g(50)=-15$. Must $g(x)=-10$? ||| <strong>Yes</strong>: $g$ continuous and $11>-10>-15$, so by the IVT.
 ---
 ex ||| CA #2 #9: $f(x)=3x^2-5x-2$ on $[0,3]$, $k=-1$ ||| Polynomial, so continuous; $f(0)=-2<-1<10=f(3)$, so <strong>yes, the IVT holds</strong>.
+---
+iv ||| Does the IVT guarantee $\frac{1}{x-2}=0$ on $[1,3]$? ||| <strong>No.</strong> $f$ is <strong>not continuous</strong> at $x=2$ (inside the interval), so the IVT doesn't apply, even though $f(1)=-1<0<1=f(3)$. It actually never equals 0.
 </script>
     </div>
 
