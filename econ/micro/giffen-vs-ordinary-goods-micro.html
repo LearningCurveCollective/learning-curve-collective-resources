@@ -1115,7 +1115,7 @@ mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: aut
             <h2>Classify it</h2>
         </div>
 
-        <p>Pick an answer for each question. You get instant feedback, and the order shuffles every time you reset.</p>
+        <p>Pick an answer for each question. Every explanation runs the <a href="#" onclick="goTab('t3'); return false;" style="color:var(--green-dark); font-weight:600;">3-step chain</a>, and the order shuffles every time you reset.</p>
 
         <div class="scorebar">
             <div class="score" id="scoreText">Score: 0 / 0</div>
@@ -1231,27 +1231,60 @@ var C3 = ['Normal (ordinary)', 'Inferior but ordinary', 'Giffen'];
 var TF = ['True', 'False'];
 var QUIZ = [
     { q: 'The price of X rises. $SE = -4$ and $IE = -2$. Classify X.', c: C3, a: 0,
-      e: 'IE is negative, so X is normal. Both effects push X down: total $= -6$.' },
+      s: ['Price rises, so SE says buy less: $-4$.',
+          '$IE = -2$ points the <strong>same</strong> way as SE, so X is <strong>normal</strong>. Stop here.',
+          'Skip. Both effects agree; total $= -6$.'],
+      v: 'Normal (ordinary).' },
     { q: 'The price of X rises. $SE = -4$ and $IE = +1$. Classify X.', c: C3, a: 1,
-      e: 'IE is positive, so X is inferior. But $IE = 1 &lt; |SE| = 4$, so the substitution effect wins and the total is $-3$. Ordinary.' },
+      s: ['Price rises, so SE says buy less: $-4$.',
+          '$IE = +1$ points <strong>opposite</strong> to SE, so X is <strong>inferior</strong>. Go on.',
+          '$|IE| = 1 &lt; |SE| = 4$. SE wins; total $= -3$.'],
+      v: 'Inferior but ordinary.' },
     { q: 'The price of X rises. $SE = -2$ and $IE = +5$. Classify X.', c: C3, a: 2,
-      e: 'IE is positive <em>and</em> $IE = 5 &gt; |SE| = 2$. The income effect outweighs the substitution effect, so the total is $+3$. Giffen.' },
+      s: ['Price rises, so SE says buy less: $-2$.',
+          '$IE = +5$ points <strong>opposite</strong> to SE, so X is <strong>inferior</strong>. Go on.',
+          '$|IE| = 5 &gt; |SE| = 2$. IE wins; total $= +3$.'],
+      v: 'Giffen: X rises when its price rises.' },
     { q: 'When income rises 10%, a student buys 4% fewer instant noodles. When noodles get more expensive, she buys fewer. Classify noodles for her.', c: C3, a: 1,
-      e: 'Buying less when richer means inferior. Buying less when pricier means ordinary. Inferior but ordinary, like most inferior goods.' },
+      s: ['Price rises, so SE says buy fewer noodles.',
+          'She buys fewer when richer, so noodles are <strong>inferior</strong>. IE points opposite to SE (more noodles). Go on.',
+          'She still ends up buying fewer, so SE must be bigger than IE. SE wins.'],
+      v: 'Inferior but ordinary.' },
     { q: 'A very poor household spends most of its budget on rice. When the price of rice rises, it buys <em>more</em> rice. Classify rice for this household.', c: C3, a: 2,
-      e: 'Quantity rises with own price, which is the definition of Giffen. (And it must be inferior, because only a positive income effect can produce that.)' },
+      s: ['Price rises, so SE says buy less rice.',
+          'The household buys more anyway, so something pushed against SE. Only an inferior good&rsquo;s IE points opposite to SE, so rice is <strong>inferior</strong>. Go on.',
+          'Buying more overall means IE beat SE: $|IE| &gt; |SE|$.'],
+      v: 'Giffen.' },
     { q: 'X has an income elasticity of $+1.5$. Its price rises. Classify X.', c: C3, a: 0,
-      e: 'Positive income elasticity means normal. A normal good is always ordinary, because SE and IE are both negative for a price rise.' },
+      s: ['Price rises, so SE says buy less.',
+          'Positive income elasticity means <strong>normal</strong>, so IE also says buy less. Stop here.',
+          'Skip. Both effects push X down.'],
+      v: 'Normal (ordinary).' },
     { q: 'True or false: own-price elasticity is always negative.', c: TF, a: 1,
-      e: 'False. It is negative for ordinary goods, but positive for Giffen goods, since the elasticity takes the sign of $\\frac{\\partial x}{\\partial p_x}$.' },
+      s: ['SE always moves opposite to the price, which pushes the elasticity negative.',
+          'Normal goods stop here, so their elasticity is negative. Inferior goods go on.',
+          'If an inferior good&rsquo;s IE is bigger than its SE, quantity moves <em>with</em> the price, so the elasticity is positive.'],
+      v: 'False: Giffen goods have a positive own-price elasticity.' },
     { q: 'True or false: every Giffen good is an inferior good.', c: TF, a: 0,
-      e: 'True. To beat the always-negative SE, you need a positive IE, and a positive IE (for a price rise) means the good is inferior.' },
+      s: ['SE always moves opposite to the price.',
+          'A normal good stops here as ordinary. The only way to keep going is the <strong>inferior</strong> branch.',
+          'Giffen is one of the two exits from step 3, and only inferior goods reach step 3.'],
+      v: 'True.' },
     { q: 'True or false: every inferior good is a Giffen good.', c: TF, a: 1,
-      e: 'False. Most inferior goods have a positive IE that is too small to outweigh $|SE|$, so they are still ordinary.' },
+      s: ['SE always moves opposite to the price.',
+          'Inferior, so IE points opposite to SE. Go on.',
+          'Giffen only if IE is <em>bigger</em> than SE. Most inferior goods answer &ldquo;no&rdquo; here and stay ordinary.'],
+      v: 'False.' },
     { q: 'True or false: a normal good can be a Giffen good.', c: TF, a: 1,
-      e: 'False. For a normal good both effects are negative, so the total effect of a price rise must be negative.' },
+      s: ['SE always moves opposite to the price.',
+          'Normal, so IE moves the <strong>same</strong> way as SE. The chain stops: ordinary.',
+          'Never reached, so the Giffen exit is impossible.'],
+      v: 'False.' },
     { q: 'The price of X <em>falls</em>, and the consumer buys less X. What must be true?', c: ['X is normal', 'X is inferior but ordinary', 'X is Giffen'], a: 2,
-      e: 'Quantity moved in the <em>same</em> direction as price (both down). That is Giffen behavior. For a price fall, SE is positive and the IE is negative and larger.' }
+      s: ['Price falls, so SE says buy more.',
+          'The consumer buys less anyway, so IE must point opposite to SE. X is <strong>inferior</strong>. Go on.',
+          'Buying less overall means IE beat SE: $|IE| &gt; |SE|$.'],
+      v: 'X is Giffen.' }
 ];
 var score = 0, answered = 0;
 function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
@@ -1275,7 +1308,10 @@ function buildQuiz() {
                 answered++; if (ok) score++; updateScore();
                 var fb = d.querySelector('.feedback');
                 fb.className = 'feedback show ' + (ok ? 'ok' : 'no');
-                fb.innerHTML = '<strong>' + (ok ? 'Correct.' : 'Not quite.') + '</strong> ' + item.e;
+                var tags = ['Step 1 &middot; SE', 'Step 2 &middot; Normal?', 'Step 3 &middot; Size?'];
+                fb.innerHTML = '<strong>' + (ok ? 'Correct.' : 'Not quite.') + '</strong> Run the chain:' +
+                    item.s.map(function(s, k){ return '<div class="wk-row"><span class="wk-tag">' + tags[k] + '</span><span>' + s + '</span></div>'; }).join('') +
+                    '<p style="margin:10px 0 0;"><strong>' + item.v + '</strong></p>';
                 typeset(fb);
             });
         });
