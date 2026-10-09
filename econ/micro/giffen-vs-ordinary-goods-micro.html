@@ -398,6 +398,33 @@ li { margin-bottom: 10px; }
 /* ─── Keep display math inside its box on small screens ─── */
 mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
 
+
+/* ─── 3-step chain ─── */
+.chain { margin: 18px 0; }
+.chain-step { display: flex; gap: 16px; position: relative; padding-bottom: 18px; }
+.chain-step:not(:last-child)::before { content: ''; position: absolute; left: 19px; top: 44px; bottom: 4px; width: 3px; border-radius: 2px; background: linear-gradient(var(--gold), var(--green-dark)); }
+.chain-num { width: 40px; height: 40px; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.chain-body { flex: 1; background: white; border-radius: 10px; padding: 16px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.chain-body h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; color: var(--green-dark); margin-bottom: 6px; }
+.chain-body > p { margin-bottom: 8px; }
+.branches { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.branch { border-radius: 8px; padding: 10px 12px; font-size: 14px; line-height: 1.55; }
+.branch .b-if { display: block; font-weight: 700; color: var(--brown-dark); margin-bottom: 3px; }
+.branch .outcome { display: table; margin-top: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 10px; color: white; }
+.go-normal { background: rgba(33,68,43,0.08); border-left: 4px solid #21442B; }
+.go-inf { background: rgba(221,162,94,0.13); border-left: 4px solid #DDA25E; }
+.go-giffen { background: rgba(66,38,13,0.08); border-left: 4px solid #8B5E3C; }
+.givens { background: var(--gold-pale); border-radius: 6px; padding: 10px 12px; font-size: 14px; margin-bottom: 8px; }
+.wk-row { display: grid; grid-template-columns: 150px 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--cream-dark); font-size: 14.5px; line-height: 1.6; }
+.wk-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green-dark); padding-top: 3px; }
+.wk-verdict { margin-top: 12px; padding: 11px 14px; border-radius: 8px; color: white; font-weight: 500; font-size: 14.5px; }
+.chain-mini { counter-reset: cm; list-style: none; margin: 8px 0 0; }
+.chain-mini li { counter-increment: cm; position: relative; padding-left: 38px; margin-bottom: 12px; }
+.chain-mini li::before { content: counter(cm); position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+.link-btn { border: none; background: var(--green-dark); color: white; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13.5px; padding: 8px 14px; border-radius: 8px; cursor: pointer; }
+.link-btn:hover { background: #2F5A3C; }
+@media (max-width: 768px) { .branches { grid-template-columns: 1fr; } .wk-row { grid-template-columns: 1fr; gap: 2px; } }
+
 /* ─── Three labeled tab rows ─── */
 .tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
 .tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
@@ -532,6 +559,7 @@ mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: aut
         <div class="tab-row"><span class="tab-row-label">Study guide</span>
             <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 Two Different Questions</button>
             <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 SE vs. IE Lab</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 The 3-Step Chain</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Practice</span>
             <button class="tab-button" data-group="sprint" onclick="switchTab('quiz', this)">&#9889; Classify It</button>
@@ -617,9 +645,24 @@ mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: aut
             </div>
         </div>
 
-        <!-- === section 3 — Key takeaways === -->
+        <!-- === section 3 — The 3-step chain === -->
         <div class="section-header">
             <div class="section-number">3</div>
+            <h2>How to solve any problem: the 3-step chain</h2>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <ol class="chain-mini">
+                <li><strong>Identify the substitution effect.</strong> It always moves opposite to the price.</li>
+                <li><strong>Normal or inferior?</strong> Normal: the income effect moves the <em>same</em> way as SE, so you are done (ordinary). Inferior: the income effect moves <em>opposite</em> to SE, so go to step 3.</li>
+                <li><strong>Inferior only: is the income effect bigger than the substitution effect?</strong> No: inferior but ordinary. Yes: Giffen.</li>
+            </ol>
+            <button class="link-btn" onclick="goTab('t3')">See worked problems &rarr;</button>
+        </div>
+
+        <!-- === section 4 — Key takeaways === -->
+        <div class="section-header">
+            <div class="section-number">4</div>
             <h2>Key takeaways</h2>
         </div>
 
@@ -873,6 +916,197 @@ mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: aut
         </div>
     </div>
 
+    <!-- ═══════════ TAB 3 — THE 3-STEP CHAIN ═══════════ -->
+    <div id="tab-t3" class="tab-content">
+
+        <!-- === section 1 — The method === -->
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <h2>The 3-step chain</h2>
+        </div>
+
+        <p>Use the same three questions, in the same order, on every income and substitution effect problem. Each step either settles the answer or sends you to the next step.</p>
+
+        <div class="chain">
+            <div class="chain-step">
+                <div class="chain-num">1</div>
+                <div class="chain-body">
+                    <h3>Identify the substitution effect.</h3>
+                    <p>The substitution effect <strong>always moves opposite to the price</strong>. Write its direction down first.</p>
+                    <div class="branches">
+                        <div class="branch go-normal"><span class="b-if">Price rises &uarr;</span>SE says buy <strong>less</strong> X.</div>
+                        <div class="branch go-normal"><span class="b-if">Price falls &darr;</span>SE says buy <strong>more</strong> X.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chain-step">
+                <div class="chain-num">2</div>
+                <div class="chain-body">
+                    <h3>Is the good normal or inferior?</h3>
+                    <p>This tells you which way the income effect points <strong>relative to the substitution effect</strong>.</p>
+                    <div class="branches">
+                        <div class="branch go-normal"><span class="b-if">Normal</span>The income effect moves in the <strong>same direction</strong> as the substitution effect. Both arrows agree, so you are done.<span class="outcome" style="background:#21442B;">Ordinary &middot; stop here</span></div>
+                        <div class="branch go-inf"><span class="b-if">Inferior</span>The income effect moves <strong>opposite</strong> to the substitution effect. Now there is a tug-of-war.<span class="outcome" style="background:#BC6C26;">Go to step 3</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="chain-step">
+                <div class="chain-num">3</div>
+                <div class="chain-body">
+                    <h3>Inferior only: is the income effect bigger than the substitution effect?</h3>
+                    <p>Compare <strong>sizes</strong> (absolute values). The bigger effect decides which way $x$ moves.</p>
+                    <div class="branches">
+                        <div class="branch go-inf"><span class="b-if">No: $|IE| &lt; |SE|$</span>The substitution effect wins. $x$ still moves opposite to price.<span class="outcome" style="background:#BC6C26;">Inferior but ordinary</span></div>
+                        <div class="branch go-giffen"><span class="b-if">Yes: $|IE| &gt; |SE|$</span>The income effect wins. $x$ moves in the <em>same</em> direction as price.<span class="outcome" style="background:#42260D;">Giffen</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin:0;"><strong>Why step 3 is &ldquo;inferior only.&rdquo;</strong> For a normal good the two effects point the same way, so their sizes do not matter: they add up in one direction. Size only matters when they fight, and they only fight for an inferior good. That is why a normal good can never be Giffen.</p>
+        </div>
+
+        <!-- === section 2 — Worked problems === -->
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <h2>Worked problems</h2>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Example 1: A normal good gets pricier</h3>
+            <div class="step-example"><span class="step-label">Worked Example</span></div>
+            <p>Coffee is a normal good for Maya. The price of coffee rises. What happens to how much coffee she buys?</p>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Run the chain</button>
+            <div class="example-body">
+                <div class="givens"><strong>Givens:</strong> price of coffee &uarr;; coffee is normal.</div>
+                <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price rises, so the substitution effect says buy <strong>less</strong> coffee.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>Yes, normal. The income effect moves the <strong>same</strong> way: Maya is effectively poorer, so she also buys <strong>less</strong>.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>Skip. Both arrows point down, so there is nothing to compare.</span></div>
+                <div class="wk-verdict" style="background:#21442B;">Coffee purchases fall for sure. Coffee is <strong style="color:white">ordinary</strong>.</div>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>Example 2: An inferior good gets cheaper</h3>
+            <div class="step-example"><span class="step-label">Worked Example</span></div>
+            <p>Bus rides are an inferior good for Jordan (as his income grows, he switches to rideshares). The bus fare falls. The substitution effect is $+6$ rides per month and the income effect is $-2$ rides per month. Classify bus rides for Jordan.</p>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Run the chain</button>
+            <div class="example-body">
+                <div class="givens"><strong>Givens:</strong> fare &darr;; bus rides are inferior; $SE = +6$, $IE = -2$.</div>
+                <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price falls, so the substitution effect says ride <strong>more</strong>: $SE = +6$.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>No, inferior. The income effect moves <strong>opposite</strong> to SE: the cheaper fare makes Jordan effectively richer, so he rides <strong>less</strong>: $IE = -2$. Tug-of-war, so go on.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>$|IE| = 2 &lt; |SE| = 6$. The substitution effect wins. Total $= +6 + (-2) = +4$ rides.</span></div>
+                <div class="wk-verdict" style="background:#BC6C26;">Rides rise as the fare falls. Bus rides are <strong style="color:white">inferior but ordinary</strong>.</div>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>Example 3: A Giffen good</h3>
+            <div class="step-example"><span class="step-label">Worked Example</span></div>
+            <p>A very poor household spends most of its budget on rice. The price of rice rises. The substitution effect is $-3$ kg and the income effect is $+5$ kg. Classify rice for this household.</p>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Run the chain</button>
+            <div class="example-body">
+                <div class="givens"><strong>Givens:</strong> price of rice &uarr;; $SE = -3$, $IE = +5$.</div>
+                <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price rises, so the substitution effect says buy <strong>less</strong>: $SE = -3$.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>The income effect ($+5$) points <strong>opposite</strong> to SE, so rice must be <strong>inferior</strong>. Tug-of-war, so go on.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>$|IE| = 5 &gt; |SE| = 3$. The income effect wins. Total $= -3 + 5 = +2$ kg.</span></div>
+                <div class="wk-verdict" style="background:#42260D;">The household buys <em style="color:white">more</em> rice when it gets pricier. Rice is <strong style="color:white">Giffen</strong>.</div>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Example 4: Computing the effects first (Cobb-Douglas)</h3>
+            <div class="step-example"><span class="step-label">Worked Example</span></div>
+            <p>$U(x,y) = xy$, income $M = 16$, $p_y = 1$. The price of X rises from $p_x = 1$ to $p_x' = 4$. Find the substitution and income effects on X, then run the chain.</p>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Compute, then run the chain</button>
+            <div class="example-body">
+                <div class="givens"><strong>Givens:</strong> $U = xy$; $M = 16$; $p_y = 1$; $p_x$: $1 \to 4$. Cobb-Douglas with equal weights, so $x^* = \dfrac{M}{2p_x}$ and $y^* = \dfrac{M}{2p_y}$.</div>
+                <div class="highlight-box">
+                    <p><strong>A (original):</strong> $x_A = \dfrac{16}{2(1)} = 8$, $\;y_A = 8$, $\;U_0 = 8 \cdot 8 = 64$.</p>
+                    <p><strong>C (new price):</strong> $x_C = \dfrac{16}{2(4)} = 2$.</p>
+                    <p><strong>B (old utility, new slope):</strong> tangency $\dfrac{y}{x} = 4 \Rightarrow y = 4x$. On the old curve: $x(4x) = 64 \Rightarrow x^2 = 16 \Rightarrow x_B = 4$.</p>
+                    <p style="margin:0;">$SE = x_B - x_A = 4 - 8 = -4$, $\quad IE = x_C - x_B = 2 - 4 = -2$.</p>
+                </div>
+                <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price rises, and $SE = -4$: buy <strong>less</strong>, as expected.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>$IE = -2$ points the <strong>same</strong> way as SE, so X is <strong>normal</strong>. Done.</span></div>
+                <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>Skip. Total $= -4 + (-2) = -6$, which matches $x_C - x_A = 2 - 8$.</span></div>
+                <div class="wk-verdict" style="background:#21442B;">X is <strong style="color:white">normal and ordinary</strong>. (Cobb-Douglas goods are always normal.)</div>
+            </div>
+        </div>
+
+        <!-- === section 3 — Your turn === -->
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <h2>Your turn: run the chain</h2>
+        </div>
+
+        <p>Write down all three steps before you open the solution.</p>
+
+        <div id="chainPractice">
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+                    <div style="flex: 1;">
+                        <p>The price of X <strong>falls</strong>. The substitution effect is $+4$ and the income effect is $-1$. Classify X.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price falls, so SE says buy more: $+4$.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>IE $= -1$ is opposite to SE, so X is <strong>inferior</strong>. Go on.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>$|IE| = 1 &lt; |SE| = 4$. SE wins; total $= +3$.</span></div>
+                            <div class="wk-verdict" style="background:#BC6C26;">Inferior but ordinary.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+                    <div style="flex: 1;">
+                        <p>X is a normal good for you, and its price rises. A classmate says X might be Giffen if the income effect is big enough. Is that possible?</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price rises, so SE says buy less.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>Yes, normal, so IE also says buy less. The chain stops here.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>Never reached. A bigger IE only pushes X down <em>harder</em>.</span></div>
+                            <div class="wk-verdict" style="background:#21442B;">Not possible. A normal good is always ordinary.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+                    <div style="flex: 1;">
+                        <p>The price of X <strong>falls</strong>. The substitution effect is $+2$ and the income effect is $-3$. Classify X, and say what happens to the quantity bought.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price falls, so SE says buy more: $+2$.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>IE $= -3$ is opposite to SE, so X is <strong>inferior</strong>. Go on.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>$|IE| = 3 &gt; |SE| = 2$. IE wins; total $= -1$.</span></div>
+                            <div class="wk-verdict" style="background:#42260D;">Giffen. The consumer buys <em style="color:white">less</em> X even though it got cheaper.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">4</div>
+                    <div style="flex: 1;">
+                        <p>Instant ramen is an inferior good for Sam. Its price rises. The substitution effect is $-2.5$ packs and the income effect is $+1$ pack. Classify ramen for Sam.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <div class="wk-row"><span class="wk-tag">Step 1 &middot; SE</span><span>Price rises, so SE says buy less: $-2.5$.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 2 &middot; Normal?</span><span>Inferior (given), so IE points opposite: $+1$. Go on.</span></div>
+                            <div class="wk-row"><span class="wk-tag">Step 3 &middot; Size?</span><span>$|IE| = 1 &lt; |SE| = 2.5$. SE wins; total $= -1.5$ packs.</span></div>
+                            <div class="wk-verdict" style="background:#BC6C26;">Inferior but ordinary. Being inferior is not enough to be Giffen.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ═══════════ PRACTICE — CLASSIFY IT ═══════════ -->
     <div id="tab-quiz" class="tab-content">
 
@@ -905,6 +1139,20 @@ mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: aut
 <script>
 function typeset(el) {
     if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(function(){});
+}
+function goTab(name) {
+    var b = document.querySelector('.tab-buttons [onclick*="\'' + name + '\'"]');
+    switchTab(name, b);
+}
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open')) setTimeout(function(){ typeset(body); }, 50);
+}
+function toggleSolution(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open')) setTimeout(function(){ typeset(body); }, 50);
 }
 function switchTab(name, btn) {
     document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
