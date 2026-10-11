@@ -338,6 +338,21 @@ table.cmp.small { font-size: 13px; }
 .eqline mjx-container:not([display]) { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; }
 mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 
+/* links to the full reading sheets */
+.fs-box { background: white; border: 2px solid var(--gold); border-radius: 10px; padding: 12px 16px; margin: 0 0 18px; }
+.fs-h { font-family: 'Switzer','Space Grotesk',sans-serif; font-weight: 700; color: var(--brown-dark); font-size: 15px; margin-bottom: 2px; }
+.fs-lead { font-size: 13.5px; color: var(--text-medium); margin-bottom: 8px; }
+.fs-item { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; padding: 6px 0; border-top: 1px dashed var(--cream-dark); font-size: 13.5px; line-height: 1.55; }
+.fs-item:first-of-type { border-top: none; }
+.fs-btn { display: inline-block; background: var(--green-dark); color: white !important; text-decoration: none; font-weight: 700; font-size: 13px; padding: 5px 12px; border-radius: 16px; white-space: nowrap; }
+.fs-btn:hover { background: var(--green-medium); }
+.fs-tabs { flex: 1; min-width: 220px; }
+.fs-strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; background: rgba(221,162,94,0.10); border-radius: 8px; padding: 8px 12px; margin: 0 0 14px; }
+.fs-chip { display: inline-block; font-size: 11.5px; font-weight: 700; color: #8A4C14 !important; background: var(--gold-pale); border: 1px solid rgba(188,108,38,0.35); border-radius: 12px; padding: 2px 9px; text-decoration: none; white-space: nowrap; margin-left: 6px; }
+.fs-strip .fs-chip { margin-left: 0; }
+.fs-chip:hover { background: var(--gold); color: white !important; }
+@media print { .fs-box, .fs-strip, .fs-chip { display: none !important; } }
+
 
 /* ===== Article pages + clickable source cites ===== */
 a.pgl { color: inherit; text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; }
@@ -425,6 +440,7 @@ a.pgl:hover { color: var(--copper, #BC6C26); text-decoration-style: solid; }
         <div class="section-header"><div class="section-number">&#9733;</div><h2>Cheat Sheet: what to memorize</h2></div>
         <p>Sparse on purpose: the formulas, lists and one-liners you must produce from memory. Every row is clickable and jumps to the tab that explains it. The study tabs follow your professor's study guide question by question.</p>
 
+        <div class="fs-strip nolink"><b>Full reading sheets</b> (open in a new tab; best for hands-on practice): <a class="fs-chip" href="Comparing%20Environmental%20Policies.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Comparing Environmental Policies &#8599;</a> <a class="fs-chip" href="Carbon%20Taxes%20vs%20Cap%20and%20Trade.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carbon Taxes vs Cap and Trade &#8599;</a> <a class="fs-chip" href="Bridging%20the%20Energy%20Efficiency%20Gap.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Bridging the Energy Efficiency Gap &#8599;</a> <a class="fs-chip" href="Rebound%20Effect%20and%20Efficiency%20Standards.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rebound Effect and Efficiency Standards &#8599;</a> <a class="fs-chip" href="Voluntary%20and%20Information-Based%20Approaches.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Voluntary and Information-Based Approaches &#8599;</a> <a class="fs-chip" href="Carbon%20Tax%20Salience%20and%20Polluter%20Lists.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carbon Tax Salience and Polluter Lists &#8599;</a></div>
         <div class="cs-grid">
             <div class="cs-row" onclick="goTab('t1')"><img class="cs-thumb" data-img="negext" alt="">
                 <div><h4>Externality algebra <span class="src">GLS ch. 17</span></h4>
@@ -432,41 +448,41 @@ a.pgl:hover { color: var(--copper, #BC6C26); text-decoration-style: solid; }
                 <p>Efficient: $MSB = MSC$. Pigouvian tax $t^* = MEC$ <em>at $Q^*$</em>; subsidy $= MEB$ at $Q^*$.</p><span class="go">Tab 1 &rarr;</span></div></div>
             <div class="cs-row" onclick="goTab('t1')"><img class="cs-thumb" data-img="coase" alt="">
                 <div><h4>Coase theorem: 3 conditions <span class="src">Fullerton p. 13</span></h4>
-                <p>(1) well-defined property rights, (2) low bargaining costs (few parties), (3) exclusion feasible (no free riding). Then $Z^*$ is reached <strong>whoever</strong> holds the rights; rights change only <em>who pays whom</em>.</p><span class="go">Tab 1 &rarr;</span></div></div>
+                <p>(1) well-defined property rights, (2) low bargaining costs (few parties), (3) exclusion feasible (no free riding). Then $Z^*$ is reached <strong>whoever</strong> holds the rights; rights change only <em>who pays whom</em>.</p><span class="go">Tab 1 &rarr;</span> <a class="fs-chip" href="Comparing%20Environmental%20Policies.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t2')"><img class="cs-thumb" data-img="fullerton" alt="">
                 <div><h4>Fullerton Figure 1 <span class="src">Fullerton pp. 5 to 7</span></h4>
-                <p>Unregulated $Z^\circ$: $MB = PMC$. Efficient $Z'$: $MB = SMC$, $SMC = PMC + MED$. Tax $t = P' - P^\circ$. Net gain <strong>5+6</strong> for all 8 policies; they differ in who gets <strong>2+3</strong>.</p><span class="go">Tab 2 &rarr;</span></div></div>
+                <p>Unregulated $Z^\circ$: $MB = PMC$. Efficient $Z'$: $MB = SMC$, $SMC = PMC + MED$. Tax $t = P' - P^\circ$. Net gain <strong>5+6</strong> for all 8 policies; they differ in who gets <strong>2+3</strong>.</p><span class="go">Tab 2 &rarr;</span> <a class="fs-chip" href="Comparing%20Environmental%20Policies.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t2')"><img class="cs-thumb" data-img="fullerton8" alt="">
                 <div><h4>The 8 instruments and 8 criteria <span class="src">Fullerton &sect;3, &sect;4</span></h4>
                 <p class="mono">Tax &middot; abatement subsidy &middot; permits handed out &middot; permits auctioned &middot; CAC quantity limit &middot; CAC quantity + price limit &middot; Coase (victim rights) &middot; Coase (polluter rights)</p>
-                <p class="mono">Criteria: economic eff. &middot; administrative eff. &middot; monitoring/enforcement &middot; info &amp; uncertainty &middot; political/ethical &middot; equity &middot; other distortions &middot; flexibility</p><span class="go">Tab 2 &rarr;</span></div></div>
+                <p class="mono">Criteria: economic eff. &middot; administrative eff. &middot; monitoring/enforcement &middot; info &amp; uncertainty &middot; political/ethical &middot; equity &middot; other distortions &middot; flexibility</p><span class="go">Tab 2 &rarr;</span> <a class="fs-chip" href="Comparing%20Environmental%20Policies.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t3')"><img class="cs-thumb" data-img="efficiency" alt="">
                 <div><h4>Efficiency vs cost-effectiveness <span class="src">Stavins &sect;2</span></h4>
-                <p><strong>Efficient:</strong> $MD = MAC$ (right amount). <strong>Cost-effective:</strong> $MAC_1 = MAC_2 = \dots = t$ (any target at least cost). A tax or permit price delivers the second automatically.</p><span class="go">Tab 3 &rarr;</span></div></div>
+                <p><strong>Efficient:</strong> $MD = MAC$ (right amount). <strong>Cost-effective:</strong> $MAC_1 = MAC_2 = \dots = t$ (any target at least cost). A tax or permit price delivers the second automatically.</p><span class="go">Tab 3 &rarr;</span> <a class="fs-chip" href="Carbon%20Taxes%20vs%20Cap%20and%20Trade.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t3')"><img class="cs-thumb" data-img="taxcap" alt="">
                 <div><h4>Stavins: 6 similarities, 9 differences <span class="src">Stavins &sect;2.1, &sect;2.2</span></h4>
                 <p class="mono"><b>Same:</b> emission reductions &middot; abatement costs &middot; revenue &middot; cost to firms &middot; distribution &middot; competitiveness</p>
-                <p class="mono"><b>Differ:</b> uncertainty &middot; price volatility &middot; complementary policies &middot; manipulation &middot; transaction costs &middot; macro &middot; linkage &middot; complexity &middot; politics</p><span class="go">Tab 3 &rarr;</span></div></div>
+                <p class="mono"><b>Differ:</b> uncertainty &middot; price volatility &middot; complementary policies &middot; manipulation &middot; transaction costs &middot; macro &middot; linkage &middot; complexity &middot; politics</p><span class="go">Tab 3 &rarr;</span> <a class="fs-chip" href="Carbon%20Taxes%20vs%20Cap%20and%20Trade.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t3')"><img class="cs-thumb" data-img="weitzman" alt="">
                 <div><h4>Weitzman rule (difference #1) <span class="src">Stavins &sect;2.2.1</span></h4>
-                <p><strong>Steep MAC</strong> (flat MD) &rarr; <strong>tax</strong>. <strong>Steep MD</strong> (flat MAC) &rarr; <strong>cap</strong>. Positive MB&ndash;MC correlation tilts toward cap (Stavins 1996; Karp &amp; Traeger 2018).</p><span class="go">Tab 3 &rarr;</span></div></div>
+                <p><strong>Steep MAC</strong> (flat MD) &rarr; <strong>tax</strong>. <strong>Steep MD</strong> (flat MAC) &rarr; <strong>cap</strong>. Positive MB&ndash;MC correlation tilts toward cap (Stavins 1996; Karp &amp; Traeger 2018).</p><span class="go">Tab 3 &rarr;</span> <a class="fs-chip" href="Carbon%20Taxes%20vs%20Cap%20and%20Trade.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t4')"><img class="cs-thumb" data-img="posext" alt="">
                 <div><h4>Failures behind slow diffusion / the gap <span class="src">JNS; G&amp;P</span></h4>
                 <p class="mono"><b>JNS adoption externalities:</b> learning by doing &middot; learning by using &middot; network. <b>Asymmetric info:</b> long-term uncertainty &middot; principal-agent</p>
-                <p class="mono"><b>G&amp;P market:</b> imperfect info &middot; principal-agent &middot; credit constraints &middot; learning by using &middot; regulatory failures. <b>Behavioral:</b> self-control &middot; reference dependence/loss aversion &middot; limited attention &middot; framing</p><span class="go">Tab 4 &rarr;</span></div></div>
+                <p class="mono"><b>G&amp;P market:</b> imperfect info &middot; principal-agent &middot; credit constraints &middot; learning by using &middot; regulatory failures. <b>Behavioral:</b> self-control &middot; reference dependence/loss aversion &middot; limited attention &middot; framing</p><span class="go">Tab 4 &rarr;</span> <a class="fs-chip" href="Bridging%20the%20Energy%20Efficiency%20Gap.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t4')"><img class="cs-thumb" data-img="internality" alt="">
                 <div><h4>Internalities <span class="src">Allcott &amp; Sunstein</span></h4>
-                <p>Costs we impose on <strong>our future selves</strong> (decision utility &ne; experienced utility). Fixes: nudges/information first, then taxes/subsidies set to the <em>average bias of marginal consumers</em>; mandates are strictly worse than the optimal subsidy.</p><span class="go">Tab 4 &rarr;</span></div></div>
+                <p>Costs we impose on <strong>our future selves</strong> (decision utility &ne; experienced utility). Fixes: nudges/information first, then taxes/subsidies set to the <em>average bias of marginal consumers</em>; mandates are strictly worse than the optimal subsidy.</p><span class="go">Tab 4 &rarr;</span> <a class="fs-chip" href="Bridging%20the%20Energy%20Efficiency%20Gap.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t5')"><img class="cs-thumb" data-img="rebound_ic" alt="">
                 <div><h4>Rebound formulas <span class="src">GRW pp. 4, 8, 21</span></h4>
                 <p>$p_{service} = \dfrac{p_{energy}}{\text{efficiency}}$ &nbsp; Rebound $= \dfrac{\text{expected} - \text{actual savings}}{\text{expected savings}}$</p>
-                <p>Direct rebound $\approx -\varepsilon$ (e.g. $-0.5 \to 50\%$). Macro price: $1 - \dfrac{a-c}{a-b} < 100\%$.</p><span class="go">Tab 5 &rarr;</span></div></div>
+                <p>Direct rebound $\approx -\varepsilon$ (e.g. $-0.5 \to 50\%$). Macro price: $1 - \dfrac{a-c}{a-b} < 100\%$.</p><span class="go">Tab 5 &rarr;</span> <a class="fs-chip" href="Rebound%20Effect%20and%20Efficiency%20Standards.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t6')"><img class="cs-thumb" data-img="club" alt="">
                 <div><h4>VIBAs, clubs, disclosure <span class="src">Kotchen; Tietenberg</span></h4>
-                <p>VIBAs fix (1) incomplete info, (2) public-good free riding. Green good viable if $\alpha + \beta \ge 1$. Club = excludable + congestible. Tietenberg: <b>detect &rarr; assure reliability &rarr; disseminate &rarr; act</b>.</p><span class="go">Tab 6 &rarr;</span></div></div>
+                <p>VIBAs fix (1) incomplete info, (2) public-good free riding. Green good viable if $\alpha + \beta \ge 1$. Club = excludable + congestible. Tietenberg: <b>detect &rarr; assure reliability &rarr; disseminate &rarr; act</b>.</p><span class="go">Tab 6 &rarr;</span> <a class="fs-chip" href="Voluntary%20and%20Information-Based%20Approaches.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
             <div class="cs-row" onclick="goTab('t7')"><img class="cs-thumb" data-img="salience" alt="">
                 <div><h4>Salience + reading OLS <span class="src">R&amp;S; Lab</span></h4>
-                <p>BC: 5&cent; market price &rarr; <b>&minus;1.8%</b>; 5&cent; carbon tax &rarr; <b>&minus;12.5%</b> (<b>7.1&times;</b>). log-lin: $\%\Delta y \approx 100\beta$; log-log: $\beta$ = elasticity; $|t| > 2 \Rightarrow$ significant at 5%.</p><span class="go">Tab 7 &rarr;</span></div></div>
+                <p>BC: 5&cent; market price &rarr; <b>&minus;1.8%</b>; 5&cent; carbon tax &rarr; <b>&minus;12.5%</b> (<b>7.1&times;</b>). log-lin: $\%\Delta y \approx 100\beta$; log-log: $\beta$ = elasticity; $|t| > 2 \Rightarrow$ significant at 5%.</p><span class="go">Tab 7 &rarr;</span> <a class="fs-chip" href="Carbon%20Tax%20Salience%20and%20Polluter%20Lists.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Full sheet &#8599;</a></div></div>
         </div>
 
         <div class="idea-box" style="margin-top:18px;">
@@ -1033,6 +1049,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t1" class="tab-content">
         <div class="section-header"><div class="section-number">1</div><h2>Externalities, Market Failure &amp; Coase <span class="src">GLS ch. 17</span></h2></div>
         <p class="lead">Your professor says GLS questions will be asked <em>through</em> the other papers: you apply externality and property-rights logic to Fullerton, Stavins, JNS and Kotchen. So master the tools here, then watch them reappear in every tab. Play with the explorer first, then read the guide questions.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">The quiz sheets let John work the models hands-on; this tab is the exam summary.</p><div class="fs-item"><a class="fs-btn" href="Comparing%20Environmental%20Policies.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Comparing Environmental Policies &#8599;</a><span class="fs-tabs">Use <b>One Gain, 8 Splits</b> for the two Coase cases (who pays whom) and <b>Figure 1 &amp; the Model</b> to see the externality on one graph.</span></div></div>
 
         <div class="card ifig">
             <h3><span class="play">Play first</span>Externality explorer: set the external cost, then try to fix it with a tax</h3>
@@ -1116,6 +1133,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t2" class="tab-content">
         <div class="section-header"><div class="section-number">2</div><h2>Fullerton: one model, eight policies <span class="src">Fullerton 2001</span></h2></div>
         <p class="lead">Fullerton's big result: in a simple world (no admin costs, no enforcement problems, competition, certainty, lump-sum taxes available) <strong>all eight policies have the same efficiency effect</strong> (area 5+6) but <strong>different distributional effects</strong>. Then Section 4 adds the real-world criteria that make them differ. Click each policy and watch who gets which area.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">Best place to actually practice the Fullerton model: drill the Area Quiz until every policy's split is automatic.</p><div class="fs-item"><a class="fs-btn" href="Comparing%20Environmental%20Policies.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Comparing Environmental Policies &#8599;</a><span class="fs-tabs"><b>Figure 1 &amp; the Model</b> (every area labeled) &rarr; <b>Area Quiz</b> (pick the areas for each policy) &rarr; <b>One Gain, 8 Splits</b> &rarr; <b>Table 1 Reference</b>. The <b>Guide-Question Quiz</b> covers the Q list.</span></div></div>
 
         <div class="card ifig">
             <h3><span class="play">Play first</span>Policy switcher: who gets which area of Figure 1?</h3>
@@ -1248,6 +1266,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t3" class="tab-content">
         <div class="section-header"><div class="section-number">3</div><h2>Stavins: Carbon Taxes vs Cap and Trade <span class="src">Stavins 2019</span></h2></div>
         <p class="lead">Stavins' thesis: a carbon tax and a comparable cap-and-trade system are <strong>more similar than different</strong>; design elements (auctioning, allocation, collars, revenue use) matter more than the choice of instrument, and the choice is really a point on a <strong>policy continuum</strong>. The explorer shows the one place theory gives a clear edge: uncertainty.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">Use it for the graphs: tax vs cap on one diagram, Weitzman, and the hybrid/collar.</p><div class="fs-item"><a class="fs-btn" href="Carbon%20Taxes%20vs%20Cap%20and%20Trade.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carbon Taxes vs Cap and Trade &#8599;</a><span class="fs-tabs"><b>The Model</b> (abatement market, equimarginal principle) &rarr; <b>Part 2 &middot; Exam</b> (the graph questions) &rarr; <b>Area Quiz</b>. <b>6 vs 9 Cheat Sheet</b> has the similarities and differences with the design element behind each.</span></div></div>
 
         <div class="card ifig">
             <h3><span class="play">Play first</span>Prices vs quantities: costs come in higher than expected. Which instrument loses less?</h3>
@@ -1414,6 +1433,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t4" class="tab-content">
         <div class="section-header"><div class="section-number">4</div><h2>Market &amp; Behavioral Failures: JNS, Gillingham &amp; Palmer, Allcott &amp; Sunstein</h2></div>
         <p class="lead">Three papers, one question: <strong>why don't people and firms adopt clean, money-saving technology as fast as they should, and what policy fixes each reason?</strong> JNS (tale of two market failures) gives the market-failure list; Gillingham &amp; Palmer add behavioral failures for the energy efficiency gap; Allcott &amp; Sunstein turn behavioral failures into "internalities." Sort the scenarios first: naming the failure is half of every answer here.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">The Gap Map crosswalk is the fastest prep for the "relate G&amp;P to JNS" questions.</p><div class="fs-item"><a class="fs-btn" href="Bridging%20the%20Energy%20Efficiency%20Gap.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Bridging the Energy Efficiency Gap &#8599;</a><span class="fs-tabs"><b>The Model</b> (build the gap, then shrink it) &rarr; <b>Policy Matcher</b> (one instrument per failure) &rarr; <b>Gap Map</b>, which has the <b>crosswalk to Jaffe, Newell &amp; Stavins</b> and the evidence scorecard (cross-paper Qs).</span></div></div>
         <p style="font-size:12.5px;"><span class="src nf">JNS and Allcott &amp; Sunstein are not in John's folder</span> Their sections are built from the papers' standard content and the study guide; check them against your class notes and slides.</p>
 
         <div class="card ifig">
@@ -1554,6 +1574,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t5" class="tab-content">
         <div class="section-header"><div class="section-number">5</div><h2>The Rebound Effect <span class="src">Gillingham, Rapson &amp; Wagner 2016</span></h2></div>
         <p class="lead">"Buy a more fuel-efficient car, drive more." An efficiency standard is command-and-control, but its economic effect is a <strong>price cut on the energy service</strong>. Everything in this paper follows from that one fact plus the law of demand. Move the sliders to see why rebound is real but backfire is rare.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">Use the Model tab to practice drawing the substitution and income effects.</p><div class="fs-item"><a class="fs-btn" href="Rebound%20Effect%20and%20Efficiency%20Standards.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rebound Effect and Efficiency Standards &#8599;</a><span class="fs-tabs"><b>The Model</b> has all three pictures (service demand, indifference curves, Figure 1 macro price effect) &rarr; <b>Exam Questions (*)</b> &rarr; <b>Rebound Map</b> (numbers to know, misconceptions).</span></div></div>
 
         <div class="card ifig">
             <h3><span class="play">Play first</span>Rebound calculator: micro (your car) and macro (the world oil market)</h3>
@@ -1681,6 +1702,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t6" class="tab-content">
         <div class="section-header"><div class="section-number">6</div><h2>Voluntary &amp; Information-Based Approaches: Kotchen, Tietenberg, Foulon et al.</h2></div>
         <p class="lead">The "third wave" of environmental policy (after command-and-control, then market-based instruments): disclose information and let consumers, investors, workers, courts and voluntary clubs do the pushing. Kotchen explains <em>why</em> these work using public economics; Tietenberg explains <em>how</em> disclosure works; Foulon et al. test whether information actually changes polluters' behavior.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">Two sheets cover this tab.</p><div class="fs-item"><a class="fs-btn" href="Voluntary%20and%20Information-Based%20Approaches.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Voluntary and Information-Based Approaches &#8599;</a><span class="fs-tabs"><b>The Model</b> (characteristics-space frontier, green-club trade-off, four kinds of goods) &rarr; <b>Kotchen Q1&ndash;6</b> &rarr; <b>Tietenberg Q1&ndash;3</b> &rarr; <b>VIBA Map</b>.</span></div><div class="fs-item"><a class="fs-btn" href="Carbon%20Tax%20Salience%20and%20Polluter%20Lists.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carbon Tax Salience and Polluter Lists &#8599;</a><span class="fs-tabs">For Foulon et al.: <b>3 Lists &amp; Fines</b>, <b>4 Reading the Results</b>, and <b>Foulon et al. Q1&ndash;7</b>.</span></div></div>
 
         <div class="card ifig">
             <h3><span class="play">Play first</span>Kotchen's green good: when does shade-grown coffee beat "regular coffee + a donation"?</h3>
@@ -1836,6 +1858,7 @@ sa ||| Fixed effects ||| Unit (country/province) FE absorb permanent differences
     <div id="tab-t7" class="tab-content">
         <div class="section-header"><div class="section-number">7</div><h2>Salience of Carbon Taxes &amp; Reading OLS Tables <span class="src">Rivers &amp; Schaufele 2015; OLS Lab</span></h2></div>
         <p class="lead">British Columbia's carbon tax (2008) cut gasoline demand <strong>7.1 times</strong> more than an equal rise in the market price would have. This tab covers the paper's guide questions and the exam's research-methods item: <em>"If given a table of OLS regression for a specific economic question, interpret the results in economic terms."</em> Use the interpreter to practice the sentence you'll write for any coefficient.</p>
+        <div class="fs-box nolink"><div class="fs-h">&#9654; Practice it in the full reading sheet</div><p class="fs-lead">The full sheet goes deeper on identification and table reading.</p><div class="fs-item"><a class="fs-btn" href="Carbon%20Tax%20Salience%20and%20Polluter%20Lists.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Carbon Tax Salience and Polluter Lists &#8599;</a><span class="fs-tabs"><b>1 Salience Model</b> &rarr; <b>2 Identification</b> &rarr; <b>Table Drill</b> (reading the regression tables) &rarr; <b>Rivers &amp; Schaufele GQs</b> (official 6.2a sheet) &rarr; <b>5 Compare &amp; Connect</b>.</span></div></div>
 
         <div class="card ifig">
             <h3><span class="play">Play first</span>Coefficient interpreter: pick the model form, get the exam sentence</h3>
