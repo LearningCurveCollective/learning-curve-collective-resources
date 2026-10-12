@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Related Rates Study Sheet (AP Calculus)</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+
+    <script>
+    window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+
+<style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC; --copper: #BC6C26;
+    --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+
+/* Header */
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* Tab system: three labeled rows */
+.tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
+.tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.tab-row-label { width:92px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); opacity:0.75; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="study"] { border-color: #21442B; }
+.tab-button[data-group="study"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="study"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="sprint"] { border-color: #BC6C26; }
+.tab-button[data-group="sprint"].active { background: linear-gradient(135deg, #BC6C26, #D48A48); }
+.tab-button[data-group="sprint"]:hover { border-color: #BC6C26; background: rgba(188,108,38,0.1); }
+.tab-button[data-group="sprint"].active:hover { background: linear-gradient(135deg, #BC6C26, #D48A48); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sections, cards */
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.card h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 18px; margin-bottom: 10px; }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.slide-ref { display:inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; background: rgba(33,68,43,0.10); color: var(--green-dark); padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+.beyond-badge { display: inline-block; font-size: 11px; font-weight: 600; background: rgba(221,162,94,0.18); color: #8B5E3C; padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+
+/* Concept list */
+.concept-list { background-color: var(--cream-dark); border-radius: 8px; padding: 20px; margin: 15px 0; }
+.concept-item { margin-bottom: 12px; padding: 16px 18px; border-radius: 8px; display: flex; gap: 16px; align-items: flex-start; }
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) { background-color: rgba(59, 83, 35, 0.08); border-left: 4px solid #21442B; }
+.concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
+.concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
+.concept-body { flex: 1; }
+.concept-body p { margin-bottom: 6px; line-height: 1.6; }
+.concept-label { font-weight: 700; color: var(--brown-dark); margin-bottom: 4px; font-size: 15px; }
+
+/* Technique sections */
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+.step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+
+/* Collapsibles */
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+
+/* Tables */
+table.cmp { width: 100%; border-collapse: collapse; margin: 14px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 14px; }
+table.cmp th { background: var(--green-dark); color: white; text-align: left; padding: 10px 12px; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 600; }
+table.cmp td { padding: 10px 12px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; line-height: 1.55; }
+table.cmp tr:nth-child(even) td { background: rgba(221,162,94,0.06); }
+table.cmp td:first-child { font-weight: 600; color: var(--brown-dark); }
+.tbl-wrap { overflow-x: auto; }
+
+/* Figures */
+.figure { background: white; border-radius: 8px; padding: 14px 16px; border: 1px solid var(--cream-dark); margin: 12px 0; }
+.figure > svg { width: 100%; height: auto; display: block; }
+.figure .cap { font-size: 12.5px; color: var(--text-medium); margin-top: 8px; margin-bottom: 0; }
+
+/* v4 cheat-sheet rows */
+.cs-row { display:flex; gap:18px; background:white; border-radius:10px; padding:16px 18px; margin-bottom:12px; box-shadow:0 1px 5px rgba(0,0,0,0.07); border-left:5px solid var(--green-dark); align-items:flex-start; }
+.cs-row:nth-of-type(3n+2) { border-left-color: var(--gold); }
+.cs-row:nth-of-type(3n+3) { border-left-color: #8B5E3C; }
+.cs-fig { flex-shrink:0; width:172px; }
+.cs-fig svg { width:100%; height:auto; display:block; background:#FBF8F2; border:1px solid var(--cream-dark); border-radius:8px; }
+.cs-body { flex:1; min-width:0; }
+.cs-body h4 { font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); font-size:15.5px; margin-bottom:5px; }
+.cs-econ { font-size:13.5px; margin-bottom:5px; line-height:1.6; }
+.cs-k { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase; background:rgba(33,68,43,0.10); color:var(--green-dark); border-radius:4px; padding:1px 7px; margin-right:6px; }
+.cs-plain { font-size:13.5px; color:var(--text-medium); line-height:1.6; margin-bottom:0; }
+.cs-plain .cs-k { background:rgba(221,162,94,0.18); color:#8B5E3C; }
+@media (max-width:620px){ .cs-row{flex-direction:column;} .cs-fig{width:100%;max-width:230px;} }
+
+/* Interactive lead-in widgets */
+.ifig { border-left-color: var(--copper) !important; }
+.ifig-stage { background:#FBF8F2; border:1px solid var(--cream-dark); border-radius:8px; padding:10px; }
+.ifig-stage svg { width:100%; height:auto; display:block; max-width:560px; margin:0 auto; }
+.ifig-controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+.ifig-controls .btn-small { padding:9px 16px; font-size:13px; }
+input[type=range].ifig-slider { flex:1; min-width:150px; accent-color: var(--green-dark); }
+.ifig-readout { font-size:13.5px; background:rgba(33,68,43,0.06); border-radius:6px; padding:9px 13px; margin-top:10px; line-height:1.7; }
+.ifig-step { font-size:14.5px; line-height:1.75; background:white; border:1px solid var(--cream-dark); border-radius:8px; padding:13px 17px; margin-top:10px; min-height:96px; }
+.stepdots { display:flex; gap:6px; align-items:center; }
+.stepdot { width:10px; height:10px; border-radius:50%; background:#DDD0BC; }
+.stepdot.on { background:var(--green-dark); }
+.sl-val { font-weight:700; color:var(--green-dark); }
+
+/* Setup Drill */
+.dr-item { background:white; border-radius:8px; border-left:5px solid var(--copper); box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:18px 20px; margin-bottom:14px; }
+.dr-num { display:inline-flex; width:26px; height:26px; background:var(--copper); color:white; border-radius:50%; align-items:center; justify-content:center; font-weight:700; font-size:13px; margin-right:9px; }
+.dr-q { font-weight:600; line-height:1.65; margin-bottom:10px; }
+.dr-item textarea { width:100%; min-height:58px; border:1.5px solid var(--cream-dark); border-radius:8px; padding:10px 12px; font-family:'Inter',sans-serif; font-size:14px; resize:vertical; }
+.dr-model { display:none; margin-top:10px; }
+.dr-model.open { display:block; }
+.dr-grader { background:rgba(221,162,94,0.10); border-left:4px solid var(--gold); border-radius:6px; padding:10px 14px; margin-top:10px; font-size:13.5px; }
+.dr-grader ul { margin-bottom:0; }
+.dr-grader li { margin-bottom:4px; font-size:13.5px; }
+.dr-mark { display:flex; gap:8px; margin-top:10px; align-items:center; flex-wrap:wrap; }
+.dr-badge { font-size:11px; font-weight:700; border-radius:10px; padding:3px 10px; display:none; }
+.dr-badge.show { display:inline-block; }
+.dr-badge.got { background:#E8F5E9; color:var(--green-dark); }
+.dr-badge.miss { background:#FFEBEE; color:#C62828; }
+
+/* Quiz */
+.quiz-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 18px; }
+.score-pill { background: var(--green-dark); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 14px; }
+.quiz-btn { border:none; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; font-size:13px; padding:8px 14px; border-radius:8px; background: var(--gold); color: var(--brown-dark); }
+.quiz-btn:hover { background: var(--gold-light); }
+.q-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 16px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.q-head { display:flex; gap:14px; align-items:flex-start; }
+.q-num { width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.q-text { font-weight: 600; margin-bottom: 12px; line-height: 1.6; }
+.opt { display:block; width:100%; text-align:left; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; cursor:pointer; font-family:'Inter',sans-serif; font-size:14px; color: var(--text-dark); transition: all 0.15s; line-height:1.5; }
+.opt:hover { border-color: var(--gold); background: rgba(221,162,94,0.10); }
+.opt .ltr { display:inline-block; width:22px; font-weight:700; color: var(--green-dark); }
+.opt.correct { background: #E8F5E9; border-color: var(--green-light); }
+.opt.wrong { background: #FFEBEE; border-color: #E57373; }
+.opt.dim { opacity: 0.55; cursor: default; }
+.opt.locked { cursor: default; }
+.q-exp { display:none; margin-top: 10px; padding: 12px 16px; border-radius: 6px; background: rgba(33,68,43,0.06); border-left: 4px solid var(--green-dark); font-size: 14px; line-height: 1.65; }
+.q-exp.show { display:block; }
+.q-exp .verdict { font-weight: 700; margin-bottom: 4px; }
+.q-exp .verdict.ok { color: var(--green-dark); }
+.q-exp .verdict.no { color: #C62828; }
+
+/* Flashcards (Flashcard Studier) */
+.btn-small { border:none; background:var(--green-dark); color:white; border-radius:6px; padding:7px 12px; font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; cursor:pointer; }
+.btn-small:hover { background:var(--green-medium); }
+.fc-controls { display:flex; flex-direction:column; gap:10px; }
+.fc-ctl-group { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.fc-ctl-label { width:78px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); }
+.fc-chip { border:1.5px solid var(--cream-dark); background:var(--cream); border-radius:20px; padding:5px 13px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:var(--text-medium); cursor:pointer; transition:all 0.15s; }
+.fc-chip:hover { border-color:var(--green-light); color:var(--green-dark); }
+.fc-chip.on { background:var(--green-dark); border-color:var(--green-dark); color:white; }
+.fc-chip.miss.on { background:#C0392B; border-color:#C0392B; }
+.fc-chip.custom.on { background:var(--gold); border-color:var(--gold); color:var(--brown-dark); }
+.fc-chip.pick { border-style:dashed; }
+.fc-chip.pick.on { background:var(--gold-pale); border-color:var(--gold); color:var(--brown-dark); }
+.fc-pick-group { margin-bottom:10px; }
+.fc-pick-head { display:flex; align-items:center; gap:10px; font-weight:700; font-size:13px; color:var(--green-dark); margin-bottom:6px; }
+.fc-pick-head button { border:none; background:rgba(33,68,43,0.10); color:var(--green-dark); border-radius:10px; padding:2px 9px; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; cursor:pointer; }
+.fc-pick-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:5px; }
+.fc-pick { display:flex; align-items:flex-start; gap:8px; background:white; border:1.5px solid var(--cream-dark); border-radius:6px; padding:6px 10px; font-size:12.5px; cursor:pointer; line-height:1.4; transition:all 0.15s; }
+.fc-pick:hover { border-color:var(--green-light); }
+.fc-pick.on { background:var(--gold-pale); border-color:var(--gold); }
+.fc-pick input { margin-top:3px; accent-color:var(--green-dark); }
+.fc-n { font-size:11px; opacity:0.8; margin-left:2px; }
+.fc-list-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.fc-legend { font-size:12px; color:var(--text-medium); display:flex; align-items:center; gap:4px; }
+.lg { display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:3px; vertical-align:middle; }
+.lg.unseen { background:#E2E2E2; } .lg.got { background:var(--green-light); } .lg.miss { background:#E57373; }
+.fc-list { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:6px; }
+.fc-term { text-align:left; border:1.5px solid var(--cream-dark); border-left:5px solid #E2E2E2; background:white; border-radius:6px; padding:6px 10px; font-family:'Inter',sans-serif; font-size:12.5px; font-weight:500; color:var(--text-dark); cursor:pointer; transition:all 0.15s; line-height:1.4; }
+.fc-term:hover { border-color:var(--green-light); box-shadow:0 0 0 2px rgba(57,134,78,0.18); }
+.fc-term.got { border-left-color:var(--green-light); background:#F3F9F4; }
+.fc-term.miss { border-left-color:#E57373; background:#FFF3F3; }
+.fc-term.current { outline:2px solid var(--gold); outline-offset:1px; font-weight:700; }
+.fc-term .fc-term-n { color:var(--text-medium); font-weight:700; margin-right:5px; font-size:11px; }
+.fc-deckname { font-size:12px; font-weight:700; color:var(--green-dark); background:rgba(33,68,43,0.10); padding:2px 10px; border-radius:10px; }
+.fc-wrap { max-width:720px; margin:0 auto; }
+.fc-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:13.5px; color:var(--text-medium); margin-bottom:10px; }
+.fc-card { background:linear-gradient(160deg, #FBF1E1 0%, var(--gold-pale) 100%); border:2px solid var(--gold); border-radius:14px; min-height:210px; padding:22px 26px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.08); position:relative; display:flex; flex-direction:column; justify-content:center; transition:border-color 0.15s; }
+.fc-card.flipped { border-color:var(--green-dark); background:linear-gradient(160deg, #EAF3EC 0%, #DCEBE0 100%); }
+.fc-label { position:absolute; top:10px; left:14px; font-size:10.5px; font-weight:700; letter-spacing:1.2px; color:#8B6914; }
+.fc-card.flipped .fc-label { color:var(--green-dark); }
+.fc-front { font-family:'Switzer','Space Grotesk',sans-serif; font-size:20px; font-weight:700; color:var(--brown-dark); text-align:center; line-height:1.4; }
+.fc-card.flipped .fc-front { font-size:14px; font-weight:600; color:var(--text-medium); margin-bottom:10px; }
+.fc-back { display:none; font-size:16px; text-align:center; line-height:1.7; color:var(--text-dark); }
+.fc-card.flipped .fc-back { display:block; }
+.fc-back strong { color:var(--green-dark); }
+.fc-hint { position:absolute; bottom:8px; right:14px; font-size:11px; color:#999; }
+.fc-actions { display:flex; justify-content:center; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.fc-actions .btn-small { padding:9px 18px; font-size:13.5px; }
+.h3s { font-family:'Switzer','Space Grotesk',sans-serif; color:var(--green-dark); font-size:19px; margin-bottom:10px; }
+
+/* Next / Back nav */
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+@media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+@media print { .tab-nav { display: none !important; } }
+
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 8px; }
+.mjx-container { overflow-x: auto; }
+.two-col { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-row-label { width:100%; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .two-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAE5CAYAAAC9N7qHAAB7OElEQVR4nOzdd5weV3X4/8+5M/O07VXVkix3yV3uGFwB00yVaQFCen5JSALfNNp6QwtpBBKSQAokQCiiGgMGbGzZ4N5tyd2yrL69PHXKPb8/5tmVZKusirfI980LS9ryPPO0M3fOPfdcYTr19JjVK9dL37o+KS4symu3vjbppRd6sdN1CCt6VmfyTZVmv6xtGSNNiZgWRVrwadKEDhHtxpJX7NFGJFJkHsoCIFJBgCVGpKCqCshuN66oeCJqdYvCCOCJYhCeQikDvqJVMfK0gjHKuGKfBY/E6pCnWiEwVRvG/UayYdgd9jduXRWu7e2ND/iB9vSYHuDahds8gMatjylA9/puXbFihfZe3asACHrwz+Y00Z3P8+qrVpuJv/et6Jv8enHhCQLp47yYiy3AdL+3ZlpPT4/Z/0/tdBM3mYnnba6beH8/V/f67smv7/a+hznx3n9hXxxFeq7ukfXr18uaNWss7PUJSZ8qgSs+e0VmrJrJBOXsAT15UaEmWvbyfoAXmmSJ0eRo8DoUWSDYDoWjxJBVpVWQBqAZpYDQKL4JvIyPWgVN71Zt/U9VsDsPRVX3/igmHoyR5/9b5PnfFxBJvxdXI9RqLBCiDIHGCsNiTCiqIwolYIuio0bZqpYRych2X832Wi4ZCio29KqFqHsllTVX7fO53l0PZvXK1ekBrdn55RUrVuj69etlxYoV2julGzowPc/59/r163d/0lanf6xZt0Lp7T2UICso9FzdI99rvDXfaPOmwVRsJc5korzJ2DARE3lq0DZjvPkWz6q1k8cixiqxLhJDqyqJiu48TkWM58UWfUYgVGv2+nkSY9SSGE+l5ll5JpR4j48pF5oaZPZyQu6rru1dmzz3le25ukd6D+05enFSZPWa+gn/Oe99gOe973cOatLfngYvSIBevXq1t2bF8z9Y5/zd6472qhytIouNT6cmsgjRBkUXi4qnooko80DaEZJdR077eRSKaqAii0XwRWQyKKYBsB4UNQ28qjoZjNNArFaR9Fg1/QCKsDOK7nocMqVj0t1ePlHd+Y3nfFdE6/fipbeeHrvIzsA+eez1k0P6p9YfS/oiWmv7RGRU0WeBKiIbxRLisQFrY9TbalRqeNFWIhOHvre9UNNkbe8PRqb0HM+gVX+zuiWvZRNnCuJXq4vVWEkS8QSzQAxeIjYw1sxXUcFqXo05SlCLSB6ri0VEUDxEF6OSUyEEOoyRrokTcfpe2fP9T55g9/KRVLUH9HFVu5cfFsCyXWEM1BNk4u0iImJR3aJCSVS8XUd/ghpg3CpbMVMfREvCVjW2hCJzYTS5dx5gh7EyZrAGI4qoqJJYsdsCayKrxqjEsUeywwuzUZKL5Zd/9aPhg73Hnp4ec+22a73lly+3h2EQsVeHN0BPXGLVD/bcT7xunsGcr0ZfJcpZKAtV6PSzvm8CD03sZNCcMBFAD4baXT4oiiKoToRERFGdCK/pZ1Enw/BsuMzTyf/WA/rOsfpzj71+0tjl2CeDuScI6Z8A4hlQJa7E9edHR4EEkVEFKzAqQmItwwrbBIzAZjUMG6uBVdkMMmwl8cQ3ViyeiOyIrQzs7wH5tShDNliWaOxj6iciFUUkMJocrUggKqqqIoalKI2KCQXbqkYWY0HAKNoKIvUH3pY+dhFEmkXSZ8TPBekzofX3wcQTOHElRHolNPnWmjw5T+mV0XQQsIdA9pzX4VA992rrud+TPXxPUSYHJYfpvuYaGybYKNn9VVCw1o6LkKAi6ftdR1UkHfyJjiESYTUWw9MoiahsUxhRtF9F+tVqX8Z4Q2GSRBonFZsPK8vvaSuuWbMm2e0AFOHqHlm9fr2sWbFGD1dq7bC9OqtXr/YmDvqCT7zmpVb8Xwf7Kj8TLJiIMzZR1FrUaiJgdfLdtvOyUUDQg3zXTG10e2SaOBOlwT09IQGiqvUPoQ/IxIc4/XPiSmPyNnbe1ESGfW8xbEonUdn3O0ye+9fnfWG3KwfQ553M2fnIJ9MCulsU2/W9JTIZZNM/Z9/7ZdeTwXO/Nfna7vH3Jq/GpkomX+i5TwUjiMfuD0j2mG5kl8/Ant77u/x74nNgwzhSZFBgEMMmteZZNHkGTx5F9aHbP/jDJ3e9n9XfWu0djpH1ob9BFeFqhF7suT2vO9XLmo9geK2X9XNJLcZaO3mAu4xaZ98H48inu/x3D6P09KvP+8teTfUlnFoA0H38c7cwv+vJ+zmfvSkekHPkev6b7blf2T3dOPX3voiZuEoRYxA/TRbElQhRHbKqzyKsJeG6qsndc/+H1vRP/Obq1avNfubg9uqwvanP++Tr/8R4XG18ryUJY1SJRfFcMHYc5wigE+lHTXNKE3NHvnj1oF0fOyRR/Lgm+nNjvK/d+sHv31b/7cmB7IHc6cEHz3qFxh3tdwQjpcy/+zn/15MwQRObiIg5pNt2HMeZG3YG7vq/vMDzjG9IwqRmVdda9NN3/tUPfwHAt1Z7XPWc/PU+HHQQXf2t1d6aq9Yk537iyi9nCpn3xOVaAmLciNlxnBczRS2IFfC9jI9NLGrjb2GDj932oe89TE+P4epenUrlzEEF056eHtPb22sv+OSV7zdZ/x/iWhxPlok5juM4kNYKqSD4ucDEtaiItX9524eu/TwAPZj9pTwOOKDWqzXsOZ+48qQgMHdZa7MkuJGz4zjOnqmqWvGMZwIPje1/BeXhP1zbu7a6vyB9QEtDAdZ861sWUCN8TDxT0ERf3OVtjuM4+yYi4pGoJrUo8bLeb4bZlusv/MQVXfRi2ccS/QMLrD09ht5ee95fv/4UyXCnoBlNZmk9qeM4ziykqrGfz/hJGN0S29Ib7/rgDYN7W815QCPoiy6+Kf15z77bzwVZa7EuODuO40ydiPhxJYr9bPBSn4avXPHZK7L1CpDnxdIDCdCy9pK18UU978mJyNk2tjLRt8JxHMeZOhH8qBzFXj541ch48GkRdLJx0y6mHqB7egQgKpSXipGX2VqsIuIdxmN2HMd50RDBTyph4mW8Pz7/41e+Zs1Va5LntoydcoCeaA+pcWWx+EZ2XTLpOI7jHJS0RYzoZ6/ouaK5t7d3tz4sB1zFociq9E/HcRzn0IhJwjjx85ljRrPBH8PuqY4pB+idDdXlAjcv6DiOc3iIIBrHFpHfP7vn1fPXXLXGToyiD3gEjeiS+t/cINpxHOeQiUkii5/1F3gZ8zuATmztNvWhcL1O77xPXvmwl/FWJmFsBTnwAO84juPsRlHr+Z4kYfJYebh61oN///MyMvURtCDoy//u5Q2gOdQ13XAcxzlcBDE2tmoy3nH5ltwrEfSinou8qQXoeoldtZrrFqQx3cnChWjHcZzDRcF6ge8Zj5cDXMxaO6UAPVFiJ0HciGqWdAsiF6Edx3EOE1G8pBYDXLGq57WF3l6mFqDXr0wrOOLEtCqSV3U5DsdxnMNKELVWxTfLvJweB1PMQfet6xOABNNlfJPFugoOx3GcF4CKMepZ72I4mDI7x3Ec5wWhYI1vBHgpuADtOI4ze6iKWkVFl17Uc5HvArTjOM4sIYLY2IJKd5JrXOICtOM4zmyhIlgFmGetv8gFaMdxnNlCEGtt4mW9LCbpdgHacRxnNhFR4xkU6XAB2nEcZzZRFVVFLZ0uQDuO48wmAlgFxaU4HMdxZhOhvl+VYemBBWi3SazjOM60mVKALm4rCoAYWeBlfVRIcN04HMdxXjAGmeJKwlWrAFAlK+l+sa4Xh+M4zgtEgIhkat3sdv6WuMDsOI7zAkvU0uW1NB5QgBZ1Xewcx3FeSEY8U61UecsZrz1vagH6nnsAUMiCgrj0s+M4zuEmIlTiKse1LuU1p1zWPKUAvfzy5RbAQLPaF/YAHcdxXqwEIUliXn/S5bS3tenURtBrJn5bfcDtGes4jnOYGYRqUmN54xIuP+0iKmFVphSgV6xYoQCqNOAKOBzHcQ4/gSRKeMc5b6CjuY1qVJtSmZ309vamiQ2lW626BSuO4ziHkSBUNWLl/ON4+YqXUksintq+oTL1Kg5FRKSA4hIcjuM4h4sqXuBRHhznbSteQy6f0yCT4dvX/WB4ygF6xdWrA5SW+hoVF6Idx3EOA8/zGCuPcWbnCl5y4jkY33D3I/fyvZ/+YGT/Abqecs7nyYMuUquIujo7x3Gcw0EFpArvOPeNNLY1o1b1S9d8lf7Bgc3+Ad2SiCuycxzHOUw8MYxVirxxxct5+XmXkIQxtz9+Lz+9+Xq6WtrHp5zi8JNqTmGeWptmtB3HcZyDJiKESUx70MJbz389YRySeMp/fvfLWqvW8LPZp6ccoEWtL55pcIu9HcdxDp1BCDXijadfwbHzl+EHATfedws3/vImmhubiKJabf8B+up0tByoybgaaMdxnEMnQE0jGkd9Vp/+amoaMVoe49/W/BcaWUUEhWenMILuASDJmhY3Neg4jnMYiGBrCX/8qt+mtbmVQr7A//7w6/zq5l/S2NiItQkqMvUcNLHk639zw2jHcZyDZESo2pCzFp3Cq868FCvKU1s38LUffZOW5hZNrPU0UUS1vN8A3VP/M9FkASIuPDuO4xwsBfWEcKDMu896MxJ4+L7Pl378NTZv2kwmyKCqYtVGaqcwgl6/fn263RW0iQiIC9GO4zgHwxhDuVzmjStfwWnLV5LJZPj57TfyX//7JVqaWkhsopIOhEc8L+mfcopDRZan04UuPjuO4xwoQYiIWVTo5ndf+R7UE8bL4/zn9/4HEZPOHCqKgCCDppLbsf8Avbp+40qrpDOLLkI7juMcEMV4hvGhMd5z9lvobO8gm8lw3T038Ku7bqOpoRFr03WA9ThbzAyFo1MfQaMt9QjvOI7jHAAjHlUNOaPjJC496ULEEx595nE+/k+fpiHXgJ3YCUU0HUELY+vXrw/3G6D71vWlOWhlodvqynEc58AIQkwCgxF/9cb3kW/Mo6r81zVfYduO7WQyAbrbGhNB0RKw/37Q3eu70/Z1RoxbqOI4jnNgjDFUqhXefurrOGHxMRhjuOOpe/nOT75Pe0srcRzv/GGtl8opowD7a5Yka761xqapDc29cA/BcRznyGPEUIxKnNx2HL/x6l+jZiPGy+N84vN/h00s+MKeBr5GpA/2N4JOm/PrsZ+9IqtITtXtRug4jjMVAlgsBXL8f5e+myAIKOQLfPln3+DOu+6kIZefnBjc5ZekHq83wf4C9NU9AtBWM21AM7ZeAeI4juPskzGGsWqR1Se9irOPPh3P87jlvtv4r699ifbWduIk2fMvqkKiO2A/AXpiFWFec00iFFwK2nEcZ/+MGCphjdO7TuIdF72ZahISewn/+LV/YXRkFOPtNfQKComRbbCfAL1+ZbqKMLLxAlQ7NbH1JLbjOI6zN4kmGIQ/PP/dNOUaKOTz/NOXP8/td99Ba0sryd5Gz3ViGYYpVHEAKGQwxkt/81AP3XEc58jlGY8wiXjnqa/n9BNPQQUe2vwoX/r+V8gHuefnnXcnqkrGRltgPwF6sgba0unnAhSNcSHacRxnj4wYRsujLI/n8xsvfRthHFEJq/zlpz9CtVzFD/zn1DzvWdWaAKY6glYyYgRRt47QcRxnb6yBjlwb/+/K38fL+hTyeb78869z1wP30JAv7G/0PEmMUdhPgO5emS5SUdEGVSVts+Q4juPsRsEPAnZs286bl72cs09ZhTGGG+/7JZ/74r/Q1tRKMsXgDOBlfAtTHEEbMQ0HediO4zhHPM/zGKuO8/rTX8F7rng7pWqZ0ajI3371c4TVEGPMlFIbE+Ik7oT9BOg161bUb1Hb3DJvx3Gc5/PEUK5VWGrm8f8u/10kMPiez6e++Pc8cPd9NDU2kdh9V23sIk1UGF0A+12o0jsRoLtUFVRdisNxHKdOFBJRkkrI7577Djo6Oshlc3zzxu/x5W/8Ly3NLcRJvP8beg6DF6d/7vPe00lBtbRhcfUbjuM4ExQ836MW1viTy36LV770chKbsH7T43z2K5+ntaV1ypOCz2XFerDvAC0AF914kS8iy9Ut83Ycx5kU+D79I4OcmT2Bq855PeVqhdHxUf6o9/1s27wN359aSd3zCHjWLIMpTBIWHz9BEMxE5yTHcZwXO4OhlFRZVGvnL9/0R1hjyeazfO77/8GDjzxES1PLwY6e0/I6Kx7sv90oQXHYV7StfiJwEdpxnBc1QbCepSkp8Pe/9REWLVqEQfjadd/if7/+FTraOoji6OBuXNPbT3zaYAoj6KhvOAPMx7oqDsdxXuQUvMBjtH+ED5z/G5y45DgEuOPJ+/jIP/w1GT9zcGmNXe/BAGqXwBQCdLa9YHE7ETqO82Knih/4bN+6nSsXXswrzr2UKInpLw/x8f/6W1DF87xDDdD1u7I+TCFAq6nkXQc7x3Fe7Ix4jFbGWL3qNfT81l9QS0KsZ/nzf/wI999xH/nc1Jdy75Wku6J4YhbDvgJ0/SRgbaZFBFP/pwvUjuO86BgxhBJxXvdp/PkVv09NI3zj0/Mvn+Sn1/+MlpbmA1mMsl8K+y2zAyBbC3xVNS7L4TjOi5EnhqoNKYz4fPQ1fwK+obmhiX/9wX/z39/6XzraOva+O8qBUgQUhRYuusjfe4Cub3dlfdssIsbFZ8dxXmyMCLFRKs+M8KEr/pCOrk7ymTzX3vNzvvjN/6KrreOwjpxJ4zNA5tgt+b3vuzIh8qRDxKU2HMd5cRGERJSxJ/v5u7d+hMsuvBSscs8zD/DBv+mhNFREvANrgjT1+6aBY7c37zVAr16fbnclcdKKMeByHI7jvEgYBPVhbPMwn37zh3jlRS+nXC3z1I6N/MFH/5ShgUHyhT3syn2oJN1RBWiJbLljvwtVjDVu9Ow4zouGQUiwRNWIj7/tL3j5GZcSRiF9I/38+l/+Dtu3b6ehoWG/+woeoiQwQbT3FMfq9A/1aUVw42fHcY54RoRELVEc8aFL/5BXn34ZsSb0Dw/wrj//bTZt2UxjQ+MLGZwlbRyqzUlE+14D9MR+hFZZaIxBRQ/zWN5xHGf2kHpwDpOID176h7zm9MuJbMRIcZS3/7/38uTGp2hubD6o9qEHRBURaVbZR4CePGhcYHYc58hmxGAnRs6X/CGvPeNyylEFCTw+9c3P8tiGJ2htan3hg/Nzj2ta781xHGeWEYREE8I44oOX/gGvPeMyymEVPxvwkS99km9/+9u0NbcQJQfZAOkQuADtOM6LlhFBPQij+sj59Mup2RA/F/DR//kUX/va12jMFQ5ow9fDab9VHI7jOEciTwyJp4w+2c/fvedqLjv9pUSaUKpV+NT/fpZvfuMbNBWa0nV9M8QFaMdxXnQMhiohxSdG+LvVH+KVqy4hTCKGRod4x1/8Jo8+9TgtTc1YtTNaweZSHI7jvKgYEUKJyA4Jn3nrR3nNpa+kElXZMdLP2//8N3js6Sdom9hPcIbLi90I2nGcFwcFP/AZLo9y4cJVfPjX3kd7Rzu1Wsjmga285y9/h2c2P0trcwtxPL3VGnvjRtCO4xzxBMHP+OzYsYPXHncpn3jjX9DY1IgvHg8++wjv+ovf4tktm2hpbJ41wRlcgHYc5whnMFij9G3r402LL6P3DR/AD3yaG5u47qGb+O0P/yFbtm6lsaFx2uuc90BFBFUdE2XIpTgcxzkyKXieRymu0J1p4+o3vY+XnX4+NRshRvjn7/8n//yVf6MyVJqO3hpTl3Y/Go2tC9CO4xyBjAgSGMaK4ywM2/inX+tlWddRRHGM9Swf/peP8T/f/hpdbe3k8rnZE5w1HUEjDBdqLX0uQDuOc0TxxKNqa5Q2j/PbL30H73rJm8g3NoAI26sDfORzH+PnN1zP/K5ukiQ5/C1DDwspNdZq1f0HaHXN+h3Hmf0MggqMhGMcV1jK71z5x1xy7ssIk5BMNsMPb/4JvV/4G/p39NPW3DqrJgMniSrpDimj99xzT7TfAK2GWfgoHMdx6uq55kpSxavBG064nN+76F10tnWQJAnqC5/57r/zuS/8M8TQUCjMnpTGc00OiHUE9lEH3b2+WwG8hGessQjiKj4cx5lVDAIZQ7FYYmFTN++77L1cdOJ5RJLgBwGPb3+aD/7j1dz10L0U/Bwmb2ZvcAbSPQkVsbIVprJQRdwI2nGcWUYhCHwqSY3is6O845w38N6L30ZHezsq4OHz79/5b7743S+xfdM2mhrTnhqzM9+8C8GoAsY+CfsI0GtWrEgXOYr2afqgXC7acZwZJSIIggawZdtWzlt2Jr/zzrdz1klnYI1ijMcjzz7Ov3z7i3zn+9+lsaGR5ubmWT5q3p0AGPPo5N/3SNPn4fxPvOZkxdwvRryZXpfuOM6Ll2c8wiSkGtVoKeW56uzX8ZYLXkt7ZwciQqlW5ru/upZPfubTjI2P0dLcglWL2rkTuIwx1MKalsbHlw3fs+3Z/aY4Qo0HMyaTgHgz3jnEcZwXFUEwRohtwnBljO5cO+84+/W84aSXs3DBImIbY61l7X2/4t++9R/cds8dFDIFWppb5tSoGcDzPB0vFWXJwiW1P3n/b5ffeeU795GDro+tG6PqeJjNxgIZTSO0S3UcIWTipZx4RevnX5FDf4nrW8fveme7nd9nsseuM/sJYMQj1IhKpUpHroW3nP4qXnfa5Rw9bwmRJogH24b7+PIPv8a//vcXyGQCmvJprnkOBmfGx8c5fvlxfPhP/qLYdOw8C1OYJMy356OwyGY8OZ5YXXieizTNzU0EXuMZEpsQJzGqYOtvZvEMqkoSJ7v8qmJ138XwSn3lVv32FfC9nfenVic2wkTEpB8+YxARfN9Pv2/TkK3plsZYVRQ9LCcLZ+4wYjCeIYxDxsIS3Zl23nz6Fbz5jFexqH0BJjBgDMXxUb5xzXf50ne/wpatW2ltbgFh9k8C7oHneZTLFTq7Ou2X/ubfPc/3Hzn6giVFEdl/gG5a0BSPPFEdMEaOV1EF94mZzdJJFJgYsooxiG8oVUpEcURiLeF4lcZcA23NrXi+Rz6fRyPL8CM7aCw0cO6pZ2OMwdqEtuY2Otra0yC+p5deFeN5DA4PMjw2ihHBGI/bHriDsVIRo1A4qoVcRwNhrUYYR6hVqmGNKA7ZMbIDL+PjFwI8MRjPw/c8ctkcnvFIwvg5mTXd/W9aD+ruXTln7fqeLcdlwvGItqjAO055DW+56HUs6ziKUGMy+Sw7hvv4/i+u5avXfINHnnyM5kITzY1Ns6J388EwxlCtVmltb+FfP/5Ze8yio70d/Tt+ynpCq9bbV4BWgDVXrUnO+/jrtooICuo+B7OMpqNX43lYUWq1KolaUAXPEA5WiAeqnHfGOSyat5DO1g4GH9/GsQuO5tQTTyaXzbGgc346ak3SEWsmCDAYFMUYg2989v3ul8lcYPovofaa39g58jaC8dKTxMj4KFEc0T84wFhpnHvX3U+utYGGo1oYGh5ivFRkcGSIh59Yz1hpnOZl7Zhgl+mPyayMYIzBM4ZsNotanRypK7uMpNwbdtYykl5F1eIasU3QxLJq/skcX1jKWy96A93tXQRBgBVLuVThf3/0db5yzdd5YsOTZPzM5EKUuThqhvTEZJOETGOWT/3Vx7nguLMktgnlSnmg/iNm3yPonh5Db68VI9swAsgcPEcdeaSeTlCrSCBUoirFkRK5yOfoZUdDf8gZC0/mjFNOY35zF0kxYtmiJbQ0tVDIFeAVAlaJ4xhREGMwGW/y9qMoIrIRnnhEScxYOLrPVIOqUsjk8T1/MkC2tbQ/7+eaC03Mb5uXpi6OTR/Dm694A1ggUiq1MtVajVKlzPaB7VRqVRo7mxkcH2bHYB9bdmzlpjtuoeHoVryGgGKxRLlWYfMzW5C8NzkK9zyfQi6PqGDjZPLYJx+D1nPgbvQ9rYSdaTCLUozK2DhhfqGLhVE7v/mmd3HivGPobO+gGlbJ5fNs7tvKT375M7703a/yxIYnyOfytDa1oujsXKp9AAShGFb4p4/+PVecdrGGSeSPDY8N3vnofb+q/0iyzwB9ETeZtWAR3ShGkDl5EXHkMAhe4FMOK4TVkCAbED9b4cKV53Lcqcvpjlu48KwL6GjpQNUSeD6ZbA58SOKEKIkYC8ehBuPVEgOlQcajMhs3buTx9Y+TyQQoMFoZoxxW8I1HOaoyVBrBE7PHib10y3pLe0Mr+SCHqqJq6WzsIPB8tJ57DsOIU888lfnz5pHzsjTlGsn7WVpyzWnANkKQydCQa6SlvYXFSxand2AhrkZYtSQ24f+78jcRIEpiBkcGGRgZ4o777sLryOI3B2zv72NwdJjb7rmdai6mYX4LcRSiColNUFWMZ/A9H9/zyGaz2DgtxdptIYML2oeHppfxRoSajajVagDkTZaLF5zDGceczIVLzmLhvAUYMfjZgEpYY9tYH9/77jWsue77PPXUk+RyOdpb2klsQmLn1gTgnvi+z46Bfn579XtYfd7rqFSrNrax9w8/+cKzf/8bVz+sqkZE7JS62Wki/SLpEkSXgp5G9Te3ko7yykmNsc07OOXoFTRJljee9ypOOup4Ohpa6eroAt9QrVbIZrJgYLA8wtZnn2LH1u30F4fYUtzOHffcxZanNqGeUAkrhDamWBxndHgUzzP1zIjBSPp3I4JnvP0eamITbH00KpBestYrOUQgSSztP2mnkC/giUfG8/GMR9bPYK0SZAIuvfwS2hrbaMk1Ma+pk8AEZPNZjlp6FHk/S2O2gcZMYzoZFCc05BtYtmgp555xdn0UbilVylTDGjtesgPrgw1g8/bNbB/o484H7mY4HqPhqFaGhocZHh9h44YN5Dob8DPp6DuXy+FhsLGdvFKZ+P+uE5mq1n0WnkvTq5SJ92xik3T+I6xQq1ZZ2ryI9s5WljGPd7/u7XTl2mltaaWWhAS+TzEsc/fdt7N23a388CfXsnnrFvKZHG2tbVhrZ0Mz/cPC9336Bvv5rbe8m0/9aS+lcplAPT51/Rf44YYbtqmqXHXVVQL7qeLoXpn24xCfwaQWgYiHK7WbFkYMJvAYK4+R8TNE/RUuX/lSTjn9RF5y/NkcvWQZtbBGLpMF3zBWLlIeLrGt3M8vbl3LU08+xWA4wuMbnuCZJ58hk8nsUj2R5v68+p8ZL2BB1zx2VsbtPlZ+XsncHjw3BSLPeYuIQBTFlEdLKFoPcprumlyf0Hz0C4+lX68fQ5IkNDQ1ctLJK2gMCrQXWmktNBPWQpYfdwxnnHYaLUETXU0d+MbDC3wK+QItjTk6ujsAsNWEk+Ydi8XyjsvegkGo1qoMDA+yfWAH6558hMbFrQyVRxgYGmTtnb9kKB6h5ehOwmpIbGPCMCSycTqZaTx8308nVmOLJjr5fFlr6ycoedGUEQrUK3MEyRgqYYVquYqxQlNTE5Vt47x8xYWcseI0VrQcw4lHHw+SLjoxGY9SucTA+BA33n8LP7nhp6y9/ZcYhEyQoa053bh1rpXM7YvvpcH5N970Lj79/r9Og7Px+fi1/yw/2nAj8wtdN4mI9vT0KExx01iJ2WElKeOZAsl+aq6cgzYx8RUnMaWkQnV7kXNPWsXLj7mQc5afQWdTO22d7dTCGhYlNpaHtz/Ow+vW8avH7uTmG9cSa8LQyBC1WkjWz5DNZOlq70hHt7Az/7oLVSWajnye2fdofDJXPPFfAZtYHr7rAZJ6iiNRi7WWfD5PU1MTvnhkgyxRFLFo8SIuOP98OvNtzG/pxhfD0mOOpqO1neZsI03ZxnSE5xuWFAocvXQZF5xzPiQQVqqEUcR7L7iKSGO8XMC2ge1s69/Bg488xMahzbQe383g4CADo0M8uu5xsp15/HyAUJ+szGTTUbZVRNLLeqk/5onVbBMnu4kT1C4PeHZSnTyhC2kpplUlSeL0MRgIoyqxTQi3llm59ES6uzqZX2vlNZdcQVdjBy25Rtpa2ogkxsYWL+PzxLYNPLjuQW586FesvWktxVqJWqlKS3PL5An8SArMAIHvs2Own99487v49Ps/xni5RKOf5xPf+Sd+sOFndDa2E8fJbQC99d/ZZ4Besa7ejyNjhjVORo1IQcW6PMcLwJsoyi8Xack08dqlF3P2BafwslMvoNBQQFXJ5DL0DfazY6yf7/z8Bzyw/iE2jWxlw2NPEfgZMpm0+qIx10hzwUyOUOPZ8kbXfY8r9zZSzzcU0hhW78MwEbijSkiIUtQiACPrR7jvgftRtfWctWX5ccfQ1dZBc7aR1kILURhxznnncOKxJ9CeaaGt0IwX+DS3tJDJBCxpW5oeS2hZ1DIfjoUrX3IFRgxxFDM8NszA8BCPPPko2a4GEt+ybcd2tg/u4IZbb0I6MxS6m6hVaoRxTFirMV4q4uV8jGfwjIfneRhjyGVzGAQbJRNNzHZ9Nnb+W3b78nOftSmP1Z97VfP8BUq735kYwQQe1VqVKI6Ik4SwXCXrZ2lubMbzDEG/5SWnvJTjlx9LY5zjpIXHsmzJMjBCEsXkCnmsWIaL44yOjXDHk/fx45/+hCe2Ps36devJ53JkggwZLyDXkj3igvIE30uD83vf9C4+/f6PUyyN05RvpOffP8k3n/wJC5cuIrGWKLFDu/7evgNtvR/Hqi+8thAMmju8wDs5ieJEkP0nJZ39qy8gSTShWCszP9/JJcecz+tWXsbyRcso5AvUkhAjhk0jW/nVPbfzjWvXsO6x9YRxRBLF5DM5srlsurBDdx+lHen2VFlixOxWilerVonimESTyUnCXD5PNpPBEw9UaW5t4YKXXEBbroXF7QvImgyLli9m6YIlNGUaaM034XsB1loEwfM9jFfvvhumpY1hHFEsl8BLR5kDI4NsH+hjx8AO7nroHpqWd6AZYXhkmLHSGKVKmSc3Pk1FahTmNaOJrR+7YOqPy/PqH7NdeklMjGZ3Pl7Z4/OwJ1Zt/b2Rng0StZNlkCKSlqzVe1eoQFQOCftKHH/0sczvmEd3VzfVZ8dY3LqAC1edz/yueRS8HLlMjkI2j9+QIYljoijGGMNAdZj7HrqfpzZu4MGtj/DLm26hXK1QLpfIZ/LkC3mstbtfTRyBJkbO733Tu/i7D3ycYqlIU76Bj/7bJ/nW09ex8OhFNgkTYxP7uGeS8375Vz8apgdDL3a/r2xPT4/p7e3V8z5x5a/8vH9+XIkSERegD5UgeIFHsVKiweR59QkX8+azXsPy7qWEGpHxA4phiXUbH+PL3/kqDz+9nqeeeprA+GSz2bSG1MjkG9zZs8lJvvrIW4DE7qzagDR3XK1W01G3WuI4Zt6ieczrmEchyNGca8JGMSedtpIzTj6d9mwL81u6UFUaGxtpa2sn6wVpigMggTgM0yGpgB8EaGxJ4phiuUSpUqJSq7F1x1aqhBQ6mxgfH2NgZIjR4iiDw8PUohq33X8nKkrziV3pY0GohbV0skye8+8p5ElymSye56GqeJ5HLpNFPENp4wil/jHOPf1s5nXMo721jUXzFtAYNFAdKHLUwqPoaGmjpbGZXEMhTTXFMQaDnw+I45jxWpHBwSEGxoa468n7uPGGGxmPSjz21OOMDo9SyOXJZrPpBHT9GOZq/fJUiQi+56XB+Y2/xt9+4OMUyyWa8g1c/e+f4htP/YTFRy+mVgnjIB/4UTn66u0fvuZdEwNjmEIO+iZuMkCMsGN2J8vmCAVjhJCY/s19vPqkS/idS9/F0QuW4Ps+CZZqVOPn967lW9d9l5tvuYUoDPGMR0tD82QpmFULR+bV4GG119GZ7Lzk932fpqamnXlWEcJixDPDGybL+6wqtz18F57nT1a2hLWQZcuXcdppp9ESNDK/pQsstHW0c8ppp9AcNNKSb6IhKdRn06DQ1EBTSxNiDMcee0x6LBaSWoy1CYm1kyP98E1heqj10boxhsGRIcrV8uSoeXBkmHKlhIhhf4uJOts6yOfSDVJz2Rzd7V1pSkHT5fgZP8DzPDzjpZOu+SA9bqvESUycJFRqFRIbs6M4yOaRbTzywHr6hvvZOLaFO++4i+GBQdQIURjhG498Ls+8ru70PWstCkdsGmNXadUbbB/o471vro+cyyWaC430/Nsn+cZTP2HRssWElRoiouIbxOg2gFVfXOXfwz0RTCFAT1RyqGUT1hX1HwojBusplbDGUbVOet/0Pi5YeQ7ZfBYRoX9skGvW/piv/ODrbB3aQWl4nKamJrJBBuCIqP+cjfYUxI1nyPk5YOekpdb7g0xMtObyOTY9u4knHn9icvSdJAmFhgILFi4g52XJB1lyQY5atcZJp67g5JUrafIbaG9opbOhHVCM7zF/4YL06ihI5xICL6DRb9r9OGNLIZPHmF02N1qWBoP9rbeZOO5dH7Pv++Dv/K0kSajFIaWoSjWssW3DNjROGI/KbBnaxvbyALfdciujgyOU4gqjlTG2bdmGKAReQD6fJ5tNn7NCJj852TfXF5QcKGMMNk4Iifmdq97LJ/64h1K5TKNfoOffPsk368E5qtZABEW9JExQK08DNG5tnHyl9l/FsaZ+p+gWTQs4XIg+QBOX11Vbo7q1yB9f8Vtcdd6V5PJ5MBDFEb989E4+9o+f5NEnHyefTSdOWlrSlokuhTH9ppIXVVWCICCbTVMb6Uq5tOZ7cNsAtj5ZOVFBs37Do3znmu+yS51KWgOeDTj9rDPIehmac400ZAsUMnmaso2TDaOiMGLh0oWsWLEiLe+r319nY1t9QdC+H4+IMFoZo1grp60BfI+HHnyI7Vu2E2QCUCiFJcZrJUYr44xWxrn/7vsIayHGyGTp48SJIB1l+3S1dta/Y7F253OW6ItzMGE8j7Bawy9k+Nu//Bhvu+ANjJXGCcTnk9d8jm8+9RMW7hKcUdR4nklq0bBaewPA2qvXJhNlHFMqswPQQDajCirPmwx29s4zHrHG1Mo1Xnbsubz39W/h+CXHYAU83+P2R+7mP7//P9xw841orHS0tpHUc3MvhkvBuW5v5WBBJgD20bp1lwoNtco9v7orva3JoG539jaRNJDnGwq0tbWC3bkYIRtk6qs8900QwiQkSuJ0wGBgeGiYSrmSBmCt194bky6XN2kTrUxDsMeVDxOB+EhZPHI4eJ5HuVKhubWZf/zIp7n05AsZL42ni1B+8i987/GfsWDJIqJquLMQTlTFiIilePtHrn2SjwoT+WeYQoCe2PrKxPKsei7FcSA84zFaGac128ifvuz3eO1ZL0cyHplMhi39W/m7f/4sP7rppxTHizQ1NCBZM3tK4pxDMuWKmvq3Cw0FYNda8OeXxNnEUhkt7/blUr3EcComJ0vrGrMNNBea9tine2ISb3I3EncRt09BEDA2PkZ3Vzf/+rF/4qzlpxFFEdVSlX+44Qtc9/TNtOdaiMNotxiaBldQ5SlEdKL/0cT3pzCCro+1rWzFSxcWHs4HdiSaqBwoRxWW63w+9Ko/5vSTTqMW1vCA7918LZ/76r/xwIMP0tneQXNTU/3DcGTPajt7N9WKBs/fvYDK4+ALqqxabOzec4fK9zwGBgdZvnQZ//XJf+O4henk79joGB/70T/xy2330ppvTueQnh89VURUkO8D9LBzkQpMJUBfjdILiUmKxhIiknFn070zYgiTiFK5xHvPWc1vX/gOglyGJIkZrozyT1//V770tf+hodDAvK5u4jh2OWZnytx7ZfaYuNoZLRV53ZWv48O/9n4WdS0kmwm45Y5f8Ymf/DNDDWVac017n+BXECPiWdYBrF+/frcQPuUcdDU0tXxGtxnPLNXY6vOvwV7cVBXfeFRtSD4M+J3T3s2vX/EuytUyQRCw9v5f8v5P/hU7Bvtob0tbcb7YZrcd50hhTLqytFKr8nu/8dv82TvfB3EaA66/+Rd84JsfI7OkgYLk0v7se6bGiElqcSkJzJY9/cD+A7RM/GASggyJyFK3s8ruVJVMEDBSK3J88xI+/Ib3sfKYk6iEVRISPnvNF/nX//g3wmpEc0OTm/xznDnMMx61sIb4ho++76/4nTf9OuVSiZyf42cPruUjP/s7CktbyPrBPueUVNV62cCLq+EdcefCJwHWrFmzWzQ3e/7V51u+Pl8TlQEMz6mofHFTVTLZLH0D/ZycX87n3voxjj3qaGIbM1QZ5reu/iM++fd/g1jI5Y7cXgOOc8QTIfB9RsZHWH78MXzj8//Lb7/+3dSqVXzx+c+ffZWrf/oZsm15AuPvd8JfEGt8g0E23vO7X4wuuvGi521dNOUAvWbNGqtGSxMrZBxAIZPJ0D/Yz6nmGD73zr+mqaGRwA+47dG7+fWP/B633P5LOts6QOSIX9rqOEcqY9JSi607tnH5hZfxvx//AqcvXEEUxRQrZX7vc/+P/3zgm2SCDMZKvY3uvqmoZ6MEJc0/c9Me7ncKx6arV6+e6AO9UTwD4ra+EtK2lX2DA5wmx/DFP/8nso15stkMX7r2a1z1B+/kqceform52U0EOs4c5hmPYrGIl/X5s9/7U77woc/QUWjDzwQ8tXkD71vTw/32SRoLTfWOjVP6rKsxxiS1uGyT5MdQX6DyHFOeJAQQdd0foL7ZoypJLeL95/8GV134erzA4AcB/7rmv/jYP/8NLU3N6c+5UbPjzEnpqBmK1RJHH3M0f/0HH+aysy+iWCxirOH71/+Q/7j/WwzYEdpyzcQH0opBqS/zllpbv30a2G2ByoQpBei+/2+FsAYUBkUESTeam/rBHEHS3jGWKIp53znv5m0vexPVuIbxPf7ua5/js//5eVqbWnbf385xnDnF8zxqtRrlSoW3XfVWPvSb/482v4larUYSJnz+xi/xpVu+Qceibgomf2DBGVBRNUYE0Xuv++frart2sNvVlAJ08fFtE+sSKy/64jpjSMKQ953zbt564RsohSVy+Ryf/upn+fx//RutjTt3hHAcZ26Rej/uYrFI57xO/vItH+A33vRuolqI8TwefPhBPn/L/3Jf8THmL1lIEiVYDmYgJtb4xsSRfhdg9VWrzRrWHFqKQ1/Etc+qSiaTYXB4iN8/8+287WVvolwrkSvUg/N//zstTS1HfPNxxzlSeZ5HHMeMVcu85Mzz+PRffIxjupZRrVUgsnz3zh/ymev/k2o2pqWhiTiMD21dtQhi2QTQt6Jvj7d0QAH6xWqilK5/sJ/TZDnvuextVKIK2UKOv/3qZ/n8f/07LY1NLjg7zhxkjEGtMjI2QmtTC//4kb/hDRe+GrFCHMWMV0p85Ct/w63b76V9XieZhLSE7uCDs/U848el2mbRzIMAF3OxXcva5/2gC9D7pWT8DH19fZxijuYLf/YZ1APfD/jbr32uHpybXVrDceYYqW+8UKlWEN/wxte+gT94829x0rITiOKIfC7Hl6/9P75y3/cYy1fp6OwkiQ69TkLBSuAZTewjt3/kuxup71q1p591AXo/PPEYjYqc3no8//LeTyK+IZ/L8/f/9zn++T//lVYXnB1nzvGMRxiFDJdGWHniSfS8/8NcePw56RZlxuOxpx/jS7d+i5v67sbLCHnJHtYNM9LBt24CWLXtWu8eiPb0cy5A74MnhnJS45iGRXzmnR8nm8uRz+f5929/ic988V/qI2fXwMZx5oqJ0rmx8jjdXV287zf/P97+8rfQ3tiGVUttvMq1D93Mv9/xf2wZ305nWyc6scXcYSLgJWGsJjE/A1g+vNzewz17/FkXoPfCIMQmoSUq8KHL/oimXCPZbIb/+8kaej73cVoamwEXnB1nLpgIzKVyiTiJectr3sgHfuuPWdKyMK1ts8qGzRv555/9N7946ld0Luymq62TOD6kXPOeiYhNbBJgboXn99/YlQvQeyGeoe/prXzwsj/gtBNPplqt8cCW9Xzqy5+hkMm7RSiOMwdM7N9YLBaRwHD+qnP5w3f8HueuOBODAYStmzbz3Qev4/uP/ZyyrTJ/0QLiKCbmBQjOoGIQtbojKmQG9vfDBxagVV8UZXae8ShHFX7z3Lfy7te+jUqtymBlmPd/6q8Y6x8hn8+7DVwdZxYzxiAIxXIRq8oF557Pe1//Ti4752I8MRgrVGoVbrn/Fv7lhv9mY2UbbW3t5E3u0Mvn9kFVrRf4Hla/f+sH1lRQlX21zphSgF7eNmzvARRtUXtkdxr1PZ/h8iin5I/hT1b/HuWwitWED/zNB3nk4fW0NLe4jnSOM0t5noe1lnK5TIJl1eln8p43vIOXn3UJLQ3NhGENjS23PXUf/3fn97lr64MEuQxd+S7iJMbywm7rJ2CN73lJNVkHcNHVF3trYa+N4ac2gp7Y2VtNAdJNAI7EEC0IoUZk+5U/es+vgwiFQoF/+M7nueGWX9DV2eWa7DvOLDOxxZyIMDo2ih8EnLPqbN77xl/jwjPPp9Ev4Ps+1WKZdc88yn/+9KvcFz1JrAkN+QJqdXo2v1UUI15cjUKUxwC6V3bvcxJrSgF6zbfWWAQQ7Z7cRPIII/X/aGj52Dv+gnNOP5s4Tvj5PTfxhf/5Tzpa211wdpxZxPM8UKiFNWphCAKXveRi3vra1Vy26mXkszmSKMFguPWeO/j2nddy08Y7MC0BhUyeLJnpnUcSVeP7JqnFT9sougtgzboVhxyg0yYePRhBOrEKqBxpe8d6ns/A2CCv7Dify8+8mEqtyqahLfzZJz9IXInwMpkjsg/2brtIv5Avqe7ehNFVvzgHY2KkjCpjY2NYURbOX8CVr34dl6x8CeeedhaBBBjPUCtXWff0I3z5F9/gzv6HqWViWue3ora+Y/k0f6BVUfEMYui/s/e6sdXfWu2tuap3n/nS/QdoBQQuKFzZYCM9Rq19oT/K086IUA4rnL5gBR+86v1U4xpe4PPpr32O/sEBWptapucSaBqISDqBIoJaJQxDrFoSa9HDWOv5XJ5Jd59OJ28g8AM832MiTk98WFRdF0Dn+dLRslKt1YjiCD8b8LKLX8bZx53BVa9+I91NXeSyOcJKDWsSbrnzl/zooRu4/qlb8Voz5Nvz5NWQRPHMJmitIsJ9gPSt23P/jV1NuYojSkzGM7ZNrYLKkdM2SUECj1L/OG8/9zW0NreSJDGf/fq/8+Nrf0TLHA7Ok6MNdo5YozCiUqsQxRFBLsv8BfPI+7n0ks/PoAqqlssuv4xCQwMCzGvqwq9fTu7pPkYr4wyXRzBiEN9w3wP3s/HxDWSyGWx6xUUprKBqKYdVVJT+gQGKfeMYz2Ak/b9nDL7nk8vlUHTy2CcfC7LbqMcF8iPXzpFy+jqPjIxgsh5HzV/M6Sedynve+E5WLD+B9kIrlWqVQibPjv4+1m95nO8+/FNufewual5E28J2NLZoYklIZjQ4i4ixiVWFHwC6loste+i/sdvv7PdW631Kz+m5YrGXz27iCMtBe8ZjtDTGe896C39w+XtRAw88s44rf3s1Dbn8nM1qeJ5HEidUa1USTQiCDEkUs/y4Yzjn9LPozrXT1d3NyaetpD3bQluhlYZsYbffN5I2qPWNl4642fMbJk6SNKACqqQnNCEN6JqOjgdLI1hNGCqNkIjy+BOPs/3ZbQTZgJHyGOPVIkPlYXYMD/Dg3fdPBmOrFlWd3JVGxOAZD08M2VwWz5j0pFJ/pay1Ln0yhxljMCJUKzVCGyFAU1sLLzv/Qs476Sxe/pJLmNfYhed5eCpUw5DB0SG+ddP3WDf2FPf1rUeMIZfL4WOI4ni3E/1ME8+QWD36jr/6wTN76wG9q/2PoK/uEehVzTe0CPGcDVh7IgiRxLTVGnjzKa8iwTI+Ps5f/8un8D0fMQadQ6M0z/OwicWiDA0P0dzZyolHn0h3cwevevWrWTnvOLraO+no6KQxWwCFqFJDjEl7EAQBGltQpVguEUUhiDBeKhLFEXvbj7K5sQnf81G1GM+jpbEFVJHAgEk/HLkgi6pyVMtCVJWzjzoV/PR7SZIQJhG1qEa5VmV4YBBBGK6MsmOsn6HyCL+4/kbCao1IY8arJcpRhQ1Pb6BSqeB7Hp7xMGLIZrPp5TDp6ysiGK++s1s9kCvKkTrZPZdM9F5GhCRJsKqUx4tExCxZuoRjFx/DFa94BWcvPY2li5fSkmuiXC6T8QP6+/pZv/lx7tryID9/6pdsGdhGrrlAQ64BUGyixCSzKThb8YyxiX24Oaj0T/WX9huge4BewGjchYG9DqPmnDSTHo3X+MRb/oqu7m583+dLP/k/br7tl8zvmjdnUhsTed3RsVGyuSy5TI7ffMd7ufzCSzj5mBV05FpRVbLZLIJQK1XoH+kjUUukMRu3PMumHVu468F7aTy6Db8QMDwyTDWsISIMjg4RhhHGyB5Hpx2t7WSCdEbc9z06WzsR31DZOk51oEiQCTj75FU0FRrpbO+gIVegs60TmyTYyFLI5fE9j7yfpaXQyMLj5wGkJxub/v/dl7wVI4ZaVGW4PMZ4WOKhBx+iVCxRTWpsH+1nOBzjrjvuZMe2HXi+R2wTwjikUqwgCJ5JR9++8cjl87BLwsRau/O9rbt+xzlcJiek6/MgURhRqlaIbUxDoYFcLscrXvFyzj1uFWetWsWxXUvx1CPI+EgCI8PDDI+PcuOjv2Ltk7dz2+P30DivBR9DZ2dn+n55AedRDoWC9TOesZXkhp//2c9LPT09pld693uwU85Bi9qTxfioJJYD2A18tvLEMFYb56Utp/OSk87FqvLo1if48ne+Skd7x5xYjDJRlF8ql0DgwnNfwptf+0YuOP4suju7aQjyVKoVfOMThSEPPPgAG0e3MhSPcs31P2JLsY+2Y7soFUvUopDx0jhe2UdM2oZR6stkfc9DxECy56C1oW9bGrjrOY7o6Rgxgq3F2MgiRrjpjvvwjEcm8DHikclmiEshxaeHueDMc+lobaerrYOF8xailQQdTzhm6dG0NDbT3NBIQ6ER4wk5P8e8hgzzG7o46RXHMTFoqEU1wiRi9C2jRGHEeLXIQGWYDVuf4eabbsH3fcarRUaqYwwXR3nqsScAqee/hUyQ2Tnyruc/PeOlvYLdBOZBkXq6QkhHyEmSYK0ljEKq1SpdC+Zx/mmn05pr4rWveg1nLjuF9rZ2mgtNJLWYWGOyQcAjjz3Gur7HWXv/rdzTt44wb7HGsmDJQpIoRoVZXwIrqiqewYhsAbh227Ue7H8rlv0G6PUr19dLhOX0NA+pc35jFUGoaY1F2W4+cNUfEGOxmvDZr/8bw0PDNBUaSGbxB3FiBDJeHMd4HueuOpfffNO7uPTsl+HjkclkSWoxW3ZsZag0zNd/9l2GG8tsePYZnhp6lkJHI9nmANOSY6Q4ijGGTD5Dd0M32Ho42q0sTtlXWjcbZHYeG0C2PlIqyGQATep56lBj1EaUShVEQI4vsHb4XnSoPlpGqY1WkFLC8qXLaW1spqmhidbWVoaf7KMr08ZLz76AjtYOuju6ILIUgjy5bI5cJsvizkXpu9qmeeuXnngev/GKdwIwXisxWhlnpDTKU489SZhE7BjtZ7A2wp1338XGp57BD3yqUUisMaVymUp5ZwrFMx6FfAExE6ke3Wc3wxdDLvy5KYSJyVwEqpUqtSgkikMKTQ00F5oo5AtcetmlnNh1DCccczwrjjuR1kwTURTj+R4mEYYHhhitjXPXw/dx4xO/YnOlj0e2P0HbvHa8ZkPepCWvURjtnOuY3RTEj8uhqpUnABoXNE7pqPcboCdLQVSXMvHGnNvxGRGoVUPecsGrWdixAC/j8e2bf8B3v/99OlrbZnVwntjMshrWOHfV2fzO6vdy8RkXks/mCashfsZn7e238OjY0/zwluvoz44RJhF2QCnkCyxcvJAkTiZ3fxHjT+ZkY3two5DnBaJd//mcCxEhzTt6kn6yNIGCn61/J2UWtqIGhmrj9I0Pk4wk2E2WJErwxOOGm+7GM4ZMNkN52zgnth/DksVHsbB7Ad2tHYxsGOD4pceyaP5COlraaSgUsECWgPn5ThYWujllyUlAOvKKkpjylWXiMKIWh2wb62O4Nsa6R9fz7OPPEBEzVBphpDLGA/c/QFgLMV7a60EQfN/b5fI9HTUaEYJdTlyTo/D6cz0Xg/dEeSbsfLWiKCKxSX0yN30+FSVJYo5feSLHLjya1qCJk884hZeedgEd+RYKDQ005RvACpVymTiKqVYqPLHpaR4ff4a7H7qXm5+4A68jR7FcpLGpkUWLFhFH8e6bMc+ZOKQqgWdslGyshOYmgLWsnVKQ2d9DnJi61/M/ceVtXs4/L65GiYh4h3jEM0YUYs/SNdbIl//oc+SbCvQPD/Cej/4uGzY8QxAEs/LDMzEyGR4eZvlJx/KH7/xd3vCSV5P3syBCWKvx4DOP8D/XfZ37Rx9jRIu0t7Yhyc4ctZ0IDLP9jV1/+nctExSZ+A9poyoFq4rxhNDGxHFcv4yOKfcVWdy9kM62dtra2ol2lMhVAs4942yOmr+IxfMW4VmDrcbM6+ymkMtTyBcgY9AkDS5qFWMMXsYnjEKKtRKlWpmnnnoaGyeUwyrbxnYwVBnhphvXMjQ0hO97VKOQMAmpRSH9ff3pSXCX/Lcg5HK5ne+zA3gtJt6Xhzpo3PX3p7xASZVKpUqcJCSakNj0JN/d3UUhVyDnZcnlc1zxyleyrOMouhraWbh0MQvb59OSbyKJYuIkIZvLYmsJfQN9DFVHGSwO8e2fX0N/fpS+sSG2VvvIZbPk/Byi6XvXJnZuvG/3QlHrZwKThPGDt33wmtPo6TH07j//DPsbQdeD8zmfvaKZ4kSjpMNxyDNEFT+bZWjrdv7iVb9FS2sz+B7//I0vcN8DDzC/e96szGV5nkcURkSScOWVV/KX7/4Tli9YRq1aBYU77r2Dr9/7Q+4cXUcUhjS0NDCfLqI4LXfbLW86F16/+jHutlPNHiKSEQGbjoxzQQbJpOM609ZFLQrZUulnY2k7Nk6H8fc9+BTmIcELfKqDJXQo4sKzzmdeZzcLu+Yz+vQgxyw6mmOXLKe1uZX25la0WsWIodHkaS40ctRZiyZnYOIoIrYJv//q904GkZHKKMPVcYbGh7n91ttI6hNXI5VRRsvjVLXGo+sfZfPmLWQOZDAggie7T/1MdGyberhOJ3l3nUibKGPcF1XwfMPJZ59KV1M7bflW2htaMWK44CXns7BjAfObOvGNTyabIRtkMZ5BawlhFFEaL2E1YcuOrdz64J1UWhLuffh+7nz2AQrzmqhVqkjFkM1k6Wxow6qmz6ewcy5oLrxv90PVrgNk9fr1smaKv7PPAL16TboVuFfJnqyiy22cICpmrj5ZnuczPD7MqnkrueyMi0hUWf/kOr5//bV0dXTO2uBcHC+SyWX42Ac+yjte8RaSSgRWGR4f5e/WfI5bdzxAzY9paWom52XQxBLxwrVMnG0mA/lEnKnG6cSfF5D1Mkh9lf5EIFJVGruaYb5w2+ADxH3pyLsyVKL9yXY6W9vJZ/M0NDYw+Mg2lncu4fwzz6WrrYOu9m7CsQp5k2XhvIUUcjmaco1IQ1qq2FRo5Kj0oLj81JdNvgbVsEY1qhJrQt+OPkZHR/E8D1Vlx/gAsY3ZNtqHFeXZzZu457a7yWR3BnCrlnKtMtk0RtVSjqrYdGXvFJ8nCDyfXJCjXqpCNsgSeAEiENYiFh9zFKvOPBNfDV2NHbQ3tNGSbQID8xfNpyFbIB/kyWdzAETVME1b+R4GQ61SZUvfFjZv24LXHLDumUf5/k+vxVuQo5ZJ2LBpA9rg0ZAv0LKwDRtbGguN6eGoEuuRE5An1JN5Kuh3AV2xYt/9N3a1zwA9mX+2sjQoBNmoXItFZM42+VcsgfV429mvp9BYIFHLF7/3JcbHxmhpaiHR2VW54RmP8eI4J562gg+/+wNcfOaF1Ko1fM/nGz/5Dl9bdw3b7ACNrQ3kxcyJypNpUV9Uk0506h4HmDa2EEPBzyN+feK1pZMoiRmKx7DhCHbUQjPsCNdx2+3rAMX4HmObhmkLmjhz5em0NbXQ1dlFecc4uarPGStPo6Wphc7WDlqamrGJxRND4AfkTQYjhs4lJ0Kwy7Ekae35RI/xOEng15k86YhAbNNFPmlGQkjUMlweJU6mvhBDVckFWVrzzZPPS3OukVyQ2y2FMLFIydSrWKRey24rMXESE9cShovDiAiVqMKm7Vt45IlH2aqD2Cysf+IRbn/gLpqWdWAyBtqBEPzEp3NhNyRpHtlG9vlXeEcoQcQYnoC0bHmqphZs1XZP3M1clZbVFXnDiZfzqvMvpxaF3PP0g/x87Q005BtmXf2k73mMjI5y+csv42/+5K+ZX+gkimO2b93Ol277Fj947HpyhRzN2SYSm6TLWJ2pq7+VJ193BWrpDhqB+ODv6d2epgjmH7uQRC239z9Isj0heTwhLod4iaF9+41kgoBcJkuukGfw0e0saurm5ONX0tbcSltzK92d3fiJoTwwTnNzC/M7ujHG0NTQiIjQ0tiCMfX8uz+xyEYpBPnJY1eFJS0LD+wjWa/vngi4qqQllfXywnSRUrotVBiFlColytUKz27dRLYtTygxm7dtYcdQPzfdfjO2zSPb1cD4+BgjY2OUqZHJZcgGGRadcTQ2TNI7mRxDQhztcpU6d8PJ1CkqvmfiMN4otcy29ItTD9H7DNCTM40qS9Va6t3/D/5gZ4ggRCQ0SYErT38ltTjE5Hz+43v/w/jY+Kxrwu95HkMjQ7zhtW/gb//kYwRJumz7ye0b+NOv9bA1GqCzvRMbJ25nl8Npl9z3ngfe6VfiWgQIDfXRNyKYBkEFojimrFWKlTK2NIR0C4/rNh55Zkt9RGxRI8TFkOLWETo7Olm2cCm+59He0oqI0NnaiZ8JCEfKlDeNoUYp5Aqcc/IqrCqqlmwmy7zO7gNaKScihFHI1h3bQITA89nSt431Tz+KLx4NS1sJmnLpIqValdHxUcbLRR596nGCrjxBYxaxaVD35/vp0zFSwvM8GtoaaaK5XqFiiSrhLsc2+ybdp4sKiR94vo2S227r/V5fPYZOeTS4rwAt9GJXfWFVoIP2Eo2FudoiSYxQqVZZvfJVnLL0JPDhuz+7hhtuupHmpuZZFZx9z2NweJh3v+XX6P2DD6Z1vvk8P73jBv72l1+klKvS2dBBPFED6ky/euDZdfSd1P+ajnfTmmk8JstSxXtOvXBHI10LuonjiGfD7WisPL5tIwrEz6ajTBtbbC2dSzDGcMPYXZMnD2MMQRBwoB9Jq5YwDOsPQ6hFIeVKOV2YU/IRb+ciJd94GM+w8JQlaGyxuyxUmkyJ1Oco0xYDO+POLFpiPaNEUfENYsw22P8OKs+13xSHt/XEPJnx49LeBXPzWbfW0hI0ctWq1xFrQrlc5l++/kVsFEMmO9OHN8nzPAaGh3jPW97Jp97XQ61Wo5DN0/sfn+an/bdC1pAls7MZkTPr6C7/3XXg+LxKiQTicowgZCVIX8966kEyu5QWTi6Kqeemd7mnSA9sUnsi2eBlg8mvNGQbaGppmphFTTMSukvVtkJUCff+0X/xDo6nSI2NElTZcDC/vfcl2/UnPpMtzQfN7VKCOaf4xmOsVuQ1J17CUZ2LyOayfP/GH/HIE4/R1Ng0ayYojDGMjo7yxtdeyUd//y+JahGN2QY++Pm/5muP/xC/IYOPt9soxZnbRNIaZIumpWVq672509RVnCTp7tJx+v96L9j6/5lcKDPV/00srdn1Nqy1O+8jSe83qR+HnZhknZvjstlAMcZLqnE5UPMrgIu5+IA+wHsN0KuvWm0AErWnGmO8Wbl6Yz9EhDAJmVfo5HWnvQLjC0Njw3z5e1+lIV+YNflbYwzVWpWLLr2Iv/njv8a3Hr7n81ef7+V7m27gqGVHodH07wDhOM4hUDCeoKIjtajyJEBvb+8BfYj3GqCfvvzpienjy7ysj8rcKxMQhGoUcsGiMzhuwdGIGL5z/TU8/vQTZDKZWXHO8TyPSqVCe0cHf/+nnyBPhkI2z3/84H/59jM/Y/HSxYSV2hy8dnGcFzlJr3NQie/svW6s/tXDE6CXty236a3J4jnSkOR5FKXBy/PGM15FlMRUtMY1N/8YM0uKUUSEKIoIgoB/eP8nWNDQiWc8fnHfLXzr6Z+w6KhFhPvK/zmOM4ul8VmEp+v/POAP8t4CtKy5ak1y7GevyAKdmlhA51SU8IzHaGWci5edw4mLj8XP+Ny17h4e2/A4DYUGklnQsF0QIo356z/7KJeeexEWWLfxMT5x4+cJTZwupphTz7rjOBMUVAyo1QcAeq7uOTwBevXqNP/cOppZIYZTbGRVVOZUD2g14MeGUztOJFvIUYmqfOXH36Q4NI74HvvsnzkNfM9naGSIt1/1Nt566RupVCtseGYD7//ihylphYwJXM7ZceYyhXQY5q0/2JvYY9DtW5Eu8fYDu9jPZxqsanLABZczSESoVCscHSzgygtfRa1W46Fn1nPLL2+mobEBO8N1z8YYKrUKp6w8hT9+/e8Q1UJ89fjHH32BgaYShSA/61Y2Oo5zEETAt1tgZ2/9A7HHAN29srveoYWFMz3SPBgGQ5hEvOuS1QD4GZ9vXvttxovFdHfqGWbr+6998s966WrtJDABX7v9e9xXfYzO5naiOJrpQ3Qc51CJqIhAxPjB3sQeA/Saq9bY9PbNpTaxCDpn0htGDJWkykkdx3DBiWeTyWZY//Rj/PTm62nMN854M37P86iEVX79zb/G2UefTpLErH/6Uf779m/ief6sWtXoOM5BU1G8uBbFaD1AT7XH6C72FngVRVT1ZZoo6NwpIxAR4ijm5ce+hO7WTmpxyFd/9E2Gh4fx/Zkt5/Y8j/GxcU464UT+/Lf+hFpUoxaFfOaW/6JGSCC+yzo7zpEgbUQlGtuaJa4CHEib0Ql7CtACcNmnLmtHyM2lFIcghElEsxS45PgLqMY1xqrjXH/LDeRzeewMPxabWHJNBd7/nj8iR4Z8kOPTX/ssd29/mELG5Z0d50ihoipGQNhucwwD9B5Qo9HU8wN0T1oKUtb86YI0TnYLnAMEIbIRKwpHM79zHrlsjp/cfj0DY0Nk/Mz+b+AF5Hs+o+NjrL7yjVxxweXEUcz9Gx/mVyP3p1sCzbJe1I7jHBLFM4gwWNsRpSmOqw/8Avl5AXpVuh04irnIywW+qsbMlRBtgFh516vfRi6TZbg0xrU3XJe2PvRkxtIbRoRqrcr8hfP5rde9h1qpijGGL938Dca1gm+8uXSh4jjO/ky0MFHGHmy8oAIcVBR9XoBufHvjRFuko4xJW6sc0oFOEyOGYljmtK4TOaF9OdYTHnjiIW6545cz3lJU6mV1737d2zlmwVIyQZavXvctfrnpHpozMz9x6TjOYVav4BAjRXp77cGsIoTnB2hZe8na+KKei3zQo+obYc6JCg4xgq3GHJtdTHtnBzZJuP6+tXjGm9EFH0aEWq3Gwu6FvP1VbyGKYgZGB/j+E9cTZGbnDuKO4xwGAqjEMNl87tBSHD31/HPFbz5KVM6wUYLI7F9BKEAUR7Q3tfLOK95KLayydXQHP/35z/Fk5io3ROq7KIvlw+//S+a1duFh+P49P+XZaAeFTMFNDDrOEUhAEcGqrcDOxX8HarfgO7HSJQh0kVcI2m3aj3PW558FIdSICxeeRXtDK7l8nh/d8BM2bNpAIZ+fwQANlWqVM884k1eceQlhFLFx27N856Ef0+Dnie3s20XccZzDo77hQgWguPCEw5DiqBdSWzULZrwmbapUMRmfUt84Zy08mcbGRkZKo9zxxL1pP4sZHaEK4gnvfeO7yHoZMibge/dfR19lGN+bs5ujO44zVXpoTeZ2C9Br6oXUavU8mBvdN4wxFCtFVh1/KueeuIrYRjy56WluvvlmGhoaZmwCzvM8xovjXHjeS7jsjJeiieWprRv46eO3kM/mUDcx6DjOfuw+gr56stv/JWoVmQvpDTHEtYjOsJl58+aBhRvX30qczGB/JxFskuBnAt7y6jeS93JYa/nUmn9iMB6trxicGxcojuPMnN0DtKCrV6/2ENpn6HgOWGIT8tk8737F26jVaozHJW64/gY0sTPW596IUKnWWHXmmbz8jIuJk5iN2zfxrPaT87MznHZxHGeu2Bmge9K/bzl1fJmoNGliZ38PDk37PudGDfOaO8kV8tx461rue/h+Ghtmrr5YAPWU91z5DvKZHEYNP374FwxHYwTG9dtwHGdqJgP0RVyUbhIr/uni0apWdbZnoX3PY7Q0xjtfsZr57d1Uwgr3PfMwNk5mLDljPI9iscQpp5zCS04/D40sG/ue5SeP3kQ+l8POko1qHceZ/SYD9EQZiEFO9fNZQ7rEe9YShNDGzM92cMa8FUhgGBwa4vs/+WE6ep6hlYOiSiKW8088i65CB8Yz/PihGxmIRghwo2fHcaZuMkA3bn2svsRbmlWVtNP07CUi1KIaR3UtYuWyE4njmPs3raNYLGLMzK2tiZKYjvYO3vPGdxLGIVu3b+NnT9xCxs/MmcpFx3Fmh4lIJmt718b1mr1j0vzz7N8kVkR4ybwzESNkshl++JNrKZVLeDO0a8pEv+c3ver1LGibR9bP8NN7b+Sprc+Qz87cghnHceamNEDXl3if+9kru1U4q77Ee1YHaEUxarjglHPwPZ+NA5t5fOvTZL3MjARCESEKY+YvWcCVl7yajJdh6/ZtfO/+62ib304SRXOgaNFxnMNJD3E3qt1+2ZT8Li/jL1Br7XO/N5sYMVRtyLnzTmFeoQM/F3D/Qw/y4IMP0tBQwM5A9YYRoVwrc/yiYzht+cnUalWe2rGB7TKEZ43LPTvOi4iCaKIYTCfAPb/zxYNq27x7ELZ0z4XrcM8YxsfHOXbhcjrbOylVSvzqsTvJeMGM5XlVFSPCm654A8RKJshwzaO/QHwz24thHMeZpQxAT/0faqILme0X4goxCa1BE0v8eVhjGSsV+dnPf04mM3PpjTCKOeaEY7l01cvwMz53PHg3tz16F7lcbi6c8xzHeSHIYejFMdHFTsRcKkbQWdykX4xQrdWY19jJFRe+nCRKuO3RuxivFPE9f0aCYdp3Y4zLzrmYzrZ2kmrEg1sfYTAZc8u6HefFSFXUKmq1+7w/XZ1HDi4MGIA1V62ZSNq2zfpgoiCecEJuKWotmXyWW371y/qu3dPfIS6dHIxoa2/nZWdcgKeGclzlpo2309rcQhLP6nJyx3FeCIKk/YykJemKCgBcfTA56HSJt17w6SsXgraTzO4mSZ7nURou8vqLXk0um+OZ7c+ybuOjNOYaZmTjVRGhGtVYdfoZnHfK2SRxws333spTo5vwxZvtpzvHcV5AKiKFTHzQ8dRMLPFWlVMwZr5N7MR2h7OOADWNWJZbQFemFS/r8/iTT3D3vfdQKBRQOwP5Z8Amllde9ko8NWSCDD979GYqtSqemZl6bMdxZpaoiFoLyjwtaxtAz+Rs39SZiSXeVvXEoJDxsbN3F2/PeBTLRc5bdS7HLj2WarXKE0PPkM1kZ2zrqDhJ6Oju4Jxlp5HJZFj32Ho2DG+iqbmJJHHpDcd50VJA1Y+z3kGXLJvlbcMWwKi2q53dS7wTlBwZjskvBk9I4oTrbvgZpr7333TzPI/x8XFecvb5HL1kGRpbHh/ckJ40vMClNxznxUoQVU28rJ+3UdICO4sxDoRZc9UaS0+PEThV49m7xFsQ4iSmvbmN845fRZLEPDOyhWeefWbGto9SqwSFDOectIrGoECxVORnd/6C1q524sh1rXOcFzMF9XzPV5XMwd6GAfQcnmxU5GwbJwizdBdvAasW0xfR2dJOJpfh+pt/wfb+HWQz2WkfQYsItbBGd3s3F513IdVKlfFaiXXFpzGuH7/jOKpi08ZzHcDknq8HwgD4jDciLFKrs3YnQlEh1oS3vOxKMl6GWhLxzNZnSNK+IdN/PAiJWk5euZLFzQsIshmuu+VnlKkR+IGrfXYcB1A8rx6gD0I6Wg7i7lkalyd5vqE0Os6S+UdRKBTYPtTHA8+spyGXn5EJQjFCrVbjVS99BcbzSGoRj5U3UklqmNnbxsRxnOkigAXUHgM7N+U+EPUSO+8k8QRm6QrCtLwuZlnjIub5bSTGsnXbVh55YB3ZbHbamyNNLE5ZtHQxpy9fSS7I8MjTj3PHY/fS1trqqjccxwGQNBMt3Qd7A+lQT+R88QzK7NzN1PN8xsbGWLn4RE496WSiMOKmB3+FeIaZqAj0jEexVOSsk05n2eJl1CpVNo1vY9CMY6zMzrOc4zjTSgBVQGQeAFf3HtwIGuE4MQLIrIwtVi1ZApb587Eo1ibccOMNYO2MVGxbawkaspx9xtkUJEuUxHznF9dQaChgk1l5jnMcZyYooCwBDipW1QO0ZjUtqp6ViegkiWlubeEVL7uMJErYWuqnqiGe8ac9KSMiRHFER1MbLz3zfMIoZGhsmG3BEGZWL5J3HGdmaPvB/qa54NNXNqnSrulodPaFFwU1Qry1RGuumUwuy51338lTG54ml83NyAShVUtToZEFDV1k81muu/V6tg7PTLmf4zizlZB2d4Mr/uiKbPqPA4uxRmq6BFigsZ2F0RmMEcIk5NJTLqQQ5EjE8vSWjdTKVczBr6A8hOMxVKtV3vqG1TQ0NBCWQ/r8UWxW0hlbx3EcAEVUQZVscX5Tc/1rB8RYYxaLSJcmaTb78B/loTHGozReZuWxK2huamFobIj7Nj5MIZefka2tVBUT+Jy06DhymRxPbn6aH9/6M1qbWkgSt3rQcZzDx2Bsu5fzUWH2NUlSSMTSFOfo0mYIhL6+fu6+7U6yudy0B2jPGMqlMqedcgorVqwgqtSomohys0USnW3PnuM4s4CIaFaigwpWRsU0zNYdvI0xVKoVTj3pZE478VSiMGLj2JZ6ImcmDlmIbMSJS45nYdM8oiTmF7fehDc7nz7HcWaaKoo2FDVZBMDVPQeWgybRttk6ryUmXRAiIwltLa2IEX7xy5uohTXSssDplSQJDU2NvOzilxFHEb7vc9e2B0msxQ2fHcfZjdTroJWcwXQBrF5/YB3tDKLzSTPZsy7CWGvJZbKcv/RM4iSmElV57LHHwOqMhENF8azh5O7jMYHHPQ/dx6COuY1hHcfZKwGVg1wEaETSPtCzscRONV06c8Gq8zAYNo1sZbA6QtbPYKe5AHpiefeK01bS0dpOID4P9T3GxsHNZP2Ma47kOM5hZxQ5Cp2ZEem+iIIaJT/sUSBLkM/w4P0P8tijj5HL56d9eyvPeFRqFS4966W0NjZTLpYYs2UaWpuwsavecBzn8DOCLFGroLNrpkvEUImqXHLuS2lvbiNOYnYU+xHLzIxWFdTAguZ5BH6GvpEBfnjTjylkZqabnuM4Rz6jMCuHf8Y3VMZKLCh00djcyGhxlFvuvS1dPTjd3euMUKmWWbFiBaeffjphpUZZq1TakvoJw3Ec5/Az6CwM0Ap4gpYSgpJgAo/x8SIP3PcAmUxm2ifkDIZaHNGRbWVp+2IQuPH2m7GqM7JZgOM4c4ig5iD3WTII3bNtCChGKFfKrDxxBRefdxFRNWTz+DbEn5lG+IpijOHkk1fii4cg3L3lIWpxiJmlO4Q5jjPDdGJttkSRiYpw4E37jTHSpTq7qjgEIUkSMonHgq55iAgPPLWOcrU8IwHRWksum+U1F1+BouwY6KPWYMlms6jLPzuOs0+aqPUqB/ObRmfrDJeFxbYrTSEYuPvWu6iWKzPSICkldGbbyGQCHnpiHeseW1/Ph8+yyw/HcWYPEVSp5sOGPuCAm/YbmYXX6KoWPxvw6otfiYdhoDLCUDRKxp+B/LMxVCoVLr7oIjq6OkiqMf2MEDZYxLr+z47j7F9I9aDirLHWbhORGapd24N6t7jipiFag0b8XMATTz3Jg+seJp/Lz0yArlU5ccExtDW1MlYc54HHHqbQUEBd9zrHcfZDVFSb/XSj0gMc0BlUhmbTKFBESEhoMY3kTBbxDNu3b2NkYBg/8Kc9QNvEkm/Is3TxEsRCNa5x2xP3EJgA65Z3O46zDyKgRpMmO1I7mN83iPqH+6AOhRGPUqXEqy59JcsWLaUW1thY3EYmE0x7/bMRQ7VWZfnSoznnzHMIqyHDlVGChQ2Ide1FHcfZB9F6kJDoguLPK0xusTJ1RuzsqoM2nlAZr9CY5GhobKBSrXLXA3fjeTNwHhGIbULeZOkutONnfH528/WMjozMzPE4jjPniKr29h7cfksGYaN4ph7tZ5YAsSa0+I0sKywiwVKtVnjkwfX4vjf9HePqdYznvOQ8Ai/AWMOz2k9IjHELVBzHmYJDWa1tEB0/nAdzSESI4piuri5WnrACjRM2jW0jMYphJopNFGM8Vp14Or7n0Tewg7FonFx++pebO44zBwmIyNPAQfWEMKrmWUlr9WZ8BA2QJBYTKgs654EI6zY+xlhpDM+bgRG0CFEYsrhhHn4m4OFnHuW2h+6iIVdwDZIcx5kSPYTtpA0iW8QTEJnxAJ0egTIvasNg8LMB6+55iOJoEc/zpvdYRAhrIcedcBxdXV3Y0FLLJUhHBqID3j3dcZwXmXQbbgFlCDjg7a4AjKhuT9uNzoIdVURQlMsvuITADxirFBksjxD4/rSXaRtjKFfLnHvK2Syct4BatcKGzc/gm+k/Fsdx5iRNUxz6xMHegAHbH1ejREQ8ZrhzpogQRRGLuhaQ8QMGxgZ5euBZsn4w7ekNQYg1oaPQRi7IUg1r/Pz2m9KThUtvOI6zPxMhS2UIoOcgbsJAsANhSDzZ9Sann4J6ij+iZEMfk/XYumkrjz64jmw+P62TchMnis6uTs4490yiSkRMQrk9SdMwroLDcZypEMFgtgGsP8ANYwGMR2UHMCRiZvTS3RhDpVrltONO5qjuhdgkYftYH5rMzDHFSUxrYyvHzTsaMfDwk49QjaozM1npOM6cZVVHAVh94L9rfnlc0xDK4EyPoAUI44hF8xfR0dpBLQ55tP8pxMxMLyerlgw+8xo78bMB1//qBrb17yDjZ2bkeBzHmWNEVASSJC4f7E0YrlqTgAyJESbqKGaEZ4grEblRIVvIYRPL7b+8LV0QMu3VdYK1llXnn4XxPDS0FJa2EjRkUFf/7DjO/qkIJq7FVoQ0QK858BuZGJ4+m+6SPXOVHNYmtOQbOW3pSqI4pFQtM9Q/yEylXlSVs048nXw2S/9AHxsHtqS7iScuQDuOsx/pHihGE1s2npQAVhzgbipQD9BG2KqaVoQc7uOciokdVBqbmzlm2dFgYfP4dkq2ij8DKQ4jhjAMWdQ4H8/3eXr7s9z28J0UsnkSV8HhOM7+iGq6voQdcWBHAHoP4mYMgDWyIa2FnqnyBEVFiXaUmN82Dy/weODhB+nr7yOY5hI7ESEMQ5YsX8q8+d3YyKIFwevOQayugsNxnP1SRcUzoGyxTy4eBA54NxWYCNCJbmOG22cqkK8G2MQinmHTM89SLpYx07yC0IihUq1w8gkrWbxgMXEtYtO2zRi3ctBxnKkSUTECIkP3fPGLET09BjnwXK0BSMrhs/VfnZkURz2l8LrLXk1jvkA1qjGWlNLR8zTnn0WEMIlo85tpyTYRJiE/XHsdYma2DNFxnLlDQBFB0DGAi7jp4La8AsD3R61qPFODRBFIsBy1YDGZbJb+kQEefOxhcpnstHeNU1X8wGfh4oX1YzOUOpIZXmPpOM5cUw+nFYDiwhMOKrqmATqfj1C2iDHTvzehKuJ7hINlgorgZX0G+gZ44IEHyOVy055/juOYttZWzjnnbJIwYrQ0hqKu/7PjOFOmqLFpxdcOgMatjx1UIDMAjRUS0OrhO7ypEzFUoyrHzVvOsq6jsImlFJbJZKZ/B2+oL1AxGZY2L8LLBNx23+1s2raZTCbrRtGO40yNYmxsAXkGoHtl98EH6LX0VUG2GM+gMr11ZGnfi5iF8xbQ3dlFEsdsHNtKYu2MZFystTQ1N9PW0ILxDE9ue4ah8RECt8TbcZypUTEiNk4S1ehxgDXrDrwGGiYXqqy1MmMjaCGKI9paWmlrbsOq5fa776jnnqc3RE8cywUvPZ9MLktcCskubKTQ0UgSW9cC2nGcKREEEakh/o5DuZ2dM4sqwSEf1cFINyJEt9XQ+qruJx99Ih2tTnNAnFjifVzX0eQzOcbLRTZt24Tv+W707DjO1KWtjcLIVPoB6D3wGmgAgyL0oogOpYswprcfR2ITGrMFLjn9QpIkZqwyTiIJ3gysIBQRwihKGyT5Pv3DA9yz/n7yuZzrweE4ztRMtCRWksZKVNrlqwfMrF6z2pCuIdxQ72g3ray15Ap5li46CkHYURpkuDKe7lwyzRUcSZzQ3NJMc3MzapUyVYbzFTxrZrBLieM4c4roxCKVjWt71x70jt4AZiJ5rSqNTPdlvILxDcVnh2nONuFnfB555BG2bNky7VUcIkK5UubklSs56cSTiKshI6UxsrmsS284jjNladMMQS3PkhYuH/TwzuzMjWjbdO9NKAJWlVbTmF4AeML2bdsojxfxvOlNcQhCbBPasi205Zqxqtx0xy1EceTmBh3HmToFDIjoOuCgNoudYOo3h4o0MM2bVYsYKrUql55/Ea3NLdRqNfpKg2QyGex0j1oFLJbW5hZyQQ4xwv1PPpRWk7hFKo7jTJVIOoL2dBPA6pUHvtXVhHSY2oMRJXeYDm/KRASrlqPmLyYXZKnENbYXB/CY/ppjm1gKhQbOvfA8oiiiVqvRemI3Ju1I5TiOMyUCihHUMgLQt67vEAM0acPPw3BsU6fg+R7F7aPIaIKfzzA6NMKdt99JNjf9PTisWrJ+wDGdSxGBwZEhRotjaYmdi9CO40yRgmiiivHHDvW2DMBrF742JyILrbWIMm3J38jGtDe00tmQLlCp1CqMjYziTXOL0QmiwrymLrzA58HHHubZrZvIZrK4Hv2O40yJoiL4cSVKqNkhOPhl3lAP0EMjxlO0kA4Up2cgLSZtjL904VEcd/Rx2MSybbxvxlbr2cTS1NJELpvDqGE0U2HcVPBUZnSrRsdx5hBRNZ5BYLsx/nY4+GXesEuKQ5Dp7cGBENuYjvYOuto6sIll4/BWYpsg0xyljTHUajXOu+A8mpqbiKo1ilGJbD437akWx3HmLlVUjAF0hxa8PuCgdlKZkDbsj7WgcLQmlumMjkmcYEsxhXwBzzP86sZbCGs1zDSvIhQRYk1Y1r6YQpCjXK2waetmPOO57LPjOFMnohgBGL79A2sqB7uTyoSdI2jBPxzHdyA8DAttB4larCqlcmna18pAfZPYKKQj30YQBAyPj3DnunvIZbKoS0A7jnMA0lXe1ODgd1KZYACCsNxwOA7sQCiK53mccuJKjArD5RHGakV840171UQSxzQ2N9LR1YkmFrKG8eYIYw/h1Oc4zouTgiADAMVtxUPKSBiAMJdrkmlejKGqBJkMy49ahgDjUYliWMLI9KY3jDHUwhpLly7jxBOOJwkT+ocG8HxXXuc4zoFSUasgdgtA44LGQwoiBkDUm/5FKp5QHSzRlG3EC3ye2fQsm7ZuScvapjnPEduE1lwT7flWrFq2DWwnjiOm+6TlOM7cJopRaxE1z8ChldhBPUCrxPPriZPpiYyqYAQZjtGaRQLDjs3bGNjeT5CZ5i52CIlNyElAS74Zz/f42S03UKlV8MzM1GM7jjNHiYhNFIs9pJ1UJhgAo17rdA4WjXhUqhXOO+McOtrasUnCSHWMTDADPTg0TXMsOe5oDIIohA1u9xTHcQ6CgFqbGN9sBw6pxA4mqjiMmYcIyPRERxGIk4SF8xbQkM1TiyP6K8Nphd80x2eLxfd9Vp15JtYq5UoFvzOHF/iodTlox3EOhICgarzhw3Fr6Qg6YZEYQacrPEqaVljcvZB8oUCxVOSOu+8km8lgp7usTdMyu85cG77v0zfcz47+vvo2V9N7KI7jzGkqAgLVpFhJ93g9xCtxA2BVo0M+tKlS8AKP8kCR0WcGkYwhrIU8+cST+IE/7SPotJu2sKxtMcYzbNm6la1928gEGcDVQDuOM2UqRlBlS55KeDhuMK3igHki05NeSHfOjulqbmf5gqXYJCFMwl12UJn+YavxPIwxiAiDdpSBaDTdcmvaj8RxnLlL673jZQiID8ct1qs46EZIlylOgyiO6Gjr4JglR2MTy47iAGEcckhrIg+CMYZqpcqq886irasDW42JgoRccwGND2krMcdxXmTSPhwCylNre9fGpAmOw1AHPY3X8iLpTt4tLc10tnaiCpsHthHGETLNi1REhCiJWNa1mKZcA7WoxpZtWw/9WXUc58VHRMUIIroNoKfn4Le6mjC9EREAwSaWZDikqaGRIAi4+aa1jI2N4fvTW3csQKKW7sZOckGWUqXMXQ/dS3aaN6x1HOcIsTPFwfpD2OpqwkSAnvZoJIM7UzTTXrkxcQxiiKOIjARpuiMKeWTTE/UKDhegHceZOlFVEcGio3BoW11NqOegNTN9IVoRES4863wEoRSWGauW8GT6W3vGcUxLexuLli7CRgkmY+hYsQAbJW6fWMdxDpwBo1KDQ2+UVL85QMmqKuj07EsowMLu+RhjKNZKjFbG8L3p3ShWRIiikO6uLk464URsbNnWv51atYoxxuWgHcc5ICoYW0sQT0bh0BslwUSAnsbiCQXEMyxZeBS+8RitjDNYGq63GZ0+aQ8OS0OQpz3bAga29m0njMJp76jnOM6cp4J4SRSDJuNw6I2SYLKbnalN1zW9GCEqhmQkg8n6bHx6A4+tf4xcPodO5/ZSkk4Q5oM8rfkWPD/gpjtuZqw4PmOb1jqOM7cpxKg5bAv/6iNojWQ66qBVMb5HbVuRcKwKAnGUYKOYmUr6ep6HGEGskpnfAIG4CULHcQ6UiieIZSQO2QGw4hA72cHOHPS0REcjhnK1zKqTz2DhvAVYaxksDU/7HoQTROAll7wEEaFWraINBj8z/cvNHceZ63RiO9dqkLdFgN7DcKtpFQc6LRFSRIiThO6OLhrzDcRxzI7xfkTMDI1ahQVt89JceGmMgcEBV2LnOM4BUwAjqFCM8vEIcMitRmFyJaFsQ5mGKg4hTmLmdXTTkCsQJTEDlRHMTDRfrj91C5vn4XkeY8UiQ2PDeC5AO45z4DTtNEqYHzq3DByWnvL1kbMOquoL3qReDCRxQiHIEWSzhGHIbbfchu/PXFDsLLQhnmHjlmd59KnHyWdzbidvx3EOmCAoatcextYZ9QAt/fUR5QsaosUzRGNVRp7shwA0sZRGx2dsgtBaO7mDi2Yhziu4Jv2O4xwspUZvr+UwxdJ6FYdsUWsnktwvCAGiOKazrZMzVpyOjRLGakUsdto3ZzXGUKlUWHX2mSxcvJCkElM2IYXOJjS2M3bCcBxnjlImomkN4KKeizwOQ7lB2rDfJBvq2zu9gJOFgk0SGgsNHDV/EdZaBopDVKPatC8MSbvYxSzomE9TQxNxHLG9fwck07VrruM4zv4ZAE/M09baF7YBcr3NaD6Xo6utA7XKSDhGaCPMDAxYE5vQlmsh52cJ44h1TzziFqg4jjOrTAxdx0E2i2fSPaBeIKpKxs/Q3NiMl/G5/74HGB0ZwfeD6e3DQbonYltDC9kgQxiH3P3IvXhmevuBOI7j7IsBuLV8TUlUHzCeQeUFKmFQwAgDD28ljmKMZxjuGyKshdOeg4Z0grAW1gDwAp/OlYvSpeYu/ew4zkGSw7wa26z+1mqPXizC3eIbROUFCdAi6RLqM044lcDzSZKEUCM8c1hy6Qd0HHEc09HZwRlnnkESxpQqZSIbMV37MjqOc8TyD+eNmYmm0omVe5NaHCOH9w52Za3lmKOOxvc8ymGF4eJImlZ4oe5wL5L6ZOWSRUehVhkcGaRWq037lluO4xxBFFQZOJw3aday1gL4Qfk+TZJ+4xuBFybNoSgdre0Y4xEmEcWkMjmynk6KkvEytGSbECMMjY4QRhHGyAuZgncc50g1sZGpshUOT6tRAEMvdvVqvFv/4vqtIPeLMaov4IX+/K75+EFAX38fTzzxBLlsbtoDdGItuUyW9oZ0FeEjTz7KaHEU33vBLh4cxzmypbNXh/ki3ACsWNGjgFiRbyGIvABTZSJCUo3JmACTMQwMDLLh6Q1kZmiD1qgWYcRgjGHbWB+VsOoa9TuOc1AEQa2CkQfg8LQahXqA7k27Lqln9GdJFPeLMQKHMWqqYjKGyrYxaoMlAHzPm5HgLCJYaznhlBPxPAOhpfXYLjJNOTRxPTgcxzkIiqgqGrIJDk+rUdi55RX0YG79i2u2amx/arK+KHLYFq6IGCq1KiuOXcFRCxajiWWkMnZYzwEHQq3l5BUryQQZiuUi2/t2uBpox3EO3kTOwbObD+fNTlzTK+tXS/2O/tOGcSjgHa4Zs7S0LaG9pY2mhkYStfQXh2ak5lhIW021BE14nkclrFEsjeMZ4yYIHcc5WKI2sYk1w8Bh6QUNu6a016xJALn9Q9eutZG9w8v4ghy+IWWSJLQ2NdOQbyBJEsbCcWZuVYilq7Edz3gMjQzy5OYNZDNZN4J2HOdgWOMbVHlI42TwcN7wbrNiq1evnthh5VNqbVo0chiIpEur29vaJwP0r2751QwtDEnrYdob2hAj9A0M8PjTT7oA7TjOQVGwJvBB+dU9vdeWe3p6DHJ4IttuAXrNt9bYnp4ec8eHrr0uCfU7fi7jqdVDz0UL2CghGQnxfA+1ytatW2dk/DyRbomTGIBsU56GriZs7CYIHcc5cKKq4gkGtgBcu+3aw9Z1bfe6MkF76QVBjdUPx7V4PF24cmhnA/GEuBoxsrEf/DQsZzKZQ7nJg2KMoVqtctxJJ7B4yWJsLUFzQrarwfWBdhznwCkqxvhxORxD9EaA5cPLD/eOKrvoxfb09JhbP3rNY1jba3zPaLqy8KCDtE2UQj7PMcuOQa1lvFakGtVmpElSFEXM6+yitaWFJEnYvH0zxC/8dl+O4xyBRNX4Rmxi+2/94LW3A7Imnc87LPa4MqO3t1fp6TG3hWd+Jq5GP/ZzgafKQd9p2vuikdNPOIUkThirlqhGIUamt3JCRLBYGjMN5L0c1lr6BwdccHYc56BMbHMiIt8BtKen57BGk70tnVN6e5XeXitZ/71JLXray3o+euD5aCHtA+17Pk2NjaBQjIpEdvrbjAppo/7mbCOFTB6rlqHxkfp33QSh4zgHRFHERlY1lq/C4VugMmFfa5u1p6fH3PZn3+vTyLxBw2Sjl/E9VeIDuwtB1ZLJBHS1dSFG2LpjO+PFIv6072CSriJsyjeSCTIkarn93jvcCNpxnAOmkAT5jFhrv3N7cvo6ejD0Hp765wn7bD7R29trV39rtXf7R3/wUKy82sb2CT/n+6DJgeQmFPAwZDNZvIzPugcepr+vf9p3UoF0NF+r1UDS9fPBggY3eHYc58AoKoIkURwq8vf09lrWc8gFFc+13+5Aa65ak7B6tXfnh65ZT1UvTmrxd71s4IlnRCHeX6BWFOMbBtZvIw4jADJBBmOmvzGRVUs2m+Woo47CxpYkicm052dkstJxnLlLRRM/F3hJqP96xwevuYMeDGsOfp5ub6YWJdekQfrW3mu2Lj42e1VSjf9QbTLi5wNfjIjq3kfUEzuYnHLsSrJ+uhikGteQGcgrJElCY3MTZ5x1BkmUMFwcoVQsYYxxg2jHcaZEVRMvE/hxNb437rYfoqfnBRttTr0B8po1CYqskTUJ8PlVH3vDdUEl/KAgb/dzQd5GFpskCYCITCaXBcGqZUHXfALfJ4xChkujM9P7Qv//9q4tNq6riq51zr0zY3viOI6T0JaglBRSOVKFsFLgh+YDAV+8pIlA4gtEK7XfqKFSNZkfHgIJgYQQCPULCSkj8VCL+odk9YMSaolHOtCgJk2a2rHzcBKPncx97MXHvTOecUzixzgRqtfo+N4Z39c5Z5+91znnnr2zoZYhPwDngJvNBbQe0Ot+23hfYHURfxDsZBt9gYDEF4JAUTKXIP7a1DOvLkkvk+zv2HMb69P82fJFVk5W/NSLv3/79Rde/qYcP5HG6c8hmwsGCj4ohT7LiCx7f1pmaaq9o2MIfYBWGmOh1bzvvpfJLFqK9x7DpTKc95ieu4SFxYVssnKbQr+foE7q/uTyikx20xWpI8//O6EnkST9nSlX23ccf7drqzd1nqlzTCcPnbSN/sIEJUEpCCyxc4npi3994dUz1WrV9TtQbDc2EkJE9WMZm66eqLJ2vPZPAM8++f0vf9ffbn2VdJ+HdDQoZoragVAEjOwYSRzJVtJyzWiRzrn7PkFoMhR8iD1Do2DgcPqtNzF79TI+OPwhxK1o+22O/zd081NC6vZfKwBdDYe5sIkkgXYPj/TLlZ75Qc+dOi7v9qi7TI8Dq04HrZBnS+wmhAVBbvlkFnzoxrCatK3Wk8vv09PLy3dl6txT1rOVgISS1D5RavN2Umx7rtyW+HvDBJj3LmDonUXJn+LbybfeqP3xbKVS8bVare/jzt3YeIynbFm42uMvp47XLgL40cTTEz8JDn7gAFrJZ0F8jkH4eBwn+z9y8LFSYccAmu/O4tTrpzAwOAgz67L66lwXAnuktY+CJAmpRDNTMBDCBV552+29h4D1ePNbd5iwFQrkwUFb00jvlr9lZdENdn5UFqAi33aryZ6z6Mm2mJAgHdERIOeWJYjMFC4ApULaijtXtNQWSKQQKOM1ZUwWBG9ISAlI5AVATUgeju/A1HRUaPLnSLtpdEWXYCbxvIICgCi/rYuWvB+IFCUEAFcIFLTgI0VlS8M7SiD06SNmGMlF1DnYR0F4kAmFg5IGAQYgHoXgSZQlFAEEhHbmryYN0zkGRR/Qu44Sl9o5y7g3kPlFXyG1Hfat7k27Hnvr7U5zIm6lyt96Y6Lc7X5bA4GOgXNB6F0ape9ZK/lxNLrvp1PHfxlXq1W31coZ6EeI8FotW3cu8KkTT/nJ2mQM4D95+tkXfvCNHRfTdz+WLsWPnz73r6803v73J5vNpYFSsVDMmh9zG79CP9rycnap/WfzKBQKKBWK5ujc8IfHUDg3kN3eoZcZOeaMam1wvq1L1vic3QrkASJrrFtgJ+6Sv1XrU8ssEABAsJshom0u8+8koUSzom6Q8Aa1KF4AIFLOxEsA5kWGoK5BmvPOw5I0IjALD0hI5WzGx0gQApHCi4MtpQAxWfvD9X4WxxpxZj0Hj1crhWGgnA4tFgop9ykNKGEfiFK82Nrjg6Aks91GjlI2AnCPoAKAAxmL1n44F3YZsqw1Eh2DllGl3Lh16iML9NxTX1hV4W8emQN3ietdf5FD9yAgufEh5Oico3dk4DJjlhrS2M6kcfqbxOulqe+8cgEAUIWrtfXeFqN/UVIJTWIyAUBUq6wCaBxusH7spQUAr336e596DcCvjjz3pdHBwUF361azGAbhBByfoPFhAWOAiiQDQQHEA6RCZF2M3RTKIjZcKASQxDEOHToUXm/ddIsXF2320sy8MyxZkjoZxkB4ZsJAmmIzmydoa2HwluIKpIT3mnEUJMIDyTzB2xvNTz8gyQPcBSigo2W8YZMgJJMDcf2O/OVzGGa6RmCWyCYiRBHALZjOgxBFgQwNmiEwC/iALvXeeCmGrlqU0u3yKs27FlBI4sEWoyWlU/j4bdRqqlar3HQDqlZd5XAjK49677/Gx8fVaDQ4Pj6uu68cqwEnVqisEyBQXdsjdO03Go3euqkA9WP1CMC1/JdL97ygwEq94ubmMBAvtigXDFiUkEHwiMyGXaoRQ7KPcIGIR5ENkIwB3JN3THYI2AEoATAIYYRkRs+zFwNGBfh+OREWQEpG7wtBKQg2QtJWGpGVyIayiDRKoNgWZXYZiZ0X9DdIvytGA1OTtXoTACqViq/X64baxvXQenE/ug3EsYp74/nn3ZNHjsS2xkLe/5lDD/vUhT50JuM+IN1JcxsumAQACKVRUnzu2WdKO21o8S/n/n7ltM4uDBW8i80/BPiAlkrO01GRIruc4t6BCi0IGXqbeW/pRvzQ8N67lmnx5qDmy6n/x7d/vbjRvPQTE794OsT0dFg+sNta15Y2LQ/F0UE137nqpmqvLPXj+TaM9hwJgMrhBs/O78pnpadQni53hHBvY29nv36yvlzXffLnu8XInvIEWMkjIs2NzxEAmjNNYmIC5em3dBRHrZatcNt0np744deHlgpXkl2LpXIR2B0nsRg4yfnQyfYACmj9GbqTiQZnzrMMr11I1zeiILEA4rFVJ/GyToCHdJFwNyAskOms0sL0n1/87fnuQysnK77+5rhwn1hzN/4LQ5hMWgEaT+AAAAAASUVORK5CYII=" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Related Rates</h1>
+            <div class="subtitle">AP CALCULUS &bull; STUDY SHEET</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">Calculus &bull; Related Rates</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="tab-row-label">Reference</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Study guide</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 The Process</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 Geometry Toolbox</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 Signs &amp; Snapshots</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t4', this)">4 Worked Examples</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Practice</span>
+            <button class="tab-button" data-group="sprint" onclick="switchTab('flash', this)">&#9998; Flashcards</button>
+            <button class="tab-button" data-group="sprint" onclick="switchTab('drill', this)">Setup Drill</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('quiza', this)">Quiz A &middot; Overview</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('quizb', this)">Quiz B &middot; Apply It</button>
+        </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div id="tab-cheat" class="tab-content active">
+        <div class="section-header"><div class="section-number">&#9733;</div><h2>One-Page Cheat Sheet</h2></div>
+        <p>Related rates in one place: the four-step process, the geometry toolbox, the sign rules, and the moves that rescue you when a rate seems to be missing. Everything here is unpacked in the study tabs and backed by six fully worked examples. If you can explain every row below in your own words, you are ready for the quiz.</p>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14" y="16" width="88" height="26" rx="5" fill="rgba(33,68,43,0.12)" stroke="#21442B"/><text x="58" y="33" font-size="10" text-anchor="middle" fill="#21442B" font-weight="bold">1 Gather givens</text>
+                <rect x="118" y="16" width="88" height="26" rx="5" fill="rgba(221,162,94,0.18)" stroke="#BC6C26"/><text x="162" y="33" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">2 One equation</text>
+                <rect x="14" y="106" width="88" height="26" rx="5" fill="rgba(139,94,60,0.12)" stroke="#8B5E3C"/><text x="58" y="123" font-size="10" text-anchor="middle" fill="#42260D" font-weight="bold">4 Plug in last</text>
+                <rect x="118" y="106" width="88" height="26" rx="5" fill="rgba(57,134,78,0.14)" stroke="#39864E"/><text x="162" y="123" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">3 Differentiate</text>
+                <path d="M106 29 L114 29" stroke="#8B5E3C" stroke-width="2" marker-end="none"/><path d="M110 25 L116 29 L110 33" fill="none" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M162 46 L162 100" stroke="#8B5E3C" stroke-width="2"/><path d="M158 96 L162 102 L166 96" fill="none" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M114 119 L108 119" stroke="#8B5E3C" stroke-width="2"/><path d="M112 115 L106 119 L112 123" fill="none" stroke="#8B5E3C" stroke-width="2"/>
+                <text x="110" y="80" font-size="9" text-anchor="middle" fill="#4A4A4A">the order never changes</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>The four-step process <span class="slide-ref">Tab 1</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>1&nbsp;Gather givens (rates with signs, snapshot values, constants). 2&nbsp;Write one simple equation. 3&nbsp;Differentiate with respect to $t$. 4&nbsp;Plug in the snapshot values, solve, interpret.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>Write down everything you know, find one formula that connects it all, take the derivative, and only then feed in the numbers for "that instant."</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="12" y="24" width="100" height="30" rx="5" fill="white" stroke="#DDA25E"/><text x="62" y="37" font-size="8.5" text-anchor="middle" fill="#42260D">"surface is falling</text><text x="62" y="48" font-size="8.5" text-anchor="middle" fill="#42260D">at 1/2 ft per hr"</text>
+                <path d="M114 39 L138 39" stroke="#21442B" stroke-width="2.5"/><path d="M133 34 L141 39 L133 44" fill="none" stroke="#21442B" stroke-width="2.5"/>
+                <rect x="144" y="22" width="64" height="34" rx="5" fill="rgba(33,68,43,0.10)" stroke="#21442B"/><text x="176" y="43" font-size="11" text-anchor="middle" fill="#21442B" font-weight="bold">dh/dt = &#8722;&#189;</text>
+                <rect x="12" y="92" width="100" height="30" rx="5" fill="white" stroke="#DDA25E"/><text x="62" y="105" font-size="8.5" text-anchor="middle" fill="#42260D">"leaking out in</text><text x="62" y="116" font-size="8.5" text-anchor="middle" fill="#42260D">cubic ft per hr"</text>
+                <path d="M114 107 L138 107" stroke="#21442B" stroke-width="2.5"/><path d="M133 102 L141 107 L133 112" fill="none" stroke="#21442B" stroke-width="2.5"/>
+                <rect x="144" y="90" width="64" height="34" rx="5" fill="rgba(33,68,43,0.10)" stroke="#21442B"/><text x="176" y="111" font-size="11" text-anchor="middle" fill="#21442B" font-weight="bold">dV/dt = ?</text>
+                <text x="110" y="74" font-size="9" text-anchor="middle" fill="#4A4A4A">units name the variable</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Translate words into rates <span class="slide-ref">Tab 1</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Every "at a rate of" phrase is a derivative, and the units tell you which one: ft/hr is $\frac{dh}{dt}$, ft&sup3;/hr is $\frac{dV}{dt}$, ft&sup2;/min is $\frac{dA}{dt}$, mph is a distance rate.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>The problem hands you one rate and asks for another. Spot both before doing anything else; the units are the name tag.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14" y="18" width="90" height="114" rx="6" fill="rgba(57,134,78,0.08)" stroke="#39864E"/>
+                <path d="M59 108 L59 46" stroke="#21442B" stroke-width="3"/><path d="M52 54 L59 42 L66 54" fill="none" stroke="#21442B" stroke-width="3"/>
+                <text x="59" y="126" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">rising, filling,</text><text x="59" y="30" font-size="12" text-anchor="middle" fill="#21442B" font-weight="bold">+ away</text>
+                <rect x="116" y="18" width="90" height="114" rx="6" fill="rgba(229,115,115,0.10)" stroke="#E57373"/>
+                <path d="M161 42 L161 104" stroke="#C62828" stroke-width="3"/><path d="M154 96 L161 108 L168 96" fill="none" stroke="#C62828" stroke-width="3"/>
+                <text x="161" y="126" font-size="9.5" text-anchor="middle" fill="#C62828" font-weight="bold">falling, draining,</text><text x="161" y="30" font-size="12" text-anchor="middle" fill="#C62828" font-weight="bold">&#8722; toward</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Signs: which way is it changing? <span class="slide-ref">Tab 3</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Falling, draining, shrinking, deflating, and moving <em>toward</em> a point all mean the variable is decreasing: the rate is <strong>negative</strong>. Rising, filling, growing, and moving <em>away</em> are positive.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>"At 1/2 ft/hr" is a speed; the story around it decides the sign. Drop the negative and the answer key will have a trap waiting (think $+4$ vs $-4$).</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 24 L180 24 L110 134 Z" fill="rgba(33,68,43,0.06)" stroke="#21442B" stroke-width="2"/>
+                <path d="M75 79 L145 79 L110 134 Z" fill="rgba(57,134,78,0.30)" stroke="#39864E" stroke-width="1.5"/>
+                <path d="M110 134 L110 24" stroke="#8B5E3C" stroke-width="1.2" stroke-dasharray="4 3"/>
+                <text x="118" y="56" font-size="10" fill="#42260D" font-weight="bold">H</text>
+                <text x="118" y="104" font-size="10" fill="#21442B" font-weight="bold">h</text>
+                <text x="143" y="20" font-size="10" text-anchor="middle" fill="#42260D" font-weight="bold">R</text>
+                <text x="128" y="74" font-size="10" text-anchor="middle" fill="#21442B" font-weight="bold">r</text>
+                <text x="110" y="147" font-size="9" text-anchor="middle" fill="#4A4A4A">r / h = R / H, always</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Cones hide a similar triangle <span class="slide-ref">Tab 2</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>The water cone is always similar to the tank, so $\frac{r}{h}=\frac{R}{H}=c$ (a constant). Tank 18 ft deep with top radius 6 ft: $r=\frac{h}{3}$. Tank 20 ft deep, radius 10: $r=\frac{h}{2}$.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>The tank's big numbers ($H$, $R$) only matter through this ratio. They are never the values you plug in at the end; the water's snapshot depth is.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="12" y="20" width="92" height="32" rx="5" fill="white" stroke="#BC6C26"/><text x="58" y="40" font-size="10.5" text-anchor="middle" fill="#42260D" font-weight="bold">V = &#8537;&#960;r&#178;h</text>
+                <text x="58" y="66" font-size="9" text-anchor="middle" fill="#C62828">two variables: stuck</text>
+                <rect x="124" y="20" width="84" height="32" rx="5" fill="rgba(221,162,94,0.18)" stroke="#DDA25E"/><text x="166" y="40" font-size="10.5" text-anchor="middle" fill="#8B5E3C" font-weight="bold">r = h/2</text>
+                <path d="M166 56 L166 76 L70 76 L70 88" stroke="#21442B" stroke-width="2" fill="none"/><path d="M63 82 L70 92 L77 82" fill="none" stroke="#21442B" stroke-width="2"/>
+                <rect x="14" y="94" width="112" height="34" rx="5" fill="rgba(33,68,43,0.10)" stroke="#21442B"/><text x="70" y="115" font-size="11" text-anchor="middle" fill="#21442B" font-weight="bold">V = &#960;h&#179;/12</text>
+                <text x="168" y="114" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">one variable:</text><text x="168" y="126" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">now differentiate</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Substitute before you differentiate <span class="slide-ref">Tab 2</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Use the constraint to get down to one variable first: with $r=\frac{h}{2}$, $V=\frac{1}{3}\pi\left(\frac{h}{2}\right)^2 h=\frac{\pi h^3}{12}$, so $\frac{dV}{dt}=\frac{\pi h^2}{4}\frac{dh}{dt}$. No product rule, no unknown $\frac{dr}{dt}$.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>If you product-rule first, an unknown rate appears and you are stuck. Substituting first makes the problem two lines long. (Product rule still works if you also use $r'=\frac{1}{2}h'$; same answer, more arithmetic.)</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 58 L128 58 L128 118 L40 118 Z" fill="rgba(33,68,43,0.06)" stroke="#21442B" stroke-width="2"/>
+                <path d="M40 58 L66 36 L154 36 L128 58" fill="rgba(221,162,94,0.15)" stroke="#21442B" stroke-width="2"/>
+                <path d="M128 58 L154 36 L154 96 L128 118" fill="rgba(139,94,60,0.10)" stroke="#21442B" stroke-width="2"/>
+                <text x="84" y="134" font-size="10" text-anchor="middle" fill="#21442B" font-weight="bold">&#8467; changing</text>
+                <text x="186" y="70" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">w changing</text>
+                <text x="26" y="92" font-size="10" text-anchor="middle" fill="#C62828" font-weight="bold">h</text>
+                <rect x="14" y="80" width="22" height="16" rx="3" fill="white" stroke="#C62828"/><text x="25" y="92" font-size="9" text-anchor="middle" fill="#C62828" font-weight="bold">10</text>
+                <text x="110" y="20" font-size="9" text-anchor="middle" fill="#4A4A4A">freeze the constant, product-rule the rest</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Boxes: freeze the constant dimension <span class="slide-ref">Tab 2</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>$V=\ell w h$; if $h=10$ never changes, write $V=10\,\ell w$ and product-rule: $\frac{dV}{dt}=10\!\left[\frac{d\ell}{dt}w+\ell\frac{dw}{dt}\right]$. The constant multiplies the <strong>whole bracket</strong>.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>A fixed dimension is just a number: bake it in before differentiating. Applying it to only one term turns $10(12-32)=-200$ into the wrong $120-32=88$.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 124 L190 124" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M40 124 L40 20" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M40 54 L124 124" stroke="#21442B" stroke-width="2" stroke-dasharray="5 3"/>
+                <circle cx="40" cy="54" r="6" fill="#39864E"/><text x="22" y="50" font-size="10" fill="#21442B" font-weight="bold">A</text>
+                <circle cx="124" cy="124" r="6" fill="#BC6C26"/><text x="124" y="144" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">B</text>
+                <text x="26" y="92" font-size="10" fill="#21442B" font-weight="bold">y</text>
+                <text x="82" y="118" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">x</text>
+                <text x="92" y="80" font-size="10" fill="#42260D" font-weight="bold">z</text>
+                <path d="M124 124 L104 124" stroke="#BC6C26" stroke-width="2.5"/><path d="M108 119 L101 124 L108 129" fill="none" stroke="#BC6C26" stroke-width="2.5"/>
+                <path d="M40 54 L40 36" stroke="#39864E" stroke-width="2.5"/><path d="M35 41 L40 33 L45 41" fill="none" stroke="#39864E" stroke-width="2.5"/>
+                <text x="156" y="36" font-size="10" fill="#42260D" font-weight="bold">x&#178;+y&#178;=z&#178;</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Distance problems: Pythagoras <span class="slide-ref">Tab 3</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Let $x$ and $y$ be each mover's distance from the corner <em>at the asked time</em>; then $x^2+y^2=z^2$ and $\frac{dz}{dt}=\frac{x\,x'+y\,y'}{z}$. Moving toward the corner makes that rate negative.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>First figure out where everyone actually is at the moment in question (distance = rate &times; time), then build the triangle. Expect a 3-4-5 family: $(3,4,5)$, $(6,8,10)$, $(30,40,50)$, $(5,12,13)$, $(7,24,25)$.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="20" width="180" height="30" rx="5" fill="rgba(33,68,43,0.08)" stroke="#21442B"/><text x="110" y="39" font-size="10.5" text-anchor="middle" fill="#21442B" font-weight="bold">dV/dt = 3s&#178; &middot; ds/dt</text>
+                <rect x="20" y="62" width="180" height="30" rx="5" fill="rgba(221,162,94,0.15)" stroke="#DDA25E"/><text x="110" y="81" font-size="10.5" text-anchor="middle" fill="#8B5E3C" font-weight="bold">dA/dt = 12s &middot; ds/dt</text>
+                <path d="M30 104 L190 104" stroke="#42260D" stroke-width="2"/>
+                <text x="110" y="128" font-size="11" text-anchor="middle" fill="#42260D" font-weight="bold">divide: ds/dt cancels, s = 4 &middot; (dV/dt) / (dA/dt)</text>
+                <text x="110" y="143" font-size="8.5" text-anchor="middle" fill="#4A4A4A">two equations, two unknowns</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Two rates given? Divide the equations <span class="slide-ref">Tab 3</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Cube with $\frac{dV}{dt}$ and $\frac{dA}{dt}$ both known: differentiate $V=s^3$ and $A=6s^2$, then divide. $\frac{dV/dt}{dA/dt}=\frac{3s^2\,s'}{12s\,s'}=\frac{s}{4}$, so the unknown rate $s'$ cancels and $s$ pops out.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>Two given rates and no snapshot usually means you are solving for a dimension. Treat $s'$ as a variable, write both derivative equations, and eliminate it (dividing is fastest; solve-and-substitute also works).</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="16" y="22" width="110" height="32" rx="5" fill="white" stroke="#21442B"/><text x="71" y="42" font-size="10" text-anchor="middle" fill="#21442B" font-weight="bold">dV/dt = (&#960;h&#178;/4) h'</text>
+                <circle cx="160" cy="38" r="15" fill="rgba(57,134,78,0.15)" stroke="#39864E" stroke-width="2"/><text x="160" y="43" font-size="12" text-anchor="middle" fill="#21442B" font-weight="bold">&#10003;</text>
+                <text x="186" y="42" font-size="9" fill="#21442B">then</text>
+                <rect x="16" y="96" width="110" height="32" rx="5" fill="white" stroke="#8B5E3C"/><text x="71" y="116" font-size="10" text-anchor="middle" fill="#42260D" font-weight="bold">h = 8, h' = &#8722;&#189;</text>
+                <path d="M71 58 L71 92" stroke="#8B5E3C" stroke-width="2"/><path d="M64 86 L71 96 L78 86" fill="none" stroke="#8B5E3C" stroke-width="2"/>
+                <text x="168" y="108" font-size="9.5" text-anchor="middle" fill="#C62828" font-weight="bold">plug in early and</text>
+                <text x="168" y="120" font-size="9.5" text-anchor="middle" fill="#C62828" font-weight="bold">the rate vanishes</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Snapshot values go in last <span class="slide-ref">Tab 1</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>"When the water is 8 ft deep" is a <strong>snapshot</strong>, not a constant. Substitute $h=8$ into $V$ before differentiating and $V$ becomes a fixed number whose derivative is $0$.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>True constants (the tank's size, a ladder's length, a frozen height) can go in early. Values that hold only "at that instant" wait until after the derivative exists.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 16 L76 16 L48 72 Z" fill="rgba(33,68,43,0.06)" stroke="#21442B" stroke-width="1.6"/>
+                <path d="M34 44 L62 44 L48 72 Z" fill="rgba(57,134,78,0.30)" stroke="#39864E"/>
+                <text x="48" y="88" font-size="8.5" text-anchor="middle" fill="#4A4A4A">constant pour in</text>
+                <path d="M100 128 L205 128" stroke="#8B5E3C" stroke-width="2"/><path d="M100 128 L100 22" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M100 118 Q 128 42 200 32" fill="none" stroke="#21442B" stroke-width="2.5"/>
+                <text x="152" y="22" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">h(t): rising, flattening</text>
+                <text x="152" y="144" font-size="9" text-anchor="middle" fill="#4A4A4A">dh/dt shrinks as h grows</text>
+                <text x="92" y="30" font-size="9" text-anchor="end" fill="#8B5E3C" font-weight="bold">h</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Constant fill, slowing rise <span class="slide-ref">Tab 3</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Constant $\frac{dV}{dt}=k$ into a vertex-down cone gives $\frac{dh}{dt}=\frac{k}{\pi c^2 h^2}$: positive, <strong>decreasing, nonlinear</strong>. A cylinder, by contrast, fills at a constant $\frac{dh}{dt}=\frac{k}{\pi r^2}$.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>A cup of water poured into the skinny tip raises the level a lot; the same cup near the wide top barely moves it (pour it into a lake and nothing happens). To prove non-linearity, differentiate again and show the second derivative is not zero.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 36 L66 36 L44 86 Z" fill="rgba(33,68,43,0.07)" stroke="#21442B" stroke-width="1.6"/>
+                <circle cx="110" cy="58" r="26" fill="rgba(221,162,94,0.15)" stroke="#BC6C26" stroke-width="1.6"/>
+                <rect x="158" y="32" width="42" height="52" rx="12" fill="rgba(139,94,60,0.10)" stroke="#8B5E3C" stroke-width="1.6"/>
+                <text x="44" y="102" font-size="9" text-anchor="middle" fill="#21442B" font-weight="bold">cone</text>
+                <text x="110" y="102" font-size="9" text-anchor="middle" fill="#8B5E3C" font-weight="bold">sphere</text>
+                <text x="179" y="102" font-size="9" text-anchor="middle" fill="#42260D" font-weight="bold">cylinder</text>
+                <text x="110" y="128" font-size="9.5" text-anchor="middle" fill="#4A4A4A">memorize the formula bank below</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>The shape formula bank <span class="slide-ref">Tab 2</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Cone $V=\frac{1}{3}\pi r^2 h$ &middot; Cylinder $V=\pi r^2 h$ &middot; Sphere $V=\frac{4}{3}\pi r^3$, $A=4\pi r^2$ &middot; Cube $V=s^3$, $A=6s^2$ &middot; Box $V=\ell wh$, $A=2(\ell w+\ell h+wh)$ &middot; Circle $A=\pi r^2$, $C=2\pi r$ &middot; Right triangle $x^2+y^2=z^2$.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>Step 2 of the process is only fast if these are automatic. The units of the rate you want point to the right formula: a ft&sup3;/hr question wants a volume formula.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="18" y="26" width="184" height="40" rx="6" fill="rgba(33,68,43,0.08)" stroke="#21442B"/>
+                <text x="110" y="43" font-size="10.5" text-anchor="middle" fill="#21442B" font-weight="bold">dV/dt = &#8722;2&#960; ft&#179;/hr</text>
+                <text x="110" y="58" font-size="9" text-anchor="middle" fill="#21442B">sign + number + units</text>
+                <rect x="18" y="84" width="184" height="40" rx="6" fill="rgba(221,162,94,0.14)" stroke="#DDA25E"/>
+                <text x="110" y="101" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">"Water is leaving at 2&#960; ft&#179;/hr."</text>
+                <text x="110" y="116" font-size="9" text-anchor="middle" fill="#8B5E3C">the sentence the grader wants</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Interpret the answer <span class="slide-ref">Tab 1</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>A negative $\frac{dV}{dt}$ means the volume is decreasing; "the rate at which water is leaving" is the magnitude. Always attach units: ft&sup3;/hr, in&sup3;/sec, mph, ft/s.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>On a multiple-choice question the sign <em>is</em> the trap ($-200$ and $+200$ will both be listed). On a free-response question, the closing sentence with units is its own point.</p>
+            </div>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin-bottom:0;"><strong>Numbers worth memorizing.</strong> Right-triangle families: <strong>(3,&nbsp;4,&nbsp;5)</strong> and its multiples <strong>(6,&nbsp;8,&nbsp;10)</strong>, <strong>(30,&nbsp;40,&nbsp;50)</strong>, <strong>(60,&nbsp;80,&nbsp;100)</strong>, plus <strong>(5,&nbsp;12,&nbsp;13)</strong> and <strong>(7,&nbsp;24,&nbsp;25)</strong>. Cone volume carries a <strong>1/3</strong>; sphere volume a <strong>4/3</strong>; cube division gives <strong>$s=4\cdot\frac{dV/dt}{dA/dt}$</strong>. Worked-example answers to sanity-check yourself against: Ex.&nbsp;1 gives <strong>$-2\pi$</strong>, Ex.&nbsp;2 gives <strong>$-40$</strong>, Ex.&nbsp;3 gives <strong>$-28$</strong>, Ex.&nbsp;4 gives <strong>$s=9$</strong>, Ex.&nbsp;5 gives <strong>$-\frac{5}{6}$</strong>.</p>
+        </div>
+
+        <div class="idea-box">
+            <p style="margin-bottom:0;"><strong>How free-response graders score these.</strong> Related-rates FRQs typically award separate points for (1) the <strong>equation</strong> relating the variables, (2) the <strong>derivative</strong> with correct chain-rule factors, (3) the <strong>plug-in and solve</strong>, and (4) the <strong>answer with units</strong> and the right sign or direction. Writing the four-step process down in order earns the points in order.</p>
+        </div>
+    </div>
+
+    <!-- TAB 1: THE PROCESS -->
+    <div id="tab-t1" class="tab-content">
+        <div class="section-header"><div class="section-number">1</div><h2>The Four-Step Process</h2></div>
+        <p>Related-rates problems feel wordy because they are: the calculus is usually two lines, buried in a paragraph of story. The fix is a fixed process. Walk through a full problem below, one step at a time, before reading the details.</p>
+
+        <div class="card ifig">
+            <h3>Play first: one problem, four steps</h3>
+            <p style="margin-bottom:10px; font-size:14px;">Step through the draining-tank problem (this is Worked Example 1). Watch what each step adds, and notice when the snapshot value $h=6$ finally gets used.</p>
+            <div class="ifig-stage"><svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 25 L210 25 L130 150 Z" fill="none" stroke="#21442B" stroke-width="2.5"/>
+                <polygon id="st-water" points="130,150 103.3,108.3 156.7,108.3" fill="rgba(57,134,78,0.35)" stroke="#39864E" stroke-width="1.5"/>
+                <line id="st-surface" x1="103.3" y1="108.3" x2="156.7" y2="108.3" stroke="#21442B" stroke-width="2"/>
+                <line x1="130" y1="150" x2="130" y2="25" stroke="#8B5E3C" stroke-width="1" stroke-dasharray="4 3"/>
+                <text x="222" y="30" font-size="11" fill="#42260D" font-weight="bold">R = 6</text>
+                <text x="136" y="70" font-size="11" fill="#42260D" font-weight="bold">H = 18</text>
+                <text id="st-hlabel" x="136" y="132" font-size="11" fill="#21442B" font-weight="bold">h</text>
+                <path d="M36 70 L36 100" stroke="#C62828" stroke-width="2.5"/><path d="M30 93 L36 103 L42 93" fill="none" stroke="#C62828" stroke-width="2.5"/>
+                <text x="36" y="62" font-size="9.5" text-anchor="middle" fill="#C62828" font-weight="bold">falling &#189; ft/hr</text>
+            </svg></div>
+            <div class="ifig-step" id="st-box"></div>
+            <div class="ifig-controls">
+                <button class="btn-small" style="background:#8B5E3C;" onclick="stGo(-1)">&larr; Back</button>
+                <button class="btn-small" onclick="stGo(1)">Next step &rarr;</button>
+                <div class="stepdots" id="st-dots"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>The process, step by step</h3>
+            <div class="concept-list">
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 1: gather your givens</div>
+                    <p>Read the whole problem once, then write down everything you know before touching any calculus. In particular, <strong>pay attention to the rate they give you</strong>: every related-rates problem hands you at least one derivative, disguised as a phrase like "the surface is falling at $\frac{1}{2}$ ft/hr" ($\frac{dh}{dt}=-\frac{1}{2}$). Record signs now, list the snapshot values ("when the water is 6 ft deep") separately, and write what you want: "find $\frac{dV}{dt}$."</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 2: come up with a simple equation</div>
+                    <p>You need <strong>one formula</strong> that connects the variable whose rate you want to the variable whose rate you have. The units of the target rate point to it: a ft&sup3;/hr question wants a volume formula; mph between two cars wants $x^2+y^2=z^2$. If the formula has an extra variable, hunt for a constraint that removes it (Tab 2).</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 3: differentiate with respect to $t$</div>
+                    <p>Differentiate both sides implicitly. Every changing variable picks up its own rate by the chain rule: $\frac{d}{dt}(h^3)=3h^2\frac{dh}{dt}$, and a product of two changing variables needs the product rule: $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$. Plain constants (like a frozen height of 10) just ride along in front.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 4: plug in last, then interpret</div>
+                    <p>Only now do the snapshot values enter. Substitute, solve for the unknown rate, and close with a sentence: sign (increasing or decreasing?), magnitude, and <strong>units</strong>. "$\frac{dV}{dt}=-2\pi$, so water is leaving the tank at $2\pi$ ft&sup3;/hr."</p></div></div>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Sorting the givens: three kinds of numbers</h3>
+            <div class="tbl-wrap">
+            <table class="cmp">
+                <tr><th>Kind</th><th>How to spot it</th><th>When it enters</th><th>Example</th></tr>
+                <tr><td>Rate</td><td>"at a rate of," "per," units with /time</td><td>Step 4 (after differentiating)</td><td>$\frac{dh}{dt}=-\frac{1}{2}$ ft/hr</td></tr>
+                <tr><td>True constant</td><td>A dimension that never changes during the motion</td><td>Step 2 is fine (bake it into the equation)</td><td>Tank size $H=18$, $R=6$; a box's fixed $h=10$; a 13-ft ladder</td></tr>
+                <tr><td>Snapshot value</td><td>"when," "at the instant," "at 1 PM"</td><td>Step 4 only, never before the derivative</td><td>$h=6$; $\ell=10$, $w=4$; the cars' positions at 1 PM</td></tr>
+            </table>
+            </div>
+        </div>
+
+        <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam trap: plugging in too early.</strong> Substituting a snapshot value like $h=8$ into $V=\frac{\pi h^3}{12}$ <em>before</em> differentiating freezes $h$: $V$ becomes the fixed number $\frac{128\pi}{3}$, its derivative is $0$, and the rate you were solving for has vanished. The "when" values describe one instant of an ongoing motion, so the motion (the derivative) must be written down first.</p></div>
+
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> A typical free-response part reads: "Water drains from the tank described above. At the instant the depth is 6 ft, the depth is decreasing at $\frac{1}{2}$ ft/hr. Find the rate at which the volume of water is changing at that instant. Indicate units of measure." A full-credit answer shows the one-variable equation, the differentiated equation, the substitution, and the sentence $\frac{dV}{dt}=-2\pi$ ft&sup3;/hr with "decreasing" stated. That is the four steps, in order, worth roughly one point each.</p></div>
+    </div>
+
+    <!-- TAB 2: GEOMETRY TOOLBOX -->
+    <div id="tab-t2" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>The Geometry Toolbox</h2></div>
+        <p>Step 2 of the process ("come up with a simple equation") is where most problems are won or lost. Each shape hides one extra fact that turns a stuck two-variable formula into a clean one-variable one. Play with the cone below to see the most important fact of all.</p>
+
+        <div class="card ifig">
+            <h3>Play first: the similar triangle inside every cone</h3>
+            <p style="margin-bottom:10px; font-size:14px;">Drag the water level up and down. The water's radius $r$ and depth $h$ both change, but their <strong>ratio never does</strong>: the water cone stays similar to the tank (here $H=18$, $R=6$).</p>
+            <div class="ifig-stage"><svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70 25 L230 25 L150 160 Z" fill="none" stroke="#21442B" stroke-width="2.5"/>
+                <polygon id="tri-water" points="150,160 123.3,115 176.7,115" fill="rgba(57,134,78,0.32)" stroke="#39864E" stroke-width="1.5"/>
+                <line x1="150" y1="160" x2="150" y2="25" stroke="#8B5E3C" stroke-width="1" stroke-dasharray="4 3"/>
+                <line id="tri-rline" x1="150" y1="115" x2="176.7" y2="115" stroke="#21442B" stroke-width="2.5"/>
+                <text id="tri-rtext" x="166" y="109" font-size="11" fill="#21442B" font-weight="bold">r</text>
+                <text id="tri-htext" x="156" y="142" font-size="11" fill="#21442B" font-weight="bold">h</text>
+                <text x="236" y="30" font-size="11" fill="#42260D" font-weight="bold">R = 6</text>
+                <text x="156" y="60" font-size="11" fill="#42260D" font-weight="bold">H = 18</text>
+            </svg></div>
+            <div class="ifig-controls">
+                <span style="font-size:13px; font-weight:600; color:var(--text-medium);">Water depth</span>
+                <input type="range" class="ifig-slider" id="tri-slider" min="2" max="18" step="0.5" value="6" oninput="triUpdate()">
+            </div>
+            <div class="ifig-readout" id="tri-readout"></div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>A. Cones: similar triangles, then substitute <span class="slide-ref">Ex. 1</span></h3>
+            <div class="step-concept"><span class="step-label">The move</span></div>
+            <p>$V=\frac{1}{3}\pi r^2 h$ has two changing variables, and the problem only gives you $\frac{dh}{dt}$. The rescue is the cross-section: the water always forms a triangle similar to the tank's, so $\frac{r}{h}=\frac{R}{H}=c$, a constant. Solve for whichever variable you want to <em>eliminate</em>: you were given $\frac{dh}{dt}$, so keep $h$ and set $r=ch$.</p>
+            <div class="highlight-box">
+                $$r=\frac{h}{3}\;\Rightarrow\; V=\frac{1}{3}\pi\Big(\frac{h}{3}\Big)^2 h=\frac{\pi h^3}{27}\;\Rightarrow\;\frac{dV}{dt}=\frac{\pi h^2}{9}\,\frac{dh}{dt}$$
+                <p style="margin-bottom:0; font-size:13.5px;">One variable before differentiating means one clean chain rule and no product rule at all.</p>
+            </div>
+            <div class="step-example"><span class="step-label">The alternative route</span></div>
+            <p>Product-ruling $V=\frac{1}{3}\pi r^2h$ directly is not wrong, but it produces a $\frac{dr}{dt}$ the problem never gave you. You can still finish by differentiating the constraint ($r=ch\Rightarrow \frac{dr}{dt}=c\,\frac{dh}{dt}$) and substituting both $r=ch$ and that rate; the answer matches. Substituting first is simply fewer chances to slip.</p>
+        </div>
+
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>B. Boxes: freeze the constant, product-rule the rest <span class="slide-ref">Ex. 2</span></h3>
+            <div class="step-concept"><span class="step-label">The move</span></div>
+            <p>All 3-D shapes track three dimensions; a box tracks them separately as $V=\ell wh$. When one dimension is fixed ("the height is 10 in"), it is a true constant: write it as a number immediately, $V=10\,\ell w$, and product-rule the two that actually change.</p>
+            <div class="highlight-box">
+                $$\frac{dV}{dt}=10\left[\frac{d\ell}{dt}\,w+\ell\,\frac{dw}{dt}\right]$$
+                <p style="margin-bottom:0; font-size:13.5px;">The 10 sits outside the bracket and multiplies <strong>both</strong> product-rule terms. Compute the bracket first, then scale.</p>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>C. One-variable shapes: spheres, circles, cylinders</h3>
+            <div class="step-concept"><span class="step-label">The move</span></div>
+            <p>Some shapes need no constraint because one variable already runs the show. A sphere's size is all radius: $V=\frac{4}{3}\pi r^3$ gives $\frac{dV}{dt}=4\pi r^2\frac{dr}{dt}$ in one line. A ripple is a circle: $A=\pi r^2$ gives $\frac{dA}{dt}=2\pi r\frac{dr}{dt}$. A cylinder with fixed radius is effectively one-variable too: $V=\pi r^2h$ with $r$ frozen gives $\frac{dV}{dt}=\pi r^2\frac{dh}{dt}$.</p>
+        </div>
+
+        <div class="card">
+            <h3>Side-by-side: shape, equation, rescue move</h3>
+            <div class="tbl-wrap">
+            <table class="cmp">
+                <tr><th>Shape</th><th>Equation</th><th>Extra fact that saves you</th><th>Differentiated form</th></tr>
+                <tr><td>Cone (vertex down)</td><td>$V=\frac{1}{3}\pi r^2h$</td><td>Similar triangles: $r=ch$ with $c=\frac{R}{H}$</td><td>$\frac{dV}{dt}=\pi c^2 h^2\,\frac{dh}{dt}$</td></tr>
+                <tr><td>Box, one side fixed</td><td>$V=\ell wh$</td><td>Freeze the constant: $V=h_0\,\ell w$</td><td>$\frac{dV}{dt}=h_0\big[\ell'w+\ell w'\big]$</td></tr>
+                <tr><td>Two movers</td><td>$x^2+y^2=z^2$</td><td>Positions at the asked time; signs on $x'$, $y'$</td><td>$z\,z'=x\,x'+y\,y'$</td></tr>
+                <tr><td>Sphere</td><td>$V=\frac{4}{3}\pi r^3$, $A=4\pi r^2$</td><td>Already one variable</td><td>$V'=4\pi r^2 r'$, $A'=8\pi r\,r'$</td></tr>
+                <tr><td>Cube</td><td>$V=s^3$, $A=6s^2$</td><td>Two rates given: divide the equations</td><td>$V'=3s^2 s'$, $A'=12s\,s'$</td></tr>
+                <tr><td>Ladder on a wall</td><td>$x^2+y^2=L^2$</td><td>$L$ constant, so the right side differentiates to 0</td><td>$x\,x'+y\,y'=0$</td></tr>
+            </table>
+            </div>
+        </div>
+
+        <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam trap: distributing the constant to only one term.</strong> With $\frac{dV}{dt}=10[\,\ell'w+\ell w'\,]$ and a bracket of $12-32=-20$, the answer is $10(-20)=-200$. Applying the 10 to only the first term gives $120-32=88$, which will not be among the answer choices, and on a grid-in it is simply wrong. Finish the bracket, then multiply.</p></div>
+
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Memory hook.</strong> Match the complaint to the cure: "two variables, one rate" &rarr; similar triangles (cone). "Three variables" &rarr; one of them is probably frozen (box). "No rate for $r$" &rarr; eliminate $r$ before differentiating. "Two rates, no snapshot" &rarr; divide the equations (cube). "Two moving objects" &rarr; Pythagoras with positions at the asked time.</p></div>
+    </div>
+
+    <!-- TAB 3: SIGNS, SNAPSHOTS, TWO-RATE PROBLEMS -->
+    <div id="tab-t3" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Signs, Snapshots &amp; Two-Rate Problems</h2></div>
+        <p>The calculus in a related-rates problem is rarely what costs points; the bookkeeping is. This tab is the bookkeeping: signs, where everything is at the asked moment, and the special problems that hand you two rates or no numbers at all.</p>
+
+        <div class="card ifig">
+            <h3>Play first: two cars and a shrinking hypotenuse</h3>
+            <p style="margin-bottom:10px; font-size:14px;">Car A drives north at 60 mph and reaches the intersection at noon. Car B is 160 mi east at noon, driving <strong>toward</strong> the intersection at 80 mph. Drag time forward and watch $\frac{dz}{dt}$: the cars close in, then the sign flips.</p>
+            <div class="ifig-stage"><svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+                <line x1="40" y1="150" x2="285" y2="150" stroke="#8B5E3C" stroke-width="2"/>
+                <line x1="40" y1="150" x2="40" y2="18" stroke="#8B5E3C" stroke-width="2"/>
+                <text x="288" y="166" font-size="10" text-anchor="end" fill="#8B5E3C" font-weight="bold">east</text>
+                <text x="26" y="24" font-size="10" fill="#8B5E3C" font-weight="bold">north</text>
+                <circle cx="40" cy="150" r="4" fill="#42260D"/>
+                <line id="car-z" x1="40" y1="150" x2="248" y2="150" stroke="#21442B" stroke-width="2" stroke-dasharray="6 4"/>
+                <circle id="car-a" cx="40" cy="150" r="7" fill="#39864E" stroke="white" stroke-width="2"/>
+                <circle id="car-b" cx="248" cy="150" r="7" fill="#BC6C26" stroke="white" stroke-width="2"/>
+                <text id="car-alabel" x="54" y="146" font-size="10" fill="#21442B" font-weight="bold">A</text>
+                <text id="car-blabel" x="248" y="138" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">B</text>
+            </svg></div>
+            <div class="ifig-controls">
+                <span style="font-size:13px; font-weight:600; color:var(--text-medium);">Time after noon</span>
+                <input type="range" class="ifig-slider" id="car-slider" min="0" max="1.6" step="0.02" value="0" oninput="carUpdate()">
+            </div>
+            <div class="ifig-readout" id="car-readout"></div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Sign conventions: the phrase decides</h3>
+            <div class="tbl-wrap">
+            <table class="cmp">
+                <tr><th>The problem says</th><th>You write</th><th>Why</th></tr>
+                <tr><td>"the surface is falling at $\frac{1}{2}$ ft/hr"</td><td>$\frac{dh}{dt}=-\frac{1}{2}$</td><td>depth is decreasing</td></tr>
+                <tr><td>"moving toward the intersection at 80 mph"</td><td>$\frac{dx}{dt}=-80$</td><td>distance from the corner is shrinking</td></tr>
+                <tr><td>"the width decreases at 4 in/sec"</td><td>$\frac{dw}{dt}=-4$</td><td>decreasing is negative, even inside a product rule</td></tr>
+                <tr><td>"air leaks from the balloon at $36\pi$ cm&sup3;/min"</td><td>$\frac{dV}{dt}=-36\pi$</td><td>volume is going down</td></tr>
+                <tr><td>"sand is added at 10 ft&sup3;/min" / "driving away at 55 mph"</td><td>$\frac{dV}{dt}=+10$ / $\frac{dx}{dt}=+55$</td><td>growing and receding are positive</td></tr>
+            </table>
+            </div>
+            <p style="font-size:14px; margin-bottom:0;">And on the way back out: a negative result means <em>decreasing</em>. $\frac{dz}{dt}=-14$ mph is read "the cars are getting closer at 14 mph."</p>
+        </div>
+
+        <div class="technique-section" style="background: rgba(33,68,43,0.06); border-left: 4px solid #21442B;">
+            <h3>Where is everything at the asked time? <span class="slide-ref">Ex. 3</span></h3>
+            <div class="step-concept"><span class="step-label">The move</span></div>
+            <p>Distance problems describe a starting arrangement ("at noon, car A reaches the intersection; car B is 160 mi away") but ask about a <em>later</em> instant ("at 1 PM"). Before building the triangle, advance every object: distance = rate &times; time. At 1 PM, A is $60(1)=60$ mi north; B has covered $80$ of its $160$ mi, so it is $160-80=80$ mi east. Then $z=\sqrt{60^2+80^2}=100$ (a scaled 3-4-5), and</p>
+            <div class="highlight-box">
+                $$z\,\frac{dz}{dt}=x\,\frac{dx}{dt}+y\,\frac{dy}{dt}\;\Rightarrow\;\frac{dz}{dt}=\frac{(80)(-80)+(60)(60)}{100}=\frac{-6400+3600}{100}=-28\ \text{mph}$$
+                <p style="margin-bottom:0; font-size:13.5px;">Note the $-80$: car B moves toward the corner. Forget that sign and you get $+100$ mph, a classic wrong answer choice.</p>
+            </div>
+            <p style="font-size:14px;">A side note the widget shows: the moment $\frac{dz}{dt}=0$ is the cars' <strong>closest approach</strong>; after it, the distance grows again. Setting $x\,x'+y\,y'=0$ finds that time.</p>
+        </div>
+
+        <div class="technique-section" style="background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E;">
+            <h3>Two rates, no snapshot: solve for the dimension <span class="slide-ref">Ex. 4</span></h3>
+            <div class="step-concept"><span class="step-label">The move</span></div>
+            <p>A cube's volume grows at $\frac{dV}{dt}=36$ in&sup3;/min while its surface area grows at $\frac{dA}{dt}=16$ in&sup2;/min; find the edge. Nothing to plug in? Then the <em>dimension itself</em> is the unknown. Differentiate both formulas and treat $\frac{ds}{dt}$ as a second unknown: two equations, two unknowns.</p>
+            <div class="highlight-box">
+                $$36=3s^2\,\frac{ds}{dt},\qquad 16=12s\,\frac{ds}{dt}\;\Rightarrow\;\frac{36}{16}=\frac{3s^2}{12s}=\frac{s}{4}\;\Rightarrow\; s=9\ \text{in}$$
+                <p style="margin-bottom:0; font-size:13.5px;">Dividing the equations cancels $\frac{ds}{dt}$ in one stroke. (Yes, you may divide one whole equation by another, just as you may add or subtract them.) The slower route works too: solve the second for $\frac{ds}{dt}=\frac{16}{12s}$ and substitute into the first.</p>
+            </div>
+        </div>
+
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>No numbers at all: describe the rate's behavior <span class="slide-ref">Ex. 6</span></h3>
+            <div class="step-concept"><span class="step-label">The move</span></div>
+            <p>Conceptual version: water pours into a vertex-down cone at a constant rate; is $\frac{dh}{dt}$ constant, linear, or neither? No tank dimensions are given, so name the ratio a letter: $r=ch$ for some constant $c$. Then $V=\frac{\pi c^2}{3}h^3$, and with $\frac{dV}{dt}=k$:</p>
+            <div class="highlight-box">
+                $$k=\pi c^2 h^2\,\frac{dh}{dt}\;\Rightarrow\;\frac{dh}{dt}=\frac{k}{\pi c^2 h^2}$$
+                <p style="margin-bottom:0; font-size:13.5px;">Positive (water rises), but the $h^2$ downstairs means it <strong>shrinks as the level climbs</strong>, and not along a straight line. To certify "nonlinear," differentiate once more: $\frac{d^2h}{dt^2}=-\frac{2k}{\pi c^2h^3}\frac{dh}{dt}<0$ and depends on $h$, so the rate is not constant and not linear.</p>
+            </div>
+            <div class="figure"><svg viewBox="0 0 560 170" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="140" x2="260" y2="140" stroke="#8B5E3C" stroke-width="2"/>
+                <line x1="50" y1="140" x2="50" y2="22" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M50 130 Q 90 45 250 32" fill="none" stroke="#21442B" stroke-width="2.5"/>
+                <text x="155" y="20" font-size="12" text-anchor="middle" fill="#21442B" font-weight="bold">depth h(t): rising, flattening</text>
+                <text x="258" y="156" font-size="11" text-anchor="end" fill="#8B5E3C">t</text>
+                <line x1="320" y1="140" x2="530" y2="140" stroke="#8B5E3C" stroke-width="2"/>
+                <line x1="320" y1="140" x2="320" y2="22" stroke="#8B5E3C" stroke-width="2"/>
+                <path d="M320 36 Q 352 118 520 132" fill="none" stroke="#BC6C26" stroke-width="2.5"/>
+                <text x="428" y="20" font-size="12" text-anchor="middle" fill="#BC6C26" font-weight="bold">dh/dt: positive, decreasing</text>
+                <text x="528" y="156" font-size="11" text-anchor="end" fill="#8B5E3C">t</text>
+            </svg><p class="cap">Constant inflow, vertex-down cone: the depth keeps rising but ever more slowly, so its rate curve decays. A cup of water poured near the empty tip jumps the level; the same cup near the wide top (or into a lake) barely moves it.</p></div>
+        </div>
+
+        <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam trap: plugging in the container instead of the contents.</strong> In the draining-tank problem, the 18 and the 6 describe the tank; they enter only through the ratio $c=\frac{1}{3}$. The value that goes into $\frac{dV}{dt}=\frac{\pi h^2}{9}h'$ is the water's snapshot depth. Substituting the tank's full depth is a tempting slip, and multiple-choice writers know it: the "full depth" answer is usually sitting among the options.</p></div>
+
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> "Is $h$ increasing at an increasing or decreasing rate? Justify." The justification is the sign of the <em>second</em> derivative (or the sign of $\frac{d}{dh}\big(\frac{dh}{dt}\big)$): state $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}>0$ so $h$ increases, and since $h$ increases, $\frac{k}{\pi c^2 h^2}$ decreases, so $h$ increases at a decreasing rate. Two sentences, full credit.</p></div>
+    </div>
+
+    <!-- TAB 4: WORKED EXAMPLES -->
+    <div id="tab-t4" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>Worked Examples</h2></div>
+        <p>Six problems spanning every pattern on this sheet. Set each one up yourself first (givens, equation, derivative), then open the solution and compare line by line. The quiz questions reuse these setups with different numbers.</p>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Ex. 1 &middot; The draining conical tank</h3>
+            <p><span class="step-label" style="background: rgba(33,68,43,0.12); color: var(--green-dark);">Similar triangles &middot; substitute first &middot; negative rate</span></p>
+            <p>A conical reservoir, vertex down, is 18 ft deep and has a top radius of 6 ft. Water leaks out so that the surface is falling at $\frac{1}{2}$ ft/hr. At what rate, in ft&sup3;/hr, is water leaving the reservoir when the water is 6 ft deep?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Full solution</button>
+            <div class="solution-body">
+                <p><strong>Answer: water is leaving at $2\pi$ ft&sup3;/hr</strong> (that is, $\frac{dV}{dt}=-2\pi$).</p>
+                <p><strong>Givens.</strong> Tank: $H=18$, $R=6$ (constants). Rate: $\frac{dh}{dt}=-\frac{1}{2}$ ft/hr (falling). Snapshot: $h=6$. Want: $\frac{dV}{dt}$.</p>
+                <p><strong>Equation.</strong> $V=\frac{1}{3}\pi r^2h$, with similar triangles $\frac{r}{h}=\frac{6}{18}=\frac{1}{3}$, so $r=\frac{h}{3}$ and $V=\frac{\pi h^3}{27}$.</p>
+                <p><strong>Differentiate.</strong> $\frac{dV}{dt}=\frac{\pi h^2}{9}\,\frac{dh}{dt}$.</p>
+                <p><strong>Plug in.</strong> $\frac{dV}{dt}=\frac{\pi(36)}{9}\cdot\left(-\frac{1}{2}\right)=4\pi\cdot\left(-\frac{1}{2}\right)=-2\pi$. Negative, so volume is decreasing: water leaves at $2\pi$ ft&sup3;/hr.</p>
+                <p style="margin-bottom:0;"><strong>Trap check.</strong> Plugging in the tank's depth 18 instead of the water's depth 6 gives $-18\pi$; dropping the negative gives $+2\pi$; assuming $r=\frac{h}{2}$ (the classic 20-and-10 tank from other versions of this problem) changes the constant. All three are the kinds of wrong answers test writers list.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--gold);">
+            <h3>Ex. 2 &middot; The box with a frozen height</h3>
+            <p><span class="step-label" style="background: rgba(221,162,94,0.15); color: #8B6914;">Constant dimension &middot; product rule &middot; distribute the constant</span></p>
+            <p>A rectangular box has a constant height of 5 in. Its length increases at 3 in/sec and its width decreases at 2 in/sec. When the length is 10 in and the width is 4 in, at what rate, in in&sup3;/sec, is the volume changing?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Full solution</button>
+            <div class="solution-body">
+                <p><strong>Answer: $\frac{dV}{dt}=-40$ in&sup3;/sec</strong> (the volume is shrinking at 40 in&sup3;/sec).</p>
+                <p><strong>Givens.</strong> $h=5$ (constant, so $\frac{dh}{dt}=0$). $\frac{d\ell}{dt}=+3$, $\frac{dw}{dt}=-2$. Snapshot: $\ell=10$, $w=4$. Want: $\frac{dV}{dt}$.</p>
+                <p><strong>Equation.</strong> $V=\ell wh=5\,\ell w$ once the constant is frozen in.</p>
+                <p><strong>Differentiate.</strong> $\frac{dV}{dt}=5\left[\frac{d\ell}{dt}w+\ell\frac{dw}{dt}\right]$.</p>
+                <p><strong>Plug in.</strong> $\frac{dV}{dt}=5\big[(3)(4)+(10)(-2)\big]=5\,[12-20]=5(-8)=-40$.</p>
+                <p style="margin-bottom:0;"><strong>Trap check.</strong> The 5 multiplies the whole bracket: $5\cdot12-20=40$ is the only-one-term error. And the width's rate stays negative <em>inside</em> the product rule; making it $+2$ gives $+160$. The answer choices will contain both.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: #8B5E3C;">
+            <h3>Ex. 3 &middot; Two cars on perpendicular roads</h3>
+            <p><span class="step-label" style="background: rgba(66,38,13,0.12); color: var(--brown-medium);">Pythagoras &middot; positions at the asked time &middot; toward = negative</span></p>
+            <p>Car A travels north at 60 mph and reaches the intersection at noon. At that moment car B is 160 mi east of the intersection, traveling toward it at 80 mph. At 1 PM, at what rate, in mph, is the distance between the cars changing?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Full solution</button>
+            <div class="solution-body">
+                <p><strong>Answer: $\frac{dz}{dt}=-28$ mph</strong> (the cars are getting closer at 28 mph).</p>
+                <p><strong>Givens.</strong> $\frac{dy}{dt}=+60$ (A moving away, north of the corner). $\frac{dx}{dt}=-80$ (B moving toward the corner). At 1 PM: $y=60(1)=60$; $x=160-80(1)=80$. So $z=\sqrt{80^2+60^2}=100$, a scaled 3-4-5.</p>
+                <p><strong>Equation.</strong> $x^2+y^2=z^2$.</p>
+                <p><strong>Differentiate.</strong> $2x\,x'+2y\,y'=2z\,z'$, so $z'=\dfrac{x\,x'+y\,y'}{z}$.</p>
+                <p><strong>Plug in.</strong> $z'=\dfrac{(80)(-80)+(60)(60)}{100}=\dfrac{-6400+3600}{100}=\dfrac{-2800}{100}=-28$.</p>
+                <p style="margin-bottom:0;"><strong>Trap check.</strong> Using the noon picture ($x=160$, $y=0$) answers the wrong instant. Dropping the sign on $x'$ gives $+100$. Reporting $+28$ misses that the distance is shrinking. Three traps, one problem.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <h3>Ex. 4 &middot; The cube with two given rates</h3>
+            <p><span class="step-label" style="background: rgba(33,68,43,0.12); color: var(--green-dark);">Two equations &middot; divide to cancel the rate &middot; solve for a dimension</span></p>
+            <p>The volume of a cube is increasing at 36 in&sup3;/min and its surface area is increasing at 16 in&sup2;/min. What is the length of each edge of the cube?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Full solution</button>
+            <div class="solution-body">
+                <p><strong>Answer: $s=9$ in.</strong></p>
+                <p><strong>Givens.</strong> $\frac{dV}{dt}=36$, $\frac{dA}{dt}=16$. Unknowns: $s$ and $\frac{ds}{dt}$. Want: $s$.</p>
+                <p><strong>Equations.</strong> $V=s^3$ and $A=6s^2$.</p>
+                <p><strong>Differentiate both.</strong> $36=3s^2\frac{ds}{dt}$ and $16=12s\frac{ds}{dt}$.</p>
+                <p><strong>Divide.</strong> $\dfrac{36}{16}=\dfrac{3s^2}{12s}=\dfrac{s}{4}$, so $s=\dfrac{4\cdot36}{16}=9$.</p>
+                <p style="margin-bottom:0;"><strong>Check.</strong> From the area equation $\frac{ds}{dt}=\frac{16}{12\cdot 9}=\frac{4}{27}$; then $3(81)\frac{4}{27}=36$. Both equations agree, so $s=9$ is consistent. Answering $\frac{36}{16}=2.25$ (the ratio itself) forgets the $\frac{s}{4}$.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: var(--gold);">
+            <h3>Ex. 5 &middot; The sliding ladder</h3>
+            <p><span class="step-label" style="background: rgba(221,162,94,0.15); color: #8B6914;">Constant hypotenuse &middot; 5-12-13 &middot; opposite signs</span></p>
+            <p>A 13-ft ladder leans against a wall. The base slides away from the wall at 2 ft/sec. When the base is 5 ft from the wall, at what rate is the top of the ladder sliding down?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Full solution</button>
+            <div class="solution-body">
+                <p><strong>Answer: the top slides down at $\frac{5}{6}$ ft/sec</strong> ($\frac{dy}{dt}=-\frac{5}{6}$).</p>
+                <p><strong>Givens.</strong> $L=13$ (true constant). $\frac{dx}{dt}=+2$ (base moving away). Snapshot: $x=5$, so $y=\sqrt{169-25}=12$ (the 5-12-13 triple).</p>
+                <p><strong>Equation.</strong> $x^2+y^2=13^2$. The constant right side is the whole point: its derivative is 0.</p>
+                <p><strong>Differentiate.</strong> $2x\,x'+2y\,y'=0$, so $y'=-\dfrac{x\,x'}{y}$.</p>
+                <p><strong>Plug in.</strong> $y'=-\dfrac{(5)(2)}{12}=-\dfrac{5}{6}$.</p>
+                <p style="margin-bottom:0;"><strong>Trap check.</strong> The top does <em>not</em> fall at 2 ft/sec just because the base moves at 2 ft/sec; the rates are linked by the positions. And a ladder problem where the base moves away must have the top moving down: if your signs agree, re-check them.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-left-color: #8B5E3C;">
+            <h3>Ex. 6 &middot; Filling a cone at a constant rate (conceptual)</h3>
+            <p><span class="step-label" style="background: rgba(66,38,13,0.12); color: var(--brown-medium);">No numbers &middot; name the ratio c &middot; behavior of dh/dt</span></p>
+            <p>Water is poured into a vertex-down conical reservoir at a constant rate. If $h(t)$ is the depth of the water, is $\frac{dh}{dt}$ constant, linear and decreasing, linear and increasing, nonlinear and increasing, or nonlinear and decreasing?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Full solution</button>
+            <div class="solution-body">
+                <p><strong>Answer: nonlinear and decreasing</strong> (positive, but shrinking as the level climbs, and not along a line).</p>
+                <p><strong>Intuition first.</strong> A cup of water poured into the nearly empty tip raises the level a lot; the same cup poured near the wide top barely moves it. So the level always rises, ever more slowly.</p>
+                <p><strong>The math.</strong> No dimensions are given, so set $r=ch$ with $c=\frac{R}{H}$ a constant. Then $V=\frac{\pi c^2}{3}h^3$, and with $\frac{dV}{dt}=k$ constant: $k=\pi c^2h^2\frac{dh}{dt}$, so $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}$.</p>
+                <p style="margin-bottom:0;"><strong>Certify it.</strong> That expression is positive and falls as $h$ grows. Differentiating again gives $\frac{d^2h}{dt^2}=-\frac{2k}{\pi c^2h^3}\frac{dh}{dt}<0$, which is itself not constant, so $h(t)$ is concave down and $\frac{dh}{dt}$ is genuinely nonlinear. Contrast: a cylinder gives $\frac{dh}{dt}=\frac{k}{\pi r^2}$, a true constant.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLASHCARDS -->
+    <div id="tab-flash" class="tab-content">
+        <div class="section-header"><div class="section-number">&#9998;</div><h2>Flashcard Studier</h2></div>
+
+        <div class="card" style="border-left-color:var(--green-dark);">
+            <p style="margin-bottom:12px; font-size:14.5px;"><strong>How it works.</strong> Pick a deck, read the term, say the answer out loud, flip, mark yourself. Anything you miss is saved to the <strong>Missed</strong> deck (it stays saved next time you open this file) until you get it right there. Click any term in the list to jump straight to that card. Any deck, including My deck and Missed, can be downloaded as an Anki file.</p>
+            <div class="fc-controls">
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Deck</span>
+                    <button class="fc-chip on" data-filter="all" onclick="fcSetFilter('all',this)">All <span class="fc-n" id="fcn-all"></span></button>
+                    <button class="fc-chip" data-filter="pr" onclick="fcSetFilter('pr',this)">The process <span class="fc-n" id="fcn-pr"></span></button>
+                    <button class="fc-chip" data-filter="eq" onclick="fcSetFilter('eq',this)">Equations &amp; shapes <span class="fc-n" id="fcn-eq"></span></button>
+                    <button class="fc-chip" data-filter="tr" onclick="fcSetFilter('tr',this)">Signs &amp; traps <span class="fc-n" id="fcn-tr"></span></button>
+                    <button class="fc-chip" data-filter="ex" onclick="fcSetFilter('ex',this)">Examples <span class="fc-n" id="fcn-ex"></span></button>
+                    <button class="fc-chip miss" data-filter="missed" onclick="fcSetFilter('missed',this)">&#10007; Missed <span class="fc-n" id="fcn-missed"></span></button>
+                    <button class="fc-chip custom" data-filter="custom" onclick="fcSetFilter('custom',this)">&#9733; My deck <span class="fc-n" id="fcn-custom"></span></button>
+                    <button class="fc-chip pick" id="fc-pick-btn" onclick="fcTogglePick()">Pick cards&hellip;</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Show first</span>
+                    <button class="fc-chip on" data-side="term" onclick="fcSetSide('term',this)">Term first</button>
+                    <button class="fc-chip" data-side="def" onclick="fcSetSide('def',this)">Definition first</button>
+                    <button class="fc-chip" data-side="random" onclick="fcSetSide('random',this)">Random</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Order</span>
+                    <button class="fc-chip on" data-order="inorder" onclick="fcSetOrder('inorder',this)">In order</button>
+                    <button class="fc-chip" data-order="shuffle" onclick="fcSetOrder('shuffle',this)">Shuffle</button>
+                    <button class="fc-chip" data-order="quick" onclick="fcSetOrder('quick',this)">&#9889; Quick test (10 random)</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">&nbsp;</span>
+                    <button class="btn-small" onclick="fcRestart()">Restart deck</button>
+                    <button class="btn-small" style="background:#8B5E3C;" onclick="fcClearMissed()">Clear missed list</button>
+                </div>
+                <div class="fc-ctl-group"><span class="fc-ctl-label">Anki</span>
+                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('deck')">&#11015; Download this deck for Anki</button>
+                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('all')">&#11015; Download all cards for Anki</button>
+                    <button class="fc-chip" onclick="fcToggleAnkiHelp()">How do I import?</button>
+                </div>
+            </div>
+            <div id="fc-anki-help" style="display:none; margin-top:12px;" class="idea-box">
+                <p style="margin-bottom:8px;"><strong>Importing into Anki (desktop app, free at apps.ankiweb.net).</strong> The download is a plain text file Anki reads directly; formatting and formulas come through.</p>
+                <ol style="margin-bottom:6px;">
+                    <li>Download a deck above. &ldquo;This deck&rdquo; exports whatever is currently selected: a topic, your <strong>My deck</strong> picks, or just your <strong>Missed</strong> cards.</li>
+                    <li>In Anki: <strong>File &rarr; Import&hellip;</strong> and choose the file.</li>
+                    <li>Anki should auto-detect the tab separator, the deck name, and that HTML is allowed. If it asks: note type <strong>Basic</strong>, field 1 &rarr; Front, field 2 &rarr; Back, field 3 &rarr; Tags, and tick <strong>Allow HTML in fields</strong>.</li>
+                    <li>Click Import. Cards land in a deck called <em>AP Calculus :: Related Rates</em>, tagged by topic so you can filter later.</li>
+                </ol>
+                <p style="margin:0; font-size:13px;">On mobile: import the file on desktop once and sync, or use AnkiDroid&rsquo;s import from a text file. Re-importing the same file later updates rather than duplicates the cards.</p>
+            </div>
+        </div>
+
+        <div class="card fc-pick-panel" id="fc-pick-panel" style="display:none; border-left-color:var(--gold);">
+            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Build my own deck</span><span class="fc-legend"><strong id="fc-pick-count">0</strong>&nbsp;selected &nbsp;<button class="btn-small" style="background:#E2E2E2; color:var(--text-medium); padding:4px 10px;" onclick="fcPickAll(false)">Clear</button></span></div>
+            <p style="font-size:13.5px; color:var(--text-medium); margin-bottom:10px;">Tick the cards you want, then hit <strong>Study my deck</strong>. Your picks are remembered next time you open this file.</p>
+            <div id="fc-pick-groups"></div>
+            <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;"><button class="btn-small" onclick="fcStudyCustom()">&#9733; Study my deck</button><button class="btn-small" style="background:#8B5E3C;" onclick="fcTogglePick()">Close</button></div>
+        </div>
+
+        <div class="card">
+            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Terms in this deck</span><span class="fc-legend"><span class="lg unseen"></span>not yet &nbsp;<span class="lg got"></span>got it &nbsp;<span class="lg miss"></span>missed</span></div>
+            <div class="fc-list" id="fc-list"></div>
+        </div>
+
+        <div class="card" style="border-left-color:var(--green-dark);">
+            <div class="fc-wrap">
+                <div class="fc-top"><span id="fc-count">Card 1</span><span>Got: <strong id="fc-got">0</strong> &nbsp; Missed: <strong id="fc-miss">0</strong></span><span id="fc-deckname" class="fc-deckname">All terms</span></div>
+                <div class="fc-card" id="fc-card" onclick="fcFlip()">
+                    <div class="fc-label" id="fc-label">TERM</div>
+                    <div class="fc-front" id="fc-front"></div>
+                    <div class="fc-back" id="fc-back"></div>
+                    <div class="fc-hint" id="fc-hint">click to flip</div>
+                </div>
+                <div class="fc-actions">
+                    <button class="btn-small" style="background:var(--gold); color:var(--brown-dark);" onclick="fcFlip()">Flip</button>
+                    <button class="btn-small" onclick="fcMark(true)">&#10003; Got it</button>
+                    <button class="btn-small" style="background:#C0392B;" onclick="fcMark(false)">&#10007; Missed</button>
+                    <button class="btn-small" style="background:#E2E2E2; color:var(--text-medium);" onclick="fcSkip()">Skip &rarr;</button>
+                </div>
+                <div id="fc-done" class="idea-box" style="display:none; margin-top:14px;"></div>
+            </div>
+        </div>
+
+<script type="text/plain" id="fc-data">
+pr ||| Step 1 of the related-rates process ||| <strong>Gather your givens.</strong> Write down every quantity and every rate, with signs, before touching calculus. Pay special attention to the rate the problem hands you, like $\frac{dh}{dt}=-\frac{1}{2}$.
+---
+pr ||| Step 2 of the related-rates process ||| <strong>Come up with one simple equation</strong> connecting the variable whose rate you want to the variable whose rate you know: a volume, area, or Pythagorean formula.
+---
+pr ||| Step 3 of the related-rates process ||| <strong>Differentiate both sides with respect to $t$</strong> (implicitly). Every changing variable picks up its own rate by the chain rule.
+---
+pr ||| Step 4 of the related-rates process ||| <strong>Plug in the snapshot values last</strong>, solve for the unknown rate, then interpret the sign and attach units in a closing sentence.
+---
+pr ||| How do units identify the rate a problem gives you? ||| Units are a name tag: <strong>ft&sup3;/hr means $\frac{dV}{dt}$</strong>, ft/hr means a length rate like $\frac{dh}{dt}$, ft&sup2;/min means $\frac{dA}{dt}$, mph is a distance rate.
+---
+pr ||| Snapshot value ||| A value that holds <strong>only at the instant in question</strong> ("when the water is 6 ft deep"). It gets plugged in <strong>after</strong> differentiating, never before.
+---
+pr ||| True constant ||| A quantity that never changes during the motion: a tank's dimensions, a frozen box height, a ladder's length. Constants <strong>may</strong> be substituted before differentiating.
+---
+pr ||| Why can't a snapshot value go in before differentiating? ||| Substituting $h=6$ early freezes $h$ into a constant, its derivative becomes 0, and <strong>the rate you wanted vanishes</strong> from the equation.
+---
+pr ||| "The rate at which water is leaving" asks for what? ||| The magnitude of $\frac{dV}{dt}$: compute it, expect a <strong>negative</strong> value for a draining tank, and report the leaving rate as $\left|\frac{dV}{dt}\right|$.
+---
+pr ||| The two things a full-credit final answer states ||| The <strong>sign or direction</strong> (increasing or decreasing) and the <strong>units</strong> (ft&sup3;/hr, in&sup3;/sec, mph, ft/s).
+---
+pr ||| Implicit differentiation in related rates ||| Treat every letter as a function of $t$: $\frac{d}{dt}(x^2)=2x\frac{dx}{dt}$ and $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$.
+---
+pr ||| Typical FRQ point structure for related rates ||| Roughly one point each for the <strong>equation</strong>, the <strong>derivative</strong>, the <strong>plug-in and solve</strong>, and the <strong>answer with units</strong> and direction.
+---
+pr ||| First thing to draw on any related-rates problem ||| A labeled <strong>picture</strong>: letter every changing length, mark the fixed numbers, and arrow the given rate with its sign.
+---
+pr ||| Translate: "How fast is X changing when ... ?" ||| Find $\frac{dX}{dt}$ <strong>at the single instant</strong> described by the "when" values; those values are the snapshot.
+---
+eq ||| Volume of a cone ||| $V=\frac{1}{3}\pi r^2h$. Two variables change, so pair it with the <strong>similar-triangles ratio</strong> before differentiating.
+---
+eq ||| Similar-triangles ratio in a cone ||| The water cone stays similar to the tank, so $\frac{r}{h}=\frac{R}{H}=c$, a <strong>constant</strong>. With $R=6$, $H=18$: $r=\frac{h}{3}$.
+---
+eq ||| The substitute-first move ||| Use $r=ch$ to rewrite $V$ in <strong>one variable</strong>: $V=\frac{\pi c^2}{3}h^3$. Now the derivative needs no unknown $\frac{dr}{dt}$ and no product rule.
+---
+eq ||| Cone with $r=\frac{h}{2}$: the one-variable volume ||| $V=\frac{1}{3}\pi\left(\frac{h}{2}\right)^2h=\frac{\pi h^3}{12}$, so $\frac{dV}{dt}=\frac{\pi h^2}{4}\frac{dh}{dt}$.
+---
+eq ||| Box volume setup when one dimension is fixed ||| $V=\ell wh$; a <strong>constant</strong> dimension becomes a plain number first. Fixed $h=10$ gives $V=10\,\ell w$, ready to product-rule.
+---
+eq ||| Derivative of $V=10\,\ell w$ ||| Product rule inside, constant outside: $\frac{dV}{dt}=10\left[\frac{d\ell}{dt}w+\ell\frac{dw}{dt}\right]$. The 10 multiplies <strong>both</strong> terms of the bracket.
+---
+eq ||| Box surface area ||| $A=2(\ell w+\ell h+wh)$: the other box formula, for problems that hand you a surface-area rate.
+---
+eq ||| Distance equation for two movers on perpendicular roads ||| $x^2+y^2=z^2$, where $x$ and $y$ are each object's <strong>distance from the intersection</strong> and $z$ is the separation.
+---
+eq ||| Derivative of $x^2+y^2=z^2$ ||| $2x\frac{dx}{dt}+2y\frac{dy}{dt}=2z\frac{dz}{dt}$; cancel the 2s to get $\frac{dz}{dt}=\frac{x\,x'+y\,y'}{z}$.
+---
+eq ||| Sphere formulas and their derivatives ||| $V=\frac{4}{3}\pi r^3$ and $A=4\pi r^2$, so $\frac{dV}{dt}=4\pi r^2\frac{dr}{dt}$ and $\frac{dA}{dt}=8\pi r\frac{dr}{dt}$.
+---
+eq ||| Circle (ripple) formulas and their derivatives ||| $A=\pi r^2$ and $C=2\pi r$: $\frac{dA}{dt}=2\pi r\frac{dr}{dt}$ and $\frac{dC}{dt}=2\pi\frac{dr}{dt}$.
+---
+eq ||| Cylinder volume and why cylinders fill linearly ||| $V=\pi r^2h$; with radius fixed, $\frac{dV}{dt}=\pi r^2\frac{dh}{dt}$, so a constant inflow makes $\frac{dh}{dt}$ a <strong>constant</strong>.
+---
+eq ||| The cube pair of formulas ||| $V=s^3$ and $A=6s^2$: differentiated, $\frac{dV}{dt}=3s^2\frac{ds}{dt}$ and $\frac{dA}{dt}=12s\frac{ds}{dt}$.
+---
+eq ||| Ladder-on-a-wall setup ||| The ladder's length is the <strong>constant</strong> hypotenuse: $x^2+y^2=L^2$, so differentiating gives $x\,x'+y\,y'=0$.
+---
+tr ||| Sign of $\frac{dh}{dt}$ when a surface is falling ||| <strong>Negative.</strong> "Falling at $\frac{1}{2}$ ft/hr" means $\frac{dh}{dt}=-\frac{1}{2}$; the phrase carries the sign, the number is just the speed.
+---
+tr ||| Sign for an object moving toward the intersection ||| Its distance $x$ from the corner is shrinking, so $\frac{dx}{dt}<0$: "toward at 80 mph" means $\frac{dx}{dt}=-80$.
+---
+tr ||| The sign-word cheat list ||| Negative: falling, draining, leaking, shrinking, deflating, <strong>toward</strong>. Positive: rising, filling, growing, inflating, <strong>away from</strong>.
+---
+tr ||| The constant-distribution trap ||| $10[\,12-32\,]=-200$, not $120-32=88$: a constant outside a product rule multiplies <strong>the entire bracket</strong>, not just the first term.
+---
+tr ||| The tank-dimensions trap ||| $H=18$ and $R=6$ describe the <strong>container</strong> and enter only through the ratio $c=\frac{1}{3}$. The number that gets plugged in is the water's snapshot depth.
+---
+tr ||| What to do when you "don't have $\frac{dr}{dt}$" ||| Not a dead end: use the constraint $r=ch$ to <strong>eliminate $r$ before differentiating</strong>, or differentiate the constraint to get $\frac{dr}{dt}=c\frac{dh}{dt}$.
+---
+tr ||| Positions at the asked time ||| If the setup is given at noon but the question asks about 1 PM, first advance everyone: <strong>distance = rate &times; time</strong>, then build the triangle.
+---
+tr ||| What a negative $\frac{dz}{dt}$ means ||| The separation is <strong>shrinking</strong>: the objects are approaching each other at $\left|\frac{dz}{dt}\right|$. Positive means they are pulling apart.
+---
+tr ||| The moment when $\frac{dz}{dt}=0$ for two movers ||| Their <strong>closest approach</strong>: the distance stops shrinking and starts growing. Found by setting $x\,x'+y\,y'=0$.
+---
+tr ||| Two rates given and no snapshot values: what are you solving for? ||| Probably a <strong>dimension</strong>. Differentiate both formulas, treat the unknown rate as a variable, and <strong>divide the equations</strong> so it cancels.
+---
+tr ||| Dividing the cube equations ||| $\frac{dV/dt}{dA/dt}=\frac{3s^2\,s'}{12s\,s'}=\frac{s}{4}$: the unknown $s'$ cancels and the edge pops out as $s=4\cdot\frac{dV/dt}{dA/dt}$.
+---
+tr ||| Behavior of $\frac{dh}{dt}$ for a constant-rate fill of a cone ||| $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}$: <strong>positive, decreasing, nonlinear</strong>. The level rises fastest at the narrow vertex and slows as the cone widens.
+---
+tr ||| How to prove a rate is nonlinear ||| Differentiate <strong>again</strong>: a linear function has a constant derivative. Here $\frac{d^2h}{dt^2}$ is negative and depends on $h$, so the rate is neither constant nor linear.
+---
+tr ||| Cylinder fill vs cone fill at the same constant inflow ||| The <strong>cylinder's</strong> level rises at a constant rate ($\frac{dh}{dt}=\frac{k}{\pi r^2}$); the vertex-down <strong>cone's</strong> rise keeps slowing as the water widens.
+---
+ex ||| Ex. 1: the draining conical tank ||| Tank 18 ft deep, radius 6; surface falls $\frac{1}{2}$ ft/hr at $h=6$. $r=\frac{h}{3}$, $V=\frac{\pi h^3}{27}$, $\frac{dV}{dt}=\frac{\pi h^2}{9}h'$, giving $-2\pi$: <strong>water leaves at $2\pi$ ft&sup3;/hr</strong>.
+---
+ex ||| Ex. 2: the box with a frozen height ||| $h=5$ fixed, $\ell'=3$, $w'=-2$ at $\ell=10$, $w=4$: $\frac{dV}{dt}=5[(3)(4)+(10)(-2)]=5(-8)$, so <strong>$-40$ in&sup3;/sec</strong>.
+---
+ex ||| Ex. 3: two cars on perpendicular roads ||| At 1 PM, $x=80$, $y=60$, $z=100$ (scaled 3-4-5). $\frac{dz}{dt}=\frac{80(-80)+60(60)}{100}=-28$: <strong>closing at 28 mph</strong>.
+---
+ex ||| Ex. 4: the cube with two given rates ||| $\frac{dV}{dt}=36$, $\frac{dA}{dt}=16$: dividing gives $\frac{s}{4}=\frac{36}{16}$, so <strong>$s=9$ in</strong>. Check: $\frac{ds}{dt}=\frac{4}{27}$ satisfies both equations.
+---
+ex ||| Ex. 5: the sliding ladder ||| 13-ft ladder, base 5 ft out moving away at 2 ft/s: $y=12$ and $y'=-\frac{(5)(2)}{12}$, so <strong>the top slides down at $\frac{5}{6}$ ft/s</strong>.
+---
+ex ||| Ex. 6: filling a cone at a constant rate ||| With nothing but the shape, $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}$: <strong>nonlinear and decreasing</strong>, like a cup of water barely moving a lake.
+---
+ex ||| Right-triangle families to spot instantly ||| $(3,4,5)$ and multiples $(6,8,10)$, $(30,40,50)$, $(60,80,100)$, plus $(5,12,13)$ and $(7,24,25)$: <strong>spotting one skips the square root</strong>.
+---
+ex ||| The leaking balloon pattern ||| $V=\frac{4}{3}\pi r^3$ with $\frac{dV}{dt}=-36\pi$ at $r=3$: $-36\pi=4\pi(9)\frac{dr}{dt}$, so $\frac{dr}{dt}=-1$: <strong>the radius shrinks 1 unit per minute</strong>.
+---
+ex ||| The pond-ripple pattern ||| $A=\pi r^2$ with $\frac{dr}{dt}=2$ ft/s at $r=15$: $\frac{dA}{dt}=2\pi(15)(2)=60\pi$ ft&sup2;/s: <strong>area grows fastest when the circle is already big</strong>.
+</script>
+    </div>
+
+    <!-- SETUP DRILL -->
+    <div id="tab-drill" class="tab-content">
+        <div class="section-header"><div class="section-number">&#9881;</div><h2>Setup Drill</h2></div>
+        <p>Free-response graders give most of their points for the <em>setup</em>: the givens with correct signs, the one equation, the derivative. This drill trains exactly that. Type your setup (or say it out loud), reveal the model answer, compare against what a grader looks for, and mark yourself. Missed prompts are remembered next time you open this file.</p>
+        <div class="quiz-top"><span class="score-pill" id="dr-score">Marked: 0 / 12</span><button class="quiz-btn" onclick="drReset()">Reset marks</button></div>
+        <div id="drill-list"></div>
+    </div>
+
+    <!-- QUIZ A -->
+    <div id="tab-quiza" class="tab-content">
+        <div class="section-header"><div class="section-number">A</div><h2>Quiz A &middot; Overview (10 questions)</h2></div>
+        <p>Gist-level check: the process, the sign rules, the geometry moves, and the conceptual behavior questions. Answer options are shuffled every time the page loads.</p>
+        <div class="quiz-top"><span class="score-pill" id="score-qa">Score: 0 / 10</span><button class="quiz-btn" onclick="buildQuiz('qa')">Reset &amp; reshuffle</button></div>
+        <div id="quiz-qa"></div>
+    </div>
+
+    <!-- QUIZ B -->
+    <div id="tab-quizb" class="tab-content">
+        <div class="section-header"><div class="section-number">B</div><h2>Quiz B &middot; Apply It (10 questions)</h2></div>
+        <p>Full problems with numbers, built on the worked-example patterns. Every wrong option is a real mistake (a dropped sign, an undistributed constant, a too-early plug-in), so treat a miss as a diagnosis. Harder than Quiz A; no calculator needed.</p>
+        <div class="quiz-top"><span class="score-pill" id="score-qb">Score: 0 / 10</span><button class="quiz-btn" onclick="buildQuiz('qb')">Reset &amp; reshuffle</button></div>
+        <div id="quiz-qb"></div>
+    </div>
+
+</div><!-- end container -->
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Related Rates &middot; Study Sheet</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+<script>
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0 });
+    setTimeout(function() { if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+}
+function goTab(name) {
+    var btn = Array.from(document.querySelectorAll('.tab-button')).find(function(b){ return (b.getAttribute('onclick')||'').indexOf("'" + name + "'") >= 0; });
+    switchTab(name, btn);
+}
+function toggleExample(btn) { var body = btn.nextElementSibling; body.classList.toggle('open'); btn.classList.toggle('open'); if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50); }
+function toggleSolution(btn) { var body = btn.nextElementSibling; body.classList.toggle('open'); btn.classList.toggle('open'); if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(); }, 50); }
+
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+/* ───────── WIDGET 1: four-step walkthrough (Tab 1) ───────── */
+var ST = [
+ { f: 0.50, html: "<strong>The problem.</strong> A conical reservoir, vertex down, is 18 ft deep with a top radius of 6 ft. Water leaks out so that the surface is falling at $\\frac{1}{2}$ ft/hr. How fast, in ft&sup3;/hr, is water leaving the reservoir when the water is 6 ft deep? <em>(Click Next step.)</em>" },
+ { f: 0.47, html: "<strong>Step 1: gather givens.</strong> Tank (true constants): $H=18$, $R=6$. The rate they give: $\\frac{dh}{dt}=-\\frac{1}{2}$ ft/hr, negative because the surface is <em>falling</em>. Snapshot, saved for the very end: $h=6$. Wanted: $\\frac{dV}{dt}$, because the question's units are ft&sup3;/hr." },
+ { f: 0.43, html: "<strong>Step 2: one simple equation.</strong> $V=\\frac{1}{3}\\pi r^2 h$ connects volume to the water, but it has two variables and we only know $h$'s rate. Similar triangles to the rescue: $\\frac{r}{h}=\\frac{6}{18}=\\frac{1}{3}$, so $r=\\frac{h}{3}$ and $V=\\frac{1}{3}\\pi\\big(\\frac{h}{3}\\big)^2h=\\frac{\\pi h^3}{27}$." },
+ { f: 0.38, html: "<strong>Step 3: differentiate with respect to $t$.</strong> $\\frac{dV}{dt}=\\frac{3\\pi h^2}{27}\\,\\frac{dh}{dt}=\\frac{\\pi h^2}{9}\\,\\frac{dh}{dt}$. Notice the snapshot $h=6$ still has not been touched; the derivative had to exist first." },
+ { f: 0.333, html: "<strong>Step 4: plug in last, then interpret.</strong> $\\frac{dV}{dt}=\\frac{\\pi(6)^2}{9}\\cdot\\big({-\\tfrac{1}{2}}\\big)=4\\pi\\cdot\\big({-\\tfrac{1}{2}}\\big)=-2\\pi$. Negative means the volume is decreasing: <strong>water is leaving at $2\\pi$ ft&sup3;/hr.</strong> This is Worked Example 1 on Tab 4." }
+];
+var stIdx = 0;
+function stRender() {
+    var s = ST[stIdx];
+    var yTop = 150 - 125 * s.f, hw = 80 * s.f;
+    var poly = document.getElementById('st-water');
+    poly.setAttribute('points', '130,150 ' + (130 - hw) + ',' + yTop + ' ' + (130 + hw) + ',' + yTop);
+    var line = document.getElementById('st-surface');
+    line.setAttribute('x1', 130 - hw); line.setAttribute('x2', 130 + hw);
+    line.setAttribute('y1', yTop); line.setAttribute('y2', yTop);
+    document.getElementById('st-hlabel').setAttribute('y', Math.min(142, yTop + 24));
+    var box = document.getElementById('st-box');
+    box.innerHTML = s.html;
+    var dots = document.getElementById('st-dots');
+    dots.innerHTML = ST.map(function(_, i){ return '<span class="stepdot' + (i <= stIdx ? ' on' : '') + '"></span>'; }).join('');
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30);
+}
+function stGo(d) { stIdx = Math.max(0, Math.min(ST.length - 1, stIdx + d)); stRender(); }
+
+/* ───────── WIDGET 2: similar-triangles slider (Tab 2) ───────── */
+function triUpdate() {
+    var h = parseFloat(document.getElementById('tri-slider').value);
+    var f = h / 18, yTop = 160 - 135 * f, hw = 80 * f;
+    document.getElementById('tri-water').setAttribute('points', '150,160 ' + (150 - hw) + ',' + yTop + ' ' + (150 + hw) + ',' + yTop);
+    var rl = document.getElementById('tri-rline');
+    rl.setAttribute('x1', 150); rl.setAttribute('x2', 150 + hw); rl.setAttribute('y1', yTop); rl.setAttribute('y2', yTop);
+    var rt = document.getElementById('tri-rtext'); rt.setAttribute('x', 150 + hw / 2); rt.setAttribute('y', Math.max(20, yTop - 6));
+    var ht = document.getElementById('tri-htext'); ht.setAttribute('y', Math.min(152, yTop + (160 - yTop) / 2 + 4));
+    var r = h / 3, V = Math.PI * h * h * h / 27;
+    document.getElementById('tri-readout').innerHTML =
+        'Depth <span class="sl-val">h = ' + h.toFixed(1) + ' ft</span> &nbsp;&middot;&nbsp; radius <span class="sl-val">r = h/3 = ' + r.toFixed(2) + ' ft</span> &nbsp;&middot;&nbsp; ratio <span class="sl-val">r/h = ' + (r / h).toFixed(3) + '</span> (never moves!) &nbsp;&middot;&nbsp; V = &pi;h&sup3;/27 &asymp; <span class="sl-val">' + V.toFixed(1) + ' ft&sup3;</span><br>Because r/h is pinned at 1/3, writing r = h/3 is legal at <em>every</em> depth. That one substitution is what makes the whole problem one-variable.';
+}
+
+/* ───────── WIDGET 3: two-cars simulator (Tab 3) ───────── */
+function carTime(t) {
+    if (t < 0.005) return 'noon';
+    var mins = Math.round(t * 60), hr = 12 + Math.floor(mins / 60), mm = mins % 60;
+    return (hr > 12 ? hr - 12 : hr) + ':' + (mm < 10 ? '0' : '') + mm + ' PM';
+}
+function carUpdate() {
+    var t = parseFloat(document.getElementById('car-slider').value);
+    var x = 160 - 80 * t, y = 60 * t;
+    var z = Math.sqrt(x * x + y * y);
+    var dz = (x * (-80) + y * 60) / z;
+    var bx = 40 + x * 1.3, ay = 150 - y * 1.1;
+    var A = document.getElementById('car-a'), B = document.getElementById('car-b'), L = document.getElementById('car-z');
+    A.setAttribute('cy', ay); B.setAttribute('cx', bx);
+    L.setAttribute('x2', bx); L.setAttribute('y2', 150); L.setAttribute('x1', 40); L.setAttribute('y1', ay);
+    document.getElementById('car-alabel').setAttribute('y', Math.max(16, ay - 10));
+    document.getElementById('car-blabel').setAttribute('x', bx);
+    var state, color;
+    if (dz < -0.5) { state = 'closing in'; color = '#21442B'; }
+    else if (dz > 0.5) { state = 'pulling apart'; color = '#BC6C26'; }
+    else { state = 'closest approach!'; color = '#C62828'; }
+    document.getElementById('car-readout').innerHTML =
+        '<span class="sl-val">' + carTime(t) + '</span> &nbsp;&middot;&nbsp; x = ' + x.toFixed(0) + ' mi, y = ' + y.toFixed(0) + ' mi, z = ' + z.toFixed(1) + ' mi &nbsp;&middot;&nbsp; dz/dt = (x&middot;x&prime; + y&middot;y&prime;)/z = <span style="color:' + color + '; font-weight:700;">' + dz.toFixed(1) + ' mph (' + state + ')</span><br>At 1:00 PM the triangle is 80-60-100 and dz/dt = &minus;28 mph (Worked Example 3). The sign flips at t = 1.28 hr (about 1:17 PM): that instant of dz/dt = 0 is the closest the cars ever get.';
+}
+
+/* ───────── SETUP DRILL ───────── */
+var DRILL = [
+ { q: 'Translate into calculus, with the correct sign: "Water drains from a tank so that the depth is falling at 3 in/min."',
+   model: '$\\frac{dh}{dt}=-3$ in/min. The units in/min are length per time, so this is the depth rate, and "falling" makes it negative.',
+   grader: ['The variable is chosen from the units (length rate, not volume rate)', 'The sign is negative and tied to the word "falling"', 'Units are written with the rate'] },
+ { q: 'Translate, with the correct sign: "Sand pours onto a pile at 10 ft&sup3;/min, and the pile always keeps the shape of a cone."',
+   model: '$\\frac{dV}{dt}=+10$ ft&sup3;/min. Cubic units mean a volume rate; pouring on means increasing. The cone remark is a promise that a similar-triangles ratio will be available later.',
+   grader: ['Cubic units read as a volume rate', 'Positive sign, since material is being added', 'The shape clause recognized as the future r = ch constraint'] },
+ { q: 'A problem asks for a rate "when $r=6$ cm." What kind of number is the 6, and when does it enter your work?',
+   model: 'A snapshot value: it holds only at that one instant. It is substituted into the <em>differentiated</em> equation at the end, never into the original equation first.',
+   grader: ['Named as a snapshot (an instant), not a constant', 'Enters after the derivative exists', 'Reason given: substituting early freezes the variable and kills the rate'] },
+ { q: 'A conical tank, vertex down, is 20 ft deep with a top radius of 5 ft. Write the constraint between the water&rsquo;s radius and depth.',
+   model: 'Similar triangles: $\\frac{r}{h}=\\frac{5}{20}=\\frac{1}{4}$, so $r=\\frac{h}{4}$ at every depth.',
+   grader: ['Ratio set up as r/h = R/H', 'Reduced to a constant (1/4)', 'Solved for the variable to be eliminated'] },
+ { q: 'Why substitute $r=\\frac{h}{4}$ into $V=\\frac{1}{3}\\pi r^2h$ before differentiating, instead of product-ruling right away?',
+   model: 'Product-ruling first creates a $\\frac{dr}{dt}$ the problem never gave. Substituting first leaves one variable, $V=\\frac{\\pi h^3}{48}$, and one clean chain rule. (The product-rule route still works if you also differentiate the constraint to get $\\frac{dr}{dt}=\\frac{1}{4}\\frac{dh}{dt}$; it is just longer.)',
+   grader: ['Identifies the unknown dr/dt as the problem with product-ruling first', 'Shows the one-variable form of V', 'Knows the alternative route exists and gives the same answer'] },
+ { q: 'A box has a fixed height of 12 cm while its length and width change. Write the volume ready to differentiate, then differentiate it.',
+   model: '$V=12\\,\\ell w$, so $\\frac{dV}{dt}=12\\left[\\frac{d\\ell}{dt}w+\\ell\\frac{dw}{dt}\\right]$. The frozen dimension becomes a plain number before the product rule.',
+   grader: ['Constant height baked in as the number 12', 'Product rule applied to the two changing dimensions', 'The 12 kept outside, multiplying the whole bracket'] },
+ { q: 'In $\\frac{dV}{dt}=12\\left[\\ell&prime;w+\\ell w&prime;\\right]$ the bracket works out to $-5$. A classmate computes $12\\,\\ell&prime;w+\\ell w&prime;$ instead and gets a different number. What went wrong?',
+   model: 'The constant was distributed to only the first term. A constant times a product differentiates to the constant times the <em>entire</em> product rule: $\\frac{dV}{dt}=12(-5)=-60$.',
+   grader: ['Error named: constant applied to one term only', 'Correct rule stated: constant multiplies the whole bracket', 'Corrected value computed (here, -60)'] },
+ { q: 'Two cars: $x$ is car B&rsquo;s distance from the intersection, and B drives toward the intersection at 45 mph. State $\\frac{dx}{dt}$ and the general equation for $\\frac{dz}{dt}$.',
+   model: '$\\frac{dx}{dt}=-45$ mph, because the distance to the corner is shrinking. From $x^2+y^2=z^2$: $z\\,z&prime;=x\\,x&prime;+y\\,y&prime;$, so $\\frac{dz}{dt}=\\frac{x\\,x&prime;+y\\,y&prime;}{z}$.',
+   grader: ['"Toward" converted to a negative rate', 'Pythagorean relation differentiated correctly', 'Solved for dz/dt with z downstairs'] },
+ { q: 'At noon a runner is at the corner heading north at 6 mi/hr; a cyclist is 16 mi east of the corner, riding toward it at 8 mi/hr. Set up (do not fully solve) the 1 PM picture.',
+   model: 'Advance everyone one hour first: $y=6(1)=6$, $x=16-8(1)=8$, so $z=10$ (a 6-8-10 triangle). Rates: $y&prime;=+6$, $x&prime;=-8$. Then $\\frac{dz}{dt}=\\frac{x\\,x&prime;+y\\,y&prime;}{z}=\\frac{(8)(-8)+(6)(6)}{10}=-2.8$ mi/hr if you finish it.',
+   grader: ['Positions advanced by rate times time before anything else', 'The 6-8-10 triple spotted without a square root', 'Signs: +6 away, -8 toward'] },
+ { q: 'A sphere&rsquo;s volume rate and surface-area rate are both given, but no radius. What is the fastest route to $r$?',
+   model: 'Differentiate both formulas: $V&prime;=4\\pi r^2 r&prime;$ and $A&prime;=8\\pi r\\,r&prime;$. Divide them: $\\frac{V&prime;}{A&prime;}=\\frac{r}{2}$, so $r=\\frac{2V&prime;}{A&prime;}$. The unknown $r&prime;$ cancels, exactly like the cube&rsquo;s $s=4\\cdot\\frac{dV/dt}{dA/dt}$.',
+   grader: ['Both formulas differentiated with the shared unknown rate', 'Equations divided so the rate cancels', 'Result solved for the dimension'] },
+ { q: 'Water fills a vertex-down cone at a constant rate. In one sentence each: what is $\\frac{dh}{dt}$ doing, and how would you justify it?',
+   model: 'It is positive but decreasing, nonlinearly: $\\frac{dh}{dt}=\\frac{k}{\\pi c^2h^2}$, and as $h$ grows the $h^2$ downstairs grows. Justify with that formula, or by showing the second derivative is negative (and itself non-constant), or with the intuition that a cup of water barely moves a nearly full, wide tank.',
+   grader: ['Direction: positive, water rises', 'Behavior: decreasing, with the h-squared denominator named', 'A justification offered: formula, second derivative, or the pouring intuition'] },
+ { q: 'Your computation gives $\\frac{dV}{dt}=-6\\pi$ ft&sup3;/hr for a draining tank. Write the final sentence a grader wants to see.',
+   model: '"The volume is decreasing: water is leaving the tank at $6\\pi$ ft&sup3;/hr." The sign is interpreted, the magnitude is reported as the leaving rate, and the units are attached.',
+   grader: ['Negative sign read as "decreasing"', 'Leaving rate reported as the magnitude', 'Units stated in the sentence'] }
+];
+var DR_KEY = 'lcc-related-rates-drill-marks';
+var drMarks = {};
+function drLoad() { try { var v = localStorage.getItem(DR_KEY); if (v) drMarks = JSON.parse(v) || {}; } catch (e) {} }
+function drSave() { try { localStorage.setItem(DR_KEY, JSON.stringify(drMarks)); } catch (e) {} }
+function drInit() {
+    drLoad();
+    var wrap = document.getElementById('drill-list'); var html = '';
+    DRILL.forEach(function(d, i) {
+        html += '<div class="dr-item" id="dr-' + i + '">';
+        html += '<div class="dr-q"><span class="dr-num">' + (i + 1) + '</span>' + d.q + '</div>';
+        html += '<textarea placeholder="Type your setup here (or just say it out loud), then reveal the model answer."></textarea>';
+        html += '<button class="solution-toggle" onclick="drReveal(this)"><span class="arrow">&#9654;</span> Reveal model answer</button>';
+        html += '<div class="dr-model"><div class="highlight-box" style="margin-top:0;"><p style="margin-bottom:0;">' + d.model + '</p></div>';
+        html += '<div class="dr-grader"><strong>What a grader looks for:</strong><ul>' + d.grader.map(function(g){ return '<li>' + g + '</li>'; }).join('') + '</ul></div>';
+        html += '<div class="dr-mark"><button class="btn-small" onclick="drMark(' + i + ',true,this)">&#10003; I had it</button><button class="btn-small" style="background:#C0392B;" onclick="drMark(' + i + ',false,this)">&#10007; Missed it</button><span class="dr-badge got" id="dr-badge-got-' + i + '">HAD IT</span><span class="dr-badge miss" id="dr-badge-miss-' + i + '">MISSED: review this one</span></div>';
+        html += '</div></div>';
+    });
+    wrap.innerHTML = html;
+    DRILL.forEach(function(_, i) { if (drMarks[i] === 1) drShowBadge(i, true); if (drMarks[i] === 0) drShowBadge(i, false); });
+    drScore();
+}
+function drReveal(btn) { var body = btn.nextElementSibling; body.classList.toggle('open'); btn.classList.toggle('open'); if (body.classList.contains('open') && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([body]); }, 50); }
+function drShowBadge(i, ok) {
+    document.getElementById('dr-badge-got-' + i).classList.toggle('show', ok);
+    document.getElementById('dr-badge-miss-' + i).classList.toggle('show', !ok);
+    document.getElementById('dr-' + i).style.borderLeftColor = ok ? '#39864E' : '#E57373';
+}
+function drMark(i, ok, btn) { drMarks[i] = ok ? 1 : 0; drSave(); drShowBadge(i, ok); drScore(); }
+function drScore() {
+    var n = Object.keys(drMarks).length, missed = Object.keys(drMarks).filter(function(k){ return drMarks[k] === 0; }).length;
+    document.getElementById('dr-score').textContent = 'Marked: ' + n + ' / ' + DRILL.length + (missed ? ' (' + missed + ' to review)' : '');
+}
+function drReset() { drMarks = {}; drSave(); drInit(); }
+
+/* ───────── QUIZ DATA ───────── */
+/* opts[0] is ALWAYS the correct answer; options are shuffled on render. */
+var QUIZ = {
+qa: [
+ { q: "What is the correct order of the four-step related-rates process?",
+   opts: ["Gather givens, write one simple equation, differentiate, then plug in the snapshot values",
+          "Write one simple equation, plug in the snapshot values, differentiate, then gather givens",
+          "Plug in the snapshot values, gather the givens, differentiate, then write one equation",
+          "Differentiate the shape formula, gather givens, write one equation, then plug in values"],
+   exp: "Givens come first so you know what you have and what you want; the snapshot values enter only after the derivative exists. Every other ordering either differentiates before an equation exists or plugs in early, which freezes a variable and erases its rate.", ref: "Tab 1" },
+ { q: "A problem says a tank drains so that \"the depth is falling at 3 in/min.\" Which given is that?",
+   opts: ["$\\frac{dh}{dt}=-3$ in/min, a depth rate, negative because it is falling",
+          "$\\frac{dh}{dt}=+3$ in/min, a depth rate, positive because 3 is positive",
+          "$\\frac{dV}{dt}=-3$ in/min, a volume rate, negative because it is draining",
+          "$h=3$ in, a snapshot of the depth at the instant we care about in time"],
+   exp: "The units in/min are length per time, so this is the depth rate dh/dt, and \"falling\" supplies the negative sign. The +3 version drops the sign; the dV/dt version would need cubic units like in&sup3;/min; and h = 3 confuses a rate with a snapshot value.", ref: "Tab 1" },
+ { q: "In a vertex-down conical tank, why is it legal to replace $r$ with $ch$ before differentiating?",
+   opts: ["The water cone stays similar to the tank, so $r/h$ equals the same constant at every depth",
+          "The radius of the water surface never actually changes while the tank drains or fills up",
+          "The problem always provides a value for $dr/dt$, so $r$ can be safely removed from $V$",
+          "Volume depends only on height for every solid shape, so $r$ never belongs in $V$ anyway"],
+   exp: "Similar triangles pin r/h to R/H, a constant, at every depth, so r = ch is an identity, not an approximation. The radius does change (that distractor is false); dr/dt is usually NOT given, which is exactly why we eliminate r; and volume generally depends on more than height.", ref: "Tab 2" },
+ { q: "What goes wrong if you substitute the snapshot value $h=8$ into $V=\\frac{\\pi h^3}{12}$ before differentiating?",
+   opts: ["$h$ becomes a constant, so its derivative is 0 and the rate you need disappears entirely",
+          "The equation becomes nonlinear, so the chain rule can no longer be applied correctly to it",
+          "The units of $V$ silently change from cubic feet to square feet, scaling the final answer",
+          "Nothing goes wrong mathematically, but the arithmetic takes several extra steps to finish"],
+   exp: "Plugging in early turns V into the fixed number 128&pi;/3, whose derivative is 0; the motion is gone. The equation was already nonlinear and the chain rule handles that fine; units do not change; and it is not harmless, it destroys the problem.", ref: "Tab 1" },
+ { q: "A box's height is constant at 10 in while its length and width change. The cleanest setup is:",
+   opts: ["Write $V=10\\,\\ell w$, product-rule the $\\ell w$, and keep the 10 multiplying the whole bracket",
+          "Write $V=\\ell wh$ and expand a full three-factor product rule with a nonzero $dh/dt$ term",
+          "Write $V=10\\,\\ell w$, then apply the 10 only to the first term that the product rule makes",
+          "Write $A=2(\\ell w+\\ell h+wh)$, since surface area is the quantity box problems measure"],
+   exp: "A frozen dimension is a true constant: bake it in and product-rule the two changing variables, with the constant scaling the entire bracket. The three-factor version wastes work since dh/dt = 0; applying the 10 to one term is the classic arithmetic trap; and the question concerns volume, not surface area.", ref: "Tab 2" },
+ { q: "For two cars on perpendicular roads, the $x$ and $y$ in $x^2+y^2=z^2$ stand for:",
+   opts: ["Each car's distance from the intersection at the particular instant in question",
+          "Each car's total distance traveled since the starting time given in the problem",
+          "The two cars' speeds, which the problem supplies in units of miles per hour each",
+          "The map coordinates of the intersection measured from where each car started out"],
+   exp: "The legs of the right triangle are the cars' current distances from the corner, which is why you advance each car to the asked time before plugging anything in. Distance traveled is different from distance remaining; speeds are the derivatives x&prime; and y&prime;, not the legs; and the intersection is the vertex, not a leg.", ref: "Tab 3" },
+ { q: "A car is driving toward the intersection at 60 mph. In the distance setup, $dx/dt$ equals:",
+   opts: ["$-60$ mph, because the car's distance from the intersection is shrinking",
+          "$+60$ mph, because a speed is always recorded as a positive quantity",
+          "$0$ mph, because the intersection itself is not moving anywhere at all",
+          "$-60$ mph, but only after the car has already passed the intersection"],
+   exp: "x measures distance to the corner, and that distance is decreasing, so its rate is negative the whole approach. Speeds are positive, but rates of change carry direction; the intersection being fixed is irrelevant to x&prime;; and the sign is negative before passing, during the approach.", ref: "Tab 3" },
+ { q: "A problem gives $dV/dt$ and $dA/dt$ for a cube but no snapshot moment and no dimensions. You are most likely solving for:",
+   opts: ["The edge length, by dividing the two differentiated equations so $ds/dt$ cancels out",
+          "The rate $ds/dt$, by adding the two differentiated equations together term by term",
+          "The cube's volume at that instant, by multiplying the two given rates by each other",
+          "Nothing: two equations with two unknowns in them is a system that cannot be solved"],
+   exp: "Two rates and no snapshot means the dimension itself is the unknown: differentiate V = s&sup3; and A = 6s&sup2;, then divide so the shared ds/dt cancels, leaving s/4. Adding the equations cancels nothing; multiplying rates has no meaning here; and two equations with two unknowns is exactly solvable.", ref: "Tab 3" },
+ { q: "Water pours into a vertex-down cone at a constant rate. The depth's rate of change $dh/dt$ is:",
+   opts: ["Positive, but decreasing nonlinearly as the water level climbs toward the wide top",
+          "Positive and constant throughout, since the inflow rate itself never changes at all",
+          "Positive and growing over time, since more total water keeps arriving in the tank",
+          "Negative and nonlinear, because the cone keeps widening toward its very top edge"],
+   exp: "dh/dt = k/(&pi;c&sup2;h&sup2;): positive (water rises) with h&sup2; downstairs, so it shrinks as the level climbs, and not along a line. Constant dh/dt belongs to the cylinder; \"growing\" reverses the behavior; and the level never falls while water pours in, so the rate is not negative.", ref: "Tab 3" },
+ { q: "Which final answer earns full credit for a draining-tank question asking how fast water leaves?",
+   opts: ["\"$dV/dt=-2\\pi$ ft&sup3;/hr; the negative means $V$ is decreasing, so water leaves at $2\\pi$ ft&sup3;/hr\"",
+          "\"$dV/dt=-2\\pi$,\" with the sign's meaning and the units left for the grader to infer from context",
+          "\"Water is leaving at $2\\pi$,\" since the units are obvious from the wording of the question itself",
+          "\"$dV/dt=+2\\pi$ ft&sup3;/hr,\" because a rate of leaving ought to be reported as a positive derivative"],
+   exp: "Full credit states the computed rate, interprets the sign, and attaches units. Bare numbers without units or interpretation drop the answer point; and writing dV/dt as +2&pi; is wrong because the volume is decreasing, even though the leaving rate (a magnitude) is 2&pi;.", ref: "Tab 1" }
+],
+qb: [
+ { q: "A conical tank, vertex down, is 12 ft deep with a top radius of 3 ft. Water drains so the surface falls at 1 ft/hr. When the water is 4 ft deep, at what rate is water leaving the tank?",
+   opts: ["$\\pi$ ft&sup3;/hr", "$9\\pi$ ft&sup3;/hr", "$4\\pi$ ft&sup3;/hr", "$16\\pi$ ft&sup3;/hr"],
+   exp: "c = 3/12 = 1/4, so V = &pi;h&sup3;/48 and dV/dt = (&pi;h&sup2;/16)h&prime; = (16&pi;/16)(&minus;1) = &minus;&pi;: leaving at &pi; ft&sup3;/hr. The traps: 9&pi; plugs in the tank's full depth 12; 4&pi; assumes the ratio is 1/2 instead of 1/4; 16&pi; forgets the c&sup2; factor and uses &pi;h&sup2;h&prime;.", ref: "Ex. 1" },
+ { q: "A box has a constant height of 8 in. Its length grows at 2 in/sec and its width shrinks at 6 in/sec. When $\\ell=9$ and $w=2$, the volume is changing at:",
+   opts: ["$-400$ in&sup3;/sec", "$+400$ in&sup3;/sec", "$-50$ in&sup3;/sec", "$-22$ in&sup3;/sec"],
+   exp: "dV/dt = 8[(2)(2) + (9)(&minus;6)] = 8[4 &minus; 54] = 8(&minus;50) = &minus;400. The traps: +400 drops the sign on the shrinking width; &minus;50 is the bare bracket with the 8 forgotten; &minus;22 distributes the 8 to only the first term (16 &minus; 54 wrongly becomes 32 &minus; 54).", ref: "Ex. 2" },
+ { q: "Car A heads north at 30 mph and reaches the intersection at noon, when car B is 80 mi east of it, driving toward it at 40 mph. At 1 PM the distance between the cars is changing at:",
+   opts: ["$-14$ mph", "$+14$ mph", "$-50$ mph", "$+50$ mph"],
+   exp: "At 1 PM: y = 30, x = 80 &minus; 40 = 40, z = 50 (a 30-40-50 triangle). dz/dt = [(40)(&minus;40) + (30)(30)]/50 = (&minus;1600 + 900)/50 = &minus;14: closing at 14 mph. The traps: +14 forgets that the cars are approaching; &minus;50 makes y&prime; negative too, (&minus;1600 &minus; 900)/50; +50 is just the hypotenuse z mistaken for a rate.", ref: "Ex. 3" },
+ { q: "A cube's volume is increasing at 54 in&sup3;/min while its surface area increases at 18 in&sup2;/min. The edge of the cube is:",
+   opts: ["$12$ in", "$3$ in", "$6$ in", "$24$ in"],
+   exp: "Divide the differentiated equations: 54/18 = 3s&sup2;s&prime;/(12s s&prime;) = s/4, so s = 12. Check: ds/dt = 18/(12&middot;12) = 1/8 and 3(144)(1/8) = 54. The traps: 3 stops at the ratio 54/18 and forgets the s/4; 6 halves the right answer; 24 doubles it (dividing by 2 instead of 4 somewhere).", ref: "Ex. 4" },
+ { q: "A 25-ft ladder leans on a wall; the base, 7 ft from the wall, slides away at 3 ft/sec. The top of the ladder is:",
+   opts: ["Falling at $\\frac{7}{8}$ ft/sec", "Falling at $\\frac{8}{7}$ ft/sec", "Falling at $3$ ft/sec", "Rising at $\\frac{7}{8}$ ft/sec"],
+   exp: "7-24-25 triple: y = 24. From x&sup2; + y&sup2; = 25&sup2;: y&prime; = &minus;x x&prime;/y = &minus;(7)(3)/24 = &minus;7/8. The traps: 8/7 inverts the fraction; 3 ft/sec assumes the top matches the base's speed, which the geometry forbids; \"rising\" reverses the direction, impossible while the base slides out.", ref: "Ex. 5" },
+ { q: "A spherical balloon leaks air at $36\\pi$ cm&sup3;/min. When the radius is 3 cm, the radius is changing at:",
+   opts: ["$-1$ cm/min", "$-3$ cm/min", "$-\\frac{1}{3}$ cm/min", "$-4$ cm/min"],
+   exp: "dV/dt = 4&pi;r&sup2; dr/dt, so &minus;36&pi; = 4&pi;(9) dr/dt and dr/dt = &minus;1. The traps: &minus;3 uses 4&pi;r instead of 4&pi;r&sup2; (&minus;36&pi;/(12&pi;)); &minus;1/3 divides by 3 too many times; &minus;4 divides by 9&pi; and forgets the 4.", ref: "Tab 2" },
+ { q: "A stone dropped in a pond makes a circular ripple whose radius grows at 2 ft/sec. When the radius is 15 ft, the enclosed area is growing at:",
+   opts: ["$60\\pi$ ft&sup2;/sec", "$30\\pi$ ft&sup2;/sec", "$225\\pi$ ft&sup2;/sec", "$4\\pi$ ft&sup2;/sec"],
+   exp: "dA/dt = 2&pi;r dr/dt = 2&pi;(15)(2) = 60&pi;. The traps: 30&pi; forgets the chain-rule 2 (using &pi;r r&prime;); 225&pi; is just the area &pi;r&sup2; at that instant, not a rate; 4&pi; squares the rate instead of using the radius, &pi;(r&prime;)&sup2;.", ref: "Tab 2" },
+ { q: "A cylindrical tank of radius 5 ft is filled at $50\\pi$ ft&sup3;/min. The water level rises at:",
+   opts: ["$2$ ft/min, a constant rate", "$10$ ft/min, a constant rate", "$2\\pi$ ft/min, a constant rate", "$2$ ft/min, but slowing as it fills"],
+   exp: "V = &pi;r&sup2;h with r frozen: dV/dt = 25&pi; dh/dt, so dh/dt = 50&pi;/25&pi; = 2, and it stays 2 because a cylinder's cross-section never changes. The traps: 10 divides by 5&pi; (radius not squared); 2&pi; forgets to cancel the &pi;; \"slowing as it fills\" describes a cone, not a cylinder.", ref: "Tab 3" },
+ { q: "To find how fast a cone's volume changes, a student writes $V=\\frac{\\pi h^3}{12}$, substitutes $h=8$ to get $V=\\frac{128\\pi}{3}$, differentiates, and reports $dV/dt=0$. The error is:",
+   opts: ["The snapshot was plugged in before differentiating, freezing $h$ into a constant",
+          "The wrong cone formula was used, since volume should be one third of $\\pi r^2 h$",
+          "The negative sign on $dh/dt$ was dropped when the problem said the level falls",
+          "The tank's full depth was confused with the water's depth at the instant asked"],
+   exp: "Substituting h = 8 first makes V a number, and numbers have derivative zero: the motion was erased. The formula &pi;h&sup3;/12 is correct for a tank with c = 1/2 (it already is one third of &pi;r&sup2;h after substitution); no sign was dropped and no depth was confused; those errors change the value, not make it 0.", ref: "Tab 1" },
+ { q: "Two tanks receive water at the same constant rate: one is a cylinder, one a vertex-down cone. Which statement is correct?",
+   opts: ["The cylinder's level rises at a constant rate, while the cone's rise keeps slowing down",
+          "Both levels must rise at a constant rate, because the inflow itself is held constant",
+          "The cone's level rises at a constant rate, while the cylinder's rise keeps slowing down",
+          "Both levels rise ever more slowly, because every container is widest near the very top"],
+   exp: "Cylinder: dh/dt = k/(&pi;r&sup2;), constant. Cone: dh/dt = k/(&pi;c&sup2;h&sup2;), shrinking as h grows. Constant inflow does not mean constant rise; the shape decides. Swapping the two reverses the geometry, and a cylinder is not wider at the top, so neither \"both\" option survives.", ref: "Ex. 6" }
+]
+};
+
+var quizState = {};
+function buildQuiz(id) {
+    var data = QUIZ[id]; var wrap = document.getElementById('quiz-' + id); wrap.innerHTML = '';
+    quizState[id] = { score: 0, answered: 0 };
+    document.getElementById('score-' + id).textContent = 'Score: 0 / ' + data.length;
+    data.forEach(function(item, qi) {
+        var opts = item.opts.map(function(o, i){ return { t: o, correct: i === 0 }; });
+        shuffle(opts);
+        var card = document.createElement('div'); card.className = 'q-card';
+        var html = '<div class="q-head"><div class="q-num">' + (qi+1) + '</div><div style="flex:1;"><div class="q-text">' + item.q + '</div>';
+        opts.forEach(function(o, oi) {
+            html += '<button class="opt" data-correct="' + (o.correct?1:0) + '" onclick="answer(this,\'' + id + '\')"><span class="ltr">' + String.fromCharCode(65+oi) + '</span>' + o.t + '</button>';
+        });
+        html += '<div class="q-exp"><div class="verdict"></div>' + item.exp + ' <span class="slide-ref">' + item.ref + '</span></div></div></div>';
+        card.innerHTML = html; wrap.appendChild(card);
+    });
+    setTimeout(function(){ if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 80);
+}
+function answer(btn, id) {
+    if (btn.classList.contains('locked')) return;
+    var box = btn.parentElement; var opts = box.querySelectorAll('.opt'); var correct = btn.getAttribute('data-correct') === '1';
+    opts.forEach(function(o){ o.classList.add('locked'); if (o.getAttribute('data-correct') === '1') o.classList.add('correct'); else o.classList.add('dim'); });
+    if (!correct) btn.classList.add('wrong');
+    var exp = box.querySelector('.q-exp'); var v = exp.querySelector('.verdict');
+    v.textContent = correct ? 'Correct.' : 'Not quite.'; v.className = 'verdict ' + (correct ? 'ok' : 'no'); exp.classList.add('show');
+    var s = quizState[id]; s.answered++; if (correct) s.score++;
+    document.getElementById('score-' + id).textContent = 'Score: ' + s.score + ' / ' + QUIZ[id].length + (s.answered === QUIZ[id].length ? '  ·  done' : '');
+}
+
+/* ── Flashcards: decks, term list, custom deck, persisted missed set ── */
+var FC = [], fcDeck = [], fcIdx = 0, fcGot = 0, fcMiss = 0, fcRunMissed = [], fcFlipped = false, fcRound = 1;
+var fcFilter = 'all', fcOrder = 'inorder', fcSide = 'term', fcStatus = {}, fcMissedSet = {}, fcCustomSet = {}, fcDefFirst = false;
+var FC_TOPICS = ['pr','eq','tr','ex'];
+var FC_TOPIC = { pr: 'The process', eq: 'Equations & shapes', tr: 'Signs & traps', ex: 'Examples', all: 'All terms', missed: 'Missed cards', custom: 'My deck' };
+var FC_CKEY = 'lcc-related-rates-flashcards-custom';
+var FC_KEY = 'lcc-related-rates-flashcards-missed';
+function fcLoadMissed(){ try { var v = localStorage.getItem(FC_KEY); if (v) fcMissedSet = JSON.parse(v) || {}; var c = localStorage.getItem(FC_CKEY); if (c) fcCustomSet = JSON.parse(c) || {}; } catch(e){} }
+function fcSaveCustom(){ try { localStorage.setItem(FC_CKEY, JSON.stringify(fcCustomSet)); } catch(e){} }
+function fcSaveMissed(){ try { localStorage.setItem(FC_KEY, JSON.stringify(fcMissedSet)); } catch(e){} }
+function fcHaptic(){ try { if (navigator.vibrate) navigator.vibrate(12); } catch(e){} }
+function fcInit(){ var raw = document.getElementById('fc-data').textContent.trim();
+    FC = raw.split(/\n---\n/).map(function(s, i){ var p = s.split('|||'); return { id: i, t: p[0].trim(), f: p[1].trim(), b: p[2].trim() }; });
+    fcLoadMissed(); fcCounts(); fcRenderPick(); fcBuildDeck(); }
+function fcCounts(){ ['all'].concat(FC_TOPICS).forEach(function(k){ var n = k==='all' ? FC.length : FC.filter(function(c){ return c.t===k; }).length; var el=document.getElementById('fcn-'+k); if (el) el.textContent='('+n+')'; });
+    var el=document.getElementById('fcn-missed'); if (el) el.textContent='('+Object.keys(fcMissedSet).length+')';
+    var ec=document.getElementById('fcn-custom'); if (ec) ec.textContent='('+Object.keys(fcCustomSet).length+')';
+    var pc=document.getElementById('fc-pick-count'); if (pc) pc.textContent=Object.keys(fcCustomSet).length; }
+function fcSetFilter(f, btn){ fcFilter = f; document.querySelectorAll('.fc-chip[data-filter]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
+function fcSetOrder(o, btn){ fcOrder = o; document.querySelectorAll('.fc-chip[data-order]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
+function fcBuildDeck(){ var ids = FC.filter(function(c){ return fcFilter==='all' || (fcFilter==='missed' ? !!fcMissedSet[c.id] : fcFilter==='custom' ? !!fcCustomSet[c.id] : c.t===fcFilter); }).map(function(c){ return c.id; });
+    if (fcOrder !== 'inorder'){ for (var i = ids.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; } }
+    if (fcOrder === 'quick') ids = ids.slice(0, 10);
+    fcDeck = ids; fcIdx = 0; fcGot = 0; fcMiss = 0; fcRunMissed = []; fcStatus = {}; fcRound = 1;
+    document.getElementById('fc-done').style.display='none';
+    var nm = FC_TOPIC[fcFilter] + (fcOrder==='quick' ? ' · quick test' : fcOrder==='shuffle' ? ' · shuffled' : '');
+    document.getElementById('fc-deckname').textContent = nm;
+    fcRenderList(); fcRender(); }
+function fcRestart(){ fcBuildDeck(); }
+function fcClearMissed(){ fcMissedSet = {}; fcSaveMissed(); fcCounts(); if (fcFilter==='missed') fcBuildDeck(); else fcRenderList(); }
+function fcRenderList(){ var box = document.getElementById('fc-list'); if (!box) return; var html = '';
+    if (!fcDeck.length){ box.innerHTML = '<p style="margin:0; color:var(--text-medium); font-size:13.5px;">Nothing in this deck yet' + (fcFilter==='missed' ? ': cards you mark &#10007; Missed land here.' : fcFilter==='custom' ? ': use <strong>Pick cards&hellip;</strong> above to choose some.' : '.') + '</p>'; return; }
+    fcDeck.forEach(function(id, k){ var c = FC[id]; var st = fcStatus[id] || (fcMissedSet[id] ? 'miss' : '');
+        html += '<button class="fc-term ' + st + (k===fcIdx ? ' current' : '') + '" onclick="fcJump(' + k + ')"><span class="fc-term-n">' + (k+1) + '</span>' + c.f + '</button>'; });
+    box.innerHTML = html; if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
+function fcJump(k){ fcIdx = k; document.getElementById('fc-done').style.display='none'; fcHaptic(); fcRender(); }
+function fcRender(){ var card = document.getElementById('fc-card'); fcFlipped = false; card.classList.remove('flipped');
+    document.getElementById('fc-got').textContent = fcGot; document.getElementById('fc-miss').textContent = fcMiss;
+    document.querySelectorAll('#fc-list .fc-term').forEach(function(b, k){ b.classList.toggle('current', k===fcIdx); });
+    if (!fcDeck.length){ document.getElementById('fc-count').textContent = 'Empty deck'; document.getElementById('fc-front').innerHTML = 'Pick another deck above.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent=''; return; }
+    if (fcIdx >= fcDeck.length){ fcFinish(); return; }
+    var c = FC[fcDeck[fcIdx]];
+    fcDefFirst = (fcSide === 'def') || (fcSide === 'random' && Math.random() < 0.5);
+    document.getElementById('fc-count').textContent = (fcRound > 1 ? 'Review round · ' : '') + 'Card ' + (fcIdx+1) + ' / ' + fcDeck.length;
+    document.getElementById('fc-label').textContent = fcDefFirst ? 'DEFINITION: name the term' : 'TERM';
+    document.getElementById('fc-front').innerHTML = fcDefFirst ? c.b : c.f; document.getElementById('fc-back').innerHTML = fcDefFirst ? c.f : c.b;
+    document.getElementById('fc-hint').textContent = 'click to flip';
+    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([card]); }, 30); }
+function fcFlip(){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; var card = document.getElementById('fc-card'); fcFlipped = !fcFlipped; card.classList.toggle('flipped', fcFlipped); fcHaptic();
+    document.getElementById('fc-label').textContent = fcFlipped ? (fcDefFirst ? 'TERM' : 'ANSWER') : (fcDefFirst ? 'DEFINITION: name the term' : 'TERM'); document.getElementById('fc-hint').textContent = fcFlipped ? 'mark yourself below' : 'click to flip'; }
+function fcMark(ok){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; if (!fcFlipped){ fcFlip(); return; }
+    var id = fcDeck[fcIdx];
+    if (ok){ fcGot++; fcStatus[id] = 'got'; delete fcMissedSet[id]; }
+    else { fcMiss++; fcStatus[id] = 'miss'; fcMissedSet[id] = 1; fcRunMissed.push(id); }
+    fcSaveMissed(); fcCounts(); fcHaptic();
+    var b = document.querySelectorAll('#fc-list .fc-term')[fcIdx]; if (b){ b.classList.remove('got','miss'); b.classList.add(ok ? 'got' : 'miss'); }
+    fcIdx++; fcRender(); }
+function fcSkip(){ if (!fcDeck.length) return; fcIdx = (fcIdx + 1) % fcDeck.length; fcHaptic(); fcRender(); }
+function fcFinish(){ var d = document.getElementById('fc-done'); d.style.display='block';
+    document.getElementById('fc-count').textContent = 'Deck complete';
+    document.getElementById('fc-front').innerHTML = 'Round done: ' + fcGot + ' got, ' + fcMiss + ' missed.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent='';
+    if (fcRunMissed.length){ d.innerHTML = '<p style="margin-bottom:8px;"><strong>' + fcRunMissed.length + ' missed this round.</strong> They are saved in the Missed deck; review them now or come back later.</p><button class="btn-small" onclick="fcReview()">Review ' + fcRunMissed.length + ' missed now</button>';
+    } else { d.innerHTML = '<p style="margin:0;"><strong>Clean sweep.</strong> Try the shuffled or quick-test order next time.</p>'; } }
+function fcReview(){ fcDeck = fcRunMissed.slice(); fcRunMissed = []; fcIdx = 0; fcRound++; fcStatus = {}; document.getElementById('fc-done').style.display='none'; fcRenderList(); fcRender(); }
+function fcSetSide(s, btn){ fcSide = s; document.querySelectorAll('.fc-chip[data-side]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcRender(); }
+/* custom deck picker */
+function fcTogglePick(){ var p = document.getElementById('fc-pick-panel'), b = document.getElementById('fc-pick-btn'); var open = p.style.display === 'none'; p.style.display = open ? 'block' : 'none'; b.classList.toggle('on', open); fcHaptic(); if (open && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([p]); }, 30); }
+function fcRenderPick(){ var box = document.getElementById('fc-pick-groups'); if (!box) return; var html = '';
+    FC_TOPICS.forEach(function(t){ html += '<div class="fc-pick-group"><div class="fc-pick-head">' + FC_TOPIC[t] + ' <button onclick="fcPickTopic(\'' + t + '\',true)">select all</button><button onclick="fcPickTopic(\'' + t + '\',false)">none</button></div><div class="fc-pick-grid">';
+        FC.filter(function(c){ return c.t===t; }).forEach(function(c){ var on = !!fcCustomSet[c.id]; html += '<label class="fc-pick' + (on ? ' on' : '') + '"><input type="checkbox" ' + (on ? 'checked' : '') + ' onchange="fcPickOne(' + c.id + ', this.checked)"><span>' + c.f + '</span></label>'; });
+        html += '</div></div>'; });
+    box.innerHTML = html; fcCounts(); if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
+function fcPickOne(id, on){ if (on) fcCustomSet[id] = 1; else delete fcCustomSet[id]; fcSaveCustom(); fcHaptic();
+    var inp = document.querySelector('#fc-pick-groups input[onchange*="fcPickOne(' + id + ',"]'); if (inp) inp.parentElement.classList.toggle('on', on);
+    fcCounts(); if (fcFilter==='custom') fcBuildDeck(); }
+function fcPickTopic(t, on){ FC.filter(function(c){ return c.t===t; }).forEach(function(c){ if (on) fcCustomSet[c.id] = 1; else delete fcCustomSet[c.id]; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
+function fcPickAll(on){ fcCustomSet = {}; if (on) FC.forEach(function(c){ fcCustomSet[c.id] = 1; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
+function fcStudyCustom(){ var btn = document.querySelector('.fc-chip[data-filter="custom"]'); fcSetFilter('custom', btn); document.getElementById('fc-pick-panel').style.display='none'; document.getElementById('fc-pick-btn').classList.remove('on'); }
+/* Anki export: tab-separated text with Anki file headers; $..$ math -> \( .. \) which Anki's MathJax renders */
+var FC_ANKI_DECK = 'AP Calculus::Related Rates';
+function fcAnkiField(s){
+    s = String(s).replace(/\$\$([\s\S]+?)\$\$/g, function(_, m){ return '\\[' + m + '\\]'; });
+    s = s.replace(/\$([^$]+?)\$/g, function(_, m){ return '\\(' + m + '\\)'; });
+    return s.replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim();
+}
+function fcExportAnki(scope){
+    var ids = scope === 'all' ? FC.map(function(c){ return c.id; }) : fcDeck.slice();
+    if (!ids.length){ alert('This deck is empty: pick a deck with cards in it first.'); return; }
+    var lines = ['#separator:tab', '#html:true', '#tags column:3', '#deck:' + FC_ANKI_DECK, '#notetype:Basic'];
+    ids.forEach(function(id){ var c = FC[id];
+        var tags = 'APCalc Related_Rates ' + (FC_TOPIC[c.t] || c.t).replace(/[^A-Za-z0-9]+/g, '_') + (fcMissedSet[id] ? ' missed' : '');
+        lines.push(fcAnkiField(c.f) + '\t' + fcAnkiField(c.b) + '\t' + tags); });
+    var label = scope === 'all' ? 'all' : (FC_TOPIC[fcFilter] || fcFilter).replace(/[^A-Za-z0-9]+/g, '_');
+    var blob = new Blob([lines.join('\n') + '\n'], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'related_rates_anki_' + label + '.txt';
+    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500); fcHaptic();
+}
+function fcToggleAnkiHelp(){ var h = document.getElementById('fc-anki-help'); h.style.display = h.style.display === 'none' ? 'block' : 'none'; }
+document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('tab-flash').classList.contains('active')) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (e.key === 'ArrowRight') fcSkip(); else if (e.key === ' ') { e.preventDefault(); fcFlip(); }
+    else if (e.key === 'g' || e.key === 'G') fcMark(true); else if (e.key === 'm' || e.key === 'M') fcMark(false);
+});
+
+/* ── Next / Back navigation at the bottom of every tab ── */
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+window.addEventListener('DOMContentLoaded', function() {
+    buildQuiz('qa'); buildQuiz('qb');
+    fcInit();
+    drInit();
+    stRender();
+    triUpdate();
+    carUpdate();
+    addTabNav();
+});
+</script>
+</body>
+</html>
