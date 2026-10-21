@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Math: Linear Equations</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC;
+    --copper: #BC6C26; --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1050px; margin: 0 auto; padding: 32px 20px 40px; }
+
+/* Stacked tab rows: Learn / Drill / Check */
+.tab-buttons { display: flex; flex-direction: column; gap: 7px; margin-bottom: 26px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; border-bottom: 2px solid #E8E0D0; }
+.tab-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.calc-btn { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 8px; border: 2px solid var(--green-dark); background: var(--green-dark); color: white; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.calc-btn:hover { background: var(--green-medium); border-color: var(--green-medium); transform: translateY(-1px); }
+.calc-btn span { font-size: 15px; line-height: 1; }
+.row-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #A8894F; width: 54px; flex-shrink: 0; }
+.tab-button { padding: 8px 15px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="drill"] { border-color: #21442B; }
+.tab-button[data-group="drill"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.card { background-color: white; border-radius: 8px; padding: 20px 22px; margin-bottom: 18px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.trap-box { background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 15px; margin: 12px 0; }
+.trap-box .trap-label, .sol-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #8B6914; margin-bottom: 5px; }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 8px; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 22px; color: var(--brown-dark); margin: 0; }
+.btn { border: none; border-radius: 6px; padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-gold { background: var(--gold); color: var(--brown-dark); }
+.btn-gold:hover { background: var(--gold-light); }
+.btn-green { background: var(--green-dark); color: white; }
+.btn-green:hover { background: var(--green-medium); }
+.btn-ghost { background: transparent; color: var(--text-medium); border: 2px solid var(--cream-dark); padding: 7px 12px; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--brown-dark); }
+.btn-sm { padding: 5px 11px; font-size: 12.5px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+.timer-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-medium); }
+.timer-display { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-dark); background: var(--gold-pale); border-radius: 6px; padding: 4px 10px; min-width: 64px; text-align: center; display: none; }
+.timer-display.on { display: inline-block; }
+.tog { position: relative; width: 40px; height: 22px; background: var(--cream-dark); border-radius: 11px; cursor: pointer; transition: background 0.2s; border: none; }
+.tog.on { background: var(--green-light); }
+.tog::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: left 0.2s; }
+.tog.on::after { left: 21px; }
+
+/* Reference page (spacious, print-like, brand-accented) */
+.ref-page { background: white; border-radius: 10px; border: 1px solid var(--cream-dark); border-top: 4px solid var(--gold); box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 44px 48px; font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 2.0; }
+.ref-page .ref-intro { margin-bottom: 18px; }
+.legend { display: flex; gap: 8px 22px; flex-wrap: wrap; align-items: center; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.5; background: var(--gold-pale); border-radius: 8px; padding: 10px 14px; margin-bottom: 22px; color: var(--brown-dark); }
+.legend .star { font-size: 15px; }
+.ref-rule, .ref-case { margin: 20px 0; padding: 16px 22px; border-left: 3px solid transparent; border-radius: 0 10px 10px 0; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.ref-rule:hover { background: rgba(57,134,78,0.05); border-left-color: var(--green-light); transform: translateX(3px); }
+.ref-case:hover { background: rgba(188,108,38,0.06); border-left-color: var(--copper); transform: translateX(3px); }
+.ref-rule-line { font-size: 19px; margin-bottom: 12px; }
+.rname { font-weight: 600; }
+.ref-rule .rname { color: var(--green-dark); }
+.ref-case .rname { color: var(--copper); }
+.rtag { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 9px; margin-right: 10px; vertical-align: 2px; white-space: nowrap; }
+.ref-rule .rtag { background: rgba(74,74,74,0.10); color: var(--text-medium); }
+.ref-rule.ess .rtag { background: var(--gold); color: var(--brown-dark); }
+.ref-case .rtag { background: rgba(188,108,38,0.13); color: var(--copper); }
+.star { color: var(--gold); }
+.ref-rule.ess .rtag .star { color: var(--brown-dark); margin-right: 3px; }
+.exlab { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; margin-right: 6px; }
+.ref-ex { margin: 13px 0 13px 48px; }
+.ref-note { margin: 13px 0 0 48px; font-style: italic; color: var(--text-medium); }
+.ref-divider { border: none; border-top: 2px solid var(--gold-light); margin: 38px 0 30px; }
+.ref-h { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+.ref-page .fig { margin: 6px 0 10px 48px; }
+@media (max-width: 768px) { .ref-page { padding: 22px 14px; } .ref-ex, .ref-note, .ref-page .fig { margin-left: 16px; } .ref-rule, .ref-case { padding: 12px 12px; } }
+
+/* Rule anatomy: lead line, formula rows, forms / cases tables */
+.ref-lead { margin: 0 0 8px; color: var(--text-medium); font-size: 17px; line-height: 1.7; }
+.fbox { margin: 6px 0 14px; border: 1.5px solid var(--gold-light); border-radius: 10px; background: #FFFCF6; overflow: hidden; }
+.frow { display: flex; align-items: center; gap: 18px; padding: 10px 18px; border-top: 1px solid #F1E6D2; line-height: 1.6; transition: background 0.15s; }
+.frow:first-child { border-top: none; }
+.frow:hover { background: rgba(221,162,94,0.13); }
+.flabel { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; width: 160px; flex-shrink: 0; line-height: 1.35; }
+.fmath { font-size: 19px; }
+.tbl-wrap { overflow-x: auto; margin: 6px 0 14px; }
+table.forms, table.cases { width: 100%; border-collapse: separate; border-spacing: 0; border: 1.5px solid var(--gold-light); border-radius: 10px; overflow: hidden; background: #FFFCF6; line-height: 1.55; }
+table.forms th, table.cases th { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; text-align: left; padding: 9px 14px; background: var(--gold-pale); border-bottom: 1.5px solid var(--gold-light); }
+table.forms td, table.cases td { padding: 11px 14px; border-top: 1px solid #F1E6D2; vertical-align: middle; font-size: 16px; }
+table.forms tr:first-child td, table.cases tr:first-child td { border-top: none; }
+table.forms tbody tr, table.cases tbody tr { transition: background 0.15s; }
+table.forms tbody tr:hover, table.cases tbody tr:hover { background: rgba(221,162,94,0.13); }
+table.forms td.fname, table.cases td.fname { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+table.forms td.fmath { font-size: 20px; white-space: nowrap; }
+table.forms td.freads { color: var(--text-dark); }
+table.forms td.fex { color: var(--text-medium); font-size: 15.5px; }
+@media (max-width: 768px) { .frow { flex-direction: column; align-items: flex-start; gap: 4px; } .flabel { width: auto; } table.forms td, table.cases td { font-size: 15px; padding: 9px 10px; } }
+
+/* Worked-example problem box */
+.wk-prob { background: #F3F8F4; border: 2px solid #BFD8C5; border-left: 6px solid var(--green-light); border-radius: 8px; padding: 12px 16px; margin: 14px 0 10px; }
+.wk-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 6px; }
+.wk-q { font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 1.8; }
+.diff-chip { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; border-radius: 99px; padding: 3px 10px; background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.35); }
+.diff-chip.dark { background: var(--gold-pale); color: #8B6914; border-color: var(--gold-light); }
+
+/* Stepper */
+.stepper { background: white; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border: 1px solid var(--cream-dark); overflow: hidden; }
+.step-head { background: var(--green-dark); color: white; padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.step-head .step-count { font-weight: 700; font-size: 14px; letter-spacing: 0.4px; }
+.step-dots { display: flex; gap: 7px; margin-left: auto; }
+.step-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; padding: 0; transition: all 0.2s; }
+.step-dot.current { background: var(--gold); transform: scale(1.25); }
+.step-dot.done { background: var(--green-light); }
+.step-body { padding: 26px 30px 22px; }
+.step-rule-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--copper); margin-bottom: 6px; }
+.step-rule-name .star { font-size: 13px; }
+.step-rule { font-family: "Times New Roman", Georgia, serif; font-size: 22px; margin-bottom: 4px; }
+.step-say { font-size: 15px; color: var(--text-dark); margin: 10px 0 14px; }
+.step-ex { background: var(--cream); border-radius: 8px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.step-ex .sol-label { color: var(--green-dark); }
+.micro { border: 2px solid var(--cream-dark); border-radius: 8px; padding: 13px 16px; margin-top: 14px; }
+.micro .micro-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 8px; }
+.micro-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.step-nav { display: flex; gap: 10px; padding: 0 30px 22px; align-items: center; }
+.drill { background: white; border-radius: 8px; border-left: 5px solid var(--green-medium); box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 15px 18px; margin-bottom: 12px; }
+.drill-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.drill-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.drill-row input[type="text"], .micro input[type="text"] { width: 90px; padding: 7px 10px; font-size: 16px; text-align: center; border: 2px solid #9a9a9a; border-radius: 5px; font-family: 'Inter', sans-serif; outline: none; }
+.drill-row input[type="text"]:focus, .micro input[type="text"]:focus { border-color: var(--green-dark); }
+.fb { font-size: 13.5px; font-weight: 600; display: none; }
+.fb.ok { display: inline; color: var(--green-light); }
+.fb.no { display: inline; color: #C0392B; }
+.fb-exp { font-size: 13.5px; color: var(--text-medium); margin-top: 8px; display: none; }
+.fb-exp.show { display: block; }
+.mc-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.mc-opt { border: 2px solid var(--cream-dark); background: white; border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: "Times New Roman", Georgia, serif; font-size: 17px; transition: all 0.15s; }
+.mc-opt:hover { border-color: var(--gold); }
+.mc-opt.right { border-color: var(--green-light); background: rgba(57,134,78,0.15); }
+.mc-opt.wrong { border-color: #C0392B; background: rgba(192,57,43,0.10); }
+.testbar { display: flex; align-items: center; gap: 10px; background: var(--green-dark); color: white; border-radius: 8px 8px 0 0; padding: 10px 18px; flex-wrap: wrap; }
+.testbar .tprog { font-weight: 700; font-size: 14px; }
+.test-stage { background: white; border: 1px solid var(--cream-dark); border-top: none; border-radius: 0 0 8px 8px; padding: 28px 32px 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); min-height: 340px; }
+.q-directions { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin-bottom: 16px; border-bottom: 1px solid var(--cream-dark); padding-bottom: 10px; }
+.q-stem { font-family: "Times New Roman", Georgia, serif; font-size: 19px; line-height: 1.85; margin-bottom: 16px; }
+.choices { margin-top: 14px; }
+.choice { display: flex; align-items: center; gap: 14px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.choice:hover { background: rgba(221,162,94,0.10); }
+.choice .letter { width: 30px; height: 30px; border: 2px solid #9a9a9a; border-radius: 50%; flex-shrink: 0; background: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13.5px; color: var(--text-medium); font-family: 'Inter', sans-serif; }
+.choice.selected .letter { background: var(--green-dark); border-color: var(--green-dark); color: white; }
+.choice .ctext { font-family: "Times New Roman", Georgia, serif; font-size: 18px; }
+.ne-entry { display: flex; align-items: center; gap: 12px; margin: 18px 0 6px; flex-wrap: wrap; }
+.ne-entry input { width: 120px; padding: 8px 10px; font-size: 17px; text-align: center; border: 2px solid #9a9a9a; border-radius: 4px; font-family: 'Inter', sans-serif; outline: none; }
+.ne-entry input:focus { border-color: var(--green-dark); }
+.test-nav { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.qmap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.qchip { width: 34px; height: 30px; border-radius: 6px; border: 2px solid var(--cream-dark); background: white; font-size: 12.5px; font-weight: 700; color: var(--text-medium); cursor: pointer; }
+.qchip.answered { background: rgba(57,134,78,0.15); border-color: rgba(57,134,78,0.5); color: var(--green-dark); }
+.qchip.current { border-color: var(--green-dark); box-shadow: 0 0 0 2px rgba(33,68,43,0.25); }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.stat-tile { background: white; border-radius: 10px; padding: 16px 18px; text-align: center; border: 2px solid var(--gold-light); }
+.stat-tile .stat-num { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--gold); }
+.stat-tile.green .stat-num { color: var(--green-light); }
+.stat-tile .stat-label { font-size: 12px; font-weight: 600; color: var(--text-medium); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 4px; }
+.res-entry { background: white; border-radius: 8px; border-left: 5px solid #E57373; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+.res-entry.correct { border-left-color: var(--green-light); }
+.res-head { display: flex; align-items: center; gap: 12px; padding: 13px 18px; cursor: pointer; }
+.res-head:hover { background: rgba(221,162,94,0.05); }
+.res-arrow { color: var(--gold); font-size: 13px; transition: transform 0.25s; margin-left: auto; }
+.res-entry.open .res-arrow { transform: rotate(90deg); }
+.res-body { display: none; padding: 0 20px 16px; border-top: 1px solid var(--cream-dark); }
+.res-entry.open .res-body { display: block; }
+.sol-block { background: var(--cream); border-radius: 8px; padding: 13px 15px; margin: 10px 0; font-size: 15px; }
+.sol-block .sol-label { color: var(--green-dark); }
+.reveal { display: none; margin-top: 8px; font-size: 14px; background: var(--cream); border-radius: 6px; padding: 10px 12px; }
+.reveal.show { display: block; }
+.rule-write { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--cream-dark); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14.5px; resize: vertical; outline: none; }
+.rule-write:focus { border-color: var(--gold); }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.mjx-container { overflow-x: auto; }
+.nw { white-space: nowrap; }
+.mjx-container[display="true"] { margin: 6px 0 !important; }
+
+/* Value tables inside questions */
+.vtab { border-collapse: collapse; margin: 10px 0 12px; font-family: "Times New Roman", Georgia, serif; font-size: 17px; }
+.vtab th, .vtab td { border: 1px solid #9a9a9a; padding: 4px 14px; text-align: center; font-weight: normal; }
+.vtab th { background: var(--cream); }
+
+/* SVG coordinate figures */
+.fig { display: block; margin: 8px auto 14px; max-width: 100%; height: auto; }
+.fig .ax { stroke: #2D2D2D; stroke-width: 1.4; }
+.fig .ln { stroke: #21442B; stroke-width: 2; fill: none; }
+.fig .ln2 { stroke: #BC6C26; stroke-width: 2; fill: none; }
+.fig .dash { stroke: #8B6914; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+.fig .pt { fill: #21442B; }
+.fig .shade { fill: rgba(221,162,94,0.25); stroke: none; }
+.fig text { font-family: "Times New Roman", Georgia, serif; font-size: 13px; fill: #2D2D2D; }
+.fig text.it { font-style: italic; }
+.fig .sq { fill: none; stroke: #2D2D2D; stroke-width: 1.2; }
+
+/* Desmos floating button + panel (same as the SAT worksheets) */
+.desmos-fab { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: flex; align-items: center; gap: 9px; background: linear-gradient(135deg, var(--green-dark), var(--green-medium)); color: white; border-radius: 99px; padding: 13px 22px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.3px; box-shadow: 0 6px 20px rgba(0,0,0,0.28); border: 2px solid var(--gold); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.desmos-fab:hover { transform: translateY(-2px); box-shadow: 0 9px 26px rgba(0,0,0,0.34); }
+.desmos-fab .fab-ico { font-size: 17px; }
+.desmos-panel { position: fixed; z-index: 1250; right: auto; bottom: auto; left: calc(100vw - 444px); top: calc(100vh - 612px); width: 420px; height: 520px; min-width: 300px; min-height: 280px; background: var(--white); border-radius: 12px; border: 2px solid var(--green-dark); box-shadow: 0 14px 40px rgba(0,0,0,0.38); display: none; flex-direction: column; overflow: hidden; }
+.desmos-panel.open { display: flex; animation: fadeIn 0.2s ease; }
+.desmos-panel.dragging, .desmos-panel.resizing { user-select: none; }
+.desmos-panel .dp-bar { background: linear-gradient(135deg, var(--green-dark), var(--green-medium)); color: white; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; cursor: move; gap: 10px; }
+.desmos-panel .dp-title { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.desmos-panel .dp-title .dp-grip { font-size: 13px; opacity: 0.7; letter-spacing: -1px; }
+.desmos-panel .dp-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+.desmos-panel .dp-btn { background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 12px; font-weight: 600; padding: 4px 9px; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
+.desmos-panel .dp-btn:hover { background: rgba(255,255,255,0.30); }
+.desmos-panel .dp-btn.active { background: var(--gold); color: var(--brown-dark); border-color: var(--gold); }
+.desmos-panel .dp-close { background: transparent; border: none; color: white; font-size: 19px; cursor: pointer; line-height: 1; padding: 0 4px; }
+.desmos-panel .dp-body { flex: 1; position: relative; }
+.desmos-panel .dp-calc { position: absolute; inset: 0; }
+.dp-handle { position: absolute; z-index: 6; }
+.dp-handle.dp-n  { top: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.dp-handle.dp-s  { bottom: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.dp-handle.dp-e  { right: -3px; top: 10px; bottom: 10px; width: 8px; cursor: ew-resize; }
+.dp-handle.dp-w  { left: -3px; top: 10px; bottom: 10px; width: 8px; cursor: ew-resize; }
+.dp-handle.dp-ne { top: -4px; right: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.dp-handle.dp-nw { top: -4px; left: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.dp-handle.dp-se { bottom: -4px; right: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.dp-handle.dp-sw { bottom: -4px; left: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.dp-handle.dp-se::before { content: ''; position: absolute; right: 3px; bottom: 3px; width: 9px; height: 9px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+.desmos-fallback { padding: 18px; font-size: 13px; color: var(--text-medium); text-align: center; line-height: 1.7; }
+.desmos-fallback a { color: var(--green-dark); font-weight: 600; }
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .container { padding: 16px 10px; }
+    .row-label { display: none; }
+    .tab-button { font-size: 12.5px; padding: 6px 11px; }
+    .test-stage, .step-body { padding: 20px 16px; }
+    .step-nav { padding: 0 16px 18px; }
+    .desmos-panel { width: calc(100vw - 32px) !important; left: 16px !important; top: auto !important; bottom: 84px !important; height: 60vh !important; }
+    .desmos-fab { right: 16px; bottom: 16px; padding: 11px 18px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective"></a></div>
+        <div class="header-text">
+            <h1>SAT Math: Linear Equations</h1>
+            <div class="subtitle">CONCEPT + DRILLS &bull; LINEAR EQUATIONS</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">SAT MATH SERIES</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="row-label">Learn</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('ref', this)">1. Linear Rules</button>
+            <button class="tab-button" data-group="core" onclick="switchTab('core', this)">2. Worked Examples &amp; Practice</button>
+            <button class="calc-btn" onclick="toggleDesmos()" title="Open the Desmos calculator (same one as the digital SAT)"><span>&#8862;</span> Calculator</button>
+        </div>
+        <div class="tab-row"><span class="row-label">Drill</span>
+            <button class="tab-button" data-group="drill" onclick="switchTab('fluency', this)">3. Fluency Drills</button>
+            <button class="tab-button" data-group="drill" onclick="switchTab('gauntlet', this)">4. SAT Gauntlet</button>
+            <button class="tab-button" data-group="drill" onclick="switchTab('challenge', this)">5. Challenge Questions</button>
+        </div>
+        <div class="tab-row"><span class="row-label">Check</span>
+            <button class="tab-button" data-group="core" onclick="switchTab('exit', this)">6. Exit Ticket</button>
+        </div>
+    </div>
+
+    <!-- ============ TAB 1: RULES ============ -->
+    <div id="tab-ref" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Linear rules</h2></div>
+        <div class="ref-page">
+<p class="ref-intro">A linear equation is a line, and the SAT asks the same handful of questions about it: read the slope and the intercepts, move between forms, find a value from two points, compare two lines, and count how many solutions a system has. Below, $m$ is the slope, $b$ is the $y$-intercept, and $(x_1, y_1)$ is a point you know.</p>
+<div class="legend"><span><span class="star">&#9733;</span> <strong>Essential:</strong> the rules behind most SAT linear questions. Start here.</span><span><strong>Unstarred:</strong> shows up less often. Add it once the starred rules are automatic.</span></div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 1</span><span class="rname">Five forms of a line</span></div>
+<p class="ref-lead">Same line, different costumes. Read the form you are handed; convert only at the end, to match the answer choices.</p>
+<div class="tbl-wrap"><table class="forms"><thead><tr><th>Form</th><th>Formula</th><th>What it shows</th><th>Example</th></tr></thead><tbody>
+<tr><td class="fname">Slope-intercept</td><td class="fmath">$y = mx + b$</td><td class="freads">$m$ is the slope, $b$ is the $y$-intercept</td><td class="fex"><span class="nw">$y = -2x + 5$:</span> falls $2$ per step right, crosses the $y$-axis at $5$</td></tr>
+<tr><td class="fname">Point-slope</td><td class="fmath">$y - y_1 = m(x - x_1)$</td><td class="freads">a known point $(x_1, y_1)$ and the slope</td><td class="fex">slope $3$ through <span class="nw">$(2, -1)$:</span> $y + 1 = 3(x - 2)$</td></tr>
+<tr><td class="fname">Standard form</td><td class="fmath">$Ax + By = C$</td><td class="freads">$m = -\dfrac{A}{B}$<br>$y$-intercept <span class="nw">$\dfrac{C}{B}$,</span> &nbsp; $x$-intercept $\dfrac{C}{A}$</td><td class="fex"><span class="nw">$3x + 4y = 24$:</span> <span class="nw">$m = -\tfrac{3}{4}$,</span> $y$-intercept <span class="nw">$6$,</span> $x$-intercept $8$</td></tr>
+<tr><td class="fname">General form</td><td class="fmath">$ax + by + c = 0$</td><td class="freads">standard form moved to one side<br><span class="nw">$m = -\dfrac{a}{b}$,</span> &nbsp; $y$-intercept $-\dfrac{c}{b}$</td><td class="fex"><span class="nw">$2x - 5y + 10 = 0$:</span> <span class="nw">$m = \tfrac{2}{5}$,</span> $y$-intercept $2$</td></tr>
+<tr><td class="fname">Intercept form</td><td class="fmath">$\dfrac{x}{a} + \dfrac{y}{b} = 1$</td><td class="freads">$x$-intercept $a$ and $y$-intercept <span class="nw">$b$,</span> in plain sight</td><td class="fex">$\dfrac{x}{8} + \dfrac{y}{6} = 1$ is $3x + 4y = 24$ again</td></tr>
+</tbody></table></div>
+<div class="ref-note">Most errors in this family are sign slips in <span class="nw">$-\tfrac{A}{B}$.</span> When in doubt, solve for $y$ once.</div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 2</span><span class="rname">Slope from two points</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">slope</div><div class="fmath">$m = \dfrac{\Delta y}{\Delta x} = \dfrac{y_2 - y_1}{x_2 - x_1}$ &nbsp; (the same between any two points on the line)</div></div>
+<div class="frow"><div class="flabel">function notation</div><div class="fmath">$f(a) = c$ &nbsp;means the point&nbsp; $(a, c)$</div></div>
+</div>
+<div class="fig-slot" data-fig="slope"></div>
+<div class="ref-ex"><span class="exlab">Example A</span>“$f$ is linear with $f(1) = 4$ and $f(4) = 13$” is two points, $(1, 4)$ and <span class="nw">$(4, 13)$,</span> so $m = \dfrac{13 - 4}{4 - 1} = 3$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>with $m$ in hand, step to any other value: $f(10) = f(4) + 3(10 - 4) = 31$. Or find $b$ first: $4 = 3(1) + b$ gives <span class="nw">$b = 1$,</span> so $f(x) = 3x + 1$</div>
+<div class="ref-ex"><span class="exlab">Example C</span>a table is a list of points. Take the slope from two complete rows, then fill each blank by stepping: equal steps in $x$ give equal steps in $y$</div>
+<div class="ref-note">A horizontal line ($y = 4$) has slope <span class="nw">$0$.</span> A vertical line ($x = 4$) has no slope at all. “Parallel to the $x$-axis” means slope <span class="nw">$0$.</span></div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 3</span><span class="rname">Slope is a rate of change</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">change in the output</div><div class="fmath">$\Delta y = m \cdot \Delta x$ &nbsp; (the intercept never enters a change)</div></div>
+<div class="frow"><div class="flabel">average rate on a curve</div><div class="fmath">$\dfrac{f(b) - f(a)}{b - a}$ &nbsp; (the slope of the line through the two endpoints)</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span><span class="nw">$F = \tfrac{9}{5}C + 32$.</span> A rise of $45$ degrees in $F$ is a rise of $45 \div \tfrac{9}{5} = 25$ degrees in <span class="nw">$C$.</span> The $32$ never enters</div>
+<div class="ref-ex"><span class="exlab">Example B</span>in context, the slope is “per”: $P = 0.08t + 15$ charges $0.08$ dollars per minute on top of a $15$ dollar base. Fifty more minutes cost $0.08(50) = 4$ dollars more</div>
+<div class="ref-ex"><span class="exlab">Example C</span>for $g(x) = x^2$ from $x = 1$ to <span class="nw">$x = 4$:</span> average rate $= \dfrac{16 - 1}{4 - 1} = 5$</div>
+<div class="ref-note">“Which interval has the greatest average rate of change?” means: compute rise over run for every interval. The steepest secant wins, not the interval with the biggest values.</div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 4</span><span class="rname">Parallel and perpendicular</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">parallel</div><div class="fmath">$m_1 = m_2$ &nbsp; (and <span class="nw">$b_1 \neq b_2$,</span> or it is the same line)</div></div>
+<div class="frow"><div class="flabel">perpendicular</div><div class="fmath"><span class="nw">$m_1 \cdot m_2 = -1$,</span> &nbsp; so <span class="nw">$m_2 = -\dfrac{1}{m_1}$:</span> flip it and negate it</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span>negative reciprocals: $\tfrac{2}{3} \to -\tfrac{3}{2}$, &nbsp; <span class="nw">$-5 \to \tfrac{1}{5}$,</span> &nbsp; $1 \to -1$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>the line parallel to $4x + 2y = 8$ through <span class="nw">$(3, -2)$:</span> the given slope is <span class="nw">$-\tfrac{4}{2} = -2$,</span> so <span class="nw">$y + 2 = -2(x - 3)$,</span> which is $y = -2x + 4$</div>
+<div class="ref-ex"><span class="exlab">Example C</span>the line perpendicular to $2x - 3y = 6$ through <span class="nw">$(4, -1)$:</span> the given slope is <span class="nw">$\tfrac{2}{3}$,</span> the perpendicular slope is <span class="nw">$-\tfrac{3}{2}$,</span> so $y + 1 = -\tfrac{3}{2}(x - 4)$</div>
+<div class="ref-note">A horizontal line is perpendicular to a vertical one even though their slopes cannot be multiplied.</div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 5</span><span class="rname">How many solutions does a system have?</span></div>
+<p class="ref-lead">Compare the two lines, written as $y = m_1x + b_1$ and <span class="nw">$y = m_2x + b_2$,</span> or as $a_1x + b_1y = c_1$ and <span class="nw">$a_2x + b_2y = c_2$:</span></p>
+<div class="tbl-wrap"><table class="cases"><thead><tr><th>Outcome</th><th>Slope-intercept test</th><th>Standard-form test</th></tr></thead><tbody>
+<tr><td class="fname">One solution (the lines cross)</td><td class="">$m_1 \neq m_2$</td><td class="">$\dfrac{a_1}{a_2} \neq \dfrac{b_1}{b_2}$</td></tr>
+<tr><td class="fname">No solution (parallel)</td><td class="">$m_1 = m_2$ and $b_1 \neq b_2$</td><td class="">$\dfrac{a_1}{a_2} = \dfrac{b_1}{b_2} \neq \dfrac{c_1}{c_2}$</td></tr>
+<tr><td class="fname">Infinitely many (same line)</td><td class="">$m_1 = m_2$ and $b_1 = b_2$</td><td class="">$\dfrac{a_1}{a_2} = \dfrac{b_1}{b_2} = \dfrac{c_1}{c_2}$</td></tr>
+</tbody></table></div>
+<div class="ref-ex"><span class="exlab">Example A</span>$y = 2x + 1$ and <span class="nw">$y = 2x - 3$:</span> parallel, no solution. &nbsp; $y = 2x + 1$ and <span class="nw">$2y = 4x + 2$:</span> the same line, infinitely many</div>
+<div class="ref-ex"><span class="exlab">Example B</span>$3x - 4y = 7$ and $6x + ky = 20$ have no solution when $\dfrac{3}{6} = \dfrac{-4}{k}$, so <span class="nw">$k = -8$.</span> (Check the constants: $\tfrac{7}{20} \neq \tfrac{1}{2}$, so the lines are different. ✓)</div>
+<div class="ref-ex"><span class="exlab">Example C</span>$2x + 7y = 5$ and $ax + by = 15$ have infinitely many solutions when the second is an exact multiple of the first: the multiplier is <span class="nw">$15 \div 5 = 3$,</span> so $a = 6$ and $b = 21$</div>
+<div class="ref-ex"><span class="exlab">Example D</span>one solution: eliminate (line up one variable, then add or subtract), substitute, or graph both lines in Desmos and click the intersection</div>
+<div class="ref-note">“Infinitely many” hides a multiplier: read it off the terms you can see, then apply it to the unknowns.</div>
+</div>
+<div class="ref-rule"><div class="ref-rule-line"><span class="rtag">Rule 6</span><span class="rname">Midpoint and distance</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">midpoint</div><div class="fmath">$M = \left(\dfrac{x_1 + x_2}{2},\; \dfrac{y_1 + y_2}{2}\right)$ &nbsp; (average each coordinate)</div></div>
+<div class="frow"><div class="flabel">distance</div><div class="fmath">$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ &nbsp; (Pythagoras with $\Delta x$ and $\Delta y$ as legs)</div></div>
+<div class="frow"><div class="flabel">point splitting $AB$ as $a : b$</div><div class="fmath">$P = \left(\dfrac{b\,x_1 + a\,x_2}{a + b},\; \dfrac{b\,y_1 + a\,y_2}{a + b}\right)$ &nbsp; (the midpoint is the $1 : 1$ case)</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span>the midpoint of $(2, -3)$ and $(10, 5)$ is <span class="nw">$(6, 1)$.</span> Given the midpoint and one end, double and subtract: if $M = (6, 1)$ and <span class="nw">$A = (2, -3)$,</span> then $B = (2 \cdot 6 - 2,\; 2 \cdot 1 + 3) = (10, 5)$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>the distance from $(1, 2)$ to $(7, 10)$ is $\sqrt{6^2 + 8^2} = 10$</div>
+<div class="ref-ex"><span class="exlab">Example C</span>for <span class="nw">$A(0, 0)$,</span> $B(10, 5)$ and <span class="nw">$AP : PB = 2 : 3$:</span> $P = \left(\tfrac{3 \cdot 0 + 2 \cdot 10}{5}, \tfrac{3 \cdot 0 + 2 \cdot 5}{5}\right) = (4, 2)$</div>
+<div class="ref-note">Rare on the digital SAT, but cheap to keep. When a midpoint has unknown coordinates, write one small equation per coordinate.</div>
+</div>
+<div class="ref-rule"><div class="ref-rule-line"><span class="rtag">Rule 7</span><span class="rname">Area enclosed by lines</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">area</div><div class="fmath">$\tfrac{1}{2} \cdot \text{base} \cdot \text{height}$, &nbsp; with the base laid on an axis</div></div>
+<div class="frow"><div class="flabel">the vertices</div><div class="fmath">intercepts (set $x = 0$ or $y = 0$) and intersections (solve the system)</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span>$y = -\tfrac{1}{2}x + 4$ and the two axes: $x$-intercept <span class="nw">$8$,</span> $y$-intercept <span class="nw">$4$,</span> area $\tfrac{1}{2}(8)(4) = 16$</div>
+<div class="ref-ex"><span class="exlab">Example B</span><span class="nw">$f(x) = 2x - 4$,</span> <span class="nw">$g(x) = -x + 5$,</span> and the $y$-axis: the lines meet where <span class="nw">$2x - 4 = -x + 5$,</span> so $x = 3$ and <span class="nw">$y = 2$.</span> The $y$-intercepts $-4$ and $5$ make a base of $9$ on the $y$-axis, and the height is the horizontal distance to <span class="nw">$x = 3$.</span> Area $= \tfrac{1}{2}(9)(3) = 13.5$</div>
+<div class="ref-note">Put the base on an axis whenever one is available; the height is then just a coordinate of the third vertex.</div>
+</div>
+<div class="ref-rule"><div class="ref-rule-line"><span class="rtag">Rule 8</span><span class="rname">Reflecting a line</span></div>
+<div class="tbl-wrap"><table class="cases"><thead><tr><th>Reflect across</th><th>Point rule</th><th>In the equation</th><th>Effect on $y = mx + b$</th></tr></thead><tbody>
+<tr><td class="fname">the $x$-axis</td><td class="">$(x, y) \to (x, -y)$</td><td class="">replace $y$ with $-y$</td><td class=""><span class="nw">$m \to -m$,</span> &nbsp; $b \to -b$</td></tr>
+<tr><td class="fname">the $y$-axis</td><td class="">$(x, y) \to (-x, y)$</td><td class="">replace $x$ with $-x$</td><td class=""><span class="nw">$m \to -m$,</span> &nbsp; $b$ stays</td></tr>
+<tr><td class="fname">the line $y = x$</td><td class="">$(x, y) \to (y, x)$</td><td class="">swap $x$ and $y$</td><td class="">$m \to \dfrac{1}{m}$</td></tr>
+<tr><td class="fname">the origin</td><td class="">$(x, y) \to (-x, -y)$</td><td class="">replace both</td><td class="">$m$ stays, &nbsp; $b \to -b$</td></tr>
+</tbody></table></div>
+<div class="ref-ex"><span class="exlab">Example A</span>reflect $y = 2x - 3$ across the $x$-axis: <span class="nw">$-y = 2x - 3$,</span> which is $y = -2x + 3$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>across the $y$-axis: <span class="nw">$y = 2(-x) - 3 = -2x - 3$.</span> The $y$-intercept stays, so a line and its $y$-axis mirror always meet on the $y$-axis</div>
+<div class="ref-ex"><span class="exlab">Example C</span>in standard form, $2x - 3y = 6$ becomes $2x + 3y = 6$ across the $x$-axis and $-2x - 3y = 6$ across the $y$-axis</div>
+<div class="ref-note">Reflect the equation, not the picture: the point rule tells you which variable to replace.</div>
+</div>
+<hr class="ref-divider"><div class="ref-h">Moves that are not allowed</div>
+<p>The statements below <em>look</em> reasonable but are false, and each one generates a standard wrong answer. Keep them in mind.</p>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 1</span><span class="rname">not allowed: &nbsp; reading $A$ as the slope of $Ax + By = C$</span></div><div class="ref-ex">The slope is <span class="nw">$-\tfrac{A}{B}$.</span> For $3x + 4y = 24$ it is <span class="nw">$-\tfrac{3}{4}$,</span> not $3$ and not <span class="nw">$-3$.</span> Solve for $y$ once if you doubt it.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 2</span><span class="rname">not allowed: &nbsp; half of a perpendicular flip</span></div><div class="ref-ex">For a line perpendicular to slope <span class="nw">$\tfrac{2}{3}$,</span> both $-\tfrac{2}{3}$ (sign only) and $\tfrac{3}{2}$ (reciprocal only) are wrong, and both are in the choices. The answer is <span class="nw">$-\tfrac{3}{2}$.</span> Multiply the two slopes: anything but $-1$ is wrong.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 3</span><span class="rname">not allowed: &nbsp; “same slope” means no solution</span></div><div class="ref-ex">Same slope with the same intercept is the same line: infinitely many solutions. Check the constants after you check the slopes.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 4</span><span class="rname">not allowed: &nbsp; $f(2) = 5$ as the point $(5, 2)$</span></div><div class="ref-ex">The input is <span class="nw">$x$.</span> $f(2) = 5$ is the point <span class="nw">$(2, 5)$.</span> Write the points down before you subtract anything.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 5</span><span class="rname">not allowed: &nbsp; plugging a change into the whole equation</span></div><div class="ref-ex">If $F$ rises by <span class="nw">$45$,</span> that is <span class="nw">$\Delta F = 45$,</span> not <span class="nw">$F = 45$.</span> Use <span class="nw">$\Delta y = m\,\Delta x$:</span> the intercept drops out of every change.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 6</span><span class="rname">not allowed: &nbsp; finding the $x$-intercept by setting $x = 0$</span></div><div class="ref-ex">The $x$-intercept is where <span class="nw">$y = 0$.</span> Setting $x = 0$ gives the $y$-intercept. Say it out loud: “on the $x$-axis, $y$ is zero.”</div></div>
+</div>
+    </div>
+
+    <!-- ============ TAB 2: STEPPER ============ -->
+    <div id="tab-core" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>Worked examples &amp; practice</h2></div>
+        <div class="card">
+            <p>Everything on the rules tab runs on one idea: <strong>a line is a starting value plus a constant rate.</strong> The intercept is where you start, the slope is how fast you move, and every SAT question about lines is asking you to find one of those two numbers, or to compare them across two lines.</p>
+            <p style="margin-top:8px; font-size:14px; color:var(--text-medium);">The walkthrough below takes the rules one at a time, each with a worked example, the trap it pairs with, and a ten-second check. The starred steps are the essentials. Reading a rule isn't knowing it; the check is the point.</p>
+        </div>
+        <div class="stepper">
+            <div class="step-head">
+                <span class="step-count" id="stepCount">Step 1 of 9</span>
+                <div class="step-dots" id="stepDots"></div>
+            </div>
+            <div class="step-body" id="stepBody"></div>
+            <div class="step-nav">
+                <button class="btn btn-ghost" id="stepBack" onclick="stepNav(-1)">&#8592; Back</button>
+                <button class="btn btn-green" id="stepNext" onclick="stepNav(1)">Next &#8594;</button>
+                <span style="flex:1"></span>
+                <span style="font-size:13px; color:var(--text-medium);" id="stepHint"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB 3: FLUENCY ============ -->
+    <div id="tab-fluency" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Fluency drills: mixed reps</h2></div>
+        <div class="toolbar">
+            <span style="font-size:13.5px; color:var(--text-medium);">Untimed. Fractions can be entered as 7/3 or 2.333; both count. Negative slopes need the minus sign.</span>
+            <span class="timer-wrap">Timer <button class="tog" id="togF" onclick="toggleTimer('F')" aria-label="toggle timer"></button> <span class="timer-display" id="timerF">0:00</span></span>
+        </div>
+        <div id="fluencyList"></div>
+    </div>
+
+    <!-- ============ TAB 4: GAUNTLET ============ -->
+    <div id="tab-gauntlet" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>SAT Gauntlet: real formats, real traps</h2></div>
+        <div class="card">
+            <p>Ten questions in the two digital SAT formats: four-choice multiple choice and student-produced response (type the number). They are ordered the way a real module ramps, from easy openers to the high-medium items near the end. Desmos is allowed on the whole SAT math section, so it is allowed here: the button in the corner opens it, and <em>Load into Desmos</em> drops a question's equations straight into the graph.</p>
+        </div>
+        <div id="gauntletArea"></div>
+    </div>
+
+    <!-- ============ TAB 5: CHALLENGE ============ -->
+    <div id="tab-challenge" class="tab-content">
+        <div class="section-header"><div class="section-number">5</div><h2>Challenge questions</h2></div>
+        <div class="card">
+            <p>These six run from high-medium to hard: the linear questions that show up late in a module and separate a strong score from a perfect one. Each one is a rule you already have, paired with a second idea (an unknown that cancels, an area, a reflection, a translation, a pair of intercepts). Work each one, then check it right away. Understanding the mechanism matters more than getting it right on the first try.</p>
+        </div>
+        <div id="challengeArea"></div>
+    </div>
+
+    <!-- ============ TAB 6: EXIT TICKET ============ -->
+    <div id="tab-exit" class="tab-content">
+        <div class="section-header"><div class="section-number">6</div><h2>Exit ticket</h2></div>
+        <div id="exitArea"></div>
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:8px;">Write your rule</h3>
+            <p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">One sentence you will say to yourself the next time a line shows up. Make it an if-then. (Shape: “When a system question says no solution, I ______ before I touch the constants.”)</p>
+            <textarea class="rule-write" id="ruleBox" placeholder="My rule:" oninput="saveRule()"></textarea>
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-gold btn-sm" onclick="copyRule()">Copy rule</button>
+                <span id="ruleStatus" style="font-size:12.5px; color:var(--green-light); font-weight:600; opacity:0; transition:opacity 0.3s;">saved &#10003;</span>
+            </div>
+        </div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:6px;">Official extra reps</h3>
+            <p style="font-size:14px;"><strong>Start with College Board's Bluebook.</strong> It is the real test interface, Desmos included, and its full-length practice tests are the closest thing to the actual SAT: the linear questions on them are written and ranked exactly the way this sheet's gauntlet is. <a href="https://satsuite.collegeboard.org/digital/digital-practice-preparation" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">Open Bluebook practice &#8594;</a></p>
+            <p style="font-size:14px; margin-top:10px;">For skill-by-skill reps, <strong>Khan Academy's Official Digital SAT Prep</strong> sorts practice by topic: the units <em>Linear equations in two variables</em>, <em>Linear functions</em>, and <em>Systems of two linear equations</em> are this sheet's Rules 1 through 5. <a href="https://www.khanacademy.org/digital-sat" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">Open Khan Academy &#8594;</a></p>
+            <p style="font-size:14px; margin-top:10px;">For the calculator side of these questions (graphing a system, a slider for $k$, reading an intersection), see <a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Desmos-Strategies.html" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Math: Desmos Strategies &#8594;</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family:'Switzer','Space Grotesk',sans-serif; font-weight:700;">Learning Curve Collective</a> &bull; SAT Math Series: Linear Equations</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<!-- Desmos floating calculator -->
+<button class="desmos-fab" id="desmos-fab" onclick="toggleDesmos()" aria-label="Open Desmos calculator">
+    <span class="fab-ico">&#128202;</span> Desmos Calculator
+</button>
+<div class="desmos-panel" id="desmos-panel" aria-hidden="true">
+    <div class="dp-bar" id="dp-bar" title="Drag to move">
+        <span class="dp-title"><span class="dp-grip">&#8942;&#8942;</span> Desmos</span>
+        <div class="dp-tools">
+            <button class="dp-btn active" id="dp-mode-graph" onclick="setDesmosMode('graph')">Graphing</button>
+            <button class="dp-btn" id="dp-mode-sci" onclick="setDesmosMode('scientific')">Scientific</button>
+            <button class="dp-btn" id="dp-expand" onclick="toggleDesmosExpand()" title="Expand the calculator window">Expand</button>
+        </div>
+        <button class="dp-close" onclick="toggleDesmos()" aria-label="Close calculator">&times;</button>
+    </div>
+    <div class="dp-body" id="dp-body"><div class="dp-calc" id="desmos-calc"></div></div>
+    <div class="dp-handle dp-n"  data-dir="n"></div><div class="dp-handle dp-s"  data-dir="s"></div>
+    <div class="dp-handle dp-e"  data-dir="e"></div><div class="dp-handle dp-w"  data-dir="w"></div>
+    <div class="dp-handle dp-ne" data-dir="ne"></div><div class="dp-handle dp-nw" data-dir="nw"></div>
+    <div class="dp-handle dp-se" data-dir="se"></div><div class="dp-handle dp-sw" data-dir="sw"></div>
+</div>
+
+<script>
+var STEPS = [{"ess": true, "name": "Rule 1: Read the line in any form", "rule": "$y = mx + b$ &nbsp;·&nbsp; $Ax + By = C$ has $m = -\\dfrac{A}{B}$", "say": "Every form is the same line in a different costume. Slope-intercept hands you $m$ and <span class=\"nw\">$b$.<\/span> Standard form hides them: solve for <span class=\"nw\">$y$,<\/span> or read <span class=\"nw\">$m = -\\tfrac{A}{B}$,<\/span> $y$-intercept <span class=\"nw\">$\\tfrac{C}{B}$,<\/span> $x$-intercept <span class=\"nw\">$\\tfrac{C}{A}$.<\/span> Point-slope, <span class=\"nw\">$y - y_1 = m(x - x_1)$,<\/span> is what you write when you know a point and a slope.", "prob": "The equation $3x + 4y = 24$ is graphed in the $xy$-plane. What are the slope, the $y$-intercept, and the $x$-intercept of the line?", "sol": "<strong>Read it straight from standard form.<\/strong> <span class=\"nw\">$A = 3$,<\/span> <span class=\"nw\">$B = 4$,<\/span> <span class=\"nw\">$C = 24$:<\/span> slope $-\\tfrac{A}{B} = -\\tfrac{3}{4}$, $y$-intercept $\\tfrac{C}{B} = \\tfrac{24}{4} = 6$, $x$-intercept $\\tfrac{C}{A} = \\tfrac{24}{3} = 8$.<br><strong>Check by solving for <span class=\"nw\">$y$.<\/span><\/strong> <span class=\"nw\">$4y = -3x + 24$,<\/span> so <span class=\"nw\">$y = -\\tfrac{3}{4}x + 6$.<\/span> ✓ Set <span class=\"nw\">$y = 0$:<\/span> <span class=\"nw\">$3x = 24$,<\/span> <span class=\"nw\">$x = 8$.<\/span> ✓", "trap": "Reading $3$ as the slope of <span class=\"nw\">$3x + 4y = 24$.<\/span> The slope is $-\\tfrac{A}{B} = -\\tfrac{3}{4}$: the sign flip and the division are the whole trap, and both wrong versions are always in the choices.", "micro": {"q": "The slope of $5x - 2y = 10$ is", "accept": ["5/2", "2.5"], "exp": "$m = -\\tfrac{A}{B} = -\\tfrac{5}{-2} = \\tfrac{5}{2}$. Or solve: <span class=\"nw\">$-2y = -5x + 10$,<\/span> so <span class=\"nw\">$y = \\tfrac{5}{2}x - 5$.<\/span>"}}, {"ess": true, "name": "Rule 2: Two values make a slope", "rule": "$m = \\dfrac{y_2 - y_1}{x_2 - x_1}$ &nbsp;·&nbsp; $f(a) = c$ is the point $(a, c)$", "say": "A linear function with two known values is a line with two known points. Translate each $f(\\text{input}) = \\text{output}$ into a point, subtract to get the slope, then step from a known point to the one you want: $f(x) = f(x_1) + m\\,(x - x_1)$.", "prob": "For a linear function <span class=\"nw\">$f$,<\/span> $f(1) = 4$ and <span class=\"nw\">$f(4) = 13$.<\/span> What is the value of <span class=\"nw\">$f(10)$?<\/span>", "sol": "<strong>Step 1: turn the values into points.<\/strong> $(1, 4)$ and <span class=\"nw\">$(4, 13)$.<\/span><br><strong>Step 2: slope.<\/strong> $m = \\tfrac{13 - 4}{4 - 1} = 3$.<br><strong>Step 3: step from a known point.<\/strong> $f(10) = f(4) + 3(10 - 4) = 13 + 18 = 31$.<br>The intercept route agrees: $4 = 3(1) + b$ gives <span class=\"nw\">$b = 1$,<\/span> so $f(x) = 3x + 1$ and <span class=\"nw\">$f(10) = 31$.<\/span>", "trap": "Swapping the coordinates. $f(4) = 13$ is <span class=\"nw\">$(4, 13)$,<\/span> input first. Writing both points down before subtracting is a two-second habit that removes the error entirely.", "micro": {"q": "If $f$ is linear with $f(2) = 7$ and <span class=\"nw\">$f(5) = 16$,<\/span> then $f(8) =$", "accept": ["25"], "exp": "$m = \\tfrac{16 - 7}{5 - 2} = 3$, so $f(8) = 16 + 3(8 - 5) = 25$."}}, {"ess": true, "name": "Rule 2, continued: Tables are points", "rule": "Equal steps in $x$ give equal steps in $y$", "say": "A table of a linear function is a list of points, and the SAT likes to put the unknowns inside the table. Pick two rows that are complete, find the slope, then fill each blank by stepping from a complete row. If an unknown shows up as an $x$-value, the row you just filled becomes the input for the next one.", "prob": "The table gives values of the linear function <span class=\"nw\">$f$,<\/span> where $a$ and $b$ are constants.<table class='vtab'><tr><th>$x$<\/th><td>$1$<\/td><td>$3$<\/td><td>$7$<\/td><td>$a$<\/td><\/tr><tr><th>$f(x)$<\/th><td>$2$<\/td><td>$a$<\/td><td>$14$<\/td><td>$b$<\/td><\/tr><\/table>What is the value of <span class=\"nw\">$b$?<\/span>", "sol": "<strong>Step 1: slope from the two complete rows.<\/strong> $(1, 2)$ and <span class=\"nw\">$(7, 14)$:<\/span> $m = \\tfrac{14 - 2}{7 - 1} = 2$.<br><strong>Step 2: fill <span class=\"nw\">$a$.<\/span><\/strong> $a = f(3) = 2 + 2(3 - 1) = 6$.<br><strong>Step 3: the last column now reads <span class=\"nw\">$x = 6$.<\/span><\/strong> $b = f(6) = 2 + 2(6 - 1) = 12$.", "trap": "Assuming the blanks are evenly spaced, or averaging the visible outputs. Only the slope connects the rows, and it has to come from two rows that are both complete.", "micro": {"q": "A linear function $f$ has $f(1) = 3$ and <span class=\"nw\">$f(4) = 9$.<\/span> Then $f(10) =$", "accept": ["21"], "exp": "Slope <span class=\"nw\">$\\tfrac{9 - 3}{4 - 1} = 2$;<\/span> from $(4, 9)$ step $6$ in <span class=\"nw\">$x$:<\/span> <span class=\"nw\">$9 + 2(6) = 21$.<\/span>"}}, {"ess": true, "name": "Rule 3: Slope is a rate", "rule": "$\\Delta y = m \\cdot \\Delta x$ &nbsp;·&nbsp; average rate of change $= \\dfrac{f(b) - f(a)}{b - a}$", "say": "Read $m$ as “per”: dollars per minute, degrees per degree, inches per day. A change of $\\Delta x$ in the input produces a change of exactly $m \\cdot \\Delta x$ in the output, and the intercept never enters a change. On a curve, the same subtraction over an interval gives the average rate of change: the slope of the line through the two endpoints.", "prob": "The temperature <span class=\"nw\">$F$,<\/span> in degrees Fahrenheit, is related to the temperature <span class=\"nw\">$C$,<\/span> in degrees Celsius, by <span class=\"nw\">$F = \\tfrac{9}{5}C + 32$.<\/span> If the Fahrenheit temperature increases by $45$ degrees, by how many degrees does the Celsius temperature increase?", "sol": "<strong>A change, not a value.<\/strong> $\\Delta F = \\tfrac{9}{5}\\,\\Delta C$, so $45 = \\tfrac{9}{5}\\,\\Delta C$ and $\\Delta C = 45 \\cdot \\tfrac{5}{9} = 25$ degrees. The $32$ never appeared.<br><strong>Same idea on a curve:<\/strong> for $g(x) = x^2$ from $x = 1$ to <span class=\"nw\">$x = 4$,<\/span> the average rate of change is $\\tfrac{g(4) - g(1)}{4 - 1} = \\tfrac{16 - 1}{3} = 5$.", "trap": "Treating a change as a value: $45 = \\tfrac{9}{5}C + 32$ answers a different question. The $32$ is a starting point, and starting points cancel when you subtract two readings.", "micro": {"q": "For <span class=\"nw\">$h(x) = x^2 + 1$,<\/span> the average rate of change from $x = 2$ to $x = 5$ is", "accept": ["7"], "exp": "$h(5) = 26$ and <span class=\"nw\">$h(2) = 5$:<\/span> $\\tfrac{26 - 5}{5 - 2} = 7$."}}, {"ess": true, "name": "Rule 4: Parallel and perpendicular", "rule": "parallel: $m_1 = m_2$ &nbsp;·&nbsp; perpendicular: $m_1 \\cdot m_2 = -1$", "say": "Three moves, always in this order: get the slope of the given line (careful with standard form), convert it (keep it for parallel, flip and negate for perpendicular), then write point-slope through the given point. Convert to the form the answer choices use only at the end.", "prob": "Which equation represents the line that passes through the point $(4, -1)$ and is perpendicular to the line <span class=\"nw\">$2x - 3y = 6$?<\/span>", "sol": "<strong>Step 1: the given slope.<\/strong> $-\\tfrac{A}{B} = -\\tfrac{2}{-3} = \\tfrac{2}{3}$.<br><strong>Step 2: flip and negate.<\/strong> Perpendicular slope <span class=\"nw\">$-\\tfrac{3}{2}$.<\/span> (Check: $\\tfrac{2}{3} \\cdot -\\tfrac{3}{2} = -1$. ✓)<br><strong>Step 3: point-slope through <span class=\"nw\">$(4, -1)$.<\/span><\/strong> $y + 1 = -\\tfrac{3}{2}(x - 4)$, which is <span class=\"nw\">$y = -\\tfrac{3}{2}x + 5$.<\/span> Check the point: $-\\tfrac{3}{2}(4) + 5 = -1$. ✓", "trap": "Half a flip. $-\\tfrac{2}{3}$ (sign only) and $\\tfrac{3}{2}$ (reciprocal only) are both on the answer sheet. Multiply your two slopes before you commit: the product must be <span class=\"nw\">$-1$.<\/span>", "micro": {"mc": true, "q": "Which line is parallel to <span class=\"nw\">$4x + 2y = 8$?<\/span>", "opts": ["$y = 2x + 4$", "$y = \\tfrac{1}{2}x + 4$", "$y = -2x + 1$", "$y = -\\tfrac{1}{2}x + 8$"], "correct": 2, "exp": "$4x + 2y = 8$ is <span class=\"nw\">$y = -2x + 4$,<\/span> slope <span class=\"nw\">$-2$.<\/span> Parallel means slope $-2$ with a different intercept."}}, {"ess": true, "name": "Rule 5: Count a system's solutions", "rule": "one solution: $m_1 \\neq m_2$ &nbsp;·&nbsp; none: same <span class=\"nw\">$m$,<\/span> different $b$ &nbsp;·&nbsp; infinitely many: same line", "say": "Any question about “no solution” or “infinitely many solutions” is a slope question first. In standard form the ratio test does it without converting: $\\tfrac{a_1}{a_2} = \\tfrac{b_1}{b_2}$ makes the slopes equal. Then compare with <span class=\"nw\">$\\tfrac{c_1}{c_2}$:<\/span> different means parallel (no solution), equal means the same line (infinitely many).", "prob": "$$3x - 4y = 7$$ $$6x + ky = 20$$ In the system of equations above, $k$ is a constant. If the system has no solution, what is the value of <span class=\"nw\">$k$?<\/span>", "sol": "<strong>Step 1: no solution means equal slopes.<\/strong> Ratio test: $\\tfrac{3}{6} = \\tfrac{-4}{k}$, so <span class=\"nw\">$k = -8$.<\/span><br><strong>Step 2: confirm the lines are different.<\/strong> Doubling the first equation gives <span class=\"nw\">$6x - 8y = 14$;<\/span> the second is <span class=\"nw\">$6x - 8y = 20$.<\/span> Same left side, different constant: parallel and distinct. ✓<br><strong>The other direction:<\/strong> if $2x + 7y = 5$ and $ax + by = 15$ had <em>infinitely many<\/em> solutions, the multiplier would be <span class=\"nw\">$15 \\div 5 = 3$,<\/span> giving $a = 6$ and <span class=\"nw\">$b = 21$.<\/span>", "trap": "Stopping at “same slope” when the question says infinitely many. Same slope with different constants is no solution. Infinitely many needs an exact multiple, constants included.", "micro": {"q": "For what value of $k$ does the system <span class=\"nw\">$4x + 6y = 9$,<\/span> $2x + ky = 5$ have no solution? $k =$", "accept": ["3"], "exp": "$\\tfrac{4}{2} = \\tfrac{6}{k}$ gives <span class=\"nw\">$k = 3$.<\/span> The constants $9$ and $5$ have ratio <span class=\"nw\">$\\tfrac{9}{5} \\neq 2$,<\/span> so the lines are parallel and distinct: no solution."}}, {"ess": false, "name": "Rule 6: Midpoint and distance", "rule": "$M = \\left(\\dfrac{x_1 + x_2}{2}, \\dfrac{y_1 + y_2}{2}\\right)$ &nbsp;·&nbsp; $d = \\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$", "say": "The midpoint averages each coordinate. Distance is the Pythagorean theorem with $\\Delta x$ and $\\Delta y$ as the legs. Given a midpoint and one endpoint, double the midpoint and subtract the known end. A point that splits a segment in the ratio $a : b$ is a weighted average: $P = \\left(\\tfrac{b\\,x_1 + a\\,x_2}{a + b}, \\tfrac{b\\,y_1 + a\\,y_2}{a + b}\\right)$.", "prob": "The point $M(6, 1)$ is the midpoint of line segment <span class=\"nw\">$AB$,<\/span> and the coordinates of $A$ are <span class=\"nw\">$(2, -3)$.<\/span> What are the coordinates of <span class=\"nw\">$B$,<\/span> and what is the length of <span class=\"nw\">$AB$?<\/span>", "sol": "<strong>Step 1: double the midpoint, subtract the known end.<\/strong> $B = (2 \\cdot 6 - 2,\\; 2 \\cdot 1 - (-3)) = (10, 5)$.<br><strong>Step 2: distance.<\/strong> $AB = \\sqrt{(10 - 2)^2 + (5 + 3)^2} = \\sqrt{64 + 64} = \\sqrt{128} = 8\\sqrt{2} \\approx 11.3$.", "trap": "Forgetting the square root (reporting $d^2$), or subtracting where the midpoint needs an average. When the midpoint has unknown coordinates, write one small equation per coordinate.", "micro": {"q": "The distance between $(1, 2)$ and $(7, 10)$ is", "accept": ["10"], "exp": "$\\sqrt{6^2 + 8^2} = \\sqrt{100} = 10$."}}, {"ess": false, "name": "Rule 7: Area enclosed by lines", "rule": "area $= \\tfrac{1}{2} \\cdot \\text{base} \\cdot \\text{height}$, with the base on an axis", "say": "Lines enclose a triangle, and the SAT asks for its area or, in reverse, gives the area and asks for a slope or an intercept. Find every vertex: intercepts come from setting $x = 0$ or <span class=\"nw\">$y = 0$,<\/span> and the corner where two lines meet comes from solving the system. Then lay the base along an axis so the height is just a coordinate.", "fig": "area", "prob": "In the $xy$-plane above, the graphs of $f(x) = 2x - 4$ and $g(x) = -x + 5$ and the $y$-axis enclose a triangle. What is the area of the triangle?", "sol": "<strong>Step 1: the three vertices.<\/strong> The $y$-intercepts $(0, -4)$ and <span class=\"nw\">$(0, 5)$,<\/span> and the intersection: $2x - 4 = -x + 5$ gives <span class=\"nw\">$x = 3$,<\/span> <span class=\"nw\">$y = 2$.<\/span><br><strong>Step 2: base on the $y$-axis.<\/strong> Base <span class=\"nw\">$= 5 - (-4) = 9$.<\/span> Height $=$ the horizontal distance from the $y$-axis to <span class=\"nw\">$x = 3$,<\/span> which is <span class=\"nw\">$3$.<\/span><br><strong>Step 3:<\/strong> area $= \\tfrac{1}{2}(9)(3) = 13.5$.", "trap": "Using an intercept as a vertex when the actual corner is where two lines cross. A ten-second sketch, or the Desmos panel, shows which three points make the triangle.", "micro": {"q": "The area of the triangle formed by $y = -3x + 6$ and the two axes is", "accept": ["6"], "exp": "$x$-intercept <span class=\"nw\">$2$,<\/span> $y$-intercept <span class=\"nw\">$6$:<\/span> <span class=\"nw\">$\\tfrac{1}{2}(2)(6) = 6$.<\/span>"}}, {"ess": false, "name": "Rule 8: Reflecting a line", "rule": "across the $x$-axis: $y \\to -y$ &nbsp;·&nbsp; across the $y$-axis: $x \\to -x$ &nbsp;·&nbsp; across <span class=\"nw\">$y = x$:<\/span> swap $x$ and $y$", "say": "Reflect the equation, not the picture. Across the $x$-axis every $y$ flips sign, so negate $y$ in the equation (slope and intercept both flip). Across the $y$-axis, replace $x$ with $-x$ (slope flips, intercept stays). Across <span class=\"nw\">$y = x$,<\/span> swap the variables (the slope becomes $\\tfrac{1}{m}$). Through the origin, both flip (slope stays, intercept flips).", "prob": "In the $xy$-plane, line $\\ell$ is the reflection of the graph of $y = 2x - 3$ across the $x$-axis, and line $n$ is its reflection across the $y$-axis. What are the equations of $\\ell$ and <span class=\"nw\">$n$?<\/span>", "sol": "<strong>Line $\\ell$ (across the $x$-axis): replace $y$ with <span class=\"nw\">$-y$.<\/span><\/strong> <span class=\"nw\">$-y = 2x - 3$,<\/span> so <span class=\"nw\">$y = -2x + 3$.<\/span><br><strong>Line $n$ (across the $y$-axis): replace $x$ with <span class=\"nw\">$-x$.<\/span><\/strong> <span class=\"nw\">$y = 2(-x) - 3 = -2x - 3$.<\/span><br><strong>Same move in standard form:<\/strong> $2x - 3y = 6$ across the $x$-axis becomes <span class=\"nw\">$2x + 3y = 6$.<\/span>", "trap": "Flipping the wrong piece. A line and its $y$-axis reflection share the $y$-intercept, so they meet at <span class=\"nw\">$x = 0$;<\/span> a line and its $x$-axis reflection share the $x$-intercept, so they meet at <span class=\"nw\">$y = 0$.<\/span>", "micro": {"q": "The slope of the reflection of $y = \\tfrac{3}{4}x + 2$ across the $y$-axis is", "accept": ["-3/4", "-0.75", "-.75"], "exp": "Replace $x$ with <span class=\"nw\">$-x$:<\/span> <span class=\"nw\">$y = -\\tfrac{3}{4}x + 2$.<\/span> Slope <span class=\"nw\">$-\\tfrac{3}{4}$,<\/span> intercept unchanged."}}];
+var FLUENCY = [{"sec": "A. Read the line", "items": [{"q": "The slope of $6x - 2y = 9$ is", "accept": ["3"], "exp": "$-\\tfrac{A}{B} = -\\tfrac{6}{-2} = 3$."}, {"q": "The $y$-intercept of $4x + 3y = 12$ is $y =$", "accept": ["4"], "exp": "Set <span class=\"nw\">$x = 0$:<\/span> <span class=\"nw\">$3y = 12$,<\/span> so <span class=\"nw\">$y = 4$.<\/span> (Or read <span class=\"nw\">$\\tfrac{C}{B}$.<\/span>)"}, {"q": "The $x$-intercept of $5x - 2y = 20$ is $x =$", "accept": ["4"], "exp": "Set <span class=\"nw\">$y = 0$:<\/span> <span class=\"nw\">$5x = 20$,<\/span> so <span class=\"nw\">$x = 4$.<\/span>"}, {"mc": true, "q": "The line with slope $2$ through $(3, -1)$ is", "opts": ["$y = 2x + 5$", "$y = 2x - 1$", "$y = -2x + 5$", "$y = 2x - 7$"], "correct": 3, "exp": "$y + 1 = 2(x - 3)$ gives <span class=\"nw\">$y = 2x - 7$.<\/span> Check: <span class=\"nw\">$2(3) - 7 = -1$.<\/span> ✓"}]}, {"sec": "B. Two points, one slope", "items": [{"q": "If $f$ is linear with $f(2) = 3$ and <span class=\"nw\">$f(6) = 15$,<\/span> its slope is", "accept": ["3"], "exp": "$\\tfrac{15 - 3}{6 - 2} = 3$."}, {"q": "If $f$ is linear with $f(0) = -4$ and <span class=\"nw\">$f(3) = 5$,<\/span> then $f(7) =$", "accept": ["17"], "exp": "<span class=\"nw\">$m = 3$,<\/span> so <span class=\"nw\">$f(7) = 5 + 3(4) = 17$.<\/span> Or <span class=\"nw\">$f(x) = 3x - 4$.<\/span>"}, {"q": "A linear function has $f(1) = 8$ and <span class=\"nw\">$f(2) = 5$.<\/span> Then $f(5) =$", "accept": ["-4"], "exp": "<span class=\"nw\">$m = -3$,<\/span> so <span class=\"nw\">$f(5) = 5 + (-3)(3) = -4$.<\/span>"}, {"q": "If $f$ is linear with $f(1) = 2$ and <span class=\"nw\">$f(4) = 11$,<\/span> the $x$-intercept of its graph is $x =$", "accept": ["1/3", "0.333", ".333", "0.3333", ".3333", "0.33", ".33"], "exp": "<span class=\"nw\">$m = 3$,<\/span> so <span class=\"nw\">$f(x) = 3x - 1$.<\/span> Set <span class=\"nw\">$f(x) = 0$:<\/span> <span class=\"nw\">$x = \\tfrac{1}{3}$.<\/span>"}]}, {"sec": "C. Rates, parallel, perpendicular", "items": [{"q": "A plan costs $C = 0.25m + 40$ dollars for $m$ minutes. If $m$ increases by <span class=\"nw\">$120$,<\/span> $C$ increases by", "accept": ["30"], "exp": "$\\Delta C = 0.25 \\cdot 120 = 30$. The $40$ never enters a change."}, {"q": "For <span class=\"nw\">$g(x) = x^2 - 3x$,<\/span> the average rate of change from $x = 1$ to $x = 4$ is", "accept": ["2"], "exp": "$g(4) = 4$ and <span class=\"nw\">$g(1) = -2$:<\/span> $\\tfrac{4 - (-2)}{4 - 1} = 2$."}, {"mc": true, "q": "The line parallel to $y = -\\tfrac{2}{3}x + 1$ through $(6, 0)$ is", "opts": ["$y = -\\tfrac{2}{3}x + 1$", "$y = -\\tfrac{2}{3}x + 4$", "$y = \\tfrac{3}{2}x - 9$", "$y = -\\tfrac{2}{3}x - 4$"], "correct": 1, "exp": "Same slope: $y - 0 = -\\tfrac{2}{3}(x - 6)$, which is <span class=\"nw\">$y = -\\tfrac{2}{3}x + 4$.<\/span>"}, {"q": "The slope of a line perpendicular to $3x - 5y = 15$ is", "accept": ["-5/3", "-1.667", "-1.6667", "-1.67"], "exp": "The given slope is $-\\tfrac{3}{-5} = \\tfrac{3}{5}$. Flip and negate: <span class=\"nw\">$-\\tfrac{5}{3}$.<\/span>"}]}, {"sec": "D. Systems", "items": [{"q": "For what value of $k$ does the system <span class=\"nw\">$3x + 2y = 7$,<\/span> $6x + ky = 10$ have no solution? $k =$", "accept": ["4"], "exp": "$\\tfrac{3}{6} = \\tfrac{2}{k}$ gives <span class=\"nw\">$k = 4$.<\/span> Then $\\tfrac{7}{10} \\neq \\tfrac{1}{2}$, so the lines are distinct: no solution."}, {"mc": true, "q": "The system $2x - y = 3$ and $4x - 2y = 6$ has", "opts": ["no solution", "exactly one solution", "infinitely many solutions", "exactly two solutions"], "correct": 2, "exp": "The second equation is exactly twice the first: the same line."}, {"q": "If $5x - 3y = 4$ and $ax + by = -12$ have infinitely many solutions, then $a + b =$", "accept": ["-6"], "exp": "The multiplier is <span class=\"nw\">$\\tfrac{-12}{4} = -3$:<\/span> $a = -15$ and <span class=\"nw\">$b = 9$,<\/span> so <span class=\"nw\">$a + b = -6$.<\/span>"}, {"q": "The solution of $y = 2x + 1$ and $y = -x + 7$ has $x =$", "accept": ["2"], "exp": "$2x + 1 = -x + 7$ gives <span class=\"nw\">$3x = 6$,<\/span> so $x = 2$ (and $y = 5$)."}]}];
+var GAUNTLET = [{"type": "mc", "diff": "Easy", "stem": "The table shows four values of $x$ and their corresponding values of <span class=\"nw\">$f(x)$,<\/span> where $f$ is a linear function.<table class='vtab'><tr><th>$x$<\/th><td>$-1$<\/td><td>$0$<\/td><td>$1$<\/td><td>$2$<\/td><\/tr><tr><th>$f(x)$<\/th><td>$7$<\/td><td>$4$<\/td><td>$1$<\/td><td>$-2$<\/td><\/tr><\/table>Which equation defines <span class=\"nw\">$f$?<\/span>", "options": ["$f(x) = 4 + 3x$", "$f(x) = 3 - 4x$", "$f(x) = -3x - 4$", "$f(x) = 4 - 3x$"], "correct": 3, "desmos": ["y=4-3x", "(-1,7),(0,4),(1,1),(2,-2)"], "sol": "<strong>Given:<\/strong> four points of a line.<br><br>$f(0) = 4$ is the $y$-intercept. Each step of $1$ in $x$ drops $f$ by <span class=\"nw\">$3$,<\/span> so <span class=\"nw\">$m = -3$:<\/span> <span class=\"nw\">$f(x) = -3x + 4$.<\/span> Check one more row: <span class=\"nw\">$f(2) = -6 + 4 = -2$.<\/span> ✓", "trap": "$4 + 3x$ has the right intercept and the wrong sign; $-3x - 4$ has the right slope and the wrong intercept. Checking one extra row eliminates both in five seconds."}, {"type": "ne", "diff": "Easy", "stem": "In the $xy$-plane, the graph of <span class=\"nw\">$y = 2x + b$,<\/span> where $b$ is a constant, passes through the point <span class=\"nw\">$(3, 11)$.<\/span> What is the value of <span class=\"nw\">$b$?<\/span>", "label": "$b =$", "accept": ["5"], "desmos": ["y=2x+5", "(3,11)"], "sol": "<strong>Given:<\/strong> a slope and one point.<br><br>Substitute the point: <span class=\"nw\">$11 = 2(3) + b$,<\/span> so <span class=\"nw\">$b = 5$.<\/span>", "trap": "Nothing to compute but the substitution. On easy items the only risk is speed: read which constant is being asked for."}, {"type": "mc", "diff": "Easy to medium", "stem": "The equation $T = 0.4m + 12$ gives the temperature <span class=\"nw\">$T$,<\/span> in degrees Celsius, of a cup of water $m$ minutes after a heater is turned on. Which of the following is the best interpretation of $0.4$ in this context?", "options": ["The temperature of the water, in degrees Celsius, when the heater is turned on", "The increase in the temperature of the water, in degrees Celsius, each minute", "The number of minutes it takes the temperature of the water to increase by 1 degree Celsius", "The temperature of the water, in degrees Celsius, after 1 minute"], "correct": 1, "sol": "<strong>Given:<\/strong> a linear model in slope-intercept form.<br><br>$0.4$ multiplies <span class=\"nw\">$m$,<\/span> so it is the slope: the change in $T$ for each $1$-minute change in <span class=\"nw\">$m$.<\/span> The $12$ is the starting temperature (choice A), and the temperature after one minute is $12.4$ (choice D).", "trap": "Choice C reverses the rate: $0.4$ degrees per minute, not $0.4$ minutes per degree. Interpretation items reward one habit: say the slope as a “per” sentence with the units in the right order."}, {"type": "ne", "diff": "Medium", "stem": "If $f$ is a linear function with $f(2) = -1$ and <span class=\"nw\">$f(5) = 8$,<\/span> what is the $x$-coordinate of the $x$-intercept of the graph of <span class=\"nw\">$y = f(x)$?<\/span>", "label": "$x =$", "accept": ["7/3", "2.333", "2.3333", "2.33"], "desmos": ["y=3x-7"], "sol": "<strong>Given:<\/strong> the points $(2, -1)$ and <span class=\"nw\">$(5, 8)$.<\/span><br><br>$m = \\tfrac{8 - (-1)}{5 - 2} = 3$, so $f(x) = -1 + 3(x - 2) = 3x - 7$. Set <span class=\"nw\">$f(x) = 0$:<\/span> <span class=\"nw\">$x = \\tfrac{7}{3}$.<\/span>", "trap": "The $y$-intercept ($-7$) is the easy one to find; the $x$-intercept needs <span class=\"nw\">$y = 0$,<\/span> not <span class=\"nw\">$x = 0$.<\/span> On a student-produced response, $7/3$ and $2.333$ both count."}, {"type": "mc", "diff": "Medium", "stem": "The table shows the height <span class=\"nw\">$h(t)$,<\/span> in inches, of a plant $t$ days after it was planted.<table class='vtab'><tr><th>$t$<\/th><td>$0$<\/td><td>$10$<\/td><td>$20$<\/td><td>$30$<\/td><td>$40$<\/td><\/tr><tr><th>$h(t)$<\/th><td>$2$<\/td><td>$5$<\/td><td>$11$<\/td><td>$20$<\/td><td>$26$<\/td><\/tr><\/table>Over which interval is the average rate of change of $h$ the greatest?", "options": ["From $t = 0$ to $t = 10$", "From $t = 10$ to $t = 20$", "From $t = 20$ to $t = 30$", "From $t = 30$ to $t = 40$"], "correct": 2, "sol": "<strong>Given:<\/strong> a table of a nonlinear function.<br><br>Average rates, in inches per day: <span class=\"nw\">$\\tfrac{5 - 2}{10} = 0.3$,<\/span> <span class=\"nw\">$\\tfrac{11 - 5}{10} = 0.6$,<\/span> $\\tfrac{20 - 11}{10} = 0.9$, $\\tfrac{26 - 20}{10} = 0.6$. The greatest is from $t = 20$ to <span class=\"nw\">$t = 30$.<\/span>", "trap": "The interval with the biggest heights ($30$ to $40$) is not the interval with the fastest growth. Average rate of change is a difference over an interval, and it has to be computed for every option."}, {"type": "mc", "diff": "Medium", "stem": "Which equation represents the line that passes through the point $(-2, 5)$ and is perpendicular to the line <span class=\"nw\">$4x + 2y = 7$?<\/span>", "options": ["$y - 5 = \\tfrac{1}{2}(x + 2)$", "$y - 5 = -2(x + 2)$", "$y + 5 = \\tfrac{1}{2}(x - 2)$", "$y - 5 = -\\tfrac{1}{2}(x + 2)$"], "correct": 0, "desmos": ["4x+2y=7", "y-5=\\frac{1}{2}(x+2)", "(-2,5)"], "sol": "<strong>Given:<\/strong> a point and a line in standard form.<br><br>The given slope is <span class=\"nw\">$-\\tfrac{4}{2} = -2$,<\/span> so the perpendicular slope is <span class=\"nw\">$\\tfrac{1}{2}$.<\/span> Point-slope through <span class=\"nw\">$(-2, 5)$:<\/span> $y - 5 = \\tfrac{1}{2}(x + 2)$.", "trap": "Choice B is parallel, not perpendicular. Choice C has the point's signs backwards: point-slope subtracts the coordinates, so $(-2, 5)$ gives $(x + 2)$ and <span class=\"nw\">$(y - 5)$.<\/span>"}, {"type": "ne", "diff": "Medium", "stem": "A tutoring center charges a one-time registration fee plus a fixed rate per hour. A student who booked $3$ hours paid $\\$155$ in total, and a student who booked $5$ hours paid $\\$235$ in total. How much, in dollars, would a student pay for $8$ hours?", "label": "Dollars $=$", "accept": ["355"], "desmos": ["y=40x+35", "(3,155),(5,235),(8,355)"], "sol": "<strong>Given:<\/strong> the points $(3, 155)$ and $(5, 235)$ on a line.<br><br>Rate $= \\tfrac{235 - 155}{5 - 3} = 40$ dollars per hour. Fee <span class=\"nw\">$= 155 - 3(40) = 35$.<\/span> For $8$ hours: <span class=\"nw\">$35 + 8(40) = 355$.<\/span>", "trap": "A fixed charge plus a per-unit charge is always a line: the rate is the slope and the fee is the intercept. Two totals are two points, and Rule 2 does the rest."}, {"type": "ne", "diff": "Medium to high", "stem": "$$6x + ky = 11$$ $$9x - 12y = 7$$ In the system of equations above, $k$ is a constant. If the system has no solution, what is the value of <span class=\"nw\">$k$?<\/span>", "label": "$k =$", "accept": ["-8"], "desmos": ["6x-8y=11", "9x-12y=7"], "sol": "<strong>Given:<\/strong> no solution, so the lines are parallel and distinct.<br><br>Ratio test: $\\tfrac{6}{9} = \\tfrac{k}{-12}$, so $k = -12 \\cdot \\tfrac{2}{3} = -8$. The constants have ratio $\\tfrac{11}{7} \\neq \\tfrac{2}{3}$, so the lines are different. ✓", "trap": "Both slopes come out to $\\tfrac{3}{4}$ once <span class=\"nw\">$k = -8$;<\/span> a quick slope check confirms the ratio test. The sign of $k$ is the usual slip: $\\tfrac{k}{-12}$ must equal a positive <span class=\"nw\">$\\tfrac{2}{3}$,<\/span> so $k$ is negative."}, {"type": "mc", "diff": "High medium", "stem": "$$ax + 3y = 12$$ $$5x + by = 20$$ In the system of equations above, $a$ and $b$ are constants. If the system has infinitely many solutions, what is the value of <span class=\"nw\">$a + b$?<\/span>", "options": ["$6$", "$10$", "$15$", "$8$"], "correct": 3, "desmos": ["3x+3y=12", "5x+5y=20"], "sol": "<strong>Given:<\/strong> infinitely many solutions, so the second equation is a multiple of the first.<br><br>The multiplier comes from the constants: $20 \\div 12 = \\tfrac{5}{3}$. Then $5 = \\tfrac{5}{3}a$ gives <span class=\"nw\">$a = 3$,<\/span> and $b = \\tfrac{5}{3} \\cdot 3 = 5$. So <span class=\"nw\">$a + b = 8$.<\/span>", "trap": "The multiplier hides in the constants, $12$ and <span class=\"nw\">$20$.<\/span> Guessing $a = 5$ because “there is a $5$ in the other equation” leads to <span class=\"nw\">$a + b = 10$,<\/span> which is on the list."}, {"type": "mc", "diff": "High medium", "fig": "g5", "stem": "In the $xy$-plane above, line $\\ell$ passes through the points $(0, 6)$ and <span class=\"nw\">$(4, 0)$.<\/span> Point $P(a, b)$ lies on line <span class=\"nw\">$\\ell$.<\/span> If <span class=\"nw\">$b = a$,<\/span> what is the value of <span class=\"nw\">$a$?<\/span>", "options": ["$\\dfrac{6}{5}$", "$\\dfrac{5}{2}$", "$\\dfrac{12}{5}$", "$3$"], "correct": 2, "desmos": ["y=-\\frac{3}{2}x+6", "y=x"], "sol": "<strong>Given:<\/strong> two points on $\\ell$ and the condition <span class=\"nw\">$b = a$.<\/span><br><br>Slope $= \\tfrac{0 - 6}{4 - 0} = -\\tfrac{3}{2}$, so <span class=\"nw\">$\\ell$:<\/span> <span class=\"nw\">$y = -\\tfrac{3}{2}x + 6$.<\/span> The point $(a, a)$ is on it: <span class=\"nw\">$a = -\\tfrac{3}{2}a + 6$,<\/span> so $\\tfrac{5}{2}a = 6$ and <span class=\"nw\">$a = \\tfrac{12}{5}$.<\/span>", "trap": "The figure invites an eyeball guess near <span class=\"nw\">$2.5$.<\/span> The condition $b = a$ is the line <span class=\"nw\">$y = x$,<\/span> and the answer is where the two lines cross. Desmos shows it instantly: graph both and click the intersection."}];
+var CHALLENGE = [{"type": "ne", "diff": "High medium", "stem": "In the $xy$-plane, line $k$ passes through the points $(a, 2a)$ and <span class=\"nw\">$(3a, a)$,<\/span> where $a$ is a nonzero constant. What is the slope of line <span class=\"nw\">$k$?<\/span>", "label": "Slope $=$", "accept": ["-1/2", "-0.5", "-.5"], "desmos": ["a=2", "(a,2a),(3a,a)", "y-2a=-\\frac{1}{2}(x-a)"], "sol": "<strong>Given:<\/strong> two points with an unknown in every coordinate.<br><br>$m = \\dfrac{a - 2a}{3a - a} = \\dfrac{-a}{2a} = -\\tfrac{1}{2}$. The $a$ cancels, so the slope is the same for every nonzero <span class=\"nw\">$a$.<\/span>", "trap": "An unknown that cancels is the whole point: the slope does not depend on <span class=\"nw\">$a$.<\/span> Picking a number is just as fast and safer under time pressure: $a = 2$ gives $(2, 4)$ and <span class=\"nw\">$(6, 2)$,<\/span> slope $\\tfrac{2 - 4}{6 - 2} = -\\tfrac{1}{2}$. (The Desmos load uses a slider for <span class=\"nw\">$a$:<\/span> drag it and watch the slope stay put.)"}, {"type": "mc", "diff": "High medium", "stem": "The graph of <span class=\"nw\">$y = mx + 6$,<\/span> where $m < 0$, forms a triangle with the $x$-axis and the $y$-axis. If the area of the triangle is <span class=\"nw\">$24$,<\/span> what is the value of <span class=\"nw\">$m$?<\/span>", "options": ["$-\\dfrac{4}{3}$", "$-\\dfrac{3}{4}$", "$-\\dfrac{1}{4}$", "$-3$"], "correct": 1, "desmos": ["y=-\\frac{3}{4}x+6"], "sol": "<strong>Given:<\/strong> $y$-intercept $6$ and area <span class=\"nw\">$24$.<\/span><br><br>One leg is the $y$-intercept, <span class=\"nw\">$6$.<\/span> Area $24 = \\tfrac{1}{2} \\cdot \\text{base} \\cdot 6$ gives a base of <span class=\"nw\">$8$,<\/span> so the $x$-intercept is <span class=\"nw\">$8$.<\/span> The slope from $(0, 6)$ to $(8, 0)$ is $\\tfrac{0 - 6}{8 - 0} = -\\tfrac{3}{4}$.", "trap": "$-\\tfrac{4}{3}$ is run over rise. Slope is rise over run: from the $y$-intercept to the $x$-intercept you fall $6$ while moving right <span class=\"nw\">$8$.<\/span>", "extrasIntro": "Area questions come in a few costumes, and the move is always the same: find the three vertices, put the base on an axis. Three more reps.", "extras": [{"type": "ne", "q": "The triangle formed by $y = 2x + 8$ and the two axes has area", "label": "Area $=$", "accept": ["16"], "exp": "<strong>Step 1: intercepts.<\/strong> $x$-intercept <span class=\"nw\">$-4$,<\/span> $y$-intercept <span class=\"nw\">$8$.<\/span><br><strong>Step 2: lengths are positive.<\/strong> Base <span class=\"nw\">$4$,<\/span> height <span class=\"nw\">$8$:<\/span> area <span class=\"nw\">$\\tfrac{1}{2}(4)(8) = 16$.<\/span>"}, {"type": "ne", "q": "The line <span class=\"nw\">$y = -x + c$,<\/span> with $c > 0$, forms a triangle of area $18$ with the two axes. Then $c =$", "label": "$c =$", "accept": ["6"], "exp": "<strong>Step 1: intercepts.<\/strong> Both intercepts equal <span class=\"nw\">$c$.<\/span><br><strong>Step 2: area.<\/strong> <span class=\"nw\">$\\tfrac{1}{2}c^2 = 18$,<\/span> so $c^2 = 36$ and <span class=\"nw\">$c = 6$.<\/span>"}, {"type": "ne", "q": "The lines $y = x + 3$ and $y = -2x + 9$ and the $x$-axis enclose a triangle. Its area is", "label": "Area $=$", "accept": ["18.75", "75/4"], "exp": "<strong>Step 1: vertices.<\/strong> $x$-intercepts $-3$ and <span class=\"nw\">$4.5$;<\/span> the lines meet where <span class=\"nw\">$x + 3 = -2x + 9$,<\/span> so $x = 2$ and <span class=\"nw\">$y = 5$.<\/span><br><strong>Step 2: base on the $x$-axis.<\/strong> Base <span class=\"nw\">$4.5 - (-3) = 7.5$,<\/span> height <span class=\"nw\">$5$:<\/span> area $\\tfrac{1}{2}(7.5)(5) = 18.75$."}]}, {"type": "mc", "diff": "High medium", "stem": "In the $xy$-plane, line $\\ell$ is the reflection of the graph of $4x - 5y = 20$ across the $x$-axis. Which equation represents line <span class=\"nw\">$\\ell$?<\/span>", "options": ["$4x - 5y = -20$", "$-4x - 5y = 20$", "$4x + 5y = 20$", "$5x - 4y = 20$"], "correct": 2, "desmos": ["4x-5y=20", "4x+5y=20"], "sol": "<strong>Given:<\/strong> a reflection across the $x$-axis, so <span class=\"nw\">$(x, y) \\to (x, -y)$.<\/span><br><br>Replace $y$ with <span class=\"nw\">$-y$:<\/span> <span class=\"nw\">$4x - 5(-y) = 20$,<\/span> which is <span class=\"nw\">$4x + 5y = 20$.<\/span> Check with the $x$-intercept <span class=\"nw\">$(5, 0)$:<\/span> an $x$-axis reflection cannot move it, and <span class=\"nw\">$4(5) + 0 = 20$.<\/span> ✓", "trap": "Choice B is the reflection across the $y$-axis (replace $x$ with $-x$), and choice A is the reflection through the origin. The $x$-intercept is the anchor: whichever choice keeps $(5, 0)$ is the one."}, {"type": "ne", "diff": "Hard", "stem": "The graph of $5x - 2y = 8$ in the $xy$-plane is translated down $3$ units. What is the $x$-coordinate of the $x$-intercept of the resulting graph?", "label": "$x =$", "accept": ["14/5", "2.8"], "desmos": ["5x-2y=8", "y=\\frac{5}{2}x-7"], "sol": "<strong>Given:<\/strong> a line and a vertical shift.<br><br>Solve for $y$ first: <span class=\"nw\">$y = \\tfrac{5}{2}x - 4$.<\/span> Translating down $3$ subtracts $3$ from every output: <span class=\"nw\">$y = \\tfrac{5}{2}x - 7$.<\/span> Set <span class=\"nw\">$y = 0$:<\/span> <span class=\"nw\">$\\tfrac{5}{2}x = 7$,<\/span> so <span class=\"nw\">$x = \\tfrac{14}{5}$.<\/span><br>Same answer in standard form: replace $y$ with $y + 3$ to get <span class=\"nw\">$5x - 2(y + 3) = 8$,<\/span> i.e. <span class=\"nw\">$5x - 2y = 14$,<\/span> whose $x$-intercept is <span class=\"nw\">$\\tfrac{14}{5}$.<\/span>", "trap": "Shifting the original $x$-intercept ($\\tfrac{8}{5}$) up or down by $3$ is the standard wrong move: a vertical shift moves the $y$-intercept by <span class=\"nw\">$3$,<\/span> and the $x$-intercept moves by $3$ divided by the slope. Write the shifted equation and read the intercept from it."}, {"type": "ne", "diff": "Hard", "fig": "c3", "stem": "In the $xy$-plane above, line $m$ passes through $P(-3, 0)$ and <span class=\"nw\">$R(1, 4)$,<\/span> and line $\\ell$ is perpendicular to line $m$ at <span class=\"nw\">$R$.<\/span> Line $\\ell$ crosses the $x$-axis at <span class=\"nw\">$Q$.<\/span> What is the area of triangle <span class=\"nw\">$PQR$?<\/span>", "label": "Area $=$", "accept": ["16"], "desmos": ["y=x+3", "y=-x+5", "(-3,0),(1,4),(5,0)"], "sol": "<strong>Given:<\/strong> two points on <span class=\"nw\">$m$,<\/span> and $\\ell \\perp m$ at <span class=\"nw\">$R$.<\/span><br><br>Slope of <span class=\"nw\">$m$:<\/span> $\\tfrac{4 - 0}{1 - (-3)} = 1$, so $\\ell$ has slope <span class=\"nw\">$-1$:<\/span> <span class=\"nw\">$y - 4 = -(x - 1)$,<\/span> which is <span class=\"nw\">$y = -x + 5$.<\/span> Its $x$-intercept is <span class=\"nw\">$Q(5, 0)$.<\/span> The base $PQ$ lies on the $x$-axis with length <span class=\"nw\">$5 - (-3) = 8$,<\/span> and the height is the $y$-coordinate of <span class=\"nw\">$R$,<\/span> which is <span class=\"nw\">$4$.<\/span> Area $= \\tfrac{1}{2}(8)(4) = 16$.", "trap": "The legs $PR$ and $QR$ also work ($4\\sqrt{2}$ each, area $\\tfrac{1}{2} \\cdot 32 = 16$), but the base-on-axis route needs no square roots. Perpendicular at $R$ is the hint that $\\ell$ has slope <span class=\"nw\">$-1$.<\/span>"}, {"type": "mc", "diff": "Hard", "stem": "In the $xy$-plane, the graph of the linear function $f$ has $x$-intercept $(c, 0)$ and $y$-intercept <span class=\"nw\">$(0, d)$,<\/span> where $c > 0$ and $d > 0$. The slope of the graph is <span class=\"nw\">$-\\tfrac{3}{5}$,<\/span> and <span class=\"nw\">$c + d = 16$.<\/span> What is the value of <span class=\"nw\">$d$?<\/span>", "options": ["$6$", "$10$", "$8$", "$\\dfrac{48}{5}$"], "correct": 0, "desmos": ["y=-\\frac{3}{5}x+6", "(10,0),(0,6)"], "sol": "<strong>Given:<\/strong> both intercepts unknown, one slope, one sum.<br><br>The slope between $(c, 0)$ and $(0, d)$ is $\\tfrac{d - 0}{0 - c} = -\\tfrac{d}{c}$, so $\\tfrac{d}{c} = \\tfrac{3}{5}$ and <span class=\"nw\">$d = \\tfrac{3}{5}c$.<\/span> Then $c + \\tfrac{3}{5}c = 16$ gives <span class=\"nw\">$\\tfrac{8}{5}c = 16$,<\/span> so $c = 10$ and <span class=\"nw\">$d = 6$.<\/span>", "trap": "$10$ is <span class=\"nw\">$c$,<\/span> not <span class=\"nw\">$d$:<\/span> reread which intercept the question wants. The one hard step is seeing that a line through two intercepts has slope <span class=\"nw\">$-\\tfrac{d}{c}$;<\/span> after that it is a single equation.", "extrasIntro": "Intercept problems are two points in disguise: $(c, 0)$ and <span class=\"nw\">$(0, d)$.<\/span> Three more reps.", "extras": [{"type": "ne", "q": "A line has $x$-intercept $4$ and $y$-intercept <span class=\"nw\">$-6$.<\/span> Its slope is", "label": "Slope $=$", "accept": ["3/2", "1.5"], "exp": "<strong>Two points:<\/strong> $(4, 0)$ and <span class=\"nw\">$(0, -6)$.<\/span> Slope $= \\tfrac{-6 - 0}{0 - 4} = \\tfrac{3}{2}$."}, {"type": "ne", "q": "A line with slope $-2$ and $y$-intercept $10$ has $x$-intercept", "label": "$x =$", "accept": ["5"], "exp": "<span class=\"nw\">$y = -2x + 10$;<\/span> set <span class=\"nw\">$y = 0$:<\/span> <span class=\"nw\">$x = 5$.<\/span>"}, {"type": "ne", "q": "A line has $x$-intercept $(c, 0)$ and $y$-intercept <span class=\"nw\">$(0, 2c)$,<\/span> where $c > 0$, and passes through <span class=\"nw\">$(3, 4)$.<\/span> Then $c =$", "label": "$c =$", "accept": ["5"], "exp": "<strong>Step 1: slope from the intercepts.<\/strong> <span class=\"nw\">$-\\tfrac{2c}{c} = -2$,<\/span> so <span class=\"nw\">$y = -2x + 2c$.<\/span><br><strong>Step 2: use the point.<\/strong> <span class=\"nw\">$4 = -6 + 2c$,<\/span> so <span class=\"nw\">$c = 5$.<\/span>"}]}];
+var EXIT = [{"q": "The slope of the line $3x + 5y = 10$ is", "opts": ["$\\tfrac{3}{5}$", "$3$", "$-\\tfrac{5}{3}$", "$-\\tfrac{3}{5}$"], "correct": 3, "exp": "$-\\tfrac{A}{B} = -\\tfrac{3}{5}$. Solving for <span class=\"nw\">$y$:<\/span> <span class=\"nw\">$y = -\\tfrac{3}{5}x + 2$.<\/span>"}, {"q": "If $f$ is linear with $f(1) = 5$ and <span class=\"nw\">$f(3) = 11$,<\/span> then $f(0) =$", "opts": ["$3$", "$2$", "$5$", "$8$"], "correct": 1, "exp": "<span class=\"nw\">$m = 3$,<\/span> so <span class=\"nw\">$f(0) = 5 - 3(1) = 2$.<\/span> That is the $y$-intercept: <span class=\"nw\">$f(x) = 3x + 2$.<\/span>"}, {"q": "For the system $2x - 3y = 5$ and $4x - 6y = k$ to have no solution, which must be true?", "opts": ["$k = 10$", "$k = 5$", "$k \\neq 10$", "$k = -10$"], "correct": 2, "exp": "The slopes already match (the second equation doubles the first on the left). $k = 10$ would make the same line (infinitely many); any other $k$ makes parallel, distinct lines: no solution."}];
+
+/* ================= SVG coordinate figures ================= */
+var figCounter = 0;
+function graphSVG(o) {
+    var w = o.w || 320, h = o.h || 240, pad = 22;
+    var xmin = o.xmin, xmax = o.xmax, ymin = o.ymin, ymax = o.ymax;
+    var id = 'arr' + (++figCounter);
+    function X(x) { return pad + (x - xmin) / (xmax - xmin) * (w - 2 * pad); }
+    function Y(y) { return h - pad - (y - ymin) / (ymax - ymin) * (h - 2 * pad); }
+    function inBox(p) { return p[0] >= xmin - 1e-9 && p[0] <= xmax + 1e-9 && p[1] >= ymin - 1e-9 && p[1] <= ymax + 1e-9; }
+    function clipLine(m, b) {
+        var c = [[xmin, m * xmin + b], [xmax, m * xmax + b]];
+        if (m !== 0) { c.push([(ymin - b) / m, ymin]); c.push([(ymax - b) / m, ymax]); }
+        c = c.filter(inBox).sort(function(p, q) { return p[0] - q[0]; });
+        return c.length >= 2 ? [c[0], c[c.length - 1]] : null;
+    }
+    var s = '<svg class="fig" viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" role="img" aria-label="' + (o.alt || 'coordinate graph') + '">';
+    s += '<defs><marker id="' + id + '" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2D2D2D"/></marker></defs>';
+    if (o.poly) {
+        s += '<polygon class="shade" points="' + o.poly.map(function(p) { return X(p[0]) + ',' + Y(p[1]); }).join(' ') + '"/>';
+    }
+    // axes with arrowheads
+    if (ymin <= 0 && ymax >= 0) s += '<line class="ax" x1="' + X(xmin) + '" y1="' + Y(0) + '" x2="' + X(xmax) + '" y2="' + Y(0) + '" marker-end="url(#' + id + ')"/>';
+    if (xmin <= 0 && xmax >= 0) s += '<line class="ax" x1="' + X(0) + '" y1="' + Y(ymin) + '" x2="' + X(0) + '" y2="' + Y(ymax) + '" marker-end="url(#' + id + ')"/>';
+    if (ymin <= 0 && ymax >= 0) s += '<text class="it" x="' + (X(xmax) - 2) + '" y="' + (Y(0) + 15) + '">x</text>';
+    if (xmin <= 0 && xmax >= 0) s += '<text class="it" x="' + (X(0) + 7) + '" y="' + (Y(ymax) + 6) + '">y</text>';
+    if (xmin <= 0 && xmax >= 0 && ymin <= 0 && ymax >= 0) s += '<text class="it" x="' + (X(0) - 12) + '" y="' + (Y(0) + 14) + '">O</text>';
+    (o.ticks || []).forEach(function(t) {
+        if (t.x != null) s += '<line class="ax" x1="' + X(t.x) + '" y1="' + (Y(0) - 4) + '" x2="' + X(t.x) + '" y2="' + (Y(0) + 4) + '"/><text x="' + (X(t.x) - 4) + '" y="' + (Y(0) + 16) + '">' + t.label + '</text>';
+        if (t.y != null) s += '<line class="ax" x1="' + (X(0) - 4) + '" y1="' + Y(t.y) + '" x2="' + (X(0) + 4) + '" y2="' + Y(t.y) + '"/><text x="' + (X(0) - 16 - 6 * (String(t.label).length - 1)) + '" y="' + (Y(t.y) + 4) + '">' + t.label + '</text>';
+    });
+    (o.lines || []).forEach(function(l) {
+        var pts = clipLine(l.m, l.b);
+        if (!pts) return;
+        s += '<line class="' + (l.cls || 'ln') + '" x1="' + X(pts[0][0]) + '" y1="' + Y(pts[0][1]) + '" x2="' + X(pts[1][0]) + '" y2="' + Y(pts[1][1]) + '"/>';
+        if (l.label) s += '<text class="it" x="' + (X(l.lx) + (l.dx || 0)) + '" y="' + (Y(l.ly) + (l.dy || 0)) + '">' + l.label + '</text>';
+    });
+    (o.segs || []).forEach(function(g) {
+        s += '<line class="' + (g.cls || 'dash') + '" x1="' + X(g.x1) + '" y1="' + Y(g.y1) + '" x2="' + X(g.x2) + '" y2="' + Y(g.y2) + '"/>';
+    });
+    (o.squares || []).forEach(function(q) {
+        // small right-angle marker at (x,y) with unit directions u, v (math coords), size in px
+        var k = q.size || 9;
+        var ux = q.u[0] / Math.hypot(q.u[0], q.u[1]), uy = -q.u[1] / Math.hypot(q.u[0], q.u[1]);
+        var vx = q.v[0] / Math.hypot(q.v[0], q.v[1]), vy = -q.v[1] / Math.hypot(q.v[0], q.v[1]);
+        var px = X(q.x), py = Y(q.y);
+        s += '<path class="sq" d="M' + (px + ux * k) + ',' + (py + uy * k) + ' L' + (px + ux * k + vx * k) + ',' + (py + uy * k + vy * k) + ' L' + (px + vx * k) + ',' + (py + vy * k) + '"/>';
+    });
+    (o.points || []).forEach(function(p) {
+        s += '<circle class="pt" cx="' + X(p.x) + '" cy="' + Y(p.y) + '" r="3.6"/>';
+        if (p.label) s += '<text class="it" x="' + (X(p.x) + (p.dx == null ? 7 : p.dx)) + '" y="' + (Y(p.y) + (p.dy == null ? -7 : p.dy)) + '">' + p.label + '</text>';
+    });
+    (o.labels || []).forEach(function(t) {
+        s += '<text class="' + (t.cls || 'it') + '" x="' + (X(t.x) + (t.dx || 0)) + '" y="' + (Y(t.y) + (t.dy || 0)) + '">' + t.text + '</text>';
+    });
+    return s + '</svg>';
+}
+var FIGS = {
+    slope: { xmin: -1, xmax: 7, ymin: -1, ymax: 6, w: 320, h: 220, alt: 'a line through two labeled points with the horizontal and vertical legs between them',
+        lines: [{ m: 2/3, b: 2/3, label: 'y = f(x)', lx: 5.6, ly: 5.4, dx: -58, dy: 2 }],
+        segs: [{ x1: 2, y1: 2, x2: 5, y2: 2 }, { x1: 5, y1: 2, x2: 5, y2: 4 }],
+        points: [{ x: 2, y: 2, label: '(x₁, y₁)', dx: -58, dy: -8 }, { x: 5, y: 4, label: '(x₂, y₂)', dx: 8, dy: 16 }],
+        labels: [{ x: 3.5, y: 2, text: 'Δx', dx: -8, dy: 16 }, { x: 5, y: 3, text: 'Δy', dx: 7, dy: 4 }] },
+    area: { xmin: -2, xmax: 7, ymin: -6, ymax: 7, w: 320, h: 260, alt: 'two lines and the y-axis enclosing a triangle',
+        poly: [[0, -4], [0, 5], [3, 2]],
+        lines: [{ m: 2, b: -4, label: 'f', lx: 4.6, ly: 5.2, dx: 6, dy: 0 }, { m: -1, b: 5, cls: 'ln2', label: 'g', lx: 6, ly: -1, dx: 6, dy: -2 }],
+        points: [{ x: 0, y: -4, label: '(0, −4)', dx: 8, dy: 5 }, { x: 0, y: 5, label: '(0, 5)', dx: -50, dy: 14 }, { x: 3, y: 2, label: '(3, 2)', dx: 10, dy: 4 }] },
+    g5: { xmin: -2, xmax: 7, ymin: -2, ymax: 8, w: 320, h: 250, alt: 'line l through (0,6) and (4,0), the dashed line y = x, and point P where they meet',
+        lines: [{ m: -1.5, b: 6, label: 'ℓ', lx: 6, ly: -2.5, dx: 4, dy: -6 }, { m: 1, b: 0, cls: 'dash' }],
+        points: [{ x: 0, y: 6, label: '(0, 6)', dx: 8, dy: -2 }, { x: 4, y: 0, label: '(4, 0)', dx: -40, dy: 16 }, { x: 2.4, y: 2.4, label: 'P(a, b)', dx: -62, dy: 4 }] },
+    c3: { xmin: -5, xmax: 7, ymin: -2, ymax: 7, w: 340, h: 250, alt: 'line m through P and R, line l perpendicular to m at R, meeting the x-axis at Q',
+        poly: [[-3, 0], [5, 0], [1, 4]],
+        lines: [{ m: 1, b: 3, label: 'm', lx: 3.6, ly: 6.6, dx: 4, dy: 4 }, { m: -1, b: 5, cls: 'ln2', label: 'ℓ', lx: -1.6, ly: 6.6, dx: -10, dy: 4 }],
+        squares: [{ x: 1, y: 4, u: [-1, -1], v: [1, -1], size: 9 }],
+        points: [{ x: -3, y: 0, label: 'P(−3, 0)', dx: 6, dy: 16 }, { x: 1, y: 4, label: 'R(1, 4)', dx: -22, dy: -20 }, { x: 5, y: 0, label: 'Q', dx: -14, dy: 16 }] }
+};
+function fig(name) { return FIGS[name] ? graphSVG(FIGS[name]) : ''; }
+function fillFigSlots() {
+    document.querySelectorAll('.fig-slot').forEach(function(el) { el.innerHTML = fig(el.getAttribute('data-fig')); });
+}
+
+/* ================= Rule stepper ================= */
+var stepState = { idx: 0, done: {} };
+function stepTitle(s) { return (s.ess ? '<span class="star">&#9733;</span> ' : '') + s.name; }
+function renderStep() {
+    var i = stepState.idx, s = STEPS[i];
+    document.getElementById('stepCount').textContent = 'Step ' + (i+1) + ' of ' + STEPS.length;
+    var dots = '';
+    STEPS.forEach(function(_, di) {
+        var cls = 'step-dot' + (di === i ? ' current' : '') + (stepState.done[di] ? ' done' : '');
+        dots += '<button class="' + cls + '" onclick="stepState.idx=' + di + ';renderStep();" aria-label="step ' + (di+1) + '"></button>';
+    });
+    document.getElementById('stepDots').innerHTML = dots;
+    var m = s.micro, mid = 'micro' + i, microHtml = '';
+    if (m.mc) {
+        microHtml = '<div class="mc-opts" id="opts-' + mid + '">' + m.opts.map(function(o, oi) {
+            return '<button class="mc-opt" onclick="microMC(' + i + ',' + oi + ')">' + o + '</button>';
+        }).join('') + '</div>';
+    } else {
+        microHtml = '<div class="drill-row">? = <input type="text" id="in-' + mid + '" autocomplete="off" onkeydown="if(event.key===\'Enter\')microExp(' + i + ')">' +
+            '<button class="btn btn-green btn-sm" onclick="microExp(' + i + ')">Check</button>' +
+            '<span class="fb" id="fb-' + mid + '"></span></div>';
+    }
+    document.getElementById('stepBody').innerHTML =
+        '<div class="step-rule-name">' + stepTitle(s) + '</div>' +
+        '<div class="step-rule">' + s.rule + '</div>' +
+        '<p class="step-say">' + s.say + '</p>' +
+        (s.fig ? fig(s.fig) : '') +
+        '<div class="wk-prob"><div class="wk-label">The problem</div><div class="wk-q">' + s.prob + '</div></div>' +
+        '<div class="step-ex"><div class="sol-label">Solution</div>' + s.sol + '</div>' +
+        '<div class="trap-box"><div class="trap-label">The trap it pairs with</div>' + s.trap + '</div>' +
+        '<div class="micro"><div class="micro-label">Ten-second check</div><div class="micro-q">' + m.q + '</div>' + microHtml +
+        '<div class="fb-exp" id="exp-' + mid + '">' + m.exp + '</div></div>';
+    document.getElementById('stepBack').disabled = (i === 0);
+    document.getElementById('stepNext').disabled = (i === STEPS.length - 1);
+    document.getElementById('stepHint').textContent = (i === STEPS.length - 1) ? 'Done here? Fluency Drills is next.' : (i === 5 ? 'That was the last starred step. The next three are the extras.' : '');
+    typeset(document.getElementById('stepBody'));
+}
+function stepNav(d) { stepState.idx = Math.max(0, Math.min(STEPS.length-1, stepState.idx + d)); renderStep(); }
+function microExp(i) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var ok = answerMatches(document.getElementById('in-' + mid).value, s.micro.accept);
+    var fb = document.getElementById('fb-' + mid);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ got it' : '✗ not yet';
+    if (ok) { stepState.done[i] = true; }
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function microMC(i, chosen) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var opts = document.getElementById('opts-' + mid).children;
+    for (var k = 0; k < opts.length; k++) opts[k].classList.remove('right','wrong');
+    var ok = (chosen === s.micro.correct);
+    opts[chosen].classList.add(ok ? 'right' : 'wrong');
+    if (!ok) opts[s.micro.correct].classList.add('right');
+    if (ok) stepState.done[i] = true;
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function renderDotsOnly() {
+    var dots = document.getElementById('stepDots').children;
+    for (var di = 0; di < dots.length; di++) dots[di].classList.toggle('done', !!stepState.done[di]);
+}
+
+/* ================= Fluency drills ================= */
+function renderFluency() {
+    var host = document.getElementById('fluencyList');
+    var html = '', n = 0;
+    FLUENCY.forEach(function(sec, si) {
+        html += '<h3 style="font-family:\'Switzer\',\'Space Grotesk\',sans-serif; color:var(--green-dark); margin:18px 0 10px;">' + sec.sec + '</h3>';
+        sec.items.forEach(function(it, ii) {
+            var id = 'f' + si + '_' + ii;
+            n++;
+            html += '<div class="drill"><div class="drill-q">' + n + '. &nbsp;' + it.q + '</div>';
+            if (it.mc) {
+                html += '<div class="mc-opts" id="opts-' + id + '">';
+                it.opts.forEach(function(o, oi) {
+                    html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+                });
+                html += '</div>';
+            } else {
+                html += '<div class="drill-row">? = <input type="text" id="in-' + id + '" autocomplete="off" onkeydown="if(event.key===\'Enter\')checkExp(\'' + id + '\',' + si + ',' + ii + ')">' +
+                    '<button class="btn btn-green btn-sm" onclick="checkExp(\'' + id + '\',' + si + ',' + ii + ')">Check</button>' +
+                    '<span class="fb" id="fb-' + id + '"></span></div>';
+            }
+            html += '<div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+        });
+    });
+    host.innerHTML = html;
+}
+function normalizeAns(s) {
+    s = (s || '').trim().replace(/\s+/g,'').replace(/^\+/,'').replace(/^\$/,'').replace(/,/g,'');
+    var uni = { '½':'1/2', '⅓':'1/3', '⅔':'2/3', '¼':'1/4', '¾':'3/4', '⅕':'1/5', '−':'-', '–':'-' };
+    Object.keys(uni).forEach(function(k){ s = s.split(k).join(uni[k]); });
+    return s;
+}
+function parseVal(s) {
+    s = normalizeAns(s);
+    if (s === '') return null;
+    var m = s.match(/^(-?\d+(?:\.\d+)?|-?\.\d+)\/(-?\d+(?:\.\d+)?|-?\.\d+)$/);
+    if (m) { var d = parseFloat(m[2]); return d === 0 ? null : parseFloat(m[1]) / d; }
+    if (!/^-?(\d+(\.\d*)?|\.\d+)$/.test(s)) return null;
+    var n = parseFloat(s);
+    return isNaN(n) ? null : n;
+}
+function answerMatches(raw, acceptList) {
+    var val = normalizeAns(raw);
+    if (acceptList.indexOf(val) !== -1) return true;
+    var num = parseVal(raw);
+    if (num == null) return false;
+    for (var i = 0; i < acceptList.length; i++) {
+        var target = parseVal(acceptList[i]);
+        if (target == null) continue;
+        if (Math.abs(num - target) < 1e-9) return true;
+        /* SAT-style tolerance: a decimal truncated or rounded to 3 places counts */
+        if (Math.abs(num - target) < 0.0011 && /\./.test(val)) return true;
+    }
+    return false;
+}
+function checkExp(id, si, ii) {
+    var it = FLUENCY[si].items[ii];
+    var ok = answerMatches(document.getElementById('in-' + id).value, it.accept);
+    var fb = document.getElementById('fb-' + id);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ correct' : '✗ not yet: retry, or peek below';
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+function checkMC(id, chosen, correct) {
+    var opts = document.getElementById('opts-' + id).children;
+    for (var i = 0; i < opts.length; i++) opts[i].classList.remove('right','wrong');
+    opts[chosen].classList.add(chosen === correct ? 'right' : 'wrong');
+    if (chosen !== correct) opts[correct].classList.add('right');
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+
+/* ================= Gauntlet (digital SAT formats) ================= */
+var LETTERS = ['A', 'B', 'C', 'D'];
+var gState = { idx: 0, answers: {}, finished: false };
+function desmosBtn(p) {
+    return p.desmos ? '<button class="btn btn-ghost btn-sm" onclick="loadDesmos(' + js_(p.desmos) + ')" title="Graph this question\'s equations">&#128202; Load into Desmos</button>' : '';
+}
+function js_(arr) { return JSON.stringify(arr).replace(/"/g, '&quot;'); }
+function renderGauntlet() {
+    var host = document.getElementById('gauntletArea');
+    if (gState.finished) { renderGauntletResults(host); return; }
+    var total = GAUNTLET.length, i = gState.idx, p = GAUNTLET[i];
+    var dirs = { mc: 'Select one answer choice.', ne: 'Enter your answer in the box. A fraction like 7/3 or a decimal like 2.333 both count.' };
+    var html = '<div class="testbar"><span class="tprog">Question ' + (i+1) + ' of ' + total + '</span>' + (p.diff ? '<span class="diff-chip">' + p.diff + '</span>' : '') +
+        '<span class="timer-wrap" style="margin-left:auto; color:white;">Timer <button class="tog' + (timers.G.on ? ' on' : '') + '" id="togG" onclick="toggleTimer(\'G\')"></button> <span class="timer-display' + (timers.G.on ? ' on' : '') + '" id="timerG">' + fmtTime(timers.G.sec) + '</span></span></div>' +
+        '<div class="test-stage"><div class="q-directions">' + dirs[p.type] + '</div>';
+    var ans = gState.answers[i];
+    if (p.fig) html += fig(p.fig);
+    html += '<div class="q-stem">' + p.stem + '</div>';
+    if (p.type === 'mc') {
+        html += '<div class="choices">';
+        p.options.forEach(function(c, ci) {
+            html += '<div class="choice' + (ans === ci ? ' selected' : '') + '" onclick="gPick(' + ci + ')"><span class="letter">' + LETTERS[ci] + '</span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else {
+        html += '<div class="ne-entry"><span class="q-stem" style="margin:0;">' + p.label + '</span>' +
+            '<input type="text" id="neIn" value="' + (ans != null ? String(ans).replace(/"/g, '&quot;') : '') + '" oninput="gState.answers[' + i + '] = this.value" autocomplete="off"></div>';
+    }
+    html += '<div class="test-nav">' +
+        '<button class="btn btn-ghost" onclick="gNav(-1)"' + (i === 0 ? ' disabled' : '') + '>&#8592; Back</button>' +
+        '<button class="btn btn-green" onclick="gNav(1)"' + (i === total-1 ? ' disabled' : '') + '>Next &#8594;</button>' +
+        desmosBtn(p) +
+        '<span style="flex:1"></span><button class="btn btn-gold" onclick="gFinish()">Finish &amp; Score</button></div>' +
+        '<div class="qmap">' + GAUNTLET.map(function(q, qi) {
+            var cls = 'qchip';
+            if (gHasAns(qi)) cls += ' answered';
+            if (qi === i) cls += ' current';
+            return '<button class="' + cls + '" onclick="gState.idx=' + qi + ';renderGauntlet();">' + (qi+1) + '</button>';
+        }).join('') + '</div></div>';
+    host.innerHTML = html;
+    typeset(host);
+}
+function gPick(ci) { gState.answers[gState.idx] = ci; renderGauntlet(); }
+function gHasAns(qi) { var a = gState.answers[qi]; return a != null && a !== ''; }
+function gNav(s) { gState.idx = Math.max(0, Math.min(GAUNTLET.length-1, gState.idx + s)); renderGauntlet(); }
+function gGrade(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (p.type === 'ne') return a != null && answerMatches(String(a), p.accept);
+    return a === p.correct;
+}
+function gAnswerText(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (a == null || a === '') return '(no answer)';
+    if (p.type === 'mc') return LETTERS[a] + '. ' + p.options[a];
+    return String(a);
+}
+function gCorrectText(i) {
+    var p = GAUNTLET[i];
+    if (p.type === 'mc') return LETTERS[p.correct] + '. ' + p.options[p.correct];
+    return p.accept[0];
+}
+function gFinish() {
+    var un = 0;
+    for (var i = 0; i < GAUNTLET.length; i++) if (!gHasAns(i)) un++;
+    if (un > 0 && !confirm(un + ' unanswered. Score anyway?')) return;
+    gState.finished = true;
+    stopTimer('G');
+    renderGauntlet();
+}
+function renderGauntletResults(host) {
+    var right = 0;
+    GAUNTLET.forEach(function(_, i){ if (gGrade(i)) right++; });
+    var html = '<div class="stat-grid">' +
+        '<div class="stat-tile green"><div class="stat-num">' + right + '/' + GAUNTLET.length + '</div><div class="stat-label">Correct</div></div>' +
+        '<div class="stat-tile"><div class="stat-num">' + Math.round(100*right/GAUNTLET.length) + '%</div><div class="stat-label">Score</div></div>' +
+        (timers.G.sec ? '<div class="stat-tile"><div class="stat-num">' + fmtTime(timers.G.sec) + '</div><div class="stat-label">Time</div></div>' : '') + '</div>' +
+        '<div class="toolbar"><button class="btn btn-gold" onclick="gState={idx:0,answers:{},finished:false};timers.G.sec=0;renderGauntlet();">&#8635; Retake gauntlet</button></div>';
+    GAUNTLET.forEach(function(p, i) {
+        var ok = gGrade(i);
+        html += '<div class="res-entry' + (ok ? ' correct' : '') + '"><div class="res-head" onclick="this.parentElement.classList.toggle(\'open\'); typeset(this.parentElement);">' +
+            '<span style="font-size:18px;">' + (ok ? '&#9989;' : '&#10060;') + '</span>' +
+            '<span style="font-weight:600; font-size:14.5px;">Q' + (i+1) + ' (' + (p.diff || '') + '): your answer: ' + gAnswerText(i) + '</span>' +
+            '<span class="res-arrow">&#9654;</span></div>' +
+            '<div class="res-body"><div class="sol-block" style="background:white; border:1px solid var(--cream-dark); font-family:\'Times New Roman\',Georgia,serif; font-size:16.5px;">' + (p.fig ? fig(p.fig) : '') + p.stem + '</div>' +
+            '<p style="font-size:14px; margin:8px 0;"><strong>Correct answer:</strong> ' + gCorrectText(i) + '</p>' +
+            '<div class="sol-block"><div class="sol-label">Full solution</div>' + p.sol + '</div>' +
+            '<div class="trap-box"><div class="trap-label">The trap / takeaway</div>' + p.trap + '</div>' +
+            (p.desmos ? '<div style="margin-top:8px;">' + desmosBtn(p) + '</div>' : '') + '</div></div>';
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+
+/* ================= Challenge questions ================= */
+var chState = {}, chExtraOpen = {}, cxState = {};
+function renderChallenge() {
+    var host = document.getElementById('challengeArea');
+    var html = '';
+    CHALLENGE.forEach(function(p, i) {
+        var st = chState[i] || {};
+        html += '<div class="drill" style="border-left-color: var(--gold);"><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:8px; display:flex; align-items:center; gap:10px;">Challenge ' + (i+1) + ' of ' + CHALLENGE.length + (p.diff ? '<span class="diff-chip dark">' + p.diff + '</span>' : '') + '</div>';
+        if (p.fig) html += fig(p.fig);
+        if (p.type === 'mc') {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div><div class="choices" id="chopts-' + i + '">';
+            p.options.forEach(function(o, oi) {
+                var cls = 'choice';
+                if (st.checked) { if (oi === p.correct) cls += ' selected'; }
+                else if (st.pick === oi) cls += ' selected';
+                var mark = st.checked ? (oi === p.correct ? ' <span class="fb ok" style="display:inline;">✓</span>' : (st.pick === oi ? ' <span class="fb no" style="display:inline;">✗ your pick</span>' : '')) : '';
+                html += '<div class="' + cls + '" onclick="chPick(' + i + ',' + oi + ')"><span class="letter">' + LETTERS[oi] + '</span><span class="ctext">' + o + mark + '</span></div>';
+            });
+            html += '</div>';
+        } else {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div>' +
+                '<div class="drill-row"><span class="drill-q" style="margin:0;">' + p.label + '</span>' +
+                '<input type="text" id="chin-' + i + '" value="' + (st.pick != null ? String(st.pick).replace(/"/g, '&quot;') : '') + '" oninput="chState[' + i + '] = chState[' + i + '] || {}; chState[' + i + '].pick = this.value;" onkeydown="if(event.key===\'Enter\')chCheck(' + i + ')" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                (st.checked ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '✓ correct' : '✗ not this time') + '</span>' : '') +
+                '</div>';
+        }
+        if (!st.checked) {
+            html += '<div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><button class="btn btn-green btn-sm" onclick="chCheck(' + i + ')">Check</button>' + desmosBtn(p) + '</div>';
+        } else {
+            if (p.type !== 'ne') {
+                html += '<p style="font-size:13.5px; font-weight:600; margin-top:8px; color:' + (st.ok ? 'var(--green-light)' : '#C0392B') + ';">' + (st.ok ? '✓ correct' : '✗ not this time: the mechanism below is the takeaway') + '</p>';
+            }
+            html += '<div class="sol-block"><div class="sol-label">How it works</div>' + p.sol + '</div>' +
+                '<div class="trap-box"><div class="trap-label">The move to remember</div>' + p.trap + '</div>' +
+                (p.desmos ? '<div style="margin-top:8px;">' + desmosBtn(p) + '</div>' : '');
+        }
+        html += '</div>';
+        if (p.extras) html += renderChExtra(i, p);
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+function renderChExtra(ci, p) {
+    var open = !!chExtraOpen[ci];
+    var h = '<div class="drill" style="border-left-color: var(--gold-light); background: #FFFDF8;">' +
+        '<div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:6px;">Keep the pattern going</div>' +
+        '<p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">' + p.extrasIntro + '</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="chExtraOpen[' + ci + '] = !chExtraOpen[' + ci + ']; renderChallenge();">' + (open ? 'Hide practice set' : 'Show practice set (' + p.extras.length + ')') + '</button>';
+    if (open) {
+        p.extras.forEach(function(x, j) {
+            var key = ci + '_' + j;
+            var st = cxState[key] || {};
+            h += '<div style="border-top: 1px dashed var(--cream-dark); margin-top: 14px; padding-top: 12px;">' +
+                '<div class="drill-q" style="font-size:17.5px;">' + String.fromCharCode(97 + j) + '. &nbsp;' + x.q + '</div>';
+            h += '<div class="drill-row"><span style="font-family: \'Times New Roman\', Georgia, serif; font-size:16px;">' + x.label + '</span>' +
+                '<input type="text" id="cxin-' + key + '" value="' + (st.pick != null ? String(st.pick).replace(/"/g, '&quot;') : '') + '" oninput="cxState[\'' + key + '\'] = cxState[\'' + key + '\'] || {}; cxState[\'' + key + '\'].pick = this.value;" onkeydown="if(event.key===\'Enter\')cxCheckNE(' + ci + ',' + j + ')" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                (st.checked
+                    ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '✓ correct' : '✗ not yet') + '</span>'
+                    : '<button class="btn btn-green btn-sm" onclick="cxCheckNE(' + ci + ',' + j + ')">Check</button>') +
+                '</div>';
+            if (st.checked) h += '<div class="fb-exp show">' + x.exp + '</div>';
+            h += '</div>';
+        });
+    }
+    h += '</div>';
+    return h;
+}
+function cxCheckNE(ci, j) {
+    var key = ci + '_' + j;
+    var v = document.getElementById('cxin-' + key).value;
+    if (v == null || normalizeAns(v) === '') return;
+    cxState[key] = { pick: v, checked: true, ok: answerMatches(v, CHALLENGE[ci].extras[j].accept) };
+    renderChallenge();
+}
+function chPick(i, ci) {
+    if (chState[i] && chState[i].checked) return;
+    chState[i] = chState[i] || {};
+    chState[i].pick = ci;
+    renderChallenge();
+}
+function chCheck(i) {
+    var p = CHALLENGE[i];
+    var st = chState[i] = chState[i] || {};
+    if (p.type === 'ne') {
+        var v = document.getElementById('chin-' + i).value;
+        st.pick = v;
+        if (v == null || normalizeAns(v) === '') return;
+        st.ok = answerMatches(v, p.accept);
+    } else {
+        if (st.pick == null) return;
+        st.ok = (st.pick === p.correct);
+    }
+    st.checked = true;
+    renderChallenge();
+}
+
+/* ================= Exit ticket ================= */
+function renderExit() {
+    var host = document.getElementById('exitArea');
+    var html = '';
+    EXIT.forEach(function(it, i) {
+        var id = 'x' + i;
+        html += '<div class="drill"><div class="drill-q">' + (i+1) + '. &nbsp;' + it.q + '</div><div class="mc-opts" id="opts-' + id + '">';
+        it.opts.forEach(function(o, oi) {
+            html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+        });
+        html += '</div><div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+    });
+    host.innerHTML = html;
+}
+
+/* rule box: optional persistent save */
+function hasStore(){ return (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function'); }
+var ruleTimer = null;
+function saveRule() {
+    if (ruleTimer) clearTimeout(ruleTimer);
+    ruleTimer = setTimeout(async function() {
+        if (hasStore()) {
+            try { await window.storage.set('sat-linear-sheet:rule', document.getElementById('ruleBox').value, false); } catch(e) {}
+        } else {
+            try { localStorage.setItem('sat-linear-sheet:rule', document.getElementById('ruleBox').value); } catch(e) {}
+        }
+        var s = document.getElementById('ruleStatus');
+        s.style.opacity = 1; setTimeout(function(){ s.style.opacity = 0; }, 1200);
+    }, 500);
+}
+async function loadRule() {
+    try {
+        if (hasStore()) { var r = await window.storage.get('sat-linear-sheet:rule', false); if (r && r.value) document.getElementById('ruleBox').value = r.value; }
+        else { var v = localStorage.getItem('sat-linear-sheet:rule'); if (v) document.getElementById('ruleBox').value = v; }
+    } catch(e) {}
+}
+function copyRule() {
+    var t = document.getElementById('ruleBox');
+    t.select(); t.setSelectionRange(0, 99999);
+    try { document.execCommand('copy'); } catch(e) {}
+    var s = document.getElementById('ruleStatus');
+    s.textContent = 'copied ✓'; s.style.opacity = 1;
+    setTimeout(function(){ s.style.opacity = 0; s.textContent = 'saved ✓'; }, 1200);
+}
+
+/* ================= Timers (off by default) ================= */
+var timers = { F: { on: false, sec: 0, iv: null }, G: { on: false, sec: 0, iv: null } };
+function fmtTime(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function toggleTimer(k) {
+    var t = timers[k];
+    t.on = !t.on;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.toggle('on', t.on);
+    if (disp) disp.classList.toggle('on', t.on);
+    if (t.on) {
+        t.iv = setInterval(function() {
+            t.sec++;
+            var d = document.getElementById('timer' + k);
+            if (d) d.textContent = fmtTime(t.sec);
+        }, 1000);
+    } else stopTimer(k);
+}
+function stopTimer(k) {
+    var t = timers[k];
+    if (t.iv) { clearInterval(t.iv); t.iv = null; }
+    t.on = false;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.remove('on');
+    if (disp) disp.classList.remove('on');
+}
+
+/* ================= Desmos floating calculator ================= */
+var desmosCalc = null, desmosMode = 'graph', desmosLoaded = false;
+var DESMOS_OPTS = { keypad: true, expressions: true, settingsMenu: false, zoomButtons: true, expressionsTopbar: true, border: false };
+function initDesmos() {
+    if (desmosLoaded) return;
+    var host = document.getElementById('desmos-calc');
+    if (typeof Desmos === 'undefined') {
+        host.parentElement.innerHTML = '<div class="desmos-fallback">The Desmos calculator could not load (no internet connection, or the script is blocked).<br><br>You can open it in a new tab instead:<br><a href="https://www.desmos.com/calculator" target="_blank" rel="noopener">desmos.com/calculator</a></div>';
+        desmosLoaded = true;
+        return;
+    }
+    desmosCalc = Desmos.GraphingCalculator(host, DESMOS_OPTS);
+    desmosLoaded = true;
+}
+function buildDesmosFor(mode) {
+    var host = document.getElementById('desmos-calc');
+    if (typeof Desmos === 'undefined') return;
+    if (desmosCalc) { desmosCalc.destroy(); desmosCalc = null; }
+    host.innerHTML = '';
+    if (mode === 'scientific' && Desmos.ScientificCalculator) desmosCalc = Desmos.ScientificCalculator(host);
+    else desmosCalc = Desmos.GraphingCalculator(host, DESMOS_OPTS);
+}
+function toggleDesmos() {
+    var panel = document.getElementById('desmos-panel');
+    var open = panel.classList.toggle('open');
+    panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (open) {
+        dpClampToViewport();
+        if (!desmosLoaded) initDesmos();
+        else if (desmosCalc && desmosCalc.resize) desmosCalc.resize();
+    }
+}
+function openDesmos() {
+    var panel = document.getElementById('desmos-panel');
+    if (!panel.classList.contains('open')) toggleDesmos();
+}
+function setDesmosMode(mode) {
+    if (mode === desmosMode) return;
+    desmosMode = mode;
+    document.getElementById('dp-mode-graph').classList.toggle('active', mode === 'graph');
+    document.getElementById('dp-mode-sci').classList.toggle('active', mode === 'scientific');
+    if (desmosLoaded && typeof Desmos !== 'undefined') buildDesmosFor(mode);
+}
+/* Drop a question's equations into the graph (clears what was there). */
+function loadDesmos(list) {
+    openDesmos();
+    if (desmosMode !== 'graph') setDesmosMode('graph');
+    if (!desmosCalc || !desmosCalc.setExpression) return;
+    try {
+        desmosCalc.setBlank();
+        list.forEach(function(l, i) { desmosCalc.setExpression({ id: 'load' + i, latex: l }); });
+    } catch(e) {}
+}
+var DP_MIN_W = 300, DP_MIN_H = 280, dpExpanded = false, dpPreExpand = null;
+function dpClampToViewport() {
+    var panel = document.getElementById('desmos-panel');
+    if (!panel) return;
+    var r = panel.getBoundingClientRect();
+    var w = Math.min(r.width, window.innerWidth - 16), h = Math.min(r.height, window.innerHeight - 16);
+    var left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8), top = Math.min(Math.max(8, r.top), window.innerHeight - h - 8);
+    panel.style.width = w + 'px'; panel.style.height = h + 'px'; panel.style.left = left + 'px'; panel.style.top = top + 'px';
+}
+function dpAfterResize() { if (desmosCalc && desmosCalc.resize) desmosCalc.resize(); }
+function toggleDesmosExpand() {
+    var panel = document.getElementById('desmos-panel'), btn = document.getElementById('dp-expand');
+    if (!panel) return;
+    if (!dpExpanded) {
+        var r = panel.getBoundingClientRect();
+        dpPreExpand = { w: r.width, h: r.height, left: r.left, top: r.top };
+        var w = Math.min(900, window.innerWidth - 32), h = Math.min(720, window.innerHeight - 32);
+        panel.style.width = w + 'px'; panel.style.height = h + 'px';
+        panel.style.left = ((window.innerWidth - w) / 2) + 'px'; panel.style.top = ((window.innerHeight - h) / 2) + 'px';
+        dpExpanded = true;
+        if (btn) { btn.textContent = 'Restore'; btn.classList.add('active'); }
+    } else {
+        if (dpPreExpand) { panel.style.width = dpPreExpand.w + 'px'; panel.style.height = dpPreExpand.h + 'px'; panel.style.left = dpPreExpand.left + 'px'; panel.style.top = dpPreExpand.top + 'px'; }
+        dpExpanded = false;
+        if (btn) { btn.textContent = 'Expand'; btn.classList.remove('active'); }
+        dpClampToViewport();
+    }
+    dpAfterResize();
+}
+(function(){
+    var panel = document.getElementById('desmos-panel'), bar = document.getElementById('dp-bar');
+    if (!panel || !bar) return;
+    var sx, sy, sl, st;
+    function onMove(e){
+        var r = panel.getBoundingClientRect();
+        var left = sl + (e.clientX - sx), top = st + (e.clientY - sy);
+        left = Math.min(Math.max(8 - r.width + 60, left), window.innerWidth - 60);
+        top = Math.min(Math.max(8, top), window.innerHeight - 44);
+        panel.style.left = left + 'px'; panel.style.top = top + 'px';
+    }
+    function onUp(){ panel.classList.remove('dragging'); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+    bar.addEventListener('mousedown', function(e){
+        if (e.target.closest('button')) return;
+        e.preventDefault();
+        var r = panel.getBoundingClientRect();
+        sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top;
+        panel.classList.add('dragging');
+        document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+    });
+})();
+(function(){
+    var panel = document.getElementById('desmos-panel');
+    if (!panel) return;
+    var dir, sx, sy, sl, st, sw, sh;
+    function onMove(e){
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        var w = sw, h = sh, left = sl, top = st;
+        if (dir.indexOf('e') !== -1) w = sw + dx;
+        if (dir.indexOf('s') !== -1) h = sh + dy;
+        if (dir.indexOf('w') !== -1) { w = sw - dx; left = sl + dx; }
+        if (dir.indexOf('n') !== -1) { h = sh - dy; top = st + dy; }
+        if (w < DP_MIN_W) { if (dir.indexOf('w') !== -1) left -= (DP_MIN_W - w); w = DP_MIN_W; }
+        if (h < DP_MIN_H) { if (dir.indexOf('n') !== -1) top -= (DP_MIN_H - h); h = DP_MIN_H; }
+        w = Math.min(w, window.innerWidth - 16); h = Math.min(h, window.innerHeight - 16);
+        left = Math.min(Math.max(8, left), window.innerWidth - w - 8); top = Math.min(Math.max(8, top), window.innerHeight - h - 8);
+        panel.style.width = w + 'px'; panel.style.height = h + 'px'; panel.style.left = left + 'px'; panel.style.top = top + 'px';
+        dpAfterResize();
+    }
+    function onUp(){ panel.classList.remove('resizing'); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+    panel.querySelectorAll('.dp-handle').forEach(function(handle){
+        handle.addEventListener('mousedown', function(e){
+            e.preventDefault(); e.stopPropagation();
+            dir = handle.dataset.dir;
+            var r = panel.getBoundingClientRect();
+            sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top; sw = r.width; sh = r.height;
+            if (dpExpanded) { dpExpanded = false; var btn = document.getElementById('dp-expand'); if (btn) { btn.textContent = 'Expand'; btn.classList.remove('active'); } }
+            panel.classList.add('resizing');
+            document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+        });
+    });
+})();
+window.addEventListener('resize', function(){
+    var panel = document.getElementById('desmos-panel');
+    if (panel && panel.classList.contains('open')) { dpClampToViewport(); dpAfterResize(); }
+});
+
+/* ================= Tabs & init ================= */
+function typeset(el) { if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(function(){}); }
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (name === 'gauntlet') renderGauntlet();
+    if (name === 'challenge') renderChallenge();
+    setTimeout(function(){ typeset(); }, 80);
+}
+fillFigSlots();
+renderStep();
+renderFluency();
+renderExit();
+loadRule();
+</script>
+</body>
+</html>
