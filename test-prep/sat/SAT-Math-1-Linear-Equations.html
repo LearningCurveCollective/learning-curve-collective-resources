@@ -123,6 +123,7 @@ table.forms td.fex { color: var(--text-medium); font-size: 15.5px; }
 .wk-prob { background: #F3F8F4; border: 2px solid #BFD8C5; border-left: 6px solid var(--green-light); border-radius: 8px; padding: 12px 16px; margin: 14px 0 10px; }
 .wk-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 6px; }
 .wk-q { font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 1.8; }
+.wk-try { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin: 8px 0 8px; }
 .diff-chip { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; border-radius: 99px; padding: 3px 10px; background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.35); }
 .diff-chip.dark { background: var(--gold-pale); color: #8B6914; border-color: var(--gold-light); }
 
@@ -586,6 +587,7 @@ function fillFigSlots() {
 
 /* ================= Rule stepper ================= */
 var stepState = { idx: 0, done: {} };
+var solOpen = {};
 function stepTitle(s) { return (s.ess ? '<span class="star">&#9733;</span> ' : '') + s.name; }
 function renderStep() {
     var i = stepState.idx, s = STEPS[i];
@@ -611,9 +613,11 @@ function renderStep() {
         '<div class="step-rule">' + s.rule + '</div>' +
         '<p class="step-say">' + s.say + '</p>' +
         (s.fig ? fig(s.fig) : '') +
-        '<div class="wk-prob"><div class="wk-label">The problem</div><div class="wk-q">' + s.prob + '</div></div>' +
-        '<div class="step-ex"><div class="sol-label">Solution</div>' + s.sol + '</div>' +
-        '<div class="trap-box"><div class="trap-label">The trap it pairs with</div>' + s.trap + '</div>' +
+        '<div class="wk-prob"><div class="wk-label">The problem</div><div class="wk-q">' + s.prob + '</div>' +
+        '<div class="wk-try">Try it on paper first, then reveal the solution.</div>' +
+        '<button class="btn ' + (solOpen[i] ? 'btn-ghost' : 'btn-green') + ' btn-sm" onclick="solOpen[' + i + ']=!solOpen[' + i + '];renderStep();">' + (solOpen[i] ? 'Hide solution' : 'Show solution') + '</button></div>' +
+        (solOpen[i] ? '<div class="step-ex"><div class="sol-label">Solution</div>' + s.sol + '</div>' +
+        '<div class="trap-box"><div class="trap-label">The trap it pairs with</div>' + s.trap + '</div>' : '') +
         '<div class="micro"><div class="micro-label">Ten-second check</div><div class="micro-q">' + m.q + '</div>' + microHtml +
         '<div class="fb-exp" id="exp-' + mid + '">' + m.exp + '</div></div>';
     document.getElementById('stepBack').disabled = (i === 0);
