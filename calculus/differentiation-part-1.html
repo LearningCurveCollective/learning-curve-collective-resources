@@ -41,7 +41,9 @@ body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: 
 .header-right { text-align: right; }
 .subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
 .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-.tab-buttons { display: flex; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-buttons { display: flex; flex-direction: column; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; border-bottom: 2px solid #E8E0D0; }
+.tab-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.tab-row-label { width: 92px; flex-shrink: 0; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); opacity: 0.75; }
 .tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
 .tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
 .tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
@@ -141,11 +143,20 @@ li { margin-bottom: 10px; }
     .header { flex-direction: column; text-align: center; gap: 15px; }
     .header-left { flex-direction: column; }
     .header-right { text-align: center; }
-    .tab-buttons { flex-wrap: wrap; gap: 6px; }
+    .tab-row-label { width: 100%; }
     .tab-button { font-size: 12px; padding: 6px 12px; }
     .container { padding: 20px 10px; }
     .formula-grid { grid-template-columns: 1fr; }
 }
+/* keep long equations inside their boxes on small screens */
+mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+.card, .solution-body, .example-body, .step-practice, .step-example, .technique-section, .highlight-box { min-width: 0; }
+.card > div[style*="flex"] > div[style*="flex: 1"] { min-width: 0; }
+.derivation-step, .step-body, .step-body p { min-width: 0; }
+.step-body p { overflow-x: auto; overflow-y: hidden; }
+.derivation-step { display: flex; }
+@media (max-width: 768px) { table { display: block; max-width: 100%; overflow-x: auto; } }
+@media (max-width: 768px) { mjx-container:not([display]) { max-width: 100%; overflow-x: auto; overflow-y: hidden; display: inline-block; vertical-align: middle; } }
 </style>
 </head>
 <body>
@@ -165,14 +176,20 @@ li { margin-bottom: 10px; }
 
 <div class="container">
     <div class="tab-buttons">
-        <button class="tab-button active" data-group="core" onclick="switchTab('warmup', this)">Review &amp; the Big Idea</button>
-        <button class="tab-button" data-group="core" onclick="switchTab('toolkit', this)">The Toolkit</button>
-        <button class="tab-button" data-group="techniques" onclick="switchTab('power', this)">Power Rule</button>
-        <button class="tab-button" data-group="techniques" onclick="switchTab('product', this)">Product Rule</button>
-        <button class="tab-button" data-group="techniques" onclick="switchTab('chain', this)">Chain Rule</button>
-        <button class="tab-button" data-group="techniques" onclick="switchTab('quotient', this)">Quotient Rule</button>
-        <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Mixed Practice</button>
-        <button class="tab-button" data-group="core" onclick="switchTab('bonus', this)" style="border-color:#BC6C26;">Bonus: Why <em>e</em>?</button>
+        <div class="tab-row"><span class="tab-row-label">Foundations</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('warmup', this)">Review &amp; the Big Idea</button>
+            <button class="tab-button" data-group="core" onclick="switchTab('toolkit', this)">The Toolkit</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">The rules</span>
+            <button class="tab-button" data-group="techniques" onclick="switchTab('power', this)">1 Power Rule</button>
+            <button class="tab-button" data-group="techniques" onclick="switchTab('product', this)">2 Product Rule</button>
+            <button class="tab-button" data-group="techniques" onclick="switchTab('quotient', this)">3 Quotient Rule</button>
+            <button class="tab-button" data-group="techniques" onclick="switchTab('chain', this)">4 Chain Rule</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Practice</span>
+            <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Mixed Practice</button>
+            <button class="tab-button" data-group="core" onclick="switchTab('bonus', this)" style="border-color:#BC6C26;">Bonus: Why <em>e</em>?</button>
+        </div>
     </div>
 
     <!-- ============ TAB: REVIEW & BIG IDEA ============ -->
@@ -298,6 +315,33 @@ li { margin-bottom: 10px; }
                     <div class="highlight-box">$$g'(x) = 6x^2 + \frac{1}{x^2}$$</div>
                 </div>
             </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 2</span>
+                <p>Differentiate $f(x) = 4x^5 - 3\sqrt{x} + \dfrac{2}{x^2}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Rewrite first: $f(x) = 4x^5 - 3x^{1/2} + 2x^{-2}$.</p>
+                    <p>Term by term: $20x^4$, then $-3\cdot\tfrac12x^{-1/2}$, then $2\cdot(-2)x^{-3}$.</p>
+                    <div class="highlight-box">$$f'(x) = 20x^4 - \frac{3}{2\sqrt{x}} - \frac{4}{x^3}$$</div>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 3</span>
+                <p>Differentiate $f(x) = \dfrac{x^3 + 5x}{x}$. (Hint: no quotient rule needed.)</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Split the fraction: $\frac{x^3}{x} + \frac{5x}{x} = x^2 + 5$.</p>
+                    <div class="highlight-box">$$f'(x) = 2x$$</div>
+                    <p style="margin-top:8px;">The constant 5 disappears. Simplifying first turns a quotient into a two-second power rule problem.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 4</span>
+                <p>Differentiate $f(x) = \sqrt[3]{x^2} + 5\pi^2$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$\sqrt[3]{x^2} = x^{2/3}$, and $5\pi^2$ is just a number (about 49.3), so its derivative is 0.</p>
+                    <div class="highlight-box">$$f'(x) = \tfrac{2}{3}x^{-1/3} = \frac{2}{3\sqrt[3]{x}}$$</div>
+                    <p style="margin-top:8px;">Trap: $\pi$ looks like a variable but isn't. Any expression with no $x$ in it is a constant.</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -333,6 +377,107 @@ li { margin-bottom: 10px; }
                 <div class="solution-body">
                     <p>$f = x$ ($f' = 1$), $g = e^x$ ($g' = e^x$).</p>
                     <div class="highlight-box">$$h'(x) = 1\cdot e^x + x\cdot e^x = e^x(1 + x)$$</div>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 2</span>
+                <p>Differentiate $h(x) = x^3\cos x$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$f = x^3$ ($f' = 3x^2$), $g = \cos x$ ($g' = -\sin x$).</p>
+                    <div class="highlight-box">$$h'(x) = 3x^2\cos x - x^3\sin x$$</div>
+                    <p style="margin-top:8px;">Watch the sign: the derivative of $\cos x$ is $-\sin x$, so the second term is subtracted.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 3</span>
+                <p>Differentiate $h(x) = (2x+1)e^x$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$f = 2x+1$ ($f' = 2$), $g = e^x$ ($g' = e^x$).</p>
+                    <div class="highlight-box">$$h'(x) = 2e^x + (2x+1)e^x = e^x(2x+3)$$</div>
+                    <p style="margin-top:8px;">Factoring out the common $e^x$ at the end is optional but makes the answer easier to check.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 4</span>
+                <p>Differentiate $h(x) = \sqrt{x}\,\ln x$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$f = x^{1/2}$ ($f' = \frac{1}{2\sqrt{x}}$), $g = \ln x$ ($g' = \frac1x$).</p>
+                    <div class="highlight-box">$$h'(x) = \frac{\ln x}{2\sqrt{x}} + \frac{\sqrt{x}}{x} = \frac{\ln x}{2\sqrt{x}} + \frac{1}{\sqrt{x}} = \frac{\ln x + 2}{2\sqrt{x}}$$</div>
+                    <p style="margin-top:8px;">$\frac{\sqrt x}{x} = \frac{1}{\sqrt x}$ because $\frac{x^{1/2}}{x^{1}} = x^{-1/2}$. Either of the last two forms is fine.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB: QUOTIENT RULE ============ -->
+    <div id="tab-quotient" class="tab-content">
+        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
+            <h3>Quotient Rule</h3>
+            <div class="step-concept"><span class="step-label">Concept</span>
+                <p>For a fraction $\frac{f}{g}$: <em>low d-high minus high d-low, over low squared.</em> (&ldquo;Low&rdquo; = bottom, &ldquo;high&rdquo; = top.) Order matters here because of the subtraction.</p>
+                <div class="highlight-box">$$\frac{d}{dx}\!\left[\frac{f}{g}\right] = \frac{f'g - fg'}{g^2}$$</div>
+            </div>
+            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Where does this come from? (derivation)</button>
+            <div class="example-body">
+                <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Doing this straight from the limit definition is messy. The clean route: rewrite the quotient as a product, $\frac{f}{g} = f\cdot g^{-1}$, then apply the <em>product rule</em> from the last tab plus one fact you'll meet properly in the Chain Rule tab: $\frac{d}{dx}\big[g^{-1}\big] = -g^{-2}\,g'$. (Take that fact on faith for now; it's the power rule with an inside function.)</p></div></div>
+                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Rewrite as a product.</strong></p><p>$$\frac{f}{g} = f\cdot g^{-1}$$</p></div></div>
+                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Apply the product rule.</strong> Using $\frac{d}{dx}g^{-1} = -g^{-2}\,g'$ for the second factor:</p><p>$$\frac{d}{dx}\big[f\,g^{-1}\big] = f'\,g^{-1} + f\cdot\big(-g^{-2}g'\big) = \frac{f'}{g} - \frac{fg'}{g^2}$$</p></div></div>
+                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Get a common denominator of $g^2$.</strong> Multiply the first term by $\frac{g}{g}$.</p><p>$$= \frac{f'g}{g^2} - \frac{fg'}{g^2}$$</p><div class="highlight-box">$$\boxed{\frac{d}{dx}\!\left[\frac{f}{g}\right] = \frac{f'g - fg'}{g^2}}$$</div></div></div>
+            </div>
+            <div class="step-example"><span class="step-label">Worked Example</span>
+                <p>Differentiate $f(x) = \dfrac{\sin x}{x}$.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
+                <div class="example-body">
+                    <p>Top $f = \sin x$ ($f' = \cos x$); bottom $g = x$ ($g' = 1$).</p>
+                    <p>Apply $\dfrac{f'g - fg'}{g^2}$:</p>
+                    <div class="highlight-box">$$\frac{d}{dx}\!\left[\frac{\sin x}{x}\right] = \frac{x\cos x - \sin x}{x^2}$$</div>
+                </div>
+            </div>
+            <div class="step-practice"><span class="step-label">Practice</span>
+                <p>Differentiate $h(x) = \dfrac{x^2}{x+1}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Top $f = x^2$ ($f' = 2x$); bottom $g = x+1$ ($g' = 1$).</p>
+                    <p>$$h'(x) = \frac{2x(x+1) - x^2(1)}{(x+1)^2} = \frac{2x^2 + 2x - x^2}{(x+1)^2}$$</p>
+                    <div class="highlight-box">$$h'(x) = \frac{x^2 + 2x}{(x+1)^2} = \frac{x(x+2)}{(x+1)^2}$$</div>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 2</span>
+                <p>Differentiate $h(x) = \dfrac{3x-1}{x^2+2}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$f = 3x-1$ ($f' = 3$), $g = x^2+2$ ($g' = 2x$). Low d-high minus high d-low, over low squared:</p>
+                    <div class="highlight-box">$$h'(x) = \frac{3(x^2+2) - (3x-1)(2x)}{(x^2+2)^2} = \frac{3x^2 + 6 - 6x^2 + 2x}{(x^2+2)^2} = \frac{-3x^2 + 2x + 6}{(x^2+2)^2}$$</div>
+                    <p style="margin-top:8px;">Distribute the minus to <em>both</em> terms of $(3x-1)(2x) = 6x^2 - 2x$. Leave the denominator as $(x^2+2)^2$.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 3</span>
+                <p>Differentiate $h(x) = \dfrac{e^x}{x^2}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$f = e^x$ ($f' = e^x$), $g = x^2$ ($g' = 2x$).</p>
+                    <div class="highlight-box">$$h'(x) = \frac{e^x\cdot x^2 - e^x\cdot 2x}{x^4} = \frac{x e^x(x-2)}{x^4} = \frac{e^x(x-2)}{x^3}$$</div>
+                    <p style="margin-top:8px;">Factor $xe^x$ out of the numerator and cancel one $x$ with the denominator. Unsimplified $\frac{x^2e^x - 2xe^x}{x^4}$ is also correct.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 4</span>
+                <p>Differentiate $h(x) = \dfrac{\tan x}{x+1}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$f = \tan x$ ($f' = \sec^2 x$), $g = x+1$ ($g' = 1$).</p>
+                    <div class="highlight-box">$$h'(x) = \frac{(x+1)\sec^2 x - \tan x}{(x+1)^2}$$</div>
+                    <p style="margin-top:8px;">Nothing cancels here; this is the final form. The derivative of $\tan x$ is in the Toolkit tab.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 5</span>
+                <p>Differentiate $h(x) = \dfrac{x^2+3}{2x}$ <em>two ways</em>: quotient rule, then by splitting the fraction first.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p><strong>Quotient rule:</strong> $f = x^2+3$, $g = 2x$.</p>
+                    <p>$$h'(x) = \frac{2x\cdot 2x - (x^2+3)\cdot 2}{(2x)^2} = \frac{4x^2 - 2x^2 - 6}{4x^2} = \frac{2x^2-6}{4x^2} = \frac{x^2-3}{2x^2}$$</p>
+                    <p><strong>Split first:</strong> $h(x) = \frac{x^2}{2x} + \frac{3}{2x} = \tfrac12 x + \tfrac32 x^{-1}$, so $h'(x) = \tfrac12 - \tfrac32 x^{-2} = \frac{x^2-3}{2x^2}$.</p>
+                    <div class="highlight-box">$$h'(x) = \frac{x^2 - 3}{2x^2}\quad\text{either way}$$</div>
+                    <p style="margin-top:8px;">When the denominator is a single term, splitting is faster and has fewer places to drop a sign. Save the quotient rule for denominators like $x+1$.</p>
                 </div>
             </div>
         </div>
@@ -383,40 +528,40 @@ li { margin-bottom: 10px; }
                     <div class="highlight-box">$$k'(x) = \frac{1}{x^2+1}\cdot 2x = \frac{2x}{x^2+1}$$</div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- ============ TAB: QUOTIENT RULE ============ -->
-    <div id="tab-quotient" class="tab-content">
-        <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
-            <h3>Quotient Rule</h3>
-            <div class="step-concept"><span class="step-label">Concept</span>
-                <p>For a fraction $\frac{f}{g}$: <em>low d-high minus high d-low, over low squared.</em> (&ldquo;Low&rdquo; = bottom, &ldquo;high&rdquo; = top.) Order matters here because of the subtraction.</p>
-                <div class="highlight-box">$$\frac{d}{dx}\!\left[\frac{f}{g}\right] = \frac{f'g - fg'}{g^2}$$</div>
-            </div>
-            <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Where does this come from? (derivation)</button>
-            <div class="example-body">
-                <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Doing this straight from the limit definition is messy. The clean route: rewrite the quotient as a product, $\frac{f}{g} = f\cdot g^{-1}$, then apply the <em>product rule</em> and <em>chain rule</em> we just covered. (This builds on those two rules &mdash; it's a derivation from earlier results, not from scratch.)</p></div></div>
-                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Rewrite as a product.</strong></p><p>$$\frac{f}{g} = f\cdot g^{-1}$$</p></div></div>
-                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Apply the product rule.</strong> The derivative of $g^{-1}$ needs the chain rule: $\frac{d}{dx}g^{-1} = -g^{-2}\,g'$.</p><p>$$\frac{d}{dx}\big[f\,g^{-1}\big] = f'\,g^{-1} + f\cdot\big(-g^{-2}g'\big) = \frac{f'}{g} - \frac{fg'}{g^2}$$</p></div></div>
-                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Get a common denominator of $g^2$.</strong> Multiply the first term by $\frac{g}{g}$.</p><p>$$= \frac{f'g}{g^2} - \frac{fg'}{g^2}$$</p><div class="highlight-box">$$\boxed{\frac{d}{dx}\!\left[\frac{f}{g}\right] = \frac{f'g - fg'}{g^2}}$$</div></div></div>
-            </div>
-            <div class="step-example"><span class="step-label">Worked Example</span>
-                <p>Differentiate $f(x) = \dfrac{\sin x}{x}$.</p>
-                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Show steps</button>
-                <div class="example-body">
-                    <p>Top $f = \sin x$ ($f' = \cos x$); bottom $g = x$ ($g' = 1$).</p>
-                    <p>Apply $\dfrac{f'g - fg'}{g^2}$:</p>
-                    <div class="highlight-box">$$\frac{d}{dx}\!\left[\frac{\sin x}{x}\right] = \frac{x\cos x - \sin x}{x^2}$$</div>
-                </div>
-            </div>
-            <div class="step-practice"><span class="step-label">Practice</span>
-                <p>Differentiate $h(x) = \dfrac{x^2}{x+1}$.</p>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 2</span>
+                <p>Differentiate $f(x) = (2x^3 - x)^4$.</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                 <div class="solution-body">
-                    <p>Top $f = x^2$ ($f' = 2x$); bottom $g = x+1$ ($g' = 1$).</p>
-                    <p>$$h'(x) = \frac{2x(x+1) - x^2(1)}{(x+1)^2} = \frac{2x^2 + 2x - x^2}{(x+1)^2}$$</p>
-                    <div class="highlight-box">$$h'(x) = \frac{x^2 + 2x}{(x+1)^2} = \frac{x(x+2)}{(x+1)^2}$$</div>
+                    <p>Outside: $u^4 \to 4u^3$. Inside: $2x^3 - x \to 6x^2 - 1$.</p>
+                    <div class="highlight-box">$$f'(x) = 4(2x^3-x)^3\,(6x^2-1)$$</div>
+                    <p style="margin-top:8px;">Leave it factored. Expanding $(2x^3-x)^3$ is a lot of work for no credit.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 3</span>
+                <p>Differentiate $f(x) = \cos(5x)$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Outside: $\cos u \to -\sin u$. Inside: $5x \to 5$.</p>
+                    <div class="highlight-box">$$f'(x) = -5\sin(5x)$$</div>
+                    <p style="margin-top:8px;">The forgotten-inside error gives $-\sin(5x)$, off by a factor of 5.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 4</span>
+                <p>Differentiate $f(x) = \sqrt{1 - 4x}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Rewrite as $(1-4x)^{1/2}$. Outside: $\tfrac12 u^{-1/2}$. Inside: $1 - 4x \to -4$.</p>
+                    <div class="highlight-box">$$f'(x) = \tfrac12(1-4x)^{-1/2}\cdot(-4) = \frac{-2}{\sqrt{1-4x}}$$</div>
+                    <p style="margin-top:8px;">The inside derivative is $-4$, not $4$. That sign is the whole answer's sign.</p>
+                </div>
+            </div>
+            <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice 5</span>
+                <p>Differentiate $f(x) = e^{\sin x}$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>Outside: $e^u \to e^u$ (unchanged). Inside: $\sin x \to \cos x$.</p>
+                    <div class="highlight-box">$$f'(x) = e^{\sin x}\cos x$$</div>
+                    <p style="margin-top:8px;">$e^{\text{anything}}$ copies itself, then you multiply by the derivative of the exponent.</p>
                 </div>
             </div>
         </div>
@@ -461,7 +606,7 @@ li { margin-bottom: 10px; }
 
         <div class="section-header"><div class="section-number">2</div><h2>Mixed Practice &mdash; Combine the Rules</h2></div>
         <div class="card" style="border-left-color: var(--green-dark);">
-            <p>Real problems don't tell you which rule to use, and they often need <strong>two rules at once</strong> &mdash; a chain rule inside a product, a product inside a quotient. For each one, first <em>name the structure</em>, then execute. Answers are hidden; try before you peek.</p>
+            <p>Nineteen problems. Real problems don't tell you which rule to use, and they often need <strong>two rules at once</strong> &mdash; a chain rule inside a product, a product inside a quotient. For each one, first <em>name the structure</em>, then execute. Answers are hidden; try before you peek.</p>
         </div>
         <div id="practice-list">
             <div class="card" style="margin-bottom: 16px;">
@@ -638,6 +783,145 @@ li { margin-bottom: 10px; }
                             <div class="highlight-box">$$h'(2) = 11$$</div>
                             <p><strong>Quotient:</strong> $k'(2) = \dfrac{f'(2)g(2) - f(2)g'(2)}{[g(2)]^2} = \dfrac{(-1)(4) - (3)(5)}{4^2} = \dfrac{-19}{16}$.</p>
                             <div class="highlight-box">$$k'(2) = -\frac{19}{16} = -1.1875$$</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">11</div>
+                    <div style="flex: 1;">
+                        <p><strong>Differentiate</strong> $f(x) = x^3 e^{2x}$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Product + Chain</span></p>
+                            <p>Product rule with $f = x^3$, $g = e^{2x}$. The chain rule gives $g' = 2e^{2x}$.</p>
+                            <div class="highlight-box">$$f'(x) = 3x^2 e^{2x} + x^3\cdot 2e^{2x} = x^2 e^{2x}(3 + 2x)$$</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">12</div>
+                    <div style="flex: 1;">
+                        <p><strong>Differentiate</strong> $f(x) = \dfrac{\ln x}{x^2}$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Quotient</span></p>
+                            <p>$f = \ln x$ ($f' = \frac1x$), $g = x^2$ ($g' = 2x$).</p>
+                            <div class="highlight-box">$$f'(x) = \frac{\frac1x\cdot x^2 - \ln x\cdot 2x}{x^4} = \frac{x - 2x\ln x}{x^4} = \frac{1 - 2\ln x}{x^3}$$</div>
+                            <p>Factor an $x$ out of the numerator and cancel it against $x^4$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">13</div>
+                    <div style="flex: 1;">
+                        <p><strong>Differentiate</strong> $f(x) = \dfrac{x^2-1}{x^2+1}$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Quotient</span></p>
+                            <p>$f' = 2x$ and $g' = 2x$, so the cross terms are easy to combine.</p>
+                            <div class="highlight-box">$$f'(x) = \frac{2x(x^2+1) - (x^2-1)(2x)}{(x^2+1)^2} = \frac{2x\big[(x^2+1)-(x^2-1)\big]}{(x^2+1)^2} = \frac{4x}{(x^2+1)^2}$$</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">14</div>
+                    <div style="flex: 1;">
+                        <p><strong>Differentiate</strong> $f(x) = \sin^3 x$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Chain (power outside)</span></p>
+                            <p>$\sin^3 x$ means $(\sin x)^3$. Outside: $u^3 \to 3u^2$. Inside: $\sin x \to \cos x$.</p>
+                            <div class="highlight-box">$$f'(x) = 3\sin^2 x\,\cos x$$</div>
+                            <p>Compare with $\sin(x^3)$, which is $3x^2\cos(x^3)$. Where the exponent sits changes everything.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">15</div>
+                    <div style="flex: 1;">
+                        <p><strong>Differentiate</strong> $f(x) = \dfrac{x}{\sqrt{x^2+4}}$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Quotient + Chain</span></p>
+                            <p>$g = (x^2+4)^{1/2}$, so $g' = \tfrac12(x^2+4)^{-1/2}\cdot 2x = \dfrac{x}{\sqrt{x^2+4}}$.</p>
+                            <p>$$f'(x) = \frac{1\cdot\sqrt{x^2+4} - x\cdot\frac{x}{\sqrt{x^2+4}}}{x^2+4}$$</p>
+                            <p>Multiply top and bottom by $\sqrt{x^2+4}$ to clear the small fraction: the numerator becomes $(x^2+4) - x^2 = 4$.</p>
+                            <div class="highlight-box">$$f'(x) = \frac{4}{(x^2+4)^{3/2}}$$</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">16</div>
+                    <div style="flex: 1;">
+                        <p><strong>Tangent line.</strong> Find the equation of the line tangent to $f(x) = x e^x$ at $x = 1$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--green-dark); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Product, then point-slope</span></p>
+                            <p>Point: $f(1) = e$, so $(1, e)$.</p>
+                            <p>Slope: $f'(x) = e^x + xe^x = e^x(1+x)$, so $f'(1) = 2e$.</p>
+                            <div class="highlight-box">$$y - e = 2e\,(x - 1)$$</div>
+                            <p>Leave $e$ as $e$; don't round it to 2.718 unless asked.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">17</div>
+                    <div style="flex: 1;">
+                        <p><strong>Tangent and normal lines.</strong> For $f(x) = \dfrac{x+1}{x-1}$, find the tangent line and the normal line at $x = 2$.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--green-dark); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Quotient, then two lines</span></p>
+                            <p>Point: $f(2) = \frac{3}{1} = 3$, so $(2, 3)$.</p>
+                            <p>Slope: $f'(x) = \dfrac{1\cdot(x-1) - (x+1)\cdot 1}{(x-1)^2} = \dfrac{-2}{(x-1)^2}$, so $f'(2) = -2$.</p>
+                            <div class="highlight-box">$$\text{Tangent: } y - 3 = -2(x-2)\qquad\qquad \text{Normal: } y - 3 = \tfrac12(x-2)$$</div>
+                            <p>The normal's slope is the negative reciprocal of $-2$, which is $+\tfrac12$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">18</div>
+                    <div style="flex: 1;">
+                        <p><strong>Horizontal tangents.</strong> Find all points on $f(x) = \dfrac{x}{x^2+1}$ where the tangent line is horizontal.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--green-dark); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Quotient, then solve f' = 0</span></p>
+                            <p>$$f'(x) = \frac{(x^2+1) - x(2x)}{(x^2+1)^2} = \frac{1 - x^2}{(x^2+1)^2}$$</p>
+                            <p>A fraction is zero only when its numerator is zero: $1 - x^2 = 0$, so $x = \pm 1$. (The denominator is never zero.)</p>
+                            <div class="highlight-box">$$\left(1, \tfrac12\right)\quad\text{and}\quad\left(-1, -\tfrac12\right)$$</div>
+                            <p>"Points" means you need the $y$-values too: plug $x$ back into $f$, not $f'$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">19</div>
+                    <div style="flex: 1;">
+                        <p><strong>Horizontal tangents.</strong> Find all points on $f(x) = (x-3)^2(x+2)$ where the tangent line is horizontal.</p>
+                        <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                        <div class="solution-body">
+                            <p><span style="background: var(--green-dark); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;">Product + Chain, then factor</span></p>
+                            <p>Product rule with $u = (x-3)^2$ (chain: $u' = 2(x-3)$) and $v = x+2$ ($v' = 1$):</p>
+                            <p>$$f'(x) = 2(x-3)(x+2) + (x-3)^2 = (x-3)\big[2(x+2) + (x-3)\big] = (x-3)(3x+1)$$</p>
+                            <p>Factor out the common $(x-3)$ instead of expanding; it makes the roots visible: $x = 3$ or $x = -\tfrac13$.</p>
+                            <div class="highlight-box">$$(3, 0)\quad\text{and}\quad\left(-\tfrac13, \tfrac{500}{27}\right)$$</div>
+                            <p>$f(-\tfrac13) = \left(-\tfrac{10}{3}\right)^2\left(\tfrac53\right) = \tfrac{100}{9}\cdot\tfrac53 = \tfrac{500}{27} \approx 18.5$.</p>
                         </div>
                     </div>
                 </div>
