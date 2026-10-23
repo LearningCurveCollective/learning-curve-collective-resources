@@ -3,1137 +3,640 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Learning Curve Collective: free interactive mathematics and STEM learning resources designed to build deep conceptual understanding and lasting academic confidence.">
-<title>Learning Curve Collective | Open Learning Resources</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<title>Open Learning by Learning Curve Collective</title>
+<meta name="description" content="A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.">
+<link rel="icon" href="assets/lcc-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-    --green-dark: #21442B;
-    --green-medium: #5E6C39;
-    --green-light: #39864E;
+    --ink: #21442B;        /* LCC deep green */
+    --ink-2: #2B5537;
+    --moss: #5E6C39;
+    --leaf: #39864E;
     --gold: #DDA25E;
     --gold-light: #E6BC84;
-    --gold-pale: #F5E4CC;
-    --copper: #BC6C26;
-    --brown-dark: #42260D;
-    --brown-medium: #271404;
-    --brown-accent: #8B5E3C;
-    --cream: #F0F0F0;
-    --cream-dark: #E2E2E2;
+    --sand: #F5E4CC;
+    --paper: #F4F2EC;
+    --paper-2: #EBE8DF;
+    --line: #DAD5C8;
+    --text: #2A2A26;
+    --muted: #5C5A52;
     --white: #FFFFFF;
-    --text-dark: #2D2D2D;
-    --text-medium: #4A4A4A;
+    --display: 'Space Grotesk', 'Switzer', sans-serif;
+    --body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --radius: 14px;
+    --wrap: 1120px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body {
-    margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
-    line-height: 1.6;
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { margin: 0; font-family: var(--body); background: var(--paper); color: var(--text); line-height: 1.6; font-size: 16px; }
+a { color: var(--ink); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+svg.ic { width: 14px; height: 14px; vertical-align: -2px; flex-shrink: 0; }
 
-/* ============ Top nav bar ============ */
-.topbar {
-    background: linear-gradient(135deg, var(--green-dark) 0%, #2d5738 60%, var(--green-medium) 100%);
-    border-bottom: 4px solid var(--gold);
-    padding: 14px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    box-shadow: 0 2px 12px rgba(0,0,0,.18);
-}
-.topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
-}
-.topbar-logo {
-    width: 46px;
-    height: 46px;
-    border-radius: 10px;
-    background: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,.25);
-}
-.topbar-logo img { width: 100%; height: 100%; object-fit: contain; }
-.topbar-name {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 19px;
-    letter-spacing: .5px;
-    color: var(--white);
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.topbar-tag {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-top: 1px;
-}
-.topbar-cta {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--green-dark);
-    background: var(--gold);
-    padding: 10px 20px;
-    border-radius: 999px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background .2s, transform .2s;
-}
-.topbar-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+/* ---------- top bar ---------- */
+.topbar { position: sticky; top: 0; z-index: 40; background: var(--ink); color: var(--white); border-bottom: 3px solid var(--gold); }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--white); min-width: 0; }
+.brand img { width: 38px; height: 38px; border-radius: 9px; background: var(--white); object-fit: contain; flex-shrink: 0; }
+.brand .brand-name { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: .2px; white-space: nowrap; }
+.brand .brand-by { font-size: 12.5px; color: var(--gold-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topnav { display: flex; align-items: center; gap: 22px; }
+.topnav a { color: var(--white); text-decoration: none; font-size: 14.5px; font-weight: 500; opacity: .92; }
+.topnav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; font-family: var(--body); font-weight: 600; font-size: 15px; padding: 11px 22px; border-radius: 999px; text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: background .15s, transform .15s; }
+.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.45); }
+.btn-ghost:hover { border-color: var(--white); }
+.btn-sm { padding: 8px 16px; font-size: 14px; }
+@media (max-width: 720px) { .topnav .hide-sm { display: none; } .brand .brand-by { display: none; } .brand .brand-name { font-size: 18px; } .topbar .btn-sm { padding: 7px 14px; font-size: 13.5px; } }
 
-/* ============ Hero ============ */
-.hero {
-    background:
-        radial-gradient(1200px 500px at 85% -10%, rgba(221,162,94,.22), transparent 60%),
-        radial-gradient(900px 420px at -10% 110%, rgba(57,134,78,.30), transparent 60%),
-        linear-gradient(150deg, var(--green-dark) 0%, #2a5236 55%, var(--green-medium) 100%);
-    color: var(--white);
-    padding: 84px 24px 96px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-.hero::after {  /* gentle "learning curve" line across the hero */
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: -2px;
-    height: 90px;
-    background: var(--cream);
-    clip-path: ellipse(75% 100% at 50% 100%);
-}
-.hero-badge {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    border: 1px solid rgba(230,188,132,.55);
-    border-radius: 999px;
-    padding: 7px 18px;
-    margin-bottom: 26px;
-    background: rgba(0,0,0,.15);
-}
-.hero h1 {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: clamp(2.3rem, 5.5vw, 3.6rem);
-    line-height: 1.12;
-    margin: 0 auto;
-    max-width: 800px;
-    letter-spacing: -.5px;
-}
-.hero h1 .accent { color: var(--gold); }
-.hero p {
-    max-width: 660px;
-    margin: 22px auto 0;
-    font-size: 1.13rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,.88);
-}
-.hero-actions {
-    margin-top: 36px;
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-}
-.btn-primary, .btn-ghost {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 14px 30px;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: transform .2s, box-shadow .2s, background .2s;
-}
-.btn-primary {
-    background: var(--gold);
-    color: var(--green-dark);
-    box-shadow: 0 6px 18px rgba(0,0,0,.25);
-}
-.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-.btn-ghost {
-    color: var(--white);
-    border: 1.5px solid rgba(255,255,255,.55);
-}
-.btn-ghost:hover { background: rgba(255,255,255,.12); transform: translateY(-2px); }
+/* ---------- hero ---------- */
+.hero { background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 58%, #3b5a36 100%); color: var(--white); padding: 64px 0 60px; position: relative; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; }
+.hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(52px, 8.2vw, 104px); line-height: .96; letter-spacing: -.02em; margin: 0 0 14px; }
+.hero .by { font-size: 17px; color: var(--gold-light); margin: 0 0 28px; display: flex; align-items: center; gap: 14px; }
+.hero .by::before { content: ""; width: 38px; height: 2px; background: var(--gold); flex-shrink: 0; }
+.hero .by a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(230,188,132,.5); }
+.hero .by a:hover { border-color: var(--gold-light); }
+.hero p.lede { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.55; max-width: 32em; margin: 0 0 26px; color: rgba(255,255,255,.93); }
+.hero-search { display: flex; align-items: center; gap: 10px; background: var(--white); border-radius: 999px; padding: 6px 6px 6px 18px; max-width: 560px; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+.hero-search svg { color: var(--muted); flex-shrink: 0; }
+.hero-search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--text); outline: none; padding: 8px 0; }
+.hero-search input::placeholder { color: #8a877d; }
+.hero-search button { flex-shrink: 0; }
+.hero-links { margin: 16px 0 0; font-size: 14.5px; color: rgba(255,255,255,.8); }
+.hero-links a { color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); margin-right: 16px; }
+.hero-links a:hover { border-color: var(--gold); }
+.curve { width: 100%; height: auto; display: block; overflow: visible; }
+.curve text { font-family: var(--body); font-size: 11.5px; fill: rgba(255,255,255,.82); }
+.curve .path { fill: none; stroke: var(--gold); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.7s cubic-bezier(.4,0,.2,1) .25s forwards; }
+.curve .fill { fill: url(#curveFill); opacity: 0; animation: fade .9s ease-out 1.4s forwards; }
+.curve .dot { fill: var(--sand); stroke: var(--ink); stroke-width: 2; opacity: 0; animation: fade .4s ease-out forwards; }
+.curve .grid { stroke: rgba(255,255,255,.13); stroke-width: 1; }
+.curve .tick { stroke: rgba(255,255,255,.35); stroke-width: 1; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fade { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .curve .path { stroke-dashoffset: 0; } .curve .fill, .curve .dot { opacity: 1; } }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero-art { max-width: 440px; } }
 
-/* ============ Pillars strip ============ */
-.pillars {
-    max-width: 1100px;
-    margin: -30px auto 0;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 18px;
-    position: relative;
-    z-index: 3;
-}
-.pillar {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 22px 24px;
-    box-shadow: 0 8px 24px rgba(33,68,43,.10);
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    border-top: 4px solid var(--gold);
-}
-.pillar:nth-child(2) { border-top-color: var(--green-light); }
-.pillar:nth-child(3) { border-top-color: var(--brown-accent); }
-.pillar-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--gold-pale);
-    color: var(--copper);
-}
-.pillar:nth-child(2) .pillar-icon { background: rgba(57,134,78,.14); color: var(--green-dark); }
-.pillar:nth-child(3) .pillar-icon { background: rgba(139,94,60,.14); color: var(--brown-accent); }
-.pillar h3 {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-size: 16px;
-    margin: 0 0 4px;
-    color: var(--green-dark);
-}
-.pillar p { margin: 0; font-size: 14px; color: var(--text-medium); line-height: 1.55; }
+/* ---------- sections ---------- */
+section.block { padding: 64px 0 24px; }
+.block h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3vw, 34px); letter-spacing: -.01em; margin: 0 0 6px; color: var(--ink); }
+.block .sub { margin: 0 0 28px; color: var(--muted); font-size: 16px; max-width: 60ch; }
 
-/* ============ Resources ============ */
-.container { max-width: 960px; margin: auto; padding: 64px 24px 30px; }
-.section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 8px;
-}
-.section-number {
-    width: 40px; height: 40px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--white);
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-.section-header h2 {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-size: 1.9rem;
-    margin: 0;
-    color: var(--green-dark);
-    letter-spacing: -.3px;
-}
-.section-sub {
-    margin: 6px 0 24px 54px;
-    color: var(--text-medium);
-    font-size: 15px;
-}
+/* subject tiles */
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr; } }
+.tile { display: block; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 18px; text-decoration: none; color: var(--text); position: relative; transition: border-color .15s, transform .15s; min-height: 150px; }
+.tile:hover { border-color: var(--leaf); transform: translateY(-2px); }
+.tile .t-name { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink); display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.tile .t-count { white-space: nowrap; font-family: var(--body); font-size: 13px; font-weight: 600; color: var(--moss); background: var(--sand); padding: 2px 10px; border-radius: 999px; }
+.tile .t-subjects { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 10px; }
+.tile .t-subjects li { font-size: 14px; color: var(--muted); }
+.tile .t-blurb { margin: 10px 0 0; font-size: 14.5px; color: var(--muted); line-height: 1.5; }
 
-/* toolbar: search + expand/collapse */
-.toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
-.search-wrap {
-    flex: 1; min-width: 240px;
-    display: flex; align-items: center; gap: 10px;
-    background: var(--white); border: 2px solid var(--cream-dark); border-radius: 999px;
-    padding: 9px 16px; color: var(--text-medium);
-    transition: border-color .2s, box-shadow .2s;
-}
-.search-wrap:focus-within { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(221,162,94,.18); }
-.search-wrap input {
-    flex: 1; border: none; outline: none; background: transparent;
-    font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-dark); min-width: 0;
-}
-.toolbar-btns { display: flex; gap: 8px; }
-.tb-btn {
-    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
-    color: var(--green-dark); background: var(--white);
-    border: 2px solid var(--cream-dark); border-radius: 999px; padding: 8px 16px; cursor: pointer;
-    transition: border-color .2s, background .2s;
-}
-.tb-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
-.no-results { margin: 0 0 18px; color: var(--copper); font-weight: 600; }
+/* featured */
+.featured { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .featured { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .featured { grid-template-columns: 1fr; } }
 
-/* accordion */
-.accordion { display: flex; flex-direction: column; gap: 10px; }
-.group-label {
-    font-size: 11.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--brown-accent); margin: 22px 0 4px 6px;
-}
-.group-label:first-child { margin-top: 0; }
-.subject {
-    background: var(--white);
-    border-radius: 14px;
-    border-left: 5px solid var(--green-dark);
-    box-shadow: 0 4px 14px rgba(33,68,43,.08);
-    overflow: hidden;
-    transition: box-shadow .2s;
-}
-.subject:nth-of-type(3n+2) { border-left-color: var(--gold); }
-.subject:nth-of-type(3n)   { border-left-color: var(--brown-accent); }
-.subject:hover { box-shadow: 0 10px 24px rgba(33,68,43,.14); }
-.subject.open { box-shadow: 0 10px 28px rgba(33,68,43,.16); }
-.subject-toggle {
-    width: 100%; text-align: left; cursor: pointer;
-    display: flex; align-items: center; gap: 16px;
-    background: none; border: none; padding: 18px 20px 18px 22px;
-    font-family: 'Inter', sans-serif; color: var(--text-dark);
-}
-.subject-toggle:hover .subject-name { color: var(--green-light); }
-.card-icon {
-    width: 48px; height: 48px; flex-shrink: 0;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(33,68,43,.08);
-    color: var(--green-dark);
-}
-.subject:nth-of-type(3n+2) .card-icon { background: rgba(221,162,94,.16); color: var(--copper); }
-.subject:nth-of-type(3n) .card-icon   { background: rgba(139,94,60,.13); color: var(--brown-accent); }
-.subject-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.subject-name {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-size: 1.15rem; font-weight: 700; color: var(--green-dark);
-    transition: color .15s;
-}
-.subject-desc { font-size: 13.5px; color: var(--text-medium); line-height: 1.45; }
-.ws-count {
-    flex-shrink: 0;
-    font-size: 11px; font-weight: 700;
-    background: var(--gold-pale); color: var(--copper);
-    border-radius: 999px; padding: 3px 10px;
-}
-.chev { flex-shrink: 0; color: var(--text-medium); transition: transform .25s; display: flex; }
-.subject.open .chev { transform: rotate(180deg); color: var(--green-dark); }
-.subject-panel { border-top: 1px dashed var(--cream-dark); }
-.panel-inner { padding: 14px 22px 20px 86px; animation: panelIn .22s ease; }
-@keyframes panelIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-.folder-link { font-size: 12.5px; font-weight: 600; color: var(--copper); text-decoration: none; display: inline-block; margin-bottom: 6px; }
-.folder-link:hover { text-decoration: underline; }
-.topic-group { margin-top: 12px; }
-.topic-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
-    color: var(--green-dark); opacity: .8; margin-bottom: 4px; padding-left: 8px;
-}
-.ws-list { list-style: none; margin: 0; padding: 0; counter-reset: ws; }
-.ws-list li { margin: 0; }
-.ws-list a {
-    display: flex; align-items: baseline; gap: 10px;
-    padding: 7px 8px; border-radius: 8px;
-    text-decoration: none;
-    font-size: 14.5px; font-weight: 500; line-height: 1.4;
-    color: var(--text-dark);
-    transition: background .15s, color .15s;
-}
-.ws-list a::before { counter-increment: ws; content: counter(ws); font-size: 11px; font-weight: 700; color: var(--gold); min-width: 16px; text-align: right; flex-shrink: 0; }
-.ws-list a:hover { background: rgba(221,162,94,.13); color: var(--green-dark); }
-.badge-new {
-    font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
-    background: var(--green-light); color: var(--white);
-    border-radius: 4px; padding: 2px 6px; margin-left: 6px;
-    text-transform: uppercase; align-self: center; flex-shrink: 0;
-}
-.hit { background: rgba(221,162,94,.35); border-radius: 3px; padding: 0 1px; }
-[hidden] { display: none !important; }
+/* cards */
+.card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s, box-shadow .3s; scroll-margin-top: 90px; }
+.card { cursor: pointer; }
+.card:hover { border-color: var(--leaf); box-shadow: 0 4px 16px rgba(33,68,43,.08); }
+.card.flash { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(221,162,94,.35); }
+.card h4 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 17.5px; line-height: 1.3; letter-spacing: -.005em; }
+.card h4 a { color: var(--ink); text-decoration: none; }
+.card h4 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.card p { margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.5; flex: 1; }
+.card .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
+.pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 3px 9px 3px 7px; border-radius: 999px; line-height: 1.4; white-space: nowrap; }
+.pill-level { background: #E8F0E9; color: var(--ink); }
+.pill-level svg { width: 22px; height: 11px; }
+.pill-content { background: var(--sand); color: #6D4A1F; }
+.pill-format { background: var(--paper-2); color: var(--muted); }
+.pill-topic { color: var(--muted); font-size: 12.5px; padding-left: 2px; }
+.card .rel { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-top: 2px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.card .rel span { color: var(--moss); font-weight: 600; margin-right: 4px; }
+.card .rel a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--leaf); }
+.card .rel a:hover { border-bottom-style: solid; }
+.card .rel .sep { color: var(--line); margin: 0 5px; }
+.card.featured-card { border-top: 4px solid var(--gold); }
+.card.featured-card .subj { font-size: 12.5px; font-weight: 600; color: var(--leaf); }
 
-/* ============ Mission band ============ */
-.mission {
-    max-width: 1100px;
-    margin: 30px auto 70px;
-    padding: 0 24px;
-}
-.mission-inner {
-    background: linear-gradient(135deg, var(--green-dark), #2d5738);
-    border-radius: 18px;
-    border-left: 6px solid var(--gold);
-    color: var(--white);
-    padding: 40px 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 28px;
-    flex-wrap: wrap;
-    box-shadow: 0 12px 30px rgba(33,68,43,.22);
-}
-.mission-inner h2 {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    margin: 0 0 8px;
-    font-size: 1.5rem;
-}
-.mission-inner p { margin: 0; color: rgba(255,255,255,.85); max-width: 560px; font-size: 15px; }
-.mission-inner .btn-primary { flex-shrink: 0; }
+/* ---------- browse ---------- */
+#browse { padding-bottom: 72px; }
+.toolbar { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 12px; box-shadow: 0 6px 24px rgba(33,68,43,.06); }
+.toolbar-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.search { flex: 1 1 260px; display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; }
+.search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 15px; color: var(--text); outline: none; }
+.search svg { color: var(--muted); flex-shrink: 0; }
+.select { position: relative; }
+.select select { appearance: none; -webkit-appearance: none; font: inherit; font-size: 14px; font-weight: 500; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 8px 34px 8px 14px; cursor: pointer; }
+.select::after { content: ""; position: absolute; right: 14px; top: 50%; width: 7px; height: 7px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chips .label { font-size: 13.5px; color: var(--muted); margin-right: 2px; min-width: 42px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13.5px; font-weight: 500; padding: 6px 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; transition: background .12s, border-color .12s; }
+.chip:hover { border-color: var(--leaf); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.chip[aria-pressed="true"] svg .d { fill: var(--gold); }
+.chip-clear { border: 0; background: transparent; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: 13.5px; cursor: pointer; }
+.key { margin: 14px 0 0; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+.key b { font-weight: 600; color: var(--moss); }
+.key .k { display: inline-flex; align-items: center; gap: 6px; }
+.key .k svg { width: 22px; height: 11px; }
+.result-line { margin: 22px 0 10px; color: var(--muted); font-size: 14.5px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.result-line .expand { display: flex; gap: 12px; }
+.result-line button { font: inherit; font-size: 13.5px; color: var(--ink); background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 0; }
 
-/* ============ Footer ============ */
-.footer {
-    background: var(--brown-medium);
-    border-top: 4px solid var(--gold);
-    color: rgba(255,255,255,.92);
-    text-align: center;
-    padding: 42px 24px;
-}
-.footer .brand {
-    font-family: 'Switzer', 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: .5px;
-    color: var(--white);
-    text-decoration: none;
-}
-.footer .site {
-    display: block;
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--gold-light);
-    text-decoration: none;
-}
-.footer .fine {
-    margin-top: 16px;
-    font-size: 12px;
-    color: rgba(255,255,255,.55);
-}
+.area-label { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--moss); margin: 34px 0 10px; padding-left: 2px; }
+.subject { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); margin: 0 0 12px; overflow: hidden; scroll-margin-top: 80px; }
+.subject-head { width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: none; border: 0; text-align: left; cursor: pointer; font: inherit; color: var(--text); }
+.subject-head:hover { background: #FBFAF6; }
+.subject-head .s-name { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink); }
+.subject-head .s-blurb { display: block; font-size: 14px; color: var(--muted); margin-top: 2px; }
+.subject-head .s-count { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--moss); background: var(--sand); padding: 2px 10px; border-radius: 999px; }
+.subject-head .chev { width: 20px; height: 20px; color: var(--ink); transition: transform .2s; flex-shrink: 0; }
+.subject-head[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.subject-body { padding: 4px 20px 20px; border-top: 1px dashed var(--line); }
+.topic-label { font-size: 13.5px; font-weight: 600; color: var(--moss); margin: 18px 0 10px; }
+.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+.show-more { margin: 16px 0 0; }
+.empty { background: var(--white); border: 1px dashed var(--line); border-radius: var(--radius); padding: 28px; color: var(--muted); text-align: center; margin-top: 16px; }
 
-/* ============ Responsive ============ */
-@media (max-width: 768px) {
-    .topbar { padding: 12px 16px; }
-    .topbar-cta { display: none; }
-    .hero { padding: 60px 20px 84px; }
-    .container { padding: 48px 18px 20px; }
-    .section-sub { margin-left: 0; }
-    .panel-inner { padding-left: 22px; }
-    .subject-toggle { padding: 14px 14px 14px 16px; gap: 12px; }
-    .subject-desc { display: none; }
-    .mission-inner { padding: 30px 26px; }
-}
+/* ---------- footer ---------- */
+footer { background: var(--ink); color: rgba(255,255,255,.85); padding: 48px 0 40px; margin-top: 24px; border-top: 3px solid var(--gold); }
+footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
+@media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
+footer h3 { font-family: var(--display); font-size: 16px; margin: 0 0 10px; color: var(--white); }
+footer p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; max-width: 44ch; }
+footer ul { list-style: none; padding: 0; margin: 0; }
+footer li { margin: 0 0 8px; font-size: 14.5px; }
+footer a { color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.25); }
+footer a:hover { border-color: var(--gold); }
+footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14); padding-top: 18px; font-size: 13px; color: rgba(255,255,255,.65); }
 </style>
 </head>
 <body>
 
-<!-- ============ Top bar ============ -->
-<nav class="topbar">
-    <div class="topbar-left">
-        <div class="topbar-logo">
-            <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a>
-        </div>
-        <div>
-            <a class="topbar-name" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learning Curve Collective</a>
-            <div class="topbar-tag">Open Learning Resources</div>
-        </div>
-    </div>
-    <a class="topbar-cta" href="#resources">Browse Resources</a>
-</nav>
-
-<!-- ============ Hero ============ -->
-<header class="hero">
-    <div class="hero-badge">Free &bull; Open &bull; Interactive</div>
-    <h1>Learn deeply. <span class="accent">Grow confidently.</span></h1>
-    <p>
-        Free interactive mathematics and STEM learning resources designed to build deep
-        conceptual understanding and lasting academic confidence, open to every learner.
-    </p>
-    <div class="hero-actions">
-        <a class="btn-primary" href="#resources">Explore Resources</a>
-        <a class="btn-ghost" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Visit Our Site</a>
+<header class="topbar">
+    <div class="wrap">
+        <a class="brand" href="#top">
+            <img src="assets/lcc-logo.png" alt="">
+            <span>
+                <span class="brand-name">Open Learning</span><br>
+                <span class="brand-by">by Learning Curve Collective</span>
+            </span>
+        </a>
+        <nav class="topnav" aria-label="Site">
+            <a class="hide-sm" href="#subjects">Subjects</a>
+            <a class="hide-sm" href="#featured">Featured</a>
+            <a class="hide-sm" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learning Curve Collective</a>
+            <a class="btn btn-gold btn-sm" href="#browse">Explore resources</a>
+        </nav>
     </div>
 </header>
 
-<!-- ============ Pillars ============ -->
-<section class="pillars" aria-label="What makes us different">
-    <div class="pillar">
-        <div class="pillar-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.9L21 9l-5.4 4.4L17.5 21 12 16.9 6.5 21l1.9-7.6L3 9l6.6-.1z"/></svg>
-        </div>
+<main id="top">
+<section class="hero">
+    <div class="wrap">
         <div>
-            <h3>Free, forever</h3>
-            <p>Every lesson, worksheet, and tool is open to all learners: no accounts, no paywalls.</p>
+            <h1>Open Learning</h1>
+            <p class="by">by <a href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learning Curve Collective</a></p>
+            <p class="lede">A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.</p>
+            <form class="hero-search" id="hero-search" role="search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                <label class="sr-only" for="hq">Search resources</label>
+                <input id="hq" type="search" placeholder="Search for a topic, like chain rule or elasticity" autocomplete="off">
+                <button class="btn btn-gold btn-sm" type="submit">Explore resources</button>
+            </form>
+            <p class="hero-links"><a href="#subjects">Browse by subject</a><a href="#featured">Featured sheets</a><a href="#browse">All resources</a></p>
         </div>
-    </div>
-    <div class="pillar">
-        <div class="pillar-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/><path d="M3 21h18"/></svg>
-        </div>
-        <div>
-            <h3>Interactive by design</h3>
-            <p>Visualizers, step-by-step derivations, and practice with instant feedback, not static PDFs.</p>
-        </div>
-    </div>
-    <div class="pillar">
-        <div class="pillar-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg>
-        </div>
-        <div>
-            <h3>Concept-first</h3>
-            <p>We teach the <em>why</em> behind every formula, so understanding sticks long after the test.</p>
+        <div class="hero-art" aria-hidden="true">
+            <!-- the learning curve: a logistic curve through the six academic levels, drawn by script -->
+            <svg class="curve" id="curve" viewBox="0 0 460 300" role="img"></svg>
         </div>
     </div>
 </section>
 
-<!-- ============ Resources ============ -->
-<main class="container" id="resources">
-    <div class="section-header">
-        <div class="section-number">&darr;</div>
-        <h2>Browse Resources</h2>
+<section class="block" id="subjects">
+    <div class="wrap">
+        <h2>Browse by subject</h2>
+        <p class="sub">Every resource is sorted by subject and listed in the order you would meet it in a course.</p>
+        <div class="tiles" id="tiles"></div>
     </div>
-    <p class="section-sub">Click a subject to open it. Within each subject, worksheets are listed in the order you would meet them in a course.</p>
+</section>
 
-    <div class="toolbar">
-        <label class="search-wrap" for="ws-search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-            <input id="ws-search" type="search" placeholder="Search worksheets (e.g. &ldquo;chain rule&rdquo;, &ldquo;elasticity&rdquo;, &ldquo;ACT science&rdquo;)" autocomplete="off" oninput="filterResources(this.value)">
-        </label>
-        <div class="toolbar-btns">
-            <button class="tb-btn" type="button" onclick="setAll(true)">Expand all</button>
-            <button class="tb-btn" type="button" onclick="setAll(false)">Collapse all</button>
+<section class="block" id="featured">
+    <div class="wrap">
+        <h2>Featured resources</h2>
+        <p class="sub">A few of the interactive tools that show what these sheets can do.</p>
+        <div class="featured" id="featured-grid"></div>
+    </div>
+</section>
+
+<section class="block" id="browse">
+    <div class="wrap">
+        <h2>All resources</h2>
+        <p class="sub">Search, or combine filters by academic level, what's inside, subject, and format. Open a subject to see its sheets in course order.</p>
+
+        <div class="toolbar" role="search">
+            <div class="toolbar-row">
+                <label class="search" for="q">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                    <span class="sr-only">Search resources</span>
+                    <input id="q" type="search" placeholder="Search by topic, like chain rule, elasticity, or ACT science" autocomplete="off">
+                </label>
+                <div class="select"><label class="sr-only" for="f-subject">Subject</label><select id="f-subject"><option value="">All subjects</option></select></div>
+                <div class="select"><label class="sr-only" for="f-format">Format</label><select id="f-format"><option value="">All formats</option></select></div>
+            </div>
+            <div class="toolbar-row chips" id="level-chips" aria-label="Academic level"><span class="label">Level</span></div>
+            <div class="toolbar-row chips" id="content-chips" aria-label="What's inside"><span class="label">Inside</span></div>
+            <div class="toolbar-row chips" id="exam-chips" aria-label="Exam" hidden><span class="label">Exam</span></div>
         </div>
-    </div>
-    <p class="no-results" id="no-results" hidden>No worksheets match that search.</p>
+        <div class="key" id="key"></div>
 
-    <div class="accordion" id="accordion">
-        <div class="group-label">Mathematics</div>
-        <section class="subject" data-folder="algebra" id="subj-algebra">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-algebra" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l6 6-6 6"/><path d="M14 18h6"/><path d="M14 12h3"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Algebra</span>
-                    <span class="subject-desc">Foundations, functions, and symbolic reasoning.</span>
-                </span>
-                <span class="ws-count">5</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-algebra" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/">Open the Algebra folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Foundations</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/factoring-worksheet.html">Factoring</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/algebra-review-solving-systems-and-quadratics.html">Algebra Review: Solving Systems &amp; Quadratics</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Functions</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/parent_functions_transformations_worksheet.html">Parent Functions &amp; Transformations</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/polynomials_rational_functions_worksheet.html">Polynomials &amp; Rational Functions</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Proofs</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/algebra/walkthrough-proof-rational-roots-theorem.html">Rational Root Theorem: Proof Walkthrough</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="geometry" id="subj-geometry">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-geometry" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 18H3z"/><circle cx="12" cy="15" r="3"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Geometry</span>
-                    <span class="subject-desc">Shapes, proofs, and spatial reasoning.</span>
-                </span>
-                <span class="ws-count">1</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-geometry" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/geometry/">Open the Geometry folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Triangles</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/geometry/triangle_centers.html">Triangle Centers</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="precalc" id="subj-precalc">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-precalc" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18c4 0 5-12 9-12s5 12 9 12"/><path d="M3 12h18"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Precalculus</span>
-                    <span class="subject-desc">Functions, trig, and the bridge to calculus.</span>
-                </span>
-                <span class="ws-count">5</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-precalc" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/">Open the Precalculus folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Functions &amp; their graphs</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/exponential-logarithmic-worksheet.html">Exponential &amp; Logarithmic Functions</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/asymptotes-discontinuities-worksheet.html">Asymptotes &amp; Discontinuities</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Analytic geometry</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/conic_sections_worksheet.html">Conic Sections</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/polar_and_parametric_equations.html">Polar Graphs &amp; Parametric Equations</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Sequences</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/precalc/sequences_series_worksheet.html">Sequences &amp; Series</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="calculus" id="subj-calculus">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-calculus" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3c-3 0-3 4-3 9s0 9-3 9"/><path d="M7 8h8"/><path d="M7 16h8"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Calculus</span>
-                    <span class="subject-desc">From rates of change and integrals to multivariable ideas.</span>
-                </span>
-                <span class="ws-count">20</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-calculus" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/">Open the Calculus folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Limits &amp; derivatives</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/average-and-instantaneous-rate-of-change.html">Average &amp; Instantaneous Rate of Change</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/derivative-definition-continuity-differentiability-study-sheet.html">The Derivative: Definition, Continuity &amp; Differentiability</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/power-rule-study-sheet.html">Power Rule Study Sheet: Derivative Shortcuts</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/differentiation-part-1.html">Derivatives Part 1: Rules &amp; Toolkit</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/product-and-quotient-rule-practice.html">Product &amp; Quotient Rule Practice</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/differentiation-part-2.html">Derivatives Part 2: Chain Rule &amp; Beyond</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Applications of derivatives</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/related-rates-study-sheet.html">Related Rates Study Sheet</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/IVT_EVT_MVT_Extrema_Sheet.html">IVT, EVT, MVT &amp; Extrema: Existence Theorems</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/practice-extrema-mvt-worksheet.html">Extrema &amp; the Mean Value Theorem: Practice</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/Derivative%20Tests%20Study%20Sheet.html">Derivative Tests &amp; Justification Study Sheet</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/applications_of_differentiation.html">Applications of Differentiation</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Integration</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/integration_methods_and_practice.html">Integration: Methods &amp; Practice</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/disk-washer-method-practice.html">Disk vs Washer Method Organizer</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/moments-physics-and-probability.html">Moments, Center of Mass &amp; Expected Value</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/numerical-integration-convergence-with-taylor-series.html">Midpoint Rule Convergence: Taylor Proof</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Multivariable</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/directional_derivative_worksheet.html">Gradient &amp; Directional Derivatives</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/lagrange_multiplier_worksheet.html">Lagrange Multipliers: Complete Guide</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/double_integrals.html">Double Integrals: Theory &amp; Visualization</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/line_integral_worksheet.html">Line Integrals: Three Types</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/projection-to-gradient-descent-conceptual-map.html">From Projection to Gradient Descent</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="stats" id="subj-stats">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-stats" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Statistics</span>
-                    <span class="subject-desc">Probability, inference, and data analysis.</span>
-                </span>
-                <span class="ws-count">1</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-stats" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/stats/">Open the Statistics folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Descriptive statistics</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/stats/variance-standard-deviation-standard-error-organizer.html">Variance, SD, SE + Covariance &amp; Correlation</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="group-label">Sciences &amp; Social Sciences</div>
-        <section class="subject" data-folder="physics" id="subj-physics">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-physics" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Physics</span>
-                    <span class="subject-desc">Interactive electricity &amp; magnetism labs.</span>
-                </span>
-                <span class="ws-count">2</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-physics" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/">Open the Physics folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Electricity &amp; magnetism</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/electric_fields_interactive.html">Electric Fields: Interactive Worksheet</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/physics/circuits-interactive.html">Circuits: Interactive Lab</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="biology" id="subj-biology">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-biology" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6"/><path d="M17 3c0 6-10 6-10 12s10 6 10 6"/><path d="M8 8h8"/><path d="M8 16h8"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Biology</span>
-                    <span class="subject-desc">Cells, chemistry, and life science study sheets.</span>
-                </span>
-                <span class="ws-count">1</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-biology" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/biology/">Open the Biology folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Foundations</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/biology/Chemistry_of_Life_Study_Sheet.html">The Chemistry of Life: Atoms, Bonds &amp; Water</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="econ" id="subj-econ">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-econ" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/><path d="M3 21h18"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Economics</span>
-                    <span class="subject-desc">Principles, micro, environmental, public econ, and econometrics made intuitive.</span>
-                </span>
-                <span class="ws-count">26</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-econ" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/">Open the Economics folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Reference sheets</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/econ-graphs-master-cheatsheet.html">The Ultimate Econ Graph Cheat Sheet</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/market_structure_organizer.html">Market Structure Organizer</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Principles of economics</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/Principles%20of%20Econ/Principles%20of%20Econ%20-%20Midterm%202%20Study%20Sheet.html">Principles of Econ: Midterm 2 Study Sheet</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Microeconomics: in course order</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/Micro_Module0_Math_Foundations.html">Module 0: Math Foundations for Micro</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/preferences-utility-budget-micro.html">Preferences, Utility &amp; the Budget</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/consumer-optimum-micro.html">Solving the Consumer&rsquo;s Problem</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/demand-curves-micro.html">From Optimum to Demand</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/elasticity-micro.html">Elasticity &amp; Market Demand</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/income-substitution-effects-micro.html">Income &amp; Substitution Effects</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/giffen-vs-ordinary-goods-micro.html">Normal, Inferior &amp; Giffen Goods</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/midterm1-review-micro.html">Micro Unit 1 Study Sheet (Midterm Review)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/cost-curves-profit-max-micro.html">Cost Curves, Revenue &amp; Profit Maximization</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/game-theory/game-theory-micro.html">Game Theory</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/exchange-economy-ge-micro.html">General Equilibrium in an Exchange Economy</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/micro/Competitive%20Equilibrium%20with%20Production%20-%20Robinson%20Crusoe.html">Competitive Equilibrium with Production: The Robinson Crusoe Economy</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Environmental economics</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Evolution%20of%20Environmental%20Economics.html">The Evolution of Environmental Economics</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Comparing%20Environmental%20Policies.html">Comparing Environmental Policies (Fullerton 2001)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Carbon%20Taxes%20vs%20Cap%20and%20Trade.html">Carbon Taxes vs. Cap and Trade</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Carbon%20Tax%20Salience%20and%20Polluter%20Lists.html">Carbon Tax Salience &amp; Polluter Lists</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Voluntary%20and%20Information-Based%20Approaches.html">Voluntary &amp; Information-Based Approaches</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Monitoring%20and%20Local%20Conditions.html">Monitoring &amp; Local Conditions</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Bridging%20the%20Energy%20Efficiency%20Gap.html">Bridging the Energy Efficiency Gap</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/Rebound%20Effect%20and%20Efficiency%20Standards.html">The Rebound Effect &amp; Efficiency Standards</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/environmental-econ/ECON%204800%20Exam%20Study%20Sheet%20-%20Environmental%20Policy.html">Environmental Policy: Exam Review Study Sheet</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Public economics</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/public-econ/Public%20Econ%20Study%20Sheet%20-%20Public%20Goods%20and%20Local%20Finance.html">Public Goods &amp; Local Finance Study Sheet</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Econometrics</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/econ/econometrics/econometrics_cheat_sheet.html">Econometrics Master Cheat Sheet</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="psychology" id="subj-psychology">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-psychology" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a5 5 0 0 0-5 5v3l-2 3h2v3a3 3 0 0 0 3 3h3v2h5v-5a7 7 0 0 0 0-14z"/><path d="M12 8v4"/><circle cx="12" cy="14.5" r=".5"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Psychology</span>
-                    <span class="subject-desc">Research methods and study sheets.</span>
-                </span>
-                <span class="ws-count">1</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-psychology" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/psychology/">Open the Psychology folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Research methods</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/psychology/Observational_Research_Lecture2_Study_Sheet.html">Observational Research: Lecture 2 Study Sheet</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="machine-learning" id="subj-machine-learning">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-machine-learning" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><path d="M7 7l3 4M7 17l3-4M14 12h3"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Machine Learning</span>
-                    <span class="subject-desc">Core algorithms, stepped through by hand.</span>
-                </span>
-                <span class="ws-count">7</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-machine-learning" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/">Open the Machine Learning folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Math &amp; stats foundations</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Stats-for-ML-Cheat-Sheet.html">Statistics for ML: Formula Cheat Sheet</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/matrix-calculus-worksheet.html">Matrix Calculus: Gradients &amp; Shapes</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Algorithms, step by step</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Decision_Tree_Step_Through.html">Growing a Decision Tree</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/Neural_Network_Step_Through.html">Inside a Simple Neural Network</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/kmeans_image_compression_worksheet.html">K-Means Image Compression</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/semi_supervised_em_step_through.html">Semi-Supervised EM &amp; Gaussian Mixtures</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Review</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/machine-learning/ml_study_guide.html">ML Study Guide</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="medical study sheets" id="subj-medical-study-sheets">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-medical-study-sheets" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M4 12h16"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">Medical Study Sheets</span>
-                    <span class="subject-desc">Board-style review sheets by specialty.</span>
-                </span>
-                <span class="ws-count">1</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-medical-study-sheets" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/medical%20study%20sheets/">Open the Medical Study Sheets folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Hematology</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/medical%20study%20sheets/hematology/Inherited_Thrombophilias_ASHSAP_Ch19_Study_Sheet.html">Inherited Thrombophilias (ASH-SAP Ch. 19)</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="group-label">Test Prep</div>
-        <section class="subject" data-folder="test-prep" id="subj-test-prep">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-test-prep" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">SAT, PSAT &amp; ACT</span>
-                    <span class="subject-desc">Diagnostics, section-by-section skills, and full-length practice.</span>
-                </span>
-                <span class="ws-count">19</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-test-prep" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/">Open the SAT, PSAT &amp; ACT folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Start here</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/SAT-PSAT-Diagnostic.html">PSAT / SAT Diagnostic</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html">Test Day Playbook: SAT, PSAT &amp; ACT</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">SAT &amp; PSAT</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Reading-1-Student-Notes.html">SAT Reading 1: Student Notes (SCORE)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Grammar-1-Transitions.html">SAT Grammar 1: Transitions (LINK)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Grammar-2-Sentence-Boundaries.html">SAT Grammar 2: Sentence Boundaries</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Words-in-Context-1-Words-1-40.html">SAT Words in Context: Set 1 (Words 1&ndash;40)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Words-in-Context-2-Words-41-80.html">SAT Words in Context: Set 2 (Words 41&ndash;80)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Words-in-Context-3-Words-81-120.html">SAT Words in Context: Set 3 (Words 81&ndash;120)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Desmos-Strategies.html">SAT Math: Desmos Strategies</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Math-1-Linear-Equations.html">SAT Math 1: Linear Equations</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/Practice-SAT-Full-Test.html">Full-Length Practice SAT</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/Test-Day-Playbook-SAT-PSAT.html">Test Day Playbook: SAT &amp; PSAT</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">ACT</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Grammar-1-Transitions.html">ACT Grammar 1: Transitions (LINK)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Grammar-2-Sentence-Boundaries.html">ACT Grammar 2: Sentence Boundaries</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Geometry-Review.html">ACT Math: Geometry Review</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Stats-Probability-Review.html">ACT Math: Statistics &amp; Probability Review</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Science-1-CHART-Core-Data-Skills.html">ACT Science 1: Core Data Skills (CHART)</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/act/ACT-Science-2-IMPACT-Advanced-Question-Types.html">ACT Science 2: Advanced Question Types (IMPACT)</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">For tutors</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/SAT-Tutor-Evaluation.html">Tutor Skills Evaluation</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="subject" data-folder="gre" id="subj-gre">
-            <button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-gre" onclick="toggleSubject(this)">
-                <span class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
-                <span class="subject-text">
-                    <span class="subject-name">GRE</span>
-                    <span class="subject-desc">Quant, essay, and full-length practice for grad school admissions.</span>
-                </span>
-                <span class="ws-count">8</span>
-                <span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
-            </button>
-            <div class="subject-panel" id="panel-gre" hidden>
-                <div class="panel-inner">
-                    <a class="folder-link" href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/">Open the GRE folder &rarr;</a>
-                    <div class="topic-group">
-                        <div class="topic-label">Quant: reference</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-quant-formula-cards.html">GRE Quant: Formula Sheet &amp; Flash Cards</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Quant: topic sheets</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-exponents-sheet.html">GRE Quant: Simplifying Exponents</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-sequences-sheet.html">GRE Quant: Sequences</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-interest-sheet.html">GRE Quant: Interest &amp; Percent Change</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-circles-sheet.html">GRE Quant: Circles</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/gre-triangles-sheet.html">GRE Quant: Triangles</a></li>
-                        </ol>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-label">Writing &amp; full practice</div>
-                        <ol class="ws-list">
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/GRE-Essay-Sheet.html">GRE Essay: The Issue Essay Roadmap</a></li>
-                            <li><a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/gre/GRE_Practice_Test_Full.html">Full-Length GRE Practice Test</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="result-line">
+            <span id="result-count"></span>
+            <span class="expand"><button type="button" id="expand-all">Expand all</button><button type="button" id="collapse-all">Collapse all</button></span>
+        </div>
+        <div id="results"></div>
     </div>
+</section>
 </main>
 
-<!-- ============ Mission band ============ -->
-<section class="mission">
-    <div class="mission-inner">
+<footer>
+    <div class="wrap">
         <div>
-            <h2>Education should be free.</h2>
-            <p>The Learning Curve Collective builds open, high-quality learning tools so that
-               cost is never the barrier between a curious mind and a deep understanding.</p>
+            <h3>Open Learning</h3>
+            <p>Free, interactive study sheets from the educators at Learning Curve Collective, a tutoring and academic coaching practice in Los Angeles.</p>
+            <p>These resources are free for independent study, classroom enrichment, and academic growth.</p>
         </div>
-        <a class="btn-primary" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learn More About Us</a>
+        <div>
+            <h3>Learning Curve Collective</h3>
+            <ul>
+                <li><a href="https://learningcurvecollective.com" target="_blank" rel="noopener">Home</a></li>
+                <li><a href="https://learningcurvecollective.com" target="_blank" rel="noopener">Test prep</a></li>
+                <li><a href="https://learningcurvecollective.com" target="_blank" rel="noopener">Subject tutoring</a></li>
+                <li><a href="https://learningcurvecollective.com" target="_blank" rel="noopener">Book a free consultation</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>This library</h3>
+            <ul>
+                <li><a href="#subjects">Browse by subject</a></li>
+                <li><a href="#featured">Featured resources</a></li>
+                <li><a href="#browse">All resources</a></li>
+                <li><a href="https://github.com/LearningCurveCollective/learning-curve-collective-resources" target="_blank" rel="noopener">Source on GitHub</a></li>
+            </ul>
+        </div>
+        <p class="fine">&copy; Learning Curve Collective. Commercial redistribution or resale of these materials is not permitted without written permission.</p>
     </div>
-</section>
+</footer>
 
-<!-- ============ Footer ============ -->
-<div class="footer">
-    <a class="brand" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learning Curve Collective</a>
-    <a class="site" href="https://learningcurvecollective.com" target="_blank" rel="noopener">learningcurvecollective.com</a>
-    <p class="fine">&copy; 2026 Learning Curve Collective &bull; Free &amp; open educational content</p>
-</div>
-
-
+<script src="catalog.js"></script>
 <script>
-/* ---------- accordion ---------- */
-function toggleSubject(btn, force) {
-    var sec = btn.closest('.subject'), panel = document.getElementById(btn.getAttribute('aria-controls'));
-    var open = (force === undefined) ? !sec.classList.contains('open') : force;
-    sec.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    panel.hidden = !open;
-}
-function setAll(open) {
-    document.querySelectorAll('.subject-toggle').forEach(function (b) { toggleSubject(b, open); });
-}
-/* open a subject when the URL has #subj-xxx, e.g. index.html#subj-calculus */
-function openFromHash() {
-    var id = (location.hash || '').replace('#', '');
-    if (!id) return;
-    var sec = document.getElementById(id);
-    if (sec && sec.classList.contains('subject')) {
-        toggleSubject(sec.querySelector('.subject-toggle'), true);
-        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-}
-window.addEventListener('hashchange', openFromHash);
-window.addEventListener('DOMContentLoaded', openFromHash);
-
-/* ---------- search ---------- */
-var _origText = new WeakMap();
-function filterResources(q) {
-    q = (q || '').trim().toLowerCase();
-    var any = false;
-    document.querySelectorAll('.subject').forEach(function (sec) {
-        var secHit = 0;
-        sec.querySelectorAll('.topic-group').forEach(function (g) {
-            var gHit = 0;
-            g.querySelectorAll('.ws-list li').forEach(function (li) {
-                var a = li.querySelector('a');
-                if (!_origText.has(a)) _origText.set(a, a.innerHTML);
-                var text = a.textContent.replace(/\s*new$/i, '').toLowerCase();
-                var hit = !q || text.indexOf(q) !== -1;
-                li.hidden = !hit;
-                if (hit) gHit++;
-                // highlight
-                if (q && hit) {
-                    var raw = _origText.get(a), badge = '';
-                    var m = raw.match(/<span class="badge-new">.*?<\/span>/); if (m) { badge = m[0]; raw = raw.replace(m[0], ''); }
-                    var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
-                    a.innerHTML = raw.replace(re, '<span class="hit">$1</span>') + badge;
-                } else {
-                    a.innerHTML = _origText.get(a);
-                }
-            });
-            g.hidden = gHit === 0;
-            secHit += gHit;
-        });
-        var lbl = sec.previousElementSibling;
-        sec.hidden = secHit === 0;
-        if (secHit) any = true;
-        toggleSubject(sec.querySelector('.subject-toggle'), q ? true : false);
-    });
-    // hide group labels whose subjects are all hidden
-    document.querySelectorAll('.group-label').forEach(function (gl) {
-        var n = gl.nextElementSibling, visible = false;
-        while (n && !n.classList.contains('group-label')) { if (!n.hidden) visible = true; n = n.nextElementSibling; }
-        gl.hidden = !visible;
-    });
-    document.getElementById('no-results').hidden = any || !q;
-}
-
-/* ---------- auto-detect newly published worksheets ----------
-   Asks the GitHub API for the repo tree. Any .html file not in KNOWN is appended
-   to its subject under a "Recently added" heading with a "new" badge; a brand-new
-   folder gets its own subject. Fails silently if offline. */
 (function () {
-    var KNOWN = new Set(["algebra/factoring-worksheet.html", "algebra/algebra-review-solving-systems-and-quadratics.html", "algebra/parent_functions_transformations_worksheet.html", "algebra/polynomials_rational_functions_worksheet.html", "algebra/walkthrough-proof-rational-roots-theorem.html", "geometry/triangle_centers.html", "precalc/exponential-logarithmic-worksheet.html", "precalc/asymptotes-discontinuities-worksheet.html", "precalc/conic_sections_worksheet.html", "precalc/polar_and_parametric_equations.html", "precalc/sequences_series_worksheet.html", "calculus/average-and-instantaneous-rate-of-change.html", "calculus/differentiation-part-1.html", "calculus/differentiation-part-2.html", "calculus/IVT_EVT_MVT_Extrema_Sheet.html", "calculus/practice-extrema-mvt-worksheet.html", "calculus/applications_of_differentiation.html", "calculus/integration_methods_and_practice.html", "calculus/disk-washer-method-practice.html", "calculus/moments-physics-and-probability.html", "calculus/numerical-integration-convergence-with-taylor-series.html", "calculus/directional_derivative_worksheet.html", "calculus/lagrange_multiplier_worksheet.html", "calculus/double_integrals.html", "calculus/line_integral_worksheet.html", "calculus/projection-to-gradient-descent-conceptual-map.html", "stats/variance-standard-deviation-standard-error-organizer.html", "physics/electric_fields_interactive.html", "physics/circuits-interactive.html", "biology/Chemistry_of_Life_Study_Sheet.html", "econ/econ-graphs-master-cheatsheet.html", "econ/market_structure_organizer.html", "econ/micro/Micro_Module0_Math_Foundations.html", "econ/micro/preferences-utility-budget-micro.html", "econ/micro/consumer-optimum-micro.html", "econ/demand-curves-micro.html", "econ/elasticity-micro.html", "econ/income-substitution-effects-micro.html", "econ/micro/giffen-vs-ordinary-goods-micro.html", "econ/micro/midterm1-review-micro.html", "econ/cost-curves-profit-max-micro.html", "econ/game-theory/game-theory-micro.html", "econ/micro/exchange-economy-ge-micro.html", "econ/environmental-econ/Evolution of Environmental Economics.html", "econ/environmental-econ/Comparing Environmental Policies.html", "econ/environmental-econ/Carbon Taxes vs Cap and Trade.html", "econ/environmental-econ/Voluntary and Information-Based Approaches.html", "econ/environmental-econ/Bridging the Energy Efficiency Gap.html", "econ/environmental-econ/Rebound Effect and Efficiency Standards.html", "econ/econometrics/econometrics_cheat_sheet.html", "psychology/Observational_Research_Lecture2_Study_Sheet.html", "machine-learning/Stats-for-ML-Cheat-Sheet.html", "machine-learning/matrix-calculus-worksheet.html", "machine-learning/Decision_Tree_Step_Through.html", "machine-learning/Neural_Network_Step_Through.html", "machine-learning/kmeans_image_compression_worksheet.html", "machine-learning/semi_supervised_em_step_through.html", "machine-learning/ml_study_guide.html", "medical study sheets/hematology/Inherited_Thrombophilias_ASHSAP_Ch19_Study_Sheet.html", "test-prep/SAT-PSAT-Diagnostic.html", "test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html", "test-prep/sat/SAT-Reading-1-Student-Notes.html", "test-prep/sat/SAT-Grammar-1-Transitions.html", "test-prep/sat/SAT-Grammar-2-Sentence-Boundaries.html", "test-prep/sat/SAT-Words-in-Context-1-Words-1-40.html", "test-prep/sat/SAT-Words-in-Context-2-Words-41-80.html", "test-prep/sat/SAT-Words-in-Context-3-Words-81-120.html", "test-prep/sat/SAT-Desmos-Strategies.html", "test-prep/sat/SAT-Math-1-Linear-Equations.html", "test-prep/sat/Practice-SAT-Full-Test.html", "test-prep/sat/Test-Day-Playbook-SAT-PSAT.html", "test-prep/act/ACT-Grammar-1-Transitions.html", "test-prep/act/ACT-Grammar-2-Sentence-Boundaries.html", "test-prep/act/ACT-Geometry-Review.html", "test-prep/act/ACT-Stats-Probability-Review.html", "test-prep/act/ACT-Science-1-CHART-Core-Data-Skills.html", "test-prep/act/ACT-Science-2-IMPACT-Advanced-Question-Types.html", "test-prep/SAT-Tutor-Evaluation.html", "gre/gre-quant-formula-cards.html", "gre/gre-exponents-sheet.html", "gre/gre-sequences-sheet.html", "gre/gre-interest-sheet.html", "gre/gre-circles-sheet.html", "gre/gre-triangles-sheet.html", "gre/GRE-Essay-Sheet.html", "gre/GRE_Practice_Test_Full.html", "calculus/derivative-definition-continuity-differentiability-study-sheet.html", "calculus/power-rule-study-sheet.html", "calculus/product-and-quotient-rule-practice.html", "calculus/related-rates-study-sheet.html", "calculus/Derivative Tests Study Sheet.html", "econ/Principles of Econ/Principles of Econ - Midterm 2 Study Sheet.html", "econ/micro/Competitive Equilibrium with Production - Robinson Crusoe.html", "econ/environmental-econ/Carbon Tax Salience and Polluter Lists.html", "econ/environmental-econ/Monitoring and Local Conditions.html", "econ/environmental-econ/ECON 4800 Exam Study Sheet - Environmental Policy.html", "econ/public-econ/Public Econ Study Sheet - Public Goods and Local Finance.html"]);
-    var BASE = 'https://learningcurvecollective.github.io/learning-curve-collective-resources/';
-    var API = 'https://api.github.com/repos/LearningCurveCollective/learning-curve-collective-resources/git/trees/main?recursive=1';
-    var ACRO = { sat:'SAT', psat:'PSAT', act:'ACT', gre:'GRE', ap:'AP', em:'EM', sd:'SD', se:'SE', kmeans:'K-Means', vs:'vs', and:'&', to:'to', of:'of', a:'a', the:'the', ml:'ML', ivt:'IVT', evt:'EVT', mvt:'MVT' };
-    function prettify(name) {
-        return name.replace(/\.html$/, '').split(/[-_\s]+/).map(function (w) {
-            var lw = w.toLowerCase();
-            if (ACRO[lw]) return ACRO[lw];
-            return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-        }).join(' ');
-    }
-    function encPath(p) { return p.split('/').map(encodeURIComponent).join('/'); }
-    var GENERIC_ICON = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
-    function getOrCreateSubject(folder) {
-        var sec = document.querySelector('.subject[data-folder="' + folder.replace(/"/g, '\\"') + '"]');
-        if (sec) return sec;
-        var acc = document.getElementById('accordion'); if (!acc) return null;
-        var sid = 'auto-' + folder.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        sec = document.createElement('section');
-        sec.className = 'subject'; sec.setAttribute('data-folder', folder); sec.id = 'subj-' + sid;
-        sec.innerHTML =
-            '<button class="subject-toggle" type="button" aria-expanded="false" aria-controls="panel-' + sid + '" onclick="toggleSubject(this)">' +
-            '<span class="card-icon">' + GENERIC_ICON + '</span>' +
-            '<span class="subject-text"><span class="subject-name"></span><span class="subject-desc">New subject: just published.</span></span>' +
-            '<span class="ws-count">0</span>' +
-            '<span class="chev" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>' +
-            '<div class="subject-panel" id="panel-' + sid + '" hidden><div class="panel-inner"><a class="folder-link" href="' + BASE + encPath(folder) + '/">Open the folder &rarr;</a></div></div>';
-        sec.querySelector('.subject-name').textContent = prettify(folder);
-        acc.appendChild(sec);
-        return sec;
-    }
-    function recentList(sec) {
-        var inner = sec.querySelector('.panel-inner');
-        var g = inner.querySelector('.topic-group.recent');
-        if (!g) {
-            g = document.createElement('div'); g.className = 'topic-group recent';
-            g.innerHTML = '<div class="topic-label">Recently added</div><ol class="ws-list"></ol>';
-            inner.appendChild(g);
-        }
-        return g.querySelector('.ws-list');
-    }
-    fetch(API).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-        if (!data || !data.tree) return;
-        data.tree.forEach(function (node) {
-            if (node.type !== 'blob') return;
-            var p = node.path;
-            if (!/\.html$/i.test(p) || p === 'index.html' || KNOWN.has(p)) return;
-            if (p.indexOf('/') === -1) return;
-            var folder = p.split('/')[0];
-            var sec = getOrCreateSubject(folder); if (!sec) return;
-            var list = recentList(sec);
-            var li = document.createElement('li'), a = document.createElement('a');
-            a.href = BASE + encPath(p);
-            a.textContent = prettify(p.split('/').pop());
-            var badge = document.createElement('span'); badge.className = 'badge-new'; badge.textContent = 'new';
-            a.appendChild(badge); li.appendChild(a); list.appendChild(li);
-            var count = sec.querySelector('.ws-count');
-            if (count) count.textContent = sec.querySelectorAll('.ws-list li').length;
+    var C = window.OPEN_LEARNING_CATALOG;
+    if (!C) return;
+    var BASE = C.site.base;
+    var R = C.resources.slice().sort(function (a, b) { return a.subject === b.subject ? a.order - b.order : 0; });
+    var BYID = {}; R.forEach(function (r) { BYID[r.id] = r; });
+    var SUBJ = {}; C.subjects.forEach(function (s) { SUBJ[s.key] = s; });
+    var EXAMS = ['SAT', 'PSAT', 'ACT', 'GRE'];
+    var CONTENT = {}; C.content_types.forEach(function (c) { CONTENT[c.key] = c; });
+    // reverse of builds_on
+    var LEADS = {}; R.forEach(function (r) { (r.builds_on || []).forEach(function (d) { (LEADS[d] = LEADS[d] || []).push(r.id); }); });
+
+    function enc(p) { return BASE + p.split('/').map(encodeURIComponent).join('/'); }
+    function el(tag, attrs, children) {
+        var e = document.createElement(tag);
+        if (attrs) Object.keys(attrs).forEach(function (k) {
+            if (k === 'text') e.textContent = attrs[k];
+            else if (k === 'html') e.innerHTML = attrs[k];
+            else e.setAttribute(k, attrs[k]);
         });
-    }).catch(function () {});
+        (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+        return e;
+    }
+    function count(fn) { return R.filter(fn).length; }
+
+    /* ---------- the learning curve (logistic), shared by the hero and the level glyphs ---------- */
+    function logistic(t, k) { k = k || 7; var f = function (x) { return 1 / (1 + Math.exp(-k * (x - 0.5))); }; return (f(t) - f(0)) / (f(1) - f(0)); }
+    function curvePath(x0, y0, w, h, n) {
+        var d = '';
+        for (var i = 0; i <= n; i++) { var t = i / n; var x = x0 + t * w, y = y0 - logistic(t) * h; d += (i ? ' L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
+        return d;
+    }
+    function drawHeroCurve() {
+        var svg = document.getElementById('curve'); if (!svg) return;
+        var NS = 'http://www.w3.org/2000/svg';
+        var x0 = 44, y0 = 252, w = 380, h = 206, n = 120;
+        var defs = document.createElementNS(NS, 'defs');
+        defs.innerHTML = '<linearGradient id="curveFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDA25E" stop-opacity=".22"/><stop offset="1" stop-color="#DDA25E" stop-opacity="0"/></linearGradient>';
+        svg.appendChild(defs);
+        var g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'grid');
+        for (var i = 0; i <= 4; i++) { var l = document.createElementNS(NS, 'line'); var y = y0 - i * (h / 4); l.setAttribute('x1', x0 - 4); l.setAttribute('x2', x0 + w + 16); l.setAttribute('y1', y); l.setAttribute('y2', y); g.appendChild(l); }
+        svg.appendChild(g);
+        var fill = document.createElementNS(NS, 'path'); fill.setAttribute('class', 'fill');
+        fill.setAttribute('d', curvePath(x0, y0, w, h, n) + ' L' + (x0 + w) + ' ' + y0 + ' Z'); svg.appendChild(fill);
+        var path = document.createElementNS(NS, 'path'); path.setAttribute('class', 'path'); path.setAttribute('pathLength', '1');
+        path.setAttribute('d', curvePath(x0, y0, w, h, n)); svg.appendChild(path);
+        var labels = C.levels;
+        labels.forEach(function (name, i) {
+            var t = i / (labels.length - 1), x = x0 + t * w, y = y0 - logistic(t) * h;
+            var dot = document.createElementNS(NS, 'circle'); dot.setAttribute('class', 'dot'); dot.setAttribute('cx', x); dot.setAttribute('cy', y); dot.setAttribute('r', 5);
+            dot.style.animationDelay = (0.3 + 1.6 * t) + 's'; svg.appendChild(dot);
+            var tx = document.createElementNS(NS, 'text');
+            // labels: the first two sit below the flat start, the last sits above the top, the rest hang to the left of their dot
+            if (i === 0) { tx.setAttribute('x', x); tx.setAttribute('y', y + 22); tx.setAttribute('text-anchor', 'start'); }
+            else if (i === 1) { tx.setAttribute('x', x + 10); tx.setAttribute('y', y + 18); tx.setAttribute('text-anchor', 'start'); }
+            else if (i === labels.length - 1) { tx.setAttribute('x', x); tx.setAttribute('y', y - 14); tx.setAttribute('text-anchor', 'end'); }
+            else { tx.setAttribute('x', x - 12); tx.setAttribute('y', y + 4); tx.setAttribute('text-anchor', 'end'); }
+            tx.textContent = name; svg.appendChild(tx);
+        });
+    }
+    function levelGlyph(i) {  // small curve with a dot at this level's position, 26 x 12
+        var n = C.levels.length - 1, t = i / n, x0 = 2, y0 = 10.5, w = 22, h = 9;
+        var x = x0 + t * w, y = y0 - logistic(t) * h;
+        return '<svg viewBox="0 0 26 12" aria-hidden="true"><path d="' + curvePath(x0, y0, w, h, 24) + '" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".55"/><circle class="d" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.6" fill="currentColor"/></svg>';
+    }
+    var ICON = {
+        theory: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>',
+        practice: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M13 7l3 3"/></svg>',
+        reference: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>'
+    };
+    ICON['theory+practice'] = ICON.theory + ICON.practice;
+
+    /* ---------- state ---------- */
+    var state = { q: '', subject: '', format: '', levels: [], exams: [], content: [] };
+    var open = {};
+
+    function readHash() {
+        var h = location.hash.replace(/^#/, '');
+        if (h.indexOf('browse?') !== 0) return false;
+        var ps = new URLSearchParams(h.slice(7));
+        state.q = ps.get('q') || '';
+        state.subject = ps.get('subject') || '';
+        state.format = ps.get('format') || '';
+        state.levels = ps.get('level') ? ps.get('level').split(',') : [];
+        state.exams = ps.get('exam') ? ps.get('exam').split(',') : [];
+        state.content = ps.get('inside') ? ps.get('inside').split(',') : [];
+        return true;
+    }
+    function writeHash() {
+        var ps = new URLSearchParams();
+        if (state.q) ps.set('q', state.q);
+        if (state.subject) ps.set('subject', state.subject);
+        if (state.format) ps.set('format', state.format);
+        if (state.levels.length) ps.set('level', state.levels.join(','));
+        if (state.exams.length) ps.set('exam', state.exams.join(','));
+        if (state.content.length) ps.set('inside', state.content.join(','));
+        var s = ps.toString();
+        var target = s ? '#browse?' + s : '#browse';
+        if (location.hash !== target) history.replaceState(null, '', target);
+    }
+    function filtering() { return !!(state.q || state.subject || state.format || state.levels.length || state.exams.length || state.content.length); }
+
+    /* ---------- matching ---------- */
+    function matches(r) {
+        if (state.subject && r.subject !== state.subject && SUBJ[r.subject].area !== state.subject) return false;
+        if (state.format && r.format !== state.format) return false;
+        if (state.levels.length && !state.levels.some(function (l) { return r.levels.indexOf(l) !== -1; })) return false;
+        if (state.content.length && state.content.indexOf(r.content) === -1) return false;
+        if (state.exams.length && !(r.exams || []).some(function (x) { return state.exams.indexOf(x) !== -1; })) return false;
+        if (state.q) {
+            var hay = (r.title + ' ' + r.description + ' ' + r.topic + ' ' + r.tags.join(' ') + ' ' + SUBJ[r.subject].name + ' ' + r.levels.join(' ') + ' ' + r.format + ' ' + (r.exams || []).join(' ')).toLowerCase();
+            var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+            if (!terms.every(function (t) { return hay.indexOf(t) !== -1; })) return false;
+        }
+        return true;
+    }
+
+    /* ---------- cards ---------- */
+    function relLink(id) {
+        var t = BYID[id]; if (!t) return null;
+        var a = el('a', { href: '#r=' + id, text: t.title });
+        a.addEventListener('click', function (e) { e.preventDefault(); jumpTo(id); });
+        return a;
+    }
+    function relRow(label, ids) {
+        var row = el('div', null, [el('span', { text: label })]);
+        ids.forEach(function (id, i) { if (i) row.appendChild(el('i', { 'class': 'sep', text: '|' })); row.appendChild(relLink(id)); });
+        return row;
+    }
+    function card(r, extra) {
+        var meta = el('div', { 'class': 'meta' });
+        r.levels.forEach(function (l) { meta.appendChild(el('span', { 'class': 'pill pill-level', html: levelGlyph(C.levels.indexOf(l)) + '<span>' + l + '</span>' })); });
+        if (r.content) meta.appendChild(el('span', { 'class': 'pill pill-content', html: ICON[r.content] + '<span>' + CONTENT[r.content].label + '</span>' }));
+        meta.appendChild(el('span', { 'class': 'pill pill-format', text: r.format }));
+        if (extra && extra.topic) meta.appendChild(el('span', { 'class': 'pill-topic', text: r.topic }));
+        var h = el('h4', null, [el('a', { href: enc(r.path), text: r.title })]);
+        var kids = [];
+        if (extra && extra.subject) kids.push(el('span', { 'class': 'subj', text: SUBJ[r.subject].name }));
+        kids.push(h, el('p', { text: r.description }), meta);
+        var bo = (r.builds_on || []).filter(function (id) { return BYID[id]; }), lt = (LEADS[r.id] || []);
+        if (bo.length || lt.length) {
+            var rel = el('div', { 'class': 'rel' });
+            if (bo.length) rel.appendChild(relRow('Builds on', bo));
+            if (lt.length) rel.appendChild(relRow('Leads to', lt));
+            kids.push(rel);
+        }
+        var node = el('article', { 'class': 'card' + (extra && extra.featured ? ' featured-card' : ''), id: 'r-' + r.id, 'data-id': r.id }, kids);
+        node.addEventListener('click', function (e) {
+            if (e.target.closest('a') || e.defaultPrevented) return;
+            if (e.metaKey || e.ctrlKey) window.open(enc(r.path), '_blank'); else location.href = enc(r.path);
+        });
+        return node;
+    }
+    function jumpTo(id) {
+        var t = BYID[id]; if (!t) return;
+        // make sure the target is visible: clear filters that hide it, open its subject
+        if (!matches(t)) { state = { q: '', subject: '', format: '', levels: [], exams: [], content: [] }; }
+        open[t.subject] = true; showAll[t.subject] = true;
+        update();
+        var node = document.getElementById('r-' + id);
+        if (!node) return;
+        node.scrollIntoView({ block: 'center' });
+        node.classList.add('flash'); setTimeout(function () { node.classList.remove('flash'); }, 2200);
+        var link = node.querySelector('h4 a'); if (link) link.focus({ preventScroll: true });
+    }
+
+    /* ---------- tiles ---------- */
+    function renderTiles() {
+        var t = document.getElementById('tiles');
+        C.areas.forEach(function (a) {
+            var subs = C.subjects.filter(function (s) { return s.area === a.key; });
+            var n = count(function (r) { return SUBJ[r.subject].area === a.key; });
+            var list = el('ul', { 'class': 't-subjects' });
+            subs.forEach(function (s) {
+                var c = count(function (r) { return r.subject === s.key; });
+                list.appendChild(el('li', { text: s.name + ' (' + c + ')' }));
+            });
+            var blurb = subs.length === 1 ? subs[0].blurb : null;
+            t.appendChild(el('a', { 'class': 'tile', href: '#browse?subject=' + a.key }, [
+                el('div', { 'class': 't-name' }, [el('span', { text: a.name }), el('span', { 'class': 't-count', text: n + (n === 1 ? ' sheet' : ' sheets') })]),
+                blurb ? el('p', { 'class': 't-blurb', text: blurb }) : list
+            ]));
+        });
+    }
+
+    /* ---------- featured ---------- */
+    function renderFeatured() {
+        var g = document.getElementById('featured-grid');
+        R.filter(function (r) { return r.featured; }).sort(function (a, b) { return a.featured - b.featured; })
+         .forEach(function (r) { g.appendChild(card(r, { featured: true, subject: true })); });
+    }
+
+    /* ---------- toolbar ---------- */
+    function toggle(arr, v) { var i = arr.indexOf(v); if (i === -1) arr.push(v); else arr.splice(i, 1); }
+    function renderToolbar() {
+        var fs = document.getElementById('f-subject');
+        C.areas.forEach(function (a) {
+            var subs = C.subjects.filter(function (s) { return s.area === a.key; });
+            if (subs.length === 1) { fs.appendChild(el('option', { value: subs[0].key, text: subs[0].name })); return; }
+            var og = el('optgroup', { label: a.name });
+            og.appendChild(el('option', { value: a.key, text: 'All ' + a.name.toLowerCase() }));
+            subs.forEach(function (s) { og.appendChild(el('option', { value: s.key, text: s.name })); });
+            fs.appendChild(og);
+        });
+        var ff = document.getElementById('f-format');
+        C.formats.forEach(function (f) { ff.appendChild(el('option', { value: f, text: f })); });
+        var lc = document.getElementById('level-chips');
+        C.levels.forEach(function (l, i) {
+            var b = el('button', { type: 'button', 'class': 'chip', 'aria-pressed': 'false', 'data-level': l, html: levelGlyph(i) + '<span>' + l + '</span>' });
+            b.querySelector('svg').style.width = '22px'; b.querySelector('svg').style.height = '11px';
+            b.addEventListener('click', function () { toggle(state.levels, l); update(); });
+            lc.appendChild(b);
+        });
+        var cc = document.getElementById('content-chips');
+        C.content_types.forEach(function (c) {
+            var b = el('button', { type: 'button', 'class': 'chip', 'aria-pressed': 'false', 'data-content': c.key, title: c.blurb, html: ICON[c.key] + '<span>' + c.label + '</span>' });
+            b.addEventListener('click', function () { toggle(state.content, c.key); update(); });
+            cc.appendChild(b);
+        });
+        var ec = document.getElementById('exam-chips');
+        EXAMS.forEach(function (x) {
+            var b = el('button', { type: 'button', 'class': 'chip', 'aria-pressed': 'false', 'data-exam': x, text: x });
+            b.addEventListener('click', function () { toggle(state.exams, x); update(); });
+            ec.appendChild(b);
+        });
+        var clear = el('button', { type: 'button', 'class': 'chip-clear', text: 'Clear filters' });
+        clear.addEventListener('click', function () { state = { q: '', subject: '', format: '', levels: [], exams: [], content: [] }; update(); });
+        cc.appendChild(clear);
+        // tag key
+        var key = document.getElementById('key');
+        key.appendChild(el('b', { text: 'Tag key' }));
+        key.appendChild(el('span', { 'class': 'k', html: levelGlyph(1) + 'the dot marks the academic level on the curve, from Foundations to Graduate' }));
+        C.content_types.forEach(function (c) { key.appendChild(el('span', { 'class': 'k', html: ICON[c.key] + c.label + ': ' + c.blurb.toLowerCase() })); });
+
+        document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value.trim(); update(); });
+        var hf = document.getElementById('hero-search'), hq = document.getElementById('hq');
+        hq.addEventListener('input', function (e) { state.q = e.target.value.trim(); update(false); });
+        hf.addEventListener('submit', function (e) { e.preventDefault(); state.q = hq.value.trim(); update(); document.getElementById('browse').scrollIntoView(); document.getElementById('q').focus({ preventScroll: true }); });
+        fs.addEventListener('change', function (e) { state.subject = e.target.value; update(); });
+        ff.addEventListener('change', function (e) { state.format = e.target.value; update(); });
+        document.getElementById('expand-all').addEventListener('click', function () { C.subjects.forEach(function (s) { open[s.key] = true; }); renderResults(); });
+        document.getElementById('collapse-all').addEventListener('click', function () { C.subjects.forEach(function (s) { open[s.key] = false; }); renderResults(); });
+    }
+    function syncToolbar() {
+        document.getElementById('q').value = state.q;
+        if (document.activeElement !== document.getElementById('hq')) document.getElementById('hq').value = state.q;
+        document.getElementById('f-subject').value = state.subject;
+        document.getElementById('f-format').value = state.format;
+        document.querySelectorAll('[data-level]').forEach(function (b) { b.setAttribute('aria-pressed', state.levels.indexOf(b.getAttribute('data-level')) !== -1 ? 'true' : 'false'); });
+        document.querySelectorAll('[data-content]').forEach(function (b) { b.setAttribute('aria-pressed', state.content.indexOf(b.getAttribute('data-content')) !== -1 ? 'true' : 'false'); });
+        document.querySelectorAll('[data-exam]').forEach(function (b) { b.setAttribute('aria-pressed', state.exams.indexOf(b.getAttribute('data-exam')) !== -1 ? 'true' : 'false'); });
+        var testPrep = !state.subject || state.subject === 'test-prep' || (SUBJ[state.subject] && SUBJ[state.subject].area === 'test-prep');
+        document.getElementById('exam-chips').hidden = !testPrep;
+        if (!testPrep) state.exams = [];
+    }
+
+    /* ---------- results ---------- */
+    var SHOW_LIMIT = 10;
+    var showAll = {};
+    function renderResults() {
+        var root = document.getElementById('results'); root.innerHTML = '';
+        var hits = R.filter(matches); var total = hits.length;
+        document.getElementById('result-count').textContent = filtering()
+            ? 'Showing ' + total + ' of ' + R.length + ' resources'
+            : R.length + ' resources across ' + C.subjects.filter(function (s) { return count(function (r) { return r.subject === s.key; }); }).length + ' subjects';
+        if (!total) { root.appendChild(el('div', { 'class': 'empty', text: 'No resources match that search. Try a broader term, or clear the filters.' })); return; }
+        var isFiltering = filtering();
+        C.areas.forEach(function (a) {
+            var subs = C.subjects.filter(function (s) { return s.area === a.key; });
+            var areaHits = hits.filter(function (r) { return SUBJ[r.subject].area === a.key; });
+            if (!areaHits.length) return;
+            if (subs.length > 1) root.appendChild(el('div', { 'class': 'area-label', text: a.name }));
+            subs.forEach(function (s) {
+                var sh = areaHits.filter(function (r) { return r.subject === s.key; });
+                if (!sh.length) return;
+                var expanded = isFiltering ? open[s.key] !== false : !!open[s.key];
+                var head = el('button', { 'class': 'subject-head', type: 'button', 'aria-expanded': String(expanded) }, [
+                    el('span', null, [el('span', { 'class': 's-name', text: s.name }), el('span', { 'class': 's-blurb', text: s.blurb })]),
+                    el('span', { 'class': 's-count', text: sh.length }),
+                    el('span', { 'class': 'chev', html: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' })
+                ]);
+                var body = el('div', { 'class': 'subject-body' }); body.hidden = !expanded;
+                var topics = []; sh.forEach(function (r) { if (topics.indexOf(r.topic) === -1) topics.push(r.topic); });
+                var shown = 0, capped = false, limit = (isFiltering || showAll[s.key]) ? Infinity : SHOW_LIMIT;
+                topics.forEach(function (t) {
+                    var tr = sh.filter(function (r) { return r.topic === t; });
+                    if (shown >= limit) { capped = true; return; }
+                    body.appendChild(el('div', { 'class': 'topic-label', text: t }));
+                    var grid = el('div', { 'class': 'cards' });
+                    tr.forEach(function (r) { if (shown >= limit) { capped = true; return; } grid.appendChild(card(r)); shown++; });
+                    body.appendChild(grid);
+                });
+                if (capped) {
+                    var more = el('button', { 'class': 'btn btn-gold btn-sm show-more', type: 'button', text: 'Show all ' + sh.length + ' in ' + s.name });
+                    more.addEventListener('click', function () { showAll[s.key] = true; renderResults(); });
+                    body.appendChild(more);
+                }
+                head.addEventListener('click', function () { open[s.key] = !expanded; renderResults(); });
+                root.appendChild(el('section', { 'class': 'subject', id: 'subj-' + s.key }, [head, body]));
+            });
+        });
+    }
+
+    function update(hash) { syncToolbar(); if (hash !== false) writeHash(); renderResults(); }
+
+    drawHeroCurve(); renderTiles(); renderFeatured(); renderToolbar();
+    var rm = location.hash.match(/^#r=(.+)$/);
+    if (rm) { syncToolbar(); renderResults(); jumpTo(decodeURIComponent(rm[1])); }
+    else if (readHash()) { update(); document.getElementById('browse').scrollIntoView(); }
+    else { syncToolbar(); renderResults(); }
+    window.addEventListener('hashchange', function () { var m = location.hash.match(/^#r=(.+)$/); if (m) jumpTo(decodeURIComponent(m[1])); else if (readHash()) { update(); document.getElementById('browse').scrollIntoView(); } });
+
+    /* ---------- safety net: list any published .html not yet in the catalog ---------- */
+    (function () {
+        var API = 'https://api.github.com/repos/LearningCurveCollective/learning-curve-collective-resources/git/trees/main?recursive=1';
+        var known = {}; R.forEach(function (r) { known[r.path] = true; });
+        var folderToSubject = { 'medical study sheets': 'medicine', 'test-prep': 'sat' };
+        fetch(API).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+            if (!data || !data.tree) return;
+            var extra = [];
+            data.tree.forEach(function (n) {
+                var p = n.path;
+                if (n.type !== 'blob' || !/\.html$/i.test(p) || p === 'index.html' || p.indexOf('/') === -1 || known[p] || p.charAt(0) === '_') return;
+                var folder = p.split('/')[0];
+                var key = p.indexOf('test-prep/act/') === 0 ? 'act' : (folderToSubject[folder] || folder);
+                if (!SUBJ[key]) return;
+                var name = p.split('/').pop().replace(/\.html$/, '').replace(/[-_]+/g, ' ');
+                extra.push({ id: 'new--' + p, path: p, title: name, description: 'Just published. A catalog entry is on its way.', subject: key, topic: 'Recently added', order: 999, levels: [], format: 'New', tags: [], builds_on: [] });
+            });
+            if (extra.length) { R = R.concat(extra); extra.forEach(function (x) { BYID[x.id] = x; }); renderResults(); }
+        }).catch(function () {});
+    })();
 })();
 </script>
 </body>

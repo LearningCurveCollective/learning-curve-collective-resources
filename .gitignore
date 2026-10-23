@@ -1,3 +1,8 @@
 .DS_Store
 ._*
 Thumbs.db
+
+# build-time inspection caches (not published)
+_build/extract.json
+_build/skeleton.json
+index.v1.html
