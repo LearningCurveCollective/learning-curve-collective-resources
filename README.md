@@ -1,4 +1,4 @@
-# Learning Curve Collective — Open Learning Resources
+# Learning Curve Collective: Open Learning Resources
 
 Welcome to the open learning resource library from **Learning Curve Collective**.
 
@@ -24,7 +24,7 @@ At **Learning Curve Collective**, we believe meaningful learning happens when st
 - build confidence through consistent, structured practice
 - discover connections and patterns across mathematical concepts
 
-Our goal is to help every learner become more curious, capable, and confident—not just in mathematics, but in how they approach learning itself.
+Our goal is to help every learner become more curious, capable, and confident, not just in mathematics, but in how they approach learning itself.
 
 ## Using these resources
 

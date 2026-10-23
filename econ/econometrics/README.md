@@ -1,6 +1,6 @@
 # Econometrics
 
-This section contains conceptual, graphical, and applied econometrics learning materials developed by Torin Learning Group.
+This section contains conceptual, graphical, and applied econometrics learning materials developed by Learning Curve Collective.
 
 Resources are designed to help students build strong statistical intuition for economic data, understand regression modeling deeply, and connect mathematical formulas with real empirical interpretation.
 

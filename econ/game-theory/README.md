@@ -4,4 +4,4 @@ Interactive worksheets covering strategic behavior in microeconomics: simultaneo
 
 ## Contents
 
-- **game-theory-micro.html** — full interactive worksheet: definitions with worked numeric examples, payoff-matrix lab, sequential game trees, grim-trigger discount-factor explorer, mixed-strategy best-response diagrams, and a Cournot bridge connecting reaction functions to best responses. Includes 8 scaffolded practice problems with step-by-step checks.
+- **game-theory-micro.html**: full interactive worksheet: definitions with worked numeric examples, payoff-matrix lab, sequential game trees, grim-trigger discount-factor explorer, mixed-strategy best-response diagrams, and a Cournot bridge connecting reaction functions to best responses. Includes 8 scaffolded practice problems with step-by-step checks.

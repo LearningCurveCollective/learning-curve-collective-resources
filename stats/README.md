@@ -1,6 +1,6 @@
 # Statistics Resources
 
-This section contains statistics and data analysis learning materials developed by Torin Learning Group.
+This section contains statistics and data analysis learning materials developed by Learning Curve Collective.
 
 Topics may include:
 
