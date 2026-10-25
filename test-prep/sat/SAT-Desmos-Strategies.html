@@ -602,6 +602,47 @@ table.ref tr:last-child td { border-bottom: none; }
 .fp-fb.bad { color: #B23A3A; }
 .fp-fb.bad strong { color: #B23A3A; }
 @media (max-width: 640px) { .fs-item { grid-template-columns: 1fr; } }
+
+/* ─── SAT Gauntlet ─── */
+.g-hud { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 13.5px; color: var(--text-medium); margin-bottom: 12px; }
+.g-hud b { color: var(--green-dark); }
+.g-hud .g-timer { margin-left: auto; font-family: 'Inter', monospace; font-weight: 700; font-size: 15px; color: var(--brown-dark); background: white; border: 1.5px solid var(--cream-dark); border-radius: 8px; padding: 4px 12px; }
+.g-hud .g-timer.slow { border-color: #E57373; color: #B23A3A; }
+.g-tier { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; margin-bottom: 10px; }
+.g-tier.easy { background: rgba(57,134,78,0.15); color: #2E6B3E; }
+.g-tier.medium { background: rgba(221,162,94,0.22); color: #8B5E14; }
+.g-tier.hard { background: rgba(178,58,58,0.12); color: #B23A3A; }
+.g-q { font-size: 16px; line-height: 1.75; margin-bottom: 12px; }
+.g-q .q-fmt { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--copper); margin-left: 8px; }
+.g-opts { list-style: none; padding: 0; margin: 6px 0 12px; display: grid; gap: 8px; }
+.g-opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: white; border: 2px solid var(--cream-dark); border-radius: 10px; padding: 10px 14px; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.g-opt:hover { border-color: var(--gold); }
+.g-opt .ltr { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--green-dark); color: var(--green-dark); font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.g-opt.picked { border-color: var(--green-dark); background: rgba(33,68,43,0.06); }
+.g-opt.correct { border-color: #39864E; background: #E8F5E9; }
+.g-opt.wrong { border-color: #E57373; background: #FFEBEE; }
+.g-opt.locked { cursor: default; }
+.g-opt.locked:not(.correct):not(.wrong) { opacity: 0.55; }
+.g-spr { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 6px 0 12px; }
+.g-spr .fp-input { width: 170px; }
+.g-spr .fp-preview .pv { min-width: 30px; }
+.g-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+.g-reveal { margin-top: 14px; border-top: 1px dashed var(--cream-dark); padding-top: 14px; }
+.g-verdict { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.g-verdict.ok { color: #2E6B3E; }
+.g-verdict.no { color: #B23A3A; }
+.g-route { background: rgba(33,68,43,0.06); border-left: 4px solid var(--green-dark); border-radius: 8px; padding: 12px 16px; margin: 10px 0; }
+.g-route .lab, .g-check .lab { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--green-dark); margin-bottom: 4px; }
+.g-check { background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 8px; padding: 12px 16px; margin: 10px 0; }
+.g-check .lab { color: #8B5E14; }
+.g-sum-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 14px 0; }
+.g-sum-tile { background: white; border-radius: 10px; padding: 14px 16px; text-align: center; border: 2px solid var(--cream-dark); }
+.g-sum-tile .big { font-size: 26px; font-weight: 700; color: var(--brown-dark); }
+.g-sum-tile .lab { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-medium); }
+.g-sum-tile.easy { border-color: #39864E; } .g-sum-tile.medium { border-color: var(--gold); } .g-sum-tile.hard { border-color: #E57373; }
+.g-miss { margin: 6px 0; padding: 10px 14px; background: #FFF8F0; border-left: 4px solid var(--gold); border-radius: 6px; font-size: 14px; }
+.g-miss b { color: var(--brown-dark); }
+@media (max-width: 600px) { .g-hud .g-timer { margin-left: 0; } }
     </style>
 </head>
 <body>
@@ -634,6 +675,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <button class="tab-button" data-group="core" onclick="switchTab('fillin', this)">Formatting Your Answers</button>
         <button class="tab-button" data-group="core" onclick="switchTab('formulas', this)">Formulas</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Practice</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('gauntlet', this)">&#9889; SAT Gauntlet</button>
         </div>
     </div>
 
@@ -1083,7 +1125,7 @@ table.ref tr:last-child td { border-bottom: none; }
             <h2>Mixed Practice</h2>
         </div>
         <div class="card" style="border-left-color: #8B5E3C;">
-            <p>Twenty-six questions, two for each of the 13 techniques. By default they run in technique order (1, 1, 2, 2, …), so you can drill one technique at a time. Flip the switch to shuffle them so you also practice <em>recognizing</em> which technique a question calls for. For every one, try to answer it <strong>with Desmos first</strong>, then confirm with algebra.</p>
+            <p>Twenty-six questions, two for each of the 13 techniques. By default they run in technique order (1, 1, 2, 2, …), so you can drill one technique at a time. Flip the switch to shuffle them so you also practice <em>recognizing</em> which technique a question calls for. For every one, try to answer it <strong>with Desmos first</strong>, then confirm with algebra. There are no Load buttons on this tab: open the calculator and type the equations in yourself, the way you will on test day.</p>
             <div class="order-bar">
                 <span class="order-label">Question order:</span>
                 <button class="order-btn active" id="order-seq" onclick="setOrder('seq')">By technique</button>
@@ -1098,7 +1140,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
                     <div style="flex:1;">
                         <p>In the parabola $y = 2x^{2} - 7$, what is the $x$-coordinate of the positive $x$-intercept, rounded to the nearest hundredth?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=2x^{2}-7"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1114,7 +1155,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
                     <div style="flex:1;">
                         <p>The graph of $y = -x^{2} + 4x + 6$ has two $x$-intercepts. What is the $x$-coordinate of the one that is positive, rounded to the nearest hundredth?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=-x^{2}+4x+6"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1130,7 +1170,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
                     <div style="flex:1;">
                         <p>$$4x - 3y = 10$$ $$x + 2y = 8$$ If $(x,\,y)$ is the solution to the system above, what is the value of $x + y$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["4x-3y=10", "x+2y=8"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1146,7 +1185,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
                     <div style="flex:1;">
                         <p>$$y = -3x + 11$$ $$y = x - 5$$ The solution to the system above is $(x,\,y)$. What is the value of $y$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=-3x+11", "y=x-5"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1162,7 +1200,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">5</div>
                     <div style="flex:1;">
                         <p>The function $f(x) = x^{2} - 6x + 5$ intersects the $x$-axis at two points. What is the sum of the $x$-coordinates of those points?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=x^{2}-6x+5"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1178,7 +1215,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">6</div>
                     <div style="flex:1;">
                         <p>At what positive value of $x$ does the graph of $f(x) = 2x^{2} - 5x - 3$ cross the $x$-axis?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=2x^{2}-5x-3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1194,7 +1230,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">7</div>
                     <div style="flex:1;">
                         <p>How many solutions does the following system have? $$6x - 4y = 10$$ $$3x - 2y = 5$$<ul class="choices"><li><span class="ltr">A</span>Zero</li><li><span class="ltr">B</span>Exactly one</li><li><span class="ltr">C</span>Exactly two</li><li><span class="ltr">D</span>Infinitely many</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["6x-4y=10", "3x-2y=5"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1210,7 +1245,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">8</div>
                     <div style="flex:1;">
                         <p>How many solutions does the following system have? $$2x + 3y = 6$$ $$4x + 6y = 9$$<ul class="choices"><li><span class="ltr">A</span>Zero</li><li><span class="ltr">B</span>Exactly one</li><li><span class="ltr">C</span>Exactly two</li><li><span class="ltr">D</span>Infinitely many</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["2x+3y=6", "4x+6y=9"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1226,7 +1260,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">9</div>
                     <div style="flex:1;">
                         <p>How many times does the circle $(x - 2)^{2} + (y - 3)^{2} = 9$ intersect the $x$-axis?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["(x-2)^{2}+(y-3)^{2}=9"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1242,7 +1275,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">10</div>
                     <div style="flex:1;">
                         <p>How many times does the graph of $(x + 2)^{2} + (y - 1)^{2} = 25$ intersect the $x$-axis?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["(x+2)^{2}+(y-1)^{2}=25"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1258,7 +1290,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">11</div>
                     <div style="flex:1;">
                         <p>$$h(x) = -(x - 1)(x + 7)$$ For what value of $x$ does $h$ reach its maximum value, and what is that maximum?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["h(x)=-(x-1)(x+7)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1274,7 +1305,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">12</div>
                     <div style="flex:1;">
                         <p>What is the minimum value of the function $f(x) = 2x^{2} + 8x - 3$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=2x^{2}+8x-3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1290,7 +1320,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">13</div>
                     <div style="flex:1;">
                         <p>$$f(x) = x^{2} - 6x + 10$$ The graph of $f$ is translated down 4 units. How many times does the translated graph intersect the $x$-axis?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=x^{2}-6x+10", "y=f(x)-4"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1306,7 +1335,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">14</div>
                     <div style="flex:1;">
                         <p>$$f(x) = -x^{2} + 2x + 3$$ The graph of $f$ is translated up 3 units. What is the maximum value of the translated function?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["f(x)=-x^{2}+2x+3", "y=f(x)+3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1322,7 +1350,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">15</div>
                     <div style="flex:1;">
                         <p>The data set $\{4,\ 4,\ 9,\ 11,\ 15,\ 20,\ 21\}$ has mean $m$ and median $d$. What is $m - d$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["\\operatorname{mean}\\left(4,4,9,11,15,20,21\\right)", "\\operatorname{median}\\left(4,4,9,11,15,20,21\\right)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1338,7 +1365,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">16</div>
                     <div style="flex:1;">
                         <p>What is the sum of the mean and the median of the data set $\{6,\ 9,\ 10,\ 10,\ 14,\ 17,\ 22,\ 24\}$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["\\operatorname{mean}\\left(6,9,10,10,14,17,22,24\\right)", "\\operatorname{median}\\left(6,9,10,10,14,17,22,24\\right)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1354,7 +1380,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">17</div>
                     <div style="flex:1;">
                         <p>What is the sum of the solutions to $|2x + 3| = 9$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=\\left|2x+3\\right|", "y=9"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1370,7 +1395,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">18</div>
                     <div style="flex:1;">
                         <p>What is the sum of the solutions to $|3x - 4| = 8$? Enter your answer as a fraction or a decimal.</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y=\\left|3x-4\\right|", "y=8"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1386,7 +1410,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">19</div>
                     <div style="flex:1;">
                         <p>$$y \le 2x - 1$$ $$y \ge -x + 5$$ The point $(3,\,y)$ is a solution to the system of inequalities above. What is one possible value of $y$?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y\\le 2x-1", "y\\ge -x+5", "x=3"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1402,7 +1425,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">20</div>
                     <div style="flex:1;">
                         <p>$$y > x + 1$$ $$y < -2x + 10$$ Which of the following points is a solution to the system of inequalities above?<ul class="choices"><li><span class="ltr">A</span>$(1,\,1)$</li><li><span class="ltr">B</span>$(2,\,4)$</li><li><span class="ltr">C</span>$(0,\,12)$</li><li><span class="ltr">D</span>$(4,\,3)$</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["y>x+1", "y<-2x+10", "(1,1)", "(2,4)", "(0,12)", "(4,3)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1418,7 +1440,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">21</div>
                     <div style="flex:1;">
                         <p>Which of the following is an equation of a line with slope $-2$ and $y$-intercept $6$?<ul class="choices"><li><span class="ltr">A</span>$x + 2y = 6$</li><li><span class="ltr">B</span>$2x - y = 6$</li><li><span class="ltr">C</span>$2x + y = 6$</li><li><span class="ltr">D</span>$y = 2x + 6$</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["x+2y=6", "2x-y=6", "2x+y=6", "y=2x+6"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1434,7 +1455,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">22</div>
                     <div style="flex:1;">
                         <p>Which of the following is an equation of a line that has an $x$-intercept of $3$ and passes through the point $(6,\,-4)$?<ul class="choices"><li><span class="ltr">A</span>$3x + 4y = 12$</li><li><span class="ltr">B</span>$4x - 3y = 12$</li><li><span class="ltr">C</span>$3x - 4y = 12$</li><li><span class="ltr">D</span>$4x + 3y = 12$</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["3x+4y=12", "4x-3y=12", "3x-4y=12", "4x+3y=12", "(6,-4)"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1450,7 +1470,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">23</div>
                     <div style="flex:1;">
                         <p>$$5x - 2y = 7$$ $$10x + ky = 3$$ In the system above, $k$ is a constant. For what value of $k$ does the system have no solutions?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["5x-2y=7", "10x+ky=3", "k=1"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1466,7 +1485,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">24</div>
                     <div style="flex:1;">
                         <p>$$2x + 5y = 12$$ $$kx + 10y = 24$$ In the system above, $k$ is a constant. For what value of $k$ does the system have infinitely many solutions?</p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadIntoDesmos(["2x+5y=12", "kx+10y=24", "k=1"])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1482,7 +1500,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">25</div>
                     <div style="flex:1;">
                         <p>Which equation best approximates the line of best fit for the points $(1, 3)$, $(4, 8)$, $(6, 11)$, and $(10, 18)$?<ul class="choices"><li><span class="ltr">A</span>$y = 1.7x + 1.3$</li><li><span class="ltr">B</span>$y = 1.3x + 1.7$</li><li><span class="ltr">C</span>$y = 2.1x - 0.4$</li><li><span class="ltr">D</span>$y = 0.6x + 4.5$</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadRegression([1, 4, 6, 10],[3, 8, 11, 18])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1498,7 +1515,6 @@ table.ref tr:last-child td { border-bottom: none; }
                     <div class="pnum" style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">26</div>
                     <div style="flex:1;">
                         <p>A line of best fit is drawn through the points $(0, 4)$, $(3, 7)$, $(5, 10)$, and $(8, 12)$. Which of the following best approximates its slope and $y$-intercept?<ul class="choices"><li><span class="ltr">A</span>slope $\approx 4.1$, intercept $\approx 1.0$</li><li><span class="ltr">B</span>slope $\approx 1.0$, intercept $\approx 4.1$</li><li><span class="ltr">C</span>slope $\approx 0.5$, intercept $\approx 4.0$</li><li><span class="ltr">D</span>slope $\approx 1.5$, intercept $\approx 2.0$</li></ul></p>
-                        <div class="tech-actions"><button class="load-btn" onclick='loadRegression([0, 3, 5, 8],[4, 7, 10, 12])'><span class="ico">&#9673;</span> Load into Desmos</button></div>
                         <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                         <div class="solution-body">
                             <div style="background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px;">
@@ -1510,6 +1526,29 @@ table.ref tr:last-child td { border-bottom: none; }
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ═══ TAB 7: SAT GAUNTLET ═══ -->
+    <div id="tab-gauntlet" class="tab-content">
+        <div class="section-header">
+            <div class="section-number">&#9889;</div>
+            <h2>SAT Gauntlet</h2>
+        </div>
+        <div class="card" style="border-left-color: #8B5E3C;" id="g-intro">
+            <p>Fifteen questions in the style of the digital SAT, five easy, five medium, five hard, every one of them faster with Desmos than without. There are <strong>no Load buttons here</strong>: open the calculator yourself (bottom-right) and type the equations in, exactly as you will on test day. A timer runs; the real test gives you about <strong>1 minute 35 seconds</strong> per Math question.</p>
+            <p style="margin-bottom:10px;">After each question you see whether you were right, the correct answer, the Desmos route, and an algebra check. At the end you get a score by difficulty and a list of what to revisit.</p>
+            <div class="order-bar" style="margin-top:6px;">
+                <span class="order-label">Order:</span>
+                <button class="order-btn active" id="g-ord-tier" onclick="gSetOrder('tier')">Easy to hard</button>
+                <button class="order-btn" id="g-ord-shuf" onclick="gSetOrder('shuf')">Shuffled</button>
+                <button class="fp-check" style="margin-left:auto;" onclick="gStart()">Start the gauntlet &rarr;</button>
+            </div>
+        </div>
+        <div id="g-stage" style="display:none;">
+            <div class="g-hud" id="g-hud"></div>
+            <div class="card" id="g-card"></div>
+        </div>
+        <div id="g-summary" style="display:none;"></div>
     </div>
 
 </div><!-- end container -->
@@ -1946,6 +1985,135 @@ function fpGo(i) {
 }
 document.addEventListener('DOMContentLoaded', function() { fpRender(); if (document.getElementById('fsStage')) fsStart(); });
 
+</script>
+<script>
+/* ══════════ SAT Gauntlet: 15 CB-style questions, timed, no Load buttons ══════════ */
+var GQ = [{"tier": "easy", "format": "mc", "title": "Solve a system", "prompt": "$$y = 3x - 4$$ $$y = -2x + 11$$ The solution to the given system of equations is $(x, y)$. What is the value of $x$?", "options": ["$-3$", "$3$", "$5$", "$15$"], "answer": 1, "desmos": "Type both equations on their own lines and hover the intersection: $(3,\\,5)$. The question asks for $x$, so the answer is $3$, not $5$.", "algebra": "Set the right sides equal: $3x - 4 = -2x + 11$, so $5x = 15$ and $x = 3$."}, {"tier": "easy", "format": "grid", "title": "Positive x-intercept", "prompt": "The function $f$ is defined by $f(x) = 2x^{2} - 50$. In the $xy$-plane, the graph of $y = f(x)$ has two $x$-intercepts. What is the $x$-coordinate of the $x$-intercept with the greater $x$-value?", "accepted": ["5"], "desmos": "Graph $y = 2x^{2} - 50$. Zoom out until both grey dots on the $x$-axis show; the right one reads $(5,\\,0)$.", "algebra": "$2x^{2} = 50 \\Rightarrow x^{2} = 25 \\Rightarrow x = \\pm 5$. The greater value is $5$."}, {"tier": "easy", "format": "mc", "title": "Minimum value", "prompt": "The function $g$ is defined by $g(x) = x^{2} - 6x + 11$. What is the minimum value of $g(x)$?", "options": ["$2$", "$3$", "$6$", "$11$"], "answer": 0, "desmos": "Graph it and hover the vertex dot: $(3,\\,2)$. The minimum <em>value</em> is the $y$-coordinate, $2$.", "algebra": "Vertex at $x = -\\dfrac{b}{2a} = 3$; $g(3) = 9 - 18 + 11 = 2$."}, {"tier": "easy", "format": "grid", "title": "Mean minus median", "prompt": "The data set shown gives the number of minutes eight students spent on a homework assignment. $$11,\\ 14,\\ 14,\\ 18,\\ 21,\\ 25,\\ 27,\\ 30$$ What is the result when the median of the data set is subtracted from the mean?", "accepted": ["0.5", ".5", "1/2"], "desmos": "Type <span class=\"kbd\">mean(11,14,14,18,21,25,27,30)</span> and <span class=\"kbd\">median(11,14,14,18,21,25,27,30)</span>: $20$ and $19.5$. Subtract: $0.5$.", "algebra": "Mean $= \\dfrac{160}{8} = 20$. Eight values, so the median is the average of the 4th and 5th: $\\dfrac{18 + 21}{2} = 19.5$. $20 - 19.5 = 0.5$. Enter <span class=\"kbd\">.5</span>, <span class=\"kbd\">0.5</span> or <span class=\"kbd\">1/2</span>."}, {"tier": "easy", "format": "mc", "title": "Point on a circle", "prompt": "In the $xy$-plane, the graph of $(x - 3)^{2} + (y + 2)^{2} = 25$ is a circle. Which of the following points lies on the circle?", "options": ["$(3,\\,-2)$", "$(0,\\,0)$", "$(3,\\,3)$", "$(8,\\,3)$"], "answer": 2, "desmos": "Graph the circle, then type each point as $(3,-2)$, $(0,0)$, and so on. Only $(3,\\,3)$ sits on the curve, straight above the center.", "algebra": "Center $(3,\\,-2)$, radius $5$. Check $(3,\\,3)$: $(0)^{2} + (5)^{2} = 25$ ✓."}, {"tier": "medium", "format": "mc", "title": "No solution", "prompt": "$$3x + 4y = 12$$ $$ax - 8y = 10$$ In the given system of equations, $a$ is a constant. For which value of $a$ does the system have no solution?", "options": ["$-6$", "$-3$", "$6$", "$8$"], "answer": 0, "desmos": "Type both equations; Desmos offers a slider for $a$. Drag it until the two lines are parallel and never cross: that happens at $a = -6$. Check that the lines are not the same line (they have different intercepts).", "algebra": "Parallel means equal slopes: line 1 has slope $-\\dfrac{3}{4}$, line 2 has slope $\\dfrac{a}{8}$. $\\dfrac{a}{8} = -\\dfrac{3}{4} \\Rightarrow a = -6$. Multiplying line 1 by $-2$ gives $-6x - 8y = -24 \\neq 10$, so the lines are distinct."}, {"tier": "medium", "format": "grid", "title": "Absolute value", "prompt": "What is the sum of the solutions to the equation $|2x - 7| = 15$?", "accepted": ["7"], "desmos": "Graph $y = |2x - 7|$ and $y = 15$. The V crosses the horizontal line at $x = -4$ and $x = 11$. Sum: $7$.", "algebra": "$2x - 7 = 15 \\Rightarrow x = 11$; $2x - 7 = -15 \\Rightarrow x = -4$. $11 + (-4) = 7$."}, {"tier": "medium", "format": "mc", "title": "System of inequalities", "prompt": "$$y \\ge 2x - 5$$ $$y \\le -x + 7$$ Which of the following points $(x,\\,y)$ is a solution to the given system of inequalities in the $xy$-plane?", "options": ["$(0,\\,8)$", "$(2,\\,-2)$", "$(4,\\,3)$", "$(5,\\,4)$"], "answer": 2, "desmos": "Enter both inequalities; the solution is the doubly shaded wedge. Type the four points. $(4,\\,3)$ sits exactly on both boundary lines, and both boundaries are solid ($\\ge$ and $\\le$), so it counts.", "algebra": "$(4,\\,3)$: $3 \\ge 3$ ✓ and $3 \\le 3$ ✓. $(0,\\,8)$ fails $y \\le -x + 7$; $(2,\\,-2)$ fails $y \\ge 2x - 5$; $(5,\\,4)$ fails both."}, {"tier": "medium", "format": "grid", "title": "Line meets parabola", "prompt": "$$y = x^{2} - 2x - 3$$ $$y = x + 1$$ If $(x,\\,y)$ is a solution to the given system of equations and $x > 0$, what is the value of $y$?", "accepted": ["5"], "desmos": "Graph both. The two intersections read $(-1,\\,0)$ and $(4,\\,5)$. The one with $x > 0$ has $y = 5$.", "algebra": "$x^{2} - 2x - 3 = x + 1 \\Rightarrow x^{2} - 3x - 4 = 0 \\Rightarrow (x - 4)(x + 1) = 0$. With $x = 4$, $y = 5$. (The question asks for $y$, not $x$.)"}, {"tier": "medium", "format": "mc", "title": "Line of best fit", "prompt": "A scientist recorded the height, in centimeters, of a plant at the end of each of five weeks.", "figure": "<table style=\"border-collapse:collapse;margin:8px 0 12px;font-size:14px;\"><tr><th style=\"border:1px solid #BBB;padding:6px 14px;background:rgba(33,68,43,0.08);\">Week</th><td style=\"border:1px solid #BBB;padding:6px 14px;\">1</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">2</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">3</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">4</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">5</td></tr><tr><th style=\"border:1px solid #BBB;padding:6px 14px;background:rgba(33,68,43,0.08);\">Height (cm)</th><td style=\"border:1px solid #BBB;padding:6px 14px;\">4.1</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">6.2</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">7.9</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">10.1</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">11.8</td></tr></table>", "prompt2": "Which of the following equations best models the height $h$, in centimeters, of the plant $w$ weeks after the start of the experiment?", "options": ["$h = 1.9w + 2.2$", "$h = 2.2w + 1.9$", "$h = 1.9w - 2.2$", "$h = 4.1w + 1.9$"], "answer": 0, "desmos": "Make a table ($x_1$ = week, $y_1$ = height), then type <span class=\"kbd\">y1 ~ m x1 + b</span>. Desmos reports $m \\approx 1.93$ and $b \\approx 2.23$, so $h \\approx 1.9w + 2.2$.", "algebra": "Estimate the slope from the first and last points: $\\dfrac{11.8 - 4.1}{5 - 1} = 1.925$. Back up one week from $(1,\\,4.1)$ to get the intercept, about $2.2$."}, {"tier": "hard", "format": "grid", "title": "Exactly one solution", "prompt": "The equation $2x^{2} + bx + 8 = 0$, where $b$ is a positive constant, has exactly one solution. What is the value of $b$?", "accepted": ["8"], "desmos": "Graph $y = 2x^{2} + bx + 8$ and add a slider for $b$. Drag $b$ until the parabola just touches the $x$-axis at a single point. That happens at $b = 8$ (and at $b = -8$, which is ruled out because $b$ is positive).", "algebra": "One solution means the discriminant is zero: $b^{2} - 4(2)(8) = 0 \\Rightarrow b^{2} = 64 \\Rightarrow b = 8$ since $b > 0$."}, {"tier": "hard", "format": "mc", "title": "Transformed function", "prompt": "The function $f$ is defined by $f(x) = -(x - 2)^{2} + 9$. The function $g$ is defined by $g(x) = f(x + 3) - 5$. In the $xy$-plane, what is the $x$-coordinate of the $x$-intercept of the graph of $y = g(x)$ with the greater $x$-value?", "options": ["$-3$", "$1$", "$3$", "$7$"], "answer": 1, "desmos": "Type <span class=\"kbd\">f(x) = -(x-2)^2 + 9</span> on one line and <span class=\"kbd\">y = f(x+3) - 5</span> on the next. Hover the second graph's $x$-intercepts: $(-3,\\,0)$ and $(1,\\,0)$.", "algebra": "$g(x) = -(x + 3 - 2)^{2} + 9 - 5 = -(x + 1)^{2} + 4$. Zeros where $(x + 1)^{2} = 4$: $x = 1$ or $x = -3$. The greater is $1$."}, {"tier": "hard", "format": "mc", "title": "Circle and line", "prompt": "In the $xy$-plane, the graph of $x^{2} + y^{2} - 6x + 4y = 12$ is a circle. How many points do the circle and the line $y = x - 1$ have in common?", "desmos": "Desmos graphs the circle from the general form as written, no completing the square needed. Add $y = x - 1$: the line cuts through the circle at two grey dots.", "algebra": "Complete the square: $(x - 3)^{2} + (y + 2)^{2} = 25$, center $(3,\\,-2)$, radius $5$. The distance from the center to the line $x - y - 1 = 0$ is $\\dfrac{|3 + 2 - 1|}{\\sqrt{2}} \\approx 2.83 < 5$, so the line crosses the circle twice.", "options": ["Zero", "Exactly one", "Exactly two", "More than two"], "answer": 2}, {"tier": "hard", "format": "mc", "title": "Exponential model", "prompt": "The population of a town $t$ years after 2010 is modeled by the function $P(t) = 12{,}000(1.04)^{t}$. Based on the model, in which year will the population first exceed $20{,}000$?", "options": ["2022", "2023", "2024", "2025"], "answer": 2, "desmos": "Graph $y = 12000(1.04)^{x}$ and $y = 20000$ (set the window to $x$ from $0$ to $20$ and $y$ up to $25000$). The intersection is at $x \\approx 13.02$. The population is still below $20{,}000$ at $t = 13$, so the first whole year above it is $t = 14$: $2010 + 14 = 2024$.", "algebra": "$P(13) = 12{,}000(1.04)^{13} \\approx 19{,}981 < 20{,}000$ and $P(14) \\approx 20{,}780 > 20{,}000$. So $t = 14$, the year 2024."}, {"tier": "hard", "format": "grid", "title": "Tangent line, constant k", "prompt": "$$y = x^{2} + 4x + k$$ $$y = 2x + 1$$ In the given system of equations, $k$ is a constant. The system has exactly one solution. What is the value of $k$?", "accepted": ["2"], "desmos": "Type both equations and add a slider for $k$. Drag $k$ until the line just touches the parabola (one grey dot instead of two or none). That is $k = 2$.", "algebra": "Set equal: $x^{2} + 4x + k = 2x + 1 \\Rightarrow x^{2} + 2x + (k - 1) = 0$. One solution when the discriminant is zero: $4 - 4(k - 1) = 0 \\Rightarrow k = 2$."}];
+var G = { order: [], i: 0, mode: 'tier', results: [], t0: 0, tick: null, picked: null, done: false };
+var G_PER_Q = 95;   /* seconds: roughly the digital SAT's time per Math question */
+function gShuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function gSetOrder(m) { G.mode = m; document.getElementById('g-ord-tier').classList.toggle('active', m === 'tier'); document.getElementById('g-ord-shuf').classList.toggle('active', m === 'shuf'); }
+function gTypeset(el) { if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset(el ? [el] : undefined); }, 30); }
+function gStart() {
+    var idx = GQ.map(function(_, i){ return i; });
+    if (G.mode === 'shuf') idx = gShuffle(idx);
+    else { var tiers = { easy: [], medium: [], hard: [] }; idx.forEach(function(i){ tiers[GQ[i].tier].push(i); }); idx = gShuffle(tiers.easy).concat(gShuffle(tiers.medium), gShuffle(tiers.hard)); }
+    G.order = idx; G.i = 0; G.results = []; G.done = false;
+    document.getElementById('g-intro').style.display = 'none';
+    document.getElementById('g-summary').style.display = 'none';
+    document.getElementById('g-stage').style.display = '';
+    gShow();
+    window.scrollTo({ top: document.getElementById('tab-gauntlet').offsetTop - 80, behavior: 'smooth' });
+}
+function gHud() {
+    var right = G.results.filter(function(r){ return r.ok; }).length;
+    var el = document.getElementById('g-hud');
+    el.innerHTML = '<span>Question <b>' + (G.i + 1) + '</b> of ' + G.order.length + '</span><span>Right so far: <b>' + right + '</b></span>'
+        + '<span class="g-timer" id="g-timer">0:00</span>';
+}
+function gTimer() {
+    var s = Math.floor((Date.now() - G.t0) / 1000), el = document.getElementById('g-timer');
+    if (!el) return;
+    el.textContent = Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+    el.classList.toggle('slow', s > G_PER_Q);
+}
+function gShow() {
+    var q = GQ[G.order[G.i]], card = document.getElementById('g-card');
+    G.picked = null;
+    var h = '<span class="g-tier ' + q.tier + '">' + q.tier + '</span>';
+    h += '<div class="g-q">' + q.prompt + (q.figure ? q.figure : '') + (q.prompt2 ? ' ' + q.prompt2 : '') + '<span class="q-fmt">' + (q.format === 'mc' ? 'Multiple choice' : 'Student-produced response') + '</span></div>';
+    if (q.format === 'mc') {
+        h += '<ul class="g-opts">' + q.options.map(function(o, i){ return '<li><button class="g-opt" data-i="' + i + '" onclick="gPick(' + i + ')"><span class="ltr">' + 'ABCD'[i] + '</span><span>' + o + '</span></button></li>'; }).join('') + '</ul>';
+        h += '<div class="g-actions"><button class="fp-check" id="g-submit" onclick="gSubmit()" disabled>Submit</button><span style="font-size:12.5px;color:var(--text-medium);">Keys: A to D to pick, Enter to submit</span></div>';
+    } else {
+        h += '<div class="g-spr"><input class="fp-input" id="g-in" maxlength="12" autocomplete="off" spellcheck="false" placeholder="your answer" oninput="gLive()" onkeydown="if(event.key===\'Enter\'){gSubmit();}"><button class="fp-check" id="g-submit" onclick="gSubmit()">Submit</button><span class="fp-preview">Answer preview: <span id="g-pv">' + fpPreview('') + '</span></span></div>';
+        h += '<div style="font-size:12.5px;color:var(--text-medium);">Digits, one decimal point or one fraction bar, a minus sign first if needed. No symbols, no spaces.</div>';
+    }
+    h += '<div id="g-reveal"></div>';
+    card.innerHTML = h;
+    gHud(); G.t0 = Date.now(); clearInterval(G.tick); G.tick = setInterval(gTimer, 500); gTimer();
+    gTypeset(card);
+    var inp = document.getElementById('g-in'); if (inp) setTimeout(function(){ inp.focus(); }, 50);
+}
+function gPick(i) {
+    if (G.results.length > G.i) return;
+    G.picked = i;
+    document.querySelectorAll('#g-card .g-opt').forEach(function(b){ b.classList.toggle('picked', +b.dataset.i === i); });
+    document.getElementById('g-submit').disabled = false;
+}
+function gLive() { document.getElementById('g-pv').innerHTML = fpPreview(document.getElementById('g-in').value); }
+function gNorm(s) { return String(s).trim().toLowerCase().replace(/\s+/g, ''); }
+function gNum(s) { s = gNorm(s); if (!s) return NaN; var m = s.match(/^(-?)(\d+)\/(\d+)$/); if (m) return (m[1] ? -1 : 1) * (+m[2]) / (+m[3]); return /^-?(\d+\.?\d*|\.\d+)$/.test(s) ? parseFloat(s) : NaN; }
+function gSubmit() {
+    if (G.results.length > G.i) return;
+    var q = GQ[G.order[G.i]], ok, given, correctText;
+    if (q.format === 'mc') {
+        if (G.picked === null) return;
+        ok = G.picked === q.answer; given = 'ABCD'[G.picked]; correctText = 'ABCD'[q.answer] + '. ' + q.options[q.answer];
+        document.querySelectorAll('#g-card .g-opt').forEach(function(b){ var i = +b.dataset.i; b.classList.add('locked'); if (i === q.answer) b.classList.add('correct'); else if (i === G.picked) b.classList.add('wrong'); });
+    } else {
+        var inp = document.getElementById('g-in'); given = inp.value.trim();
+        if (!given) { inp.focus(); return; }
+        var fmt = fpCheck(given, { p: 0, q: 1 }, 'plain');   /* format gate only: symbols, spaces, length */
+        var formatBad = /[%$,\s]/.test(given) || /[a-zA-Z]/.test(given) || given.indexOf('-') > 0 || given.length > (given.charAt(0) === '-' ? 6 : 5);
+        var v = gNum(given);
+        ok = !formatBad && q.accepted.some(function(a){ var an = gNum(a); return gNorm(a) === gNorm(given) || (!isNaN(an) && !isNaN(v) && Math.abs(an - v) <= 1e-4 * Math.max(1, Math.abs(an))); });
+        correctText = q.accepted.join(' or ');
+        inp.classList.add(ok ? 'ok' : 'no'); inp.disabled = true;
+        if (formatBad && !ok) correctText += ' (your entry would be rejected by Bluebook: ' + fmt[1] + ')';
+    }
+    var secs = Math.round((Date.now() - G.t0) / 1000); clearInterval(G.tick);
+    G.results.push({ qi: G.order[G.i], ok: ok, given: given, secs: secs });
+    document.getElementById('g-submit').disabled = true;
+    var r = document.getElementById('g-reveal');
+    r.className = 'g-reveal';
+    r.innerHTML = '<div class="g-verdict ' + (ok ? 'ok' : 'no') + '">' + (ok ? '&#10003; Correct' : '&#10007; Not quite') + ' <span style="font-weight:400;color:var(--text-medium);font-size:13px;">(' + secs + 's' + (secs > G_PER_Q ? ', over the per-question budget' : '') + ')</span></div>'
+        + (ok ? '' : '<p style="margin-bottom:8px;"><strong>Correct answer:</strong> ' + correctText + '</p>')
+        + '<div class="g-route"><span class="lab">Desmos route</span><p style="margin:0;">' + q.desmos + '</p></div>'
+        + '<div class="g-check"><span class="lab">Algebra check</span><p style="margin:0;">' + q.algebra + '</p></div>'
+        + '<div class="g-actions"><button class="fp-check" id="g-next" onclick="gNext()">' + (G.i + 1 < G.order.length ? 'Next question &rarr;' : 'See my results &rarr;') + '</button></div>';
+    gHud(); gTypeset(r);
+    setTimeout(function(){ var n = document.getElementById('g-next'); if (n) n.focus(); }, 60);
+}
+function gNext() {
+    if (G.i + 1 < G.order.length) { G.i++; gShow(); window.scrollTo({ top: document.getElementById('g-hud').offsetTop - 90, behavior: 'smooth' }); }
+    else gFinish();
+}
+function gFinish() {
+    G.done = true; clearInterval(G.tick);
+    var byTier = { easy: [0, 0], medium: [0, 0], hard: [0, 0] }, total = 0, right = 0, secs = 0;
+    G.results.forEach(function(r){ var t = GQ[r.qi].tier; byTier[t][1]++; if (r.ok) { byTier[t][0]++; right++; } total++; secs += r.secs; });
+    var misses = G.results.filter(function(r){ return !r.ok; });
+    var h = '<div class="card" style="border-left-color: #8B5E3C;"><div class="section-header" style="margin-top:0;"><div class="section-number">&#10003;</div><h2>Gauntlet results</h2></div>';
+    h += '<div class="g-sum-grid"><div class="g-sum-tile"><div class="big">' + right + ' / ' + total + '</div><div class="lab">Overall</div></div>';
+    ['easy', 'medium', 'hard'].forEach(function(t){ h += '<div class="g-sum-tile ' + t + '"><div class="big">' + byTier[t][0] + ' / ' + byTier[t][1] + '</div><div class="lab">' + t + '</div></div>'; });
+    h += '<div class="g-sum-tile"><div class="big">' + Math.floor(secs / 60) + ':' + ('0' + (secs % 60)).slice(-2) + '</div><div class="lab">Total time</div></div>';
+    h += '<div class="g-sum-tile"><div class="big">' + Math.round(secs / Math.max(1, total)) + 's</div><div class="lab">Per question (budget ' + G_PER_Q + 's)</div></div></div>';
+    if (misses.length) {
+        h += '<p><strong>Revisit these</strong> (the technique to practice is in the technique tabs):</p>';
+        misses.forEach(function(r){ var q = GQ[r.qi]; h += '<div class="g-miss"><b>' + q.title + '</b> <span class="g-tier ' + q.tier + '" style="margin:0 0 0 6px;">' + q.tier + '</span><br>' + q.prompt.replace(/\$\$[^$]*\$\$/g, ' [equations] ') + (q.prompt2 ? ' ' + q.prompt2 : '') + '<br><span style="color:var(--text-medium);">You answered: ' + (r.given || '(blank)').replace(/</g, '&lt;') + '. Correct: ' + (q.format === 'mc' ? 'ABCD'[q.answer] : q.accepted[0]) + '.</span></div>'; });
+    } else {
+        h += '<div class="idea-box">Clean sweep. Run it shuffled, and try to beat your time.</div>';
+    }
+    var slow = G.results.filter(function(r){ return r.secs > G_PER_Q; }).length;
+    if (slow) h += '<div class="warning-box"><strong>' + slow + ' question' + (slow > 1 ? 's' : '') + ' went over the time budget.</strong> On those, ask whether typing the equation into Desmos sooner would have saved the algebra.</div>';
+    h += '<div class="g-actions"><button class="fp-check" onclick="gStart()">Run it again</button><button class="order-btn" onclick="gSetOrder(\'shuf\'); gStart();">Run it shuffled</button><button class="order-btn" onclick="gReset()">Back to the intro</button></div></div>';
+    var s = document.getElementById('g-summary'); s.innerHTML = h; s.style.display = '';
+    document.getElementById('g-stage').style.display = 'none';
+    gTypeset(s);
+    try { var best = JSON.parse(localStorage.getItem('lcc-desmos-gauntlet-best') || 'null'); if (!best || right > best.right || (right === best.right && secs < best.secs)) localStorage.setItem('lcc-desmos-gauntlet-best', JSON.stringify({ right: right, total: total, secs: secs, when: new Date().toISOString() })); } catch (e) {}
+    window.scrollTo({ top: s.offsetTop - 80, behavior: 'smooth' });
+}
+function gReset() { clearInterval(G.tick); document.getElementById('g-summary').style.display = 'none'; document.getElementById('g-stage').style.display = 'none'; document.getElementById('g-intro').style.display = ''; }
+document.addEventListener('keydown', function(e) {
+    var tab = document.getElementById('tab-gauntlet'); if (!tab || !tab.classList.contains('active')) return;
+    if (document.getElementById('g-stage').style.display === 'none') return;
+    if (document.activeElement && document.activeElement.tagName === 'INPUT') { return; }
+    var k = e.key.toLowerCase();
+    if (G.results.length > G.i) { if (k === 'enter' || k === ' ') { e.preventDefault(); gNext(); } return; }
+    var q = GQ[G.order[G.i]];
+    if (q.format === 'mc') { var m = 'abcd'.indexOf(k); if (m >= 0) gPick(m); else if (k === 'enter') gSubmit(); }
+});
 </script>
 </body>
 </html>

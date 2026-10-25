@@ -2123,7 +2123,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "test-prep--sat--sat-desmos-strategies",
    "path": "test-prep/sat/SAT-Desmos-Strategies.html",
    "title": "SAT Math: Desmos Strategies",
-   "description": "Shows how to use Desmos on every digital SAT Math question, with calculator basics, thirteen techniques, answer formatting tips, a formula list, and practice.",
+   "description": "Shows how to use Desmos on every digital SAT Math question, with calculator basics, thirteen techniques, answer formatting tips, a formula list, practice, and a timed 15-question SAT Gauntlet.",
    "subject": "sat",
    "topic": "Reading, writing & math",
    "order": 10,
