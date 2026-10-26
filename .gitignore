@@ -8,3 +8,4 @@ _build/skeleton.json
 index.v1.html
 
 __pycache__/
+*.backup*.html
