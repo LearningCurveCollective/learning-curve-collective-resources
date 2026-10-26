@@ -227,6 +227,25 @@ table.steps tr.reveal { animation: stepIn 0.35s ease; }
 .vpairs .pr.hit { background: rgba(33,68,43,0.10); border-left: 3px solid var(--green-dark); font-weight: 600; }
 .vpairs .pr-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-medium); padding: 0 10px 2px; }
 .vcol { display:inline-flex; flex-direction:column; gap: 5px; align-items:flex-start; }
+/* X method and box method */
+.xd { position: relative; display: inline-block; width: 168px; height: 148px; vertical-align: middle; margin: 2px 6px; flex-shrink: 0;
+      background: linear-gradient(to top right, transparent calc(50% - 1.5px), var(--brown-dark) calc(50% - 1.5px), var(--brown-dark) calc(50% + 1.5px), transparent calc(50% + 1.5px)),
+                  linear-gradient(to top left,  transparent calc(50% - 1.5px), var(--brown-dark) calc(50% - 1.5px), var(--brown-dark) calc(50% + 1.5px), transparent calc(50% + 1.5px)); }
+.xd .xd-t, .xd .xd-b, .xd .xd-l, .xd .xd-r { position: absolute; }
+.xd .xd-t { top: 0; left: 50%; transform: translateX(-50%); }
+.xd .xd-b { bottom: 0; left: 50%; transform: translateX(-50%); }
+.xd .xd-l { left: 0; top: 50%; transform: translateY(-50%); }
+.xd .xd-r { right: 0; top: 50%; transform: translateY(-50%); }
+.xd .chip { font-size: 16px; padding: 5px 10px; background: var(--cream); }
+.xd .chip.bin { background: rgba(33,68,43,0.10); }
+.xd .chip.blank { background: white; }
+.boxg { display: inline-grid; grid-template-columns: repeat(3, auto); gap: 5px; vertical-align: middle; margin: 4px 6px; }
+.boxg .bx { min-width: 60px; text-align: center; font-size: 16px; padding: 7px 10px; box-sizing: border-box; }
+.boxg .be { visibility: hidden; }
+.boxg .bl { background: rgba(221,162,94,0.22); border-color: var(--gold); }
+.boxg .bc { background: white; border-color: var(--brown-dark); }
+.boxg .blank { background: white; border: 2px dashed var(--copper); color: var(--copper); }
+table.steps.xbox td:last-child { white-space: normal; }
 /* lock cracker */
 .lockwrap { display:grid; grid-template-columns: 220px 1fr; gap: 22px; align-items:start; }
 @media (max-width: 700px) { .lockwrap { grid-template-columns: 1fr; } }
@@ -304,7 +323,7 @@ table.steps tr.reveal { animation: stepIn 0.35s ease; }
     <div class="decide">
         <div class="decide-row" style="background: rgba(221,162,94,0.10); border-left: 3px solid var(--gold);"><div><strong>1. GCF?</strong> Pull it out first, every time. Then count the terms that are left.</div><div class="decide-ex">$6x^2 + 9x = 3x(2x+3)$</div></div>
         <div class="decide-row" style="background: rgba(33,68,43,0.06); border-left: 3px solid var(--green-dark);"><div><strong>2. Two terms.</strong> Both squares: $(a-b)(a+b)$. Both cubes: SOAP. Sum of squares: stop, it doesn't factor.</div><div class="decide-ex">$x^2 - 9 = (x-3)(x+3)$<br>$x^3 + 8 = (x+2)(x^2-2x+4)$</div></div>
-        <div class="decide-row" style="background: rgba(66,38,13,0.06); border-left: 3px solid #8B5E3C;"><div><strong>3. Three terms.</strong> Multiply, Add, Split, Group. (When $a = 1$ the two numbers drop straight into $(x+m)(x+n)$.)</div><div class="decide-ex">$2x^2 + 7x + 3 = (2x+1)(x+3)$<br>$x^2 + 5x + 6 = (x+2)(x+3)$</div></div>
+        <div class="decide-row" style="background: rgba(66,38,13,0.06); border-left: 3px solid #8B5E3C;"><div><strong>3. Three terms.</strong> Draw the X: $a \cdot c$ on top, $b$ on the bottom, find the two side numbers. Then the box turns them into the factors. (When $a = 1$ the two side numbers drop straight into $(x+m)(x+n)$.)</div><div class="decide-ex">$2x^2 + 7x + 3 = (2x+1)(x+3)$<br>$x^2 + 5x + 6 = (x+2)(x+3)$</div></div>
         <div class="decide-row" style="background: rgba(221,162,94,0.10); border-left: 3px solid var(--gold);"><div><strong>4. Four terms.</strong> Group in pairs, factor each pair, factor out the matching parentheses.</div><div class="decide-ex">$x^3 + 3x^2 + 2x + 6 = (x+3)(x^2+2)$</div></div>
         <div class="decide-row" style="background: rgba(33,68,43,0.06); border-left: 3px solid var(--green-dark);"><div><strong>5. Look again.</strong> Each factor gets the same checklist. $x^2 - 9$ or $x^3 + 8$ sitting inside your answer means you're not done.</div><div class="decide-ex">$(x+2)(x^2-9) = (x+2)(x-3)(x+3)$</div></div>
     </div>
@@ -321,8 +340,8 @@ table.steps tr.reveal { animation: stepIn 0.35s ease; }
         <p class="formula-note">If the two binomials don't match, try the other pairing or pull a negative out of the second pair.</p>
     </div>
     <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
-        <h4>Multiply → Add → Split → Group</h4><p>$$ax^2 + bx + c:\quad mn = ac,\quad m + n = b$$</p>
-        <p class="formula-note">Split $bx$ into $mx + nx$, then group. Sign rule: $ac$ negative: one of each sign; $ac$ positive: both take $b$'s sign.</p>
+        <h4>X → Box</h4><p>$$ax^2 + bx + c:\quad mn = ac,\quad m + n = b$$</p>
+        <p class="formula-note">The X finds $m$ and $n$. Box: $ax^2$ top-left, $c$ bottom-right, $mx$ and $nx$ in the other corners; the row and column GCFs are the factors. Sign rule: $ac$ negative: one of each sign; $ac$ positive: both take $b$'s sign.</p>
     </div>
     <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
         <h4>Difference of Squares</h4><p>$$a^2 - b^2 = (a-b)(a+b)$$</p>
@@ -334,7 +353,7 @@ table.steps tr.reveal { animation: stepIn 0.35s ease; }
     </div>
     <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
         <h4>Perfect Square (a quadratic)</h4><p>$$a^2 \pm 2ab + b^2 = (a \pm b)^2$$</p>
-        <p class="formula-note">The Add step still finds it ($m = n$): this is just the shortcut when you spot it.</p>
+        <p class="formula-note">The X still finds it ($m = n$): this is just the shortcut when you spot it.</p>
     </div>
 </div>
 <div class="warning-box">
@@ -507,12 +526,12 @@ $$(x+3)(x+4) = x^2 + \underbrace{7}_{3+4}x + \underbrace{12}_{3\cdot4}$$
 </div>
 </div>
 <div id="tab-q2" class="tab-content"><div class="section-header"><div class="section-number">1</div><h2>See It Happen</h2></div>
-<p>The whole Multiply → Add → Split → Group method, one line at a time. The middle term splits in two, and then it's the grouping move you already know.</p>
+<p>The X finds the two numbers; the box turns them into the factors. One line at a time, and watch the pieces move into place.</p>
 <div class="gviz" id="vq2">
     <div class="gviz-controls">
         <div class="control-group"><label>Expression</label>
             <select id="vq2-ex" onchange="vizLoad('vq2')"><option value="0">6x² − 7x − 3</option><option value="1">8x² + 2x − 3</option><option value="2">2x² + 7x + 3</option></select></div>
-        <label class="gviz-toggle"><input type="checkbox" id="vq2-u" onchange="vizLoad('vq2')"> Show the $u$-substitution</label>
+        <label class="gviz-toggle"><input type="checkbox" id="vq2-u" onchange="vizLoad('vq2')"> Split &amp; Group instead of the box</label>
     </div>
     <div class="gviz-work" id="vq2-work"></div>
     <div class="gviz-caption" id="vq2-cap"></div>
@@ -526,65 +545,65 @@ $$(x+3)(x+4) = x^2 + \underbrace{7}_{3+4}x + \underbrace{12}_{3\cdot4}$$
 </div>
 <div class="section-header"><div class="section-number">2</div><h2>Quadratics: $ax^2 + bx + c$</h2></div>
 <div class="technique-section" style="background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C;">
-<h3>Multiply → Add → Split → Group</h3>
+<h3>The X, then the Box</h3>
 <div class="why-box"><span class="why-label">Why this matters</span><p><strong>Where does "multiply $a \cdot c$" come from?</strong> It's not a rule someone made up. Suppose the answer is $(px + q)(rx + s)$ and FOIL it:</p>
 $$(px+q)(rx+s) = pr\,x^2 + (ps + qr)\,x + qs$$
 <p>The middle coefficient $b$ is secretly two pieces added together, $ps$ and $qr$. Multiply those two pieces and you get $(pr)(qs) = ac$. So the two numbers you're hunting in the Add step are real objects: they're the two halves of the middle term, and you know their product and their sum. Splitting the middle just writes $b$ as those two halves again, and grouping rebuilds the parentheses.</p></div>
 <div class="step-concept"><span class="step-label">Concept</span></div>
-<p>Same idea as $x^2 + bx + c$, with one extra move at the front: because $a \ne 1$, you factor $a \cdot c$ instead of just $c$. The signs are decided the same way, from $ac$ and $b$.</p>
+<p>Same idea as $x^2 + bx + c$, with one extra move at the front: because $a \ne 1$, you factor $a \cdot c$ instead of just $c$. The X organizes that hunt, and the box turns the two numbers you find into the two factors. No splitting, no grouping: the box does that part for you.</p>
 <div class="highlight-box">
-<table class="steps masg no-step">
-<tr><td><strong>Signs</strong></td><td>Same rule: the back number ($ac$ now) tells you same or different, the middle tells you which. $ac$ negative: $(+)(-)$, and in the Add step you add one number and subtract the other. $ac$ positive: both take $b$'s sign.</td></tr>
-<tr><td><strong>Multiply</strong></td><td>$a \cdot c$</td></tr>
-<tr><td><strong>Add</strong></td><td>find two numbers that multiply to $ac$ and add to $b$</td></tr>
-<tr><td><strong>Split</strong></td><td>rewrite $bx$ as $mx + nx$: four terms now</td></tr>
-<tr><td><strong>Group</strong></td><td>pair, factor each pair, factor out the matching parentheses. Stuck on that last step? The $u$-substitution on the <a href="#" onclick="goTab('grp');return false;">Grouping tab</a> makes it mechanical.</td></tr>
+<table class="steps xbox no-step">
+<tr><td><strong>GCF</strong></td><td>pull it out first if there is one; the numbers get much smaller</td></tr>
+<tr><td><strong>Signs</strong></td><td>same rule as before: $ac$ negative: $(+)(-)$. $ac$ positive: both take $b$'s sign</td></tr>
+<tr><td><strong>The X</strong></td><td>$a \cdot c$ on top, $b$ on the bottom. The two sides are the numbers that multiply to the top and add to the bottom</td></tr>
+<tr><td><strong>The box</strong></td><td>a $2 \times 2$ grid. $ax^2$ top-left, $c$ bottom-right. The X's two numbers, each times $x$, fill the other two corners</td></tr>
+<tr><td><strong>Labels</strong></td><td>GCF of the top row goes on its left; divide across for the column labels; the bottom row's label must work for both of its cells</td></tr>
+<tr><td><strong>Read it off</strong></td><td>the row labels are one factor, the column labels are the other. FOIL the middle term to check</td></tr>
 </table></div>
-<p>If there's a GCF, pull it out <em>before</em> you start: the numbers get much smaller. The order of the two final factors doesn't matter.</p>
+<div class="why-box"><span class="why-label">Why the box works</span><p>The box is just FOIL drawn as a picture. Multiply $(3x + 1)(2x - 3)$ with a grid and you get four cells: $6x^2$, $-9x$, $2x$, $-3$. Factoring runs that picture backwards: you know the four cells (the X told you how to split the middle), so you recover the labels on the edges. The two diagonals always multiply to the same thing, $ac\,x^2$, which is exactly why the X asks for a product of $ac$.</p></div>
 <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
 <p>Factor: $\;6x^2 - 7x - 3$</p>
 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
-<div class="example-body"><div class="highlight-box"><table class="steps masg">
+<div class="example-body"><div class="highlight-box"><table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-7$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(-3) = \boxed{-18}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-18$ and add to $-7$. List the factor pairs of $18$ and find the one that differs by $7$</td><td><div class="vpairs"><div class="pr">$1\cdot18$</div><div class="pr hit">$2\cdot9$ &#10003;</div><div class="pr">$3\cdot6$</div></div>$\boxed{-9 \text{ and } +2}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2-9x+2x-3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2-9x) + (2x-3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(2x-3) +1(2x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x-3)(3x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(-3) = -18$ <div class="xd"><span class="chip xd-t">$-18$</span><span class="chip xd-b">$-7$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-18$ and add to $-7$. List the factor pairs of $18$ top to bottom and find the one that differs by $7$</td><td><div class="vpairs"><div class="pr">$1\cdot18$</div><div class="pr hit">$2\cdot9$ &#10003;</div><div class="pr">$3\cdot6$</div></div><div class="xd"><span class="chip xd-t">$-18$</span><span class="chip xd-b">$-7$</span><span class="chip xd-l">$-9$</span><span class="chip xd-r">$+2$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $-3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$-9x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$-9x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x+1)(2x-3)}$$</td></tr>
 </table></div></div>
 <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example</span></div>
 <p>Factor: $\;8x^2 + 2x - 3$</p>
 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
-<div class="example-body"><div class="highlight-box"><table class="steps masg">
+<div class="example-body"><div class="highlight-box"><table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+2$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$8(-3) = \boxed{-24}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-24$ and add to $+2$. List the factor pairs of $24$ and find the one that differs by $2$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr">$3\cdot8$</div><div class="pr hit">$4\cdot6$ &#10003;</div></div>$\boxed{+6 \text{ and } -4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$8x^2+6x-4x-3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(8x^2+6x) + (-4x-3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(4x+3) -1(4x+3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(4x+3)(2x-1)}$$</td></tr>
-</table><p style="margin:6px 0 0;">The second pair is $-4x - 3$; factoring out $-1$ flips both signs so the parentheses match $(4x+3)$. Writing the $-1$ explicitly is what keeps the sign straight.</p></div></div>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$8(-3) = -24$ <div class="xd"><span class="chip xd-t">$-24$</span><span class="chip xd-b">$2$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-24$ and add to $+2$. List the factor pairs of $24$ top to bottom and find the one that differs by $2$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr">$3\cdot8$</div><div class="pr hit">$4\cdot6$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-24$</span><span class="chip xd-b">$2$</span><span class="chip xd-l">$+6$</span><span class="chip xd-r">$-4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $8x^2$ top-left, $-3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$8x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$4x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$8x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl">$-1$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x-1)(4x+3)}$$</td></tr>
+</table></div></div>
 <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked Example: GCF first</span></div>
 <p>Factor completely: $\;6x^2 - 15x - 9$</p>
 <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step-by-step</button>
-<div class="example-body"><div class="highlight-box"><p style="margin-bottom:6px;">Without the GCF you'd be hunting pairs of $54$. With it, pairs of $6$.</p><table class="steps masg"><tr><td><strong>GCF first</strong></td><td>$3(2x^2-5x-3)$</td></tr></table><table class="steps masg">
+<div class="example-body"><div class="highlight-box"><p style="margin-bottom:6px;">Without the GCF you'd be hunting pairs of $54$. With it, pairs of $6$.</p><table class="steps xbox"><tr><td><strong>GCF first</strong></td><td>$3(2x^2-5x-3)$</td></tr></table><table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-5$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$2(-3) = \boxed{-6}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-6$ and add to $-5$. List the factor pairs of $6$ and find the one that differs by $5$</td><td><div class="vpairs"><div class="pr hit">$1\cdot6$ &#10003;</div><div class="pr">$2\cdot3$</div></div>$\boxed{-6 \text{ and } +1}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$2x^2-6x+x-3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(2x^2-6x) + (x-3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(x-3) +1(x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{3(x-3)(2x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$2(-3) = -6$ <div class="xd"><span class="chip xd-t">$-6$</span><span class="chip xd-b">$-5$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-6$ and add to $-5$. List the factor pairs of $6$ top to bottom and find the one that differs by $5$</td><td><div class="vpairs"><div class="pr hit">$1\cdot6$ &#10003;</div><div class="pr">$2\cdot3$</div></div><div class="xd"><span class="chip xd-t">$-6$</span><span class="chip xd-b">$-5$</span><span class="chip xd-l">$-6$</span><span class="chip xd-r">$+1$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $2x^2$ top-left, $-3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{3(2x+1)(x-3)}$$</td></tr>
 </table></div></div>
 <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
 <div class="practice-box"><p>Factor: $\;3x^2 + 10x + 8$</p>
 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
-<div class="solution-body"><div class="highlight-box">$ac = 24$, both $+$: $6$ and $4$. $3x^2 + 6x + 4x + 8 = 3x(x+2) + 4(x+2) = \boxed{(x+2)(3x+4)}$</div></div></div>
+<div class="solution-body"><div class="highlight-box">X: $ac = 24$, $b = 10$: $+6$ and $+4$. Box rows $3x$ and $+4$, columns $x$ and $+2$: $\boxed{(3x+4)(x+2)}$</div></div></div>
 <div class="step-practice" style="margin-top:14px;"><span class="step-label">Practice</span></div>
 <div class="practice-box"><p>Factor: $\;4x^2 - 11x + 6$</p>
 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Check your answer</button>
-<div class="solution-body"><div class="highlight-box">$ac = 24$, both $-$: $-8$ and $-3$. $4x^2 - 8x - 3x + 6 = 4x(x-2) - 3(x-2) = \boxed{(x-2)(4x-3)}$</div></div></div>
+<div class="solution-body"><div class="highlight-box">X: $ac = 24$, $b = -11$: $-8$ and $-3$. Box rows $4x$ and $-3$, columns $x$ and $-2$: $\boxed{(4x-3)(x-2)}$</div></div></div>
+<div class="step-example" style="margin-top:14px;"><span class="step-label">The other road: Split → Group</span></div>
+<p>Prefer writing it out as four terms? Same X, same two numbers. Split the middle term into them and group: $6x^2 - 7x - 3 = 6x^2 - 9x + 2x - 3 = 3x(2x-3) + 1(2x-3) = (2x-3)(3x+1)$. The box and the grouping always land on the same answer; the box just keeps the sign bookkeeping on the page for you. Stuck on the grouping step? The <a href="#" onclick="goTab('grp');return false;">Grouping tab</a> walks it.</p>
 </div>
 
 <div class="idea-box"><p><strong>Two test-day tips.</strong></p>
@@ -989,7 +1008,7 @@ var SPRINT = [
     ["Factor", R`x^3 + 1`, "Sum of cubes", R`$\boxed{(x+1)(x^2-x+1)}$`],
     ["Factor", R`x^2 - 6x + 9`, "Perfect square quadratic", R`$\boxed{(x-3)^2}$`],
     ["Factor", R`xy + 2x + 3y + 6`, "Grouping", R`$x(y+2) + 3(y+2) = \boxed{(x+3)(y+2)}$`],
-    ["Factor", R`2x^2 + 5x + 2`, "Multiply → Add → Split → Group", R`$ac = 4$; $4$ and $1$. $2x^2+4x+x+2 = 2x(x+2)+1(x+2) = \boxed{(2x+1)(x+2)}$`],
+    ["Factor", R`2x^2 + 5x + 2`, "X → Box", R`X: $ac = 4$, $b = 5$: $+4$ and $+1$. Box rows $2x$ and $+1$, columns $x$ and $+2$: $\boxed{(2x+1)(x+2)}$`],
     ["Factor", R`x^2 - 2x - 8`, "Two numbers: $(-4)(2)=-8,\\ -4+2=-2$", R`$\boxed{(x-4)(x+2)}$`],
     ["Factor", R`9 - x^2`, "Difference of squares", R`$\boxed{(3-x)(3+x)}$`],
     ["Factor", R`x^3 - 8`, "Difference of cubes", R`$\boxed{(x-2)(x^2+2x+4)}$`],
@@ -1041,113 +1060,101 @@ var SETB = [
 <tr><td><strong>Pick the pair</strong>: Same signs, so we need a pair whose <em>sum</em> is $13$: $8 + 5$, both negative.</td><td>$\boxed{-8 \text{ and } -5}$</td></tr>
 <tr><td><strong>Fill in</strong>, then FOIL to check</td><td>$$\boxed{(x-8)(x-5)}$$</td></tr>
 </table>`],
-    ["Factor", R`2x^2+7x+3`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`2x^2+7x+3`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$2(3) = \boxed{6}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $6$ and add to $+7$. List the factor pairs of $6$ and find the one that adds to $7$</td><td><div class="vpairs"><div class="pr hit">$1\cdot6$ &#10003;</div><div class="pr">$2\cdot3$</div></div>$\boxed{+6 \text{ and } +1}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$2x^2+6x+x+3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(2x^2+6x) + (x+3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(x+3) +1(x+3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x+3)(2x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$2(3) = 6$ <div class="xd"><span class="chip xd-t">$6$</span><span class="chip xd-b">$7$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $6$ and add to $+7$. List the factor pairs of $6$ top to bottom and find the one that adds to $7$</td><td><div class="vpairs"><div class="pr hit">$1\cdot6$ &#10003;</div><div class="pr">$2\cdot3$</div></div><div class="xd"><span class="chip xd-t">$6$</span><span class="chip xd-b">$7$</span><span class="chip xd-l">$+6$</span><span class="chip xd-r">$+1$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $2x^2$ top-left, $+3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+x$</span><span class="chip bx bc">$+3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+x$</span><span class="chip bx bc">$+3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x+1)(x+3)}$$</td></tr>
 </table>`],
-    ["Factor", R`3x^2-10x+8`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`3x^2-10x+8`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is negative: both $-$.</td><td>$(\;\; - \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$3(8) = \boxed{24}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $24$ and add to $-10$. List the factor pairs of $24$ and find the one that adds to $10$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr">$3\cdot8$</div><div class="pr hit">$4\cdot6$ &#10003;</div></div>$\boxed{-6 \text{ and } -4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$3x^2-6x-4x+8$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(3x^2-6x) + (-4x+8)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(x-2) -4(x-2)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x-2)(3x-4)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$3(8) = 24$ <div class="xd"><span class="chip xd-t">$24$</span><span class="chip xd-b">$-10$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $24$ and add to $-10$. List the factor pairs of $24$ top to bottom and find the one that adds to $10$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr">$3\cdot8$</div><div class="pr hit">$4\cdot6$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$24$</span><span class="chip xd-b">$-10$</span><span class="chip xd-l">$-6$</span><span class="chip xd-r">$-4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $3x^2$ top-left, $+8$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$3x^2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$+8$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$3x^2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bl">$-4$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$+8$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x-4)(x-2)}$$</td></tr>
 </table>`],
-    ["Factor", R`6x^2-7x-3`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`6x^2-7x-3`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-7$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(-3) = \boxed{-18}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-18$ and add to $-7$. List the factor pairs of $18$ and find the one that differs by $7$</td><td><div class="vpairs"><div class="pr">$1\cdot18$</div><div class="pr hit">$2\cdot9$ &#10003;</div><div class="pr">$3\cdot6$</div></div>$\boxed{-9 \text{ and } +2}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2-9x+2x-3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2-9x) + (2x-3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(2x-3) +1(2x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x-3)(3x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(-3) = -18$ <div class="xd"><span class="chip xd-t">$-18$</span><span class="chip xd-b">$-7$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-18$ and add to $-7$. List the factor pairs of $18$ top to bottom and find the one that differs by $7$</td><td><div class="vpairs"><div class="pr">$1\cdot18$</div><div class="pr hit">$2\cdot9$ &#10003;</div><div class="pr">$3\cdot6$</div></div><div class="xd"><span class="chip xd-t">$-18$</span><span class="chip xd-b">$-7$</span><span class="chip xd-l">$-9$</span><span class="chip xd-r">$+2$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $-3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$-9x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$-9x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x+1)(2x-3)}$$</td></tr>
 </table>`],
-    ["Factor", R`8x^2+2x-3`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`8x^2+2x-3`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+2$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$8(-3) = \boxed{-24}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-24$ and add to $+2$. List the factor pairs of $24$ and find the one that differs by $2$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr">$3\cdot8$</div><div class="pr hit">$4\cdot6$ &#10003;</div></div>$\boxed{+6 \text{ and } -4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$8x^2+6x-4x-3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(8x^2+6x) + (-4x-3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(4x+3) -1(4x+3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(4x+3)(2x-1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$8(-3) = -24$ <div class="xd"><span class="chip xd-t">$-24$</span><span class="chip xd-b">$2$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-24$ and add to $+2$. List the factor pairs of $24$ top to bottom and find the one that differs by $2$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr">$3\cdot8$</div><div class="pr hit">$4\cdot6$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-24$</span><span class="chip xd-b">$2$</span><span class="chip xd-l">$+6$</span><span class="chip xd-r">$-4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $8x^2$ top-left, $-3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$8x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$4x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$8x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl">$-1$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x-1)(4x+3)}$$</td></tr>
 </table>`],
-    ["Factor", R`4x^2+4x-15`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`4x^2+4x-15`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+4$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$4(-15) = \boxed{-60}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-60$ and add to $+4$. List the factor pairs of $60$ and find the one that differs by $4$</td><td><div class="vpairs"><div class="pr">$1\cdot60$</div><div class="pr">$2\cdot30$</div><div class="pr">$3\cdot20$</div><div class="pr">$4\cdot15$</div><div class="pr">$5\cdot12$</div><div class="pr hit">$6\cdot10$ &#10003;</div></div>$\boxed{+10 \text{ and } -6}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$4x^2+10x-6x-15$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(4x^2+10x) + (-6x-15)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(2x+5) -3(2x+5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+5)(2x-3)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$4(-15) = -60$ <div class="xd"><span class="chip xd-t">$-60$</span><span class="chip xd-b">$4$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-60$ and add to $+4$. List the factor pairs of $60$ top to bottom and find the one that differs by $4$</td><td><div class="vpairs"><div class="pr">$1\cdot60$</div><div class="pr">$2\cdot30$</div><div class="pr">$3\cdot20$</div><div class="pr">$4\cdot15$</div><div class="pr">$5\cdot12$</div><div class="pr hit">$6\cdot10$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-60$</span><span class="chip xd-b">$4$</span><span class="chip xd-l">$+10$</span><span class="chip xd-r">$-6$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $4x^2$ top-left, $-15$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$+10x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-15$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$+10x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-15$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x-3)(2x+5)}$$</td></tr>
 </table>`],
-    ["Factor", R`5x^2-13x-6`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`5x^2-13x-6`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-13$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$5(-6) = \boxed{-30}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-30$ and add to $-13$. List the factor pairs of $30$ and find the one that differs by $13$</td><td><div class="vpairs"><div class="pr">$1\cdot30$</div><div class="pr hit">$2\cdot15$ &#10003;</div><div class="pr">$3\cdot10$</div><div class="pr">$5\cdot6$</div></div>$\boxed{-15 \text{ and } +2}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$5x^2-15x+2x-6$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(5x^2-15x) + (2x-6)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$5x(x-3) +2(x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x-3)(5x+2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$5(-6) = -30$ <div class="xd"><span class="chip xd-t">$-30$</span><span class="chip xd-b">$-13$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-30$ and add to $-13$. List the factor pairs of $30$ top to bottom and find the one that differs by $13$</td><td><div class="vpairs"><div class="pr">$1\cdot30$</div><div class="pr hit">$2\cdot15$ &#10003;</div><div class="pr">$3\cdot10$</div><div class="pr">$5\cdot6$</div></div><div class="xd"><span class="chip xd-t">$-30$</span><span class="chip xd-b">$-13$</span><span class="chip xd-l">$-15$</span><span class="chip xd-r">$+2$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $5x^2$ top-left, $-6$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$5x^2$</span><span class="chip bx bc">$-15x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-6$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$5x$</span><span class="chip bx bc">$5x^2$</span><span class="chip bx bc">$-15x$</span><span class="chip bx bl">$+2$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-6$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(5x+2)(x-3)}$$</td></tr>
 </table>`],
-    ["Factor", R`6x^2+19x+10`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`6x^2+19x+10`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(10) = \boxed{60}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $60$ and add to $+19$. List the factor pairs of $60$ and find the one that adds to $19$</td><td><div class="vpairs"><div class="pr">$1\cdot60$</div><div class="pr">$2\cdot30$</div><div class="pr">$3\cdot20$</div><div class="pr hit">$4\cdot15$ &#10003;</div><div class="pr">$5\cdot12$</div><div class="pr">$6\cdot10$</div></div>$\boxed{+15 \text{ and } +4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2+15x+4x+10$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2+15x) + (4x+10)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(2x+5) +2(2x+5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+5)(3x+2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(10) = 60$ <div class="xd"><span class="chip xd-t">$60$</span><span class="chip xd-b">$19$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $60$ and add to $+19$. List the factor pairs of $60$ top to bottom and find the one that adds to $19$</td><td><div class="vpairs"><div class="pr">$1\cdot60$</div><div class="pr">$2\cdot30$</div><div class="pr">$3\cdot20$</div><div class="pr hit">$4\cdot15$ &#10003;</div><div class="pr">$5\cdot12$</div><div class="pr">$6\cdot10$</div></div><div class="xd"><span class="chip xd-t">$60$</span><span class="chip xd-b">$19$</span><span class="chip xd-l">$+15$</span><span class="chip xd-r">$+4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $+10$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bc">$+10$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl">$+2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bc">$+10$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x+2)(2x+5)}$$</td></tr>
 </table>`],
-    ["Factor", R`12x^2-17x+6`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`12x^2-17x+6`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is negative: both $-$.</td><td>$(\;\; - \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$12(6) = \boxed{72}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $72$ and add to $-17$. List the factor pairs of $72$ and find the one that adds to $17$</td><td><div class="vpairs"><div class="pr">$1\cdot72$</div><div class="pr">$2\cdot36$</div><div class="pr">$3\cdot24$</div><div class="pr">$4\cdot18$</div><div class="pr">$6\cdot12$</div><div class="pr hit">$8\cdot9$ &#10003;</div></div>$\boxed{-9 \text{ and } -8}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$12x^2-9x-8x+6$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(12x^2-9x) + (-8x+6)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(4x-3) -2(4x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(4x-3)(3x-2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$12(6) = 72$ <div class="xd"><span class="chip xd-t">$72$</span><span class="chip xd-b">$-17$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $72$ and add to $-17$. List the factor pairs of $72$ top to bottom and find the one that adds to $17$</td><td><div class="vpairs"><div class="pr">$1\cdot72$</div><div class="pr">$2\cdot36$</div><div class="pr">$3\cdot24$</div><div class="pr">$4\cdot18$</div><div class="pr">$6\cdot12$</div><div class="pr hit">$8\cdot9$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$72$</span><span class="chip xd-b">$-17$</span><span class="chip xd-l">$-9$</span><span class="chip xd-r">$-8$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $12x^2$ top-left, $+6$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$-9x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-8x$</span><span class="chip bx bc">$+6$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$4x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$-9x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bc">$-8x$</span><span class="chip bx bc">$+6$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x-2)(4x-3)}$$</td></tr>
 </table>`],
-    ["Factor", R`10x^2-x-3`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`10x^2-x-3`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-1$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$10(-3) = \boxed{-30}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-30$ and add to $-1$. List the factor pairs of $30$ and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot30$</div><div class="pr">$2\cdot15$</div><div class="pr">$3\cdot10$</div><div class="pr hit">$5\cdot6$ &#10003;</div></div>$\boxed{-6 \text{ and } +5}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$10x^2-6x+5x-3$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(10x^2-6x) + (5x-3)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(5x-3) +1(5x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(5x-3)(2x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$10(-3) = -30$ <div class="xd"><span class="chip xd-t">$-30$</span><span class="chip xd-b">$-1$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-30$ and add to $-1$. List the factor pairs of $30$ top to bottom and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot30$</div><div class="pr">$2\cdot15$</div><div class="pr">$3\cdot10$</div><div class="pr hit">$5\cdot6$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-30$</span><span class="chip xd-b">$-1$</span><span class="chip xd-l">$-6$</span><span class="chip xd-r">$+5$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $10x^2$ top-left, $-3$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$10x^2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+5x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$5x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$10x^2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+5x$</span><span class="chip bx bc">$-3$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x+1)(5x-3)}$$</td></tr>
 </table>`],
-    ["Factor completely", R`2x^2+14x+24`, "GCF, then Multiply → Add → Split → Group", R`<table class="steps masg"><tr><td><strong>GCF first</strong></td><td>$2(x^2+7x+12)$</td></tr></table><table class="steps masg">
+    ["Factor completely", R`2x^2+14x+24`, "GCF, then X → Box", R`<table class="steps xbox"><tr><td><strong>GCF first</strong></td><td>$2(x^2+7x+12)$</td></tr></table><table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$1(12) = \boxed{12}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $12$ and add to $+7$. List the factor pairs of $12$ and find the one that adds to $7$</td><td><div class="vpairs"><div class="pr">$1\cdot12$</div><div class="pr">$2\cdot6$</div><div class="pr hit">$3\cdot4$ &#10003;</div></div>$\boxed{+4 \text{ and } +3}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$x^2+4x+3x+12$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(x^2+4x) + (3x+12)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$x(x+4) +3(x+4)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{2(x+4)(x+3)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$1(12) = 12$ <div class="xd"><span class="chip xd-t">$12$</span><span class="chip xd-b">$7$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $12$ and add to $+7$. List the factor pairs of $12$ top to bottom and find the one that adds to $7$</td><td><div class="vpairs"><div class="pr">$1\cdot12$</div><div class="pr">$2\cdot6$</div><div class="pr hit">$3\cdot4$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$12$</span><span class="chip xd-b">$7$</span><span class="chip xd-l">$+4$</span><span class="chip xd-r">$+3$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $x^2$ top-left, $+12$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$x^2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+3x$</span><span class="chip bx bc">$+12$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$+4$</span><span class="chip bx bl">$x$</span><span class="chip bx bc">$x^2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bc">$+3x$</span><span class="chip bx bc">$+12$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{2(x+3)(x+4)}$$</td></tr>
 </table>`],
-    ["Factor completely", R`3x^2-27x+60`, "GCF, then Multiply → Add → Split → Group", R`<table class="steps masg"><tr><td><strong>GCF first</strong></td><td>$3(x^2-9x+20)$</td></tr></table><table class="steps masg">
+    ["Factor completely", R`3x^2-27x+60`, "GCF, then X → Box", R`<table class="steps xbox"><tr><td><strong>GCF first</strong></td><td>$3(x^2-9x+20)$</td></tr></table><table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is negative: both $-$.</td><td>$(\;\; - \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$1(20) = \boxed{20}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $20$ and add to $-9$. List the factor pairs of $20$ and find the one that adds to $9$</td><td><div class="vpairs"><div class="pr">$1\cdot20$</div><div class="pr">$2\cdot10$</div><div class="pr hit">$4\cdot5$ &#10003;</div></div>$\boxed{-5 \text{ and } -4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$x^2-5x-4x+20$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(x^2-5x) + (-4x+20)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$x(x-5) -4(x-5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{3(x-5)(x-4)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$1(20) = 20$ <div class="xd"><span class="chip xd-t">$20$</span><span class="chip xd-b">$-9$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $20$ and add to $-9$. List the factor pairs of $20$ top to bottom and find the one that adds to $9$</td><td><div class="vpairs"><div class="pr">$1\cdot20$</div><div class="pr">$2\cdot10$</div><div class="pr hit">$4\cdot5$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$20$</span><span class="chip xd-b">$-9$</span><span class="chip xd-l">$-5$</span><span class="chip xd-r">$-4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $x^2$ top-left, $+20$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$x^2$</span><span class="chip bx bc">$-5x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$+20$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-5$</span><span class="chip bx bl">$x$</span><span class="chip bx bc">$x^2$</span><span class="chip bx bc">$-5x$</span><span class="chip bx bl">$-4$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$+20$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{3(x-4)(x-5)}$$</td></tr>
 </table>`],
-    ["Factor completely", R`-x^2+3x+10`, "GCF, then Multiply → Add → Split → Group", R`<table class="steps masg"><tr><td><strong>GCF first</strong></td><td>$-(x^2-3x-10)$</td></tr></table><table class="steps masg">
+    ["Factor completely", R`-x^2+3x+10`, "GCF, then X → Box", R`<table class="steps xbox"><tr><td><strong>GCF first</strong></td><td>$-(x^2-3x-10)$</td></tr></table><table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-3$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$1(-10) = \boxed{-10}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-10$ and add to $-3$. List the factor pairs of $10$ and find the one that differs by $3$</td><td><div class="vpairs"><div class="pr">$1\cdot10$</div><div class="pr hit">$2\cdot5$ &#10003;</div></div>$\boxed{-5 \text{ and } +2}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$x^2-5x+2x-10$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(x^2-5x) + (2x-10)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$x(x-5) +2(x-5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{-(x-5)(x+2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$1(-10) = -10$ <div class="xd"><span class="chip xd-t">$-10$</span><span class="chip xd-b">$-3$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-10$ and add to $-3$. List the factor pairs of $10$ top to bottom and find the one that differs by $3$</td><td><div class="vpairs"><div class="pr">$1\cdot10$</div><div class="pr hit">$2\cdot5$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-10$</span><span class="chip xd-b">$-3$</span><span class="chip xd-l">$-5$</span><span class="chip xd-r">$+2$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $x^2$ top-left, $-10$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$x^2$</span><span class="chip bx bc">$-5x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-10$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-5$</span><span class="chip bx bl">$x$</span><span class="chip bx bc">$x^2$</span><span class="chip bx bc">$-5x$</span><span class="chip bx bl">$+2$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$-10$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{-(x+2)(x-5)}$$</td></tr>
 </table>`]
 ];
 var SETC = [
@@ -1171,11 +1178,11 @@ var MIXED = [
     ["Factor completely", R`4x^2 - 25`, "Two terms, both squares: difference of squares", R`$\boxed{(2x-5)(2x+5)}$`],
     ["Factor completely", R`x^3 + 2x^2 - 5x - 10`, "Four terms: grouping", R`$x^2(x+2) - 5(x+2) = \boxed{(x+2)(x^2-5)}$`],
     ["Factor completely", R`7x^2 - 14x`, "GCF", R`$\boxed{7x(x-2)}$`],
-    ["Factor completely", R`3x^2 + 11x + 6`, "Three terms, $a \\ne 1$: Multiply → Add → Split → Group", R`$ac=18$; $9$ and $2$. $3x^2+9x+2x+6 = 3x(x+3)+2(x+3) = \boxed{(3x+2)(x+3)}$`],
+    ["Factor completely", R`3x^2 + 11x + 6`, "Three terms, $a \\ne 1$: X → Box", R`X: $ac = 18$, $b = 11$: $+9$ and $+2$. Box rows $3x$ and $+2$, columns $x$ and $+3$: $\boxed{(3x+2)(x+3)}$`],
     ["Factor completely", R`x^3 - 27`, "Two terms, both cubes: difference of cubes", R`$\boxed{(x-3)(x^2+3x+9)}$`],
     ["Factor completely", R`x^2 + 4x - 32`, "Three terms, $a=1$: two numbers", R`$8(-4)=-32,\ 8-4=4$: $\boxed{(x+8)(x-4)}$`],
     ["Factor completely", R`5x^2 - 20`, "GCF, then two terms: difference of squares", R`$5(x^2-4) = \boxed{5(x-2)(x+2)}$`],
-    ["Factor completely", R`2x^2 - 5x - 12`, "Three terms, $a \\ne 1$: Multiply → Add → Split → Group", R`$ac=-24$; $-8$ and $+3$. $2x^2-8x+3x-12 = 2x(x-4)+3(x-4) = \boxed{(2x+3)(x-4)}$`],
+    ["Factor completely", R`2x^2 - 5x - 12`, "Three terms, $a \\ne 1$: X → Box", R`X: $ac = -24$, $b = -5$: $-8$ and $+3$. Box rows $2x$ and $+3$, columns $x$ and $-4$: $\boxed{(2x+3)(x-4)}$`],
     ["Factor completely", R`x^4 - 1`, "Two terms: difference of squares, then again", R`$(x^2-1)(x^2+1) = \boxed{(x-1)(x+1)(x^2+1)}$`],
     ["Factor completely", R`64 + y^3`, "Two terms, both cubes: sum of cubes", R`$\boxed{(y+4)(y^2-4y+16)}$`],
     ["Factor completely", R`4x^3 + 8x^2 - 9x - 18`, "Four terms: grouping, then difference of squares", R`$4x^2(x+2) - 9(x+2) = (x+2)(4x^2-9) = \boxed{(x+2)(2x-3)(2x+3)}$`]
@@ -1316,158 +1323,141 @@ var BANK = [
 <tr><td><strong>Pick the pair</strong>: Same signs, so we need a pair whose <em>sum</em> is $7$: $4 + 3$, both negative.</td><td>$\boxed{-4 \text{ and } -3}$</td></tr>
 <tr><td><strong>Fill in</strong>, then FOIL to check</td><td>$$\boxed{(x-4)(x-3)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`9x^2+9x-10`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`9x^2+9x-10`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+9$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$9(-10) = \boxed{-90}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-90$ and add to $+9$. List the factor pairs of $90$ and find the one that differs by $9$</td><td><div class="vpairs"><div class="pr">$1\cdot90$</div><div class="pr">$2\cdot45$</div><div class="pr">$3\cdot30$</div><div class="pr">$5\cdot18$</div><div class="pr hit">$6\cdot15$ &#10003;</div><div class="pr">$9\cdot10$</div></div>$\boxed{+15 \text{ and } -6}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$9x^2+15x-6x-10$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(9x^2+15x) + (-6x-10)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(3x+5) -2(3x+5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x+5)(3x-2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$9(-10) = -90$ <div class="xd"><span class="chip xd-t">$-90$</span><span class="chip xd-b">$9$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-90$ and add to $+9$. List the factor pairs of $90$ top to bottom and find the one that differs by $9$</td><td><div class="vpairs"><div class="pr">$1\cdot90$</div><div class="pr">$2\cdot45$</div><div class="pr">$3\cdot30$</div><div class="pr">$5\cdot18$</div><div class="pr hit">$6\cdot15$ &#10003;</div><div class="pr">$9\cdot10$</div></div><div class="xd"><span class="chip xd-t">$-90$</span><span class="chip xd-b">$9$</span><span class="chip xd-l">$+15$</span><span class="chip xd-r">$-6$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $9x^2$ top-left, $-10$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$9x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-10$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$9x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-10$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x-2)(3x+5)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`4x^2+12x+5`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`4x^2+12x+5`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$4(5) = \boxed{20}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $20$ and add to $+12$. List the factor pairs of $20$ and find the one that adds to $12$</td><td><div class="vpairs"><div class="pr">$1\cdot20$</div><div class="pr hit">$2\cdot10$ &#10003;</div><div class="pr">$4\cdot5$</div></div>$\boxed{+10 \text{ and } +2}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$4x^2+10x+2x+5$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(4x^2+10x) + (2x+5)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(2x+5) +1(2x+5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+5)(2x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$4(5) = 20$ <div class="xd"><span class="chip xd-t">$20$</span><span class="chip xd-b">$12$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $20$ and add to $+12$. List the factor pairs of $20$ top to bottom and find the one that adds to $12$</td><td><div class="vpairs"><div class="pr">$1\cdot20$</div><div class="pr hit">$2\cdot10$ &#10003;</div><div class="pr">$4\cdot5$</div></div><div class="xd"><span class="chip xd-t">$20$</span><span class="chip xd-b">$12$</span><span class="chip xd-l">$+10$</span><span class="chip xd-r">$+2$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $4x^2$ top-left, $+5$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$+10x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$+5$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$+10x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+2x$</span><span class="chip bx bc">$+5$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x+1)(2x+5)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`10x^2-x-21`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`10x^2-x-21`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-1$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$10(-21) = \boxed{-210}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-210$ and add to $-1$. List the factor pairs of $210$ and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot210$</div><div class="pr">$2\cdot105$</div><div class="pr">$3\cdot70$</div><div class="pr">$5\cdot42$</div><div class="pr">$6\cdot35$</div><div class="pr">$7\cdot30$</div><div class="pr">$10\cdot21$</div><div class="pr hit">$14\cdot15$ &#10003;</div></div>$\boxed{-15 \text{ and } +14}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$10x^2-15x+14x-21$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(10x^2-15x) + (14x-21)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$5x(2x-3) +7(2x-3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x-3)(5x+7)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$10(-21) = -210$ <div class="xd"><span class="chip xd-t">$-210$</span><span class="chip xd-b">$-1$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-210$ and add to $-1$. List the factor pairs of $210$ top to bottom and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot210$</div><div class="pr">$2\cdot105$</div><div class="pr">$3\cdot70$</div><div class="pr">$5\cdot42$</div><div class="pr">$6\cdot35$</div><div class="pr">$7\cdot30$</div><div class="pr">$10\cdot21$</div><div class="pr hit">$14\cdot15$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-210$</span><span class="chip xd-b">$-1$</span><span class="chip xd-l">$-15$</span><span class="chip xd-r">$+14$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $10x^2$ top-left, $-21$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$10x^2$</span><span class="chip bx bc">$-15x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+14x$</span><span class="chip bx bc">$-21$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bl">$5x$</span><span class="chip bx bc">$10x^2$</span><span class="chip bx bc">$-15x$</span><span class="chip bx bl">$+7$</span><span class="chip bx bc">$+14x$</span><span class="chip bx bc">$-21$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(5x+7)(2x-3)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`6x^2-17x+7`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`6x^2-17x+7`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is negative: both $-$.</td><td>$(\;\; - \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(7) = \boxed{42}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $42$ and add to $-17$. List the factor pairs of $42$ and find the one that adds to $17$</td><td><div class="vpairs"><div class="pr">$1\cdot42$</div><div class="pr">$2\cdot21$</div><div class="pr hit">$3\cdot14$ &#10003;</div><div class="pr">$6\cdot7$</div></div>$\boxed{-14 \text{ and } -3}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2-14x-3x+7$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2-14x) + (-3x+7)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(3x-7) -1(3x-7)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x-7)(2x-1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(7) = 42$ <div class="xd"><span class="chip xd-t">$42$</span><span class="chip xd-b">$-17$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $42$ and add to $-17$. List the factor pairs of $42$ top to bottom and find the one that adds to $17$</td><td><div class="vpairs"><div class="pr">$1\cdot42$</div><div class="pr">$2\cdot21$</div><div class="pr hit">$3\cdot14$ &#10003;</div><div class="pr">$6\cdot7$</div></div><div class="xd"><span class="chip xd-t">$42$</span><span class="chip xd-b">$-17$</span><span class="chip xd-l">$-14$</span><span class="chip xd-r">$-3$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $+7$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$-14x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-3x$</span><span class="chip bx bc">$+7$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$-7$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$-14x$</span><span class="chip bx bl">$-1$</span><span class="chip bx bc">$-3x$</span><span class="chip bx bc">$+7$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x-1)(3x-7)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`6x^2+23x+20`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`6x^2+23x+20`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(20) = \boxed{120}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $120$ and add to $+23$. List the factor pairs of $120$ and find the one that adds to $23$</td><td><div class="vpairs"><div class="pr">$1\cdot120$</div><div class="pr">$2\cdot60$</div><div class="pr">$3\cdot40$</div><div class="pr">$4\cdot30$</div><div class="pr">$5\cdot24$</div><div class="pr">$6\cdot20$</div><div class="pr hit">$8\cdot15$ &#10003;</div><div class="pr">$10\cdot12$</div></div>$\boxed{+15 \text{ and } +8}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2+15x+8x+20$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2+15x) + (8x+20)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(2x+5) +4(2x+5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+5)(3x+4)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(20) = 120$ <div class="xd"><span class="chip xd-t">$120$</span><span class="chip xd-b">$23$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $120$ and add to $+23$. List the factor pairs of $120$ top to bottom and find the one that adds to $23$</td><td><div class="vpairs"><div class="pr">$1\cdot120$</div><div class="pr">$2\cdot60$</div><div class="pr">$3\cdot40$</div><div class="pr">$4\cdot30$</div><div class="pr">$5\cdot24$</div><div class="pr">$6\cdot20$</div><div class="pr hit">$8\cdot15$ &#10003;</div><div class="pr">$10\cdot12$</div></div><div class="xd"><span class="chip xd-t">$120$</span><span class="chip xd-b">$23$</span><span class="chip xd-l">$+15$</span><span class="chip xd-r">$+8$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $+20$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+8x$</span><span class="chip bx bc">$+20$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl">$+4$</span><span class="chip bx bc">$+8x$</span><span class="chip bx bc">$+20$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x+4)(2x+5)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`4x^2-11x+6`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`4x^2-11x+6`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is negative: both $-$.</td><td>$(\;\; - \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$4(6) = \boxed{24}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $24$ and add to $-11$. List the factor pairs of $24$ and find the one that adds to $11$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr hit">$3\cdot8$ &#10003;</div><div class="pr">$4\cdot6$</div></div>$\boxed{-8 \text{ and } -3}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$4x^2-8x-3x+6$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(4x^2-8x) + (-3x+6)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$4x(x-2) -3(x-2)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x-2)(4x-3)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$4(6) = 24$ <div class="xd"><span class="chip xd-t">$24$</span><span class="chip xd-b">$-11$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $24$ and add to $-11$. List the factor pairs of $24$ top to bottom and find the one that adds to $11$</td><td><div class="vpairs"><div class="pr">$1\cdot24$</div><div class="pr">$2\cdot12$</div><div class="pr hit">$3\cdot8$ &#10003;</div><div class="pr">$4\cdot6$</div></div><div class="xd"><span class="chip xd-t">$24$</span><span class="chip xd-b">$-11$</span><span class="chip xd-l">$-8$</span><span class="chip xd-r">$-3$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $4x^2$ top-left, $+6$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$-8x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-3x$</span><span class="chip bx bc">$+6$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bl">$4x$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$-8x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bc">$-3x$</span><span class="chip bx bc">$+6$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(4x-3)(x-2)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`2x^2+3x-14`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`2x^2+3x-14`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+3$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$2(-14) = \boxed{-28}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-28$ and add to $+3$. List the factor pairs of $28$ and find the one that differs by $3$</td><td><div class="vpairs"><div class="pr">$1\cdot28$</div><div class="pr">$2\cdot14$</div><div class="pr hit">$4\cdot7$ &#10003;</div></div>$\boxed{+7 \text{ and } -4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$2x^2+7x-4x-14$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(2x^2+7x) + (-4x-14)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$x(2x+7) -2(2x+7)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+7)(x-2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$2(-14) = -28$ <div class="xd"><span class="chip xd-t">$-28$</span><span class="chip xd-b">$3$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-28$ and add to $+3$. List the factor pairs of $28$ top to bottom and find the one that differs by $3$</td><td><div class="vpairs"><div class="pr">$1\cdot28$</div><div class="pr">$2\cdot14$</div><div class="pr hit">$4\cdot7$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-28$</span><span class="chip xd-b">$3$</span><span class="chip xd-l">$+7$</span><span class="chip xd-r">$-4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $2x^2$ top-left, $-14$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$+7x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-14$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+7$</span><span class="chip bx bl">$x$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$+7x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-14$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(x-2)(2x+7)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`6x^2+5x-6`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`6x^2+5x-6`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+5$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(-6) = \boxed{-36}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-36$ and add to $+5$. List the factor pairs of $36$ and find the one that differs by $5$</td><td><div class="vpairs"><div class="pr">$1\cdot36$</div><div class="pr">$2\cdot18$</div><div class="pr">$3\cdot12$</div><div class="pr hit">$4\cdot9$ &#10003;</div><div class="pr">$6\cdot6$</div></div>$\boxed{+9 \text{ and } -4}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2+9x-4x-6$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2+9x) + (-4x-6)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(2x+3) -2(2x+3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+3)(3x-2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(-6) = -36$ <div class="xd"><span class="chip xd-t">$-36$</span><span class="chip xd-b">$5$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-36$ and add to $+5$. List the factor pairs of $36$ top to bottom and find the one that differs by $5$</td><td><div class="vpairs"><div class="pr">$1\cdot36$</div><div class="pr">$2\cdot18$</div><div class="pr">$3\cdot12$</div><div class="pr hit">$4\cdot9$ &#10003;</div><div class="pr">$6\cdot6$</div></div><div class="xd"><span class="chip xd-t">$-36$</span><span class="chip xd-b">$5$</span><span class="chip xd-l">$+9$</span><span class="chip xd-r">$-4$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $-6$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+9x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-6$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+9x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bc">$-4x$</span><span class="chip bx bc">$-6$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x-2)(2x+3)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`12x^2+7x+1`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`12x^2+7x+1`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$12(1) = \boxed{12}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $12$ and add to $+7$. List the factor pairs of $12$ and find the one that adds to $7$</td><td><div class="vpairs"><div class="pr">$1\cdot12$</div><div class="pr">$2\cdot6$</div><div class="pr hit">$3\cdot4$ &#10003;</div></div>$\boxed{+4 \text{ and } +3}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$12x^2+4x+3x+1$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(12x^2+4x) + (3x+1)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$4x(3x+1) +1(3x+1)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x+1)(4x+1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$12(1) = 12$ <div class="xd"><span class="chip xd-t">$12$</span><span class="chip xd-b">$7$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $12$ and add to $+7$. List the factor pairs of $12$ top to bottom and find the one that adds to $7$</td><td><div class="vpairs"><div class="pr">$1\cdot12$</div><div class="pr">$2\cdot6$</div><div class="pr hit">$3\cdot4$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$12$</span><span class="chip xd-b">$7$</span><span class="chip xd-l">$+4$</span><span class="chip xd-r">$+3$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $12x^2$ top-left, $+1$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+3x$</span><span class="chip bx bc">$+1$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bl">$4x$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bl">$+1$</span><span class="chip bx bc">$+3x$</span><span class="chip bx bc">$+1$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(4x+1)(3x+1)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`12x^2+29x+14`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`12x^2+29x+14`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$12(14) = \boxed{168}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $168$ and add to $+29$. List the factor pairs of $168$ and find the one that adds to $29$</td><td><div class="vpairs"><div class="pr">$1\cdot168$</div><div class="pr">$2\cdot84$</div><div class="pr">$3\cdot56$</div><div class="pr">$4\cdot42$</div><div class="pr">$6\cdot28$</div><div class="pr">$7\cdot24$</div><div class="pr hit">$8\cdot21$ &#10003;</div><div class="pr">$12\cdot14$</div></div>$\boxed{+21 \text{ and } +8}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$12x^2+21x+8x+14$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(12x^2+21x) + (8x+14)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(4x+7) +2(4x+7)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(4x+7)(3x+2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$12(14) = 168$ <div class="xd"><span class="chip xd-t">$168$</span><span class="chip xd-b">$29$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $168$ and add to $+29$. List the factor pairs of $168$ top to bottom and find the one that adds to $29$</td><td><div class="vpairs"><div class="pr">$1\cdot168$</div><div class="pr">$2\cdot84$</div><div class="pr">$3\cdot56$</div><div class="pr">$4\cdot42$</div><div class="pr">$6\cdot28$</div><div class="pr">$7\cdot24$</div><div class="pr hit">$8\cdot21$ &#10003;</div><div class="pr">$12\cdot14$</div></div><div class="xd"><span class="chip xd-t">$168$</span><span class="chip xd-b">$29$</span><span class="chip xd-l">$+21$</span><span class="chip xd-r">$+8$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $12x^2$ top-left, $+14$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$+21x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+8x$</span><span class="chip bx bc">$+14$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$4x$</span><span class="chip bx bl">$+7$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$+21x$</span><span class="chip bx bl">$+2$</span><span class="chip bx bc">$+8x$</span><span class="chip bx bc">$+14$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x+2)(4x+7)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`10x^2+9x-9`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`10x^2+9x-9`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+9$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$10(-9) = \boxed{-90}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-90$ and add to $+9$. List the factor pairs of $90$ and find the one that differs by $9$</td><td><div class="vpairs"><div class="pr">$1\cdot90$</div><div class="pr">$2\cdot45$</div><div class="pr">$3\cdot30$</div><div class="pr">$5\cdot18$</div><div class="pr hit">$6\cdot15$ &#10003;</div><div class="pr">$9\cdot10$</div></div>$\boxed{+15 \text{ and } -6}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$10x^2+15x-6x-9$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(10x^2+15x) + (-6x-9)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$5x(2x+3) -3(2x+3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+3)(5x-3)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$10(-9) = -90$ <div class="xd"><span class="chip xd-t">$-90$</span><span class="chip xd-b">$9$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-90$ and add to $+9$. List the factor pairs of $90$ top to bottom and find the one that differs by $9$</td><td><div class="vpairs"><div class="pr">$1\cdot90$</div><div class="pr">$2\cdot45$</div><div class="pr">$3\cdot30$</div><div class="pr">$5\cdot18$</div><div class="pr hit">$6\cdot15$ &#10003;</div><div class="pr">$9\cdot10$</div></div><div class="xd"><span class="chip xd-t">$-90$</span><span class="chip xd-b">$9$</span><span class="chip xd-l">$+15$</span><span class="chip xd-r">$-6$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $10x^2$ top-left, $-9$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$10x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-9$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bl">$5x$</span><span class="chip bx bc">$10x^2$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bl">$-3$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-9$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(5x-3)(2x+3)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`6x^2+23x+21`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`6x^2+23x+21`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(21) = \boxed{126}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $126$ and add to $+23$. List the factor pairs of $126$ and find the one that adds to $23$</td><td><div class="vpairs"><div class="pr">$1\cdot126$</div><div class="pr">$2\cdot63$</div><div class="pr">$3\cdot42$</div><div class="pr">$6\cdot21$</div><div class="pr">$7\cdot18$</div><div class="pr hit">$9\cdot14$ &#10003;</div></div>$\boxed{+14 \text{ and } +9}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2+14x+9x+21$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2+14x) + (9x+21)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(3x+7) +3(3x+7)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x+7)(2x+3)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(21) = 126$ <div class="xd"><span class="chip xd-t">$126$</span><span class="chip xd-b">$23$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $126$ and add to $+23$. List the factor pairs of $126$ top to bottom and find the one that adds to $23$</td><td><div class="vpairs"><div class="pr">$1\cdot126$</div><div class="pr">$2\cdot63$</div><div class="pr">$3\cdot42$</div><div class="pr">$6\cdot21$</div><div class="pr">$7\cdot18$</div><div class="pr hit">$9\cdot14$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$126$</span><span class="chip xd-b">$23$</span><span class="chip xd-l">$+14$</span><span class="chip xd-r">$+9$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $+21$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+14x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+9x$</span><span class="chip bx bc">$+21$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$+7$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+14x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bc">$+9x$</span><span class="chip bx bc">$+21$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x+3)(3x+7)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`9x^2+15x-14`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`9x^2+15x-14`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+15$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$9(-14) = \boxed{-126}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-126$ and add to $+15$. List the factor pairs of $126$ and find the one that differs by $15$</td><td><div class="vpairs"><div class="pr">$1\cdot126$</div><div class="pr">$2\cdot63$</div><div class="pr">$3\cdot42$</div><div class="pr hit">$6\cdot21$ &#10003;</div><div class="pr">$7\cdot18$</div><div class="pr">$9\cdot14$</div></div>$\boxed{+21 \text{ and } -6}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$9x^2+21x-6x-14$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(9x^2+21x) + (-6x-14)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(3x+7) -2(3x+7)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x+7)(3x-2)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$9(-14) = -126$ <div class="xd"><span class="chip xd-t">$-126$</span><span class="chip xd-b">$15$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-126$ and add to $+15$. List the factor pairs of $126$ top to bottom and find the one that differs by $15$</td><td><div class="vpairs"><div class="pr">$1\cdot126$</div><div class="pr">$2\cdot63$</div><div class="pr">$3\cdot42$</div><div class="pr hit">$6\cdot21$ &#10003;</div><div class="pr">$7\cdot18$</div><div class="pr">$9\cdot14$</div></div><div class="xd"><span class="chip xd-t">$-126$</span><span class="chip xd-b">$15$</span><span class="chip xd-l">$+21$</span><span class="chip xd-r">$-6$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $9x^2$ top-left, $-14$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$9x^2$</span><span class="chip bx bc">$+21x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-14$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$+7$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$9x^2$</span><span class="chip bx bc">$+21x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bc">$-6x$</span><span class="chip bx bc">$-14$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x-2)(3x+7)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`4x^2-3x-10`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`4x^2-3x-10`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-3$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$4(-10) = \boxed{-40}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-40$ and add to $-3$. List the factor pairs of $40$ and find the one that differs by $3$</td><td><div class="vpairs"><div class="pr">$1\cdot40$</div><div class="pr">$2\cdot20$</div><div class="pr">$4\cdot10$</div><div class="pr hit">$5\cdot8$ &#10003;</div></div>$\boxed{-8 \text{ and } +5}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$4x^2-8x+5x-10$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(4x^2-8x) + (5x-10)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$4x(x-2) +5(x-2)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x-2)(4x+5)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$4(-10) = -40$ <div class="xd"><span class="chip xd-t">$-40$</span><span class="chip xd-b">$-3$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-40$ and add to $-3$. List the factor pairs of $40$ top to bottom and find the one that differs by $3$</td><td><div class="vpairs"><div class="pr">$1\cdot40$</div><div class="pr">$2\cdot20$</div><div class="pr">$4\cdot10$</div><div class="pr hit">$5\cdot8$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-40$</span><span class="chip xd-b">$-3$</span><span class="chip xd-l">$-8$</span><span class="chip xd-r">$+5$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $4x^2$ top-left, $-10$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$-8x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+5x$</span><span class="chip bx bc">$-10$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$-2$</span><span class="chip bx bl">$4x$</span><span class="chip bx bc">$4x^2$</span><span class="chip bx bc">$-8x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bc">$+5x$</span><span class="chip bx bc">$-10$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(4x+5)(x-2)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`2x^2+13x+15`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`2x^2+13x+15`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$2(15) = \boxed{30}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $30$ and add to $+13$. List the factor pairs of $30$ and find the one that adds to $13$</td><td><div class="vpairs"><div class="pr">$1\cdot30$</div><div class="pr">$2\cdot15$</div><div class="pr hit">$3\cdot10$ &#10003;</div><div class="pr">$5\cdot6$</div></div>$\boxed{+10 \text{ and } +3}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$2x^2+10x+3x+15$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(2x^2+10x) + (3x+15)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(x+5) +3(x+5)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x+5)(2x+3)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$2(15) = 30$ <div class="xd"><span class="chip xd-t">$30$</span><span class="chip xd-b">$13$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $30$ and add to $+13$. List the factor pairs of $30$ top to bottom and find the one that adds to $13$</td><td><div class="vpairs"><div class="pr">$1\cdot30$</div><div class="pr">$2\cdot15$</div><div class="pr hit">$3\cdot10$ &#10003;</div><div class="pr">$5\cdot6$</div></div><div class="xd"><span class="chip xd-t">$30$</span><span class="chip xd-b">$13$</span><span class="chip xd-l">$+10$</span><span class="chip xd-r">$+3$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $2x^2$ top-left, $+15$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$+10x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+3x$</span><span class="chip bx bc">$+15$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$2x^2$</span><span class="chip bx bc">$+10x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bc">$+3x$</span><span class="chip bx bc">$+15$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x+3)(x+5)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`12x^2-x-20`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`12x^2-x-20`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $-1$, so the bigger one is $-$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$12(-20) = \boxed{-240}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-240$ and add to $-1$. List the factor pairs of $240$ and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot240$</div><div class="pr">$2\cdot120$</div><div class="pr">$3\cdot80$</div><div class="pr">$4\cdot60$</div><div class="pr">$5\cdot48$</div><div class="pr">$6\cdot40$</div><div class="pr">$8\cdot30$</div><div class="pr">$10\cdot24$</div><div class="pr">$12\cdot20$</div><div class="pr hit">$15\cdot16$ &#10003;</div></div>$\boxed{-16 \text{ and } +15}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$12x^2-16x+15x-20$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(12x^2-16x) + (15x-20)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$4x(3x-4) +5(3x-4)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x-4)(4x+5)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$12(-20) = -240$ <div class="xd"><span class="chip xd-t">$-240$</span><span class="chip xd-b">$-1$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-240$ and add to $-1$. List the factor pairs of $240$ top to bottom and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot240$</div><div class="pr">$2\cdot120$</div><div class="pr">$3\cdot80$</div><div class="pr">$4\cdot60$</div><div class="pr">$5\cdot48$</div><div class="pr">$6\cdot40$</div><div class="pr">$8\cdot30$</div><div class="pr">$10\cdot24$</div><div class="pr">$12\cdot20$</div><div class="pr hit">$15\cdot16$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-240$</span><span class="chip xd-b">$-1$</span><span class="chip xd-l">$-16$</span><span class="chip xd-r">$+15$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $12x^2$ top-left, $-20$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$-16x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bc">$-20$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$-4$</span><span class="chip bx bl">$4x$</span><span class="chip bx bc">$12x^2$</span><span class="chip bx bc">$-16x$</span><span class="chip bx bl">$+5$</span><span class="chip bx bc">$+15x$</span><span class="chip bx bc">$-20$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(4x+5)(3x-4)}$$</td></tr>
 </table>`},
-    {t:"q2", i:"Factor", p:R`6x^2+17x+12`, b:"Multiply → Add → Split → Group", s:R`<table class="steps masg">
+    {t:"q2", i:"Factor", p:R`6x^2+17x+12`, b:"X → Box", s:R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is positive and $b$ is positive: both $+$.</td><td>$(\;\; + \;\;)(\;\; + \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(12) = \boxed{72}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $72$ and add to $+17$. List the factor pairs of $72$ and find the one that adds to $17$</td><td><div class="vpairs"><div class="pr">$1\cdot72$</div><div class="pr">$2\cdot36$</div><div class="pr">$3\cdot24$</div><div class="pr">$4\cdot18$</div><div class="pr">$6\cdot12$</div><div class="pr hit">$8\cdot9$ &#10003;</div></div>$\boxed{+9 \text{ and } +8}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2+9x+8x+12$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2+9x) + (8x+12)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(2x+3) +4(2x+3)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(2x+3)(3x+4)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(12) = 72$ <div class="xd"><span class="chip xd-t">$72$</span><span class="chip xd-b">$17$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $72$ and add to $+17$. List the factor pairs of $72$ top to bottom and find the one that adds to $17$</td><td><div class="vpairs"><div class="pr">$1\cdot72$</div><div class="pr">$2\cdot36$</div><div class="pr">$3\cdot24$</div><div class="pr">$4\cdot18$</div><div class="pr">$6\cdot12$</div><div class="pr hit">$8\cdot9$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$72$</span><span class="chip xd-b">$17$</span><span class="chip xd-l">$+9$</span><span class="chip xd-r">$+8$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $+12$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+9x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$+8x$</span><span class="chip bx bc">$+12$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$2x$</span><span class="chip bx bl">$+3$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+9x$</span><span class="chip bx bl">$+4$</span><span class="chip bx bc">$+8x$</span><span class="chip bx bc">$+12$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x+4)(2x+3)}$$</td></tr>
 </table>`},
     {t:"sq", i:"Factor", p:R`81x^2 - 36y^2`, b:"Difference of squares", s:R`Both terms are perfect squares. $a = 9x,\ b = 6y$: $$\boxed{(9x-6y)(9x+6y)}$$`},
     {t:"sq", i:"Factor", p:R`49x^2 - 36`, b:"Difference of squares", s:R`Both terms are perfect squares. $a = 7x,\ b = 6$: $$\boxed{(7x-6)(7x+6)}$$`},
@@ -1520,23 +1510,21 @@ var EXTRA_B = [
 <tr><td><strong>Pick the pair</strong>: Same signs, so we need a pair whose <em>sum</em> is $10$: $7 + 3$.</td><td>$\boxed{+7 \text{ and } +3}$</td></tr>
 <tr><td><strong>Fill in</strong>, then FOIL to check</td><td>$$\boxed{(x+7)(x+3)}$$</td></tr>
 </table>`],
-    ["Factor", R`3x^2+5x-2`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`3x^2+5x-2`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+5$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$3(-2) = \boxed{-6}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-6$ and add to $+5$. List the factor pairs of $6$ and find the one that differs by $5$</td><td><div class="vpairs"><div class="pr hit">$1\cdot6$ &#10003;</div><div class="pr">$2\cdot3$</div></div>$\boxed{+6 \text{ and } -1}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$3x^2+6x-x-2$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(3x^2+6x) + (-x-2)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$3x(x+2) -1(x+2)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(x+2)(3x-1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$3(-2) = -6$ <div class="xd"><span class="chip xd-t">$-6$</span><span class="chip xd-b">$5$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-6$ and add to $+5$. List the factor pairs of $6$ top to bottom and find the one that differs by $5$</td><td><div class="vpairs"><div class="pr hit">$1\cdot6$ &#10003;</div><div class="pr">$2\cdot3$</div></div><div class="xd"><span class="chip xd-t">$-6$</span><span class="chip xd-b">$5$</span><span class="chip xd-l">$+6$</span><span class="chip xd-r">$-1$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $3x^2$ top-left, $-2$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$3x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-x$</span><span class="chip bx bc">$-2$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$x$</span><span class="chip bx bl">$+2$</span><span class="chip bx bl">$3x$</span><span class="chip bx bc">$3x^2$</span><span class="chip bx bc">$+6x$</span><span class="chip bx bl">$-1$</span><span class="chip bx bc">$-x$</span><span class="chip bx bc">$-2$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(3x-1)(x+2)}$$</td></tr>
 </table>`],
-    ["Factor", R`6x^2+x-2`, "Multiply → Add → Split → Group", R`<table class="steps masg">
+    ["Factor", R`6x^2+x-2`, "X → Box", R`<table class="steps xbox">
 <tr><td><strong>Signs</strong>: $ac$ is negative: one $+$ and one $-$. The bigger number takes the sign of $b$ ($b$ is $+1$, so the bigger one is $+$).</td><td>$(\;\; + \;\;)(\;\; - \;\;)$</td></tr>
-<tr><td><strong>Multiply</strong> $a \cdot c$</td><td>$6(-2) = \boxed{-12}$</td></tr>
-<tr><td><strong>Add</strong>: two numbers that multiply to $-12$ and add to $+1$. List the factor pairs of $12$ and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot12$</div><div class="pr">$2\cdot6$</div><div class="pr hit">$3\cdot4$ &#10003;</div></div>$\boxed{+4 \text{ and } -3}$</td></tr>
-<tr><td><strong>Split</strong> the middle term</td><td>$6x^2+4x-3x-2$</td></tr>
-<tr><td><strong>Group</strong>: pair them <span class="grp-link">(<a href="#" onclick="goTab('grp');return false;">stuck here? See Grouping</a>)</span></td><td>$(6x^2+4x) + (-3x-2)$</td></tr>
-<tr><td>Factor the GCF out of each pair</td><td>$2x(3x+2) -1(3x+2)$</td></tr>
-<tr><td>The parentheses match: factor it out, and what's left from each pair goes in the second parentheses</td><td>$$\boxed{(3x+2)(2x-1)}$$</td></tr>
+<tr><td><strong>The X</strong>: $a \cdot c$ on top, $b$ on the bottom</td><td>$6(-2) = -12$ <div class="xd"><span class="chip xd-t">$-12$</span><span class="chip xd-b">$1$</span><span class="chip xd-l blank">$\square$</span><span class="chip xd-r blank">$\square$</span></div></td></tr>
+<tr><td><strong>The sides</strong>: two numbers that multiply to $-12$ and add to $+1$. List the factor pairs of $12$ top to bottom and find the one that differs by $1$</td><td><div class="vpairs"><div class="pr">$1\cdot12$</div><div class="pr">$2\cdot6$</div><div class="pr hit">$3\cdot4$ &#10003;</div></div><div class="xd"><span class="chip xd-t">$-12$</span><span class="chip xd-b">$1$</span><span class="chip xd-l">$+4$</span><span class="chip xd-r">$-3$</span></div></td></tr>
+<tr><td><strong>The box</strong>: $6x^2$ top-left, $-2$ bottom-right. The two side numbers, each times $x$, take the other two corners</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bl blank">$\square$</span><span class="chip bx bc">$-3x$</span><span class="chip bx bc">$-2$</span></div></td></tr>
+<tr><td><strong>Labels</strong>: the GCF of the top row goes on its left. Divide across for the column labels. The bottom row's label has to work for both of its cells</td><td><div class="boxg"><span class="bx be"></span><span class="chip bx bl">$3x$</span><span class="chip bx bl">$+2$</span><span class="chip bx bl">$2x$</span><span class="chip bx bc">$6x^2$</span><span class="chip bx bc">$+4x$</span><span class="chip bx bl">$-1$</span><span class="chip bx bc">$-3x$</span><span class="chip bx bc">$-2$</span></div></td></tr>
+<tr><td><strong>Read it off</strong>: row labels make one factor, column labels the other. FOIL the middle term to check</td><td>$$\boxed{(2x-1)(3x+2)}$$</td></tr>
 </table>`]
 ];
 var EXTRA_C = [
@@ -1751,30 +1739,52 @@ VIZ.vq1 = { examples: [
   } };
 
 VIZ.vq2 = { examples: [
-  { a: 6, b: -7, c: -3, ac: -18, pairs: ['1\\cdot18', '2\\cdot9', '3\\cdot6'], pick: 1, m: '-9', n: '+2', s1: '+', s2: '-',
+  { a: 6, b: -7, c: -3, ac: -18, pairs: ['1\\cdot18', '2\\cdot9', '3\\cdot6'], pick: 1, m: '-9', n: '+2',
+    r1: '3x', c1: '2x', c2: '-3', r2: '+1',
     capS: '$ac = 6(-3) = -18$ is negative: one $+$ and one $-$.', capP: 'Need a <em>difference</em> of $7$: $9 - 2$. Bigger one takes the sign of $b = -7$: $-9$ and $+2$.',
     grp: { terms: ['6x^2', '-9x', '+2x', '-3'], g1: '3x', g2: '1', sg: '+', u: '2x-3' } },
-  { a: 8, b: 2, c: -3, ac: -24, pairs: ['1\\cdot24', '2\\cdot12', '3\\cdot8', '4\\cdot6'], pick: 3, m: '+6', n: '-4', s1: '+', s2: '-',
+  { a: 8, b: 2, c: -3, ac: -24, pairs: ['1\\cdot24', '2\\cdot12', '3\\cdot8', '4\\cdot6'], pick: 3, m: '+6', n: '-4',
+    r1: '2x', c1: '4x', c2: '+3', r2: '-1',
     capS: '$ac = 8(-3) = -24$ is negative: one $+$ and one $-$.', capP: 'Need a <em>difference</em> of $2$: $6 - 4$. Bigger one takes the sign of $b = +2$: $+6$ and $-4$.',
     grp: { terms: ['8x^2', '+6x', '-4x', '-3'], g1: '2x', g2: '1', sg: '-', u: '4x+3' } },
-  { a: 2, b: 7, c: 3, ac: 6, pairs: ['1\\cdot6', '2\\cdot3'], pick: 0, m: '+6', n: '+1', s1: '+', s2: '+',
+  { a: 2, b: 7, c: 3, ac: 6, pairs: ['1\\cdot6', '2\\cdot3'], pick: 0, m: '+6', n: '+1',
+    r1: '2x', c1: 'x', c2: '+3', r2: '+1',
     capS: '$ac = 2(3) = 6$ is positive and $b = +7$ is positive: both $+$.', capP: 'Need a <em>sum</em> of $7$: $6 + 1$.',
     grp: { terms: ['2x^2', '+6x', '+x', '+3'], g1: '2x', g2: '1', sg: '+', u: 'x+3' } } ],
-  build: function(e, useU) {
+  build: function(e, useSplit) {
     var at = e.a + 'x^2', bt = (e.b > 0 ? '+' : '') + e.b + 'x', ct = (e.c > 0 ? '+' : '') + e.c;
+    var mx = (e.m === '+1' ? '+' : e.m === '-1' ? '-' : e.m) + 'x', nx = (e.n === '+1' ? '+' : e.n === '-1' ? '-' : e.n) + 'x';
+    var dim = function() { return [T('t1', at, 'dimtok', ['t1']), T('t2', bt, 'dimtok', ['t2']), T('t3', ct, 'dimtok', ['t3']), NOTE('&nbsp;')]; };
     var L = [];
-    L.push({ items: [T('t1', at), T('t2', bt), T('t3', ct)], cap: '<p><strong>Three terms, leading coefficient $' + e.a + '$.</strong> Same game as $x^2 + bx + c$, with one extra move at the front.</p>' });
-    L.push({ items: [T('t1', at, 'dimtok', ['t1']), T('t2', bt, 'dimtok', ['t2']), T('t3', ct, 'dimtok', ['t3']), NOTE('&nbsp;'), P([T('m', SQ, 'blank'), OP(e.s1), T('m2', SQ, 'blank')]), P([T('n', SQ, 'blank'), OP(e.s2), T('n2', SQ, 'blank')])],
-             cap: '<p><strong>Signs first.</strong> ' + e.capS + '</p>' });
-    L.push({ items: [NOTE('Multiply'), T('A', String(e.a), 'gcf', ['t1']), OP('\\cdot'), T('C', String(e.c), 'gcf', ['t3']), OP('='), T('AC', String(e.ac), 'bin')],
-             cap: '<p><strong>Multiply $a \\cdot c$.</strong> The leading coefficient and the last term come out and multiply.</p>' });
+    L.push({ items: [T('t1', at), T('t2', bt), T('t3', ct)], cap: '<p><strong>Three terms, leading coefficient $' + e.a + '$.</strong> Two moves: the X finds two numbers, the box turns them into the factors.</p>' });
+    L.push({ items: dim().concat([{ xd: { t: T('AC', String(e.ac), 'bin', ['t1', 't3']), b: T('B', String(e.b), 'bin', ['t2']), l: T('m', SQ, 'blank'), r: T('n', SQ, 'blank') } }]),
+             cap: '<p><strong>Draw the X.</strong> $a \\cdot c$ goes on top, $b$ goes on the bottom. The two sides must multiply to the top and add to the bottom. ' + e.capS + '</p>' });
     var pr = []; e.pairs.forEach(function(p, i) { pr.push(T('pr' + i, p, i === e.pick ? 'bin' : 'pair', ['AC'])); });
-    L.push({ items: [NOTE('Add'), T('AC', String(e.ac), 'bin', ['AC']), NOTE('factor pairs of ' + Math.abs(e.ac) + ':'), COL(pr)],
-             cap: '<p><strong>Add.</strong> Factor $' + Math.abs(e.ac) + '$ into pairs and find the pair that combines to $b = ' + e.b + '$. ' + e.capP + '</p>' });
-    L.push({ items: [T('t1', at), T('mx', e.m + 'x', 'bin', ['pr' + e.pick]), T('nx', e.n + 'x', 'bin', ['pr' + e.pick]), T('t3', ct)],
-             cap: '<p><strong>Split the middle term.</strong> $' + bt + '$ becomes $' + e.m + 'x ' + e.n + 'x$: same total, but now there are four terms.</p>' });
-    var g = e.grp; g.ids = ['t1', 'mx', 'nx', 't3'];
-    return linesGrouping(g, useU, L);
+    L.push({ items: dim().concat([{ xd: { t: T('AC', String(e.ac), 'bin', ['AC']), b: T('B', String(e.b), 'bin', ['B']), l: T('m', SQ, 'blank'), r: T('n', SQ, 'blank') } }, NOTE('factor pairs of ' + Math.abs(e.ac) + ':'), COL(pr)]),
+             cap: '<p><strong>List the factor pairs of $' + Math.abs(e.ac) + '$</strong> top to bottom, starting from $1$, so none get skipped. One of them combines to $b = ' + e.b + '$.</p>' });
+    L.push({ items: dim().concat([{ xd: { t: T('AC', String(e.ac), 'bin', ['AC']), b: T('B', String(e.b), 'bin', ['B']), l: T('m', e.m, 'bin pulse', ['pr' + e.pick]), r: T('n', e.n, 'bin pulse', ['pr' + e.pick]) } }]),
+             cap: '<p><strong>Fill in the sides.</strong> ' + e.capP + '</p>' });
+    if (useSplit) {
+        L.push({ items: [T('t1', at), T('mx', mx, 'bin', ['m']), T('nx', nx, 'bin', ['n']), T('t3', ct)],
+                 cap: '<p><strong>Split the middle term.</strong> $' + bt + '$ becomes $' + mx + ' ' + nx + '$: same total, but now there are four terms, and grouping takes it from here.</p>' });
+        var g = e.grp; g.ids = ['t1', 'mx', 'nx', 't3'];
+        return linesGrouping(g, false, L);
+    }
+    var B = function(c1, c2, r1, r2, f) {
+        return { box: { c1: c1, c2: c2, r1: r1, r2: r2,
+                        tl: T('tl', at, 'bc', f ? ['t1'] : ['tl']), tr: T('tr', mx, 'bc', f ? ['m'] : ['tr']),
+                        bl: T('bl', nx, 'bc', f ? ['n'] : ['bl']), br: T('br', ct, 'bc', f ? ['t3'] : ['br']) } };
+    };
+    L.push({ items: [B(T('c1', SQ, 'blank'), T('c2', SQ, 'blank'), T('r1', SQ, 'blank'), T('r2', SQ, 'blank'), true)],
+             cap: '<p><strong>Build the box.</strong> $' + at + '$ goes top-left and $' + ct + '$ bottom-right: that\'s the original first and last term. The X\'s two numbers, each times $x$, take the other two corners. Add up the four cells and you get the original back.</p>' });
+    L.push({ items: [B(T('c1', e.c1, 'gcf', ['tl']), T('c2', e.c2, 'gcf', ['tr']), T('r1', e.r1, 'gcf', ['tl', 'tr']), T('r2', SQ, 'blank'), false)],
+             cap: '<p><strong>Label the top row.</strong> The GCF of $' + at + '$ and $' + mx + '$ is $' + e.r1 + '$: it goes on the left. Divide each cell by it to get the two column labels on top.</p>' });
+    L.push({ items: [B(T('c1', e.c1, 'gcf', ['c1']), T('c2', e.c2, 'gcf', ['c2']), T('r1', e.r1, 'gcf', ['r1']), T('r2', e.r2, 'gcf pulse', ['bl', 'br']), false)],
+             cap: '<p><strong>Label the bottom row.</strong> $' + nx + ' \\div ' + e.c1 + ' = ' + e.r2 + '$, and $' + ct + ' \\div ' + e.c2 + ' = ' + e.r2 + '$ too. Both cells agree, so the label is $' + e.r2 + '$. If they ever disagree, a sign slipped in the X.</p>' });
+    var r2s = e.r2.charAt(0), r2a = e.r2.slice(1), c2s = e.c2.charAt(0), c2a = e.c2.slice(1);
+    L.push({ items: [P([T('f1', e.r1, 'final', ['r1']), OP(r2s), T('f2', r2a, 'final', ['r2'])]), P([T('f3', e.c1, 'final', ['c1']), OP(c2s), T('f4', c2a, 'final', ['c2'])])],
+             cap: '<p><strong>Read it off.</strong> The row labels make one factor, the column labels make the other. FOIL the middle term to check: it should come back as $' + bt + '$.</p>' });
+    return L;
   } };
 
 VIZ.vpat = { examples: [
@@ -1877,6 +1887,8 @@ function itemsHTML(items) {
         if (it.col) return '<span class="vcol">' + itemsHTML(it.items) + '</span>';
         if (it.group) return '<span class="grp"><span class="grp-lbl">' + it.label + '</span>' + itemsHTML(it.items) + '</span>';
         if (it.paren) return '<span class="paren ' + it.cls + '"><span class="pmark">(</span>' + itemsHTML(it.items) + '<span class="pmark">)</span></span>';
+        if (it.xd) return '<span class="xd"><span class="xd-t">' + tokHTML(it.xd.t) + '</span><span class="xd-b">' + tokHTML(it.xd.b) + '</span><span class="xd-l">' + tokHTML(it.xd.l) + '</span><span class="xd-r">' + tokHTML(it.xd.r) + '</span></span>';
+        if (it.box) { var b = it.box; return '<span class="boxg"><span class="bx be"></span>' + [b.c1, b.c2, b.r1, b.tl, b.tr, b.r2, b.bl, b.br].map(function(t) { t.cls = 'bx ' + (t.cls || '').replace('bx', '').trim(); return tokHTML(t); }).join('') + '</span>'; }
         return tokHTML(it);
     }).join('');
 }
@@ -1955,7 +1967,7 @@ function vizPlay(id) {
 }
 /* ── sprint: filtered random draw from BANK ── */
 var sprintTimer = null, sprintStart = 0, sprintDrawn = [];
-var TYPE_NAME = { gcf: 'GCF', group: 'Grouping', q1: 'x² + bx + c', q2: 'ax² + bx + c', sq: 'Difference of squares', cu: 'Cubes' };
+var TYPE_NAME = { gcf: 'GCF', group: 'Grouping', q1: 'x² + bx + c', q2: 'ax² + bx + c (X → Box)', sq: 'Difference of squares', cu: 'Cubes' };
 function sprintTypes() { return Array.from(document.querySelectorAll('.sprint-filters input:checked')).map(function(i) { return i.dataset.t; }); }
 function drawSprint() {
     var types = sprintTypes(), c = document.getElementById('sprint-problems');
