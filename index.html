@@ -169,6 +169,11 @@ section.block { padding: 64px 0 24px; }
 .subject-body { padding: 4px 20px 20px; border-top: 1px dashed var(--line); }
 .topic-label { font-size: 13.5px; font-weight: 600; color: var(--moss); margin: 18px 0 10px; }
 .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.best { margin: 0 0 26px; padding: 16px 18px 18px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; }
+.best .best-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.best .best-title { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--moss); }
+.best .best-note { font-size: 12.5px; color: var(--muted); }
+.best .best-note b { color: var(--text); font-weight: 600; }
 @media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
 .show-more { margin: 16px 0 0; }
 .empty { background: var(--white); border: 1px dashed var(--line); border-radius: var(--radius); padding: 28px; color: var(--muted); text-align: center; margin-top: 16px; }
@@ -269,6 +274,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
             <span id="result-count"></span>
             <span class="expand"><button type="button" id="expand-all">Expand all</button><button type="button" id="collapse-all">Collapse all</button></span>
         </div>
+        <div id="best"></div>
         <div id="results"></div>
     </div>
 </section>
@@ -395,7 +401,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
     }
     function writeHash() {
         var ps = new URLSearchParams();
-        if (state.q) ps.set('q', state.q);
+        if (state.q.trim()) ps.set('q', state.q.trim());
         if (state.subject) ps.set('subject', state.subject);
         if (state.format) ps.set('format', state.format);
         if (state.levels.length) ps.set('level', state.levels.join(','));
@@ -408,19 +414,55 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
     function filtering() { return !!(state.q || state.subject || state.format || state.levels.length || state.exams.length || state.content.length); }
 
     /* ---------- matching ---------- */
-    function matches(r) {
-        if (state.subject && r.subject !== state.subject && SUBJ[r.subject].area !== state.subject) return false;
-        if (state.format && r.format !== state.format) return false;
-        if (state.levels.length && !state.levels.some(function (l) { return r.levels.indexOf(l) !== -1; })) return false;
-        if (state.content.length && state.content.indexOf(r.content) === -1) return false;
-        if (state.exams.length && !(r.exams || []).some(function (x) { return state.exams.indexOf(x) !== -1; })) return false;
-        if (state.q) {
-            var hay = (r.title + ' ' + r.description + ' ' + r.topic + ' ' + r.tags.join(' ') + ' ' + SUBJ[r.subject].name + ' ' + r.levels.join(' ') + ' ' + r.format + ' ' + (r.exams || []).join(' ')).toLowerCase();
-            var terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
-            if (!terms.every(function (t) { return hay.indexOf(t) !== -1; })) return false;
-        }
-        return true;
+    /* The page-content index (search-index.js) is fetched the first time someone searches,
+       so the first paint never waits for it. Until it arrives, search works on the catalog
+       text alone and re-runs by itself once the index lands. */
+    var IDX = null, idxState = 'idle';
+    function ensureIndex() {
+        if (idxState !== 'idle') return;
+        idxState = 'loading';
+        var s = document.createElement('script');
+        s.src = 'search-index.js';
+        s.onload = function () { IDX = window.SEARCH_INDEX || {}; idxState = 'ready'; if (state.q) renderResults(); };
+        s.onerror = function () { idxState = 'failed'; };   // keep searching the catalog text
+        document.head.appendChild(s);
     }
+    function queryTerms() { return state.q.trim().toLowerCase().split(/\s+/).filter(Boolean); }
+    function wordHit(hay, term) {
+        if (!hay) return false;
+        var i = hay.indexOf(term);
+        while (i !== -1) { if (i === 0 || hay.charAt(i - 1) === ' ') return true; i = hay.indexOf(term, i + 1); }
+        return false;
+    }
+    /* 0 means "not a result". Higher is a better match: the title beats the catalog text,
+       which beats a heading inside the page, which beats ordinary prose. */
+    function score(r) {
+        if (state.subject && r.subject !== state.subject && SUBJ[r.subject].area !== state.subject) return 0;
+        if (state.format && r.format !== state.format) return 0;
+        if (state.levels.length && !state.levels.some(function (l) { return r.levels.indexOf(l) !== -1; })) return 0;
+        if (state.content.length && state.content.indexOf(r.content) === -1) return 0;
+        if (state.exams.length && !(r.exams || []).some(function (x) { return state.exams.indexOf(x) !== -1; })) return 0;
+        var terms = queryTerms();
+        if (!terms.length) return 1;
+        var title = r.title.toLowerCase();
+        var meta = (r.description + ' ' + r.topic + ' ' + r.tags.join(' ') + ' ' + SUBJ[r.subject].name + ' '
+                    + r.levels.join(' ') + ' ' + r.format + ' ' + (r.exams || []).join(' ')).toLowerCase();
+        var doc = (IDX && IDX[r.id]) || null;
+        var total = 0, deep = false;
+        for (var i = 0; i < terms.length; i++) {
+            var term = terms[i], s = 0;
+            if (title.indexOf(term) !== -1) s += 100;
+            if (meta.indexOf(term) !== -1) s += 40;
+            if (doc) {
+                if (wordHit(doc.k, term)) s += 20;
+                else if (wordHit(doc.b, term)) { s += 6; deep = true; }
+            }
+            if (!s) return 0;                 // every word in the query has to land somewhere
+            total += s;
+        }
+        return deep && total <= 6 * terms.length ? total : total + 1;   // nudge non-content matches ahead of ties
+    }
+    function matches(r) { return score(r) > 0; }
 
     /* ---------- cards ---------- */
     function relLink(id) {
@@ -539,18 +581,20 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
         key.appendChild(el('span', { 'class': 'k', html: levelGlyph(1) + 'the dot marks the academic level on the curve, from Foundations to Graduate' }));
         C.content_types.forEach(function (c) { key.appendChild(el('span', { 'class': 'k', html: ICON[c.key] + c.label + ': ' + c.blurb.toLowerCase() })); });
 
-        document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value.trim(); update(); });
+        document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value; update(); });
         var hf = document.getElementById('hero-search'), hq = document.getElementById('hq');
-        hq.addEventListener('input', function (e) { state.q = e.target.value.trim(); update(false); });
-        hf.addEventListener('submit', function (e) { e.preventDefault(); state.q = hq.value.trim(); update(); document.getElementById('browse').scrollIntoView(); document.getElementById('q').focus({ preventScroll: true }); });
+        hq.addEventListener('input', function (e) { state.q = e.target.value; update(false); });
+        hf.addEventListener('submit', function (e) { e.preventDefault(); state.q = hq.value; update(); document.getElementById('browse').scrollIntoView(); document.getElementById('q').focus({ preventScroll: true }); });
         fs.addEventListener('change', function (e) { state.subject = e.target.value; update(); });
         ff.addEventListener('change', function (e) { state.format = e.target.value; update(); });
         document.getElementById('expand-all').addEventListener('click', function () { C.subjects.forEach(function (s) { open[s.key] = true; }); renderResults(); });
         document.getElementById('collapse-all').addEventListener('click', function () { C.subjects.forEach(function (s) { open[s.key] = false; }); renderResults(); });
     }
     function syncToolbar() {
-        document.getElementById('q').value = state.q;
-        if (document.activeElement !== document.getElementById('hq')) document.getElementById('hq').value = state.q;
+        /* Never write back into the box being typed in: doing so used to eat spaces. */
+        var qi = document.getElementById('q'), hqi = document.getElementById('hq');
+        if (document.activeElement !== qi) qi.value = state.q;
+        if (document.activeElement !== hqi) hqi.value = state.q;
         document.getElementById('f-subject').value = state.subject;
         document.getElementById('f-format').value = state.format;
         document.querySelectorAll('[data-level]').forEach(function (b) { b.setAttribute('aria-pressed', state.levels.indexOf(b.getAttribute('data-level')) !== -1 ? 'true' : 'false'); });
@@ -567,6 +611,7 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
     function renderResults() {
         var root = document.getElementById('results'); root.innerHTML = '';
         var hits = R.filter(matches); var total = hits.length;
+        renderBest(hits);
         document.getElementById('result-count').textContent = filtering()
             ? 'Showing ' + total + ' of ' + R.length + ' resources'
             : R.length + ' resources across ' + C.subjects.filter(function (s) { return count(function (r) { return r.subject === s.key; }); }).length + ' subjects';
@@ -608,7 +653,31 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
         });
     }
 
-    function update(hash) { syncToolbar(); if (hash !== false) writeHash(); renderResults(); }
+    /* With a search term, lead with the strongest matches so a concept turns up a page even
+       when its title says nothing about that concept. */
+    function renderBest(hits) {
+        var box = document.getElementById('best'); box.innerHTML = '';
+        if (!state.q.trim() || !hits.length) return;
+        var ranked = hits.map(function (r) { return { r: r, s: score(r) }; })
+                         .sort(function (a, b) { return b.s - a.s || a.r.title.localeCompare(b.r.title); });
+        var note = idxState === 'ready'
+            ? 'Searching titles, tags and the text inside every sheet.'
+            : (idxState === 'failed' ? 'Searching titles and tags.' : 'Searching titles and tags; loading page text\u2026');
+        var kids = [el('div', { 'class': 'best-head' }, [
+            el('span', { 'class': 'best-title', text: hits.length > 4 ? 'Best matches' : 'Matches' }),
+            el('span', { 'class': 'best-note', text: note })
+        ])];
+        /* Four or fewer hits are all visible in the list below, so showing them again here
+           would just be noise: the note alone explains why they turned up. */
+        if (hits.length > 4) {
+            var grid = el('div', { 'class': 'cards' });
+            ranked.slice(0, 4).forEach(function (x) { grid.appendChild(card(x.r, { subject: true })); });
+            kids.push(grid);
+        }
+        box.appendChild(el('div', { 'class': 'best' }, kids));
+    }
+
+    function update(hash) { if (state.q.trim()) ensureIndex(); syncToolbar(); if (hash !== false) writeHash(); renderResults(); }
 
     drawHeroCurve(); renderTiles(); renderFeatured(); renderToolbar();
     var rm = location.hash.match(/^#r=(.+)$/);

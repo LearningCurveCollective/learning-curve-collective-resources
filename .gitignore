@@ -6,3 +6,5 @@ Thumbs.db
 _build/extract.json
 _build/skeleton.json
 index.v1.html
+
+__pycache__/
