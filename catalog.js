@@ -2205,7 +2205,8 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "practice",
    "builds_on": [
-    "test-prep--sat--sat-math-1-linear-equations"
+    "test-prep--sat--sat-math-1-linear-equations",
+    "algebra--factoring-worksheet"
    ]
   },
   {
