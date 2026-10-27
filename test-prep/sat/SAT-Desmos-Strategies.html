@@ -675,7 +675,7 @@ table.ref tr:last-child td { border-bottom: none; }
         <button class="tab-button" data-group="core" onclick="switchTab('fillin', this)">Formatting Your Answers</button>
         <button class="tab-button" data-group="core" onclick="switchTab('formulas', this)">Formulas</button>
         <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Practice</button>
-        <button class="tab-button" data-group="practice" onclick="switchTab('gauntlet', this)">&#9889; SAT Gauntlet</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('gauntlet', this)">&#9889; SAT-Style Practice</button>
         </div>
     </div>
 
@@ -1532,7 +1532,7 @@ table.ref tr:last-child td { border-bottom: none; }
     <div id="tab-gauntlet" class="tab-content">
         <div class="section-header">
             <div class="section-number">&#9889;</div>
-            <h2>SAT Gauntlet</h2>
+            <h2>SAT-Style Practice</h2>
         </div>
         <div class="card" style="border-left-color: #8B5E3C;" id="g-intro">
             <p>Fifteen questions written to the digital SAT's formats and content areas (word problems, data tables, function notation, equations with constants), five easy, five medium, five hard, and every one of them faster with Desmos than without. Part of the skill is deciding <em>what</em> to type. There are <strong>no Load buttons here</strong>: open the calculator yourself (bottom-right) and type the equations in, exactly as you will on test day. A timer runs; the real test gives you about <strong>1 minute 35 seconds</strong> per Math question.</p>
@@ -1541,7 +1541,7 @@ table.ref tr:last-child td { border-bottom: none; }
                 <span class="order-label">Order:</span>
                 <button class="order-btn active" id="g-ord-tier" onclick="gSetOrder('tier')">Easy to hard</button>
                 <button class="order-btn" id="g-ord-shuf" onclick="gSetOrder('shuf')">Shuffled</button>
-                <button class="fp-check" style="margin-left:auto;" onclick="gStart()">Start the gauntlet &rarr;</button>
+                <button class="fp-check" style="margin-left:auto;" onclick="gStart()">Start the practice set &rarr;</button>
             </div>
         </div>
         <div id="g-stage" style="display:none;">
@@ -2085,7 +2085,7 @@ function gFinish() {
     var byTier = { easy: [0, 0], medium: [0, 0], hard: [0, 0] }, total = 0, right = 0, secs = 0;
     G.results.forEach(function(r){ var t = GQ[r.qi].tier; byTier[t][1]++; if (r.ok) { byTier[t][0]++; right++; } total++; secs += r.secs; });
     var misses = G.results.filter(function(r){ return !r.ok; });
-    var h = '<div class="card" style="border-left-color: #8B5E3C;"><div class="section-header" style="margin-top:0;"><div class="section-number">&#10003;</div><h2>Gauntlet results</h2></div>';
+    var h = '<div class="card" style="border-left-color: #8B5E3C;"><div class="section-header" style="margin-top:0;"><div class="section-number">&#10003;</div><h2>Practice results</h2></div>';
     h += '<div class="g-sum-grid"><div class="g-sum-tile"><div class="big">' + right + ' / ' + total + '</div><div class="lab">Overall</div></div>';
     ['easy', 'medium', 'hard'].forEach(function(t){ h += '<div class="g-sum-tile ' + t + '"><div class="big">' + byTier[t][0] + ' / ' + byTier[t][1] + '</div><div class="lab">' + t + '</div></div>'; });
     h += '<div class="g-sum-tile"><div class="big">' + Math.floor(secs / 60) + ':' + ('0' + (secs % 60)).slice(-2) + '</div><div class="lab">Total time</div></div>';
