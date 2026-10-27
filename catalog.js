@@ -7,7 +7,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-10-22"
+  "updated": "2026-10-27"
  },
  "levels": [
   "Foundations",
@@ -2177,13 +2177,45 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-math-2-quadratics",
+   "path": "test-prep/sat/SAT-Math-2-Quadratics.html",
+   "title": "SAT Math 2: Quadratics",
+   "description": "Reviews the three forms of a parabola, factoring, the discriminant, the vertex, and line-parabola systems on the SAT, with worked examples, fluency drills, a gauntlet, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Reading, writing & math",
+   "order": 12,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "quadratics",
+    "factoring",
+    "discriminant",
+    "parabola",
+    "vertex",
+    "systems of equations",
+    "Desmos"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-1-linear-equations"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Reading, writing & math",
-   "order": 12,
+   "order": 13,
    "levels": [
     "High School"
    ],
@@ -2405,7 +2437,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Timed tutor evaluation covering SAT Reading & Writing and Math, with Desmos, used to assess a tutor's skills in a single sitting.",
    "subject": "sat",
    "topic": "For tutors",
-   "order": 13,
+   "order": 14,
    "levels": [
     "High School"
    ],
