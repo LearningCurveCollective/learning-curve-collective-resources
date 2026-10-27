@@ -2180,7 +2180,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "test-prep--sat--sat-math-2-quadratics",
    "path": "test-prep/sat/SAT-Math-2-Quadratics.html",
    "title": "SAT Math 2: Quadratics",
-   "description": "Reviews the three forms of a parabola, factoring, the discriminant, the vertex, and line-parabola systems on the SAT, with worked examples, fluency drills, a gauntlet, challenge questions, and an exit ticket.",
+   "description": "Reviews the three forms of a parabola, factoring, the vertex, the discriminant, and line-parabola systems on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Reading, writing & math",
    "order": 12,
