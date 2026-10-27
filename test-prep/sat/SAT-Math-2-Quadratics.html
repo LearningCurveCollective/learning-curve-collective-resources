@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Math: Quadratics</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] }, svg: { fontCache: 'global' } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC;
+    --copper: #BC6C26; --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1050px; margin: 0 auto; padding: 32px 20px 40px; }
+
+/* Stacked tab rows: Learn / Drill / Check */
+.tab-buttons { display: flex; flex-direction: column; gap: 7px; margin-bottom: 26px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; border-bottom: 2px solid #E8E0D0; }
+.tab-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.calc-btn { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 8px; border: 2px solid var(--green-dark); background: var(--green-dark); color: white; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.calc-btn:hover { background: var(--green-medium); border-color: var(--green-medium); transform: translateY(-1px); }
+.calc-btn span { font-size: 15px; line-height: 1; }
+.row-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #A8894F; width: 54px; flex-shrink: 0; }
+.tab-button { padding: 8px 15px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="drill"] { border-color: #21442B; }
+.tab-button[data-group="drill"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.card { background-color: white; border-radius: 8px; padding: 20px 22px; margin-bottom: 18px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.trap-box { background: rgba(221,162,94,0.10); border-left: 4px solid var(--gold); border-radius: 6px; padding: 12px 15px; margin: 12px 0; }
+.trap-box .trap-label, .sol-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #8B6914; margin-bottom: 5px; }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 8px; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 22px; color: var(--brown-dark); margin: 0; }
+.btn { border: none; border-radius: 6px; padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-gold { background: var(--gold); color: var(--brown-dark); }
+.btn-gold:hover { background: var(--gold-light); }
+.btn-green { background: var(--green-dark); color: white; }
+.btn-green:hover { background: var(--green-medium); }
+.btn-ghost { background: transparent; color: var(--text-medium); border: 2px solid var(--cream-dark); padding: 7px 12px; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--brown-dark); }
+.btn-sm { padding: 5px 11px; font-size: 12.5px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+.timer-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-medium); }
+.timer-display { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-dark); background: var(--gold-pale); border-radius: 6px; padding: 4px 10px; min-width: 64px; text-align: center; display: none; }
+.timer-display.on { display: inline-block; }
+.tog { position: relative; width: 40px; height: 22px; background: var(--cream-dark); border-radius: 11px; cursor: pointer; transition: background 0.2s; border: none; }
+.tog.on { background: var(--green-light); }
+.tog::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: left 0.2s; }
+.tog.on::after { left: 21px; }
+
+/* Reference page (spacious, print-like, brand-accented) */
+.ref-page { background: white; border-radius: 10px; border: 1px solid var(--cream-dark); border-top: 4px solid var(--gold); box-shadow: 0 4px 16px rgba(0,0,0,0.06); padding: 44px 48px; font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 2.0; }
+.ref-page .ref-intro { margin-bottom: 18px; }
+.legend { display: flex; gap: 8px 22px; flex-wrap: wrap; align-items: center; font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.5; background: var(--gold-pale); border-radius: 8px; padding: 10px 14px; margin-bottom: 22px; color: var(--brown-dark); }
+.legend .star { font-size: 15px; }
+.ref-rule, .ref-case { margin: 20px 0; padding: 16px 22px; border-left: 3px solid transparent; border-radius: 0 10px 10px 0; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.ref-rule:hover { background: rgba(57,134,78,0.05); border-left-color: var(--green-light); transform: translateX(3px); }
+.ref-case:hover { background: rgba(188,108,38,0.06); border-left-color: var(--copper); transform: translateX(3px); }
+.ref-rule-line { font-size: 19px; margin-bottom: 12px; }
+.rname { font-weight: 600; }
+.ref-rule .rname { color: var(--green-dark); }
+.ref-case .rname { color: var(--copper); }
+.rtag { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 9px; margin-right: 10px; vertical-align: 2px; white-space: nowrap; }
+.ref-rule .rtag { background: rgba(74,74,74,0.10); color: var(--text-medium); }
+.ref-rule.ess .rtag { background: var(--gold); color: var(--brown-dark); }
+.ref-case .rtag { background: rgba(188,108,38,0.13); color: var(--copper); }
+.star { color: var(--gold); }
+.ref-rule.ess .rtag .star { color: var(--brown-dark); margin-right: 3px; }
+.exlab { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; margin-right: 6px; }
+.ref-ex { margin: 13px 0 13px 48px; }
+.ref-note { margin: 13px 0 0 48px; font-style: italic; color: var(--text-medium); }
+.ref-divider { border: none; border-top: 2px solid var(--gold-light); margin: 38px 0 30px; }
+.ref-h { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+.ref-page .fig { margin: 6px 0 10px 48px; }
+@media (max-width: 768px) { .ref-page { padding: 22px 14px; } .ref-ex, .ref-note, .ref-page .fig { margin-left: 16px; } .ref-rule, .ref-case { padding: 12px 12px; } }
+
+/* Rule anatomy: lead line, formula rows, forms / cases tables */
+.ref-lead { margin: 0 0 8px; color: var(--text-medium); font-size: 17px; line-height: 1.7; }
+.fbox { margin: 6px 0 14px; border: 1.5px solid var(--gold-light); border-radius: 10px; background: #FFFCF6; overflow: hidden; }
+.frow { display: flex; align-items: center; gap: 18px; padding: 10px 18px; border-top: 1px solid #F1E6D2; line-height: 1.6; transition: background 0.15s; }
+.frow:first-child { border-top: none; }
+.frow:hover { background: rgba(221,162,94,0.13); }
+.flabel { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; width: 160px; flex-shrink: 0; line-height: 1.35; }
+.fmath { font-size: 19px; }
+.tbl-wrap { overflow-x: auto; margin: 6px 0 14px; }
+table.forms, table.cases { width: 100%; border-collapse: separate; border-spacing: 0; border: 1.5px solid var(--gold-light); border-radius: 10px; overflow: hidden; background: #FFFCF6; line-height: 1.55; }
+table.forms th, table.cases th { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #A8894F; text-align: left; padding: 9px 14px; background: var(--gold-pale); border-bottom: 1.5px solid var(--gold-light); }
+table.forms td, table.cases td { padding: 11px 14px; border-top: 1px solid #F1E6D2; vertical-align: middle; font-size: 16px; }
+table.forms tr:first-child td, table.cases tr:first-child td { border-top: none; }
+table.forms tbody tr, table.cases tbody tr { transition: background 0.15s; }
+table.forms tbody tr:hover, table.cases tbody tr:hover { background: rgba(221,162,94,0.13); }
+table.forms td.fname, table.cases td.fname { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+table.forms td.fmath { font-size: 20px; white-space: nowrap; }
+table.forms td.freads { color: var(--text-dark); }
+table.forms td.fex { color: var(--text-medium); font-size: 15.5px; }
+@media (max-width: 768px) { .frow { flex-direction: column; align-items: flex-start; gap: 4px; } .flabel { width: auto; } table.forms td, table.cases td { font-size: 15px; padding: 9px 10px; } }
+
+/* Worked-example problem box */
+.wk-prob { background: #F3F8F4; border: 2px solid #BFD8C5; border-left: 6px solid var(--green-light); border-radius: 8px; padding: 12px 16px; margin: 14px 0 10px; }
+.wk-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 6px; }
+.wk-q { font-family: "Times New Roman", Georgia, serif; font-size: 18px; line-height: 1.8; }
+.wk-try { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin: 8px 0 8px; }
+.diff-chip { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; border-radius: 99px; padding: 3px 10px; background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.35); }
+.diff-chip.dark { background: var(--gold-pale); color: #8B6914; border-color: var(--gold-light); }
+.star-chip { background: var(--gold); color: var(--brown-dark); border-color: var(--gold); }
+
+/* Stepper */
+.stepper { background: white; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border: 1px solid var(--cream-dark); overflow: hidden; }
+.step-head { background: var(--green-dark); color: white; padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.step-head .step-count { font-weight: 700; font-size: 14px; letter-spacing: 0.4px; }
+.step-dots { display: flex; gap: 7px; margin-left: auto; }
+.step-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; padding: 0; transition: all 0.2s; }
+.step-dot.current { background: var(--gold); transform: scale(1.25); }
+.step-dot.done { background: var(--green-light); }
+.step-body { padding: 26px 30px 22px; }
+.step-rule-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--copper); margin-bottom: 6px; }
+.step-rule-name .star { font-size: 13px; }
+.step-rule { font-family: "Times New Roman", Georgia, serif; font-size: 22px; margin-bottom: 4px; }
+.step-say { font-size: 15px; color: var(--text-dark); margin: 10px 0 14px; }
+.step-ex { background: var(--cream); border-radius: 8px; padding: 12px 16px; margin: 12px 0; font-size: 15px; }
+.step-ex .sol-label { color: var(--green-dark); }
+.micro { border: 2px solid var(--cream-dark); border-radius: 8px; padding: 13px 16px; margin-top: 14px; }
+.micro .micro-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--green-dark); margin-bottom: 8px; }
+.micro-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.step-nav { display: flex; gap: 10px; padding: 0 30px 22px; align-items: center; }
+.drill { background: white; border-radius: 8px; border-left: 5px solid var(--green-medium); box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 15px 18px; margin-bottom: 12px; }
+.drill-q { font-family: "Times New Roman", Georgia, serif; font-size: 18.5px; margin-bottom: 10px; }
+.drill-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.drill-row input[type="text"], .micro input[type="text"] { width: 90px; padding: 7px 10px; font-size: 16px; text-align: center; border: 2px solid #9a9a9a; border-radius: 5px; font-family: 'Inter', sans-serif; outline: none; }
+.drill-row input[type="text"]:focus, .micro input[type="text"]:focus { border-color: var(--green-dark); }
+.fb { font-size: 13.5px; font-weight: 600; display: none; }
+.fb.ok { display: inline; color: var(--green-light); }
+.fb.no { display: inline; color: #C0392B; }
+.fb-exp { font-size: 13.5px; color: var(--text-medium); margin-top: 8px; display: none; }
+.fb-exp.show { display: block; }
+.mc-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.mc-opt { border: 2px solid var(--cream-dark); background: white; border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: "Times New Roman", Georgia, serif; font-size: 17px; transition: all 0.15s; }
+.mc-opt:hover { border-color: var(--gold); }
+.mc-opt.right { border-color: var(--green-light); background: rgba(57,134,78,0.15); }
+.mc-opt.wrong { border-color: #C0392B; background: rgba(192,57,43,0.10); }
+.testbar { display: flex; align-items: center; gap: 10px; background: var(--green-dark); color: white; border-radius: 8px 8px 0 0; padding: 10px 18px; flex-wrap: wrap; }
+.testbar .tprog { font-weight: 700; font-size: 14px; }
+.test-stage { background: white; border: 1px solid var(--cream-dark); border-top: none; border-radius: 0 0 8px 8px; padding: 28px 32px 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); min-height: 340px; }
+.q-directions { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin-bottom: 16px; border-bottom: 1px solid var(--cream-dark); padding-bottom: 10px; }
+.q-stem { font-family: "Times New Roman", Georgia, serif; font-size: 19px; line-height: 1.85; margin-bottom: 16px; }
+.choices { margin-top: 14px; }
+.choice { display: flex; align-items: center; gap: 14px; padding: 9px 10px; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+.choice:hover { background: rgba(221,162,94,0.10); }
+.choice .letter { width: 30px; height: 30px; border: 2px solid #9a9a9a; border-radius: 50%; flex-shrink: 0; background: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13.5px; color: var(--text-medium); font-family: 'Inter', sans-serif; }
+.choice.selected .letter { background: var(--green-dark); border-color: var(--green-dark); color: white; }
+.choice .ctext { font-family: "Times New Roman", Georgia, serif; font-size: 18px; }
+.ne-entry { display: flex; align-items: center; gap: 12px; margin: 18px 0 6px; flex-wrap: wrap; }
+.ne-entry input { width: 120px; padding: 8px 10px; font-size: 17px; text-align: center; border: 2px solid #9a9a9a; border-radius: 4px; font-family: 'Inter', sans-serif; outline: none; }
+.ne-entry input:focus { border-color: var(--green-dark); }
+.test-nav { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+.qmap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.qchip { width: 34px; height: 30px; border-radius: 6px; border: 2px solid var(--cream-dark); background: white; font-size: 12.5px; font-weight: 700; color: var(--text-medium); cursor: pointer; }
+.qchip.answered { background: rgba(57,134,78,0.15); border-color: rgba(57,134,78,0.5); color: var(--green-dark); }
+.qchip.current { border-color: var(--green-dark); box-shadow: 0 0 0 2px rgba(33,68,43,0.25); }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.stat-tile { background: white; border-radius: 10px; padding: 16px 18px; text-align: center; border: 2px solid var(--gold-light); }
+.stat-tile .stat-num { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: var(--gold); }
+.stat-tile.green .stat-num { color: var(--green-light); }
+.stat-tile .stat-label { font-size: 12px; font-weight: 600; color: var(--text-medium); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 4px; }
+.res-entry { background: white; border-radius: 8px; border-left: 5px solid #E57373; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+.res-entry.correct { border-left-color: var(--green-light); }
+.res-head { display: flex; align-items: center; gap: 12px; padding: 13px 18px; cursor: pointer; }
+.res-head:hover { background: rgba(221,162,94,0.05); }
+.res-arrow { color: var(--gold); font-size: 13px; transition: transform 0.25s; margin-left: auto; }
+.res-entry.open .res-arrow { transform: rotate(90deg); }
+.res-body { display: none; padding: 0 20px 16px; border-top: 1px solid var(--cream-dark); }
+.res-entry.open .res-body { display: block; }
+.sol-block { background: var(--cream); border-radius: 8px; padding: 13px 15px; margin: 10px 0; font-size: 15px; }
+.sol-block .sol-label { color: var(--green-dark); }
+.reveal { display: none; margin-top: 8px; font-size: 14px; background: var(--cream); border-radius: 6px; padding: 10px 12px; }
+.reveal.show { display: block; }
+.rule-write { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--cream-dark); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14.5px; resize: vertical; outline: none; }
+.rule-write:focus { border-color: var(--gold); }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.mjx-container { overflow-x: auto; }
+.nw { white-space: nowrap; }
+.mjx-container[display="true"] { margin: 6px 0 !important; }
+
+/* Value tables inside questions */
+.vtab { border-collapse: collapse; margin: 10px 0 12px; font-family: "Times New Roman", Georgia, serif; font-size: 17px; }
+.vtab th, .vtab td { border: 1px solid #9a9a9a; padding: 4px 14px; text-align: center; font-weight: normal; }
+.vtab th { background: var(--cream); }
+
+/* SVG coordinate figures */
+.fig { display: block; margin: 8px auto 14px; max-width: 100%; height: auto; }
+.fig .ax { stroke: #2D2D2D; stroke-width: 1.4; }
+.fig .ln { stroke: #21442B; stroke-width: 2; fill: none; }
+.fig .ln2 { stroke: #BC6C26; stroke-width: 2; fill: none; }
+.fig .dash { stroke: #8B6914; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+.fig .pt { fill: #21442B; }
+.fig .shade { fill: rgba(221,162,94,0.25); stroke: none; }
+.fig text { font-family: "Times New Roman", Georgia, serif; font-size: 13px; fill: #2D2D2D; }
+.fig text.it { font-style: italic; }
+.fig .sq { fill: none; stroke: #2D2D2D; stroke-width: 1.2; }
+
+/* Desmos floating button + panel (same as the SAT worksheets) */
+.desmos-fab { position: fixed; right: 24px; bottom: 24px; z-index: 1200; display: flex; align-items: center; gap: 9px; background: linear-gradient(135deg, var(--green-dark), var(--green-medium)); color: white; border-radius: 99px; padding: 13px 22px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.3px; box-shadow: 0 6px 20px rgba(0,0,0,0.28); border: 2px solid var(--gold); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.desmos-fab:hover { transform: translateY(-2px); box-shadow: 0 9px 26px rgba(0,0,0,0.34); }
+.desmos-fab .fab-ico { font-size: 17px; }
+.desmos-panel { position: fixed; z-index: 1250; right: auto; bottom: auto; left: calc(100vw - 444px); top: calc(100vh - 612px); width: 420px; height: 520px; min-width: 300px; min-height: 280px; background: var(--white); border-radius: 12px; border: 2px solid var(--green-dark); box-shadow: 0 14px 40px rgba(0,0,0,0.38); display: none; flex-direction: column; overflow: hidden; }
+.desmos-panel.open { display: flex; animation: fadeIn 0.2s ease; }
+.desmos-panel.dragging, .desmos-panel.resizing { user-select: none; }
+.desmos-panel .dp-bar { background: linear-gradient(135deg, var(--green-dark), var(--green-medium)); color: white; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; cursor: move; gap: 10px; }
+.desmos-panel .dp-title { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.desmos-panel .dp-title .dp-grip { font-size: 13px; opacity: 0.7; letter-spacing: -1px; }
+.desmos-panel .dp-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+.desmos-panel .dp-btn { background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 12px; font-weight: 600; padding: 4px 9px; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
+.desmos-panel .dp-btn:hover { background: rgba(255,255,255,0.30); }
+.desmos-panel .dp-btn.active { background: var(--gold); color: var(--brown-dark); border-color: var(--gold); }
+.desmos-panel .dp-close { background: transparent; border: none; color: white; font-size: 19px; cursor: pointer; line-height: 1; padding: 0 4px; }
+.desmos-panel .dp-body { flex: 1; position: relative; }
+.desmos-panel .dp-calc { position: absolute; inset: 0; }
+.dp-handle { position: absolute; z-index: 6; }
+.dp-handle.dp-n  { top: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.dp-handle.dp-s  { bottom: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.dp-handle.dp-e  { right: -3px; top: 10px; bottom: 10px; width: 8px; cursor: ew-resize; }
+.dp-handle.dp-w  { left: -3px; top: 10px; bottom: 10px; width: 8px; cursor: ew-resize; }
+.dp-handle.dp-ne { top: -4px; right: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.dp-handle.dp-nw { top: -4px; left: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.dp-handle.dp-se { bottom: -4px; right: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.dp-handle.dp-sw { bottom: -4px; left: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.dp-handle.dp-se::before { content: ''; position: absolute; right: 3px; bottom: 3px; width: 9px; height: 9px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+.desmos-fallback { padding: 18px; font-size: 13px; color: var(--text-medium); text-align: center; line-height: 1.7; }
+.desmos-fallback a { color: var(--green-dark); font-weight: 600; }
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .container { padding: 16px 10px; }
+    .row-label { display: none; }
+    .tab-button { font-size: 12.5px; padding: 6px 11px; }
+    .test-stage, .step-body { padding: 20px 16px; }
+    .step-nav { padding: 0 16px 18px; }
+    .desmos-panel { width: calc(100vw - 32px) !important; left: 16px !important; top: auto !important; bottom: 84px !important; height: 60vh !important; }
+    .desmos-fab { right: 16px; bottom: 16px; padding: 11px 18px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective"></a></div>
+        <div class="header-text">
+            <h1>SAT Math: Quadratics</h1>
+            <div class="subtitle">CONCEPT + DRILLS &bull; QUADRATICS</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">SAT MATH SERIES</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="row-label">Learn</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('ref', this)">1. Quadratic Rules</button>
+            <button class="tab-button" data-group="core" onclick="switchTab('core', this)">2. Worked Examples &amp; Practice</button>
+            <button class="calc-btn" onclick="toggleDesmos()" title="Open the Desmos calculator (same one as the digital SAT)"><span>&#8862;</span> Calculator</button>
+        </div>
+        <div class="tab-row"><span class="row-label">Drill</span>
+            <button class="tab-button" data-group="drill" onclick="switchTab('fluency', this)">3. Fluency Drills</button>
+            <button class="tab-button" data-group="drill" onclick="switchTab('gauntlet', this)">4. SAT Gauntlet</button>
+            <button class="tab-button" data-group="drill" onclick="switchTab('challenge', this)">5. Challenge Questions</button>
+        </div>
+        <div class="tab-row"><span class="row-label">Check</span>
+            <button class="tab-button" data-group="core" onclick="switchTab('exit', this)">6. Exit Ticket</button>
+        </div>
+    </div>
+
+    <!-- ============ TAB 1: RULES ============ -->
+    <div id="tab-ref" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Quadratic rules</h2></div>
+        <div class="ref-page">
+<p class="ref-intro">A quadratic is a parabola, and the SAT asks the same handful of questions about it: read the roots, the vertex, and the $y$-intercept from whichever form you are handed, factor or use the formula to solve, use the discriminant to count solutions, and find where a line meets the curve. Below, the quadratic is $y = ax^2 + bx + c$ with <span class="nw">$a \neq 0$,</span> its roots (the $x$-intercepts) are $r_1$ and <span class="nw">$r_2$,</span> and its vertex is <span class="nw">$(h, k)$.</span></p>
+<div class="legend"><span><span class="star">&#9733;</span> <strong>Essential:</strong> the rules behind most SAT quadratic questions. Start here.</span><span><strong>Unstarred:</strong> shows up less often. Add it once the starred rules are automatic.</span></div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 1</span><span class="rname">Three forms of a parabola</span></div>
+<p class="ref-lead">Same parabola, different costumes. Each form puts a different feature in plain sight, and the SAT asks outright which form shows which feature.</p>
+<div class="tbl-wrap"><table class="forms"><thead><tr><th>Form</th><th>Formula</th><th>What it shows</th><th>Example</th></tr></thead><tbody>
+<tr><td class="fname">Standard</td><td class="fmath">$y = ax^2 + bx + c$</td><td class="freads">$c$ is the $y$-intercept<br>$a > 0$ opens up, $a < 0$ opens down<br>axis of symmetry $x = -\dfrac{b}{2a}$</td><td class="fex"><span class="nw">$y = x^2 - 6x + 5$:</span> crosses the $y$-axis at <span class="nw">$5$,</span> opens up, axis $x = 3$</td></tr>
+<tr><td class="fname">Factored</td><td class="fmath">$y = a(x - r_1)(x - r_2)$</td><td class="freads">the roots $r_1$ and $r_2$ are the $x$-intercepts<br>the vertex sits halfway between them</td><td class="fex"><span class="nw">$y = (x - 1)(x - 5)$:</span> $x$-intercepts $1$ and <span class="nw">$5$,</span> axis $x = 3$</td></tr>
+<tr><td class="fname">Vertex</td><td class="fmath">$y = a(x - h)^2 + k$</td><td class="freads">vertex $(h, k)$<br>$k$ is the minimum value ($a > 0$) or the maximum value ($a < 0$)</td><td class="fex"><span class="nw">$y = (x - 3)^2 - 4$:</span> vertex <span class="nw">$(3, -4)$,</span> minimum value $-4$</td></tr>
+</tbody></table></div>
+<div class="fig-slot" data-fig="anatomy"></div>
+<div class="ref-ex"><span class="exlab">Example A</span>all three are the same parabola: $(x - 1)(x - 5) = x^2 - 6x + 5 = (x - 3)^2 - 4$. Expand to move right in the table; factor or complete the square to move left</div>
+<div class="ref-ex"><span class="exlab">Example B</span>“Which form displays the $x$-intercepts as constants?” is factored form. “The vertex” or “the minimum value” is vertex form. “The $y$-intercept” is standard form</div>
+<div class="ref-ex"><span class="exlab">Example C</span>$a$ is the same number in every form and never moves the axis: $y = 2(x - 1)(x - 5)$ still has roots $1$ and $5$ and vertex at <span class="nw">$x = 3$,</span> but now $k = 2(3 - 1)(3 - 5) = -8$</div>
+<div class="ref-note">The $y$-intercept of vertex or factored form is found by setting <span class="nw">$x = 0$:</span> for $y = 2(x - 3)^2 - 8$ it is <span class="nw">$2(9) - 8 = 10$,</span> not <span class="nw">$-8$.</span></div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 2</span><span class="rname">Factor, then set each factor to zero</span></div>
+<p class="ref-lead">Factoring writes an expression as a product. A product is zero only when one of its factors is zero, so a factored equation hands you its solutions.</p>
+<div class="tbl-wrap"><table class="forms"><thead><tr><th>Pattern</th><th>Expanded</th><th>Factored</th><th>Example</th></tr></thead><tbody>
+<tr><td class="fname">Perfect square</td><td class="fmath">$a^2 + 2ab + b^2$</td><td class="freads">$(a + b)^2$</td><td class="fex">$x^2 + 6x + 9 = (x + 3)^2$: the middle term is twice the product of the two square roots</td></tr>
+<tr><td class="fname">Perfect square</td><td class="fmath">$a^2 - 2ab + b^2$</td><td class="freads">$(a - b)^2$</td><td class="fex">$4x^2 - 12x + 9 = (2x - 3)^2$</td></tr>
+<tr><td class="fname">Difference of squares</td><td class="fmath">$a^2 - b^2$</td><td class="freads">$(a + b)(a - b)$</td><td class="fex">no middle term: $x^2 - 49 = (x + 7)(x - 7)$, &nbsp; $9n^2 - 1 = (3n + 1)(3n - 1)$</td></tr>
+<tr><td class="fname">Trinomial, $a = 1$</td><td class="fmath">$x^2 + bx + c$</td><td class="freads">$(x + p)(x + q)$ with <span class="nw">$p + q = b$,</span> $pq = c$</td><td class="fex">$x^2 - 2x - 3 = (x - 3)(x + 1)$: the numbers $-3$ and $1$ add to $-2$ and multiply to $-3$</td></tr>
+<tr><td class="fname">Trinomial, $a \neq 1$</td><td class="fmath">$ax^2 + bx + c$</td><td class="freads">two numbers with product $ac$ and sum <span class="nw">$b$,</span> then group</td><td class="fex">$6x^2 + x - 1$: product <span class="nw">$-6$,</span> sum <span class="nw">$1$:</span> $3$ and <span class="nw">$-2$.</span> $6x^2 + 3x - 2x - 1 = (3x - 1)(2x + 1)$</td></tr>
+<tr><td class="fname">Common factor first</td><td class="fmath">$12x^2 + 2x - 2$</td><td class="freads">$2(6x^2 + x - 1)$</td><td class="fex">$= 2(3x - 1)(2x + 1)$: pull the greatest common factor before anything else</td></tr>
+</tbody></table></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">zero product</div><div class="fmath">$(x - r_1)(x - r_2) = 0$ &nbsp;means&nbsp; $x = r_1$ &nbsp;or&nbsp; $x = r_2$</div></div>
+<div class="frow"><div class="flabel">square root</div><div class="fmath">$x^2 = n$ gives $x = \pm\sqrt{n}$; &nbsp; $(x - h)^2 = n$ gives $x = h \pm \sqrt{n}$</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span><span class="nw">$x^2 - 7x + 12 = 0$:</span> $(x - 3)(x - 4) = 0$, so $x = 3$ or <span class="nw">$x = 4$.</span> The signs inside the factors are the opposite of the roots</div>
+<div class="ref-ex"><span class="exlab">Example B</span><span class="nw">$2x^2 + 5x - 12 = 0$:</span> product <span class="nw">$ac = -24$,</span> sum <span class="nw">$5$:</span> $8$ and <span class="nw">$-3$.</span> $2x^2 + 8x - 3x - 12 = 2x(x + 4) - 3(x + 4) = (2x - 3)(x + 4)$, so $x = \tfrac{3}{2}$ or $x = -4$</div>
+<div class="ref-ex"><span class="exlab">Example C</span>structure, not solving: if <span class="nw">$(x - 3)(x + 3) = a$,</span> then $(2x - 6)(x + 3) = 2(x - 3)(x + 3) = 2a$. Look for the piece you already know inside the new expression</div>
+<div class="ref-ex"><span class="exlab">Example D</span>$x^2 - y^2 = 24$ with positive integers: $(x - y)(x + y) = 24$, and the two factors must be both even or both odd. $2 \cdot 12$ gives <span class="nw">$x = 7$,</span> <span class="nw">$y = 5$;</span> $4 \cdot 6$ gives <span class="nw">$x = 5$,</span> $y = 1$</div>
+<div class="ref-note">Desmos factors for you: graph $y = 2x^2 + 5x - 12$ and click the $x$-intercepts. Use that to check. “Equivalent expression” questions have nothing to click, so the patterns above still have to be automatic.</div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 3</span><span class="rname">The quadratic formula and the discriminant</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">quadratic formula</div><div class="fmath">$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$ &nbsp; (for $ax^2 + bx + c = 0$; set it equal to zero first)</div></div>
+<div class="frow"><div class="flabel">discriminant</div><div class="fmath">$D = b^2 - 4ac$ &nbsp; (the part under the root; its sign counts the real solutions)</div></div>
+<div class="frow"><div class="flabel">tangent</div><div class="fmath">a line is tangent to a parabola exactly when the combined equation has $D = 0$</div></div>
+</div>
+<div class="tbl-wrap"><table class="cases"><thead><tr><th>Discriminant</th><th>Real solutions</th><th>Graph of $y = ax^2 + bx + c$</th><th></th></tr></thead><tbody>
+<tr><td class="fname">$D > 0$</td><td class="">two (rational if $D$ is a perfect square, irrational if not)</td><td class="">crosses the $x$-axis twice</td><td class=""><span class="fig-slot" data-fig="dpos"></span></td></tr>
+<tr><td class="fname">$D = 0$</td><td class="">one, a double root at $x = -\dfrac{b}{2a}$</td><td class="">touches the $x$-axis at its vertex: the axis is tangent</td><td class=""><span class="fig-slot" data-fig="dzero"></span></td></tr>
+<tr><td class="fname">$D < 0$</td><td class="">none</td><td class="">never meets the $x$-axis: entirely above it ($a > 0$) or entirely below it ($a < 0$)</td><td class=""><span class="fig-slot" data-fig="dneg"></span></td></tr>
+</tbody></table></div>
+<div class="ref-ex"><span class="exlab">Example A</span><span class="nw">$x^2 - 6x + 7 = 0$:</span> $D = 36 - 28 = 8$, two irrational solutions, $x = \dfrac{6 \pm \sqrt{8}}{2} = 3 \pm \sqrt{2}$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>$x^2 + 2x + k = 0$ has exactly one solution when <span class="nw">$4 - 4k = 0$,</span> so <span class="nw">$k = 1$.</span> &nbsp; $2x^2 + 3x + 5 = 0$ has <span class="nw">$D = 9 - 40 < 0$:</span> no real solutions</div>
+<div class="ref-ex"><span class="exlab">Example C</span>$y = 2x + k$ is tangent to <span class="nw">$y = x^2 - 4$:</span> set them equal, <span class="nw">$x^2 - 2x - 4 - k = 0$.</span> Tangent means <span class="nw">$D = 0$:</span> $4 + 4(4 + k) = 20 + 4k = 0$, so $k = -5$</div>
+<div class="ref-note">Set the equation equal to zero before you read <span class="nw">$a$,</span> <span class="nw">$b$,</span> and <span class="nw">$c$.</span> In <span class="nw">$x^2 - 2x = 2x + k$,</span> $b$ is <span class="nw">$-4$,</span> not <span class="nw">$-2$.</span></div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 4</span><span class="rname">Vertex, axis of symmetry, maximum and minimum</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">axis of symmetry</div><div class="fmath">$h = -\dfrac{b}{2a} = \dfrac{r_1 + r_2}{2}$ &nbsp; (halfway between the roots, or between any two points with the same $y$)</div></div>
+<div class="frow"><div class="flabel">vertex value</div><div class="fmath">$k = f(h)$: the minimum if <span class="nw">$a > 0$,</span> the maximum if $a < 0$</div></div>
+<div class="frow"><div class="flabel">completing the square</div><div class="fmath">$x^2 + bx + c = \left(x + \dfrac{b}{2}\right)^2 - \dfrac{b^2}{4} + c$</div></div>
+<div class="frow"><div class="flabel">symmetry</div><div class="fmath">$f(h - t) = f(h + t)$ for every $t$</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span><span class="nw">$y = x^2 - 6x + 5$:</span> $h = 3$ and <span class="nw">$k = 9 - 18 + 5 = -4$.</span> Completing the square agrees: $(x - 3)^2 - 9 + 5 = (x - 3)^2 - 4$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>in context, $h(t) = -16t^2 + 64t + 80$ is a ball's height. It starts at $80$ (set <span class="nw">$t = 0$),</span> peaks at $t = \dfrac{-64}{2(-16)} = 2$ with height <span class="nw">$h(2) = 144$,</span> and lands when <span class="nw">$h = 0$:</span> $-16(t - 5)(t + 1) = 0$, so $t = 5$</div>
+<div class="ref-ex"><span class="exlab">Example C</span>if $f(2) = f(8)$ for a quadratic <span class="nw">$f$,</span> the vertex is at <span class="nw">$x = 5$,</span> whether those two outputs are $0$ or $7$</div>
+<div class="ref-note">“The minimum value” is <span class="nw">$k$;</span> “the $x$ at which the minimum occurs” is <span class="nw">$h$.</span> Both are always in the answer choices.</div>
+</div>
+<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag"><span class="star">&#9733;</span>Rule 5</span><span class="rname">A line meets a parabola</span></div>
+<p class="ref-lead">Set the two $y$'s equal, move everything to one side, and solve the quadratic. Every solution $x$ is an intersection; plug it into the line, the easier equation, to get <span class="nw">$y$.</span></p>
+<div class="tbl-wrap"><table class="cases"><thead><tr><th>Outcome</th><th>Algebra test</th><th>Picture</th></tr></thead><tbody>
+<tr><td class="fname">Two solutions</td><td class="">$D > 0$ for the combined equation</td><td class="">the line cuts through the parabola at two points</td></tr>
+<tr><td class="fname">One solution</td><td class="">$D = 0$</td><td class="">the line is tangent to the parabola</td></tr>
+<tr><td class="fname">No solution</td><td class="">$D < 0$</td><td class="">the line misses the parabola</td></tr>
+</tbody></table></div>
+<div class="fig-slot" data-fig="sys"></div>
+<div class="ref-ex"><span class="exlab">Example A</span>$y = 2x + 1$ and <span class="nw">$y = x^2 - 5x + 7$:</span> $x^2 - 5x + 7 = 2x + 1$ gives <span class="nw">$x^2 - 7x + 6 = (x - 1)(x - 6) = 0$.</span> At $x = 1$, <span class="nw">$y = 3$;</span> at $x = 6$, <span class="nw">$y = 13$.</span> The solutions are $(1, 3)$ and $(6, 13)$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>$y = x^2 - x - 12$ and <span class="nw">$y = 3x$:</span> $x^2 - 4x - 12 = 0$ has <span class="nw">$D = 16 + 48 = 64 > 0$,</span> so the system has two solutions ($x = 6$ and $x = -2$)</div>
+<div class="ref-ex"><span class="exlab">Example C</span>when a line and a parabola enclose a region, the intersections are the corners. From there it is the area rule from the <a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Math-1-Linear-Equations.html" target="_blank" rel="noopener" style="color:var(--copper); font-weight:600;">linear sheet</a>: base on an axis, or split into triangles and trapezoids</div>
+<div class="ref-note">In Desmos, graph both and click the intersection points. For a question with an unknown <span class="nw">$k$,</span> add a slider and drag it until the line just touches the curve; then confirm with $D = 0$.</div>
+</div>
+<div class="ref-rule"><div class="ref-rule-line"><span class="rtag">Rule 6</span><span class="rname">Sum and product of the roots</span></div>
+<div class="fbox">
+<div class="frow"><div class="flabel">sum</div><div class="fmath">$r_1 + r_2 = -\dfrac{b}{a}$</div></div>
+<div class="frow"><div class="flabel">product</div><div class="fmath">$r_1 r_2 = \dfrac{c}{a}$</div></div>
+<div class="frow"><div class="flabel">build from the roots</div><div class="fmath">$x^2 - (r_1 + r_2)\,x + r_1 r_2 = 0$</div></div>
+<div class="frow"><div class="flabel">two useful rewrites</div><div class="fmath">$\dfrac{1}{r_1} + \dfrac{1}{r_2} = \dfrac{r_1 + r_2}{r_1 r_2}$, &nbsp; $r_1^2 + r_2^2 = (r_1 + r_2)^2 - 2 r_1 r_2$</div></div>
+</div>
+<div class="ref-ex"><span class="exlab">Example A</span>where it comes from: $a(x - r_1)(x - r_2) = ax^2 - a(r_1 + r_2)\,x + a\,r_1 r_2$. Match the coefficients with $ax^2 + bx + c$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>one root of $2x^2 + x - k = 0$ is <span class="nw">$1$.</span> The sum of the roots is <span class="nw">$-\tfrac{1}{2}$,</span> so the other root is <span class="nw">$-\tfrac{1}{2} - 1 = -\tfrac{3}{2}$.</span> ($k$ was never needed; it is $3$)</div>
+<div class="ref-ex"><span class="exlab">Example C</span>if $\alpha$ and $\beta$ are the roots of <span class="nw">$x^2 + 4x - 12 = 0$,</span> then $\dfrac{1}{\alpha} + \dfrac{1}{\beta} = \dfrac{\alpha + \beta}{\alpha\beta} = \dfrac{-4}{-12} = \tfrac{1}{3}$. Check by factoring: $(x + 6)(x - 2)$ gives $-\tfrac{1}{6} + \tfrac{1}{2} = \tfrac{1}{3}$. ✓</div>
+<div class="ref-note">Rare on the digital SAT, but it turns a two-minute factoring problem into a ten-second one, and a question with an unknown constant in the $c$ slot is built for it.</div>
+</div>
+<div class="ref-rule"><div class="ref-rule-line"><span class="rtag">Rule 7</span><span class="rname">Shifting and reflecting a parabola</span></div>
+<div class="tbl-wrap"><table class="cases"><thead><tr><th>Move</th><th>New equation</th><th>Effect on the vertex $(h, k)$</th></tr></thead><tbody>
+<tr><td class="fname">up $n$ units</td><td class="">$f(x) + n$</td><td class="">$(h, k + n)$</td></tr>
+<tr><td class="fname">right $n$ units</td><td class="">$f(x - n)$</td><td class="">$(h + n, k)$</td></tr>
+<tr><td class="fname">across the $x$-axis</td><td class="">$-f(x)$</td><td class=""><span class="nw">$(h, -k)$,</span> and $a \to -a$: a minimum becomes a maximum</td></tr>
+<tr><td class="fname">across the $y$-axis</td><td class="">$f(-x)$</td><td class="">$(-h, k)$</td></tr>
+</tbody></table></div>
+<div class="ref-ex"><span class="exlab">Example A</span>$f(x) = (x - 2)^2 - 5$ shifted left $3$ and up <span class="nw">$4$:</span> <span class="nw">$g(x) = (x + 1)^2 - 1$,</span> vertex $(-1, -1)$</div>
+<div class="ref-ex"><span class="exlab">Example B</span>the graph of $y = x^2 - 4x$ translated down <span class="nw">$3$:</span> <span class="nw">$y = x^2 - 4x - 3$.</span> Its new $x$-intercepts, <span class="nw">$2 \pm \sqrt{7}$,</span> come from the new equation, not from sliding the old ones</div>
+<div class="ref-ex"><span class="exlab">Example C</span>$-f(x)$ flips the parabola: $y = -(x - 2)^2 + 5$ opens down with maximum <span class="nw">$5$.</span> The $x$-intercepts stay put, because they sit on the mirror line</div>
+<div class="ref-note">Inside the parentheses the sign runs backwards: $(x - 2)^2$ is a shift to the <em>right</em> by <span class="nw">$2$.</span></div>
+</div>
+<hr class="ref-divider"><div class="ref-h">Moves that are not allowed</div>
+<p>The statements below <em>look</em> reasonable but are false, and each one generates a standard wrong answer. Keep them in mind.</p>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 1</span><span class="rname">not allowed: &nbsp; reading the roots with the signs as written</span></div><div class="ref-ex">$(x - 3)(x + 5) = 0$ has roots $3$ and <span class="nw">$-5$.</span> Set each factor to zero: $x - 3 = 0$ gives <span class="nw">$x = 3$.</span> The signs flip.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 2</span><span class="rname">not allowed: &nbsp; dividing both sides by $x$</span></div><div class="ref-ex">$x^2 = 5x$ has two solutions, $0$ and <span class="nw">$5$.</span> Dividing by $x$ throws away <span class="nw">$x = 0$.</span> Move everything to one side and factor: $x(x - 5) = 0$.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 3</span><span class="rname">not allowed: &nbsp; a square root with one sign</span></div><div class="ref-ex">$(x - 3)^2 = 16$ gives <span class="nw">$x - 3 = \pm 4$,</span> so $x = 7$ or <span class="nw">$x = -1$.</span> Half of the answer lives in the minus sign.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 4</span><span class="rname">not allowed: &nbsp; $(x + 3)^2 = x^2 + 9$</span></div><div class="ref-ex">The middle term is <span class="nw">$2 \cdot 3 \cdot x$:</span> <span class="nw">$(x + 3)^2 = x^2 + 6x + 9$.</span> For the same reason $\sqrt{x^2 + 9}$ is not <span class="nw">$x + 3$.</span></div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 5</span><span class="rname">not allowed: &nbsp; reading $a$, $b$, $c$ before the equation equals zero</span></div><div class="ref-ex">$x^2 - 2x = 2x + k$ becomes <span class="nw">$x^2 - 4x - k = 0$,</span> so $b = -4$ and <span class="nw">$c = -k$.</span> The discriminant uses the moved version, every time.</div></div>
+<div class="ref-case"><div class="ref-rule-line"><span class="rtag">Case 6</span><span class="rname">not allowed: &nbsp; copying the sign inside the parentheses into the vertex</span></div><div class="ref-ex">$y = 2(x + 1)^2 - 3$ has vertex <span class="nw">$(-1, -3)$:</span> $h$ flips sign, $k$ does not. Check by plugging in <span class="nw">$x = -1$,</span> which makes the square zero.</div></div>
+</div>
+    </div>
+
+    <!-- ============ TAB 2: STEPPER ============ -->
+    <div id="tab-core" class="tab-content">
+        <div class="section-header"><div class="section-number">2</div><h2>Worked examples &amp; practice</h2></div>
+        <div class="card">
+            <p>Everything on the rules tab runs on one idea: <strong>a quadratic is a product of two linear factors, and its graph is symmetric about its vertex.</strong> The factors hand you the roots, the symmetry hands you the vertex, and every SAT question about a parabola is asking for one of those, for how many roots there are, or for where a line meets the curve.</p>
+            <p style="margin-top:8px; font-size:14px; color:var(--text-medium);">The walkthrough below takes the rules one at a time, each with a worked example, the trap it pairs with, and a ten-second check. The starred steps are the essentials. Reading a rule isn't knowing it; the check is the point.</p>
+        </div>
+        <div class="stepper">
+            <div class="step-head">
+                <span class="step-count" id="stepCount">Step 1 of 9</span>
+                <div class="step-dots" id="stepDots"></div>
+            </div>
+            <div class="step-body" id="stepBody"></div>
+            <div class="step-nav">
+                <button class="btn btn-ghost" id="stepBack" onclick="stepNav(-1)">&#8592; Back</button>
+                <button class="btn btn-green" id="stepNext" onclick="stepNav(1)">Next &#8594;</button>
+                <span style="flex:1"></span>
+                <span style="font-size:13px; color:var(--text-medium);" id="stepHint"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TAB 3: FLUENCY ============ -->
+    <div id="tab-fluency" class="tab-content">
+        <div class="section-header"><div class="section-number">3</div><h2>Fluency drills: mixed reps</h2></div>
+        <div class="toolbar">
+            <span style="font-size:13.5px; color:var(--text-medium);">Untimed. Fractions can be entered as 7/3 or 2.333; both count. Negative slopes need the minus sign.</span>
+            <span class="timer-wrap">Timer <button class="tog" id="togF" onclick="toggleTimer('F')" aria-label="toggle timer"></button> <span class="timer-display" id="timerF">0:00</span></span>
+        </div>
+        <div id="fluencyList"></div>
+    </div>
+
+    <!-- ============ TAB 4: GAUNTLET ============ -->
+    <div id="tab-gauntlet" class="tab-content">
+        <div class="section-header"><div class="section-number">4</div><h2>SAT Gauntlet: real formats, real traps</h2></div>
+        <div class="card">
+            <p>Ten questions in the two digital SAT formats: four-choice multiple choice and student-produced response (type the number). They are ordered the way a real module ramps, from easy openers to the high-medium items near the end, and the last two carry figures the way the real test does. A <strong>&#9733; starred rule</strong> chip means the question runs on one of the starred rules from tab 1. Desmos is allowed on the whole SAT math section, so it is allowed here: the button in the corner opens it, and <em>Load into Desmos</em> drops a question's equations straight into the graph.</p>
+        </div>
+        <div id="gauntletArea"></div>
+    </div>
+
+    <!-- ============ TAB 5: CHALLENGE ============ -->
+    <div id="tab-challenge" class="tab-content">
+        <div class="section-header"><div class="section-number">5</div><h2>Challenge questions</h2></div>
+        <div class="card">
+            <p>These six run from high-medium to hard: the quadratic questions that show up late in a module and separate a strong score from a perfect one. Each one is a rule you already have, paired with a second idea (an area between two graphs, a known expression hidden inside a new one, a perfect square in disguise, a constant you never need, an integer constraint, a third point that fixes $a$). Work each one, then check it right away. Understanding the mechanism matters more than getting it right on the first try. Questions marked <strong>&#9733; starred rule</strong> use the essential rules; the ones marked <em>extra</em> lean on the unstarred rules.</p>
+        </div>
+        <div id="challengeArea"></div>
+    </div>
+
+    <!-- ============ TAB 6: EXIT TICKET ============ -->
+    <div id="tab-exit" class="tab-content">
+        <div class="section-header"><div class="section-number">6</div><h2>Exit ticket</h2></div>
+        <div id="exitArea"></div>
+        <div class="card">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:8px;">Write your rule</h3>
+            <p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">One sentence you will say to yourself the next time a parabola shows up. Make it an if-then. (Shape: “When a question says tangent or exactly one solution, I ______ before I solve anything.”)</p>
+            <textarea class="rule-write" id="ruleBox" placeholder="My rule:" oninput="saveRule()"></textarea>
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-gold btn-sm" onclick="copyRule()">Copy rule</button>
+                <span id="ruleStatus" style="font-size:12.5px; color:var(--green-light); font-weight:600; opacity:0; transition:opacity 0.3s;">saved &#10003;</span>
+            </div>
+        </div>
+        <div class="card" style="border-left-color:#8B5E3C;">
+            <h3 style="font-family:'Switzer','Space Grotesk',sans-serif; color:var(--brown-dark); margin-bottom:6px;">Official extra reps</h3>
+            <p style="font-size:14px;"><strong>Start with College Board's Bluebook.</strong> It is the real test interface, Desmos included, and its full-length practice tests are the closest thing to the actual SAT: the quadratic questions on them are written and ranked exactly the way this sheet's gauntlet is. <a href="https://satsuite.collegeboard.org/digital/digital-practice-preparation" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">Open Bluebook practice &#8594;</a></p>
+            <p style="font-size:14px; margin-top:10px;">For skill-by-skill reps, <strong>Khan Academy's Official Digital SAT Prep</strong> sorts practice by topic: the units <em>Nonlinear equations in one variable and systems of equations in two variables</em>, <em>Nonlinear functions</em>, and <em>Equivalent expressions</em> are this sheet's Rules 1 through 5. <a href="https://www.khanacademy.org/digital-sat" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">Open Khan Academy &#8594;</a></p>
+            <p style="font-size:14px; margin-top:10px;">The lines in these questions (slope, intercepts, the area a line encloses) are covered in <a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Math-1-Linear-Equations.html" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Math 1: Linear Equations &#8594;</a></p>
+            <p style="font-size:14px; margin-top:10px;">For the calculator side of these questions (graphing a parabola, a slider for $k$, clicking a vertex or an intersection), see <a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Desmos-Strategies.html" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Math: Desmos Strategies &#8594;</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family:'Switzer','Space Grotesk',sans-serif; font-weight:700;">Learning Curve Collective</a> &bull; SAT Math Series: Quadratics</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+
+<!-- Desmos floating calculator -->
+<button class="desmos-fab" id="desmos-fab" onclick="toggleDesmos()" aria-label="Open Desmos calculator">
+    <span class="fab-ico">&#128202;</span> Desmos Calculator
+</button>
+<div class="desmos-panel" id="desmos-panel" aria-hidden="true">
+    <div class="dp-bar" id="dp-bar" title="Drag to move">
+        <span class="dp-title"><span class="dp-grip">&#8942;&#8942;</span> Desmos</span>
+        <div class="dp-tools">
+            <button class="dp-btn active" id="dp-mode-graph" onclick="setDesmosMode('graph')">Graphing</button>
+            <button class="dp-btn" id="dp-mode-sci" onclick="setDesmosMode('scientific')">Scientific</button>
+            <button class="dp-btn" id="dp-expand" onclick="toggleDesmosExpand()" title="Expand the calculator window">Expand</button>
+        </div>
+        <button class="dp-close" onclick="toggleDesmos()" aria-label="Close calculator">&times;</button>
+    </div>
+    <div class="dp-body" id="dp-body"><div class="dp-calc" id="desmos-calc"></div></div>
+    <div class="dp-handle dp-n"  data-dir="n"></div><div class="dp-handle dp-s"  data-dir="s"></div>
+    <div class="dp-handle dp-e"  data-dir="e"></div><div class="dp-handle dp-w"  data-dir="w"></div>
+    <div class="dp-handle dp-ne" data-dir="ne"></div><div class="dp-handle dp-nw" data-dir="nw"></div>
+    <div class="dp-handle dp-se" data-dir="se"></div><div class="dp-handle dp-sw" data-dir="sw"></div>
+</div>
+
+<script>
+var STEPS = [{"ess": true, "name": "Rule 1: Read the parabola in any form", "rule": "$y = ax^2 + bx + c$ &nbsp;·&nbsp; $y = a(x - r_1)(x - r_2)$ &nbsp;·&nbsp; $y = a(x - h)^2 + k$", "say": "Standard form shows the $y$-intercept, factored form shows the $x$-intercepts, vertex form shows the vertex. Every form is the same parabola, and the SAT's favorite version of this rule is a question that hands you one form and asks which <em>equivalent<\/em> form displays a particular feature as a constant.", "prob": "The function $f$ is defined by <span class=\\\"nw\\\">$f(x) = x^2 - 6x + 5$.<\/span> Which equivalent form of $f(x)$ displays the $x$-intercepts of the graph as constants, and which displays the vertex as constants?", "sol": "<strong>$x$-intercepts: factor.<\/strong> Two numbers with product $5$ and sum <span class=\\\"nw\\\">$-6$:<\/span> $-1$ and <span class=\\\"nw\\\">$-5$.<\/span> <span class=\\\"nw\\\">$f(x) = (x - 1)(x - 5)$,<\/span> so the intercepts are $1$ and <span class=\\\"nw\\\">$5$.<\/span><br><strong>Vertex: complete the square.<\/strong> $x^2 - 6x + 5 = (x - 3)^2 - 9 + 5 = (x - 3)^2 - 4$, vertex <span class=\\\"nw\\\">$(3, -4)$.<\/span> Check with the roots: the vertex sits halfway between $1$ and <span class=\\\"nw\\\">$5$,<\/span> at <span class=\\\"nw\\\">$x = 3$.<\/span> ✓", "trap": "Picking $(x - 3)^2 + 5$ because it “keeps the $5$.” The $5$ is the $y$-intercept of standard form; it is not $k$. Expand your choice back out: $(x - 3)^2 + 5 = x^2 - 6x + 14$, which is a different parabola.", "micro": {"q": "The $y$-intercept of $y = 2(x - 3)^2 - 8$ is $y =$", "accept": ["10"], "exp": "Set <span class=\\\"nw\\\">$x = 0$:<\/span> <span class=\\\"nw\\\">$2(0 - 3)^2 - 8 = 18 - 8 = 10$.<\/span> The $-8$ is the minimum value, not the $y$-intercept."}}, {"ess": true, "name": "Rule 2: Factor, then zero-product", "rule": "$(x - r_1)(x - r_2) = 0$ &nbsp;means&nbsp; $x = r_1$ or $x = r_2$", "say": "Move everything to one side so the equation equals zero, pull any common factor, then factor the trinomial: two numbers with product $ac$ and sum <span class=\\\"nw\\\">$b$.<\/span> When $a = 1$ they go straight into the parentheses; when $a \\neq 1$, split the middle term and group. Each factor set to zero is one solution.", "prob": "What are the solutions of the equation <span class=\\\"nw\\\">$2x^2 + 5x - 12 = 0$?<\/span>", "sol": "<strong>Step 1: product and sum.<\/strong> $ac = -24$ and <span class=\\\"nw\\\">$b = 5$:<\/span> the numbers are $8$ and <span class=\\\"nw\\\">$-3$.<\/span><br><strong>Step 2: split and group.<\/strong> $2x^2 + 8x - 3x - 12 = 2x(x + 4) - 3(x + 4) = (2x - 3)(x + 4)$.<br><strong>Step 3: each factor to zero.<\/strong> $2x - 3 = 0$ gives <span class=\\\"nw\\\">$x = \\tfrac{3}{2}$;<\/span> $x + 4 = 0$ gives <span class=\\\"nw\\\">$x = -4$.<\/span> Check: $2(16) - 20 - 12 = 0$. ✓", "trap": "Reading the solutions off the factors with the signs as written: $(2x - 3)(x + 4)$ does not have roots $-3$ and <span class=\\\"nw\\\">$4$.<\/span> And on a student-produced response that asks for “the positive solution,” $\\tfrac{3}{2}$ and $1.5$ both count; $3$ does not.", "micro": {"q": "The positive solution of $x^2 - 2x - 15 = 0$ is $x =$", "accept": ["5"], "exp": "$(x - 5)(x + 3) = 0$: product $-15$, sum <span class=\\\"nw\\\">$-2$.<\/span> The positive solution is <span class=\\\"nw\\\">$5$.<\/span>"}}, {"ess": true, "name": "Rule 2, continued: Squares and structure", "rule": "$a^2 - b^2 = (a + b)(a - b)$ &nbsp;·&nbsp; $a^2 \\pm 2ab + b^2 = (a \\pm b)^2$", "say": "The SAT's “equivalent expression” questions run on two patterns: a difference of squares and a perfect square. Spot them by the missing middle term or by a middle term that is twice the product of two square roots. Often the move is to expand what you are given, regroup, and recognize a square, not to solve anything.", "prob": "Which of the following is equivalent to <span class=\\\"nw\\\">$\\left(n - \\dfrac{1}{n}\\right)^2 + 4$?<\/span> &nbsp; (A) $4$ &nbsp; (B) $\\left(n + \\dfrac{1}{n}\\right)^2$ &nbsp; (C) $n^2 + \\dfrac{1}{n^2}$ &nbsp; (D) $n^2 - \\dfrac{1}{n^2}$", "sol": "<strong>Step 1: expand the square.<\/strong> $\\left(n - \\tfrac{1}{n}\\right)^2 = n^2 - 2 \\cdot n \\cdot \\tfrac{1}{n} + \\tfrac{1}{n^2} = n^2 - 2 + \\tfrac{1}{n^2}$.<br><strong>Step 2: add the 4.<\/strong> $n^2 + 2 + \\tfrac{1}{n^2}$.<br><strong>Step 3: recognize a perfect square.<\/strong> The middle term $2$ is $2 \\cdot n \\cdot \\tfrac{1}{n}$, so this is <span class=\\\"nw\\\">$\\left(n + \\tfrac{1}{n}\\right)^2$.<\/span> Choice B.<br><strong>Same family:<\/strong> $x^2 - y^2 = 24$ with positive integers is $(x - y)(x + y) = 24$. Both factors must be even or both odd: $2 \\cdot 12$ gives $x = 7$ and <span class=\\\"nw\\\">$y = 5$;<\/span> $4 \\cdot 6$ gives $x = 5$ and <span class=\\\"nw\\\">$y = 1$.<\/span>", "trap": "Choice C is the expansion with the middle term dropped: $(a + b)^2$ is never <span class=\\\"nw\\\">$a^2 + b^2$.<\/span> If the pattern is not obvious, plug in $n = 2$: the original is $\\left(\\tfrac{3}{2}\\right)^2 + 4 = \\tfrac{25}{4}$, and only choice B gives <span class=\\\"nw\\\">$\\left(\\tfrac{5}{2}\\right)^2 = \\tfrac{25}{4}$.<\/span>", "micro": {"q": "If $x^2 - y^2 = 24$ and <span class=\\\"nw\\\">$x + y = 12$,<\/span> then $x - y =$", "accept": ["2"], "exp": "$x^2 - y^2 = (x + y)(x - y)$, so <span class=\\\"nw\\\">$12(x - y) = 24$<\/span> and <span class=\\\"nw\\\">$x - y = 2$.<\/span>"}}, {"ess": true, "name": "Rule 3: The discriminant counts the solutions", "rule": "$D = b^2 - 4ac$ &nbsp;·&nbsp; $D > 0$: two &nbsp;·&nbsp; $D = 0$: one &nbsp;·&nbsp; $D < 0$: none", "say": "The discriminant is the part under the root in the quadratic formula, and its sign is all the SAT usually wants: two real solutions, one (a double root, the graph tangent to the $x$-axis), or none (the graph never reaches the $x$-axis). Any question with “how many solutions,” “exactly one,” “no real solutions,” or “for what value of $k$” is a discriminant question.", "prob": "Which of the following is true about the graph of $y = 2x^2 - 6x + 3$ in the $xy$-plane? &nbsp; (A) It is tangent to the $x$-axis. &nbsp; (B) It intersects the $x$-axis at two points. &nbsp; (C) It lies entirely above the $x$-axis. &nbsp; (D) It lies entirely below the $x$-axis.", "sol": "<strong>Step 1: the discriminant.<\/strong> $D = (-6)^2 - 4(2)(3) = 36 - 24 = 12$.<br><strong>Step 2: read the sign.<\/strong> $D > 0$, so there are two real roots and the graph crosses the $x$-axis twice. Choice B.<br><strong>If $D$ had been negative:<\/strong> $a = 2 > 0$ opens up, so the graph would sit entirely above the axis (choice C). The sign of $a$ decides above versus below.", "trap": "Reading $-6$ as $b$ but forgetting to square it, or computing $4ac$ with a sign error. Write $D$ out in full before simplifying; the arithmetic is the whole question. Desmos check: graph it and count the crossings.", "micro": {"q": "For what value of $k$ are the two roots of $x^2 + 2x + k = 0$ equal? $k =$", "accept": ["1"], "exp": "Equal roots means <span class=\\\"nw\\\">$D = 0$:<\/span> <span class=\\\"nw\\\">$4 - 4k = 0$,<\/span> so <span class=\\\"nw\\\">$k = 1$.<\/span> Then $x^2 + 2x + 1 = (x + 1)^2$, a double root at $-1$. ✓"}}, {"ess": true, "name": "Rule 3, continued: Tangent means $D = 0$", "rule": "set the equations equal, move to one side, then $b^2 - 4ac = 0$", "say": "“Tangent,” “touches at exactly one point,” and “the system has exactly one solution” all say the same thing: the combined quadratic has a double root. Set the two expressions for $y$ equal, bring everything to one side (this is where the unknown $k$ lands in $c$), and solve <span class=\\\"nw\\\">$D = 0$<\/span> for <span class=\\\"nw\\\">$k$.<\/span>", "fig": "tangent", "prob": "In the $xy$-plane above, the graph of $y = 2x + k$ is tangent to the graph of <span class=\\\"nw\\\">$y = x^2 - 4$,<\/span> where $k$ is a constant. What is the value of <span class=\\\"nw\\\">$k$?<\/span>", "sol": "<strong>Step 1: set them equal and move to one side.<\/strong> $x^2 - 4 = 2x + k$ gives <span class=\\\"nw\\\">$x^2 - 2x - (4 + k) = 0$.<\/span> Now $a = 1$, <span class=\\\"nw\\\">$b = -2$,<\/span> <span class=\\\"nw\\\">$c = -4 - k$.<\/span><br><strong>Step 2: tangent means $D = 0$.<\/strong> $(-2)^2 - 4(1)(-4 - k) = 4 + 16 + 4k = 20 + 4k = 0$, so <span class=\\\"nw\\\">$k = -5$.<\/span><br><strong>Check:<\/strong> $x^2 - 2x + 1 = (x - 1)^2$, a double root at <span class=\\\"nw\\\">$x = 1$,<\/span> where both graphs give <span class=\\\"nw\\\">$y = -3$.<\/span> ✓", "trap": "Using $b = -2$ with $c = -4$ and forgetting that $k$ moved to the left side with a minus sign. Rewrite the full equation set to zero and copy $a$, <span class=\\\"nw\\\">$b$,<\/span> $c$ from that line only.", "micro": {"q": "The graph of $y = x^2 + 6x + k$ is tangent to the $x$-axis. Then $k =$", "accept": ["9"], "exp": "Tangent to the $x$-axis means one root: <span class=\\\"nw\\\">$36 - 4k = 0$,<\/span> so <span class=\\\"nw\\\">$k = 9$.<\/span> Indeed $x^2 + 6x + 9 = (x + 3)^2$."}}, {"ess": true, "name": "Rule 4: Vertex, maximum, minimum", "rule": "$h = -\\dfrac{b}{2a} = \\dfrac{r_1 + r_2}{2}$ &nbsp;·&nbsp; $k = f(h)$", "say": "The vertex is on the axis of symmetry, halfway between the roots or any two inputs with equal outputs, and $-\\tfrac{b}{2a}$ finds it from standard form directly. Its $y$-value is the maximum (opens down) or minimum (opens up). In a word problem, the vertex is the highest point of a throw or the price that maximizes revenue, and the roots are when it lands or when revenue is zero.", "prob": "A ball is thrown upward from the top of a building. Its height above the ground, in feet, $t$ seconds after the throw is given by <span class=\\\"nw\\\">$h(t) = -16t^2 + 64t + 80$.<\/span> What is the maximum height of the ball, and at what time does the ball hit the ground?", "sol": "<strong>Step 1: the vertex.<\/strong> $t = -\\dfrac{b}{2a} = -\\dfrac{64}{2(-16)} = 2$ seconds. $h(2) = -64 + 128 + 80 = 144$ feet, the maximum since $a < 0$.<br><strong>Step 2: the ground is $h = 0$.<\/strong> $-16t^2 + 64t + 80 = 0$, divide by <span class=\\\"nw\\\">$-16$:<\/span> $t^2 - 4t - 5 = (t - 5)(t + 1) = 0$. The ball lands at <span class=\\\"nw\\\">$t = 5$<\/span> (the root $t = -1$ is before the throw).<br><strong>Read the rest for free:<\/strong> $h(0) = 80$ is the building's height, and the vertex at $t = 2$ with landing at $t = 5$ is not symmetric only because the ball starts $80$ feet up.", "trap": "Answering $2$ when the question asks for the maximum height, or $144$ when it asks when the maximum occurs. The vertex is a pair, $(h, k)$: one coordinate is a time, the other is a height, and the question picks one.", "micro": {"mc": true, "q": "Which form of $f(x) = x^2 - 8x + 10$ displays the minimum value of $f$ as a constant?", "opts": ["$f(x) = x(x - 8) + 10$", "$f(x) = (x - 4)^2 - 6$", "$f(x) = (x - 4)^2 + 10$", "$f(x) = (x - 2)(x - 6) - 2$"], "correct": 1, "exp": "Complete the square: $x^2 - 8x + 16 - 16 + 10 = (x - 4)^2 - 6$. The minimum value is <span class=\\\"nw\\\">$-6$,<\/span> at <span class=\\\"nw\\\">$x = 4$.<\/span>"}}, {"ess": true, "name": "Rule 5: A line meets a parabola", "rule": "set $y = y$, solve the quadratic &nbsp;·&nbsp; each root is an intersection", "say": "A system of a line and a parabola is one quadratic equation in disguise: substitute the line into the parabola, move everything to one side, factor. Each root is the $x$ of an intersection; the line gives you the <span class=\\\"nw\\\">$y$.<\/span> To count the solutions without finding them, use the discriminant of that same equation.", "fig": "sys", "prob": "$$y = 2x + 1$$ $$y = x^2 - 5x + 7$$ The graphs of the equations above intersect at two points in the $xy$-plane. What are the coordinates of the two points?", "sol": "<strong>Step 1: set the right sides equal.<\/strong> $x^2 - 5x + 7 = 2x + 1$.<br><strong>Step 2: one side, then factor.<\/strong> $x^2 - 7x + 6 = 0$ gives <span class=\\\"nw\\\">$(x - 1)(x - 6) = 0$,<\/span> so $x = 1$ or <span class=\\\"nw\\\">$x = 6$.<\/span><br><strong>Step 3: the line gives $y$.<\/strong> $y = 2(1) + 1 = 3$ and <span class=\\\"nw\\\">$y = 2(6) + 1 = 13$.<\/span> The points are $(1, 3)$ and <span class=\\\"nw\\\">$(6, 13)$.<\/span><br><strong>Desmos:<\/strong> graph both, click each intersection. Same answer in ten seconds.", "trap": "Stopping at $x = 1$ and <span class=\\\"nw\\\">$x = 6$<\/span> when the question asks for points, or for the <em>sum of the $y$-coordinates<\/em> ($3 + 13 = 16$). Read the last sentence of the question again before you type anything.", "micro": {"mc": true, "q": "How many solutions does the system $y = x^2 - x - 12$, $y = 3x$ have?", "opts": ["$0$", "$1$", "$2$", "Infinitely many"], "correct": 2, "exp": "$x^2 - x - 12 = 3x$ gives <span class=\\\"nw\\\">$x^2 - 4x - 12 = 0$,<\/span> with <span class=\\\"nw\\\">$D = 16 + 48 = 64 > 0$:<\/span> two solutions. (They are $x = 6$ and <span class=\\\"nw\\\">$x = -2$.)<\/span>"}}, {"ess": false, "name": "Rule 6: Sum and product of the roots", "rule": "$r_1 + r_2 = -\\dfrac{b}{a}$ &nbsp;·&nbsp; $r_1 r_2 = \\dfrac{c}{a}$", "say": "Expand $a(x - r_1)(x - r_2)$ and match it with <span class=\\\"nw\\\">$ax^2 + bx + c$:<\/span> the sum of the roots is $-\\tfrac{b}{a}$ and the product is <span class=\\\"nw\\\">$\\tfrac{c}{a}$,<\/span> with no solving required. It shines when one root is known and the constant is not, or when the question asks for a combination of the roots such as $\\tfrac{1}{r_1} + \\tfrac{1}{r_2}$ rather than the roots themselves.", "prob": "If one root of the quadratic equation $2x^2 + x - k = 0$ is <span class=\\\"nw\\\">$1$,<\/span> what is the other root of the equation? &nbsp; (A) $-\\tfrac{5}{2}$ &nbsp; (B) $-\\tfrac{3}{2}$ &nbsp; (C) $-\\tfrac{1}{2}$ &nbsp; (D) $\\tfrac{3}{2}$", "sol": "<strong>The sum route (no $k$ needed).<\/strong> The roots add to <span class=\\\"nw\\\">$-\\tfrac{b}{a} = -\\tfrac{1}{2}$.<\/span> One root is <span class=\\\"nw\\\">$1$,<\/span> so the other is <span class=\\\"nw\\\">$-\\tfrac{1}{2} - 1 = -\\tfrac{3}{2}$.<\/span> Choice B.<br><strong>The long route agrees.<\/strong> Plug in $x = 1$: $2 + 1 - k = 0$ gives <span class=\\\"nw\\\">$k = 3$,<\/span> and $2x^2 + x - 3 = (2x + 3)(x - 1)$ has roots $1$ and <span class=\\\"nw\\\">$-\\tfrac{3}{2}$.<\/span> ✓", "trap": "Using $-b$ instead of $-\\tfrac{b}{a}$ when $a \\neq 1$: the sum here is <span class=\\\"nw\\\">$-\\tfrac{1}{2}$,<\/span> not <span class=\\\"nw\\\">$-1$.<\/span> The product route also works: $\\tfrac{c}{a} = -\\tfrac{k}{2}$, but that needs $k$ first.", "micro": {"mc": true, "q": "If $\\alpha$ and $\\beta$ are the roots of <span class=\\\"nw\\\">$x^2 + 4x - 12 = 0$,<\/span> what is $\\dfrac{1}{\\alpha} + \\dfrac{1}{\\beta}$?", "opts": ["$\\tfrac{1}{4}$", "$\\tfrac{1}{3}$", "$\\tfrac{1}{2}$", "$\\tfrac{3}{2}$"], "correct": 1, "exp": "$\\dfrac{1}{\\alpha} + \\dfrac{1}{\\beta} = \\dfrac{\\alpha + \\beta}{\\alpha\\beta} = \\dfrac{-4}{-12} = \\tfrac{1}{3}$. Factoring agrees: the roots are $-6$ and <span class=\\\"nw\\\">$2$,<\/span> and $-\\tfrac{1}{6} + \\tfrac{1}{2} = \\tfrac{1}{3}$."}}, {"ess": false, "name": "Rule 7: Shifting and reflecting a parabola", "rule": "$f(x) + n$: up $n$ &nbsp;·&nbsp; $f(x - n)$: right $n$ &nbsp;·&nbsp; $-f(x)$: flip over the $x$-axis", "say": "Transformations move the vertex and nothing else about the shape: adding outside the function shifts up or down, subtracting inside shifts right (backwards from what it looks like), and a leading minus sign flips the parabola so a minimum becomes a maximum. Track the vertex and the sign of <span class=\\\"nw\\\">$a$;<\/span> everything else follows.", "prob": "The graph of $f(x) = (x - 2)^2 - 5$ is translated $3$ units to the left and $4$ units up to produce the graph of <span class=\\\"nw\\\">$g$.<\/span> What is the vertex of the graph of <span class=\\\"nw\\\">$g$,<\/span> and what is the minimum value of <span class=\\\"nw\\\">$g$?<\/span>", "sol": "<strong>Step 1: the original vertex.<\/strong> $(2, -5)$.<br><strong>Step 2: move it.<\/strong> Left $3$: $x = 2 - 3 = -1$. Up $4$: $y = -5 + 4 = -1$. Vertex <span class=\\\"nw\\\">$(-1, -1)$.<\/span><br><strong>Step 3: write $g$ if asked.<\/strong> $g(x) = f(x + 3) + 4 = (x + 1)^2 - 1$. The minimum value of $g$ is <span class=\\\"nw\\\">$-1$,<\/span> since $a = 1 > 0$.", "trap": "Shifting left by writing $(x - 3)$: left is <span class=\\\"nw\\\">$f(x + 3)$.<\/span> Check with the vertex: $(x + 1)^2$ is zero at <span class=\\\"nw\\\">$x = -1$,<\/span> which is where the new vertex should be.", "micro": {"q": "If $f(x) = x^2 - 6x + 11$ and <span class=\\\"nw\\\">$g(x) = f(x) + 4$,<\/span> the minimum value of $g$ is", "accept": ["6"], "exp": "$f$ has its minimum at $x = 3$: <span class=\\\"nw\\\">$f(3) = 9 - 18 + 11 = 2$.<\/span> Shifting up $4$ makes the minimum <span class=\\\"nw\\\">$6$.<\/span>"}}];
+var FLUENCY = [{"sec": "A. Read the parabola", "items": [{"q": "The $y$-intercept of $y = 3(x - 2)^2 - 7$ is $y =$", "accept": ["5"], "exp": "Set <span class=\\\"nw\\\">$x = 0$:<\/span> <span class=\\\"nw\\\">$3(4) - 7 = 5$.<\/span>"}, {"q": "The $x$-coordinate of the vertex of $y = x^2 + 8x - 3$ is $x =$", "accept": ["-4"], "exp": "$-\\dfrac{b}{2a} = -\\dfrac{8}{2} = -4$."}, {"q": "The larger $x$-intercept of $y = (x + 2)(x - 7)$ is $x =$", "accept": ["7"], "exp": "The roots are $-2$ and <span class=\\\"nw\\\">$7$<\/span> (signs flipped from the factors)."}, {"mc": true, "q": "The parabola with vertex $(3, -2)$ and $a = 1$ is", "opts": ["$y = (x + 3)^2 - 2$", "$y = (x - 3)^2 - 2$", "$y = (x - 3)^2 + 2$", "$y = (x - 2)^2 + 3$"], "correct": 1, "exp": "Vertex form $y = a(x - h)^2 + k$ with $h = 3$ and <span class=\\\"nw\\\">$k = -2$:<\/span> <span class=\\\"nw\\\">$y = (x - 3)^2 - 2$.<\/span>"}]}, {"sec": "B. Factor and solve", "items": [{"q": "The positive solution of $x^2 - 5x - 14 = 0$ is $x =$", "accept": ["7"], "exp": "$(x - 7)(x + 2) = 0$: product $-14$, sum <span class=\\\"nw\\\">$-5$.<\/span>"}, {"q": "The nonzero solution of $3x^2 - 12x = 0$ is $x =$", "accept": ["4"], "exp": "Factor, don't divide: $3x(x - 4) = 0$, so $x = 0$ or <span class=\\\"nw\\\">$x = 4$.<\/span>"}, {"mc": true, "q": "$4x^2 - 25$ is equivalent to", "opts": ["$(2x - 5)(2x + 5)$", "$(2x - 5)^2$", "$(4x - 5)(x + 5)$", "$(2x - 25)(2x + 1)$"], "correct": 0, "exp": "A difference of squares: $(2x)^2 - 5^2 = (2x - 5)(2x + 5)$."}, {"q": "The only solution of $x^2 - 10x + 25 = 0$ is $x =$", "accept": ["5"], "exp": "A perfect square: $(x - 5)^2 = 0$, a double root at <span class=\\\"nw\\\">$5$.<\/span>"}]}, {"sec": "C. The discriminant", "items": [{"q": "The discriminant of $x^2 - 6x + 7 = 0$ is", "accept": ["8"], "exp": "$b^2 - 4ac = 36 - 28 = 8$. Two irrational solutions."}, {"q": "The number of real solutions of $2x^2 + 3x + 5 = 0$ is", "accept": ["0"], "exp": "$D = 9 - 40 = -31 < 0$: no real solutions."}, {"q": "If $x^2 - 8x + k = 0$ has exactly one solution, then $k =$", "accept": ["16"], "exp": "$D = 64 - 4k = 0$ gives <span class=\\\"nw\\\">$k = 16$,<\/span> and $(x - 4)^2 = 0$. ✓"}, {"mc": true, "q": "The graph of $y = x^2 + 4x + 7$", "opts": ["is tangent to the $x$-axis", "crosses the $x$-axis at two points", "lies entirely above the $x$-axis", "lies entirely below the $x$-axis"], "correct": 2, "exp": "$D = 16 - 28 < 0$, so no $x$-intercepts; $a = 1 > 0$ opens up, so the graph is entirely above the axis."}]}, {"sec": "D. Systems, sums, products", "items": [{"q": "The graphs of $y = x^2$ and $y = 2x + 3$ meet at two points. The larger $x$-coordinate is $x =$", "accept": ["3"], "exp": "$x^2 - 2x - 3 = (x - 3)(x + 1) = 0$: <span class=\\\"nw\\\">$x = 3$<\/span> or <span class=\\\"nw\\\">$x = -1$.<\/span>"}, {"q": "The number of solutions of the system $y = x^2 + 1$, $y = -x - 2$ is", "accept": ["0"], "exp": "$x^2 + x + 3 = 0$ has <span class=\\\"nw\\\">$D = 1 - 12 < 0$:<\/span> the line misses the parabola."}, {"q": "The sum of the solutions of $3x^2 - 12x + 5 = 0$ is", "accept": ["4"], "exp": "$-\\dfrac{b}{a} = -\\dfrac{-12}{3} = 4$. No need to solve."}, {"q": "The product of the solutions of $2x^2 + 7x - 6 = 0$ is", "accept": ["-3"], "exp": "$\\dfrac{c}{a} = \\dfrac{-6}{2} = -3$."}]}];
+var GAUNTLET = [{"ess": true, "type": "mc", "diff": "Easy", "stem": "The function $f$ is defined by <span class=\\\"nw\\\">$f(x) = (x - 3)(x + 5)$.<\/span> Which of the following are the $x$-intercepts of the graph of $y = f(x)$ in the $xy$-plane?", "options": ["$(-3, 0)$ and $(5, 0)$", "$(0, -15)$ only", "$(3, 0)$ and $(-5, 0)$", "$(0, 3)$ and $(0, -5)$"], "correct": 2, "desmos": ["y=(x-3)(x+5)"], "sol": "<strong>Given:<\/strong> factored form.<br><br>Each factor set to zero: $x - 3 = 0$ gives <span class=\\\"nw\\\">$x = 3$,<\/span> $x + 5 = 0$ gives <span class=\\\"nw\\\">$x = -5$.<\/span> The $x$-intercepts are $(3, 0)$ and <span class=\\\"nw\\\">$(-5, 0)$.<\/span>", "trap": "Choice A copies the signs from inside the parentheses. Choice D swaps the coordinates: $x$-intercepts have <span class=\\\"nw\\\">$y = 0$.<\/span> Choice B is the $y$-intercept, $f(0) = -15$."}, {"ess": true, "type": "ne", "diff": "Easy", "stem": "What is the sum of the solutions to the equation <span class=\\\"nw\\\">$x^2 - 7x + 12 = 0$?<\/span>", "label": "Sum $=$", "accept": ["7"], "desmos": ["y=x^2-7x+12"], "sol": "<strong>Given:<\/strong> a trinomial with $a = 1$.<br><br>$(x - 3)(x - 4) = 0$, so the solutions are $3$ and <span class=\\\"nw\\\">$4$,<\/span> with sum <span class=\\\"nw\\\">$7$.<\/span> Rule 6 says the same thing in one step: the sum is <span class=\\\"nw\\\">$-\\tfrac{b}{a} = 7$.<\/span>", "trap": "Typing one solution instead of the sum. Easy items are lost to the last three words of the question."}, {"ess": true, "type": "mc", "diff": "Easy to medium", "stem": "The function $h(t) = -16t^2 + 48t + 160$ gives the height <span class=\\\"nw\\\">$h$,<\/span> in feet, of a ball $t$ seconds after it is thrown upward from the top of a building. Which of the following is the best interpretation of $160$ in this context?", "options": ["The maximum height of the ball, in feet", "The height of the building, in feet", "The number of seconds the ball is in the air", "The speed at which the ball is thrown, in feet per second"], "correct": 1, "desmos": ["y=-16x^2+48x+160\\left\\{0\\le x\\le 5\\right\\}", "(0,160)"], "sol": "<strong>Given:<\/strong> standard form, with $c = 160$.<br><br>$h(0) = 160$: the height at the moment of the throw, which is the top of the building. The maximum height is at the vertex, $t = \\tfrac{48}{32} = 1.5$, where $h = 196$, so choice A is a different number.", "trap": "The constant term of a quadratic model is the starting value, exactly as the intercept was in the linear sheet. The maximum lives at the vertex, not in any single coefficient."}, {"ess": true, "type": "mc", "diff": "Medium", "stem": "$$y = x^2 - 6x + 5$$ Which of the following is an equivalent form of the equation above that displays the coordinates of the vertex of the parabola as constants?", "options": ["$y = (x - 1)(x - 5)$", "$y = x(x - 6) + 5$", "$y = (x - 3)^2 + 5$", "$y = (x - 3)^2 - 4$"], "correct": 3, "desmos": ["y=x^2-6x+5", "(3,-4)"], "sol": "<strong>Given:<\/strong> standard form; wanted: vertex form.<br><br>Complete the square: $x^2 - 6x + 9 - 9 + 5 = (x - 3)^2 - 4$. The vertex is <span class=\\\"nw\\\">$(3, -4)$.<\/span> Check: $-\\tfrac{b}{2a} = 3$ and $y(3) = 9 - 18 + 5 = -4$. ✓", "trap": "Choice C has the right $h$ and the wrong <span class=\\\"nw\\\">$k$:<\/span> it expands to <span class=\\\"nw\\\">$x^2 - 6x + 14$,<\/span> a different parabola. Choice A displays the $x$-intercepts, and the SAT asks about those in the very next question of this type."}, {"ess": true, "type": "ne", "diff": "Medium", "stem": "$$y = x^2 - 2x - 8$$ $$y = x + 2$$ The graphs of the equations above intersect at two points in the $xy$-plane. What is the $x$-coordinate of the point of intersection with the greater $x$-coordinate?", "label": "$x =$", "accept": ["5"], "desmos": ["y=x^2-2x-8", "y=x+2"], "sol": "<strong>Given:<\/strong> a line and a parabola.<br><br>$x^2 - 2x - 8 = x + 2$ gives <span class=\\\"nw\\\">$x^2 - 3x - 10 = 0$,<\/span> so <span class=\\\"nw\\\">$(x - 5)(x + 2) = 0$<\/span> and <span class=\\\"nw\\\">$x = 5$<\/span> or <span class=\\\"nw\\\">$x = -2$.<\/span> The greater is <span class=\\\"nw\\\">$5$<\/span> (the point is $(5, 7)$).", "trap": "Forgetting to move the $x + 2$ across: $x^2 - 2x - 8 = 0$ has roots $4$ and <span class=\\\"nw\\\">$-2$,<\/span> and $4$ is the standard wrong answer. Desmos: graph both, click the right-hand intersection."}, {"ess": true, "type": "mc", "diff": "Medium", "stem": "Which of the following is true about the graph of $y = 3x^2 - 2x + 4$ in the $xy$-plane?", "options": ["It is tangent to the $x$-axis.", "It intersects the $x$-axis at two points.", "It lies entirely above the $x$-axis.", "It lies entirely below the $x$-axis."], "correct": 2, "desmos": ["y=3x^2-2x+4"], "sol": "<strong>Given:<\/strong> standard form; asked: how many $x$-intercepts.<br><br>$D = (-2)^2 - 4(3)(4) = 4 - 48 = -44 < 0$, so no $x$-intercepts. $a = 3 > 0$ opens up, so the whole graph is above the axis.", "trap": "A negative discriminant says the graph never reaches the axis, but not which side it is on. That is the sign of <span class=\\\"nw\\\">$a$.<\/span> Choice D would need $a < 0$."}, {"ess": true, "type": "ne", "diff": "Medium to high", "stem": "The function $f$ is defined by <span class=\\\"nw\\\">$f(x) = 2x^2 + 12x + k$,<\/span> where $k$ is a constant. If the minimum value of $f$ is <span class=\\\"nw\\\">$-5$,<\/span> what is the value of <span class=\\\"nw\\\">$k$?<\/span>", "label": "$k =$", "accept": ["13"], "desmos": ["y=2x^2+12x+13", "(-3,-5)"], "sol": "<strong>Given:<\/strong> the minimum value, which is $k$ in vertex form, is <span class=\\\"nw\\\">$-5$.<\/span><br><br>The vertex is at $x = -\\tfrac{12}{4} = -3$, and $f(-3) = 18 - 36 + k = k - 18$. Set that equal to the minimum: <span class=\\\"nw\\\">$k - 18 = -5$,<\/span> so <span class=\\\"nw\\\">$k = 13$.<\/span> Check by completing the square: $2(x + 3)^2 - 18 + 13 = 2(x + 3)^2 - 5$. ✓", "trap": "Factoring out the $2$ changes what you subtract: $2(x^2 + 6x) + k = 2(x + 3)^2 - 2 \\cdot 9 + k$. Forgetting that factor gives $k = 4$. Finding the vertex with $-\\tfrac{b}{2a}$ and evaluating avoids the slip."}, {"ess": true, "type": "mc", "diff": "High medium", "stem": "$$y = x^2 + 2x + 5$$ $$y = -2x + 1$$ How many solutions does the system of equations above have?", "options": ["Zero", "Exactly one", "Exactly two", "Infinitely many"], "correct": 1, "desmos": ["y=x^2+2x+5", "y=-2x+1"], "sol": "<strong>Given:<\/strong> a line and a parabola; asked only how many times they meet.<br><br>$x^2 + 2x + 5 = -2x + 1$ gives <span class=\\\"nw\\\">$x^2 + 4x + 4 = 0$,<\/span> which is <span class=\\\"nw\\\">$(x + 2)^2 = 0$:<\/span> $D = 16 - 16 = 0$. One solution, at <span class=\\\"nw\\\">$(-2, 5)$,<\/span> where the line is tangent to the parabola.", "trap": "“Infinitely many” never happens for a line and a parabola; they are different shapes. The real choice is between zero, one, and two, and the discriminant of the combined equation decides."}, {"ess": true, "type": "mc", "diff": "High medium", "fig": "g9", "stem": "In the $xy$-plane above, the graphs of $f(x) = x + k$ and $g(x) = x^2 - 4x + 8$ are tangent to each other, where $k$ is a constant. What is the value of <span class=\\\"nw\\\">$k$?<\/span>", "options": ["$\\dfrac{1}{3}$", "$\\dfrac{1}{2}$", "$\\dfrac{3}{2}$", "$\\dfrac{7}{4}$"], "correct": 3, "desmos": ["y=x^2-4x+8", "y=x+k", "k=1.75"], "sol": "<strong>Given:<\/strong> tangent, so the combined equation has <span class=\\\"nw\\\">$D = 0$.<\/span><br><br>$x^2 - 4x + 8 = x + k$ gives <span class=\\\"nw\\\">$x^2 - 5x + (8 - k) = 0$.<\/span> Then $D = 25 - 4(8 - k) = 25 - 32 + 4k = 4k - 7 = 0$, so <span class=\\\"nw\\\">$k = \\tfrac{7}{4}$.<\/span> The point of tangency is at $x = \\tfrac{5}{2}$, where both give <span class=\\\"nw\\\">$y = \\tfrac{17}{4}$.<\/span>", "trap": "The constant is $8 - k$, not <span class=\\\"nw\\\">$8$:<\/span> the unknown has to cross to the left side before you read <span class=\\\"nw\\\">$c$.<\/span> In Desmos, the load adds a slider for $k$; drag it and watch the line lift off the curve on either side of $1.75$."}, {"ess": true, "type": "ne", "diff": "High medium", "fig": "g10", "stem": "The graphs of the functions $f(x) = x + 2$ and $g(x) = -x^2 + 4$ are shown in the $xy$-plane above. Points $A$ and $C$ are the $x$-intercepts of $f$ and <span class=\\\"nw\\\">$g$,<\/span> respectively, and $B$ is a point of intersection of the two graphs. What is the area of triangle <span class=\\\"nw\\\">$ABC$?<\/span>", "label": "Area $=$", "accept": ["6"], "desmos": ["y=x+2", "y=-x^2+4", "(-2,0),(1,3),(2,0)"], "sol": "<strong>Given:<\/strong> three vertices to find, then base on the $x$-axis.<br><br>$A$: $x + 2 = 0$, so <span class=\\\"nw\\\">$A = (-2, 0)$.<\/span> $C$: $-x^2 + 4 = 0$ with $x > 0$, so <span class=\\\"nw\\\">$C = (2, 0)$.<\/span> $B$: $x + 2 = -x^2 + 4$ gives $x^2 + x - 2 = (x + 2)(x - 1) = 0$; the intersection above the axis is <span class=\\\"nw\\\">$B = (1, 3)$.<\/span> Base $AC = 4$, height <span class=\\\"nw\\\">$3$:<\/span> area $= \\tfrac{1}{2}(4)(3) = 6$.", "trap": "The other intersection, $x = -2$, is point $A$ itself: the line and the parabola share that $x$-intercept. The height is the $y$-coordinate of <span class=\\\"nw\\\">$B$,<\/span> not the distance along the line."}];
+var CHALLENGE = [{"ess": true, "type": "ne", "diff": "High medium", "fig": "c1", "stem": "In the $xy$-plane above, the graphs of $y = x^2 - 4x + 5$ and $y = x + 1$ intersect at points $B$ and <span class=\\\"nw\\\">$C$.<\/span> Points $A$ and $D$ lie on the $x$-axis directly below $B$ and <span class=\\\"nw\\\">$C$.<\/span> What is the area of quadrilateral <span class=\\\"nw\\\">$ABCD$?<\/span>", "label": "Area $=$", "accept": ["10.5", "21/2"], "desmos": ["y=x^2-4x+5", "y=x+1", "(1,2),(4,5),(1,0),(4,0)"], "sol": "<strong>Given:<\/strong> the corners are the intersections and their feet on the $x$-axis.<br><br>$x^2 - 4x + 5 = x + 1$ gives <span class=\\\"nw\\\">$x^2 - 5x + 4 = (x - 1)(x - 4) = 0$.<\/span> From the line, <span class=\\\"nw\\\">$B = (1, 2)$<\/span> and <span class=\\\"nw\\\">$C = (4, 5)$,<\/span> so $A = (1, 0)$ and <span class=\\\"nw\\\">$D = (4, 0)$.<\/span> $ABCD$ is a trapezoid with parallel vertical sides $AB = 2$ and $DC = 5$ and width <span class=\\\"nw\\\">$AD = 3$:<\/span> area $= \\tfrac{1}{2}(2 + 5)(3) = 10.5$.", "trap": "The parabola is scenery once the corners are found; the region is bounded by the line and the axis. If the trapezoid formula is not automatic, split it: a $3 \\times 2$ rectangle plus a triangle with legs $3$ and <span class=\\\"nw\\\">$3$,<\/span> $6 + 4.5 = 10.5$."}, {"ess": true, "type": "mc", "diff": "High medium", "stem": "If <span class=\\\"nw\\\">$(x - 3)(x + 3) = a$,<\/span> then $(2x - 6)(x + 3) =$", "options": ["$2a$", "$3a$", "$4a$", "$6a$"], "correct": 0, "sol": "<strong>Given:<\/strong> a known product inside a new one.<br><br>$2x - 6 = 2(x - 3)$, so $(2x - 6)(x + 3) = 2(x - 3)(x + 3) = 2a$.", "trap": "Expanding both sides ($x^2 - 9 = a$ and $2x^2 - 18$) works too and lands on the same <span class=\\\"nw\\\">$2a$,<\/span> but it costs a minute. Factor the new expression until the old one appears; the SAT writes these so that it does.", "extrasIntro": "Structure questions hide a known expression inside a new one. Factor, expand, or complete the square until the known piece shows up. Three more reps.", "extras": [{"type": "ne", "q": "If <span class=\\\"nw\\\">$x^2 - 9 = 7$,<\/span> then $(x - 3)(x + 3) =$", "label": "$=$", "accept": ["7"], "exp": "$(x - 3)(x + 3) = x^2 - 9$, which is given as <span class=\\\"nw\\\">$7$.<\/span> No solving."}, {"type": "ne", "q": "If <span class=\\\"nw\\\">$(x + 2)^2 = 11$,<\/span> then $x^2 + 4x =$", "label": "$=$", "accept": ["7"], "exp": "$(x + 2)^2 = x^2 + 4x + 4 = 11$, so <span class=\\\"nw\\\">$x^2 + 4x = 7$.<\/span>"}, {"type": "ne", "q": "If <span class=\\\"nw\\\">$x^2 + 6x = 16$,<\/span> then $(x + 3)^2 =$", "label": "$=$", "accept": ["25"], "exp": "Complete the square: $(x + 3)^2 = x^2 + 6x + 9 = 16 + 9 = 25$."}]}, {"ess": true, "type": "mc", "diff": "High medium", "stem": "Which of the following is equivalent to <span class=\\\"nw\\\">$\\left(n - \\dfrac{1}{n}\\right)^2 + 4$?<\/span>", "options": ["$4$", "$\\left(n + \\dfrac{1}{n}\\right)^2$", "$n^2 + \\dfrac{1}{n^2}$", "$n^2 - \\dfrac{1}{n^2}$"], "correct": 1, "sol": "<strong>Given:<\/strong> a perfect square in disguise.<br><br>$\\left(n - \\tfrac{1}{n}\\right)^2 = n^2 - 2 + \\tfrac{1}{n^2}$. Adding $4$: <span class=\\\"nw\\\">$n^2 + 2 + \\tfrac{1}{n^2}$,<\/span> and the middle term $2 = 2 \\cdot n \\cdot \\tfrac{1}{n}$ makes this <span class=\\\"nw\\\">$\\left(n + \\tfrac{1}{n}\\right)^2$.<\/span>", "trap": "Choice C drops the middle term. When the algebra is not obvious, test a number: with $n = 2$ the original is $\\tfrac{9}{4} + 4 = \\tfrac{25}{4}$, and only choice B matches."}, {"ess": false, "type": "ne", "diff": "Hard", "stem": "The equation $3x^2 - 7x + c = 0$, where $c$ is a constant, has $x = 2$ as one of its solutions. What is the other solution?", "label": "$x =$", "accept": ["1/3", "0.333", ".333", "0.3333", ".3333", "0.33", ".33"], "desmos": ["y=3x^2-7x+2"], "sol": "<strong>Given:<\/strong> one root and no constant.<br><br>Sum of the roots $= -\\tfrac{b}{a} = \\tfrac{7}{3}$, so the other root is <span class=\\\"nw\\\">$\\tfrac{7}{3} - 2 = \\tfrac{1}{3}$.<\/span> The long route agrees: $x = 2$ gives $12 - 14 + c = 0$, so <span class=\\\"nw\\\">$c = 2$,<\/span> and $3x^2 - 7x + 2 = (3x - 1)(x - 2)$.", "trap": "On a student-produced response, $1/3$ and $.333$ both count; $0.3$ does not. Solving for $c$ first is fine but doubles the work; the sum of the roots skips it.", "extrasIntro": "Sum and product questions ask about a combination of the roots, never the roots themselves. Write the combination in terms of $r_1 + r_2$ and <span class=\\\"nw\\\">$r_1 r_2$,<\/span> then read those off the coefficients. Three more reps.", "extras": [{"type": "ne", "q": "If $\\alpha$ and $\\beta$ are the roots of <span class=\\\"nw\\\">$x^2 + 4x - 12 = 0$,<\/span> then $\\dfrac{1}{\\alpha} + \\dfrac{1}{\\beta} =$", "label": "$=$", "accept": ["1/3", "0.333", ".333", "0.3333", ".3333", "0.33", ".33"], "exp": "$\\dfrac{\\alpha + \\beta}{\\alpha\\beta} = \\dfrac{-4}{-12} = \\tfrac{1}{3}$."}, {"type": "ne", "q": "If $r$ and $s$ are the solutions of <span class=\\\"nw\\\">$x^2 - 5x + 6 = 0$,<\/span> then $r^2 + s^2 =$", "label": "$=$", "accept": ["13"], "exp": "$(r + s)^2 - 2rs = 25 - 12 = 13$. (The roots are $2$ and <span class=\\\"nw\\\">$3$:<\/span> $4 + 9 = 13$. ✓)"}, {"type": "ne", "q": "The equation $x^2 + bx + c = 0$ has solutions $2$ and <span class=\\\"nw\\\">$-5$.<\/span> Then $b =$", "label": "$b =$", "accept": ["3"], "exp": "Sum $= 2 + (-5) = -3 = -b$, so <span class=\\\"nw\\\">$b = 3$.<\/span> (And $c = -10$: the equation is $(x - 2)(x + 5) = 0$.)"}]}, {"ess": true, "type": "ne", "diff": "Hard", "stem": "If <span class=\\\"nw\\\">$x^2 - y^2 = 24$,<\/span> where $x$ and $y$ are positive integers with <span class=\\\"nw\\\">$x > y$,<\/span> what is one possible value of <span class=\\\"nw\\\">$x$?<\/span>", "label": "$x =$", "accept": ["7", "5"], "sol": "<strong>Given:<\/strong> a difference of squares equal to a number, with integer unknowns.<br><br>$(x - y)(x + y) = 24$. Since $x + y$ and $x - y$ differ by <span class=\\\"nw\\\">$2y$,<\/span> an even number, both factors are even or both are odd; $24$ has no odd-by-odd factorization, so both are even: $2 \\cdot 12$ or <span class=\\\"nw\\\">$4 \\cdot 6$.<\/span> From $x - y = 2$, <span class=\\\"nw\\\">$x + y = 12$:<\/span> $x = 7$, <span class=\\\"nw\\\">$y = 5$.<\/span> From $x - y = 4$, <span class=\\\"nw\\\">$x + y = 6$:<\/span> $x = 5$, <span class=\\\"nw\\\">$y = 1$.<\/span> Either $7$ or $5$ is accepted.", "trap": "$1 \\cdot 24$ and $3 \\cdot 8$ look available, but they give fractions for $x$ (the two factors must add to an even number, $2x$). Check: $49 - 25 = 24$ and $25 - 1 = 24$. ✓"}, {"ess": true, "type": "mc", "diff": "Hard", "stem": "In the $xy$-plane, the graph of a quadratic function $f$ has $x$-intercepts at $(-2, 0)$ and $(6, 0)$ and passes through the point <span class=\\\"nw\\\">$(0, -6)$.<\/span> What is the minimum value of <span class=\\\"nw\\\">$f$?<\/span>", "options": ["$-8$", "$-6$", "$-16$", "$-4$"], "correct": 0, "desmos": ["y=\\frac{1}{2}(x+2)(x-6)", "(0,-6),(2,-8)"], "sol": "<strong>Given:<\/strong> two roots and one more point, so factored form with an unknown <span class=\\\"nw\\\">$a$.<\/span><br><br>$f(x) = a(x + 2)(x - 6)$. At $x = 0$: $a(2)(-6) = -12a = -6$, so <span class=\\\"nw\\\">$a = \\tfrac{1}{2}$.<\/span> The vertex is halfway between the roots, at <span class=\\\"nw\\\">$x = 2$:<\/span> $f(2) = \\tfrac{1}{2}(4)(-4) = -8$. Since $a > 0$ this is the minimum.", "trap": "$-6$ is the $y$-intercept, not the minimum: the vertex is at $x = 2$, not <span class=\\\"nw\\\">$x = 0$.<\/span> $-16$ is what you get with $a = 1$, before using the third point. Two roots pin down the axis; the extra point pins down <span class=\\\"nw\\\">$a$.<\/span>", "extrasIntro": "Roots pin down the axis of symmetry: the vertex is always at their average. Three more reps.", "extras": [{"type": "ne", "q": "The $x$-coordinate of the vertex of $y = (x - 1)(x - 9)$ is $x =$", "label": "$x =$", "accept": ["5"], "exp": "Halfway between the roots $1$ and <span class=\\\"nw\\\">$9$:<\/span> <span class=\\\"nw\\\">$x = 5$.<\/span>"}, {"type": "ne", "q": "The function $f(x) = x^2 + bx + 12$ has <span class=\\\"nw\\\">$f(2) = 0$.<\/span> The other zero of $f$ is $x =$", "label": "$x =$", "accept": ["6"], "exp": "<strong>Product of the roots<\/strong> $= \\tfrac{c}{a} = 12$, so the other root is <span class=\\\"nw\\\">$\\tfrac{12}{2} = 6$.<\/span> (Then $b = -8$: $x^2 - 8x + 12 = (x - 2)(x - 6)$.)"}, {"type": "ne", "q": "A parabola has $x$-intercepts $-3$ and $5$ and passes through <span class=\\\"nw\\\">$(0, 30)$.<\/span> Its maximum value is", "label": "Max $=$", "accept": ["32"], "exp": "<strong>Step 1: $a$.<\/strong> $y = a(x + 3)(x - 5)$; at $x = 0$, $-15a = 30$, so <span class=\\\"nw\\\">$a = -2$.<\/span><br><strong>Step 2: vertex at $x = 1$.<\/strong> $y = -2(4)(-4) = 32$."}]}];
+var EXIT = [{"q": "The $x$-intercepts of the graph of $y = (x + 4)(x - 2)$ are at $x =$", "opts": ["$-4$ and $2$", "$4$ and $-2$", "$-4$ and $-2$", "$4$ and $2$"], "correct": 0, "exp": "Set each factor to zero: $x + 4 = 0$ gives <span class=\\\"nw\\\">$-4$,<\/span> $x - 2 = 0$ gives <span class=\\\"nw\\\">$2$.<\/span> The signs flip."}, {"q": "The number of real solutions of $x^2 + 3x + 5 = 0$ is", "opts": ["$2$", "$1$", "$0$", "Infinitely many"], "correct": 2, "exp": "$D = 9 - 20 = -11 < 0$: the graph never reaches the $x$-axis."}, {"q": "The vertex of the graph of $y = 2(x - 1)^2 + 3$ is", "opts": ["$(-1, 3)$", "$(1, 3)$", "$(1, -3)$", "$(-1, -3)$"], "correct": 1, "exp": "Vertex form $a(x - h)^2 + k$ with $h = 1$ and <span class=\\\"nw\\\">$k = 3$:<\/span> the sign inside the parentheses flips, the one outside does not."}];
+
+/* ================= SVG coordinate figures ================= */
+var figCounter = 0;
+function graphSVG(o) {
+    var w = o.w || 320, h = o.h || 240, pad = 22;
+    var xmin = o.xmin, xmax = o.xmax, ymin = o.ymin, ymax = o.ymax;
+    var id = 'arr' + (++figCounter);
+    function X(x) { return pad + (x - xmin) / (xmax - xmin) * (w - 2 * pad); }
+    function Y(y) { return h - pad - (y - ymin) / (ymax - ymin) * (h - 2 * pad); }
+    function inBox(p) { return p[0] >= xmin - 1e-9 && p[0] <= xmax + 1e-9 && p[1] >= ymin - 1e-9 && p[1] <= ymax + 1e-9; }
+    function clipLine(m, b) {
+        var c = [[xmin, m * xmin + b], [xmax, m * xmax + b]];
+        if (m !== 0) { c.push([(ymin - b) / m, ymin]); c.push([(ymax - b) / m, ymax]); }
+        c = c.filter(inBox).sort(function(p, q) { return p[0] - q[0]; });
+        return c.length >= 2 ? [c[0], c[c.length - 1]] : null;
+    }
+    var s = '<svg class="fig" viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" role="img" aria-label="' + (o.alt || 'coordinate graph') + '">';
+    s += '<defs><marker id="' + id + '" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2D2D2D"/></marker>' +
+        '<clipPath id="clip' + id + '"><rect x="' + X(xmin) + '" y="' + Y(ymax) + '" width="' + (X(xmax) - X(xmin)) + '" height="' + (Y(ymin) - Y(ymax)) + '"/></clipPath></defs>';
+    if (o.poly) {
+        s += '<polygon class="shade" points="' + o.poly.map(function(p) { return X(p[0]) + ',' + Y(p[1]); }).join(' ') + '"/>';
+    }
+    // axes with arrowheads
+    if (ymin <= 0 && ymax >= 0) s += '<line class="ax" x1="' + X(xmin) + '" y1="' + Y(0) + '" x2="' + X(xmax) + '" y2="' + Y(0) + '" marker-end="url(#' + id + ')"/>';
+    if (xmin <= 0 && xmax >= 0) s += '<line class="ax" x1="' + X(0) + '" y1="' + Y(ymin) + '" x2="' + X(0) + '" y2="' + Y(ymax) + '" marker-end="url(#' + id + ')"/>';
+    if (ymin <= 0 && ymax >= 0) s += '<text class="it" x="' + (X(xmax) - 2) + '" y="' + (Y(0) + 15) + '">x</text>';
+    if (xmin <= 0 && xmax >= 0) s += '<text class="it" x="' + (X(0) + 7) + '" y="' + (Y(ymax) + 6) + '">y</text>';
+    if (xmin <= 0 && xmax >= 0 && ymin <= 0 && ymax >= 0) s += '<text class="it" x="' + (X(0) - 12) + '" y="' + (Y(0) + 14) + '">O</text>';
+    (o.ticks || []).forEach(function(t) {
+        if (t.x != null) s += '<line class="ax" x1="' + X(t.x) + '" y1="' + (Y(0) - 4) + '" x2="' + X(t.x) + '" y2="' + (Y(0) + 4) + '"/><text x="' + (X(t.x) - 4) + '" y="' + (Y(0) + 16) + '">' + t.label + '</text>';
+        if (t.y != null) s += '<line class="ax" x1="' + (X(0) - 4) + '" y1="' + Y(t.y) + '" x2="' + (X(0) + 4) + '" y2="' + Y(t.y) + '"/><text x="' + (X(0) - 16 - 6 * (String(t.label).length - 1)) + '" y="' + (Y(t.y) + 4) + '">' + t.label + '</text>';
+    });
+    (o.curves || []).forEach(function(c) {
+        // y = a x^2 + b x + c, sampled across the window and clipped to the plot box
+        var n = 160, pts = [];
+        for (var i = 0; i <= n; i++) {
+            var x = xmin + (xmax - xmin) * i / n;
+            pts.push(X(x).toFixed(1) + ',' + Y(c.a * x * x + c.b * x + c.c).toFixed(1));
+        }
+        s += '<polyline class="' + (c.cls || 'ln') + '" clip-path="url(#clip' + id + ')" points="' + pts.join(' ') + '"/>';
+        if (c.label) s += '<text class="it" x="' + (X(c.lx) + (c.dx || 0)) + '" y="' + (Y(c.ly) + (c.dy || 0)) + '">' + c.label + '</text>';
+    });
+    (o.lines || []).forEach(function(l) {
+        var pts = clipLine(l.m, l.b);
+        if (!pts) return;
+        s += '<line class="' + (l.cls || 'ln') + '" x1="' + X(pts[0][0]) + '" y1="' + Y(pts[0][1]) + '" x2="' + X(pts[1][0]) + '" y2="' + Y(pts[1][1]) + '"/>';
+        if (l.label) s += '<text class="it" x="' + (X(l.lx) + (l.dx || 0)) + '" y="' + (Y(l.ly) + (l.dy || 0)) + '">' + l.label + '</text>';
+    });
+    (o.segs || []).forEach(function(g) {
+        s += '<line class="' + (g.cls || 'dash') + '" x1="' + X(g.x1) + '" y1="' + Y(g.y1) + '" x2="' + X(g.x2) + '" y2="' + Y(g.y2) + '"/>';
+    });
+    (o.squares || []).forEach(function(q) {
+        // small right-angle marker at (x,y) with unit directions u, v (math coords), size in px
+        var k = q.size || 9;
+        var ux = q.u[0] / Math.hypot(q.u[0], q.u[1]), uy = -q.u[1] / Math.hypot(q.u[0], q.u[1]);
+        var vx = q.v[0] / Math.hypot(q.v[0], q.v[1]), vy = -q.v[1] / Math.hypot(q.v[0], q.v[1]);
+        var px = X(q.x), py = Y(q.y);
+        s += '<path class="sq" d="M' + (px + ux * k) + ',' + (py + uy * k) + ' L' + (px + ux * k + vx * k) + ',' + (py + uy * k + vy * k) + ' L' + (px + vx * k) + ',' + (py + vy * k) + '"/>';
+    });
+    (o.points || []).forEach(function(p) {
+        s += '<circle class="pt" cx="' + X(p.x) + '" cy="' + Y(p.y) + '" r="3.6"/>';
+        if (p.label) s += '<text class="it" x="' + (X(p.x) + (p.dx == null ? 7 : p.dx)) + '" y="' + (Y(p.y) + (p.dy == null ? -7 : p.dy)) + '">' + p.label + '</text>';
+    });
+    (o.labels || []).forEach(function(t) {
+        s += '<text class="' + (t.cls || 'it') + '" x="' + (X(t.x) + (t.dx || 0)) + '" y="' + (Y(t.y) + (t.dy || 0)) + '">' + t.text + '</text>';
+    });
+    return s + '</svg>';
+}
+var FIGS = {
+    anatomy: { xmin: -2, xmax: 8, ymin: -6, ymax: 8, w: 340, h: 260, alt: 'the parabola y = x squared minus 6x plus 5 with its y-intercept, x-intercepts, vertex, and axis of symmetry labeled',
+        curves: [{ a: 1, b: -6, c: 5 }],
+        segs: [{ x1: 3, y1: -6, x2: 3, y2: 8 }],
+        points: [{ x: 1, y: 0, label: '(1, 0)', dx: 5, dy: -8 }, { x: 5, y: 0, label: '(5, 0)', dx: 8, dy: 16 }, { x: 0, y: 5, label: '(0, 5)', dx: -44, dy: -2 }, { x: 3, y: -4, label: '(3, −4)', dx: 8, dy: 14 }],
+        labels: [{ x: 3, y: 7.2, text: 'x = 3', dx: 6, dy: 0 }] },
+    sys: { xmin: -2, xmax: 9, ymin: -2, ymax: 15, w: 340, h: 280, alt: 'the parabola y = x squared minus 5x plus 7 and the line y = 2x plus 1 meeting at (1, 3) and (6, 13)',
+        curves: [{ a: 1, b: -5, c: 7, label: 'y = x² − 5x + 7', lx: 0.3, ly: 14.2, dx: 6, dy: 0 }],
+        lines: [{ m: 2, b: 1, label: 'y = 2x + 1', lx: 6.6, ly: 11, dx: 10, dy: 8 }],
+        points: [{ x: 1, y: 3, label: '(1, 3)', dx: 8, dy: 14 }, { x: 6, y: 13, label: '(6, 13)', dx: 8, dy: 4 }] },
+    tangent: { xmin: -4, xmax: 5, ymin: -6, ymax: 6, w: 320, h: 240, alt: 'the parabola y = x squared minus 4 with the line y = 2x minus 5 tangent to it at (1, negative 3)',
+        curves: [{ a: 1, b: 0, c: -4, label: 'y = x² − 4', lx: 3.25, ly: 5.95, dx: 6, dy: 2 }],
+        lines: [{ m: 2, b: -5, cls: 'ln2', label: 'y = 2x + k', lx: 2.8, ly: 0.6, dx: 8, dy: 4 }],
+        points: [{ x: 1, y: -3, label: '(1, −3)', dx: 8, dy: 12 }] },
+    g9: { xmin: -2, xmax: 7, ymin: -2, ymax: 12, w: 340, h: 260, alt: 'the parabola g(x) = x squared minus 4x plus 8 and the line f(x) = x + k tangent to it',
+        curves: [{ a: 1, b: -4, c: 8, label: 'g', lx: 4.7, ly: 11.3, dx: 8, dy: 0 }],
+        lines: [{ m: 1, b: 1.75, cls: 'ln2', label: 'f', lx: 6.3, ly: 8.05, dx: 6, dy: 2 }] },
+    g10: { xmin: -4, xmax: 4, ymin: -2, ymax: 6, w: 320, h: 240, alt: 'the line f(x) = x + 2 and the downward parabola g(x) = 4 minus x squared, with triangle ABC shaded between their x-intercepts and their intersection',
+        poly: [[-2, 0], [1, 3], [2, 0]],
+        curves: [{ a: -1, b: 0, c: 4, label: 'g', lx: -2.45, ly: -1.9, dx: -14, dy: 4 }],
+        lines: [{ m: 1, b: 2, cls: 'ln2', label: 'f', lx: 3.2, ly: 5.2, dx: 6, dy: 0 }],
+        points: [{ x: -2, y: 0, label: 'A', dx: -16, dy: 17 }, { x: 1, y: 3, label: 'B', dx: 8, dy: -4 }, { x: 2, y: 0, label: 'C', dx: 6, dy: 16 }] },
+    c1: { xmin: -2, xmax: 7, ymin: -2, ymax: 9, w: 320, h: 260, alt: 'the parabola y = x squared minus 4x plus 5 and the line y = x + 1 meeting at B and C, with the quadrilateral ABCD shaded down to the x-axis',
+        poly: [[1, 0], [1, 2], [4, 5], [4, 0]],
+        curves: [{ a: 1, b: -4, c: 5, label: 'y = x² − 4x + 5', lx: 0.3, ly: 8.3, dx: 0, dy: 0 }],
+        lines: [{ m: 1, b: 1, cls: 'ln2', label: 'y = x + 1', lx: 5.4, ly: 6.4, dx: 8, dy: 4 }],
+        segs: [{ x1: 1, y1: 0, x2: 1, y2: 2 }, { x1: 4, y1: 0, x2: 4, y2: 5 }],
+        squares: [{ x: 1, y: 0, u: [1, 0], v: [0, 1], size: 8 }, { x: 4, y: 0, u: [-1, 0], v: [0, 1], size: 8 }],
+        points: [{ x: 1, y: 2, label: 'B', dx: -16, dy: -4 }, { x: 4, y: 5, label: 'C', dx: 8, dy: -2 }],
+        labels: [{ x: 1, y: 0, text: 'A', dx: -4, dy: 17 }, { x: 4, y: 0, text: 'D', dx: -4, dy: 17 }] }
+};
+/* Small discriminant pictures for the Rule 3 table: a parabola below, on, or above the x-axis. */
+function miniParab(vy) {
+    var axis = 46, y0 = 6, cy = 2 * vy - y0;
+    return '<svg class="fig" viewBox="0 0 120 64" width="120" height="64" style="margin:0;" role="img" aria-label="parabola and x-axis">' +
+        '<line class="ax" x1="6" y1="' + axis + '" x2="114" y2="' + axis + '"/>' +
+        '<text class="it" x="104" y="' + (axis + 13) + '">x</text>' +
+        '<path class="ln" d="M22,' + y0 + ' Q60,' + cy + ' 98,' + y0 + '"/></svg>';
+}
+var MINI = { dpos: function() { return miniParab(60); }, dzero: function() { return miniParab(46); }, dneg: function() { return miniParab(30); } };
+function fig(name) { if (MINI[name]) return MINI[name](); return FIGS[name] ? graphSVG(FIGS[name]) : ''; }
+function fillFigSlots() {
+    document.querySelectorAll('.fig-slot').forEach(function(el) { el.innerHTML = fig(el.getAttribute('data-fig')); });
+}
+
+/* ================= Rule stepper ================= */
+var stepState = { idx: 0, done: {} };
+var solOpen = {};
+function stepTitle(s) { return (s.ess ? '<span class="star">&#9733;</span> ' : '') + s.name; }
+function renderStep() {
+    var i = stepState.idx, s = STEPS[i];
+    document.getElementById('stepCount').textContent = 'Step ' + (i+1) + ' of ' + STEPS.length;
+    var dots = '';
+    STEPS.forEach(function(_, di) {
+        var cls = 'step-dot' + (di === i ? ' current' : '') + (stepState.done[di] ? ' done' : '');
+        dots += '<button class="' + cls + '" onclick="stepState.idx=' + di + ';renderStep();" aria-label="step ' + (di+1) + '"></button>';
+    });
+    document.getElementById('stepDots').innerHTML = dots;
+    var m = s.micro, mid = 'micro' + i, microHtml = '';
+    if (m.mc) {
+        microHtml = '<div class="mc-opts" id="opts-' + mid + '">' + m.opts.map(function(o, oi) {
+            return '<button class="mc-opt" onclick="microMC(' + i + ',' + oi + ')">' + o + '</button>';
+        }).join('') + '</div>';
+    } else {
+        microHtml = '<div class="drill-row">? = <input type="text" id="in-' + mid + '" autocomplete="off" onkeydown="if(event.key===\'Enter\')microExp(' + i + ')">' +
+            '<button class="btn btn-green btn-sm" onclick="microExp(' + i + ')">Check</button>' +
+            '<span class="fb" id="fb-' + mid + '"></span></div>';
+    }
+    document.getElementById('stepBody').innerHTML =
+        '<div class="step-rule-name">' + stepTitle(s) + '</div>' +
+        '<div class="step-rule">' + s.rule + '</div>' +
+        '<p class="step-say">' + s.say + '</p>' +
+        (s.fig ? fig(s.fig) : '') +
+        '<div class="wk-prob"><div class="wk-label">The problem</div><div class="wk-q">' + s.prob + '</div>' +
+        '<div class="wk-try">Try it on paper first, then reveal the solution.</div>' +
+        '<button class="btn ' + (solOpen[i] ? 'btn-ghost' : 'btn-green') + ' btn-sm" onclick="solOpen[' + i + ']=!solOpen[' + i + '];renderStep();">' + (solOpen[i] ? 'Hide solution' : 'Show solution') + '</button></div>' +
+        (solOpen[i] ? '<div class="step-ex"><div class="sol-label">Solution</div>' + s.sol + '</div>' +
+        '<div class="trap-box"><div class="trap-label">The trap it pairs with</div>' + s.trap + '</div>' : '') +
+        '<div class="micro"><div class="micro-label">Ten-second check</div><div class="micro-q">' + m.q + '</div>' + microHtml +
+        '<div class="fb-exp" id="exp-' + mid + '">' + m.exp + '</div></div>';
+    document.getElementById('stepBack').disabled = (i === 0);
+    document.getElementById('stepNext').disabled = (i === STEPS.length - 1);
+    document.getElementById('stepHint').textContent = (i === STEPS.length - 1) ? 'Done here? Fluency Drills is next.' : (i === 6 ? 'That was the last starred step. The next two are the extras.' : '');
+    typeset(document.getElementById('stepBody'));
+}
+function stepNav(d) { stepState.idx = Math.max(0, Math.min(STEPS.length-1, stepState.idx + d)); renderStep(); }
+function microExp(i) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var ok = answerMatches(document.getElementById('in-' + mid).value, s.micro.accept);
+    var fb = document.getElementById('fb-' + mid);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ got it' : '✗ not yet';
+    if (ok) { stepState.done[i] = true; }
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function microMC(i, chosen) {
+    var s = STEPS[i], mid = 'micro' + i;
+    var opts = document.getElementById('opts-' + mid).children;
+    for (var k = 0; k < opts.length; k++) opts[k].classList.remove('right','wrong');
+    var ok = (chosen === s.micro.correct);
+    opts[chosen].classList.add(ok ? 'right' : 'wrong');
+    if (!ok) opts[s.micro.correct].classList.add('right');
+    if (ok) stepState.done[i] = true;
+    document.getElementById('exp-' + mid).classList.add('show');
+    renderDotsOnly();
+    typeset(document.getElementById('exp-' + mid));
+}
+function renderDotsOnly() {
+    var dots = document.getElementById('stepDots').children;
+    for (var di = 0; di < dots.length; di++) dots[di].classList.toggle('done', !!stepState.done[di]);
+}
+
+/* ================= Fluency drills ================= */
+function renderFluency() {
+    var host = document.getElementById('fluencyList');
+    var html = '', n = 0;
+    FLUENCY.forEach(function(sec, si) {
+        html += '<h3 style="font-family:\'Switzer\',\'Space Grotesk\',sans-serif; color:var(--green-dark); margin:18px 0 10px;">' + sec.sec + '</h3>';
+        sec.items.forEach(function(it, ii) {
+            var id = 'f' + si + '_' + ii;
+            n++;
+            html += '<div class="drill"><div class="drill-q">' + n + '. &nbsp;' + it.q + '</div>';
+            if (it.mc) {
+                html += '<div class="mc-opts" id="opts-' + id + '">';
+                it.opts.forEach(function(o, oi) {
+                    html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+                });
+                html += '</div>';
+            } else {
+                html += '<div class="drill-row">? = <input type="text" id="in-' + id + '" autocomplete="off" onkeydown="if(event.key===\'Enter\')checkExp(\'' + id + '\',' + si + ',' + ii + ')">' +
+                    '<button class="btn btn-green btn-sm" onclick="checkExp(\'' + id + '\',' + si + ',' + ii + ')">Check</button>' +
+                    '<span class="fb" id="fb-' + id + '"></span></div>';
+            }
+            html += '<div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+        });
+    });
+    host.innerHTML = html;
+}
+function normalizeAns(s) {
+    s = (s || '').trim().replace(/\s+/g,'').replace(/^\+/,'').replace(/^\$/,'').replace(/,/g,'');
+    var uni = { '½':'1/2', '⅓':'1/3', '⅔':'2/3', '¼':'1/4', '¾':'3/4', '⅕':'1/5', '−':'-', '–':'-' };
+    Object.keys(uni).forEach(function(k){ s = s.split(k).join(uni[k]); });
+    return s;
+}
+function parseVal(s) {
+    s = normalizeAns(s);
+    if (s === '') return null;
+    var m = s.match(/^(-?\d+(?:\.\d+)?|-?\.\d+)\/(-?\d+(?:\.\d+)?|-?\.\d+)$/);
+    if (m) { var d = parseFloat(m[2]); return d === 0 ? null : parseFloat(m[1]) / d; }
+    if (!/^-?(\d+(\.\d*)?|\.\d+)$/.test(s)) return null;
+    var n = parseFloat(s);
+    return isNaN(n) ? null : n;
+}
+function answerMatches(raw, acceptList) {
+    var val = normalizeAns(raw);
+    if (acceptList.indexOf(val) !== -1) return true;
+    var num = parseVal(raw);
+    if (num == null) return false;
+    for (var i = 0; i < acceptList.length; i++) {
+        var target = parseVal(acceptList[i]);
+        if (target == null) continue;
+        if (Math.abs(num - target) < 1e-9) return true;
+        /* SAT-style tolerance: a decimal truncated or rounded to 3 places counts */
+        if (Math.abs(num - target) < 0.0011 && /\./.test(val)) return true;
+    }
+    return false;
+}
+function checkExp(id, si, ii) {
+    var it = FLUENCY[si].items[ii];
+    var ok = answerMatches(document.getElementById('in-' + id).value, it.accept);
+    var fb = document.getElementById('fb-' + id);
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ correct' : '✗ not yet: retry, or peek below';
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+function checkMC(id, chosen, correct) {
+    var opts = document.getElementById('opts-' + id).children;
+    for (var i = 0; i < opts.length; i++) opts[i].classList.remove('right','wrong');
+    opts[chosen].classList.add(chosen === correct ? 'right' : 'wrong');
+    if (chosen !== correct) opts[correct].classList.add('right');
+    document.getElementById('exp-' + id).classList.add('show');
+    typeset(document.getElementById('exp-' + id));
+}
+
+/* ================= Gauntlet (digital SAT formats) ================= */
+var LETTERS = ['A', 'B', 'C', 'D'];
+var gState = { idx: 0, answers: {}, finished: false };
+function desmosBtn(p) {
+    return p.desmos ? '<button class="btn btn-ghost btn-sm" onclick="loadDesmos(' + js_(p.desmos) + ')" title="Graph this question\'s equations">&#128202; Load into Desmos</button>' : '';
+}
+function js_(arr) { return JSON.stringify(arr).replace(/"/g, '&quot;'); }
+function renderGauntlet() {
+    var host = document.getElementById('gauntletArea');
+    if (gState.finished) { renderGauntletResults(host); return; }
+    var total = GAUNTLET.length, i = gState.idx, p = GAUNTLET[i];
+    var dirs = { mc: 'Select one answer choice.', ne: 'Enter your answer in the box. A fraction like 7/3 or a decimal like 2.333 both count.' };
+    var html = '<div class="testbar"><span class="tprog">Question ' + (i+1) + ' of ' + total + '</span>' + (p.diff ? '<span class="diff-chip">' + p.diff + '</span>' : '') + (p.ess ? '<span class="diff-chip star-chip" title="Uses a starred rule">&#9733; starred rule</span>' : '') +
+        '<span class="timer-wrap" style="margin-left:auto; color:white;">Timer <button class="tog' + (timers.G.on ? ' on' : '') + '" id="togG" onclick="toggleTimer(\'G\')"></button> <span class="timer-display' + (timers.G.on ? ' on' : '') + '" id="timerG">' + fmtTime(timers.G.sec) + '</span></span></div>' +
+        '<div class="test-stage"><div class="q-directions">' + dirs[p.type] + '</div>';
+    var ans = gState.answers[i];
+    if (p.fig) html += fig(p.fig);
+    html += '<div class="q-stem">' + p.stem + '</div>';
+    if (p.type === 'mc') {
+        html += '<div class="choices">';
+        p.options.forEach(function(c, ci) {
+            html += '<div class="choice' + (ans === ci ? ' selected' : '') + '" onclick="gPick(' + ci + ')"><span class="letter">' + LETTERS[ci] + '</span><span class="ctext">' + c + '</span></div>';
+        });
+        html += '</div>';
+    } else {
+        html += '<div class="ne-entry"><span class="q-stem" style="margin:0;">' + p.label + '</span>' +
+            '<input type="text" id="neIn" value="' + (ans != null ? String(ans).replace(/"/g, '&quot;') : '') + '" oninput="gState.answers[' + i + '] = this.value" autocomplete="off"></div>';
+    }
+    html += '<div class="test-nav">' +
+        '<button class="btn btn-ghost" onclick="gNav(-1)"' + (i === 0 ? ' disabled' : '') + '>&#8592; Back</button>' +
+        '<button class="btn btn-green" onclick="gNav(1)"' + (i === total-1 ? ' disabled' : '') + '>Next &#8594;</button>' +
+        desmosBtn(p) +
+        '<span style="flex:1"></span><button class="btn btn-gold" onclick="gFinish()">Finish &amp; Score</button></div>' +
+        '<div class="qmap">' + GAUNTLET.map(function(q, qi) {
+            var cls = 'qchip';
+            if (gHasAns(qi)) cls += ' answered';
+            if (qi === i) cls += ' current';
+            return '<button class="' + cls + '" onclick="gState.idx=' + qi + ';renderGauntlet();">' + (qi+1) + '</button>';
+        }).join('') + '</div></div>';
+    host.innerHTML = html;
+    typeset(host);
+}
+function gPick(ci) { gState.answers[gState.idx] = ci; renderGauntlet(); }
+function gHasAns(qi) { var a = gState.answers[qi]; return a != null && a !== ''; }
+function gNav(s) { gState.idx = Math.max(0, Math.min(GAUNTLET.length-1, gState.idx + s)); renderGauntlet(); }
+function gGrade(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (p.type === 'ne') return a != null && answerMatches(String(a), p.accept);
+    return a === p.correct;
+}
+function gAnswerText(i) {
+    var p = GAUNTLET[i], a = gState.answers[i];
+    if (a == null || a === '') return '(no answer)';
+    if (p.type === 'mc') return LETTERS[a] + '. ' + p.options[a];
+    return String(a);
+}
+function gCorrectText(i) {
+    var p = GAUNTLET[i];
+    if (p.type === 'mc') return LETTERS[p.correct] + '. ' + p.options[p.correct];
+    return p.accept[0];
+}
+function gFinish() {
+    var un = 0;
+    for (var i = 0; i < GAUNTLET.length; i++) if (!gHasAns(i)) un++;
+    if (un > 0 && !confirm(un + ' unanswered. Score anyway?')) return;
+    gState.finished = true;
+    stopTimer('G');
+    renderGauntlet();
+}
+function renderGauntletResults(host) {
+    var right = 0;
+    GAUNTLET.forEach(function(_, i){ if (gGrade(i)) right++; });
+    var html = '<div class="stat-grid">' +
+        '<div class="stat-tile green"><div class="stat-num">' + right + '/' + GAUNTLET.length + '</div><div class="stat-label">Correct</div></div>' +
+        '<div class="stat-tile"><div class="stat-num">' + Math.round(100*right/GAUNTLET.length) + '%</div><div class="stat-label">Score</div></div>' +
+        (timers.G.sec ? '<div class="stat-tile"><div class="stat-num">' + fmtTime(timers.G.sec) + '</div><div class="stat-label">Time</div></div>' : '') + '</div>' +
+        '<div class="toolbar"><button class="btn btn-gold" onclick="gState={idx:0,answers:{},finished:false};timers.G.sec=0;renderGauntlet();">&#8635; Retake gauntlet</button></div>';
+    GAUNTLET.forEach(function(p, i) {
+        var ok = gGrade(i);
+        html += '<div class="res-entry' + (ok ? ' correct' : '') + '"><div class="res-head" onclick="this.parentElement.classList.toggle(\'open\'); typeset(this.parentElement);">' +
+            '<span style="font-size:18px;">' + (ok ? '&#9989;' : '&#10060;') + '</span>' +
+            '<span style="font-weight:600; font-size:14.5px;">' + (p.ess ? '<span class="star">&#9733;</span> ' : '') + 'Q' + (i+1) + ' (' + (p.diff || '') + '): your answer: ' + gAnswerText(i) + '</span>' +
+            '<span class="res-arrow">&#9654;</span></div>' +
+            '<div class="res-body"><div class="sol-block" style="background:white; border:1px solid var(--cream-dark); font-family:\'Times New Roman\',Georgia,serif; font-size:16.5px;">' + (p.fig ? fig(p.fig) : '') + p.stem + '</div>' +
+            '<p style="font-size:14px; margin:8px 0;"><strong>Correct answer:</strong> ' + gCorrectText(i) + '</p>' +
+            '<div class="sol-block"><div class="sol-label">Full solution</div>' + p.sol + '</div>' +
+            '<div class="trap-box"><div class="trap-label">The trap / takeaway</div>' + p.trap + '</div>' +
+            (p.desmos ? '<div style="margin-top:8px;">' + desmosBtn(p) + '</div>' : '') + '</div></div>';
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+
+/* ================= Challenge questions ================= */
+var chState = {}, chExtraOpen = {}, cxState = {};
+function renderChallenge() {
+    var host = document.getElementById('challengeArea');
+    var html = '';
+    CHALLENGE.forEach(function(p, i) {
+        var st = chState[i] || {};
+        html += '<div class="drill" style="border-left-color: var(--gold);"><div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:8px; display:flex; align-items:center; gap:10px;">Challenge ' + (i+1) + ' of ' + CHALLENGE.length + (p.diff ? '<span class="diff-chip dark">' + p.diff + '</span>' : '') + (p.ess ? '<span class="diff-chip dark star-chip" title="Uses a starred rule">&#9733; starred rule</span>' : '<span class="diff-chip dark" style="opacity:0.7" title="Uses an unstarred rule">extra</span>') + '</div>';
+        if (p.fig) html += fig(p.fig);
+        if (p.type === 'mc') {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div><div class="choices" id="chopts-' + i + '">';
+            p.options.forEach(function(o, oi) {
+                var cls = 'choice';
+                if (st.checked) { if (oi === p.correct) cls += ' selected'; }
+                else if (st.pick === oi) cls += ' selected';
+                var mark = st.checked ? (oi === p.correct ? ' <span class="fb ok" style="display:inline;">✓</span>' : (st.pick === oi ? ' <span class="fb no" style="display:inline;">✗ your pick</span>' : '')) : '';
+                html += '<div class="' + cls + '" onclick="chPick(' + i + ',' + oi + ')"><span class="letter">' + LETTERS[oi] + '</span><span class="ctext">' + o + mark + '</span></div>';
+            });
+            html += '</div>';
+        } else {
+            html += '<div class="q-stem" style="margin-bottom:8px;">' + p.stem + '</div>' +
+                '<div class="drill-row"><span class="drill-q" style="margin:0;">' + p.label + '</span>' +
+                '<input type="text" id="chin-' + i + '" value="' + (st.pick != null ? String(st.pick).replace(/"/g, '&quot;') : '') + '" oninput="chState[' + i + '] = chState[' + i + '] || {}; chState[' + i + '].pick = this.value;" onkeydown="if(event.key===\'Enter\')chCheck(' + i + ')" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                (st.checked ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '✓ correct' : '✗ not this time') + '</span>' : '') +
+                '</div>';
+        }
+        if (!st.checked) {
+            html += '<div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><button class="btn btn-green btn-sm" onclick="chCheck(' + i + ')">Check</button>' + desmosBtn(p) + '</div>';
+        } else {
+            if (p.type !== 'ne') {
+                html += '<p style="font-size:13.5px; font-weight:600; margin-top:8px; color:' + (st.ok ? 'var(--green-light)' : '#C0392B') + ';">' + (st.ok ? '✓ correct' : '✗ not this time: the mechanism below is the takeaway') + '</p>';
+            }
+            html += '<div class="sol-block"><div class="sol-label">How it works</div>' + p.sol + '</div>' +
+                '<div class="trap-box"><div class="trap-label">The move to remember</div>' + p.trap + '</div>' +
+                (p.desmos ? '<div style="margin-top:8px;">' + desmosBtn(p) + '</div>' : '');
+        }
+        html += '</div>';
+        if (p.extras) html += renderChExtra(i, p);
+    });
+    host.innerHTML = html;
+    typeset(host);
+}
+function renderChExtra(ci, p) {
+    var open = !!chExtraOpen[ci];
+    var h = '<div class="drill" style="border-left-color: var(--gold-light); background: #FFFDF8;">' +
+        '<div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#8B6914; margin-bottom:6px;">Keep the pattern going</div>' +
+        '<p style="font-size:14px; color:var(--text-medium); margin-bottom:10px;">' + p.extrasIntro + '</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="chExtraOpen[' + ci + '] = !chExtraOpen[' + ci + ']; renderChallenge();">' + (open ? 'Hide practice set' : 'Show practice set (' + p.extras.length + ')') + '</button>';
+    if (open) {
+        p.extras.forEach(function(x, j) {
+            var key = ci + '_' + j;
+            var st = cxState[key] || {};
+            h += '<div style="border-top: 1px dashed var(--cream-dark); margin-top: 14px; padding-top: 12px;">' +
+                '<div class="drill-q" style="font-size:17.5px;">' + String.fromCharCode(97 + j) + '. &nbsp;' + x.q + '</div>';
+            h += '<div class="drill-row"><span style="font-family: \'Times New Roman\', Georgia, serif; font-size:16px;">' + x.label + '</span>' +
+                '<input type="text" id="cxin-' + key + '" value="' + (st.pick != null ? String(st.pick).replace(/"/g, '&quot;') : '') + '" oninput="cxState[\'' + key + '\'] = cxState[\'' + key + '\'] || {}; cxState[\'' + key + '\'].pick = this.value;" onkeydown="if(event.key===\'Enter\')cxCheckNE(' + ci + ',' + j + ')" autocomplete="off"' + (st.checked ? ' disabled' : '') + '>' +
+                (st.checked
+                    ? '<span class="fb ' + (st.ok ? 'ok' : 'no') + '" style="display:inline;">' + (st.ok ? '✓ correct' : '✗ not yet') + '</span>'
+                    : '<button class="btn btn-green btn-sm" onclick="cxCheckNE(' + ci + ',' + j + ')">Check</button>') +
+                '</div>';
+            if (st.checked) h += '<div class="fb-exp show">' + x.exp + '</div>';
+            h += '</div>';
+        });
+    }
+    h += '</div>';
+    return h;
+}
+function cxCheckNE(ci, j) {
+    var key = ci + '_' + j;
+    var v = document.getElementById('cxin-' + key).value;
+    if (v == null || normalizeAns(v) === '') return;
+    cxState[key] = { pick: v, checked: true, ok: answerMatches(v, CHALLENGE[ci].extras[j].accept) };
+    renderChallenge();
+}
+function chPick(i, ci) {
+    if (chState[i] && chState[i].checked) return;
+    chState[i] = chState[i] || {};
+    chState[i].pick = ci;
+    renderChallenge();
+}
+function chCheck(i) {
+    var p = CHALLENGE[i];
+    var st = chState[i] = chState[i] || {};
+    if (p.type === 'ne') {
+        var v = document.getElementById('chin-' + i).value;
+        st.pick = v;
+        if (v == null || normalizeAns(v) === '') return;
+        st.ok = answerMatches(v, p.accept);
+    } else {
+        if (st.pick == null) return;
+        st.ok = (st.pick === p.correct);
+    }
+    st.checked = true;
+    renderChallenge();
+}
+
+/* ================= Exit ticket ================= */
+function renderExit() {
+    var host = document.getElementById('exitArea');
+    var html = '';
+    EXIT.forEach(function(it, i) {
+        var id = 'x' + i;
+        html += '<div class="drill"><div class="drill-q">' + (i+1) + '. &nbsp;' + it.q + '</div><div class="mc-opts" id="opts-' + id + '">';
+        it.opts.forEach(function(o, oi) {
+            html += '<button class="mc-opt" onclick="checkMC(\'' + id + '\',' + oi + ',' + it.correct + ')">' + o + '</button>';
+        });
+        html += '</div><div class="fb-exp" id="exp-' + id + '">' + it.exp + '</div></div>';
+    });
+    host.innerHTML = html;
+}
+
+/* rule box: optional persistent save */
+function hasStore(){ return (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function'); }
+var ruleTimer = null;
+function saveRule() {
+    if (ruleTimer) clearTimeout(ruleTimer);
+    ruleTimer = setTimeout(async function() {
+        if (hasStore()) {
+            try { await window.storage.set('sat-quadratics-sheet:rule', document.getElementById('ruleBox').value, false); } catch(e) {}
+        } else {
+            try { localStorage.setItem('sat-quadratics-sheet:rule', document.getElementById('ruleBox').value); } catch(e) {}
+        }
+        var s = document.getElementById('ruleStatus');
+        s.style.opacity = 1; setTimeout(function(){ s.style.opacity = 0; }, 1200);
+    }, 500);
+}
+async function loadRule() {
+    try {
+        if (hasStore()) { var r = await window.storage.get('sat-quadratics-sheet:rule', false); if (r && r.value) document.getElementById('ruleBox').value = r.value; }
+        else { var v = localStorage.getItem('sat-quadratics-sheet:rule'); if (v) document.getElementById('ruleBox').value = v; }
+    } catch(e) {}
+}
+function copyRule() {
+    var t = document.getElementById('ruleBox');
+    t.select(); t.setSelectionRange(0, 99999);
+    try { document.execCommand('copy'); } catch(e) {}
+    var s = document.getElementById('ruleStatus');
+    s.textContent = 'copied ✓'; s.style.opacity = 1;
+    setTimeout(function(){ s.style.opacity = 0; s.textContent = 'saved ✓'; }, 1200);
+}
+
+/* ================= Timers (off by default) ================= */
+var timers = { F: { on: false, sec: 0, iv: null }, G: { on: false, sec: 0, iv: null } };
+function fmtTime(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+function toggleTimer(k) {
+    var t = timers[k];
+    t.on = !t.on;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.toggle('on', t.on);
+    if (disp) disp.classList.toggle('on', t.on);
+    if (t.on) {
+        t.iv = setInterval(function() {
+            t.sec++;
+            var d = document.getElementById('timer' + k);
+            if (d) d.textContent = fmtTime(t.sec);
+        }, 1000);
+    } else stopTimer(k);
+}
+function stopTimer(k) {
+    var t = timers[k];
+    if (t.iv) { clearInterval(t.iv); t.iv = null; }
+    t.on = false;
+    var tog = document.getElementById('tog' + k), disp = document.getElementById('timer' + k);
+    if (tog) tog.classList.remove('on');
+    if (disp) disp.classList.remove('on');
+}
+
+/* ================= Desmos floating calculator ================= */
+var desmosCalc = null, desmosMode = 'graph', desmosLoaded = false;
+var DESMOS_OPTS = { keypad: true, expressions: true, settingsMenu: false, zoomButtons: true, expressionsTopbar: true, border: false };
+function initDesmos() {
+    if (desmosLoaded) return;
+    var host = document.getElementById('desmos-calc');
+    if (typeof Desmos === 'undefined') {
+        host.parentElement.innerHTML = '<div class="desmos-fallback">The Desmos calculator could not load (no internet connection, or the script is blocked).<br><br>You can open it in a new tab instead:<br><a href="https://www.desmos.com/calculator" target="_blank" rel="noopener">desmos.com/calculator</a></div>';
+        desmosLoaded = true;
+        return;
+    }
+    desmosCalc = Desmos.GraphingCalculator(host, DESMOS_OPTS);
+    desmosLoaded = true;
+}
+function buildDesmosFor(mode) {
+    var host = document.getElementById('desmos-calc');
+    if (typeof Desmos === 'undefined') return;
+    if (desmosCalc) { desmosCalc.destroy(); desmosCalc = null; }
+    host.innerHTML = '';
+    if (mode === 'scientific' && Desmos.ScientificCalculator) desmosCalc = Desmos.ScientificCalculator(host);
+    else desmosCalc = Desmos.GraphingCalculator(host, DESMOS_OPTS);
+}
+function toggleDesmos() {
+    var panel = document.getElementById('desmos-panel');
+    var open = panel.classList.toggle('open');
+    panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (open) {
+        dpClampToViewport();
+        if (!desmosLoaded) initDesmos();
+        else if (desmosCalc && desmosCalc.resize) desmosCalc.resize();
+    }
+}
+function openDesmos() {
+    var panel = document.getElementById('desmos-panel');
+    if (!panel.classList.contains('open')) toggleDesmos();
+}
+function setDesmosMode(mode) {
+    if (mode === desmosMode) return;
+    desmosMode = mode;
+    document.getElementById('dp-mode-graph').classList.toggle('active', mode === 'graph');
+    document.getElementById('dp-mode-sci').classList.toggle('active', mode === 'scientific');
+    if (desmosLoaded && typeof Desmos !== 'undefined') buildDesmosFor(mode);
+}
+/* Drop a question's equations into the graph (clears what was there). */
+function loadDesmos(list) {
+    openDesmos();
+    if (desmosMode !== 'graph') setDesmosMode('graph');
+    if (!desmosCalc || !desmosCalc.setExpression) return;
+    try {
+        desmosCalc.setBlank();
+        list.forEach(function(l, i) { desmosCalc.setExpression({ id: 'load' + i, latex: l }); });
+    } catch(e) {}
+}
+var DP_MIN_W = 300, DP_MIN_H = 280, dpExpanded = false, dpPreExpand = null;
+function dpClampToViewport() {
+    var panel = document.getElementById('desmos-panel');
+    if (!panel) return;
+    var r = panel.getBoundingClientRect();
+    var w = Math.min(r.width, window.innerWidth - 16), h = Math.min(r.height, window.innerHeight - 16);
+    var left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8), top = Math.min(Math.max(8, r.top), window.innerHeight - h - 8);
+    panel.style.width = w + 'px'; panel.style.height = h + 'px'; panel.style.left = left + 'px'; panel.style.top = top + 'px';
+}
+function dpAfterResize() { if (desmosCalc && desmosCalc.resize) desmosCalc.resize(); }
+function toggleDesmosExpand() {
+    var panel = document.getElementById('desmos-panel'), btn = document.getElementById('dp-expand');
+    if (!panel) return;
+    if (!dpExpanded) {
+        var r = panel.getBoundingClientRect();
+        dpPreExpand = { w: r.width, h: r.height, left: r.left, top: r.top };
+        var w = Math.min(900, window.innerWidth - 32), h = Math.min(720, window.innerHeight - 32);
+        panel.style.width = w + 'px'; panel.style.height = h + 'px';
+        panel.style.left = ((window.innerWidth - w) / 2) + 'px'; panel.style.top = ((window.innerHeight - h) / 2) + 'px';
+        dpExpanded = true;
+        if (btn) { btn.textContent = 'Restore'; btn.classList.add('active'); }
+    } else {
+        if (dpPreExpand) { panel.style.width = dpPreExpand.w + 'px'; panel.style.height = dpPreExpand.h + 'px'; panel.style.left = dpPreExpand.left + 'px'; panel.style.top = dpPreExpand.top + 'px'; }
+        dpExpanded = false;
+        if (btn) { btn.textContent = 'Expand'; btn.classList.remove('active'); }
+        dpClampToViewport();
+    }
+    dpAfterResize();
+}
+(function(){
+    var panel = document.getElementById('desmos-panel'), bar = document.getElementById('dp-bar');
+    if (!panel || !bar) return;
+    var sx, sy, sl, st;
+    function onMove(e){
+        var r = panel.getBoundingClientRect();
+        var left = sl + (e.clientX - sx), top = st + (e.clientY - sy);
+        left = Math.min(Math.max(8 - r.width + 60, left), window.innerWidth - 60);
+        top = Math.min(Math.max(8, top), window.innerHeight - 44);
+        panel.style.left = left + 'px'; panel.style.top = top + 'px';
+    }
+    function onUp(){ panel.classList.remove('dragging'); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+    bar.addEventListener('mousedown', function(e){
+        if (e.target.closest('button')) return;
+        e.preventDefault();
+        var r = panel.getBoundingClientRect();
+        sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top;
+        panel.classList.add('dragging');
+        document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+    });
+})();
+(function(){
+    var panel = document.getElementById('desmos-panel');
+    if (!panel) return;
+    var dir, sx, sy, sl, st, sw, sh;
+    function onMove(e){
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        var w = sw, h = sh, left = sl, top = st;
+        if (dir.indexOf('e') !== -1) w = sw + dx;
+        if (dir.indexOf('s') !== -1) h = sh + dy;
+        if (dir.indexOf('w') !== -1) { w = sw - dx; left = sl + dx; }
+        if (dir.indexOf('n') !== -1) { h = sh - dy; top = st + dy; }
+        if (w < DP_MIN_W) { if (dir.indexOf('w') !== -1) left -= (DP_MIN_W - w); w = DP_MIN_W; }
+        if (h < DP_MIN_H) { if (dir.indexOf('n') !== -1) top -= (DP_MIN_H - h); h = DP_MIN_H; }
+        w = Math.min(w, window.innerWidth - 16); h = Math.min(h, window.innerHeight - 16);
+        left = Math.min(Math.max(8, left), window.innerWidth - w - 8); top = Math.min(Math.max(8, top), window.innerHeight - h - 8);
+        panel.style.width = w + 'px'; panel.style.height = h + 'px'; panel.style.left = left + 'px'; panel.style.top = top + 'px';
+        dpAfterResize();
+    }
+    function onUp(){ panel.classList.remove('resizing'); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+    panel.querySelectorAll('.dp-handle').forEach(function(handle){
+        handle.addEventListener('mousedown', function(e){
+            e.preventDefault(); e.stopPropagation();
+            dir = handle.dataset.dir;
+            var r = panel.getBoundingClientRect();
+            sx = e.clientX; sy = e.clientY; sl = r.left; st = r.top; sw = r.width; sh = r.height;
+            if (dpExpanded) { dpExpanded = false; var btn = document.getElementById('dp-expand'); if (btn) { btn.textContent = 'Expand'; btn.classList.remove('active'); } }
+            panel.classList.add('resizing');
+            document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+        });
+    });
+})();
+window.addEventListener('resize', function(){
+    var panel = document.getElementById('desmos-panel');
+    if (panel && panel.classList.contains('open')) { dpClampToViewport(); dpAfterResize(); }
+});
+
+/* ================= Tabs & init ================= */
+function typeset(el) { if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(function(){}); }
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    if (name === 'gauntlet') renderGauntlet();
+    if (name === 'challenge') renderChallenge();
+    setTimeout(function(){ typeset(); }, 80);
+}
+fillFigSlots();
+renderStep();
+renderFluency();
+renderExit();
+loadRule();
+</script>
+</body>
+</html>
