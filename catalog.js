@@ -7,7 +7,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-10-27"
+  "updated": "2026-10-29"
  },
  "levels": [
   "Foundations",
@@ -1405,13 +1405,39 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "econ--micro--exchange-economy-blueprints",
+   "path": "econ/micro/Exchange Economy Blueprints.html",
+   "title": "Exchange Economy Blueprints: Contract Curve, Core, Equilibrium & Taxes",
+   "description": "Step-by-step blueprints for two-person exchange economy problems: contract curve, core, competitive equilibrium, and lump-sum taxes for every pairing of Cobb-Douglas, quasilinear, Leontief, and linear preferences, with worked examples, try-it problems, and a drag-and-drop Spot the Plan drill.",
+   "subject": "econ",
+   "topic": "Microeconomics",
+   "order": 15,
+   "levels": [
+    "Advanced College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "Edgeworth box",
+    "contract curve",
+    "core",
+    "competitive equilibrium",
+    "lump-sum taxes",
+    "exchange economy"
+   ],
+   "difficulty": "Challenge",
+   "content": "theory+practice",
+   "builds_on": [
+    "econ--micro--exchange-economy-ge-micro"
+   ]
+  },
+  {
    "id": "econ--micro--competitive-equilibrium-with-production-robinson-crusoe",
    "path": "econ/micro/Competitive Equilibrium with Production - Robinson Crusoe.html",
    "title": "Competitive Equilibrium with Production: The Robinson Crusoe Economy",
    "description": "Finds competitive equilibrium with production in the Robinson Crusoe economy, covering the planner, firm and consumer choices, welfare, a sprint, and a mock test.",
    "subject": "econ",
    "topic": "Microeconomics",
-   "order": 15,
+   "order": 16,
    "levels": [
     "Advanced College"
    ],
