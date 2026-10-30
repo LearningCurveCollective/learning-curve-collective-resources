@@ -44,6 +44,17 @@ This repository is an evolving project. Planned additions include:
 
 We hope these resources continue to grow into a valuable collection for students and educators around the world.
 
+## How the site is organized
+
+The hub at [learningcurvecollective.github.io/learning-curve-collective-resources](https://learningcurvecollective.github.io/learning-curve-collective-resources/) renders from `catalog.js`, which has one record per sheet (title, description, subject, topic, course order, academic levels, tags).
+
+- `index.html` is the home page: the hero, a search box that looks inside every sheet, the subject pills, and featured resources.
+- `math.html`, `test-prep.html`, `economics.html`, `science.html`, `machine-learning.html` and `social-science.html` are the subject pages: one card per course with every sheet listed in course order. They are written by `_build/build_pages.py` from the areas in `catalog.js`.
+- `assets/site.css` and `assets/site.js` are shared by all of those pages.
+- `search-index.js` is written by `_build/build_search_index.py` and holds the searchable words from each sheet.
+
+To add a sheet: drop the .html file in its subject folder, add a record to `catalog.js`, and run `00 Publish.command` (it rebuilds the search index and subject pages, then pushes). `python3 _build/check_catalog.py` lists any sheet that is missing a catalog entry.
+
 ---
 
 © Learning Curve Collective

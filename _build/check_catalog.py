@@ -15,7 +15,9 @@ for d, dirs, files in os.walk(root):
     for f in files:
         if f.endswith('.html'):
             p = os.path.relpath(os.path.join(d, f), root)
-            if p != 'index.html' and not p.startswith('index.'):
+            # sheets live in subject folders; .html files at the root are the hub pages
+            # (index.html and the subject pages written by build_pages.py)
+            if '/' in p:
                 disk.add(p)
 ids = [r['id'] for r in cat['resources']]
 dups = {i for i in ids if ids.count(i) > 1}

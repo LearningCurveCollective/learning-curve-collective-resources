@@ -9,204 +9,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-    --ink: #21442B;        /* LCC deep green */
-    --ink-2: #2B5537;
-    --moss: #5E6C39;
-    --leaf: #39864E;
-    --gold: #DDA25E;
-    --gold-light: #E6BC84;
-    --sand: #F5E4CC;
-    --paper: #F4F2EC;
-    --paper-2: #EBE8DF;
-    --line: #DAD5C8;
-    --text: #2A2A26;
-    --muted: #5C5A52;
-    --white: #FFFFFF;
-    --display: 'Space Grotesk', 'Switzer', sans-serif;
-    --body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --radius: 14px;
-    --wrap: 1120px;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
-body { margin: 0; font-family: var(--body); background: var(--paper); color: var(--text); line-height: 1.6; font-size: 16px; }
-a { color: var(--ink); }
-:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-svg.ic { width: 14px; height: 14px; vertical-align: -2px; flex-shrink: 0; }
-
-/* ---------- top bar ---------- */
-.topbar { position: sticky; top: 0; z-index: 40; background: var(--ink); color: var(--white); border-bottom: 3px solid var(--gold); }
-.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--white); min-width: 0; }
-.brand img { width: 38px; height: 38px; border-radius: 9px; background: var(--white); object-fit: contain; flex-shrink: 0; }
-.brand .brand-name { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: .2px; white-space: nowrap; }
-.brand .brand-by { font-size: 12.5px; color: var(--gold-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.topnav { display: flex; align-items: center; gap: 22px; }
-.topnav a { color: var(--white); text-decoration: none; font-size: 14.5px; font-weight: 500; opacity: .92; }
-.topnav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
-.btn { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; font-family: var(--body); font-weight: 600; font-size: 15px; padding: 11px 22px; border-radius: 999px; text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: background .15s, transform .15s; }
-.btn-gold { background: var(--gold); color: var(--ink); }
-.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
-.btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.45); }
-.btn-ghost:hover { border-color: var(--white); }
-.btn-sm { padding: 8px 16px; font-size: 14px; }
-@media (max-width: 720px) { .topnav .hide-sm { display: none; } .brand .brand-by { display: none; } .brand .brand-name { font-size: 18px; } .topbar .btn-sm { padding: 7px 14px; font-size: 13.5px; } }
-
-/* ---------- hero ---------- */
-.hero { background: linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 58%, #3b5a36 100%); color: var(--white); padding: 64px 0 60px; position: relative; overflow: hidden; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; }
-.hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(52px, 8.2vw, 104px); line-height: .96; letter-spacing: -.02em; margin: 0 0 14px; }
-.hero .by { font-size: 17px; color: var(--gold-light); margin: 0 0 28px; display: flex; align-items: center; gap: 14px; }
-.hero .by::before { content: ""; width: 38px; height: 2px; background: var(--gold); flex-shrink: 0; }
-.hero .by a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(230,188,132,.5); }
-.hero .by a:hover { border-color: var(--gold-light); }
-.hero p.lede { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.55; max-width: 32em; margin: 0 0 26px; color: rgba(255,255,255,.93); }
-.hero-search { display: flex; align-items: center; gap: 10px; background: var(--white); border-radius: 999px; padding: 6px 6px 6px 18px; max-width: 560px; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
-.hero-search svg { color: var(--muted); flex-shrink: 0; }
-.hero-search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--text); outline: none; padding: 8px 0; }
-.hero-search input::placeholder { color: #8a877d; }
-.hero-search button { flex-shrink: 0; }
-.hero-links { margin: 16px 0 0; font-size: 14.5px; color: rgba(255,255,255,.8); }
-.hero-links a { color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); margin-right: 16px; }
-.hero-links a:hover { border-color: var(--gold); }
-.curve { width: 100%; height: auto; display: block; overflow: visible; }
-.curve text { font-family: var(--body); font-size: 11.5px; fill: rgba(255,255,255,.82); }
-.curve .path { fill: none; stroke: var(--gold); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.7s cubic-bezier(.4,0,.2,1) .25s forwards; }
-.curve .fill { fill: url(#curveFill); opacity: 0; animation: fade .9s ease-out 1.4s forwards; }
-.curve .dot { fill: var(--sand); stroke: var(--ink); stroke-width: 2; opacity: 0; animation: fade .4s ease-out forwards; }
-.curve .grid { stroke: rgba(255,255,255,.13); stroke-width: 1; }
-.curve .tick { stroke: rgba(255,255,255,.35); stroke-width: 1; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes fade { to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .curve .path { stroke-dashoffset: 0; } .curve .fill, .curve .dot { opacity: 1; } }
-@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero-art { max-width: 440px; } }
-
-/* ---------- sections ---------- */
-section.block { padding: 64px 0 24px; }
-.block h2 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 3vw, 34px); letter-spacing: -.01em; margin: 0 0 6px; color: var(--ink); }
-.block .sub { margin: 0 0 28px; color: var(--muted); font-size: 16px; max-width: 60ch; }
-
-/* subject tiles */
-.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .tiles { grid-template-columns: 1fr; } }
-.tile { display: block; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 18px; text-decoration: none; color: var(--text); position: relative; transition: border-color .15s, transform .15s; min-height: 150px; }
-.tile:hover { border-color: var(--leaf); transform: translateY(-2px); }
-.tile .t-name { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink); display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.tile .t-count { white-space: nowrap; font-family: var(--body); font-size: 13px; font-weight: 600; color: var(--moss); background: var(--sand); padding: 2px 10px; border-radius: 999px; }
-.tile .t-subjects { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 10px; }
-.tile .t-subjects li { font-size: 14px; color: var(--muted); }
-.tile .t-blurb { margin: 10px 0 0; font-size: 14.5px; color: var(--muted); line-height: 1.5; }
-
-/* featured */
-.featured { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media (max-width: 900px) { .featured { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .featured { grid-template-columns: 1fr; } }
-
-/* cards */
-.card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s, box-shadow .3s; scroll-margin-top: 90px; }
-.card { cursor: pointer; }
-.card:hover { border-color: var(--leaf); box-shadow: 0 4px 16px rgba(33,68,43,.08); }
-.card.flash { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(221,162,94,.35); }
-.card h4 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 17.5px; line-height: 1.3; letter-spacing: -.005em; }
-.card h4 a { color: var(--ink); text-decoration: none; }
-.card h4 a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.card p { margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.5; flex: 1; }
-.card .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
-.pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 3px 9px 3px 7px; border-radius: 999px; line-height: 1.4; white-space: nowrap; }
-.pill-level { background: #E8F0E9; color: var(--ink); }
-.pill-level svg { width: 22px; height: 11px; }
-.pill-content { background: var(--sand); color: #6D4A1F; }
-.pill-format { background: var(--paper-2); color: var(--muted); }
-.pill-topic { color: var(--muted); font-size: 12.5px; padding-left: 2px; }
-.card .rel { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-top: 2px; border-top: 1px dashed var(--line); padding-top: 8px; }
-.card .rel span { color: var(--moss); font-weight: 600; margin-right: 4px; }
-.card .rel a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--leaf); }
-.card .rel a:hover { border-bottom-style: solid; }
-.card .rel .sep { color: var(--line); margin: 0 5px; }
-.card.featured-card { border-top: 4px solid var(--gold); }
-.card.featured-card .subj { font-size: 12.5px; font-weight: 600; color: var(--leaf); }
-
-/* ---------- browse ---------- */
-#browse { padding-bottom: 72px; }
-.toolbar { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 12px; box-shadow: 0 6px 24px rgba(33,68,43,.06); }
-.toolbar-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.search { flex: 1 1 260px; display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; }
-.search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 15px; color: var(--text); outline: none; }
-.search svg { color: var(--muted); flex-shrink: 0; }
-.select { position: relative; }
-.select select { appearance: none; -webkit-appearance: none; font: inherit; font-size: 14px; font-weight: 500; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 8px 34px 8px 14px; cursor: pointer; }
-.select::after { content: ""; position: absolute; right: 14px; top: 50%; width: 7px; height: 7px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateY(-70%) rotate(45deg); pointer-events: none; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.chips .label { font-size: 13.5px; color: var(--muted); margin-right: 2px; min-width: 42px; }
-.chip { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13.5px; font-weight: 500; padding: 6px 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; transition: background .12s, border-color .12s; }
-.chip:hover { border-color: var(--leaf); }
-.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
-.chip[aria-pressed="true"] svg .d { fill: var(--gold); }
-.chip-clear { border: 0; background: transparent; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: 13.5px; cursor: pointer; }
-.key { margin: 14px 0 0; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
-.key b { font-weight: 600; color: var(--moss); }
-.key .k { display: inline-flex; align-items: center; gap: 6px; }
-.key .k svg { width: 22px; height: 11px; }
-.result-line { margin: 22px 0 10px; color: var(--muted); font-size: 14.5px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.result-line .expand { display: flex; gap: 12px; }
-.result-line button { font: inherit; font-size: 13.5px; color: var(--ink); background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 0; }
-
-.area-label { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--moss); margin: 34px 0 10px; padding-left: 2px; }
-.subject { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); margin: 0 0 12px; overflow: hidden; scroll-margin-top: 80px; }
-.subject-head { width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: none; border: 0; text-align: left; cursor: pointer; font: inherit; color: var(--text); }
-.subject-head:hover { background: #FBFAF6; }
-.subject-head .s-name { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink); }
-.subject-head .s-blurb { display: block; font-size: 14px; color: var(--muted); margin-top: 2px; }
-.subject-head .s-count { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--moss); background: var(--sand); padding: 2px 10px; border-radius: 999px; }
-.subject-head .chev { width: 20px; height: 20px; color: var(--ink); transition: transform .2s; flex-shrink: 0; }
-.subject-head[aria-expanded="true"] .chev { transform: rotate(180deg); }
-.subject-body { padding: 4px 20px 20px; border-top: 1px dashed var(--line); }
-.topic-label { font-size: 13.5px; font-weight: 600; color: var(--moss); margin: 18px 0 10px; }
-.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.best { margin: 0 0 26px; padding: 16px 18px 18px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; }
-.best .best-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 12px; }
-.best .best-title { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--moss); }
-.best .best-note { font-size: 12.5px; color: var(--muted); }
-.best .best-note b { color: var(--text); font-weight: 600; }
-@media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
-.show-more { margin: 16px 0 0; }
-.empty { background: var(--white); border: 1px dashed var(--line); border-radius: var(--radius); padding: 28px; color: var(--muted); text-align: center; margin-top: 16px; }
-
-/* ---------- footer ---------- */
-footer { background: var(--ink); color: rgba(255,255,255,.85); padding: 48px 0 40px; margin-top: 24px; border-top: 3px solid var(--gold); }
-footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
-@media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
-footer h3 { font-family: var(--display); font-size: 16px; margin: 0 0 10px; color: var(--white); }
-footer p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; max-width: 44ch; }
-footer ul { list-style: none; padding: 0; margin: 0; }
-footer li { margin: 0 0 8px; font-size: 14.5px; }
-footer a { color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.25); }
-footer a:hover { border-color: var(--gold); }
-footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14); padding-top: 18px; font-size: 13px; color: rgba(255,255,255,.65); }
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body data-page="home">
 
 <header class="topbar">
     <div class="wrap">
         <a class="brand" href="#top">
-            <img src="assets/lcc-logo.png" alt="">
+            <span class="logo"><img src="assets/lcc-logo.png" alt=""></span>
             <span>
                 <span class="brand-name">Open Learning</span><br>
                 <span class="brand-by">by Learning Curve Collective</span>
             </span>
         </a>
         <nav class="topnav" aria-label="Site">
-            <a class="hide-sm" href="#subjects">Subjects</a>
+            <a class="hide-sm" href="#explore">Subjects</a>
             <a class="hide-sm" href="#featured">Featured</a>
             <a class="hide-sm" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learning Curve Collective</a>
-            <a class="btn btn-gold btn-sm" href="#browse">Explore resources</a>
+            <a class="btn btn-gold btn-sm" href="#explore">Explore resources</a>
         </nav>
     </div>
 </header>
@@ -222,9 +42,9 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
                 <label class="sr-only" for="hq">Search resources</label>
                 <input id="hq" type="search" placeholder="Search for a topic, like chain rule or elasticity" autocomplete="off">
-                <button class="btn btn-gold btn-sm" type="submit">Explore resources</button>
+                <button class="btn btn-gold btn-sm" type="submit">Explore<span class="hide-xs">&nbsp;resources</span></button>
             </form>
-            <p class="hero-links"><a href="#subjects">Browse by subject</a><a href="#featured">Featured sheets</a><a href="#browse">All resources</a></p>
+            <p class="hero-links"><a href="#explore">Browse by subject</a><a href="#featured">Featured sheets</a><a href="#all">All resources</a></p>
         </div>
         <div class="hero-art" aria-hidden="true">
             <!-- the learning curve: a logistic curve through the six academic levels, drawn by script -->
@@ -233,49 +53,37 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
     </div>
 </section>
 
-<section class="block" id="subjects">
+<!-- Search results replace the two sections below while a search is open -->
+<section class="block" id="results" hidden>
     <div class="wrap">
-        <h2>Browse by subject</h2>
-        <p class="sub">Every resource is sorted by subject and listed in the order you would meet it in a course.</p>
-        <div class="tiles" id="tiles"></div>
+        <div class="result-head">
+            <h2 id="result-title">Results</h2>
+            <span class="count" id="result-count"></span>
+            <button type="button" id="clear-search">Clear and go back</button>
+        </div>
+        <div class="chips" id="level-chips" aria-label="Academic level"><span class="label">Level</span></div>
+        <div class="chips" id="content-chips" aria-label="What's inside"><span class="label">Inside</span></div>
+        <div class="chips" id="exam-chips" aria-label="Exam" hidden><span class="label">Exam</span></div>
+        <div class="key" id="key"></div>
+        <div id="best"></div>
+        <div id="result-list"></div>
     </div>
 </section>
 
-<section class="block" id="featured">
+<section class="block center home-only" id="explore">
+    <div class="wrap">
+        <h2>Explore our resources</h2>
+        <p class="sub">Pick a subject to see every sheet in it, listed in the order you would meet it in a course.</p>
+        <ul class="pills" data-pills></ul>
+        <p class="quick" data-quick></p>
+    </div>
+</section>
+
+<section class="block home-only" id="featured">
     <div class="wrap">
         <h2>Featured resources</h2>
         <p class="sub">A few of the interactive tools that show what these sheets can do.</p>
         <div class="featured" id="featured-grid"></div>
-    </div>
-</section>
-
-<section class="block" id="browse">
-    <div class="wrap">
-        <h2>All resources</h2>
-        <p class="sub">Search, or combine filters by academic level, what's inside, subject, and format. Open a subject to see its sheets in course order.</p>
-
-        <div class="toolbar" role="search">
-            <div class="toolbar-row">
-                <label class="search" for="q">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                    <span class="sr-only">Search resources</span>
-                    <input id="q" type="search" placeholder="Search by topic, like chain rule, elasticity, or ACT science" autocomplete="off">
-                </label>
-                <div class="select"><label class="sr-only" for="f-subject">Subject</label><select id="f-subject"><option value="">All subjects</option></select></div>
-                <div class="select"><label class="sr-only" for="f-format">Format</label><select id="f-format"><option value="">All formats</option></select></div>
-            </div>
-            <div class="toolbar-row chips" id="level-chips" aria-label="Academic level"><span class="label">Level</span></div>
-            <div class="toolbar-row chips" id="content-chips" aria-label="What's inside"><span class="label">Inside</span></div>
-            <div class="toolbar-row chips" id="exam-chips" aria-label="Exam" hidden><span class="label">Exam</span></div>
-        </div>
-        <div class="key" id="key"></div>
-
-        <div class="result-line">
-            <span id="result-count"></span>
-            <span class="expand"><button type="button" id="expand-all">Expand all</button><button type="button" id="collapse-all">Collapse all</button></span>
-        </div>
-        <div id="best"></div>
-        <div id="results"></div>
     </div>
 </section>
 </main>
@@ -299,9 +107,9 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
         <div>
             <h3>This library</h3>
             <ul>
-                <li><a href="#subjects">Browse by subject</a></li>
+                <li><a href="#explore">Browse by subject</a></li>
                 <li><a href="#featured">Featured resources</a></li>
-                <li><a href="#browse">All resources</a></li>
+                <li><a href="#all">All resources</a></li>
                 <li><a href="https://github.com/LearningCurveCollective/learning-curve-collective-resources" target="_blank" rel="noopener">Source on GitHub</a></li>
             </ul>
         </div>
@@ -310,403 +118,6 @@ footer .fine { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.14);
 </footer>
 
 <script src="catalog.js"></script>
-<script>
-(function () {
-    var C = window.OPEN_LEARNING_CATALOG;
-    if (!C) return;
-    var BASE = C.site.base;
-    var R = C.resources.slice().sort(function (a, b) { return a.subject === b.subject ? a.order - b.order : 0; });
-    var BYID = {}; R.forEach(function (r) { BYID[r.id] = r; });
-    var SUBJ = {}; C.subjects.forEach(function (s) { SUBJ[s.key] = s; });
-    var EXAMS = ['SAT', 'PSAT', 'ACT', 'GRE'];
-    var CONTENT = {}; C.content_types.forEach(function (c) { CONTENT[c.key] = c; });
-    // reverse of builds_on
-    var LEADS = {}; R.forEach(function (r) { (r.builds_on || []).forEach(function (d) { (LEADS[d] = LEADS[d] || []).push(r.id); }); });
-
-    function enc(p) { return BASE + p.split('/').map(encodeURIComponent).join('/'); }
-    function el(tag, attrs, children) {
-        var e = document.createElement(tag);
-        if (attrs) Object.keys(attrs).forEach(function (k) {
-            if (k === 'text') e.textContent = attrs[k];
-            else if (k === 'html') e.innerHTML = attrs[k];
-            else e.setAttribute(k, attrs[k]);
-        });
-        (children || []).forEach(function (c) { if (c) e.appendChild(c); });
-        return e;
-    }
-    function count(fn) { return R.filter(fn).length; }
-
-    /* ---------- the learning curve (logistic), shared by the hero and the level glyphs ---------- */
-    function logistic(t, k) { k = k || 7; var f = function (x) { return 1 / (1 + Math.exp(-k * (x - 0.5))); }; return (f(t) - f(0)) / (f(1) - f(0)); }
-    function curvePath(x0, y0, w, h, n) {
-        var d = '';
-        for (var i = 0; i <= n; i++) { var t = i / n; var x = x0 + t * w, y = y0 - logistic(t) * h; d += (i ? ' L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
-        return d;
-    }
-    function drawHeroCurve() {
-        var svg = document.getElementById('curve'); if (!svg) return;
-        var NS = 'http://www.w3.org/2000/svg';
-        var x0 = 44, y0 = 252, w = 380, h = 206, n = 120;
-        var defs = document.createElementNS(NS, 'defs');
-        defs.innerHTML = '<linearGradient id="curveFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDA25E" stop-opacity=".22"/><stop offset="1" stop-color="#DDA25E" stop-opacity="0"/></linearGradient>';
-        svg.appendChild(defs);
-        var g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'grid');
-        for (var i = 0; i <= 4; i++) { var l = document.createElementNS(NS, 'line'); var y = y0 - i * (h / 4); l.setAttribute('x1', x0 - 4); l.setAttribute('x2', x0 + w + 16); l.setAttribute('y1', y); l.setAttribute('y2', y); g.appendChild(l); }
-        svg.appendChild(g);
-        var fill = document.createElementNS(NS, 'path'); fill.setAttribute('class', 'fill');
-        fill.setAttribute('d', curvePath(x0, y0, w, h, n) + ' L' + (x0 + w) + ' ' + y0 + ' Z'); svg.appendChild(fill);
-        var path = document.createElementNS(NS, 'path'); path.setAttribute('class', 'path'); path.setAttribute('pathLength', '1');
-        path.setAttribute('d', curvePath(x0, y0, w, h, n)); svg.appendChild(path);
-        var labels = C.levels;
-        labels.forEach(function (name, i) {
-            var t = i / (labels.length - 1), x = x0 + t * w, y = y0 - logistic(t) * h;
-            var dot = document.createElementNS(NS, 'circle'); dot.setAttribute('class', 'dot'); dot.setAttribute('cx', x); dot.setAttribute('cy', y); dot.setAttribute('r', 5);
-            dot.style.animationDelay = (0.3 + 1.6 * t) + 's'; svg.appendChild(dot);
-            var tx = document.createElementNS(NS, 'text');
-            // labels: the first two sit below the flat start, the last sits above the top, the rest hang to the left of their dot
-            if (i === 0) { tx.setAttribute('x', x); tx.setAttribute('y', y + 22); tx.setAttribute('text-anchor', 'start'); }
-            else if (i === 1) { tx.setAttribute('x', x + 10); tx.setAttribute('y', y + 18); tx.setAttribute('text-anchor', 'start'); }
-            else if (i === labels.length - 1) { tx.setAttribute('x', x); tx.setAttribute('y', y - 14); tx.setAttribute('text-anchor', 'end'); }
-            else { tx.setAttribute('x', x - 12); tx.setAttribute('y', y + 4); tx.setAttribute('text-anchor', 'end'); }
-            tx.textContent = name; svg.appendChild(tx);
-        });
-    }
-    function levelGlyph(i) {  // small curve with a dot at this level's position, 26 x 12
-        var n = C.levels.length - 1, t = i / n, x0 = 2, y0 = 10.5, w = 22, h = 9;
-        var x = x0 + t * w, y = y0 - logistic(t) * h;
-        return '<svg viewBox="0 0 26 12" aria-hidden="true"><path d="' + curvePath(x0, y0, w, h, 24) + '" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".55"/><circle class="d" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.6" fill="currentColor"/></svg>';
-    }
-    var ICON = {
-        theory: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>',
-        practice: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M13 7l3 3"/></svg>',
-        reference: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>'
-    };
-    ICON['theory+practice'] = ICON.theory + ICON.practice;
-
-    /* ---------- state ---------- */
-    var state = { q: '', subject: '', format: '', levels: [], exams: [], content: [] };
-    var open = {};
-
-    function readHash() {
-        var h = location.hash.replace(/^#/, '');
-        if (h.indexOf('browse?') !== 0) return false;
-        var ps = new URLSearchParams(h.slice(7));
-        state.q = ps.get('q') || '';
-        state.subject = ps.get('subject') || '';
-        state.format = ps.get('format') || '';
-        state.levels = ps.get('level') ? ps.get('level').split(',') : [];
-        state.exams = ps.get('exam') ? ps.get('exam').split(',') : [];
-        state.content = ps.get('inside') ? ps.get('inside').split(',') : [];
-        return true;
-    }
-    function writeHash() {
-        var ps = new URLSearchParams();
-        if (state.q.trim()) ps.set('q', state.q.trim());
-        if (state.subject) ps.set('subject', state.subject);
-        if (state.format) ps.set('format', state.format);
-        if (state.levels.length) ps.set('level', state.levels.join(','));
-        if (state.exams.length) ps.set('exam', state.exams.join(','));
-        if (state.content.length) ps.set('inside', state.content.join(','));
-        var s = ps.toString();
-        var target = s ? '#browse?' + s : '#browse';
-        if (location.hash !== target) history.replaceState(null, '', target);
-    }
-    function filtering() { return !!(state.q || state.subject || state.format || state.levels.length || state.exams.length || state.content.length); }
-
-    /* ---------- matching ---------- */
-    /* The page-content index (search-index.js) is fetched the first time someone searches,
-       so the first paint never waits for it. Until it arrives, search works on the catalog
-       text alone and re-runs by itself once the index lands. */
-    var IDX = null, idxState = 'idle';
-    function ensureIndex() {
-        if (idxState !== 'idle') return;
-        idxState = 'loading';
-        var s = document.createElement('script');
-        s.src = 'search-index.js';
-        s.onload = function () { IDX = window.SEARCH_INDEX || {}; idxState = 'ready'; if (state.q) renderResults(); };
-        s.onerror = function () { idxState = 'failed'; };   // keep searching the catalog text
-        document.head.appendChild(s);
-    }
-    function queryTerms() { return state.q.trim().toLowerCase().split(/\s+/).filter(Boolean); }
-    function wordHit(hay, term) {
-        if (!hay) return false;
-        var i = hay.indexOf(term);
-        while (i !== -1) { if (i === 0 || hay.charAt(i - 1) === ' ') return true; i = hay.indexOf(term, i + 1); }
-        return false;
-    }
-    /* 0 means "not a result". Higher is a better match: the title beats the catalog text,
-       which beats a heading inside the page, which beats ordinary prose. */
-    function score(r) {
-        if (state.subject && r.subject !== state.subject && SUBJ[r.subject].area !== state.subject) return 0;
-        if (state.format && r.format !== state.format) return 0;
-        if (state.levels.length && !state.levels.some(function (l) { return r.levels.indexOf(l) !== -1; })) return 0;
-        if (state.content.length && state.content.indexOf(r.content) === -1) return 0;
-        if (state.exams.length && !(r.exams || []).some(function (x) { return state.exams.indexOf(x) !== -1; })) return 0;
-        var terms = queryTerms();
-        if (!terms.length) return 1;
-        var title = r.title.toLowerCase();
-        var meta = (r.description + ' ' + r.topic + ' ' + r.tags.join(' ') + ' ' + SUBJ[r.subject].name + ' '
-                    + r.levels.join(' ') + ' ' + r.format + ' ' + (r.exams || []).join(' ')).toLowerCase();
-        var doc = (IDX && IDX[r.id]) || null;
-        var total = 0, deep = false;
-        for (var i = 0; i < terms.length; i++) {
-            var term = terms[i], s = 0;
-            if (title.indexOf(term) !== -1) s += 100;
-            if (meta.indexOf(term) !== -1) s += 40;
-            if (doc) {
-                if (wordHit(doc.k, term)) s += 20;
-                else if (wordHit(doc.b, term)) { s += 6; deep = true; }
-            }
-            if (!s) return 0;                 // every word in the query has to land somewhere
-            total += s;
-        }
-        return deep && total <= 6 * terms.length ? total : total + 1;   // nudge non-content matches ahead of ties
-    }
-    function matches(r) { return score(r) > 0; }
-
-    /* ---------- cards ---------- */
-    function relLink(id) {
-        var t = BYID[id]; if (!t) return null;
-        var a = el('a', { href: '#r=' + id, text: t.title });
-        a.addEventListener('click', function (e) { e.preventDefault(); jumpTo(id); });
-        return a;
-    }
-    function relRow(label, ids) {
-        var row = el('div', null, [el('span', { text: label })]);
-        ids.forEach(function (id, i) { if (i) row.appendChild(el('i', { 'class': 'sep', text: '|' })); row.appendChild(relLink(id)); });
-        return row;
-    }
-    function card(r, extra) {
-        var meta = el('div', { 'class': 'meta' });
-        r.levels.forEach(function (l) { meta.appendChild(el('span', { 'class': 'pill pill-level', html: levelGlyph(C.levels.indexOf(l)) + '<span>' + l + '</span>' })); });
-        if (r.content) meta.appendChild(el('span', { 'class': 'pill pill-content', html: ICON[r.content] + '<span>' + CONTENT[r.content].label + '</span>' }));
-        meta.appendChild(el('span', { 'class': 'pill pill-format', text: r.format }));
-        if (extra && extra.topic) meta.appendChild(el('span', { 'class': 'pill-topic', text: r.topic }));
-        var h = el('h4', null, [el('a', { href: enc(r.path), text: r.title })]);
-        var kids = [];
-        if (extra && extra.subject) kids.push(el('span', { 'class': 'subj', text: SUBJ[r.subject].name }));
-        kids.push(h, el('p', { text: r.description }), meta);
-        var bo = (r.builds_on || []).filter(function (id) { return BYID[id]; }), lt = (LEADS[r.id] || []);
-        if (bo.length || lt.length) {
-            var rel = el('div', { 'class': 'rel' });
-            if (bo.length) rel.appendChild(relRow('Builds on', bo));
-            if (lt.length) rel.appendChild(relRow('Leads to', lt));
-            kids.push(rel);
-        }
-        var node = el('article', { 'class': 'card' + (extra && extra.featured ? ' featured-card' : ''), id: 'r-' + r.id, 'data-id': r.id }, kids);
-        node.addEventListener('click', function (e) {
-            if (e.target.closest('a') || e.defaultPrevented) return;
-            if (e.metaKey || e.ctrlKey) window.open(enc(r.path), '_blank'); else location.href = enc(r.path);
-        });
-        return node;
-    }
-    function jumpTo(id) {
-        var t = BYID[id]; if (!t) return;
-        // make sure the target is visible: clear filters that hide it, open its subject
-        if (!matches(t)) { state = { q: '', subject: '', format: '', levels: [], exams: [], content: [] }; }
-        open[t.subject] = true; showAll[t.subject] = true;
-        update();
-        var node = document.getElementById('r-' + id);
-        if (!node) return;
-        node.scrollIntoView({ block: 'center' });
-        node.classList.add('flash'); setTimeout(function () { node.classList.remove('flash'); }, 2200);
-        var link = node.querySelector('h4 a'); if (link) link.focus({ preventScroll: true });
-    }
-
-    /* ---------- tiles ---------- */
-    function renderTiles() {
-        var t = document.getElementById('tiles');
-        C.areas.forEach(function (a) {
-            var subs = C.subjects.filter(function (s) { return s.area === a.key; });
-            var n = count(function (r) { return SUBJ[r.subject].area === a.key; });
-            var list = el('ul', { 'class': 't-subjects' });
-            subs.forEach(function (s) {
-                var c = count(function (r) { return r.subject === s.key; });
-                list.appendChild(el('li', { text: s.name + ' (' + c + ')' }));
-            });
-            var blurb = subs.length === 1 ? subs[0].blurb : null;
-            t.appendChild(el('a', { 'class': 'tile', href: '#browse?subject=' + a.key }, [
-                el('div', { 'class': 't-name' }, [el('span', { text: a.name }), el('span', { 'class': 't-count', text: n + (n === 1 ? ' sheet' : ' sheets') })]),
-                blurb ? el('p', { 'class': 't-blurb', text: blurb }) : list
-            ]));
-        });
-    }
-
-    /* ---------- featured ---------- */
-    function renderFeatured() {
-        var g = document.getElementById('featured-grid');
-        R.filter(function (r) { return r.featured; }).sort(function (a, b) { return a.featured - b.featured; })
-         .forEach(function (r) { g.appendChild(card(r, { featured: true, subject: true })); });
-    }
-
-    /* ---------- toolbar ---------- */
-    function toggle(arr, v) { var i = arr.indexOf(v); if (i === -1) arr.push(v); else arr.splice(i, 1); }
-    function renderToolbar() {
-        var fs = document.getElementById('f-subject');
-        C.areas.forEach(function (a) {
-            var subs = C.subjects.filter(function (s) { return s.area === a.key; });
-            if (subs.length === 1) { fs.appendChild(el('option', { value: subs[0].key, text: subs[0].name })); return; }
-            var og = el('optgroup', { label: a.name });
-            og.appendChild(el('option', { value: a.key, text: 'All ' + a.name.toLowerCase() }));
-            subs.forEach(function (s) { og.appendChild(el('option', { value: s.key, text: s.name })); });
-            fs.appendChild(og);
-        });
-        var ff = document.getElementById('f-format');
-        C.formats.forEach(function (f) { ff.appendChild(el('option', { value: f, text: f })); });
-        var lc = document.getElementById('level-chips');
-        C.levels.forEach(function (l, i) {
-            var b = el('button', { type: 'button', 'class': 'chip', 'aria-pressed': 'false', 'data-level': l, html: levelGlyph(i) + '<span>' + l + '</span>' });
-            b.querySelector('svg').style.width = '22px'; b.querySelector('svg').style.height = '11px';
-            b.addEventListener('click', function () { toggle(state.levels, l); update(); });
-            lc.appendChild(b);
-        });
-        var cc = document.getElementById('content-chips');
-        C.content_types.forEach(function (c) {
-            var b = el('button', { type: 'button', 'class': 'chip', 'aria-pressed': 'false', 'data-content': c.key, title: c.blurb, html: ICON[c.key] + '<span>' + c.label + '</span>' });
-            b.addEventListener('click', function () { toggle(state.content, c.key); update(); });
-            cc.appendChild(b);
-        });
-        var ec = document.getElementById('exam-chips');
-        EXAMS.forEach(function (x) {
-            var b = el('button', { type: 'button', 'class': 'chip', 'aria-pressed': 'false', 'data-exam': x, text: x });
-            b.addEventListener('click', function () { toggle(state.exams, x); update(); });
-            ec.appendChild(b);
-        });
-        var clear = el('button', { type: 'button', 'class': 'chip-clear', text: 'Clear filters' });
-        clear.addEventListener('click', function () { state = { q: '', subject: '', format: '', levels: [], exams: [], content: [] }; update(); });
-        cc.appendChild(clear);
-        // tag key
-        var key = document.getElementById('key');
-        key.appendChild(el('b', { text: 'Tag key' }));
-        key.appendChild(el('span', { 'class': 'k', html: levelGlyph(1) + 'the dot marks the academic level on the curve, from Foundations to Graduate' }));
-        C.content_types.forEach(function (c) { key.appendChild(el('span', { 'class': 'k', html: ICON[c.key] + c.label + ': ' + c.blurb.toLowerCase() })); });
-
-        document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value; update(); });
-        var hf = document.getElementById('hero-search'), hq = document.getElementById('hq');
-        hq.addEventListener('input', function (e) { state.q = e.target.value; update(false); });
-        hf.addEventListener('submit', function (e) { e.preventDefault(); state.q = hq.value; update(); document.getElementById('browse').scrollIntoView(); document.getElementById('q').focus({ preventScroll: true }); });
-        fs.addEventListener('change', function (e) { state.subject = e.target.value; update(); });
-        ff.addEventListener('change', function (e) { state.format = e.target.value; update(); });
-        document.getElementById('expand-all').addEventListener('click', function () { C.subjects.forEach(function (s) { open[s.key] = true; }); renderResults(); });
-        document.getElementById('collapse-all').addEventListener('click', function () { C.subjects.forEach(function (s) { open[s.key] = false; }); renderResults(); });
-    }
-    function syncToolbar() {
-        /* Never write back into the box being typed in: doing so used to eat spaces. */
-        var qi = document.getElementById('q'), hqi = document.getElementById('hq');
-        if (document.activeElement !== qi) qi.value = state.q;
-        if (document.activeElement !== hqi) hqi.value = state.q;
-        document.getElementById('f-subject').value = state.subject;
-        document.getElementById('f-format').value = state.format;
-        document.querySelectorAll('[data-level]').forEach(function (b) { b.setAttribute('aria-pressed', state.levels.indexOf(b.getAttribute('data-level')) !== -1 ? 'true' : 'false'); });
-        document.querySelectorAll('[data-content]').forEach(function (b) { b.setAttribute('aria-pressed', state.content.indexOf(b.getAttribute('data-content')) !== -1 ? 'true' : 'false'); });
-        document.querySelectorAll('[data-exam]').forEach(function (b) { b.setAttribute('aria-pressed', state.exams.indexOf(b.getAttribute('data-exam')) !== -1 ? 'true' : 'false'); });
-        var testPrep = !state.subject || state.subject === 'test-prep' || (SUBJ[state.subject] && SUBJ[state.subject].area === 'test-prep');
-        document.getElementById('exam-chips').hidden = !testPrep;
-        if (!testPrep) state.exams = [];
-    }
-
-    /* ---------- results ---------- */
-    var SHOW_LIMIT = 10;
-    var showAll = {};
-    function renderResults() {
-        var root = document.getElementById('results'); root.innerHTML = '';
-        var hits = R.filter(matches); var total = hits.length;
-        renderBest(hits);
-        document.getElementById('result-count').textContent = filtering()
-            ? 'Showing ' + total + ' of ' + R.length + ' resources'
-            : R.length + ' resources across ' + C.subjects.filter(function (s) { return count(function (r) { return r.subject === s.key; }); }).length + ' subjects';
-        if (!total) { root.appendChild(el('div', { 'class': 'empty', text: 'No resources match that search. Try a broader term, or clear the filters.' })); return; }
-        var isFiltering = filtering();
-        C.areas.forEach(function (a) {
-            var subs = C.subjects.filter(function (s) { return s.area === a.key; });
-            var areaHits = hits.filter(function (r) { return SUBJ[r.subject].area === a.key; });
-            if (!areaHits.length) return;
-            if (subs.length > 1) root.appendChild(el('div', { 'class': 'area-label', text: a.name }));
-            subs.forEach(function (s) {
-                var sh = areaHits.filter(function (r) { return r.subject === s.key; });
-                if (!sh.length) return;
-                var expanded = isFiltering ? open[s.key] !== false : !!open[s.key];
-                var head = el('button', { 'class': 'subject-head', type: 'button', 'aria-expanded': String(expanded) }, [
-                    el('span', null, [el('span', { 'class': 's-name', text: s.name }), el('span', { 'class': 's-blurb', text: s.blurb })]),
-                    el('span', { 'class': 's-count', text: sh.length }),
-                    el('span', { 'class': 'chev', html: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' })
-                ]);
-                var body = el('div', { 'class': 'subject-body' }); body.hidden = !expanded;
-                var topics = []; sh.forEach(function (r) { if (topics.indexOf(r.topic) === -1) topics.push(r.topic); });
-                var shown = 0, capped = false, limit = (isFiltering || showAll[s.key]) ? Infinity : SHOW_LIMIT;
-                topics.forEach(function (t) {
-                    var tr = sh.filter(function (r) { return r.topic === t; });
-                    if (shown >= limit) { capped = true; return; }
-                    body.appendChild(el('div', { 'class': 'topic-label', text: t }));
-                    var grid = el('div', { 'class': 'cards' });
-                    tr.forEach(function (r) { if (shown >= limit) { capped = true; return; } grid.appendChild(card(r)); shown++; });
-                    body.appendChild(grid);
-                });
-                if (capped) {
-                    var more = el('button', { 'class': 'btn btn-gold btn-sm show-more', type: 'button', text: 'Show all ' + sh.length + ' in ' + s.name });
-                    more.addEventListener('click', function () { showAll[s.key] = true; renderResults(); });
-                    body.appendChild(more);
-                }
-                head.addEventListener('click', function () { open[s.key] = !expanded; renderResults(); });
-                root.appendChild(el('section', { 'class': 'subject', id: 'subj-' + s.key }, [head, body]));
-            });
-        });
-    }
-
-    /* With a search term, lead with the strongest matches so a concept turns up a page even
-       when its title says nothing about that concept. */
-    function renderBest(hits) {
-        var box = document.getElementById('best'); box.innerHTML = '';
-        if (!state.q.trim() || !hits.length) return;
-        var ranked = hits.map(function (r) { return { r: r, s: score(r) }; })
-                         .sort(function (a, b) { return b.s - a.s || a.r.title.localeCompare(b.r.title); });
-        var note = idxState === 'ready'
-            ? 'Searching titles, tags and the text inside every sheet.'
-            : (idxState === 'failed' ? 'Searching titles and tags.' : 'Searching titles and tags; loading page text\u2026');
-        var kids = [el('div', { 'class': 'best-head' }, [
-            el('span', { 'class': 'best-title', text: hits.length > 4 ? 'Best matches' : 'Matches' }),
-            el('span', { 'class': 'best-note', text: note })
-        ])];
-        /* Four or fewer hits are all visible in the list below, so showing them again here
-           would just be noise: the note alone explains why they turned up. */
-        if (hits.length > 4) {
-            var grid = el('div', { 'class': 'cards' });
-            ranked.slice(0, 4).forEach(function (x) { grid.appendChild(card(x.r, { subject: true })); });
-            kids.push(grid);
-        }
-        box.appendChild(el('div', { 'class': 'best' }, kids));
-    }
-
-    function update(hash) { if (state.q.trim()) ensureIndex(); syncToolbar(); if (hash !== false) writeHash(); renderResults(); }
-
-    drawHeroCurve(); renderTiles(); renderFeatured(); renderToolbar();
-    var rm = location.hash.match(/^#r=(.+)$/);
-    if (rm) { syncToolbar(); renderResults(); jumpTo(decodeURIComponent(rm[1])); }
-    else if (readHash()) { update(); document.getElementById('browse').scrollIntoView(); }
-    else { syncToolbar(); renderResults(); }
-    window.addEventListener('hashchange', function () { var m = location.hash.match(/^#r=(.+)$/); if (m) jumpTo(decodeURIComponent(m[1])); else if (readHash()) { update(); document.getElementById('browse').scrollIntoView(); } });
-
-    /* ---------- safety net: list any published .html not yet in the catalog ---------- */
-    (function () {
-        var API = 'https://api.github.com/repos/LearningCurveCollective/learning-curve-collective-resources/git/trees/main?recursive=1';
-        var known = {}; R.forEach(function (r) { known[r.path] = true; });
-        var folderToSubject = { 'medical study sheets': 'medicine', 'test-prep': 'sat' };
-        fetch(API).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-            if (!data || !data.tree) return;
-            var extra = [];
-            data.tree.forEach(function (n) {
-                var p = n.path;
-                if (n.type !== 'blob' || !/\.html$/i.test(p) || p === 'index.html' || p.indexOf('/') === -1 || known[p] || p.charAt(0) === '_') return;
-                var folder = p.split('/')[0];
-                var key = p.indexOf('test-prep/act/') === 0 ? 'act' : (folderToSubject[folder] || folder);
-                if (!SUBJ[key]) return;
-                var name = p.split('/').pop().replace(/\.html$/, '').replace(/[-_]+/g, ' ');
-                extra.push({ id: 'new--' + p, path: p, title: name, description: 'Just published. A catalog entry is on its way.', subject: key, topic: 'Recently added', order: 999, levels: [], format: 'New', tags: [], builds_on: [] });
-            });
-            if (extra.length) { R = R.concat(extra); extra.forEach(function (x) { BYID[x.id] = x; }); renderResults(); }
-        }).catch(function () {});
-    })();
-})();
-</script>
+<script src="assets/site.js"></script>
 </body>
 </html>

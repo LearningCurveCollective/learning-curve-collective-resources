@@ -7,7 +7,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-10-29"
+  "updated": "2026-10-30"
  },
  "levels": [
   "Foundations",
@@ -34,27 +34,39 @@ window.OPEN_LEARNING_CATALOG = {
  "areas": [
   {
    "key": "math",
-   "name": "Mathematics"
+   "name": "Mathematics",
+   "page": "math.html",
+   "blurb": "Algebra through multivariable calculus and statistics, listed in the order you meet it in a course."
   },
   {
    "key": "test-prep",
-   "name": "Test Prep"
+   "name": "Test Prep",
+   "page": "test-prep.html",
+   "blurb": "Diagnostics, topic practice, full tests, and test-day playbooks built around the digital SAT, the ACT, and the GRE."
   },
   {
    "key": "econ",
-   "name": "Economics"
+   "name": "Economics",
+   "page": "economics.html",
+   "blurb": "Principles, microeconomics, environmental and public economics, and econometrics."
   },
   {
    "key": "science",
-   "name": "Science"
+   "name": "Science",
+   "page": "science.html",
+   "blurb": "Interactive physics labs, biology foundations, and clinical study sheets."
   },
   {
    "key": "ml",
-   "name": "Machine Learning & Data"
+   "name": "Machine Learning & Data",
+   "page": "machine-learning.html",
+   "blurb": "Algorithms stepped through by hand, plus the math and statistics behind them."
   },
   {
    "key": "social",
-   "name": "Social Science"
+   "name": "Social Science",
+   "page": "social-science.html",
+   "blurb": "Psychology research methods and study sheets."
   }
  ],
  "subjects": [

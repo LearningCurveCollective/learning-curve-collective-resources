@@ -6,11 +6,13 @@ if [ -z "$(git config user.name)" ]; then
   git config user.name "Learning Curve Collective"
   git config user.email "torin@learningcurvecollective.com"
 fi
-# Refresh the search index so the site can search inside sheets that just changed.
+# Refresh the search index so the site can search inside sheets that just changed,
+# and the subject pages (math.html, test-prep.html, ...) from the areas in catalog.js.
 if command -v python3 >/dev/null 2>&1; then
   python3 _build/build_search_index.py || echo "   (search index not rebuilt; publishing anyway)"
+  python3 _build/build_pages.py || echo "   (subject pages not rebuilt; publishing anyway)"
 else
-  echo "   (python3 not found, so search-index.js was left as it is)"
+  echo "   (python3 not found, so search-index.js and the subject pages were left as they are)"
 fi
 
 git add -A
