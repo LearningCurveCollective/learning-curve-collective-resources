@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Calculus &amp; Linear Algebra Toolkit — Learning Curve Collective</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+    <script>
+    window.MathJax = {
+        tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]], processEscapes: true },
+        svg: { fontCache: 'global' },
+        options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+    <style>
+:root {
+    --green-dark: #21442B; --green-medium: #5E6C39; --green-light: #39864E;
+    --gold: #DDA25E; --gold-light: #E6BC84; --gold-pale: #F5E4CC; --copper: #BC6C26;
+    --brown-dark: #42260D; --brown-medium: #271404;
+    --cream: #F0F0F0; --cream-dark: #E2E2E2; --white: #FFFFFF;
+    --text-dark: #2D2D2D; --text-medium: #4A4A4A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+.tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
+.tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.tab-row-label { width:92px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); opacity:0.75; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="study"] { border-color: #21442B; }
+.tab-button[data-group="study"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="study"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="sprint"] { border-color: #BC6C26; }
+.tab-button[data-group="sprint"].active { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="sprint"]:hover { border-color: #BC6C26; background: rgba(188,108,38,0.1); }
+.tab-button[data-group="sprint"].active:hover { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.card h3, .technique-section h3, h3.sub { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 19px; color: var(--green-dark); margin-bottom: 10px; }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box .mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.concept-list { background-color: var(--cream-dark); border-radius: 8px; padding: 20px; margin: 15px 0; }
+.concept-item { margin-bottom: 12px; padding: 16px 18px; border-radius: 8px; display: flex; gap: 16px; align-items: flex-start; }
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) { background-color: rgba(59, 83, 35, 0.08); border-left: 4px solid #21442B; }
+.concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
+.concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
+.concept-visual { flex-shrink: 0; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; }
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin-bottom: 8px; }
+.formula-tile .mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; }
+.formula-grid .formula-tile:nth-child(3n+1) { background: rgba(33,68,43,0.08); border-color: #21442B; }
+.formula-grid .formula-tile:nth-child(3n+2) { background: rgba(221,162,94,0.10); border-color: #DDA25E; }
+.formula-grid .formula-tile:nth-child(3n+3) { background: rgba(66,38,13,0.08); border-color: #8B5E3C; }
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.practice-box { background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3); border-radius: 8px; padding: 14px 18px; margin-top: 10px; }
+.ts-green { background: rgba(33,68,43,0.06); border-left: 4px solid #21442B; }
+.ts-gold { background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E; }
+.ts-brown { background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C; }
+.derivation-step { display: flex; gap: 14px; margin: 12px 0; align-items: flex-start; }
+.step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--green-dark); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.step-body { flex: 1; }
+.step-body p { margin-bottom: 8px; }
+table.lcc { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+table.lcc th { background: var(--green-dark); color: white; text-align: left; padding: 10px 12px; font-weight: 600; font-size: 13px; letter-spacing: 0.3px; }
+table.lcc td { padding: 9px 12px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; }
+table.lcc tr:nth-child(even) td { background: rgba(221,162,94,0.06); }
+table.lcc tr:last-child td { border-bottom: none; }
+table.lcc td.ok { color: var(--green-dark); font-weight: 600; }
+table.lcc td.bad { color: #B23B3B; font-weight: 600; }
+.pill { display: inline-block; background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-right: 6px; }
+.pill.green { background: var(--green-dark); }
+.pill.brown { background: #8B5E3C; }
+.pill.red { background: #C0564F; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.diagram { background: white; border: 2px solid var(--gold-light); border-radius: 10px; padding: 14px; margin: 14px 0; }
+.diagram svg { width: 100%; height: auto; display: block; }
+.diagram .cap { font-size: 12.5px; color: var(--text-medium); text-align: center; margin: 8px 0 0; }
+.viz-container { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--cream-dark); }
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.control-group select, .control-group input[type="number"] { padding: 8px 12px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background: var(--cream); color: var(--text-dark); outline: none; }
+.slider-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 4px; }
+.slider-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display { font-weight: 700; font-size: 18px; color: var(--gold); min-width: 64px; text-align: center; }
+.sum-type-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+.sum-type-btn { padding: 8px 14px; border: 2px solid var(--gold-light); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; background: var(--cream); color: var(--text-medium); transition: all 0.2s; }
+.sum-type-btn:hover { border-color: var(--gold); color: var(--gold); }
+.sum-type-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+.viz-canvas-wrap { text-align: center; margin-bottom: 12px; }
+.viz-canvas-wrap canvas { border-radius: 8px; border: 1px solid var(--cream-dark); max-width: 100%; height: auto; }
+.readout-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
+.readout-item { background: var(--cream); border-radius: 8px; padding: 12px 16px; text-align: center; border: 1px solid var(--gold-pale); }
+.readout-item .readout-label { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.readout-item .readout-value { font-size: 18px; font-weight: 700; color: var(--gold); font-family: 'Inter', monospace; }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+.readout-item .readout-label.math { text-transform: none; letter-spacing: 0.3px; font-size: 12px; }
+.quiz-q { background: white; border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.quiz-q .qtext { font-weight: 600; margin-bottom: 10px; }
+.quiz-opt { display: block; width: 100%; text-align: left; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 6px; padding: 9px 12px; margin: 6px 0; font-family: 'Inter', sans-serif; font-size: 14px; cursor: pointer; color: var(--text-dark); transition: all 0.15s; }
+.quiz-opt:hover { border-color: var(--gold); }
+.quiz-opt.correct { background: #E8F5E9; border-color: var(--green-light); font-weight: 600; }
+.quiz-opt.wrong { background: #FFEBEE; border-color: #E57373; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-expl { display: none; margin-top: 10px; padding: 10px 14px; background: rgba(33,68,43,0.06); border-radius: 6px; font-size: 14px; }
+.quiz-expl.show { display: block; }
+.score-bar { background: var(--green-dark); color: white; border-radius: 8px; padding: 12px 18px; font-weight: 600; margin: 10px 0 18px; display: flex; justify-content: space-between; align-items: center; }
+.score-bar button { background: var(--gold); border: none; color: var(--brown-dark); font-weight: 700; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; }
+.flash-wrap { perspective: 1000px; margin: 14px 0; }
+.flash-card { position: relative; width: 100%; min-height: 170px; cursor: pointer; transition: transform 0.5s; transform-style: preserve-3d; }
+.flash-card.flipped { transform: rotateY(180deg); }
+.flash-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px; padding: 22px 26px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-size: 16px; }
+.flash-front { background: white; border: 2px solid var(--gold); color: var(--text-dark); }
+.flash-back { background: var(--green-dark); color: white; transform: rotateY(180deg); }
+.flash-back .mjx-container { color: white !important; }
+.flash-back svg { color: white; }
+.flash-controls { display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.flash-controls button { background: var(--gold); border: none; color: var(--brown-dark); font-weight: 700; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; }
+.flash-controls button.alt { background: var(--cream-dark); color: var(--text-medium); }
+.flash-hint { font-size: 12px; color: var(--text-medium); margin-top: 6px; text-align: center; }
+.kbd { font-family: 'Inter', monospace; background: var(--cream-dark); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+pre.code { background: #1f2a22; color: #E6E6E6; border-radius: 8px; padding: 14px 16px; font-size: 13px; overflow-x: auto; line-height: 1.5; margin: 10px 0; font-family: 'SFMono-Regular', Menlo, Consolas, monospace; }
+pre.code .c { color: #9FC59F; } pre.code .k { color: #E6BC84; }
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 8px; }
+.mjx-container { overflow-x: auto; overflow-y: hidden; }
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+@media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+@media print { .tab-nav { display: none !important; } .tab-content { display: block !important; } .tab-buttons { display: none; } }
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-row-label { width: 100%; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid, .two-col { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Matrix Calculus &amp; Linear Algebra Toolkit</h1>
+            <div class="subtitle">STUDY SHEET &bull; THE MATH BEHIND DEEP LEARNING</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">Math for ML &bull; Reference</div>
+    </div>
+</div>
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="tab-row-label">Reference</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+            <button class="tab-button" data-group="core" onclick="switchTab('flash', this)">&#9646; Flashcards</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Study guide</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 Derivatives in Matrix Form</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 Norms, Stretch &amp; Eigenvectors</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 Jacobians &amp; Change of Variables</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Practice</span>
+            <button class="tab-button" data-group="sprint" onclick="switchTab('drills', this)">&#9889; Drills</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ CHEAT SHEET ═══════════════════════════ -->
+    <div id="tab-cheat" class="tab-content active">
+        <div class="section-header"><div class="section-number">1</div><h2>Scalar rule &#8594; matrix rule</h2></div>
+        <div class="card">
+            <p><strong>Convention used throughout.</strong> The gradient of a scalar with respect to a column vector $x\in\mathbb{R}^d$ is a column of the same shape. The Jacobian of a vector-to-vector map has <em>rows = outputs, columns = inputs</em>. Every rule below is the one-variable rule with shapes attached.</p>
+            <table class="lcc">
+                <tr><th>One variable</th><th>Vector / matrix version</th><th>Shape</th><th>Where it shows up</th></tr>
+                <tr><td>$\frac{d}{dx}(ax) = a$</td><td>$\nabla_x(a^\top x) = a$</td><td>$d\times1$</td><td>Linear layer, bias-free score</td></tr>
+                <tr><td>$\frac{d}{dx}(x^2) = 2x$</td><td>$\nabla_x(x^\top x) = 2x$</td><td>$d\times1$</td><td>L2 penalty, $\nabla\frac\lambda2\|w\|^2 = \lambda w$</td></tr>
+                <tr><td>$\frac{d}{dx}(ax^2) = 2ax$</td><td>$\nabla_x(x^\top Ax) = (A+A^\top)x$, $=2Ax$ if $A$ symmetric</td><td>$d\times1$</td><td>Quadratic forms, Gaussians, Rayleigh quotients</td></tr>
+                <tr><td>$\frac{d}{dx}(ax-b)^2 = 2a(ax-b)$</td><td>$\nabla_x\|Ax-b\|^2 = 2A^\top(Ax-b)$</td><td>$d\times1$</td><td>Least squares; set to $0$ for $A^\top Ax = A^\top b$</td></tr>
+                <tr><td>$\frac{d}{dx}(ax) = a$ for the matrix</td><td>$\frac{\partial(Ax)}{\partial x} = A$</td><td>$m\times d$ Jacobian</td><td>The $W$ arrow in a layer</td></tr>
+                <tr><td>$\frac{d}{dx}\phi(x) = \phi'(x)$</td><td>$\frac{\partial\phi(z)}{\partial z} = \text{Diag}(\phi'(z))$ for elementwise $\phi$</td><td>$m\times m$ diagonal</td><td>ReLU mask $D$, sigmoid $\text{Diag}(\sigma(1-\sigma))$</td></tr>
+                <tr><td>$\frac{d}{dx}f(g(x)) = f'(g)\,g'(x)$</td><td>$J_{f\circ g} = J_f\,J_g$ (outer on the left)</td><td>$(k\times m)(m\times d)$</td><td>Backprop; one layer is $D\,W$</td></tr>
+                <tr><td>$\frac{d}{dw}(wx)\cdot\delta = \delta x$</td><td>$\nabla_W\mathcal{L} = \delta\,x^\top$ when $z = Wx$, $\delta = \nabla_z\mathcal{L}$</td><td>$(m\times1)(1\times d)$</td><td>Weight gradient of any linear layer</td></tr>
+                <tr><td>$\frac{d}{dx}\text{softmax}$ (no scalar analog)</td><td>$\frac{\partial f_i}{\partial z_k} = f_i(\delta_{ik}-f_k)$; with CE, $\nabla_z\mathcal{L} = f-y$</td><td>$K\times K$</td><td>Classification head</td></tr>
+            </table>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>Order, transposes and shapes</h2></div>
+        <div class="two-col">
+            <div class="card">
+                <h3>Four rules</h3>
+                <ol>
+                    <li><strong>Outer function on the left.</strong> $h = \text{ReLU}(Wx)\Rightarrow \partial h/\partial x = D\,W$. Same order as calculus, $f'(g(x))\,g'(x)$. Scalars hid this because they commute.</li>
+                    <li><strong>A matrix acts on the vector to its right.</strong> Following a wiggle: $\Delta z = W\Delta x$, then $\Delta h = D\Delta z = (DW)\Delta x$. First step applied = rightmost factor.</li>
+                    <li><strong>Transposing reverses order.</strong> $(XYZ)^\top = Z^\top Y^\top X^\top$. Row-vector gradients: loss on the left, no transposes. Column gradients: transposes everywhere, loss on the right. Never mix.</li>
+                    <li><strong>Shape-check every product.</strong> $(a\times b)(b\times c) = a\times c$; the inner dimension cancels. A gradient has the shape of the thing you differentiate with respect to.</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h3>Backprop in both conventions</h3>
+                <div class="highlight-box" style="font-size:14px;">
+                    $$\text{row:}\quad \frac{\partial\mathcal{L}}{\partial h^{[1]}} = \delta\,W^{[L+1]}\,(D^{[L]}W^{[L]})\cdots(D^{[2]}W^{[2]})$$
+                    $$\text{column:}\quad \frac{\partial\mathcal{L}}{\partial h^{[1]}} = (D^{[2]}W^{[2]})^\top\cdots(D^{[L]}W^{[L]})^\top(W^{[L+1]})^\top\delta^\top$$
+                </div>
+                <p style="font-size:13.5px;">The row product counts <em>down</em> ($L\to2$); the column product counts <em>up</em> ($2\to L$). Both read "start at the loss." Compute right to left: every step is matrix &times; vector, which is cheap.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>The norm ladder</h2></div>
+        <div class="card">
+            <table class="lcc">
+                <tr><th>Object</th><th>Norm</th><th>Formula</th><th>Meaning</th></tr>
+                <tr><td>Number $x$</td><td>absolute value</td><td>$|x| = \sqrt{x^2}$</td><td>size</td></tr>
+                <tr><td>Vector $v$</td><td>Euclidean (2-norm)</td><td>$\|v\|_2 = \sqrt{\sum_i v_i^2}$</td><td>length of the arrow</td></tr>
+                <tr><td>Matrix $A$</td><td>Frobenius</td><td>$\|A\|_F = \sqrt{\sum_{i,j}A_{ij}^2}$</td><td>"how big are the entries" (regularization)</td></tr>
+                <tr><td>Matrix $A$</td><td><strong>spectral</strong> (operator 2-norm)</td><td>$\|A\|_2 = \max_{\|v\|=1}\|Av\| = \sqrt{\lambda_{\max}(A^\top A)} = \sigma_{\max}(A)$</td><td>"how much can it stretch a vector" (gradient flow)</td></tr>
+            </table>
+            <div class="formula-grid">
+                <div class="formula-tile"><h4>Every vector obeys the max</h4>$$\|Av\|\le\|A\|_2\,\|v\|$$<p class="formula-note">Split $v = \|v\|\,u$ with $\|u\|=1$; $u$ is one candidate in the max. Equality only for $v=0$ or $v$ along the top eigenvector of $A^\top A$.</p></div>
+                <div class="formula-tile"><h4>Stretches multiply</h4>$$\|AB\|_2\le\|A\|_2\,\|B\|_2$$<p class="formula-note">Apply the previous line twice. Holds for any matrices; nothing needs to be symmetric or square.</p></div>
+                <div class="formula-tile"><h4>Square first</h4>$$\|Av\|^2 = v^\top(A^\top A)v$$<p class="formula-note">$A^\top A$ is symmetric with eigenvalues $\sigma_i^2\ge0$. Its top eigenvector is $A$'s max-stretch direction (not necessarily an eigenvector of $A$).</p></div>
+                <div class="formula-tile"><h4>Budget picture</h4>$$\|Av\|^2 = \sum_i c_i^2\sigma_i^2,\qquad \sum_i c_i^2 = 1$$<p class="formula-note">A unit vector splits a budget of 1 across the eigen-axes; squared stretch is the weighted average of the $\sigma_i^2$. Spend it all on the top axis to maximize.</p></div>
+                <div class="formula-tile"><h4>Spectral theorem</h4>$$A^\top A = Q\Lambda Q^\top$$<p class="formula-note">Rotate into eigen-axes ($Q^\top$), scale each axis ($\Lambda$), rotate back ($Q$). Length changes only in the middle step.</p></div>
+                <div class="formula-tile"><h4>Power iteration</h4>$$v_{k+1} = \frac{Av_k}{\|Av_k\|}$$<p class="formula-note">$A^kv_0 = \sum_i c_i\lambda_i^kq_i$: the top piece outgrows the rest by $|\lambda_1/\lambda_2|$ per step. Normalize or the length blows up / vanishes like $|\lambda_1|^k$.</p></div>
+                <div class="formula-tile"><h4>Mask norm</h4>$$D = \text{Diag}(0/1)\ \Rightarrow\ \|D\|_2\le1$$<p class="formula-note">Keeps or deletes coordinates (a projection); deleting can only shorten. Columns are standard unit vectors or zero.</p></div>
+                <div class="formula-tile"><h4>Jacobian determinant</h4>$$dx\,dy = |\det J|\,dr\,d\theta,\quad \det J_{\text{polar}} = r$$<p class="formula-note">$|\det J|$ = area scale of a tiny cell. Calculus uses the determinant; backprop uses the matrix itself.</p></div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Habits that prevent lost points</h2></div>
+        <div class="concept-list">
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">Write the Givens, then the plan in words, then one move per line</div>State what each symbol is (vector, matrix, scalar) and its shape before differentiating anything.</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">When one variable feeds several outputs, the chain rule is a sum over paths</div>$\frac{\partial\mathcal{L}}{\partial z_k} = \sum_i\frac{\partial\mathcal{L}}{\partial f_i}\frac{\partial f_i}{\partial z_k}$. Softmax needs it; elementwise ReLU does not (one path per output).</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">Use the problem's own notation in the final answer</div>If $D^{[l]}$ is defined, the answer uses $D^{[l]}$, not a bare indicator vector.</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">A maximum is at least as big as every item in its list</div>That single sentence is the whole proof of $\|Au\|\le\|A\|_2$ for unit $u$. Replace the norm symbol with its definition and the step becomes obvious.</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">Check with numbers</div>Plug in a $2\times2$ matrix and a vector. Wiggle one input by $0.1$ and confirm the predicted change in each output.</div></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ FLASHCARDS ═══════════════════════════ -->
+    <div id="tab-flash" class="tab-content">
+        <div class="section-header"><div class="section-number">&#9646;</div><h2>Flashcards</h2></div>
+        <div class="card">
+            <p style="margin-bottom:6px;">Click to flip. Write the formula before flipping; say the shape out loud.</p>
+            <div id="flash-main"></div>
+        </div>
+    </div>
+    <!-- ═══════════════════════════ TAB 1: DERIVATIVES IN MATRIX FORM ═══════════════════════════ -->
+    <div id="tab-t1" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>Three kinds of first derivative</h2></div>
+        <div class="card">
+            <p>All three are "the first derivative." What changes is how many inputs and outputs the function has, and therefore the shape needed to hold all the slopes.</p>
+            <table class="lcc">
+                <tr><th>Function</th><th>Example</th><th>First derivative is</th><th>Shape</th><th>Entry</th></tr>
+                <tr><td>number &#8594; number</td><td>$f(x) = x^2$</td><td>ordinary derivative $f'(x)$</td><td>a number</td><td>$df/dx$</td></tr>
+                <tr><td>vector &#8594; number</td><td>loss $\mathcal{L}(\theta)$</td><td><strong>gradient</strong> $\nabla\mathcal{L}$</td><td>$d\times1$, same as $\theta$</td><td>$(\nabla\mathcal{L})_j = \partial\mathcal{L}/\partial\theta_j$</td></tr>
+                <tr><td>vector &#8594; vector</td><td>a layer $h^{[l]}(h^{[l-1]})$</td><td><strong>Jacobian</strong> $J$</td><td>$n_{\text{out}}\times n_{\text{in}}$</td><td>$J_{ij} = \partial h_i/\partial x_j$</td></tr>
+                <tr><td>vector &#8594; number, <em>second</em> derivative</td><td>loss $\mathcal{L}(\theta)$</td><td>Hessian $H$</td><td>$d\times d$</td><td>$H_{ij} = \partial^2\mathcal{L}/\partial\theta_i\partial\theta_j$</td></tr>
+            </table>
+            <p>The gradient is the Jacobian of a scalar function, transposed into a column: a $1\times d$ row of slopes stood upright. That one transpose is the source of every row-vs-column confusion below. Meaning of $J$ in one line: zoom in on any smooth map and it looks like multiplication by $J$, $\Delta(\text{out})\approx J\,\Delta(\text{in})$.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>The translation table, derived</h2></div>
+        <div class="technique-section ts-green">
+            <h3>Linear: $\nabla_x(a^\top x) = a$</h3>
+            <div class="step-concept"><span class="step-label">Derivation</span></div>
+            <p>$a^\top x = \sum_i a_ix_i$. Differentiate with respect to one coordinate $x_j$: every term except $i=j$ is constant, so $\partial/\partial x_j = a_j$. Stack the $d$ answers into a column: $\nabla_x(a^\top x) = a$. Same for $x^\top a$ (a number equals its transpose).</p>
+            <p><strong>Matrix version.</strong> $\dfrac{\partial(Ax)}{\partial x} = A$: entry $i$ of $Ax$ is $\sum_j A_{ij}x_j$, so $\partial(Ax)_i/\partial x_j = A_{ij}$, which is exactly the matrix $A$ laid out as rows = outputs, columns = inputs. This is the "$\times W$" arrow of every layer.</p>
+        </div>
+        <div class="technique-section ts-gold">
+            <h3>Quadratic: $\nabla_x(x^\top Ax) = (A+A^\top)x$</h3>
+            <div class="step-concept"><span class="step-label">Derivation</span></div>
+            <p>$x^\top Ax = \sum_i\sum_k x_iA_{ik}x_k$. Each $x_j$ appears twice: once as the row index ($i=j$) and once as the column index ($k=j$). Product rule on the double sum:</p>
+            <div class="highlight-box">$$\frac{\partial}{\partial x_j}\sum_{i,k}x_iA_{ik}x_k = \underbrace{\sum_k A_{jk}x_k}_{(Ax)_j} + \underbrace{\sum_i x_iA_{ij}}_{(A^\top x)_j}\quad\Longrightarrow\quad \nabla_x(x^\top Ax) = Ax + A^\top x = (A+A^\top)x$$</div>
+            <p>If $A$ is symmetric this is $2Ax$, the matrix twin of $\frac{d}{dx}ax^2 = 2ax$. Special case $A = I$: $\nabla_x(x^\top x) = 2x$, which is where $\nabla_w\frac\lambda2\|w\|^2 = \lambda w$ comes from.</p>
+            <div class="step-example" style="margin-top:14px;"><span class="step-label">Worked example</span></div>
+            <p>$A = \begin{bmatrix}2&amp;1\\0&amp;3\end{bmatrix}$, $x = \begin{bmatrix}1\\2\end{bmatrix}$. Expand: $x^\top Ax = 2x_1^2 + x_1x_2 + 3x_2^2 = 2+2+12 = 16$. Gradient by hand: $(4x_1+x_2,\ x_1+6x_2) = (6, 13)$. Formula: $(A+A^\top)x = \begin{bmatrix}4&amp;1\\1&amp;6\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix} = \begin{bmatrix}6\\13\end{bmatrix}$ ✓. Using $2Ax$ would give $(8,12)$, wrong because $A$ is not symmetric.</p>
+        </div>
+        <div class="technique-section ts-brown">
+            <h3>Least squares: $\nabla_x\|Ax-b\|^2 = 2A^\top(Ax-b)$</h3>
+            <div class="step-concept"><span class="step-label">Derivation (chain rule)</span></div>
+            <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p>Let $r = Ax-b$ (the residual, $m\times1$). Then $\|Ax-b\|^2 = r^\top r$ and $\nabla_r(r^\top r) = 2r$ by the quadratic rule.</p></div></div>
+            <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p>$\partial r/\partial x = A$ by the linear rule (an $m\times d$ Jacobian).</p></div></div>
+            <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p>Chain rule for a scalar through a vector: $\nabla_x = (\partial r/\partial x)^\top\nabla_r = A^\top(2r)$. The transpose appears because we want a $d\times1$ column: $(d\times m)(m\times1)$.</p><div class="highlight-box">$$\nabla_x\|Ax-b\|^2 = 2A^\top(Ax-b)\qquad\text{set to }0:\quad A^\top Ax = A^\top b\quad(\text{normal equations})$$</div></div></div>
+            <p>Same skeleton as a linear layer: $\nabla_W\mathcal{L} = \delta\,x^\top$ where $\delta = \nabla_z\mathcal{L}$ and $z = Wx$. Derivation: $z_k = \sum_jW_{kj}x_j$ so $W_{kj}$ appears only in $z_k$, $\partial z_k/\partial W_{kj} = x_j$, and $\partial\mathcal{L}/\partial W_{kj} = \delta_kx_j$, an outer product.</p>
+        </div>
+        <div class="technique-section ts-green">
+            <h3>Elementwise functions: diagonal Jacobians</h3>
+            <p>If $\phi$ acts entry by entry, $h_i = \phi(z_i)$ depends only on $z_i$, so $\partial h_i/\partial z_j = \phi'(z_i)$ when $i=j$ and $0$ otherwise. The Jacobian is $\text{Diag}(\phi'(z))$. For ReLU, $\phi'(z) = \mathbb{1}\{z\gt0\}$, giving the mask $D$. For sigmoid, $\text{Diag}(\sigma(z)(1-\sigma(z)))$. Softmax is <em>not</em> elementwise (every output uses every input), which is why its Jacobian has off-diagonal entries $-f_if_k$.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>The chain rule with matrices</h2></div>
+        <div class="card">
+            <div class="highlight-box">$$y = f(g(x))\quad\Longrightarrow\quad J_y = J_f\big(g(x)\big)\;J_g(x)\qquad\text{outer function on the left, same as } f'(g(x))\,g'(x)$$</div>
+            <p><strong>Why this order.</strong> Follow a small input change: $\Delta g = J_g\Delta x$, then $\Delta y = J_f\Delta g = J_f(J_g\Delta x) = (J_fJ_g)\Delta x$. A matrix multiplies the vector to its right, so the first map applied is the rightmost factor. In $f(g(x))$, $g$ is written on the right and happens first; the notation already agrees.</p>
+            <div class="step-example"><span class="step-label">Worked example: one ReLU layer</span></div>
+            <p>$h = \text{ReLU}(Wx)$, $W = \begin{bmatrix}2&amp;-1\\1&amp;3\end{bmatrix}$, $x = \begin{bmatrix}1\\-2\end{bmatrix}$. Inner: $z = Wx = \begin{bmatrix}4\\-5\end{bmatrix}$, Jacobian $W$. Outer: ReLU at $z$, Jacobian $D = \text{Diag}(1,0)$.</p>
+            <div class="highlight-box">$$J_h = D\,W = \begin{bmatrix}1&amp;0\\0&amp;0\end{bmatrix}\begin{bmatrix}2&amp;-1\\1&amp;3\end{bmatrix} = \begin{bmatrix}2&amp;-1\\0&amp;0\end{bmatrix}\qquad\text{vs. wrong order}\quad WD = \begin{bmatrix}2&amp;0\\1&amp;0\end{bmatrix}$$</div>
+            <p>$DW$ zeroes <strong>row</strong> 2: output 2 is dead and cannot move. $WD$ zeroes <strong>column</strong> 2: it would claim input 2 affects nothing, but nudging $x_2$ by $+0.1$ moves $z_1$ by $-0.1$ and so moves output 1. Numbers settle the order.</p>
+            <div class="step-example"><span class="step-label">Worked example: a sum over paths (softmax)</span></div>
+            <p>With $\mathcal{L} = -\sum_iy_i\log f_i$ and $f = \text{softmax}(z)$, each $z_k$ influences every $f_i$, so</p>
+            <div class="highlight-box">$$\frac{\partial\mathcal{L}}{\partial z_k} = \sum_i\frac{\partial\mathcal{L}}{\partial f_i}\frac{\partial f_i}{\partial z_k} = \sum_i\Big(-\frac{y_i}{f_i}\Big)f_i(\delta_{ik}-f_k) = -y_k+f_k\sum_iy_i = f_k-y_k$$</div>
+            <p>Dropping the $i\ne k$ terms gives $-y_k(1-f_k)$, which is $0$ for every wrong class, so wrong classes would never be pushed down. In matrix language, $\nabla_z\mathcal{L} = J_f^\top\nabla_f\mathcal{L}$: the transpose of the Jacobian carries a gradient backward.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Rows, columns and transposes</h2></div>
+        <div class="card">
+            <p>A gradient of a scalar can be written as a row ($1\times d$, the raw Jacobian) or a column ($d\times1$, the same numbers stood up). Both are fine. The chain rule looks different in each:</p>
+            <table class="lcc">
+                <tr><th></th><th>Row convention</th><th>Column convention</th></tr>
+                <tr><td>Gradient at layer $l-1$</td><td>$g_{l-1} = g_l\,J_l$</td><td>$g_{l-1} = J_l^\top g_l$</td></tr>
+                <tr><td>Through a whole network</td><td>$g_1 = \delta\,W^{[L+1]}J_L\cdots J_2$</td><td>$g_1 = J_2^\top\cdots J_L^\top(W^{[L+1]})^\top\delta^\top$</td></tr>
+                <tr><td>Loss sits</td><td>left</td><td>right</td></tr>
+                <tr><td>Transposes</td><td>none</td><td>on every factor</td></tr>
+                <tr><td>Product index</td><td>counts down, $L\to2$</td><td>counts up, $2\to L$</td></tr>
+            </table>
+            <p><strong>The bridge is one identity:</strong> $(XYZ)^\top = Z^\top Y^\top X^\top$. Transposing the entire row product once gives the column product, and that single transpose is what flips the order and adds a $\top$ to every factor. It is <em>not</em> true that $XY = Y^\top X^\top$; the two sides hold the same numbers in different layouts.</p>
+            <div class="warning-box"><strong>The mixed form fails.</strong> Writing $(W^{[L+1]})^\top\prod_{l=2}^{L}(D^{[l]}W^{[l]})^\top$ puts transposes in row order. Shape check: $(n_L\times1)$ next to $(n_1\times n_L)$ has mismatched inner dimensions. Pick one convention, and if it helps, write the row version and transpose once at the end.</div>
+            <p><strong>Reversing the product index.</strong> $\prod_{l=2}^{L}M_l$ conventionally lists $M_2$ first. When shapes demand $M_L$ first, either write the factors out, $M_LM_{L-1}\cdots M_2$, or write $\prod_{l=L}^{2}$ with a note that $l$ decreases. Product notation records which factors appear; the page order is yours to specify.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>Shape-checking as a habit</h2></div>
+        <div class="card">
+            <p>Before trusting any derivative, confirm two things: the result has the shape of the variable you differentiated with respect to (gradient) or outputs &times; inputs (Jacobian); and every product's inner dimensions match and cancel.</p>
+            <table class="lcc">
+                <tr><th>Candidate for $\nabla_W\mathcal{L}$, $W\in\mathbb{R}^{K\times d}$</th><th>Shapes</th><th>Verdict</th></tr>
+                <tr><td>$(f-y)\,x^\top$</td><td>$(K\times1)(1\times d) = K\times d$</td><td class="ok">✓</td></tr>
+                <tr><td>$(y-f)\,W^\top$</td><td>$(K\times1)(d\times K)$</td><td class="bad">inner dims $1\ne d$</td></tr>
+                <tr><td>$W^\top(y-f)\,x^\top$</td><td>$(d\times K)(K\times1)(1\times d) = d\times d$</td><td class="bad">wrong shape</td></tr>
+                <tr><td>$f\,x^\top$</td><td>$K\times d$</td><td class="bad">shape fine, but never uses $y$</td></tr>
+            </table>
+            <p>Shapes catch most order errors instantly, but not all: $f\,x^\top$ passes the shape test and is still wrong. Shape-check first, then sanity-check meaning (does the gradient vanish when the prediction is perfect?).</p>
+        </div>
+    </div>
+    <!-- ═══════════════════════════ TAB 2: NORMS, STRETCH & EIGENVECTORS ═══════════════════════════ -->
+    <div id="tab-t2" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>From absolute value to matrix norms</h2></div>
+        <div class="card">
+            <p>Each rung extends "size" to a bigger object. For matrices there are two natural choices, and they answer different questions.</p>
+            <table class="lcc">
+                <tr><th>Object</th><th>Norm</th><th>Formula</th><th>Example</th></tr>
+                <tr><td>$x\in\mathbb{R}$</td><td>absolute value</td><td>$|x| = \sqrt{x^2}$</td><td>$|-3| = 3$</td></tr>
+                <tr><td>$v\in\mathbb{R}^n$</td><td>Euclidean</td><td>$\|v\|_2 = \sqrt{v_1^2+\cdots+v_n^2}$</td><td>$\|(3,4)\| = 5$</td></tr>
+                <tr><td>$A\in\mathbb{R}^{m\times n}$</td><td>Frobenius</td><td>$\|A\|_F = \sqrt{\sum_{i,j}A_{ij}^2}$</td><td>$\|I_2\|_F = \sqrt2$, $\|\text{diag}(3,0.5)\|_F\approx3.0414$</td></tr>
+                <tr><td>$A\in\mathbb{R}^{m\times n}$</td><td>spectral</td><td>$\|A\|_2 = \max_{\|v\|=1}\|Av\|$</td><td>$\|I_2\|_2 = 1$, $\|\text{diag}(3,0.5)\|_2 = 3$</td></tr>
+            </table>
+            <p>Frobenius asks "how big are the entries?" and is the norm in L2 regularization, $\lambda\|W\|_F^2 = \lambda\sum_{ij}W_{ij}^2$. Spectral asks "how much can this matrix stretch a vector?" and is the norm for gradient flow and stability. Always $\|A\|_2\le\|A\|_F$. The identity shows they differ: it stretches nothing ($\|I\|_2 = 1$) but has entries ($\|I\|_F = \sqrt2$).</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>The spectral norm: maximum stretch</h2></div>
+        <div class="card">
+            <p><strong>Definition.</strong> Feed every nonzero vector through $A$ and record the largest stretch ratio. Because scaling $v$ by $c$ scales both $\|Av\|$ and $\|v\|$ by $|c|$, the ratio depends only on direction, so unit vectors suffice:</p>
+            <div class="highlight-box">$$\|A\|_2 = \max_{v\ne0}\frac{\|Av\|}{\|v\|} = \max_{\|v\|=1}\|Av\| = \sqrt{\lambda_{\max}(A^\top A)} = \sigma_{\max}(A)$$</div>
+            <p>The first two are definitions (same idea, magnitude cancelled). The last two are how you compute it and what it's called. $v$ is any test direction you are free to try; $\|A\|_2$ is the winner's stretch.</p>
+            <div class="step-example"><span class="step-label">Worked example</span></div>
+            <p>$A = \text{diag}(3, 0.5)$: $v=(1,0)\to(3,0)$, stretch $3$; $v=(0,1)\to(0,0.5)$, stretch $0.5$; $v = \frac{1}{\sqrt2}(1,1)\to\frac{1}{\sqrt2}(3,0.5)$, stretch $\sqrt{(9+0.25)/2}\approx2.1506$. The max over all directions is $3$, at $v=(1,0)$.</p>
+            <div class="technique-section ts-green" style="margin-top:14px;">
+                <h3>Lemma: $\|Av\|\le\|A\|_2\,\|v\|$ for every $v$</h3>
+                <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Split $v$ into length times direction. The direction is a unit vector, so by definition its stretch is at most the maximum. The length rides along.</p></div></div>
+                <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p>If $v = 0$, both sides are $0$. Otherwise write $v = \|v\|\,u$ with $u = v/\|v\|$, so $\|u\| = 1$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p>Pull the scalar out: $\|Av\| = \|A(\|v\|u)\| = \|v\|\,\|Au\|$.</p></div></div>
+                <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p>$u$ is one of the unit vectors in the set $S = \{\|Aw\| : \|w\| = 1\}$, and $\|A\|_2 = \max S$. A maximum is at least as big as every item in its list, so $\|Au\|\le\|A\|_2$. (This is the definition used directly, not a new fact.)</p></div></div>
+                <div class="derivation-step"><div class="step-num">4</div><div class="step-body"><p>Multiply step 3 by $\|v\|\ge0$, which preserves the inequality: $\|Av\| = \|v\|\,\|Au\|\le\|v\|\,\|A\|_2$. $\blacksquare$</p></div></div>
+                <p><strong>Equality</strong> holds only when $v = 0$ or $v$ points along an eigenvector of $A^\top A$ for its <em>largest</em> eigenvalue. Other eigenvectors give strict inequality: for $\text{diag}(3,0.5)$, $v=(0,1)$ is an eigenvector of $A^\top A$ but $\|Av\| = 0.5\lt3$.</p>
+            </div>
+            <div class="technique-section ts-gold">
+                <h3>Lemma: $\|AB\|_2\le\|A\|_2\,\|B\|_2$ (stretches multiply)</h3>
+                <p>Take any unit $u$. Apply the first lemma twice, once with $v = Bu$ (not a unit vector, which is why the lemma had to work for any $v$) and once with $v = u$:</p>
+                <div class="highlight-box">$$\|ABu\| = \|A(Bu)\|\le\|A\|_2\,\|Bu\|\le\|A\|_2\,\|B\|_2\,\|u\| = \|A\|_2\,\|B\|_2$$</div>
+                <p>Every candidate in the max defining $\|AB\|_2$ is at most $\|A\|_2\|B\|_2$, so the max is too. No symmetry or squareness was used; the "unit vectors" live inside every $\|\cdot\|_2$.</p>
+                <p><strong>The ReLU mask.</strong> $D = \text{Diag}(m)$ with $m_i\in\{0,1\}$ has columns that are standard unit vectors or zero: it keeps some coordinates and deletes the rest (a projection). $\|Dv\|^2 = \sum_im_i^2v_i^2\le\sum_iv_i^2$, so $\|D\|_2\le1$, hence $\|DW\|_2\le\|W\|_2$. Chain $L-1$ such factors and you get the vanishing-gradient bound $\le\rho^{L-1}$.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Which direction stretches most? Square first.</h2></div>
+        <div class="card">
+            <p>Length squared avoids the square root and reveals a symmetric matrix:</p>
+            <div class="highlight-box">$$\|Av\|^2 = (Av)^\top(Av) = v^\top\big(A^\top A\big)v\qquad\text{for every } v$$</div>
+            <p>So maximizing $\|Av\|$ over unit vectors is the same as maximizing the quadratic form $v^\top(A^\top A)v$, and $A^\top A$ is always symmetric with eigenvalues $\ge0$. The winner is the top eigenvector of $A^\top A$, and the max value is $\sqrt{\lambda_{\max}(A^\top A)}$.</p>
+            <ol>
+                <li>Compute $A^\top A$.</li>
+                <li>Find its largest eigenvalue $\lambda_{\max}$ (and eigenvector $v$ if the direction is needed).</li>
+                <li>$\|A\|_2 = \sqrt{\lambda_{\max}}$. Check by running $v$ through $A$: $\|Av\| = \sqrt{v^\top A^\top Av} = \sqrt{\lambda_{\max}}$.</li>
+            </ol>
+            <div class="step-example"><span class="step-label">Worked example: a shear, where eigenvectors of $A$ mislead</span></div>
+            <p>$A = \begin{bmatrix}1&amp;10\\0&amp;1\end{bmatrix}$ has the single eigenvalue $1$ with eigenvector $(1,0)$, stretched by $1$. But $v=(0,1)\mapsto(10,1)$ has length $\sqrt{101}\approx10.0499$. Eigenvalues of $A$ badly underestimate the stretch.</p>
+            <div class="highlight-box">$$A^\top A = \begin{bmatrix}1&amp;10\\10&amp;101\end{bmatrix},\quad \lambda^2-102\lambda+1 = 0\ \Rightarrow\ \lambda\approx101.9902,\ 0.0098,\qquad \|A\|_2 = \sqrt{101.9902}\approx10.0990$$</div>
+            <p>Top eigenvector $v\approx(0.0985, 0.9951)$, nearly straight up, and $\|Av\|\approx10.099$ ✓. The max-stretch direction is an eigenvector of $A^\top A$, not of $A$.</p>
+            <p><strong>Why symmetry fixes it.</strong> A symmetric matrix $M$ has perpendicular eigenvectors $q_1,\ldots,q_n$ (spectral theorem). Write a unit $v = \sum_ic_iq_i$ with $\sum_ic_i^2 = 1$. Applying $M$ scales each piece by its $\lambda_i$, and because the axes are perpendicular, Pythagoras adds the squared lengths:</p>
+            <div class="highlight-box">$$\|Mv\|^2 = \sum_i\lambda_i^2c_i^2\le\lambda_{\max}^2\sum_ic_i^2 = \lambda_{\max}^2$$</div>
+            <p>A weighted average of the $\lambda_i^2$ with weights $c_i^2$ summing to 1: maximized by putting the whole budget on the top axis. Non-symmetric matrices break this because their eigenvectors are not perpendicular (or don't exist in full), so $M$ also shears and Pythagoras fails. Negative eigenvalues are not penalized: $Mv = -5v$ still has length $5\|v\|$. For symmetric $A$, $A^\top A = A^2$ with eigenvalues $\lambda_i^2$, so the recipe returns $|\lambda_i|$ as it should.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>The budget picture (interactive)</h2></div>
+        <div class="card">
+            <p>Rotate a unit input $v$ around the circle. Its budget $c_i^2$ is how much of it lies along each eigen-axis of $A^\top A$. The output $Av$ has squared length $\sum_ic_i^2\sigma_i^2$, a weighted average of the squared stretches. Watch two things: the stretch readout peaks only when all the budget sits on the top axis, and a non-eigenvector <em>bends</em> toward the top axis because its pieces were scaled unevenly. Turning is a side effect; the lost length comes from spending budget on the weaker axis (dilution).</p>
+            <div class="viz-container">
+                <div class="viz-controls">
+                    <div class="control-group"><label>Matrix</label>
+                        <select id="bud-mat" onchange="budDraw()">
+                            <option value="diag">diag(3, 0.5): stretch x by 3, y by 0.5</option>
+                            <option value="sym">[[2,1],[1,2]]: symmetric, tilted axes</option>
+                            <option value="shear">[[1,1.5],[0,1]]: shear (axes from AᵀA)</option>
+                        </select></div>
+                    <div class="slider-group"><label>Input direction θ</label>
+                        <div class="slider-row"><input type="range" id="bud-ang" min="0" max="360" step="1" value="45" oninput="budDraw()"><span class="n-display" id="bud-ang-out">45°</span></div></div>
+                </div>
+                <div class="two-col">
+                    <div class="viz-canvas-wrap"><canvas id="bud-canvas" width="440" height="440" style="width:100%;max-width:440px;"></canvas></div>
+                    <div>
+                        <div class="viz-canvas-wrap"><canvas id="bud-bars" width="440" height="220" style="width:100%;max-width:440px;"></canvas></div>
+                        <div class="readout-panel">
+                            <div class="readout-item"><div class="readout-label math">budget c₁², c₂²</div><div class="readout-value" id="bud-c">–</div></div>
+                            <div class="readout-item"><div class="readout-label math">‖Av‖² = c₁²σ₁² + c₂²σ₂²</div><div class="readout-value" id="bud-sq">–</div></div>
+                            <div class="readout-item"><div class="readout-label math">‖Av‖ (stretch)</div><div class="readout-value exact-val" id="bud-len">–</div></div>
+                            <div class="readout-item"><div class="readout-label math">‖A‖₂ = σ₁ (max)</div><div class="readout-value" id="bud-max">–</div></div>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:12.5px;color:var(--text-medium);margin:10px 0 0;">Gold arrow: unit input $v$. Green arrow: output $Av$. Dashed lines: eigen-axes of $A^\top A$ (the input directions of max and min stretch). Faint ellipse: the image of the whole unit circle; its long axis has length $\|A\|_2$.</p>
+            </div>
+            <p><strong>Rotate, scale, rotate back.</strong> $A^\top A = Q\Lambda Q^\top$: $Q^\top$ re-describes $v$ in eigen-axis coordinates $(c_1,c_2)$ with no length change; $\Lambda$ scales each coordinate by its eigenvalue (all the stretching happens here); $Q$ rotates back. Since $v$ is a unit vector and $Q^\top$ preserves length, the coordinates obey $c_1^2+c_2^2 = 1$: a budget of 1 to split among the axes. For a general (non-symmetric) $A$ the SVD says the same thing with a twist: $A = U\Sigma V^\top$ rotates, scales by $\sigma_i$, then rotates to a <em>different</em> orientation. $A^\top A = V\Sigma^2V^\top$ because $U^\top U = I$: the final rotation cancels, leaving exactly the input axes $V$ and the squared stretches. That is why $A^\top A$ knows $A$'s max-stretch direction.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>Power iteration (interactive)</h2></div>
+        <div class="card">
+            <p>Multiply by $A$, keep only the direction, repeat. In eigen-coordinates each multiplication scales the pieces by their eigenvalues, so after $k$ steps the top piece has outgrown the others by $|\lambda_1/\lambda_2|^k$:</p>
+            <div class="highlight-box">$$v_{k+1} = \frac{Av_k}{\|Av_k\|},\qquad A^kv_0 = c_1\lambda_1^kq_1 + c_2\lambda_2^kq_2 + \cdots\ \Rightarrow\ \text{direction}\to q_1$$</div>
+            <div class="viz-container">
+                <div class="viz-controls">
+                    <div class="control-group"><label>Matrix (symmetric)</label>
+                        <select id="pi-mat" onchange="piReset()">
+                            <option value="diag">diag(3, 0.5): ratio 6 per step</option>
+                            <option value="sym">[[2,1],[1,2]]: eigenvalues 3, 1</option>
+                            <option value="close">diag(1.2, 1.0): slow, ratio 1.2</option>
+                            <option value="neg">diag(−3, 0.5): negative top eigenvalue</option>
+                        </select></div>
+                    <div class="slider-group"><label>Start angle</label>
+                        <div class="slider-row"><input type="range" id="pi-ang" min="0" max="360" step="1" value="45" oninput="piReset()"><span class="n-display" id="pi-ang-out">45°</span></div></div>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" onclick="piStep()">Step</button>
+                        <button type="button" class="sum-type-btn" onclick="piRun()">Run 10</button>
+                        <button type="button" class="sum-type-btn" onclick="piReset()">Reset</button>
+                    </div>
+                </div>
+                <div class="two-col">
+                    <div class="viz-canvas-wrap"><canvas id="pi-canvas" width="440" height="440" style="width:100%;max-width:440px;"></canvas></div>
+                    <div>
+                        <table class="lcc" id="pi-table" style="font-size:13px;"><tr><th>k</th><th>direction (before normalizing)</th><th>angle</th><th>gap to top axis</th></tr></table>
+                        <div class="readout-panel">
+                            <div class="readout-item"><div class="readout-label math">‖A vₖ‖ (growth this step)</div><div class="readout-value" id="pi-grow">–</div></div>
+                            <div class="readout-item"><div class="readout-label math">|λ₁ / λ₂|</div><div class="readout-value exact-val" id="pi-ratio">–</div></div>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:12.5px;color:var(--text-medium);margin:10px 0 0;">Each click applies $A$ and renormalizes. Earlier directions fade. Without normalizing, the length would grow like $|\lambda_1|^k$ (or vanish if $|\lambda_1|\lt1$), which is the vanishing / exploding gradient story in miniature.</p>
+            </div>
+            <div class="step-example"><span class="step-label">Worked example: $A = \text{diag}(3, 0.5)$, start at $45^\circ$</span></div>
+            <table class="lcc">
+                <tr><th>Step</th><th>Direction before normalizing</th><th>Angle from $x$-axis</th></tr>
+                <tr><td>0</td><td>$(1,1)$</td><td>$45^\circ$</td></tr>
+                <tr><td>1</td><td>$(3,0.5)$</td><td>$\approx9.46^\circ$</td></tr>
+                <tr><td>2</td><td>$(9,0.25)$</td><td>$\approx1.59^\circ$</td></tr>
+                <tr><td>3</td><td>$(27,0.125)$</td><td>$\approx0.27^\circ$</td></tr>
+            </table>
+            <p>The $y$-share shrinks by $0.5/3 = 1/6$ each step. <strong>Fine print:</strong> $v_0$ needs some component along $q_1$ ($c_1\ne0$; a random start almost always does). Convergence is slow when $|\lambda_1|\approx|\lambda_2|$ (try the ratio-1.2 matrix). A negative top eigenvalue flips the sign every step; the line settles even though the arrow alternates. For a non-symmetric $A$, power iteration on $A$ finds $A$'s dominant eigenvector; to find the max-stretch direction run it on $A^\top A$ instead.</p>
+            <div class="idea-box"><strong>Connection to deep networks.</strong> A gradient multiplied through many layers is a vector hit by many matrices in a row. Whatever directions those matrices stretch most come to dominate, and if even the top stretch is below 1, everything shrinks toward zero. Residual connections add $I$ to each factor so that the top stretch sits near 1.</div>
+        </div>
+    </div>
+    <!-- ═══════════════════════════ TAB 3: JACOBIANS & CHANGE OF VARIABLES ═══════════════════════════ -->
+    <div id="tab-t3" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>What a Jacobian is</h2></div>
+        <div class="card">
+            <p>For a map from vectors to vectors, the Jacobian is the first derivative: a matrix with rows indexed by outputs and columns by inputs, entry $J_{ij} = \partial(\text{out}_i)/\partial(\text{in}_j)$. Its meaning in one line:</p>
+            <div class="highlight-box">$$\Delta(\text{output})\approx J\,\Delta(\text{input})\qquad\text{zoom in far enough and any smooth map is multiplication by } J$$</div>
+            <p>The <strong>columns</strong> of $J$ say where each input direction gets sent. Column $j$ is the image of a tiny step along input $j$. A tiny square in input space (sides along inputs 1 and 2) maps to a tiny parallelogram whose edges are columns 1 and 2 of $J$. Everything below follows from that picture.</p>
+            <table class="lcc">
+                <tr><th></th><th>Change of variables (calculus)</th><th>Neural network layer (backprop)</th></tr>
+                <tr><td>Map</td><td>$(r,\theta)\mapsto(x,y)$</td><td>$h^{[l-1]}\mapsto h^{[l]}$</td></tr>
+                <tr><td>Jacobian</td><td>$\begin{bmatrix}\cos\theta&amp;-r\sin\theta\\\sin\theta&amp;r\cos\theta\end{bmatrix}$</td><td>$D^{[l]}W^{[l]}$</td></tr>
+                <tr><td>Part you use</td><td><strong>Determinant</strong>: area / volume scale</td><td><strong>The matrix</strong>: how wiggles and gradients flow</td></tr>
+                <tr><td>Question</td><td>"How big is this tiny region after the map?"</td><td>"How much does the output move when the input moves?"</td></tr>
+            </table>
+            <p>Same object, same name; calculus looks at $|\det J|$, deep learning at $J$ itself. (The determinant does appear in ML too: normalizing flows need $|\det J|$ to keep probabilities summing to 1, the change-of-variables formula verbatim.) Not to be confused with the Hessian, which is the <em>second</em> derivative of a scalar.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>Worked example: polar to Cartesian</h2></div>
+        <div class="card">
+            <p><strong>Givens.</strong> Inputs $(r,\theta)$, outputs $x = r\cos\theta$, $y = r\sin\theta$.</p>
+            <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Column 1: wiggle $r$ only</strong> (step outward).</p>$$\frac{\partial(x,y)}{\partial r} = \begin{bmatrix}\cos\theta\\\sin\theta\end{bmatrix},\qquad\text{length } \sqrt{\cos^2\theta+\sin^2\theta} = 1$$<p>A step $\Delta r$ outward keeps its length: no stretch.</p></div></div>
+            <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Column 2: wiggle $\theta$ only</strong> (step around the circle).</p>$$\frac{\partial(x,y)}{\partial\theta} = \begin{bmatrix}-r\sin\theta\\r\cos\theta\end{bmatrix},\qquad\text{length } \sqrt{r^2\sin^2\theta+r^2\cos^2\theta} = r$$<p>A step $\Delta\theta$ becomes an arc of length $r\,\Delta\theta$: stretched by $r$.</p></div></div>
+            <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Together.</strong> The two columns are perpendicular (dot product $-r\cos\theta\sin\theta+r\sin\theta\cos\theta = 0$), so the tiny cell becomes a rectangle with sides $1\cdot\Delta r$ and $r\cdot\Delta\theta$. In general the parallelogram's area is $|\det J|$, here $1\cdot r\cdot\sin90^\circ = r$:</p><div class="highlight-box">$$\det J = r\cos^2\theta + r\sin^2\theta = r\qquad\Longrightarrow\qquad dx\,dy = r\,dr\,d\theta$$</div></div></div>
+            <table class="lcc">
+                <tr><th>Input direction</th><th>Stretch factor</th></tr>
+                <tr><td>$r$ (outward)</td><td>$1$</td></tr>
+                <tr><td>$\theta$ (around)</td><td>$r$</td></tr>
+                <tr><td>Area (both together)</td><td>$1\times r = r = \det J$</td></tr>
+            </table>
+            <p><strong>Why the cells have different areas.</strong> Every input block has the same $\Delta r\times\Delta\theta$, but its image is a piece of a ring: thickness $\Delta r$ everywhere, arc length $r\Delta\theta$ growing with $r$. Pizza slices: equal angles, wider at the crust. This variation is <em>real</em>, and it is exactly what $\det J = r$ measures. The exact ring-piece area, $\frac{r_2^2-r_1^2}{2}\Delta\theta = r_{\text{mid}}\Delta r\Delta\theta$, matches $\det J$ at the cell's center.</p>
+            <p><strong>Where the approximation lives.</strong> $J$ treats the cell as a flat parallelogram; the true image has curved edges. The mismatch depends on the cell's <em>size</em>, not its location, and vanishes as the cell shrinks, which is why calculus uses infinitesimal $dr\,d\theta$. Note the reverse map $(x,y)\mapsto(r,\theta)$ has derivatives like $\partial(r^2)/\partial x = 2x$; its Jacobian is the inverse of this one, with determinant $1/r$.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Grid warping (interactive)</h2></div>
+        <div class="card">
+            <p>A map bends the input grid into the output grid. The highlighted cell shows one tiny square and its image; the two arrows at the image are $J$'s columns. Three maps to compare: polar (Jacobian changes from place to place), a linear layer (one Jacobian everywhere, every square becomes the same parallelogram), and a full ReLU layer (linear where both neurons are on; where a neuron is off, half the grid collapses onto an axis and $\det J = 0$, the geometric face of "a dead neuron passes no gradient").</p>
+            <div class="viz-container">
+                <div class="viz-controls">
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" id="gw-b-polar" onclick="gwMode('polar')">Polar → Cartesian</button>
+                        <button type="button" class="sum-type-btn" id="gw-b-linear" onclick="gwMode('linear')">Linear layer z = Wx</button>
+                        <button type="button" class="sum-type-btn" id="gw-b-relu" onclick="gwMode('relu')">Full layer ReLU(Wx)</button>
+                    </div>
+                </div>
+                <div class="two-col">
+                    <div><p style="font-size:13px;color:var(--text-medium);margin:0 0 6px;" id="gw-cap-in">Input grid (r, θ)</p><div class="viz-canvas-wrap"><canvas id="gw-in" width="440" height="300" style="width:100%;max-width:440px;"></canvas></div></div>
+                    <div><p style="font-size:13px;color:var(--text-medium);margin:0 0 6px;" id="gw-cap-out">Output grid (x, y)</p><div class="viz-canvas-wrap"><canvas id="gw-out" width="440" height="300" style="width:100%;max-width:440px;"></canvas></div></div>
+                </div>
+                <div class="slider-group" style="margin-top:8px;"><label>Cell position, input 1</label><div class="slider-row"><input type="range" id="gw-u" min="0" max="0.9" step="0.01" value="0.55" oninput="gwDraw()"><span class="n-display" id="gw-u-out">0.55</span></div></div>
+                <div class="slider-group" style="margin-top:4px;"><label>Cell position, input 2</label><div class="slider-row"><input type="range" id="gw-v" min="0" max="0.9" step="0.01" value="0.2" oninput="gwDraw()"><span class="n-display" id="gw-v-out">0.20</span></div></div>
+                <div class="readout-panel">
+                    <div class="readout-item"><div class="readout-label">Jacobian at the cell</div><div class="readout-value" id="gw-j" style="font-size:14px;line-height:1.5;">–</div></div>
+                    <div class="readout-item"><div class="readout-label">det J and measured area ratio</div><div class="readout-value" id="gw-det" style="font-size:14px;line-height:1.5;">–</div></div>
+                </div>
+                <p style="font-size:12.5px;color:var(--text-medium);margin:10px 0 0;">Green lines hold input 1 fixed; gold lines hold input 2 fixed. Copper: the highlighted cell, its image, and the column arrows of $J$ (the two edges of the image parallelogram).</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Reading the three maps</h2></div>
+        <div class="card">
+            <table class="lcc">
+                <tr><th>Map</th><th>Jacobian</th><th>$\det J$</th><th>What the grid shows</th></tr>
+                <tr><td>Polar</td><td>changes with $(r,\theta)$</td><td>$r$</td><td>Circles and spokes; cells grow outward; area ratio tracks $r$</td></tr>
+                <tr><td>Linear $z = Wx$</td><td>$W$ everywhere</td><td>$\det W$ (here 7)</td><td>Straight lines stay straight and parallel; every cell is the same parallelogram</td></tr>
+                <tr><td>ReLU$(Wx)$, both on</td><td>$W$</td><td>$\det W$</td><td>Identical to the linear map</td></tr>
+                <tr><td>ReLU$(Wx)$, one off</td><td>$DW$, a row zeroed</td><td>$0$</td><td>That region flattens onto an axis; the cell's image is a line segment</td></tr>
+            </table>
+            <p>With $W = \begin{bmatrix}2&amp;-1\\1&amp;3\end{bmatrix}$ and neuron 2 dead, $DW = \begin{bmatrix}2&amp;-1\\0&amp;0\end{bmatrix}$ has $\det = 0$. The layer squashes the plane onto a line; any input wiggle that would move output 2 is erased, which is the same statement as "no gradient flows back through a dead neuron."</p>
+            <div class="idea-box"><strong>Backprop in one sentence.</strong> A network is a composition of maps; its Jacobian is the product of the layer Jacobians, outer on the left. Gradients travel backward through the transposes. The determinant is irrelevant there; the matrix norms (how much each $J$ can stretch) decide whether the gradient survives.</div>
+        </div>
+    </div>
+    <!-- ═══════════════════════════ DRILLS ═══════════════════════════ -->
+    <div id="tab-drills" class="tab-content">
+        <div class="section-header"><div class="section-number">&#9889;</div><h2>Drills</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);"><p style="margin:0;">Write out Givens and shapes first. Each solution shows one move per line. Cards are shuffled on every load.</p></div>
+        <div id="drill-list">
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">1</div><div style="flex:1;">
+                <p><strong>Gradient of a quadratic form.</strong> $A = \begin{bmatrix}1&amp;4\\0&amp;2\end{bmatrix}$, $x = (2,-1)^\top$. Compute $\nabla_x(x^\top Ax)$ two ways: by expanding, and by the formula.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">quadratic rule</span></p><div class="highlight-box"><p>Expand: $x^\top Ax = x_1^2 + 4x_1x_2 + 2x_2^2$. Partial in $x_1$: $2x_1+4x_2 = 0$. Partial in $x_2$: $4x_1+4x_2 = 4$. Gradient $(0,4)^\top$.</p><p>Formula: $(A+A^\top)x = \begin{bmatrix}2&amp;4\\4&amp;4\end{bmatrix}\begin{bmatrix}2\\-1\end{bmatrix} = \begin{bmatrix}0\\4\end{bmatrix}$ ✓. ($2Ax = (0,-4)^\top$ would be wrong: $A$ is not symmetric.)</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">2</div><div style="flex:1;">
+                <p><strong>Least squares.</strong> Derive $\nabla_\theta\frac12\|X\theta-y\|^2$ and the normal equations. State every shape ($X\in\mathbb{R}^{m\times d}$).</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">chain rule, scalar through vector</span></p><div class="highlight-box"><p>Let $r = X\theta - y\in\mathbb{R}^m$. $J = \frac12r^\top r$, so $\nabla_rJ = r$ ($m\times1$). $\partial r/\partial\theta = X$ ($m\times d$).</p><p>Column convention: $\nabla_\theta J = (\partial r/\partial\theta)^\top\nabla_rJ = X^\top(X\theta-y)$, shape $(d\times m)(m\times1) = d\times1$ ✓.</p><p>Set to zero: $X^\top X\theta = X^\top y$. If $X^\top X$ is invertible, $\theta = (X^\top X)^{-1}X^\top y$. The $\frac12$ removes the factor 2.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">3</div><div style="flex:1;">
+                <p><strong>Layer Jacobian at a point.</strong> $W = \begin{bmatrix}1&amp;2\\-3&amp;1\end{bmatrix}$, $x = (1,1)^\top$, $h = \text{ReLU}(Wx)$. Find $\partial h/\partial x$ and verify one entry with a $0.1$ wiggle.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">outer on the left</span></p><div class="highlight-box"><p>$z = Wx = (3,-2)^\top$: neuron 1 on, neuron 2 off, $D = \text{Diag}(1,0)$.</p><p>$\partial h/\partial x = DW = \begin{bmatrix}1&amp;2\\0&amp;0\end{bmatrix}$.</p><p>Wiggle $x_2\to1.1$: $z_1 = 1+2.2 = 3.2$, so $h_1$ rises by $0.2 = 2\times0.1$ ✓ (entry $(1,2) = 2$). $z_2 = -3+1.1 = -1.9\lt0$, $h_2$ stays $0$ ✓ (row 2 zero).</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">4</div><div style="flex:1;">
+                <p><strong>Fix the convention.</strong> A student writes $\dfrac{\partial\mathcal{L}}{\partial h^{[1]}} = (\hat y-y)\,W^{[L+1]}\prod_{l=2}^{L}(D^{[l]}W^{[l]})^\top$. Identify the error and give two correct versions.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">transposes reverse order</span></p><div class="highlight-box"><p>Row order (loss on the left) is mixed with column-style transposes, and the shapes don't chain: $W^{[L+1]}$ is $1\times n_L$ but $(D^{[2]}W^{[2]})^\top$ is $n_1\times n_2$.</p><p>Row form: $(\hat y-y)\,W^{[L+1]}(D^{[L]}W^{[L]})\cdots(D^{[2]}W^{[2]})$, shape $1\times n_1$, counting down.</p><p>Column form: $(D^{[2]}W^{[2]})^\top\cdots(D^{[L]}W^{[L]})^\top(W^{[L+1]})^\top(\hat y-y)$, shape $n_1\times1$. One is the transpose of the other.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">5</div><div style="flex:1;">
+                <p><strong>Spectral norm by hand.</strong> $A = \begin{bmatrix}2&amp;0\\0&amp;-5\end{bmatrix}$. Find $\|A\|_2$, $\|A\|_F$, the max-stretch direction, and confirm $\|Av\|\le\|A\|_2\|v\|$ for $v = (3,4)^\top$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">square first</span></p><div class="highlight-box"><p>$A^\top A = \text{diag}(4,25)$, $\lambda_{\max} = 25$, so $\|A\|_2 = 5$ (the negative sign does not matter: lengths only). Direction: $(0,1)$. $\|A\|_F = \sqrt{4+25} = \sqrt{29}\approx5.3852\ge5$ ✓.</p><p>$Av = (6,-20)^\top$, $\|Av\| = \sqrt{436}\approx20.8806$; bound $5\cdot5 = 25$. $20.8806\le25$ ✓, strict because $v$ is not along $(0,1)$.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">6</div><div style="flex:1;">
+                <p><strong>Shear.</strong> $A = \begin{bmatrix}1&amp;2\\0&amp;1\end{bmatrix}$. Show the eigenvalues of $A$ underestimate its stretch, then compute $\|A\|_2$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">eigenvectors of AᵀA, not A</span></p><div class="highlight-box"><p>$A$ has eigenvalue $1$ (twice), eigenvector $(1,0)$ only. But $A(0,1)^\top = (2,1)^\top$ has length $\sqrt5\approx2.2361\gt1$.</p><p>$A^\top A = \begin{bmatrix}1&amp;2\\2&amp;5\end{bmatrix}$; $\lambda^2-6\lambda+1 = 0$, $\lambda = 3\pm2\sqrt2$, so $\lambda_{\max} = 3+2\sqrt2\approx5.8284$ and $\|A\|_2 = \sqrt{5.8284}\approx2.4142 = 1+\sqrt2$.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">7</div><div style="flex:1;">
+                <p><strong>Budget.</strong> $M = \text{diag}(4,1)$, unit input at $60^\circ$ from the $x$-axis. Compute the budget split, $\|Mv\|^2$ as a weighted average, and the output angle.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">weighted average of λ²</span></p><div class="highlight-box"><p>$v = (\cos60^\circ,\sin60^\circ) = (0.5, 0.8660)$, budget $c_1^2 = 0.25$, $c_2^2 = 0.75$.</p><p>$\|Mv\|^2 = 0.25\cdot16 + 0.75\cdot1 = 4.75$, $\|Mv\| = 2.1794$, between $1$ and $4$.</p><p>$Mv = (2, 0.8660)$, angle $\arctan(0.8660/2)\approx23.41^\circ$: bent toward the top axis from $60^\circ$.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">8</div><div style="flex:1;">
+                <p><strong>Power iteration.</strong> $M = \text{diag}(2,-0.5)$, $v_0 = (1,1)/\sqrt2$. Give $v_1$, $v_2$ (normalized) and the angle after 5 steps. What happens to the sign of the second coordinate?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">top piece wins by |λ₁/λ₂| per step</span></p><div class="highlight-box"><p>$M^kv_0\propto(2^k, (-0.5)^k)$. $k=1$: $(2,-0.5)\to(0.9701,-0.2425)$. $k=2$: $(4,0.25)\to(0.9981,0.0624)$. $k=5$: $(32,-0.03125)$, angle $\approx-0.056^\circ$.</p><p>The second coordinate shrinks by $|{-0.5}/2| = 1/4$ each step and alternates sign (negative $\lambda_2$). The direction converges to $(1,0)$, the top eigenvector.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">9</div><div style="flex:1;">
+                <p><strong>Jacobian determinant.</strong> $(u,v)\mapsto(x,y) = (u^2-v^2,\ 2uv)$. Find $J$, $\det J$, and the area scale at $(u,v) = (1,2)$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">columns = images of input directions</span></p><div class="highlight-box"><p>$J = \begin{bmatrix}\partial x/\partial u&amp;\partial x/\partial v\\\partial y/\partial u&amp;\partial y/\partial v\end{bmatrix} = \begin{bmatrix}2u&amp;-2v\\2v&amp;2u\end{bmatrix}$.</p><p>$\det J = 4u^2+4v^2 = 4(u^2+v^2)$. At $(1,2)$: $4\cdot5 = 20$. A tiny cell near $(1,2)$ has its area multiplied by 20; $dx\,dy = 4(u^2+v^2)\,du\,dv$.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">10</div><div style="flex:1;">
+                <p><strong>Bound a deep product.</strong> Each of 30 layers has $\|W^{[l]}\|_2\le0.8$ and ReLU gates. Bound the stretch of the gradient reaching layer 1 relative to the top. Then redo it with residual blocks and $\|W^{[l]}\|_2\le0.02$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">stretches multiply</span></p><div class="highlight-box"><p>Plain: $\prod\|D^{[l]}W^{[l]}\|_2\le0.8^{29}\approx0.0015$. About 0.15% of the signal survives.</p><p>Residual: each factor $D(I+W)$ stretches between $0.98$ and $1.02$ (triangle inequality), so the product is at least $0.98^{29}\approx0.5566$ and at most $1.02^{29}\approx1.7758$. Order 1 either way.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">11</div><div style="flex:1;">
+                <p><strong>Sum over paths.</strong> $f = \text{softmax}(z)$ with $z = (2,0,-1)$ and true class 1. Compute $\nabla_z\mathcal{L}$ numerically and check that the entries sum to 0.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">f − y</span></p><div class="highlight-box"><p>$e^z = (7.3891, 1, 0.3679)$, sum $8.7570$, so $f = (0.8438, 0.1142, 0.0420)$.</p><p>$\nabla_z\mathcal{L} = f-y = (-0.1562, 0.1142, 0.0420)$. Sum $= 0$ because $\sum f_i = 1 = \sum y_i$. The correct class is pushed up, the wrong ones down.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">12</div><div style="flex:1;">
+                <p><strong>Weight gradient of a linear layer.</strong> $z = Wx$ with $x = (1,2,3)^\top$ and upstream $\delta = \nabla_z\mathcal{L} = (0.5,-1)^\top$. Write $\nabla_W\mathcal{L}$ with its shape.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">outer product</span></p><div class="highlight-box"><p>$W$ is $2\times3$, so the gradient is $2\times3$: $\delta x^\top = \begin{bmatrix}0.5\\-1\end{bmatrix}\begin{bmatrix}1&amp;2&amp;3\end{bmatrix} = \begin{bmatrix}0.5&amp;1&amp;1.5\\-1&amp;-2&amp;-3\end{bmatrix}$.</p><p>Entry $(k,j) = \delta_kx_j$ because $W_{kj}$ appears only in $z_k$ with coefficient $x_j$.</p></div></div>
+            </div></div></div>
+
+        </div>
+    </div>
+</div><!-- end container -->
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Matrix Calculus &amp; Linear Algebra Toolkit</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+<script>
+function typesetSoon(delay) {
+    setTimeout(function() { if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise().catch(function(){}); } }, delay || 60);
+}
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    var pane = document.getElementById('tab-' + name);
+    if (pane) pane.classList.add('active');
+    if (btn) btn.classList.add('active');
+    else { document.querySelectorAll('.tab-buttons .tab-button').forEach(function(b){ var oc = b.getAttribute('onclick') || ''; if (oc.indexOf("'" + name + "'") >= 0) b.classList.add('active'); }); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    typesetSoon(100);
+    if (window.__onTabShown) window.__onTabShown(name);
+}
+function goTab(name) { switchTab(name, null); }
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open')) typesetSoon(50);
+}
+function toggleSolution(btn) { toggleExample(btn); }
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+/* ── Quiz engine ── */
+function buildQuiz(containerId, questions) {
+    var c = document.getElementById(containerId); if (!c) return;
+    var state = { answered: 0, correct: 0 };
+    var bar = document.createElement('div'); bar.className = 'score-bar';
+    bar.innerHTML = '<span>Score: <span class="qs">0</span> / ' + questions.length + '</span><button type="button">Reset</button>';
+    c.appendChild(bar);
+    var wrap = document.createElement('div'); c.appendChild(wrap);
+    function render() {
+        wrap.innerHTML = ''; state.answered = 0; state.correct = 0; bar.querySelector('.qs').textContent = '0';
+        questions.forEach(function(q, qi) {
+            var d = document.createElement('div'); d.className = 'quiz-q';
+            d.innerHTML = '<div class="qtext">' + (qi+1) + '. ' + q.q + '</div>';
+            q.opts.forEach(function(o, oi) {
+                var b = document.createElement('button'); b.className = 'quiz-opt'; b.type = 'button'; b.innerHTML = String.fromCharCode(65+oi) + '.&nbsp; ' + o;
+                b.onclick = function() {
+                    var all = d.querySelectorAll('.quiz-opt'); all.forEach(function(x){ x.disabled = true; });
+                    if (oi === q.a) { b.classList.add('correct'); state.correct++; } else { b.classList.add('wrong'); all[q.a].classList.add('correct'); }
+                    state.answered++; bar.querySelector('.qs').textContent = state.correct;
+                    d.querySelector('.quiz-expl').classList.add('show'); typesetSoon(30);
+                };
+                d.appendChild(b);
+            });
+            var e = document.createElement('div'); e.className = 'quiz-expl'; e.innerHTML = q.e; d.appendChild(e);
+            wrap.appendChild(d);
+        });
+        typesetSoon(80);
+    }
+    bar.querySelector('button').onclick = render;
+    render();
+}
+/* ── Flashcards ── */
+function buildFlashcards(containerId, cards) {
+    var c = document.getElementById(containerId); if (!c) return;
+    var i = 0, order = cards.map(function(_, k){ return k; });
+    c.innerHTML = '<div class="flash-wrap"><div class="flash-card" id="' + containerId + '-card"><div class="flash-face flash-front"></div><div class="flash-face flash-back"></div></div></div>' +
+        '<div class="flash-controls"><button type="button" class="alt" data-act="prev">&larr; Prev</button><button type="button" data-act="flip">Flip</button><button type="button" class="alt" data-act="next">Next &rarr;</button><button type="button" class="alt" data-act="shuffle">Shuffle</button></div>' +
+        '<div class="flash-hint">Card <span class="fi">1</span> of ' + cards.length + ' &middot; click the card to flip</div>';
+    var card = c.querySelector('.flash-card'), front = c.querySelector('.flash-front'), back = c.querySelector('.flash-back');
+    function show() { card.classList.remove('flipped'); front.innerHTML = cards[order[i]].f; back.innerHTML = cards[order[i]].b; c.querySelector('.fi').textContent = i+1; typesetSoon(40); }
+    card.onclick = function(){ card.classList.toggle('flipped'); };
+    c.querySelectorAll('.flash-controls button').forEach(function(b){
+        b.onclick = function(){
+            var a = b.getAttribute('data-act');
+            if (a === 'flip') card.classList.toggle('flipped');
+            if (a === 'next') { i = (i+1) % cards.length; show(); }
+            if (a === 'prev') { i = (i-1+cards.length) % cards.length; show(); }
+            if (a === 'shuffle') { for (var k = order.length-1; k > 0; k--) { var j = Math.floor(Math.random()*(k+1)); var t = order[k]; order[k] = order[j]; order[j] = t; } i = 0; show(); }
+        };
+    });
+    show();
+}
+var R = String.raw;
+var FLASH2 = [
+ {f: R`$\nabla_x(a^\top x)$`, b: R`$a$ &nbsp;(shape $d\times1$)`},
+ {f: R`$\nabla_x(x^\top Ax)$`, b: R`$(A+A^\top)x$; $=2Ax$ only if $A$ is symmetric`},
+ {f: R`$\nabla_x\|Ax-b\|^2$`, b: R`$2A^\top(Ax-b)$; zero it for the normal equations $A^\top Ax = A^\top b$`},
+ {f: R`Jacobian of $x\mapsto Ax$`, b: R`$A$ itself (rows = outputs, columns = inputs)`},
+ {f: R`Jacobian of an elementwise $\phi$`, b: R`$\text{Diag}(\phi'(z))$; ReLU gives the 0/1 mask $D$`},
+ {f: R`Matrix chain rule for $f(g(x))$`, b: R`$J_f\,J_g$: outer function on the left`},
+ {f: R`Why $DW$ and not $WD$?`, b: R`$\Delta z = W\Delta x$, then $\Delta h = D\Delta z = (DW)\Delta x$. First applied = rightmost. $DW$ zeroes rows (dead outputs).`},
+ {f: R`$\nabla_W\mathcal{L}$ for $z = Wx$`, b: R`$\delta\,x^\top$ with $\delta = \nabla_z\mathcal{L}$ (outer product, shape of $W$)`},
+ {f: R`$(XYZ)^\top = $`, b: R`$Z^\top Y^\top X^\top$: transposing reverses the order`},
+ {f: R`Row vs. column gradient conventions`, b: R`Row: loss on the left, no transposes, count down. Column: transposes, loss on the right, count up. Never mix.`},
+ {f: R`Chain rule when one variable feeds many outputs`, b: R`Sum over paths: $\partial\mathcal{L}/\partial z_k = \sum_i(\partial\mathcal{L}/\partial f_i)(\partial f_i/\partial z_k)$`},
+ {f: R`Softmax Jacobian entry`, b: R`$\partial f_i/\partial z_k = f_i(\delta_{ik}-f_k)$`},
+ {f: R`Norm ladder`, b: R`$|x|$ → $\|v\|_2 = \sqrt{\sum v_i^2}$ → Frobenius $\sqrt{\sum A_{ij}^2}$ or spectral $\max_{\|v\|=1}\|Av\|$`},
+ {f: R`Spectral norm, four equal forms`, b: R`$\max_{v\ne0}\frac{\|Av\|}{\|v\|} = \max_{\|v\|=1}\|Av\| = \sqrt{\lambda_{\max}(A^\top A)} = \sigma_{\max}(A)$`},
+ {f: R`Why unit vectors suffice`, b: R`Scaling $v$ by $c$ scales $\|Av\|$ and $\|v\|$ by $|c|$; the ratio depends only on direction`},
+ {f: R`Prove $\|Av\|\le\|A\|_2\|v\|$`, b: R`$v = \|v\|u$, $\|u\|=1$; $\|Au\|\le\max = \|A\|_2$ (one item vs. the max); multiply by $\|v\|\ge0$`},
+ {f: R`Prove $\|AB\|_2\le\|A\|_2\|B\|_2$`, b: R`For unit $u$: $\|A(Bu)\|\le\|A\|_2\|Bu\|\le\|A\|_2\|B\|_2$; max over $u$`},
+ {f: R`$\|D\|_2$ for a 0/1 diagonal mask`, b: R`$\le1$: keeps or deletes coordinates, never lengthens`},
+ {f: R`Why square first ($A^\top A$)?`, b: R`$\|Av\|^2 = v^\top A^\top Av$; $A^\top A$ is symmetric, so its top eigenvector is $A$'s max-stretch direction`},
+ {f: R`Is the max-stretch direction an eigenvector of $A$?`, b: R`Not necessarily. Shear $\begin{bmatrix}1&10\\0&1\end{bmatrix}$: eigenvalue 1, but $\|A\|_2\approx10.1$. It is an eigenvector of $A^\top A$.`},
+ {f: R`Spectral theorem in words`, b: R`Symmetric $M = Q\Lambda Q^\top$: rotate into perpendicular eigen-axes, scale each axis, rotate back`},
+ {f: R`Budget picture`, b: R`Unit $v = \sum c_iq_i$, $\sum c_i^2 = 1$; $\|Mv\|^2 = \sum c_i^2\lambda_i^2$, a weighted average. Spend it all on the top axis.`},
+ {f: R`Why does a non-eigenvector turn?`, b: R`Its pieces are scaled unevenly, so it bends toward the top axis. Turning costs no length; dilution onto weaker axes does.`},
+ {f: R`SVD and $A^\top A$`, b: R`$A = U\Sigma V^\top$, $A^\top A = V\Sigma^2V^\top$: the final rotation cancels; input axes and squared stretches remain`},
+ {f: R`Power iteration`, b: R`$v_{k+1} = Av_k/\|Av_k\|$; $A^kv_0 = \sum c_i\lambda_i^kq_i$ so the top piece wins by $|\lambda_1/\lambda_2|$ per step`},
+ {f: R`Power iteration fine print`, b: R`Need $c_1\ne0$; slow if $|\lambda_1|\approx|\lambda_2|$; negative $\lambda_1$ flips sign each step; normalize or length grows/vanishes like $|\lambda_1|^k$`},
+ {f: R`Jacobian: what is it?`, b: R`First derivative of a vector-to-vector map; $\Delta\text{out}\approx J\,\Delta\text{in}$; columns = images of input directions`},
+ {f: R`Polar Jacobian and determinant`, b: R`$\begin{bmatrix}\cos\theta&-r\sin\theta\\\sin\theta&r\cos\theta\end{bmatrix}$, $\det J = r$, so $dx\,dy = r\,dr\,d\theta$`},
+ {f: R`Why do polar cells grow with $r$?`, b: R`Arc length $r\Delta\theta$ grows; thickness $\Delta r$ doesn't. Real variation, not approximation error.`},
+ {f: R`Calculus vs. backprop use of $J$`, b: R`Calculus: $|\det J|$ (area scale). Backprop: the matrix itself (how changes and gradients flow).`},
+ {f: R`$\det J = 0$ for a ReLU layer means`, b: R`A dead neuron zeroed a row; the plane collapses onto a line; no gradient through that unit`},
+ {f: R`Jacobian vs. Hessian`, b: R`Jacobian: first derivative, vector→vector. Hessian: second derivative of a scalar, $d\times d$.`}
+];
+
+/* ───────── helpers ───────── */
+function mat(name) {
+    if (name === 'diag') return [[3,0],[0,0.5]];
+    if (name === 'sym') return [[2,1],[1,2]];
+    if (name === 'shear') return [[1,1.5],[0,1]];
+    if (name === 'close') return [[1.2,0],[0,1]];
+    if (name === 'neg') return [[-3,0],[0,0.5]];
+    return [[1,0],[0,1]];
+}
+function mv(A, v) { return [A[0][0]*v[0]+A[0][1]*v[1], A[1][0]*v[0]+A[1][1]*v[1]]; }
+function AtA(A) { return [[A[0][0]*A[0][0]+A[1][0]*A[1][0], A[0][0]*A[0][1]+A[1][0]*A[1][1]], [A[0][1]*A[0][0]+A[1][1]*A[1][0], A[0][1]*A[0][1]+A[1][1]*A[1][1]]]; }
+function symEig(M) { /* M symmetric 2x2 -> {l:[l1,l2], q:[q1,q2]} with |l1|>=|l2|, unit q */
+    var a = M[0][0], b = M[0][1], c = M[1][1];
+    var tr = a + c, det = a*c - b*b, disc = Math.sqrt(Math.max(0, tr*tr/4 - det));
+    var l1 = tr/2 + disc, l2 = tr/2 - disc;
+    function vec(l) { var v; if (Math.abs(b) > 1e-9) v = [l - c, b]; else v = (Math.abs(l - a) < Math.abs(l - c)) ? [1,0] : [0,1]; var n = Math.hypot(v[0], v[1]); return [v[0]/n, v[1]/n]; }
+    var q1 = vec(l1), q2 = vec(l2);
+    if (Math.abs(l2) > Math.abs(l1)) { var t = l1; l1 = l2; l2 = t; var tq = q1; q1 = q2; q2 = tq; }
+    if (q1[0] < 0 || (q1[0] === 0 && q1[1] < 0)) q1 = [-q1[0], -q1[1]];
+    if (q2[1] < 0 || (q2[1] === 0 && q2[0] < 0)) q2 = [-q2[0], -q2[1]];
+    return { l: [l1, l2], q: [q1, q2] };
+}
+function ctx2(id, w, h) { var c = document.getElementById(id); if (!c) return null; var r = 2; c.width = w*r; c.height = h*r; var x = c.getContext('2d'); x.setTransform(r,0,0,r,0,0); x.clearRect(0,0,w,h); return x; }
+function arrow(x, a, b, col, lw) { x.strokeStyle = col; x.fillStyle = col; x.lineWidth = lw || 2; x.beginPath(); x.moveTo(a[0],a[1]); x.lineTo(b[0],b[1]); x.stroke(); var ang = Math.atan2(b[1]-a[1], b[0]-a[0]), s = 9; x.beginPath(); x.moveTo(b[0],b[1]); x.lineTo(b[0]-s*Math.cos(ang-0.4), b[1]-s*Math.sin(ang-0.4)); x.lineTo(b[0]-s*Math.cos(ang+0.4), b[1]-s*Math.sin(ang+0.4)); x.closePath(); x.fill(); }
+function f3(n) { return (Math.abs(n) < 5e-5 ? 0 : n).toFixed(3); }
+function f2(n) { return (Math.abs(n) < 5e-3 ? 0 : n).toFixed(2); }
+function degOf(v) { var d = Math.atan2(v[1], v[0]) * 180/Math.PI; return d; }
+
+/* ───────── budget widget ───────── */
+function budDraw() {
+    var A = mat(document.getElementById('bud-mat').value);
+    var th = +document.getElementById('bud-ang').value; document.getElementById('bud-ang-out').textContent = th + '°';
+    var t = th*Math.PI/180, v = [Math.cos(t), Math.sin(t)];
+    var E = symEig(AtA(A)), s1 = Math.sqrt(Math.max(0,E.l[0])), s2 = Math.sqrt(Math.max(0,E.l[1]));
+    var c1 = v[0]*E.q[0][0]+v[1]*E.q[0][1], c2 = v[0]*E.q[1][0]+v[1]*E.q[1][1];
+    var Av = mv(A, v), len = Math.hypot(Av[0], Av[1]);
+    var W = 440, H = 440, cx = W/2, cy = H/2, unit = 190/Math.max(s1, 1.05);
+    var x = ctx2('bud-canvas', W, H); if (!x) return;
+    function P(p) { return [cx + p[0]*unit, cy - p[1]*unit]; }
+    x.strokeStyle = '#E2E2E2'; x.lineWidth = 1; x.beginPath(); x.moveTo(0,cy); x.lineTo(W,cy); x.moveTo(cx,0); x.lineTo(cx,H); x.stroke();
+    x.strokeStyle = '#B4B2A9'; x.setLineDash([5,4]); x.lineWidth = 1.2;
+    [[E.q[0],'#BA7517'],[E.q[1],'#B4B2A9']].forEach(function(pr){ var q = pr[0]; x.strokeStyle = pr[1]; x.beginPath(); var a = P([q[0]*3.2, q[1]*3.2]), b = P([-q[0]*3.2, -q[1]*3.2]); x.moveTo(a[0],a[1]); x.lineTo(b[0],b[1]); x.stroke(); });
+    x.setLineDash([]);
+    x.strokeStyle = '#888780'; x.lineWidth = 1.2; x.beginPath(); x.arc(cx, cy, unit, 0, 2*Math.PI); x.stroke();
+    x.strokeStyle = 'rgba(33,68,43,0.45)'; x.lineWidth = 1.5; x.beginPath();
+    for (var k = 0; k <= 180; k++) { var a = k/180*2*Math.PI, p = P(mv(A, [Math.cos(a), Math.sin(a)])); if (k === 0) x.moveTo(p[0],p[1]); else x.lineTo(p[0],p[1]); } x.stroke();
+    var o = P([0,0]), p1 = P([c1*E.q[0][0], c1*E.q[0][1]]);
+    x.setLineDash([3,3]); x.strokeStyle = '#DDA25E'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(o[0],o[1]); x.lineTo(p1[0],p1[1]); var pv = P(v); x.lineTo(pv[0],pv[1]); x.stroke(); x.setLineDash([]);
+    arrow(x, o, P(Av), '#21442B', 2.5);
+    arrow(x, o, pv, '#DDA25E', 2.5);
+    x.font = '600 12px Inter, sans-serif'; x.fillStyle = '#854F0B'; var lq = P([E.q[0][0]*3.05, E.q[0][1]*3.05]); x.fillText('top axis q₁ (σ₁ = ' + f2(s1) + ')', Math.min(W-150, Math.max(6, lq[0]-40)), Math.min(H-8, Math.max(14, lq[1]-10)));
+    x.fillStyle = '#5F5E5A'; var lq2 = P([E.q[1][0]*3.05, E.q[1][1]*3.05]); x.fillText('q₂ (σ₂ = ' + f2(s2) + ')', Math.min(W-110, Math.max(6, lq2[0]-30)), Math.min(H-8, Math.max(14, lq2[1]+14)));
+    x.fillStyle = '#854F0B'; x.fillText('v', pv[0]+6, pv[1]-6); x.fillStyle = '#21442B'; var pa = P(Av); x.fillText('Av', pa[0]+6, pa[1]-6);
+    var y = ctx2('bud-bars', 440, 220); if (y) {
+        var bars = [['c₁²', c1*c1, '#DDA25E'], ['c₂²', c2*c2, '#E6BC84'], ['c₁²σ₁²', c1*c1*s1*s1, '#21442B'], ['c₂²σ₂²', c2*c2*s2*s2, '#5E6C39']];
+        var maxv = Math.max(1, s1*s1), base = 180, top = 30, bw = 60;
+        y.font = '600 12px Inter, sans-serif'; y.fillStyle = '#4A4A4A'; y.fillText('budget (sums to 1)', 40, 18); y.fillText('contributions to ‖Av‖² (max σ₁² = ' + f2(s1*s1) + ')', 220, 18);
+        bars.forEach(function(b, i) { var bx = (i < 2 ? 50 : 230) + (i % 2) * 85, h = (base - top) * b[1] / maxv; y.fillStyle = b[2]; y.fillRect(bx, base - h, bw, h); y.fillStyle = '#2D2D2D'; y.fillText(b[0], bx + 8, base + 16); y.fillText(f3(b[1]), bx + 6, base - h - 5); });
+        y.strokeStyle = '#B4B2A9'; y.beginPath(); y.moveTo(30, base); y.lineTo(420, base); y.stroke();
+    }
+    document.getElementById('bud-c').textContent = f3(c1*c1) + ' , ' + f3(c2*c2);
+    document.getElementById('bud-sq').textContent = f3(c1*c1*s1*s1) + ' + ' + f3(c2*c2*s2*s2) + ' = ' + f3(len*len);
+    document.getElementById('bud-len').textContent = f3(len) + '  (angle ' + f2(degOf(Av)) + '°)';
+    document.getElementById('bud-max').textContent = f3(s1);
+}
+
+/* ───────── power iteration widget ───────── */
+var PI = { k: 0, v: [1,0], hist: [], rows: [] };
+function piReset() {
+    var th = +document.getElementById('pi-ang').value; document.getElementById('pi-ang-out').textContent = th + '°';
+    var t = th*Math.PI/180; PI.v = [Math.cos(t), Math.sin(t)]; PI.k = 0; PI.hist = [PI.v.slice()]; PI.rows = [];
+    var A = mat(document.getElementById('pi-mat').value), E = symEig(A);
+    PI.rows.push({k: 0, raw: PI.v.slice(), ang: degOf(PI.v), gap: gapTo(PI.v, E.q[0])});
+    document.getElementById('pi-ratio').textContent = (Math.abs(E.l[1]) > 1e-9 ? f2(Math.abs(E.l[0]/E.l[1])) : '∞');
+    document.getElementById('pi-grow').textContent = '–';
+    piDraw();
+}
+function gapTo(v, q) { var d = Math.abs(v[0]*q[0]+v[1]*q[1]); d = Math.min(1, d); return Math.acos(d)*180/Math.PI; }
+function piStep() {
+    var A = mat(document.getElementById('pi-mat').value), E = symEig(A);
+    var w = mv(A, PI.v), n = Math.hypot(w[0], w[1]); if (n < 1e-12) return;
+    PI.v = [w[0]/n, w[1]/n]; PI.k++; PI.hist.push(PI.v.slice()); if (PI.hist.length > 12) PI.hist.shift();
+    PI.rows.push({k: PI.k, raw: w, ang: degOf(PI.v), gap: gapTo(PI.v, E.q[0])}); if (PI.rows.length > 9) PI.rows.shift();
+    document.getElementById('pi-grow').textContent = f3(n);
+    piDraw();
+}
+function piRun() { var i = 0; (function tick(){ if (i++ < 10) { piStep(); setTimeout(tick, 220); } })(); }
+function piDraw() {
+    var A = mat(document.getElementById('pi-mat').value), E = symEig(A);
+    var W = 440, H = 440, cx = W/2, cy = H/2, unit = 170;
+    var x = ctx2('pi-canvas', W, H); if (!x) return;
+    function P(p) { return [cx + p[0]*unit, cy - p[1]*unit]; }
+    x.strokeStyle = '#E2E2E2'; x.lineWidth = 1; x.beginPath(); x.moveTo(0,cy); x.lineTo(W,cy); x.moveTo(cx,0); x.lineTo(cx,H); x.stroke();
+    x.setLineDash([5,4]); x.lineWidth = 1.5;
+    [[E.q[0],'#BA7517'],[E.q[1],'#B4B2A9']].forEach(function(pr){ var q = pr[0]; x.strokeStyle = pr[1]; x.beginPath(); var a = P([q[0]*1.25, q[1]*1.25]), b = P([-q[0]*1.25, -q[1]*1.25]); x.moveTo(a[0],a[1]); x.lineTo(b[0],b[1]); x.stroke(); });
+    x.setLineDash([]);
+    x.strokeStyle = '#888780'; x.lineWidth = 1.2; x.beginPath(); x.arc(cx, cy, unit, 0, 2*Math.PI); x.stroke();
+    var o = P([0,0]), n = PI.hist.length;
+    PI.hist.forEach(function(h, i) { if (i === n-1) return; var al = 0.35 + 0.45*(i+1)/n; arrow(x, o, P(h), 'rgba(221,162,94,' + al.toFixed(2) + ')', 1.5); });
+    arrow(x, o, P(PI.v), '#21442B', 3);
+    x.font = '600 12px Inter, sans-serif'; x.fillStyle = '#854F0B'; var lq = P([E.q[0][0]*1.3, E.q[0][1]*1.3]); x.fillText('top eigenvector q₁ (λ₁ = ' + f2(E.l[0]) + ')', Math.min(W-200, Math.max(6, lq[0]-60)), Math.min(H-8, Math.max(14, lq[1]+18)));
+    x.fillStyle = '#5F5E5A'; var lq2 = P([E.q[1][0]*1.3, E.q[1][1]*1.3]); x.fillText('q₂ (λ₂ = ' + f2(E.l[1]) + ')', Math.min(W-100, Math.max(6, lq2[0]-30)), Math.min(H-8, Math.max(14, lq2[1]+14)));
+    x.fillStyle = '#21442B'; var pv = P(PI.v); x.fillText('v' + PI.k, pv[0]+8, pv[1]-8);
+    var tb = document.getElementById('pi-table'); if (tb) {
+        var html = '<tr><th>k</th><th>direction (before normalizing)</th><th>angle</th><th>gap to top axis</th></tr>';
+        PI.rows.forEach(function(r){ html += '<tr><td>' + r.k + '</td><td>(' + f3(r.raw[0]) + ', ' + f3(r.raw[1]) + ')</td><td>' + f2(r.ang) + '°</td><td>' + f2(r.gap) + '°</td></tr>'; });
+        tb.innerHTML = html;
+    }
+}
+
+/* ───────── grid warp widget ───────── */
+var GW = { mode: 'polar' };
+var GWM = {
+    polar: { u:[0.3,2], v:[0,1.5*Math.PI], nm:['r','θ'], on:['x','y'], f:function(a,b){ return [a*Math.cos(b), a*Math.sin(b)]; }, J:function(a,b){ return [[Math.cos(b),-a*Math.sin(b)],[Math.sin(b),a*Math.cos(b)]]; } },
+    linear: { u:[-1.5,1.5], v:[-1.5,1.5], nm:['x₁','x₂'], on:['z₁','z₂'], f:function(a,b){ return [2*a-b, a+3*b]; }, J:function(){ return [[2,-1],[1,3]]; } },
+    relu: { u:[-1.5,1.5], v:[-1.5,1.5], nm:['x₁','x₂'], on:['h₁','h₂'], f:function(a,b){ return [Math.max(0,2*a-b), Math.max(0,a+3*b)]; }, J:function(a,b){ var m1 = (2*a-b)>0?1:0, m2 = (a+3*b)>0?1:0; return [[2*m1,-1*m1],[1*m2,3*m2]]; } }
+};
+function gwMode(m) { GW.mode = m; ['polar','linear','relu'].forEach(function(k){ document.getElementById('gw-b-'+k).classList.toggle('active', k === m); }); var d = GWM[m]; document.getElementById('gw-cap-in').textContent = 'Input grid (' + d.nm.join(', ') + ')'; document.getElementById('gw-cap-out').textContent = 'Output grid (' + d.on.join(', ') + ')'; gwDraw(); }
+function gwView(bb, w, h, eq) { var p = 18; var sx = (w-2*p)/((bb[2]-bb[0])||1), sy = (h-2*p)/((bb[3]-bb[1])||1); if (eq) { sx = sy = Math.min(sx, sy); } var mx = (bb[0]+bb[2])/2, my = (bb[1]+bb[3])/2; return function(X,Y){ return [w/2 + (X-mx)*sx, h/2 - (Y-my)*sy]; }; }
+function gwLine(x, pts, col, lw) { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); pts.forEach(function(q,i){ if (i) x.lineTo(q[0],q[1]); else x.moveTo(q[0],q[1]); }); x.stroke(); }
+function gwDraw() {
+    var d = GWM[GW.mode], N = 10, S = 60, u0 = d.u[0], u1 = d.u[1], v0 = d.v[0], v1 = d.v[1], du = (u1-u0)/N, dv = (v1-v0)/N;
+    var fu = +document.getElementById('gw-u').value, fv = +document.getElementById('gw-v').value;
+    document.getElementById('gw-u-out').textContent = fu.toFixed(2); document.getElementById('gw-v-out').textContent = fv.toFixed(2);
+    var cu = u0 + fu*(u1-u0), cv0 = v0 + fv*(v1-v0);
+    var Wd = 440, Hd = 300;
+    var A = ctx2('gw-in', Wd, Hd), B = ctx2('gw-out', Wd, Hd); if (!A || !B) return;
+    var vin = gwView([u0,v0,u1,v1], Wd, Hd, GW.mode !== 'polar');
+    var bb = [1e9,1e9,-1e9,-1e9], fam = [];
+    for (var i = 0; i <= N; i++) { var a = u0 + i*du, b = v0 + i*dv, p1 = [], p2 = [];
+        for (var k = 0; k <= S; k++) { var t = v0 + k*(v1-v0)/S, s = u0 + k*(u1-u0)/S; p1.push(d.f(a,t)); p2.push(d.f(s,b)); }
+        fam.push([p1,'#21442B']); fam.push([p2,'#DDA25E']);
+        p1.concat(p2).forEach(function(q){ bb[0] = Math.min(bb[0],q[0]); bb[1] = Math.min(bb[1],q[1]); bb[2] = Math.max(bb[2],q[0]); bb[3] = Math.max(bb[3],q[1]); }); }
+    var vo = gwView(bb, Wd, Hd, true);
+    if (GW.mode !== 'polar') { gwLine(A, [vin(u0,0), vin(u1,0)], '#B4B2A9', 0.7); gwLine(A, [vin(0,v0), vin(0,v1)], '#B4B2A9', 0.7); }
+    gwLine(B, [vo(bb[0],0), vo(bb[2],0)], '#B4B2A9', 0.7); gwLine(B, [vo(0,bb[1]), vo(0,bb[3])], '#B4B2A9', 0.7);
+    for (var i2 = 0; i2 <= N; i2++) { var a2 = u0 + i2*du, b2 = v0 + i2*dv; gwLine(A, [vin(a2,v0), vin(a2,v1)], '#21442B', 1); gwLine(A, [vin(u0,b2), vin(u1,b2)], '#DDA25E', 1); }
+    fam.forEach(function(F){ gwLine(B, F[0].map(function(q){ return vo(q[0],q[1]); }), F[1], 1); });
+    var cell = [[cu,cv0],[cu+du,cv0],[cu+du,cv0+dv],[cu,cv0+dv]];
+    A.fillStyle = 'rgba(188,108,38,0.4)'; A.beginPath(); cell.forEach(function(q,i){ var p = vin(q[0],q[1]); if (i) A.lineTo(p[0],p[1]); else A.moveTo(p[0],p[1]); }); A.closePath(); A.fill();
+    arrow(A, vin(cu,cv0), vin(cu+du,cv0), '#BC6C26', 2); arrow(A, vin(cu,cv0), vin(cu,cv0+dv), '#8B5E3C', 2);
+    var poly = [], E = 12;
+    for (var k1 = 0; k1 <= E; k1++) poly.push(d.f(cu + k1*du/E, cv0)); for (var k2 = 0; k2 <= E; k2++) poly.push(d.f(cu+du, cv0 + k2*dv/E));
+    for (var k3 = 0; k3 <= E; k3++) poly.push(d.f(cu+du - k3*du/E, cv0+dv)); for (var k4 = 0; k4 <= E; k4++) poly.push(d.f(cu, cv0+dv - k4*dv/E));
+    B.fillStyle = 'rgba(188,108,38,0.4)'; B.beginPath(); poly.forEach(function(q,i){ var p = vo(q[0],q[1]); if (i) B.lineTo(p[0],p[1]); else B.moveTo(p[0],p[1]); }); B.closePath(); B.fill();
+    var cx = cu + du/2, cy = cv0 + dv/2, J = d.J(cx, cy), P0 = d.f(cu, cv0);
+    var c1 = [J[0][0]*du, J[1][0]*du], c2 = [J[0][1]*dv, J[1][1]*dv];
+    if (Math.hypot(c1[0],c1[1]) > 1e-9) arrow(B, vo(P0[0],P0[1]), vo(P0[0]+c1[0], P0[1]+c1[1]), '#BC6C26', 2);
+    if (Math.hypot(c2[0],c2[1]) > 1e-9) arrow(B, vo(P0[0],P0[1]), vo(P0[0]+c2[0], P0[1]+c2[1]), '#8B5E3C', 2);
+    var ar = 0; for (var i3 = 0; i3 < poly.length; i3++) { var p = poly[i3], q = poly[(i3+1)%poly.length]; ar += p[0]*q[1] - q[0]*p[1]; } ar = Math.abs(ar)/2/(du*dv);
+    var det = J[0][0]*J[1][1] - J[0][1]*J[1][0];
+    document.getElementById('gw-j').innerHTML = '[ ' + f2(J[0][0]) + ' &nbsp;' + f2(J[0][1]) + ' ]<br>[ ' + f2(J[1][0]) + ' &nbsp;' + f2(J[1][1]) + ' ]';
+    var note = GW.mode === 'polar' ? 'det J = r = ' + f2(cx) : 'det J = ' + f2(det);
+    if (GW.mode === 'relu') { var m1 = (2*cx-cy) > 0, m2 = (cx+3*cy) > 0; note += '<br>neurons: ' + (m1?'on':'off') + ', ' + (m2?'on':'off'); }
+    document.getElementById('gw-det').innerHTML = note + '<br>measured ≈ ' + f2(ar);
+}
+
+/* ───────── drills shuffle ───────── */
+function shuffleProblems(containerId) {
+    var container = document.getElementById(containerId); if (!container) return;
+    var cards = Array.from(container.querySelectorAll(':scope > .card'));
+    for (var i = cards.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); container.appendChild(cards[j]); cards.splice(j, 1, cards[i]); }
+    Array.from(container.querySelectorAll(':scope > .card')).forEach(function(card, idx) { var circle = card.querySelector('div[style*="border-radius:50%"]'); if (circle) circle.textContent = idx + 1; });
+}
+
+window.__onTabShown = function(name) { if (name === 't2') { budDraw(); piDraw(); } if (name === 't3') gwDraw(); };
+window.__initSheet = function() {
+    buildFlashcards('flash-main', FLASH2);
+    shuffleProblems('drill-list');
+    budDraw(); piReset(); gwMode('polar');
+};
+
+window.addEventListener('DOMContentLoaded', function() {
+    if (window.__initSheet) window.__initSheet();
+    addTabNav();
+});
+</script>
+</body>
+</html>

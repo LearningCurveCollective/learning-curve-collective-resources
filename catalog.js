@@ -1947,6 +1947,64 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "machine-learning--matrix-calculus-linear-algebra-toolkit",
+   "path": "machine-learning/matrix-calculus-linear-algebra-toolkit.html",
+   "title": "Matrix Calculus & Linear Algebra Toolkit",
+   "description": "Scalar rules translated to matrix form, the chain rule with the right order and transposes, norms and the spectral norm with an interactive budget picture and power iteration, and Jacobians with a grid-warp explorer.",
+   "subject": "machine-learning",
+   "topic": "Math & stats foundations",
+   "order": 8,
+   "levels": [
+    "College",
+    "Advanced College"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "matrix calculus",
+    "chain rule",
+    "spectral norm",
+    "eigenvectors",
+    "jacobian",
+    "power iteration",
+    "machine learning"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "machine-learning--matrix-calculus-worksheet",
+    "calculus--differentiation-part-2"
+   ]
+  },
+  {
+   "id": "machine-learning--deep-learning-exam-review",
+   "path": "machine-learning/deep-learning-exam-review.html",
+   "title": "Deep Learning Exam Review",
+   "description": "Cheat sheet, flashcards, and worked derivations for a deep learning exam: gradient descent variants, batch norm, L1 and L2, backprop Jacobians, vanishing gradients and residual blocks, CNN shapes and parameter counts, LoRA, reading loss curves, and hand-built networks, plus a 20-question quiz.",
+   "subject": "machine-learning",
+   "topic": "Review",
+   "order": 9,
+   "levels": [
+    "College",
+    "Advanced College"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "deep learning",
+    "backpropagation",
+    "batch normalization",
+    "residual connections",
+    "convolutional networks",
+    "regularization",
+    "lora",
+    "machine learning"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "machine-learning--matrix-calculus-linear-algebra-toolkit",
+    "machine-learning--neural-network-step-through",
+    "machine-learning--ml-study-guide"
+   ]
+  },
+  {
    "id": "medical-study-sheets--hematology--inherited-thrombophilias-ashsap-ch19-study-sheet",
    "path": "medical study sheets/hematology/Inherited_Thrombophilias_ASHSAP_Ch19_Study_Sheet.html",
    "title": "Inherited Thrombophilias: Mechanisms, Assays & Testing",
