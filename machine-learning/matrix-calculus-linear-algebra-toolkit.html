@@ -188,6 +188,38 @@ li { margin-bottom: 8px; }
 .tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
 .tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
 @media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+/* shape dominoes */
+.domino-row { display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; margin: 14px 0; }
+.domino { border-radius: 8px; padding: 10px 16px; font-weight: 700; font-size: 15px; color: white; text-align: center; transition: transform 0.4s, box-shadow 0.4s; position: relative; }
+.domino .dim { display: block; font-size: 11px; font-weight: 600; opacity: 0.92; letter-spacing: 0.5px; margin-top: 2px; }
+.domino.d-green { background: var(--green-dark); }
+.domino.d-greenL { background: var(--green-light); }
+.domino.d-gold { background: var(--gold); color: var(--brown-dark); }
+.domino.d-brown { background: #8B5E3C; }
+.domino.d-copper { background: var(--copper); }
+.domino.d-dark { background: var(--brown-dark); }
+.domino.clash { animation: shake 0.4s; box-shadow: 0 0 0 3px #E57373; }
+@keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+.domino.snap { animation: snapIn 0.45s; box-shadow: 0 0 0 3px var(--green-light); }
+@keyframes snapIn { 0%{transform:scale(1.12);} 100%{transform:scale(1);} }
+.verdict { text-align: center; font-weight: 700; font-size: 15px; margin-top: 10px; min-height: 24px; }
+.verdict.ok { color: var(--green-light); }
+.verdict.bad { color: #E57373; }
+/* peel-the-onion stepper */
+.onion-net { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 6px 0 10px; }
+.on-box { min-width: 44px; padding: 7px 10px; border-radius: 8px; color: #fff; font-weight: 700; font-size: 16px; text-align: center; font-family: Georgia, 'Times New Roman', serif; font-style: italic; transition: opacity 0.3s, box-shadow 0.3s; }
+.on-box.d-green { background: var(--green-dark); } .on-box.d-greenL { background: var(--green-light); } .on-box.d-copper { background: var(--copper); } .on-box.d-gold { background: var(--gold); color: var(--brown-dark); } .on-box.d-dark { background: var(--brown-dark); }
+.on-box.io { background: var(--cream); color: var(--text-dark); border: 1.5px solid #bbb; }
+.on-box.peeled { opacity: 0.25; }
+.on-box.current { box-shadow: 0 0 0 3px #C0564A; animation: snapIn 0.45s; }
+.on-arrow { color: #999; font-size: 14px; }
+.onion-expr { text-align: center; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 24px; margin: 10px 0 6px; line-height: 1.9; color: var(--text-dark); }
+.on-layer.peeled > .on-sym, .on-layer.peeled > .on-par { opacity: 0.22; }
+.on-layer.current > .on-sym { background: var(--gold-pale); border-radius: 6px; padding: 0 5px; box-shadow: 0 0 0 2px var(--gold); }
+.onion-prod { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 8px 0 4px; min-height: 60px; }
+.onion-prod .eq { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 20px; margin-right: 6px; }
+.onion-prod .dot { font-weight: 700; font-size: 18px; }
+.onion-note { background: var(--cream); border-left: 4px solid var(--gold); border-radius: 6px; padding: 10px 14px; font-size: 14px; line-height: 1.6; margin-top: 10px; min-height: 20px; }
 @media print { .tab-nav { display: none !important; } .tab-content { display: block !important; } .tab-buttons { display: none; } }
 @media (max-width: 768px) {
     .header { flex-direction: column; text-align: center; gap: 15px; }
@@ -218,12 +250,16 @@ li { margin-bottom: 8px; }
     <div class="tab-buttons">
         <div class="tab-row"><span class="tab-row-label">Reference</span>
             <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+            <button class="tab-button" data-group="core" onclick="switchTab('rules', this)">&#9636; Rule Tables</button>
             <button class="tab-button" data-group="core" onclick="switchTab('flash', this)">&#9646; Flashcards</button>
         </div>
-        <div class="tab-row"><span class="tab-row-label">Study guide</span>
-            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 Derivatives in Matrix Form</button>
-            <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 Norms, Stretch &amp; Eigenvectors</button>
-            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 Jacobians &amp; Change of Variables</button>
+        <div class="tab-row"><span class="tab-row-label">Derivatives</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 Gradients &amp; Shapes</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('cr', this)">2 Chain Rule &amp; Backprop</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Geometry</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">3 Norms, Stretch &amp; Eigenvectors</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">4 Jacobians &amp; Change of Variables</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Practice</span>
             <button class="tab-button" data-group="sprint" onclick="switchTab('drills', this)">&#9889; Drills</button>
@@ -269,6 +305,22 @@ li { margin-bottom: 8px; }
                 <p style="font-size:13.5px;">The row product counts <em>down</em> ($L\to2$); the column product counts <em>up</em> ($2\to L$). Both read "start at the loss." Compute right to left: every step is matrix &times; vector, which is cheap.</p>
             </div>
         </div>
+        <div class="two-col">
+            <div class="card">
+                <h3>Scalar by matrix: the left/right law</h3>
+                <div class="highlight-box">$$f = u^\top A\,v\quad\Longrightarrow\quad \nabla_A f = u\,v^\top\qquad(\text{same shape as } A)$$</div>
+                <p style="font-size:13.5px;">Whatever multiplies the variable from the <strong>left</strong> becomes the column; whatever multiplies from the <strong>right</strong> becomes the row. A transpose on the variable swaps the sides ($u^\top A^\top v \Rightarrow v\,u^\top$). The neighbor is <em>everything grouped</em> on that side, not just the adjacent symbol. Backprop forms are this law with the upstream gradient as $u$: for $z = Wx$, $\nabla_W\mathcal{L} = \delta\,x^\top$.</p>
+            </div>
+            <div class="card">
+                <h3>The rules, ranked by reliability</h3>
+                <ol style="font-size:13.5px;margin-bottom:0;">
+                    <li><strong>Shape test</strong> (never fails): gradient shape = variable shape; Jacobian = outputs &times; inputs; inner dimensions must click. Wrong layouts refuse to multiply.</li>
+                    <li><strong>Left/right law</strong> (fast, matrix variables): $u^\top Av\Rightarrow uv^\top$.</li>
+                    <li><strong>Vector-variable law</strong> (fast): $\partial(Aw)/\partial w = A$; $\nabla_w w^\top Aw = (A+A^\top)w$; linear scalars give the other factor as a column.</li>
+                    <li><strong>Ground truth</strong> (when anything feels off): $f(A+\Delta)-f(A)\approx\langle\text{derivative},\Delta\rangle$, computed entrywise.</li>
+                </ol>
+            </div>
+        </div>
 
         <div class="section-header"><div class="section-number">3</div><h2>The norm ladder</h2></div>
         <div class="card">
@@ -309,9 +361,77 @@ li { margin-bottom: 8px; }
             <div id="flash-main"></div>
         </div>
     </div>
-    <!-- ═══════════════════════════ TAB 1: DERIVATIVES IN MATRIX FORM ═══════════════════════════ -->
-    <div id="tab-t1" class="tab-content">
+    <!-- ═══════════════════════════ RULE TABLES ═══════════════════════════ -->
+    <div id="tab-rules" class="tab-content">
+        <div class="section-header"><div class="section-number">1</div><h2>Cast of characters (fixed shapes throughout)</h2></div>
+        <div class="card">
+            <div class="highlight-box">$$E\in\mathbb{R}^{b\times b},\quad X\in\mathbb{R}^{b\times d},\quad w\in\mathbb{R}^{d\times1}\ (\text{weights, a column}),\quad a,u\in\mathbb{R}^{b\times1},\quad v\in\mathbb{R}^{d\times1},\quad A\in\mathbb{R}^{m\times n}$$</div>
+            <p>Running numeric example used in the derivations and drills: $E = \begin{pmatrix}1&amp;1&amp;0\\1&amp;0&amp;1\\0&amp;1&amp;1\end{pmatrix}$, $X = \begin{pmatrix}1&amp;2\\0&amp;1\\3&amp;-1\end{pmatrix}$, $w = \begin{pmatrix}2\\1\end{pmatrix}$, so $Xw = (4,1,5)^\top$ and $Y = E(Xw) = (5,9,6)^\top$.</p>
+            <p>Convention recap: bare vectors are columns; scalar-by-matrix gradients take the variable's shape; Jacobians are (outputs &times; inputs). When two rules disagree in your head, the shape test wins.</p>
+        </div>
 
+        <div class="section-header"><div class="section-number">2</div><h2>Table 1: differentiate with respect to a vector (coefficients as-is)</h2></div>
+        <div class="card">
+            <table class="lcc">
+                <tr><th>Expression</th><th>Type</th><th>Derivative w.r.t. $w$</th><th>Shape</th><th>Note</th></tr>
+                <tr><td>$Aw$</td><td>vector</td><td>$A$</td><td>$m\times n$</td><td>Jacobian = coefficient matrix, no transpose</td></tr>
+                <tr><td>$EXw$</td><td>vector</td><td>$EX$</td><td>$b\times d$</td><td>$EX$ acts as the design matrix</td></tr>
+                <tr><td>$a^\top w$ or $w^\top a$</td><td>scalar</td><td>$a$</td><td>$d\times1$</td><td>linear scalar: gradient is the other factor, as a column</td></tr>
+                <tr><td>$w^\top Aw$ ($A$: $d\times d$)</td><td>scalar</td><td>$(A+A^\top)w$</td><td>$d\times1$</td><td>both sides touch $w$, so symmetrize; symmetric $A$ gives $2Aw$</td></tr>
+                <tr><td>$\|Xw-y\|^2$</td><td>scalar</td><td>$2X^\top(Xw-y)$</td><td>$d\times1$</td><td>chain rule: $X^\top$ carries the residual from $b$-space back to $d$-space</td></tr>
+                <tr><td>$\phi(w)$ elementwise</td><td>vector</td><td>$\text{Diag}(\phi'(w))$</td><td>$d\times d$</td><td>ReLU gives the 0/1 mask $D$</td></tr>
+            </table>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Table 2: scalar with respect to a matrix (left → column, right → row)</h2></div>
+        <div class="card">
+            <div class="highlight-box">$$\text{Master template:}\qquad f = u^\top A\,v\;\Longrightarrow\;\nabla_Af = u\,v^\top\quad(\text{same shape as } A)$$</div>
+            <table class="lcc">
+                <tr><th>Expression</th><th>Variable</th><th>Left / right neighbors</th><th>Gradient</th><th>Note</th></tr>
+                <tr><td>$u^\top Ea$</td><td>$E$</td><td>$u$ / $a$</td><td>$u\,a^\top$</td><td>the master template itself</td></tr>
+                <tr><td>$u^\top E^\top a$</td><td>$E$</td><td>swapped by the $\top$</td><td>$a\,u^\top$</td><td>a transpose on the variable swaps the sides</td></tr>
+                <tr><td>$\operatorname{tr}(E^\top B)$</td><td>$E$</td><td>&mdash;</td><td>$B$</td><td>trace as matrix inner product: the identity rule</td></tr>
+                <tr><td>$\operatorname{tr}(AEB)$</td><td>$E$</td><td>$A$ (left) / $B$ (right)</td><td>$A^\top B^\top$</td><td>the same left/right law in trace clothing</td></tr>
+                <tr><td>$a^\top EXw$</td><td>$E$</td><td>$a$ / $Xw$</td><td>$a\,(Xw)^\top$</td><td>scalar-ized version of the filing example</td></tr>
+                <tr><td>$a^\top EXw$</td><td>$X$</td><td>$E^\top a$ / $w$</td><td>$(E^\top a)\,w^\top$</td><td>"neighbor" = everything grouped on that side of the variable</td></tr>
+                <tr><td>$\|Ax-b\|^2$</td><td>$A$</td><td>$2(Ax-b)$ / $x$</td><td>$2(Ax-b)\,x^\top$</td><td>upstream gradient on the left, input on the right</td></tr>
+            </table>
+            <div class="warning-box"><strong>Watch out:</strong> the neighbor is the entire grouped expression on that side, not just the adjacent symbol. In $a^\top EXw$ differentiated with respect to $X$, the left neighbor is $E^\top a$ (from regrouping $a^\top E = (E^\top a)^\top$), not $E$ alone.</div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Table 3: vector output with respect to a matrix (reduce per component)</h2></div>
+        <div class="card">
+            <table class="lcc">
+                <tr><th>Expression</th><th>Variable</th><th>Per-component gradient</th><th>Compressed answer</th><th>Note</th></tr>
+                <tr><td>$Y = E(Xw)$</td><td>$E$</td><td>$\nabla_EY_i = e_i\,(Xw)^\top$</td><td>$(Xw)^\top$</td><td>each output reads one row of $E$; set $u = e_i$ in the template</td></tr>
+                <tr><td>any $Y = (\text{stuff}_L)\,M\,(\text{stuff}_R)$</td><td>$M$</td><td>$(\text{left})_i$-column $\times$ (right)$^\top$</td><td>the repeating block</td><td>full object is a 3-index tensor; report the block</td></tr>
+            </table>
+        </div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>Table 4: chain-rule compositions (backprop forms)</h2></div>
+        <div class="card">
+            <p>Loss $L$ scalar, upstream gradient $g := \nabla_YL\in\mathbb{R}^{b\times1}$, model $Y = EXw$:</p>
+            <table class="lcc">
+                <tr><th>Wanted</th><th>Formula</th><th>Shape check</th></tr>
+                <tr><td>$\nabla_wL$</td><td>$(EX)^\top g$</td><td>$(d\times b)(b\times1) = d\times1$ = shape of $w$ ✓</td></tr>
+                <tr><td>$\nabla_EL$</td><td>$g\,(Xw)^\top$</td><td>$(b\times1)(1\times b) = b\times b$ = shape of $E$ ✓</td></tr>
+                <tr><td>$\nabla_XL$</td><td>$(E^\top g)\,w^\top$</td><td>$(b\times1)(1\times d) = b\times d$ = shape of $X$ ✓</td></tr>
+                <tr><td>$\nabla_{h^{[l-1]}}L$ for $h^{[l]} = \text{ReLU}(W^{[l]}h^{[l-1]})$</td><td>$(D^{[l]}W^{[l]})^\top\nabla_{h^{[l]}}L$</td><td>$(n_{l-1}\times n_l)(n_l\times1) = n_{l-1}\times1$ ✓</td></tr>
+                <tr><td>$\nabla_{W^{[l]}}L$</td><td>$\delta^{[l]}\,(h^{[l-1]})^\top$, $\ \delta^{[l]} = D^{[l]}\nabla_{h^{[l]}}L$</td><td>$(n_l\times1)(1\times n_{l-1}) = n_l\times n_{l-1}$ ✓</td></tr>
+            </table>
+            <p><strong>Patterns:</strong> downstream Jacobians enter <em>transposed</em> ($X^\top$, $E^\top$, $W^\top$: carrying the gradient backward), and matrix-variable gradients are rank-one outer products: (upstream gradient) $\times$ (the other factor)$^\top$.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">6</div><h2>The rules, ranked by reliability</h2></div>
+        <div class="concept-list">
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">1. Shape test (never fails)</div>Gradient shape = variable shape (scalar case) or outputs &times; inputs (Jacobian). Insert the unique transposes that make every product compose. The self-enforcing rule: wrong layouts refuse to multiply.</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">2. Left/right law (fast, matrix variables)</div>$u^\top Av\Rightarrow uv^\top$. Left neighbor → column, right neighbor → row. Transpose on the variable swaps sides. Neighbor = everything grouped on that side.</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">3. Vector-variable law (fast)</div>$\dfrac{\partial(Aw)}{\partial w} = A$, $\ \nabla_w\,w^\top Aw = (A+A^\top)w$. Coefficients as-is; quadratic forms symmetrize; linear scalars give the other factor as a column.</div></div>
+            <div class="concept-item"><div class="concept-body"><div class="concept-label">4. Ground truth (when anything feels off)</div>$f(A+\Delta)-f(A)\approx\langle\text{derivative},\Delta\rangle$. Entrywise partials plus first-order perturbation: the raw facts the other rules compress.</div></div>
+        </div>
+    </div>
+    <!-- ═══════════════════════════ TAB 1: GRADIENTS & SHAPES ═══════════════════════════ -->
+    <div id="tab-t1" class="tab-content">
         <div class="section-header"><div class="section-number">1</div><h2>Three kinds of first derivative</h2></div>
         <div class="card">
             <p>All three are "the first derivative." What changes is how many inputs and outputs the function has, and therefore the shape needed to hold all the slopes.</p>
@@ -325,7 +445,20 @@ li { margin-bottom: 8px; }
             <p>The gradient is the Jacobian of a scalar function, transposed into a column: a $1\times d$ row of slopes stood upright. That one transpose is the source of every row-vs-column confusion below. Meaning of $J$ in one line: zoom in on any smooth map and it looks like multiplication by $J$, $\Delta(\text{out})\approx J\,\Delta(\text{in})$.</p>
         </div>
 
-        <div class="section-header"><div class="section-number">2</div><h2>The translation table, derived</h2></div>
+        <div class="section-header"><div class="section-number">2</div><h2>Conventions: what is a row, what is a column, what shape is a gradient</h2></div>
+        <div class="card">
+            <p><strong>Bare vectors are columns.</strong> $w\in\mathbb{R}^{d\times1}$, $Xw\in\mathbb{R}^{b\times1}$, $Y\in\mathbb{R}^{b\times1}$. A row is always marked explicitly with a transpose: $v^\top$ is the row version of the column $v$. When you compute $Xw$ by matrix multiplication, the object you produce is a column; that is its birth format.</p>
+            <table class="lcc">
+                <tr><th>Derivative of</th><th>Shape</th><th>Slot $(i,k)$ holds</th></tr>
+                <tr><td>scalar by vector: $\nabla_wf$</td><td>shape of $w$ ($d\times1$)</td><td>$\partial f/\partial w_i$</td></tr>
+                <tr><td>scalar by matrix: $\nabla_Af$</td><td>shape of $A$</td><td>$\partial f/\partial A_{ik}$</td></tr>
+                <tr><td>vector by vector (Jacobian): $\partial Y/\partial w$</td><td>outputs &times; inputs ($b\times d$)</td><td>$\partial Y_i/\partial w_k$</td></tr>
+                <tr><td>vector by matrix</td><td>a 3-index tensor</td><td>compress: report $\nabla_AY_i$ per component, or the repeating block</td></tr>
+            </table>
+            <p>Row-vs-column is not mathematics; it is typesetting for a linear map. The convention-free fact is the perturbation identity (section 6). Everything else is bookkeeping chosen so that matrix multiplication executes the chain rule automatically.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>The translation table, derived</h2></div>
         <div class="technique-section ts-green">
             <h3>Linear: $\nabla_x(a^\top x) = a$</h3>
             <div class="step-concept"><span class="step-label">Derivation</span></div>
@@ -354,7 +487,99 @@ li { margin-bottom: 8px; }
             <p>If $\phi$ acts entry by entry, $h_i = \phi(z_i)$ depends only on $z_i$, so $\partial h_i/\partial z_j = \phi'(z_i)$ when $i=j$ and $0$ otherwise. The Jacobian is $\text{Diag}(\phi'(z))$. For ReLU, $\phi'(z) = \mathbb{1}\{z\gt0\}$, giving the mask $D$. For sigmoid, $\text{Diag}(\sigma(z)(1-\sigma(z)))$. Softmax is <em>not</em> elementwise (every output uses every input), which is why its Jacobian has off-diagonal entries $-f_if_k$.</p>
         </div>
 
-        <div class="section-header"><div class="section-number">3</div><h2>The chain rule with matrices</h2></div>
+
+
+        <div class="section-header"><div class="section-number">4</div><h2>Scalar by matrix: the left/right law</h2></div>
+        <div class="card">
+            <p>The master template for scalar-by-matrix gradients. Fixed vectors for the widget: $u = (1,2,-1)^\top$ on the left of $E$, $v = (3,1,2)^\top$ on the right. The left neighbor $u$ slides in as the <em>column skeleton</em> of the gradient, the right neighbor $v$ rotates in as the <em>row skeleton</em>, and each cell fills with the product $u_jv_k$. Toggle to $u^\top E^\top v$ to watch the transpose on the variable <em>swap the sides</em>: the gradient becomes $vu^\top$.</p>
+            <div class="highlight-box">$$f = u^\top E\,v = \sum_{j,k}u_jE_{jk}v_k\quad\Longrightarrow\quad\frac{\partial f}{\partial E_{jk}} = u_jv_k\quad\Longrightarrow\quad\nabla_Ef = u\,v^\top$$</div>
+            <p>Derivation in one line: $E_{jk}$ appears in exactly one term of the double sum, with coefficient $u_jv_k$. Filing those coefficients into an $E$-shaped grid puts $u$ down the rows and $v$ across the columns, which is the outer product.</p>
+        </div>
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group"><label>Expression</label>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" id="op-plain" onclick="opSelect(false)">f = u&#8317;E v</button>
+                        <button type="button" class="sum-type-btn" id="op-trans" onclick="opSelect(true)">f = u&#8317;E&#8317; v</button>
+                    </div></div>
+                <div class="control-group"><label>Animation</label>
+                    <div class="sum-type-buttons"><button type="button" class="sum-type-btn" onclick="opPlay()">&#9654; Play</button></div></div>
+            </div>
+            <div class="viz-canvas-wrap"><canvas id="opCanvas" width="900" height="400"></canvas></div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label math">gradient formula</div><div class="readout-value" id="op-formula">&nabla;<sub>E</sub> f = u v&#8317;</div></div>
+                <div class="readout-item"><div class="readout-label">Column skeleton (from)</div><div class="readout-value" id="op-col">left neighbor u</div></div>
+                <div class="readout-item"><div class="readout-label">Row skeleton (from)</div><div class="readout-value" id="op-row">right neighbor v</div></div>
+            </div>
+        </div>
+        <div class="idea-box"><strong>The law in one line:</strong> whatever multiplies the variable from the <em>left</em> lands as the column; whatever multiplies from the <em>right</em> lands as the row. A transpose on the variable swaps the two sides. Each factor stays on the side of the outer product it touched the variable from. The neighbor is <em>everything grouped</em> on that side: in $a^\top EXw$ with respect to $X$, the left neighbor is $E^\top a$, not $E$.</div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>The filing machine: $\nabla_EY_i$ for $Y = E(Xw)$</h2></div>
+        <div class="card">
+            <p>Running example with every number fixed:</p>
+            <div class="highlight-box">$$E = \begin{pmatrix}1&amp;1&amp;0\\1&amp;0&amp;1\\0&amp;1&amp;1\end{pmatrix},\quad X = \begin{pmatrix}1&amp;2\\0&amp;1\\3&amp;-1\end{pmatrix},\quad w = \begin{pmatrix}2\\1\end{pmatrix}\;\Longrightarrow\;v = Xw = \begin{pmatrix}4\\1\\5\end{pmatrix},\quad Y = Ev = \begin{pmatrix}5\\9\\6\end{pmatrix}$$</div>
+            <p>The animation plays two moves. <strong>Move A:</strong> row $i$ of $E$ sweeps across the column $v$; each row entry $E_{ik}$ pairs with $v_k$ and the products accumulate into the single number $Y_i$. <strong>Move B:</strong> the sensitivities $\partial Y_i/\partial E_{ik} = v_k$ get filed into a gradient grid <em>the same shape as $E$</em>. Because the knobs $E_{i1},E_{i2},E_{i3}$ sit horizontally, the column-born values of $v$ land horizontally: the column tips over into row $i$. That tipping <em>is</em> the transpose in $(Xw)^\top$.</p>
+        </div>
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group"><label>Output component</label>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" id="fm-btn-0" onclick="fmSelect(0)">Y&#8321;</button>
+                        <button type="button" class="sum-type-btn" id="fm-btn-1" onclick="fmSelect(1)">Y&#8322;</button>
+                        <button type="button" class="sum-type-btn" id="fm-btn-2" onclick="fmSelect(2)">Y&#8323;</button>
+                    </div></div>
+                <div class="control-group"><label>Labels</label>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" id="fm-num" onclick="fmMode(true)">Numeric</button>
+                        <button type="button" class="sum-type-btn" id="fm-sym" onclick="fmMode(false)">Symbolic</button>
+                    </div></div>
+                <div class="control-group"><label>Animation</label>
+                    <div class="sum-type-buttons"><button type="button" class="sum-type-btn" onclick="fmPlay()">&#9654; Play</button></div></div>
+            </div>
+            <div class="viz-canvas-wrap"><canvas id="fmCanvas" width="900" height="430"></canvas></div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Row used by Y<span id="fm-ri">1</span></div><div class="readout-value" id="fm-rowtxt">row 1 of E</div></div>
+                <div class="readout-item"><div class="readout-label">Dot product</div><div class="readout-value" id="fm-dottxt">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">Gradient row filed</div><div class="readout-value" id="fm-gradtxt">&mdash;</div></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p><strong>The plan.</strong> Name the intermediate column $v = Xw$ so the model reads $Y = Ev$. Write one output component $Y_i$ entrywise, read off the partial derivative with respect to every entry of $E$, then file those numbers into a grid the same shape as $E$. The filing step is where the transpose appears.</p></div></div>
+            <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Form the intermediate column.</strong> By definition of matrix-vector multiplication ($3\times2$ times $2\times1$ gives $3\times1$):</p>$$v = Xw = \begin{pmatrix}X_{11}w_1+X_{12}w_2\\X_{21}w_1+X_{22}w_2\\X_{31}w_1+X_{32}w_2\end{pmatrix} =: \begin{pmatrix}v_1\\v_2\\v_3\end{pmatrix}\quad\text{a column, as computed.}$$</div></div>
+            <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Write one output entrywise.</strong> Row $i$ of $E$ dots the column $v$:</p>$$Y_i = \sum_{k=1}^{3}E_{ik}v_k = E_{i1}v_1+E_{i2}v_2+E_{i3}v_3.$$<p>Only row $i$'s entries of $E$ appear, so $Y_i$ cannot depend on the other rows.</p></div></div>
+            <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Read off every partial derivative,</strong> one entry at a time with all others held fixed:</p>$$\frac{\partial Y_i}{\partial E_{ik}} = v_k\quad(k = 1,2,3),\qquad\frac{\partial Y_i}{\partial E_{jk}} = 0\ \text{ for } j\ne i.$$<p>These numbers are the sensitivity object: nudge $E_{ik}$ by $\epsilon$ and $Y_i$ moves by $\epsilon\,v_k$. As a set of numbers they are neither row nor column yet; they are indexed by which knob you poked.</p></div></div>
+            <div class="derivation-step"><div class="step-num">4</div><div class="step-body"><p><strong>File into an $E$-shaped grid.</strong> By the scalar-by-matrix convention, slot $(j,k)$ holds $\partial Y_i/\partial E_{jk}$. Shown for $i = 1$:</p>$$\nabla_EY_1 = \begin{pmatrix}v_1&amp;v_2&amp;v_3\\0&amp;0&amp;0\\0&amp;0&amp;0\end{pmatrix} = e_1v^\top.$$<p>The values landed horizontally, not by choice, but because the knobs they measure ($E_{11},E_{12},E_{13}$) occupy row 1 of $E$. Sensitivities live where the knobs are. A column's worth of numbers laid into a horizontal strip is that column transposed.</p>
+            <div class="highlight-box">$$\boxed{\nabla_EY_i = e_i\,(Xw)^\top}\qquad\text{row } i \text{ holds } (Xw)^\top,\text{ zeros elsewhere. Shorthand: } \frac{\partial Y}{\partial E} = (Xw)^\top.$$</div></div></div>
+            <div class="idea-box"><strong>Column-born, row-filed.</strong> In $Ev$, the row of $E$ sweeps across the column $v$; each horizontally placed knob $E_{ik}$ gets multiplied by the matching $v_k$. The knobs are strung horizontally, so the sensitivities are written horizontally. The transpose is the re-filing, not a property of $Xw$ itself.</div>
+        </div>
+
+        <div class="section-header"><div class="section-number">6</div><h2>The perturbation identity: convention-free ground truth</h2></div>
+        <div class="card">
+            <p>When any layout question feels ambiguous, drop to first principles. Perturb the whole matrix, $E\to E+\Delta$, for an arbitrary small $3\times3$ matrix $\Delta$. By linearity of matrix multiplication:</p>
+            <div class="highlight-box">$$Y(E+\Delta)-Y(E) = (E+\Delta)v-Ev = \Delta v$$</div>
+            <p>The change in $Y$ is exactly linear in $\Delta$, with coefficient object $v = Xw$. That linear map $\Delta\mapsto\Delta v$ <em>is</em> the derivative; no convention needed. Reading off row $i$: the change in $Y_i$ is $\sum_k\Delta_{ik}v_k$, whose coefficient on $\Delta_{ik}$ is $v_k$, matching step 3 of the derivation exactly.</p>
+            <p><strong>Three-step protocol that never lies.</strong> (1) Compute the sensitivity object entrywise, or by expanding $f(A+\Delta)-f(A)$ to first order. (2) Determine the required shape from the convention (variable's shape for scalar gradients; outputs &times; inputs for Jacobians). (3) Transpose or arrange the sensitivity object to fit that shape. The transposes appear here, mechanically, at filing time.</p>
+            <h3>Contrast: $\partial Y/\partial w = EX$ needs no transpose</h3>
+            <p>Group the same model as $Y = (EX)w$ and set $A = EX\in\mathbb{R}^{3\times2}$. Entrywise:</p>
+            <div class="highlight-box">$$Y_i = \sum_{k=1}^{2}A_{ik}w_k\;\Longrightarrow\;\frac{\partial Y_i}{\partial w_k} = A_{ik}\;\Longrightarrow\;\frac{\partial Y}{\partial w} = A = EX\in\mathbb{R}^{3\times2}$$</div>
+            <p>Here the Jacobian's filing grid is indexed (output $i$, input $k$) and the coefficient formula is already indexed $(i,k)$. Grid indices match formula indices, so the entries drop straight in. Transposes only appeared in the $E$-derivative because there the variable was the matrix, and the sensitivities had to be re-filed into its shape. Side by side: with respect to $w$, the coefficient matrix $EX$ files directly as the Jacobian; with respect to $E$, each output reads one row of $E$, so the column $Xw$ gets filed sideways into that row as $(Xw)^\top$.</p>
+        </div>
+        <div class="section-header"><div class="section-number">7</div><h2>Shape-checking as a habit</h2></div>
+        <div class="card">
+            <p>Before trusting any derivative, confirm two things: the result has the shape of the variable you differentiated with respect to (gradient) or outputs &times; inputs (Jacobian); and every product's inner dimensions match and cancel.</p>
+            <table class="lcc">
+                <tr><th>Candidate for $\nabla_W\mathcal{L}$, $W\in\mathbb{R}^{K\times d}$</th><th>Shapes</th><th>Verdict</th></tr>
+                <tr><td>$(f-y)\,x^\top$</td><td>$(K\times1)(1\times d) = K\times d$</td><td class="ok">✓</td></tr>
+                <tr><td>$(y-f)\,W^\top$</td><td>$(K\times1)(d\times K)$</td><td class="bad">inner dims $1\ne d$</td></tr>
+                <tr><td>$W^\top(y-f)\,x^\top$</td><td>$(d\times K)(K\times1)(1\times d) = d\times d$</td><td class="bad">wrong shape</td></tr>
+                <tr><td>$f\,x^\top$</td><td>$K\times d$</td><td class="bad">shape fine, but never uses $y$</td></tr>
+            </table>
+            <p>Shapes catch most order errors instantly, but not all: $f\,x^\top$ passes the shape test and is still wrong. Shape-check first, then sanity-check meaning (does the gradient vanish when the prediction is perfect?).</p>
+        </div>
+    </div>
+    <!-- ═══════════════════════════ TAB 2: CHAIN RULE & BACKPROP ═══════════════════════════ -->
+    <div id="tab-cr" class="tab-content">
+        <div class="section-header"><div class="section-number">1</div><h2>The chain rule with matrices</h2></div>
         <div class="card">
             <div class="highlight-box">$$y = f(g(x))\quad\Longrightarrow\quad J_y = J_f\big(g(x)\big)\;J_g(x)\qquad\text{outer function on the left, same as } f'(g(x))\,g'(x)$$</div>
             <p><strong>Why this order.</strong> Follow a small input change: $\Delta g = J_g\Delta x$, then $\Delta y = J_f\Delta g = J_f(J_g\Delta x) = (J_fJ_g)\Delta x$. A matrix multiplies the vector to its right, so the first map applied is the rightmost factor. In $f(g(x))$, $g$ is written on the right and happens first; the notation already agrees.</p>
@@ -368,6 +593,130 @@ li { margin-bottom: 8px; }
             <p>Dropping the $i\ne k$ terms gives $-y_k(1-f_k)$, which is $0$ for every wrong class, so wrong classes would never be pushed down. In matrix language, $\nabla_z\mathcal{L} = J_f^\top\nabla_f\mathcal{L}$: the transpose of the Jacobian carries a gradient backward.</p>
         </div>
 
+        <div class="section-header"><div class="section-number">2</div><h2>Backprop is the chain rule read outer-to-inner</h2></div>
+        <div class="card">
+            <p>Take a network with two layers and a loss, $L = \ell\big(\sigma(W\,\varphi(Vx))\big)$. Written as a formula, the <em>last</em> operation applied, $\ell$, is the <em>outermost</em> symbol and sits furthest left. Written as a network, that same $\ell$ sits furthest right, at the output. The chain rule differentiates the outermost function first, so its product lists the factors in nesting order, outer to inner, which is the network read from the output back to the input. That is all backprop is: the chain-rule product evaluated one factor at a time, right to left through the diagram.</p>
+            <div class="diagram" style="padding:10px;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 392" width="100%" style="max-width:900px;display:block;margin:0 auto;font-family:Inter,sans-serif">
+<defs><marker id="on-ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6B6B6B"/></marker><marker id="on-ahb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#C0564A"/></marker></defs>
+<rect x="0" y="0" width="900" height="392" fill="#fff" rx="10"/>
+<text x="560" y="126" font-size="11.5" font-weight="700" fill="#6B6B6B" letter-spacing="1">FORWARD PASS: LEFT TO RIGHT</text>
+<line x1="126" y1="80.0" x2="694" y2="80.0" stroke="#BBB" stroke-width="2" marker-end="url(#on-ah)"/>
+<circle cx="110" cy="80.0" r="16" fill="#F7F3EC" stroke="#999" stroke-width="1.5"/><text x="110" y="86.0" font-size="17" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#2D2D2D">x</text>
+<circle cx="710" cy="80.0" r="16" fill="#F7F3EC" stroke="#999" stroke-width="1.5"/><text x="710" y="86.0" font-size="17" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#2D2D2D">L</text>
+<rect x="178.0" y="58" width="64" height="44" rx="8" fill="#21442B"/>
+<text x="210" y="87.0" font-size="21" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">V</text>
+<circle cx="240.0" cy="60" r="9" fill="#fff" stroke="#21442B" stroke-width="2"/><text x="240.0" y="63.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#21442B">5</text>
+<rect x="278.0" y="58" width="64" height="44" rx="8" fill="#39864E"/>
+<text x="310" y="87.0" font-size="21" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">φ</text>
+<circle cx="340.0" cy="60" r="9" fill="#fff" stroke="#39864E" stroke-width="2"/><text x="340.0" y="63.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#39864E">4</text>
+<rect x="378.0" y="58" width="64" height="44" rx="8" fill="#BC6C26"/>
+<text x="410" y="87.0" font-size="21" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">W</text>
+<circle cx="440.0" cy="60" r="9" fill="#fff" stroke="#BC6C26" stroke-width="2"/><text x="440.0" y="63.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#BC6C26">3</text>
+<rect x="478.0" y="58" width="64" height="44" rx="8" fill="#DDA25E"/>
+<text x="510" y="87.0" font-size="21" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#42260D">σ</text>
+<circle cx="540.0" cy="60" r="9" fill="#fff" stroke="#8B6914" stroke-width="2"/><text x="540.0" y="63.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#8B6914">2</text>
+<rect x="578.0" y="58" width="64" height="44" rx="8" fill="#42260D"/>
+<text x="610" y="87.0" font-size="21" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">ℓ</text>
+<circle cx="640.0" cy="60" r="9" fill="#fff" stroke="#42260D" stroke-width="2"/><text x="640.0" y="63.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#42260D">1</text>
+<path d="M 610 50 C 550 24, 270 24, 214 50" fill="none" stroke="#C0564A" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#on-ahb)"/>
+<text x="410.0" y="23" font-size="11.5" font-weight="700" fill="#C0564A" text-anchor="middle" letter-spacing="0.6">BACKWARD PASS: RIGHT TO LEFT, 1 → 5</text>
+<rect x="150" y="170" width="610" height="100" rx="18.0" fill="#42260D" fill-opacity="0.07" stroke="#42260D" stroke-width="2"/>
+<text x="185" y="227.0" font-size="22" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#42260D">ℓ</text>
+<circle cx="162" cy="171" r="9" fill="#fff" stroke="#42260D" stroke-width="2"/><text x="162" y="174.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#42260D">1</text>
+<rect x="220" y="178" width="526" height="84" rx="15.5" fill="#8B6914" fill-opacity="0.09" stroke="#8B6914" stroke-width="2"/>
+<text x="255" y="227.0" font-size="22" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#8B6914">σ</text>
+<circle cx="232" cy="179" r="9" fill="#fff" stroke="#8B6914" stroke-width="2"/><text x="232" y="182.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#8B6914">2</text>
+<rect x="290" y="186" width="442" height="68" rx="13.0" fill="#BC6C26" fill-opacity="0.11" stroke="#BC6C26" stroke-width="2"/>
+<text x="325" y="227.0" font-size="22" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#BC6C26">W</text>
+<circle cx="302" cy="187" r="9" fill="#fff" stroke="#BC6C26" stroke-width="2"/><text x="302" y="190.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#BC6C26">3</text>
+<rect x="360" y="194" width="358" height="52" rx="10.5" fill="#39864E" fill-opacity="0.13" stroke="#39864E" stroke-width="2"/>
+<text x="395" y="227.0" font-size="22" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#39864E">φ</text>
+<circle cx="372" cy="195" r="9" fill="#fff" stroke="#39864E" stroke-width="2"/><text x="372" y="198.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#39864E">4</text>
+<rect x="430" y="202" width="274" height="36" rx="8.0" fill="#21442B" fill-opacity="0.15" stroke="#21442B" stroke-width="2"/>
+<text x="465" y="227.0" font-size="22" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#21442B">V</text>
+<circle cx="442" cy="203" r="9" fill="#fff" stroke="#21442B" stroke-width="2"/><text x="442" y="206.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#21442B">5</text>
+<text x="540" y="227.0" font-size="22" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#2D2D2D">x</text>
+<text x="500" y="158" font-size="11.5" font-weight="700" fill="#6B6B6B" letter-spacing="1">THE NESTING: OUTER ON THE LEFT, INNER ON THE RIGHT</text>
+<path d="M 210 102 C 210 151.0, 465 151.0, 465 200" fill="none" stroke="#21442B" stroke-width="2" stroke-opacity="0.85"/>
+<circle cx="465" cy="200" r="3" fill="#21442B"/>
+<path d="M 310 102 C 310 147.0, 395 147.0, 395 192" fill="none" stroke="#39864E" stroke-width="2" stroke-opacity="0.85"/>
+<circle cx="395" cy="192" r="3" fill="#39864E"/>
+<path d="M 410 102 C 410 143.0, 325 143.0, 325 184" fill="none" stroke="#BC6C26" stroke-width="2" stroke-opacity="0.85"/>
+<circle cx="325" cy="184" r="3" fill="#BC6C26"/>
+<path d="M 510 102 C 510 139.0, 255 139.0, 255 176" fill="none" stroke="#8B6914" stroke-width="2" stroke-opacity="0.85"/>
+<circle cx="255" cy="176" r="3" fill="#8B6914"/>
+<path d="M 610 102 C 610 135.0, 185 135.0, 185 168" fill="none" stroke="#42260D" stroke-width="2" stroke-opacity="0.85"/>
+<circle cx="185" cy="168" r="3" fill="#42260D"/>
+<text x="500" y="304" font-size="11.5" font-weight="700" fill="#6B6B6B" letter-spacing="1">CHAIN RULE (ROW FORM): SAME ORDER AS THE NESTING</text>
+<text x="138" y="345.0" font-size="19" font-style="italic" font-family="Georgia,serif" text-anchor="end" fill="#2D2D2D">∂L/∂x =</text>
+<line x1="185" y1="272" x2="185" y2="316" stroke="#42260D" stroke-width="2" stroke-opacity="0.85"/>
+<rect x="155.0" y="318" width="60" height="40" rx="8" fill="#42260D"/>
+<text x="185" y="345.0" font-size="20" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">ℓ′</text>
+<circle cx="213.0" cy="320" r="9" fill="#fff" stroke="#42260D" stroke-width="2"/><text x="213.0" y="323.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#42260D">1</text>
+<text x="185" y="375" font-size="11.5" font-weight="600" text-anchor="middle" fill="#6B6B6B">1×n₂</text>
+<text x="220" y="344.0" font-size="16" text-anchor="middle" fill="#6B6B6B">·</text>
+<line x1="255" y1="272" x2="255" y2="316" stroke="#8B6914" stroke-width="2" stroke-opacity="0.85"/>
+<rect x="225.0" y="318" width="60" height="40" rx="8" fill="#DDA25E"/>
+<text x="255" y="345.0" font-size="20" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#42260D">σ′</text>
+<circle cx="283.0" cy="320" r="9" fill="#fff" stroke="#8B6914" stroke-width="2"/><text x="283.0" y="323.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#8B6914">2</text>
+<text x="255" y="375" font-size="11.5" font-weight="600" text-anchor="middle" fill="#6B6B6B">n₂×n₂</text>
+<text x="290" y="344.0" font-size="16" text-anchor="middle" fill="#6B6B6B">·</text>
+<line x1="325" y1="272" x2="325" y2="316" stroke="#BC6C26" stroke-width="2" stroke-opacity="0.85"/>
+<rect x="295.0" y="318" width="60" height="40" rx="8" fill="#BC6C26"/>
+<text x="325" y="345.0" font-size="20" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">W</text>
+<circle cx="353.0" cy="320" r="9" fill="#fff" stroke="#BC6C26" stroke-width="2"/><text x="353.0" y="323.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#BC6C26">3</text>
+<text x="325" y="375" font-size="11.5" font-weight="600" text-anchor="middle" fill="#6B6B6B">n₂×n₁</text>
+<text x="360" y="344.0" font-size="16" text-anchor="middle" fill="#6B6B6B">·</text>
+<line x1="395" y1="272" x2="395" y2="316" stroke="#39864E" stroke-width="2" stroke-opacity="0.85"/>
+<rect x="365.0" y="318" width="60" height="40" rx="8" fill="#39864E"/>
+<text x="395" y="345.0" font-size="20" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">φ′</text>
+<circle cx="423.0" cy="320" r="9" fill="#fff" stroke="#39864E" stroke-width="2"/><text x="423.0" y="323.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#39864E">4</text>
+<text x="395" y="375" font-size="11.5" font-weight="600" text-anchor="middle" fill="#6B6B6B">n₁×n₁</text>
+<text x="430" y="344.0" font-size="16" text-anchor="middle" fill="#6B6B6B">·</text>
+<line x1="465" y1="272" x2="465" y2="316" stroke="#21442B" stroke-width="2" stroke-opacity="0.85"/>
+<rect x="435.0" y="318" width="60" height="40" rx="8" fill="#21442B"/>
+<text x="465" y="345.0" font-size="20" font-style="italic" font-family="Georgia,serif" text-anchor="middle" fill="#fff">V</text>
+<circle cx="493.0" cy="320" r="9" fill="#fff" stroke="#21442B" stroke-width="2"/><text x="493.0" y="323.6" font-size="10.5" font-weight="700" text-anchor="middle" fill="#21442B">5</text>
+<text x="465" y="375" font-size="11.5" font-weight="600" text-anchor="middle" fill="#6B6B6B">n₁×d</text>
+<text x="517.0" y="345.0" font-size="18" font-family="Inter,sans-serif" fill="#2D2D2D">=  a  1×d  row,  the shape of  xᵀ</text>
+<text x="517.0" y="375" font-size="11.5" fill="#6B6B6B">every inner dimension cancels left to right</text>
+</svg>
+            </div>
+            <p>Three orders, one picture. The <strong>top row</strong> is the network; the forward pass runs left to right. The <strong>middle row</strong> is the same computation written as nested parentheses, outermost ring first. The <strong>bottom row</strong> is the chain-rule product in row form. Follow any color: box $\to$ ring is a crossing line (the network order and the nesting order are reverses of each other), ring $\to$ chip is a straight line (the chain-rule order <em>is</em> the nesting order). The numbered badges say it without the lines: $1\to5$ reads right to left on the network and left to right everywhere else.</p>
+            <div class="highlight-box">$$\frac{\partial L}{\partial x} = \underbrace{\ell'}_{1\times n_2}\;\underbrace{\sigma'}_{n_2\times n_2}\;\underbrace{W}_{n_2\times n_1}\;\underbrace{\varphi'}_{n_1\times n_1}\;\underbrace{V}_{n_1\times d}\qquad\text{outer function on the left; each inner dimension cancels with the next}$$</div>
+            <p>Here $\ell'$ is the $1\times n_2$ row of partials of the loss with respect to its argument, $\sigma'$ and $\varphi'$ are the diagonal Jacobians of the elementwise activations (the 0/1 mask $D$ for ReLU), and $W$, $V$ are their own Jacobians. The column convention is the same product transposed once: $\nabla_xL = V^\top\varphi'\,W^\top\sigma'\,\ell'^{\,\top}$, which reverses the order and puts a transpose on every factor (section 4).</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Peel it yourself: a three-layer network, one factor per click</h2></div>
+        <div class="card">
+            <p>$L = \ell\big(\sigma(W_3\,\varphi(W_2\,\varphi(W_1x)))\big)$ with $x\in\mathbb{R}^3$, $W_1\in\mathbb{R}^{4\times3}$, $W_2\in\mathbb{R}^{2\times4}$, $W_3\in\mathbb{R}^{1\times2}$, ReLU $\varphi$, sigmoid $\sigma$, scalar loss $\ell$. Each click peels the outermost remaining function off the nesting (it fades in the network strip, right to left) and appends its Jacobian to the product. Watch the running shape: it starts $1\times1$ and ends $1\times3$, and every intermediate product exists because each new factor's row count equals the previous factor's column count.</p>
+        </div>
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group"><label>Peel</label>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn" onclick="onPeel()">Peel one layer</button>
+                        <button type="button" class="sum-type-btn" onclick="onPeelAll()">Peel all</button>
+                        <button type="button" class="sum-type-btn" onclick="onReset()">Reset</button>
+                    </div></div>
+                <div class="control-group"><label>Convention</label>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" id="on-row" onclick="onConv('row')">Row (no transposes)</button>
+                        <button type="button" class="sum-type-btn" id="on-col" onclick="onConv('col')">Column (transposes)</button>
+                    </div></div>
+            </div>
+            <div class="onion-net" id="on-net"></div>
+            <div class="onion-expr" id="on-expr"></div>
+            <div class="onion-prod" id="on-prod"></div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Layer just peeled</div><div class="readout-value exact-val" id="on-cur">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">Factor appended</div><div class="readout-value" id="on-fac">&mdash;</div></div>
+                <div class="readout-item"><div class="readout-label">Running shape</div><div class="readout-value exact-val" id="on-shape">&mdash;</div></div>
+            </div>
+            <div class="onion-note" id="on-note"></div>
+        </div>
+        <div class="idea-box"><strong>Why "right to left" and "outer to inner" are the same sentence.</strong> Function composition writes the first operation innermost and the last operation outermost, so the output end of the network is the outside of the onion. The chain rule starts at the outside. Therefore it starts at the output and walks toward the input. Each layer contributes exactly one Jacobian, the layer's own linear response, and the shapes force the order: a product that lists them any other way does not compose.</div>
         <div class="section-header"><div class="section-number">4</div><h2>Rows, columns and transposes</h2></div>
         <div class="card">
             <p>A gradient of a scalar can be written as a row ($1\times d$, the raw Jacobian) or a column ($d\times1$, the same numbers stood up). Both are fine. The chain rule looks different in each:</p>
@@ -384,18 +733,32 @@ li { margin-bottom: 8px; }
             <p><strong>Reversing the product index.</strong> $\prod_{l=2}^{L}M_l$ conventionally lists $M_2$ first. When shapes demand $M_L$ first, either write the factors out, $M_LM_{L-1}\cdots M_2$, or write $\prod_{l=L}^{2}$ with a note that $l$ decreases. Product notation records which factors appear; the page order is yours to specify.</p>
         </div>
 
-        <div class="section-header"><div class="section-number">5</div><h2>Shape-checking as a habit</h2></div>
+        <div class="section-header"><div class="section-number">5</div><h2>Shape dominoes: the chain rule must compose</h2></div>
         <div class="card">
-            <p>Before trusting any derivative, confirm two things: the result has the shape of the variable you differentiated with respect to (gradient) or outputs &times; inputs (Jacobian); and every product's inner dimensions match and cancel.</p>
+            <p>The test that never fails: in a chain-rule product, inner dimensions must click like dominoes, and the final shape must match the variable you differentiated by. Loss $L(Y)$ is a scalar, $Y = EXw$ with $E\in\mathbb{R}^{3\times3}$, $X\in\mathbb{R}^{3\times2}$, $w\in\mathbb{R}^{2\times1}$, and the upstream gradient is $g = \nabla_YL\in\mathbb{R}^{3\times1}$. Pick a target gradient, then pick a candidate arrangement: one composes, one clashes.</p>
             <table class="lcc">
-                <tr><th>Candidate for $\nabla_W\mathcal{L}$, $W\in\mathbb{R}^{K\times d}$</th><th>Shapes</th><th>Verdict</th></tr>
-                <tr><td>$(f-y)\,x^\top$</td><td>$(K\times1)(1\times d) = K\times d$</td><td class="ok">✓</td></tr>
-                <tr><td>$(y-f)\,W^\top$</td><td>$(K\times1)(d\times K)$</td><td class="bad">inner dims $1\ne d$</td></tr>
-                <tr><td>$W^\top(y-f)\,x^\top$</td><td>$(d\times K)(K\times1)(1\times d) = d\times d$</td><td class="bad">wrong shape</td></tr>
-                <tr><td>$f\,x^\top$</td><td>$K\times d$</td><td class="bad">shape fine, but never uses $y$</td></tr>
+                <tr><th>Wanted</th><th>Formula</th><th>Shape check</th></tr>
+                <tr><td>$\nabla_wL$</td><td>$(EX)^\top g$</td><td>$(2\times3)(3\times1) = 2\times1$ = shape of $w$</td></tr>
+                <tr><td>$\nabla_EL$</td><td>$g\,(Xw)^\top$</td><td>$(3\times1)(1\times3) = 3\times3$ = shape of $E$</td></tr>
+                <tr><td>$\nabla_XL$</td><td>$(E^\top g)\,w^\top$</td><td>$(3\times1)(1\times2) = 3\times2$ = shape of $X$</td></tr>
             </table>
-            <p>Shapes catch most order errors instantly, but not all: $f\,x^\top$ passes the shape test and is still wrong. Shape-check first, then sanity-check meaning (does the gradient vanish when the prediction is perfect?).</p>
+            <p>Two patterns hold in every row: a Jacobian you pass <em>through</em> enters transposed ($X^\top$, $E^\top$, $W^\top$ carry the gradient backward), and a gradient with respect to a <em>matrix</em> is a rank-one outer product, (upstream gradient on the left) $\times$ (the other factor, transposed, on the right).</p>
         </div>
+        <div class="viz-container">
+            <div class="viz-controls">
+                <div class="control-group"><label>Target</label>
+                    <div class="sum-type-buttons">
+                        <button type="button" class="sum-type-btn active" id="dm-t0" onclick="dmTarget(0)">&nabla;<sub>E</sub> L</button>
+                        <button type="button" class="sum-type-btn" id="dm-t1" onclick="dmTarget(1)">&nabla;<sub>w</sub> L</button>
+                        <button type="button" class="sum-type-btn" id="dm-t2" onclick="dmTarget(2)">&nabla;<sub>X</sub> L</button>
+                    </div></div>
+                <div class="control-group"><label>Candidate arrangement</label>
+                    <div class="sum-type-buttons" id="dm-choices"></div></div>
+            </div>
+            <div class="domino-row" id="dm-row"></div>
+            <div class="verdict" id="dm-verdict"></div>
+        </div>
+        <div class="warning-box"><strong>Common slip:</strong> writing $\nabla_EL = g\,(Xw)$ without the transpose. Check the shapes: $(3\times1)(3\times1)$ has inner dimensions $1$ and $3$, so the product does not even exist. There is only ever <em>one</em> way to place the transposes so everything composes; let the shapes place them for you.</div>
     </div>
     <!-- ═══════════════════════════ TAB 2: NORMS, STRETCH & EIGENVECTORS ═══════════════════════════ -->
     <div id="tab-t2" class="tab-content">
@@ -683,6 +1046,36 @@ li { margin-bottom: 8px; }
                 <div class="solution-body"><p><span class="pill">outer product</span></p><div class="highlight-box"><p>$W$ is $2\times3$, so the gradient is $2\times3$: $\delta x^\top = \begin{bmatrix}0.5\\-1\end{bmatrix}\begin{bmatrix}1&amp;2&amp;3\end{bmatrix} = \begin{bmatrix}0.5&amp;1&amp;1.5\\-1&amp;-2&amp;-3\end{bmatrix}$.</p><p>Entry $(k,j) = \delta_kx_j$ because $W_{kj}$ appears only in $z_k$ with coefficient $x_j$.</p></div></div>
             </div></div></div>
 
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">13</div><div style="flex:1;">
+                <p><strong>Outer product, entry by entry.</strong> $u = (1,2)^\top$, $v = (3,-1)^\top$, $f = u^\top Ev$ with $E\in\mathbb{R}^{2\times2}$. Write out $f$ as a sum, read off $\partial f/\partial E_{jk}$, and file the four numbers into $\nabla_Ef$.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">left/right law</span></p><div class="highlight-box"><p>$f = \sum_{j,k}u_jE_{jk}v_k = 3E_{11}-E_{12}+6E_{21}-2E_{22}$.</p><p>Each $E_{jk}$ appears once with coefficient $u_jv_k$, so $\partial f/\partial E_{jk} = u_jv_k$.</p><p>Filed into $E$\'s shape: $\nabla_Ef = uv^\top = \begin{bmatrix}3&amp;-1\\6&amp;-2\end{bmatrix}$. Left neighbor $u$ runs down the rows, right neighbor $v$ across the columns.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">14</div><div style="flex:1;">
+                <p><strong>One output, one row.</strong> With $E = \begin{pmatrix}1&amp;1&amp;0\\1&amp;0&amp;1\\0&amp;1&amp;1\end{pmatrix}$, $X = \begin{pmatrix}1&amp;2\\0&amp;1\\3&amp;-1\end{pmatrix}$, $w = (2,1)^\top$ and $Y = E(Xw)$, compute $Y_2$ and $\nabla_EY_2$ with every entry.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">column-born, row-filed</span></p><div class="highlight-box"><p>$v = Xw = (4,1,5)^\top$. $Y_2 = \text{row}_2(E)\cdot v = 1\cdot4+0\cdot1+1\cdot5 = 9$.</p><p>$\partial Y_2/\partial E_{2k} = v_k$ and every other partial is $0$ (rows 1 and 3 of $E$ never touch $Y_2$).</p><p>$\nabla_EY_2 = e_2v^\top = \begin{pmatrix}0&amp;0&amp;0\\4&amp;1&amp;5\\0&amp;0&amp;0\end{pmatrix}$: the column $v$ laid sideways into row 2.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">15</div><div style="flex:1;">
+                <p><strong>Upstream gradient through the matrix.</strong> Same $E, X, w$. A scalar loss has upstream gradient $g = \nabla_YL = (1,0,-1)^\top$. Find $\nabla_EL$ and check its shape.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">g (Xw)ᵀ</span></p><div class="highlight-box"><p>$L$ depends on $E$ only through $Y = Ev$, so $\nabla_EL = \sum_ig_i\nabla_EY_i = \sum_ig_ie_iv^\top = g\,v^\top$.</p><p>$g\,v^\top = \begin{pmatrix}1\\0\\-1\end{pmatrix}\begin{pmatrix}4&amp;1&amp;5\end{pmatrix} = \begin{pmatrix}4&amp;1&amp;5\\0&amp;0&amp;0\\-4&amp;-1&amp;-5\end{pmatrix}$, shape $(3\times1)(1\times3) = 3\times3$ = shape of $E$ ✓.</p><p>Row 2 is zero because $g_2 = 0$: the loss is indifferent to $Y_2$, so no entry in row 2 of $E$ matters.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">16</div><div style="flex:1;">
+                <p><strong>The neighbor is the whole side.</strong> Same $E, X, w, g$. Now differentiate $L$ with respect to $X$: find $\nabla_XL$ and verify one entry by the perturbation identity.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">neighbor = everything grouped on that side</span></p><div class="highlight-box"><p>$L$ is linear in $X$ through $g^\top EXw$. Regroup: $g^\top E = (E^\top g)^\top$, so the left neighbor of $X$ is $E^\top g$ and the right neighbor is $w$.</p><p>$E^\top g = (1,0,-1)^\top$ here (this $E$ happens to be symmetric), so $\nabla_XL = (E^\top g)\,w^\top = \begin{pmatrix}1\\0\\-1\end{pmatrix}\begin{pmatrix}2&amp;1\end{pmatrix} = \begin{pmatrix}2&amp;1\\0&amp;0\\-2&amp;-1\end{pmatrix}$, shape $3\times2$ ✓.</p><p>Check entry $(3,1)$: bump $X_{31}$ by $\epsilon$. Then $Xw$ gains $2\epsilon$ in slot 3, $Y = E(Xw)$ gains $2\epsilon\,E_{\cdot3} = 2\epsilon(0,1,1)^\top$, and $L$ gains $g\cdot 2\epsilon(0,1,1)^\top = -2\epsilon$. Slope $-2$ ✓.</p></div></div>
+            </div></div></div>
+
+            <div class="card" style="margin-bottom:16px;"><div style="display:flex;align-items:flex-start;gap:14px;"><div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;flex-shrink:0;">17</div><div style="flex:1;">
+                <p><strong>Transpose on the variable swaps the sides.</strong> $u = (1,2,-1)^\top$, $a = (3,1,2)^\top$, $f = u^\top E^\top a$ with $E\in\mathbb{R}^{3\times3}$. Find $\nabla_Ef$ without expanding the sum.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body"><p><span class="pill">uᵀEᵀa = aᵀEu</span></p><div class="highlight-box"><p>A scalar equals its transpose: $f = (u^\top E^\top a)^\top = a^\top Eu$. Now $E$ appears un-transposed with left neighbor $a$ and right neighbor $u$.</p><p>$\nabla_Ef = a\,u^\top = \begin{pmatrix}3\\1\\2\end{pmatrix}\begin{pmatrix}1&amp;2&amp;-1\end{pmatrix} = \begin{pmatrix}3&amp;6&amp;-3\\1&amp;2&amp;-1\\2&amp;4&amp;-2\end{pmatrix}$.</p><p>Compare $u^\top Ea\Rightarrow ua^\top$: the transpose on $E$ swapped which vector becomes the column skeleton. Shape $3\times3$ either way, so only the meaning check (which side touched $E$ from the left after regrouping) separates them.</p></div></div>
+            </div></div></div>
         </div>
     </div>
 </div><!-- end container -->
@@ -794,6 +1187,12 @@ var FLASH2 = [
  {f: R`Why $DW$ and not $WD$?`, b: R`$\Delta z = W\Delta x$, then $\Delta h = D\Delta z = (DW)\Delta x$. First applied = rightmost. $DW$ zeroes rows (dead outputs).`},
  {f: R`$\nabla_W\mathcal{L}$ for $z = Wx$`, b: R`$\delta\,x^\top$ with $\delta = \nabla_z\mathcal{L}$ (outer product, shape of $W$)`},
  {f: R`$(XYZ)^\top = $`, b: R`$Z^\top Y^\top X^\top$: transposing reverses the order`},
+ {f: R`Left/right law: $\nabla_E(u^\top Ev)$`, b: R`$uv^\top$. Left neighbor becomes the column, right neighbor the row; same shape as $E$`},
+ {f: R`$\nabla_E(u^\top E^\top a)$`, b: R`$au^\top$: a transpose on the variable swaps the sides (since $u^\top E^\top a = a^\top Eu$)`},
+ {f: R`$\nabla_EY_i$ for $Y = E(Xw)$`, b: R`$e_i(Xw)^\top$: output $i$ reads row $i$ of $E$, so the column $Xw$ is filed sideways into that row`},
+ {f: R`"Neighbor" in $a^\top EXw$ w.r.t. $X$`, b: R`Everything grouped on that side: left neighbor $E^\top a$, right neighbor $w$; $\nabla_XL = (E^\top g)w^\top$`},
+ {f: R`Perturbation identity`, b: R`$f(A+\Delta)-f(A)\approx\langle G,\Delta\rangle$ defines the gradient $G$ with no convention; for $Y = Ev$, $\Delta Y = \Delta v$`},
+ {f: R`Backprop in one sentence`, b: R`The chain-rule product read outer function first; outer = output end, so it walks the network right to left, one Jacobian per layer`},
  {f: R`Row vs. column gradient conventions`, b: R`Row: loss on the left, no transposes, count down. Column: transposes, loss on the right, count up. Never mix.`},
  {f: R`Chain rule when one variable feeds many outputs`, b: R`Sum over paths: $\partial\mathcal{L}/\partial z_k = \sum_i(\partial\mathcal{L}/\partial f_i)(\partial f_i/\partial z_k)$`},
  {f: R`Softmax Jacobian entry`, b: R`$\partial f_i/\partial z_k = f_i(\delta_{ik}-f_k)$`},
@@ -984,11 +1383,443 @@ function shuffleProblems(containerId) {
     Array.from(container.querySelectorAll(':scope > .card')).forEach(function(card, idx) { var circle = card.querySelector('div[style*="border-radius:50%"]'); if (circle) circle.textContent = idx + 1; });
 }
 
-window.__onTabShown = function(name) { if (name === 't2') { budDraw(); piDraw(); } if (name === 't3') gwDraw(); };
+/* ---------- Shared drawing helpers ---------- */
+const COL = { green:'#21442B', greenL:'#39864E', gold:'#DDA25E', goldL:'#E6BC84', goldP:'#F5E4CC',
+              brown:'#42260D', copper:'#BC6C26', cream:'#F0F0F0', creamD:'#E2E2E2', txt:'#2D2D2D', red:'#C0564A' };
+function cell(ctx,x,y,s,fill,stroke,lw){ ctx.fillStyle=fill; ctx.strokeStyle=stroke; ctx.lineWidth=lw||1.5;
+    ctx.beginPath(); ctx.roundRect(x,y,s,s,6); ctx.fill(); ctx.stroke(); }
+function label(ctx,txt,x,y,size,color,bold,align){ ctx.fillStyle=color; ctx.textAlign=align||'center'; ctx.textBaseline='middle';
+    ctx.font=(bold?'700 ':'500 ')+size+'px Inter, sans-serif'; ctx.fillText(txt,x,y); }
+function bracket(ctx,x,y,h,side,color){ ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.beginPath();
+    const w=9; if(side==='L'){ ctx.moveTo(x+w,y); ctx.lineTo(x,y); ctx.lineTo(x,y+h); ctx.lineTo(x+w,y+h); }
+    else { ctx.moveTo(x-w,y); ctx.lineTo(x,y); ctx.lineTo(x,y+h); ctx.lineTo(x-w,y+h); } ctx.stroke(); }
+function easeInOut(t){ return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+function clamp01(t){ return Math.max(0,Math.min(1,t)); }
+
+/* ---------- Viz 1: Filing Machine ---------- */
+const FM = {
+    E: [[1,1,0],[1,0,1],[0,1,1]],
+    v: [4,1,5], Y: [5,9,6],
+    i: 0, numeric: true, t0: null, playing: false,
+    CS: 56, GAP: 4,
+    // phase boundaries in seconds
+    PH: { rowHi: 0.8, pairDur: 0.95, tipDur: 1.5, hold: 0.6 }
+};
+FM.total = FM.PH.rowHi + 3*FM.PH.pairDur + FM.PH.tipDur + FM.PH.hold;
+
+function fmSelect(i){ FM.i = i;
+    for(let k=0;k<3;k++) document.getElementById('fm-btn-'+k).classList.toggle('active', k===i);
+    document.getElementById('fm-ri').textContent = i+1;
+    document.getElementById('fm-rowtxt').textContent = 'row '+(i+1)+' of E';
+    fmPlay(); }
+function fmMode(num){ FM.numeric = num;
+    document.getElementById('fm-num').classList.toggle('active', num);
+    document.getElementById('fm-sym').classList.toggle('active', !num);
+    fmPlay(); }
+function fmPlay(){ FM.t0 = performance.now(); if(!FM.playing){ FM.playing = true; requestAnimationFrame(fmFrame); } }
+
+function fmVal(k){ return FM.numeric ? String(FM.v[k]) : 'v'+String.fromCharCode(0x2081+k); }
+function fmEVal(r,c){ return FM.numeric ? String(FM.E[r][c]) : 'E'+String.fromCharCode(0x2081+r)+String.fromCharCode(0x2081+c); }
+
+function fmFrame(now){
+    const ctx = document.getElementById('fmCanvas').getContext('2d');
+    const t = FM.t0 ? (now - FM.t0)/1000 : FM.total;
+    fmDraw(ctx, Math.min(t, FM.total));
+    if (t < FM.total) requestAnimationFrame(fmFrame); else FM.playing = false;
+}
+
+function fmDraw(ctx, t){
+    const W=900,H=430, S=FM.CS, G=FM.GAP, i=FM.i, PH=FM.PH;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#FFFFFF'; ctx.fillRect(0,0,W,H);
+
+    const eX=60, eY=110, vX=290, vY=110, yX=405, yY=110, gX=590, gY=110;
+    const grid3 = 3*S+2*G;
+
+    // titles
+    label(ctx,'Move A:  Y'+String.fromCharCode(0x2081+i)+' = (row '+(i+1)+' of E) \u00B7 v', 245, 40, 16, COL.brown, true);
+    label(ctx,'Move B:  file sensitivities \u2192 \u2207E Y'+String.fromCharCode(0x2081+i), gX+grid3/2, 40, 16, COL.brown, true);
+
+    // phase progress
+    const pRow = clamp01(t/PH.rowHi);
+    const pairP = k => clamp01((t - PH.rowHi - k*PH.pairDur)/PH.pairDur);
+    const tipStart = PH.rowHi + 3*PH.pairDur;
+    const pTip = clamp01((t - tipStart)/PH.tipDur);
+
+    // E grid
+    for(let r=0;r<3;r++) for(let c=0;c<3;c++){
+        const x=eX+c*(S+G), y=eY+r*(S+G);
+        let fill = '#FBF8F2', stroke = COL.creamD, lw=1.5;
+        if(r===i && pRow>0){ fill = 'rgba(221,162,94,'+(0.14+0.26*easeInOut(pRow))+')'; stroke=COL.gold; lw=2; }
+        if(r===i && pairP(c)>0 && pairP(c)<1){ fill=COL.goldP; stroke=COL.copper; lw=3; }
+        cell(ctx,x,y,S,fill,stroke,lw);
+        label(ctx,fmEVal(r,c), x+S/2, y+S/2, 17, r===i?COL.brown:COL.txt, r===i);
+    }
+    bracket(ctx,eX-8,eY-4,grid3+8,'L',COL.green); bracket(ctx,eX+grid3+8,eY-4,grid3+8,'R',COL.green);
+    label(ctx,'E', eX+grid3/2, eY+grid3+30, 16, COL.green, true);
+
+    // v column
+    for(let r=0;r<3;r++){
+        const x=vX, y=vY+r*(S+G);
+        let fill='#F3F6F3', stroke=COL.creamD, lw=1.5;
+        const pp = pairP(r);
+        if(pp>0 && pp<1){ fill='rgba(57,134,78,0.20)'; stroke=COL.greenL; lw=3; }
+        cell(ctx,x,y,S,fill,stroke,lw);
+        // fade the source cell as its chip flies during the tip phase
+        const chipGone = pTip>0 ? 0.35 : 1;
+        ctx.globalAlpha = chipGone;
+        label(ctx,fmVal(r), x+S/2, y+S/2, 17, COL.green, true);
+        ctx.globalAlpha = 1;
+    }
+    bracket(ctx,vX-8,vY-4,grid3+8,'L',COL.greenL); bracket(ctx,vX+S+8,vY-4,grid3+8,'R',COL.greenL);
+    label(ctx,'v = Xw', vX+S/2, vY+grid3+30, 13, COL.greenL, true);
+    label(ctx,'(a column: born vertical)', vX+S/2, vY+grid3+48, 11.5, COL.greenL, false);
+    label(ctx,'\u00D7', (eX+grid3+vX)/2+2, eY+grid3/2, 22, COL.txt, true);
+
+    // Y column
+    let dotDone = 0;
+    for(let r=0;r<3;r++){
+        const x=yX, y=yY+r*(S+G);
+        const isI = r===i;
+        cell(ctx,x,y,S, isI?'rgba(188,108,38,0.10)':'#FBF8F2', isI?COL.copper:COL.creamD, isI?2:1.5);
+        if(!isI){ label(ctx,'\u00B7\u00B7\u00B7', x+S/2, y+S/2, 15, '#B9B0A2', false); }
+    }
+    // running sum text under Y_i cell
+    let sumParts=[]; 
+    for(let k=0;k<3;k++){ if(pairP(k)>=1){ sumParts.push(FM.numeric?(FM.E[i][k]+'\u00B7'+FM.v[k]):(fmEVal(i,k)+fmVal(k))); dotDone=k+1; } }
+    const yCellY = yY+i*(S+G);
+    if(dotDone===3){
+        label(ctx, FM.numeric?String(FM.Y[i]):'Y'+String.fromCharCode(0x2081+i), yX+S/2, yCellY+S/2, 18, COL.copper, true);
+    } else if(dotDone>0){
+        label(ctx, sumParts.join('+'), yX+S/2, yCellY+S/2, FM.numeric?12:10, COL.copper, true);
+    }
+    bracket(ctx,yX-8,yY-4,grid3+8,'L',COL.copper); bracket(ctx,yX+S+8,yY-4,grid3+8,'R',COL.copper);
+    label(ctx,'Y = Ev', yX+S/2, yY+grid3+30, 14, COL.copper, true);
+    label(ctx,'=', (vX+S+yX)/2+2, eY+grid3/2, 22, COL.txt, true);
+
+    // gradient grid
+    for(let r=0;r<3;r++) for(let c=0;c<3;c++){
+        const x=gX+c*(S+G), y=gY+r*(S+G);
+        const isRow = r===i;
+        cell(ctx,x,y,S, isRow&&pTip>0?'rgba(221,162,94,0.10)':'#FBF8F2', isRow?COL.gold:COL.creamD, isRow?2:1.5);
+        if(!isRow && pTip>0.15){ ctx.globalAlpha=clamp01((pTip-0.15)/0.4); label(ctx,'0',x+S/2,y+S/2,16,'#B9B0A2',false); ctx.globalAlpha=1; }
+    }
+    bracket(ctx,gX-8,gY-4,grid3+8,'L',COL.gold); bracket(ctx,gX+grid3+8,gY-4,grid3+8,'R',COL.gold);
+    label(ctx,'\u2207E Y'+String.fromCharCode(0x2081+i)+'  (shape of E)', gX+grid3/2, gY+grid3+30, 14, '#8B6914', true);
+
+    // flying chips during tip phase: from v cells to gradient row i cells
+    if(pTip>0){
+        for(let k=0;k<3;k++){
+            const kDelay = k*0.12;
+            const pp = clamp01((pTip - kDelay)/(1 - 0.24));
+            const sx=vX+S/2, sy=vY+k*(S+G)+S/2;
+            const tx=gX+k*(S+G)+S/2, ty=gY+i*(S+G)+S/2;
+            const e=easeInOut(pp);
+            const cx=(sx+tx)/2, cy=Math.min(sy,ty)-70;   // arc control point
+            const bx=(1-e)*(1-e)*sx + 2*(1-e)*e*cx + e*e*tx;
+            const by=(1-e)*(1-e)*sy + 2*(1-e)*e*cy + e*e*ty;
+            if(pp>0 && pp<1){
+                ctx.fillStyle=COL.gold; ctx.beginPath(); ctx.arc(bx,by,16,0,Math.PI*2); ctx.fill();
+                label(ctx,fmVal(k),bx,by,14,'white',true);
+            }
+            if(pp>=1){ label(ctx,fmVal(k),tx,ty,17,'#8B6914',true); }
+        }
+        // caption for the tip
+        if(pTip>0.25) label(ctx,'column tips over into row '+(i+1)+'  \u2192  the transpose', gX+grid3/2, gY-18, 13, COL.copper, true);
+    }
+
+    // pairing arcs during Move A
+    for(let k=0;k<3;k++){
+        const pp=pairP(k);
+        if(pp>0 && pp<1){
+            const ex=eX+k*(S+G)+S/2, ey=eY+i*(S+G)+S;
+            const vx=vX+S/2, vy=vY+k*(S+G)+S;
+            ctx.strokeStyle=COL.copper; ctx.lineWidth=2; ctx.setLineDash([5,4]);
+            ctx.beginPath(); ctx.moveTo(ex,ey); ctx.quadraticCurveTo((ex+vx)/2, Math.max(ey,vy)+46, vx,vy); ctx.stroke();
+            ctx.setLineDash([]);
+        }
+    }
+
+    // readouts
+    const dotEl=document.getElementById('fm-dottxt'), gradEl=document.getElementById('fm-gradtxt');
+    if(dotEl){
+        if(dotDone===3) dotEl.textContent = FM.numeric ? (FM.E[i].map((e,k)=>e+'\u00B7'+FM.v[k]).join(' + ')+' = '+FM.Y[i]) : 'row'+(i+1)+'(E) \u00B7 v = Y'+(i+1);
+        else if(dotDone>0) dotEl.textContent = sumParts.join(' + ')+' + \u2026';
+        else dotEl.textContent='\u2014';
+        gradEl.textContent = pTip>=1 ? ('row '+(i+1)+' = ( '+(FM.numeric?FM.v.join('  '):'v\u2081 v\u2082 v\u2083')+' ) = (Xw)\u1D40') : (pTip>0?'filing\u2026':'\u2014');
+    }
+}
+
+/* ---------- Viz 2: Outer Product Builder ---------- */
+const OP = { u:[1,2,-1], v:[3,1,2], transposed:false, t0:null, playing:false, CS:56, GAP:4,
+             PH:{ show:0.7, slide:1.0, fill:1.6, hold:0.6 } };
+OP.total = OP.PH.show + OP.PH.slide + OP.PH.fill + OP.PH.hold;
+
+function opSelect(tr){ OP.transposed = tr;
+    document.getElementById('op-plain').classList.toggle('active', !tr);
+    document.getElementById('op-trans').classList.toggle('active', tr);
+    document.getElementById('op-formula').innerHTML = tr ? '&nabla;<sub>E</sub> f = v u&#8317;' : '&nabla;<sub>E</sub> f = u v&#8317;';
+    document.getElementById('op-col').textContent = tr ? 'v (sides swapped)' : 'left neighbor u';
+    document.getElementById('op-row').textContent = tr ? 'u (sides swapped)' : 'right neighbor v';
+    opPlay(); }
+function opPlay(){ OP.t0 = performance.now(); if(!OP.playing){ OP.playing=true; requestAnimationFrame(opFrame); } }
+function opFrame(now){
+    const ctx=document.getElementById('opCanvas').getContext('2d');
+    const t = OP.t0 ? (now-OP.t0)/1000 : OP.total;
+    opDraw(ctx, Math.min(t,OP.total));
+    if(t<OP.total) requestAnimationFrame(opFrame); else OP.playing=false;
+}
+function opDraw(ctx,t){
+    const W=900,H=400,S=OP.CS,G=OP.GAP,PH=OP.PH;
+    ctx.clearRect(0,0,W,H); ctx.fillStyle='#FFFFFF'; ctx.fillRect(0,0,W,H);
+    const grid3=3*S+2*G;
+    // layout: expression row on top, gradient grid center-right
+    const uX=120,uY=100, aX=250,aY=100, vX=430,vY=100;   // expression zone
+    const gX=620,gY=100;                                  // gradient grid
+    const colVec = OP.transposed ? OP.v : OP.u;   // becomes column skeleton
+    const rowVec = OP.transposed ? OP.u : OP.v;   // becomes row skeleton
+    const colName = OP.transposed ? 'v' : 'u';
+    const rowName = OP.transposed ? 'u' : 'v';
+
+    const pShow=clamp01(t/PH.show);
+    const pSlide=clamp01((t-PH.show)/PH.slide);
+    const pFill=clamp01((t-PH.show-PH.slide)/PH.fill);
+
+    label(ctx, OP.transposed ? 'f = u\u1D40 E\u1D40 v  =  a scalar' : 'f = u\u1D40 E v  =  a scalar', 275, 22, 16, COL.brown, true);
+    label(ctx,'\u2207E f  (shape of E)', gX+grid3/2, 22, 16, COL.brown, true);
+
+    // u as row (u^T) on the left of E slot
+    ctx.globalAlpha = pShow;
+    for(let k=0;k<3;k++){
+        cell(ctx, uX-60+k*(S*0.72+G), uY+S, S*0.72, 'rgba(33,68,43,0.10)', COL.green, 1.5);
+        label(ctx, String(OP.u[k]), uX-60+k*(S*0.72+G)+S*0.36, uY+S+S*0.36, 14, COL.green, true);
+    }
+    label(ctx,'u\u1D40', uX+4, uY+S-16, 14, COL.green, true);
+    // E slot
+    for(let r=0;r<3;r++) for(let c=0;c<3;c++){
+        cell(ctx, aX+c*(S*0.72+G), uY+S*0.28+r*(S*0.72+G), S*0.72, '#FBF8F2', COL.creamD, 1.2);
+    }
+    label(ctx, OP.transposed?'E\u1D40':'E', aX+ (3*(S*0.72)+2*G)/2, uY+S*0.28+3*(S*0.72)+2*G+18, 15, COL.txt, true);
+    // v as column on the right
+    for(let k=0;k<3;k++){
+        cell(ctx, vX, uY+k*(S*0.72+G), S*0.72, 'rgba(221,162,94,0.14)', COL.gold, 1.5);
+        label(ctx, String(OP.v[k]), vX+S*0.36, uY+k*(S*0.72+G)+S*0.36, 14, '#8B6914', true);
+    }
+    label(ctx,'v', vX+S*0.36, uY+3*(S*0.72)+2*G+18, 15, '#8B6914', true);
+    ctx.globalAlpha = 1;
+
+    // gradient grid skeleton
+    for(let r=0;r<3;r++) for(let c=0;c<3;c++){
+        cell(ctx, gX+c*(S+G), gY+r*(S+G), S, '#FBF8F2', COL.creamD, 1.5);
+    }
+    bracket(ctx,gX-8,gY-4,grid3+8,'L',COL.gold); bracket(ctx,gX+grid3+8,gY-4,grid3+8,'R',COL.gold);
+
+    // sliding skeletons
+    if(pSlide>0){
+        const e=easeInOut(pSlide);
+        // column skeleton flies to left edge of gradient grid
+        for(let j=0;j<3;j++){
+            const sx = OP.transposed ? vX+S*0.36 : uX-60+j*(S*0.72+G)+S*0.36;
+            const sy = OP.transposed ? uY+j*(S*0.72+G)+S*0.36 : uY+S+S*0.36;
+            const tx = gX-34, ty = gY+j*(S+G)+S/2;
+            const bx=sx+(tx-sx)*e, by=sy+(ty-sy)*e;
+            ctx.fillStyle=COL.green; ctx.beginPath(); ctx.arc(bx,by,15,0,Math.PI*2); ctx.fill();
+            label(ctx,String(colVec[j]),bx,by,13,'white',true);
+        }
+        // row skeleton flies to top edge
+        for(let k=0;k<3;k++){
+            const sx = OP.transposed ? uX-60+k*(S*0.72+G)+S*0.36 : vX+S*0.36;
+            const sy = OP.transposed ? uY+S+S*0.36 : uY+k*(S*0.72+G)+S*0.36;
+            const tx = gX+k*(S+G)+S/2, ty = gY-30;
+            const bx=sx+(tx-sx)*e, by=sy+(ty-sy)*e;
+            ctx.fillStyle=COL.gold; ctx.beginPath(); ctx.arc(bx,by,15,0,Math.PI*2); ctx.fill();
+            label(ctx,String(rowVec[k]),bx,by,13,'white',true);
+        }
+        if(pSlide>=1){
+            label(ctx, colName+' \u2192 column', gX-34, gY+grid3+22, 12, COL.green, true);
+            label(ctx, rowName+'\u1D40 \u2192 row', gX+grid3/2, gY-52, 12, '#8B6914', true);
+        }
+    }
+
+    // fill cells (j,k) = colVec[j] * rowVec[k], sweeping row-major
+    if(pFill>0){
+        const totalCells=9;
+        const done=Math.floor(pFill*totalCells+0.0001);
+        for(let idx=0; idx<totalCells; idx++){
+            const r=Math.floor(idx/3), c=idx%3;
+            const x=gX+c*(S+G), y=gY+r*(S+G);
+            if(idx<done){
+                cell(ctx,x,y,S,'rgba(221,162,94,0.13)',COL.gold,2);
+                label(ctx,String(colVec[r]*rowVec[c]),x+S/2,y+S/2,17,'#8B6914',true);
+            } else if(idx===done && pFill<1){
+                cell(ctx,x,y,S,COL.goldP,COL.copper,3);
+                label(ctx,colVec[r]+'\u00D7'+rowVec[c],x+S/2,y+S/2,13,COL.copper,true);
+            }
+        }
+        if(pFill>=1) label(ctx,'rank-one: every row is a multiple of '+rowName+'\u1D40', gX+grid3/2, gY+grid3+46, 13, COL.copper, true);
+    }
+}
+
+/* ---------- Viz 3: Shape Dominoes ---------- */
+const DM = {
+    target: 0,
+    // each target: name, correct final shape, choices [{label, dominoes:[{txt,dim,cls}], ok, msg}]
+    data: [
+        { name:'\u2207E L', want:'3\u00D73 (shape of E)', choices:[
+            { label:'g (Xw)\u1D40', ok:true,
+              doms:[{t:'g', d:'3\u00D71', c:'d-green'},{t:'(Xw)\u1D40', d:'1\u00D73', c:'d-gold'}],
+              msg:'Inner dims 1 = 1 click; product is 3\u00D73 = shape of E. \u2713' },
+            { label:'g (Xw)', ok:false,
+              doms:[{t:'g', d:'3\u00D71', c:'d-green'},{t:'Xw', d:'3\u00D71', c:'d-gold'}],
+              msg:'Inner dims 1 vs 3 clash \u2014 the product does not even exist. \u2717' } ]},
+        { name:'\u2207w L', want:'2\u00D71 (shape of w)', choices:[
+            { label:'(EX)\u1D40 g', ok:true,
+              doms:[{t:'(EX)\u1D40', d:'2\u00D73', c:'d-brown'},{t:'g', d:'3\u00D71', c:'d-green'}],
+              msg:'Inner dims 3 = 3 click; product is 2\u00D71 = shape of w. \u2713' },
+            { label:'(EX) g', ok:false,
+              doms:[{t:'EX', d:'3\u00D72', c:'d-brown'},{t:'g', d:'3\u00D71', c:'d-green'}],
+              msg:'Inner dims 2 vs 3 clash \u2014 the downstream Jacobian must enter transposed. \u2717' } ]},
+        { name:'\u2207X L', want:'3\u00D72 (shape of X)', choices:[
+            { label:'(E\u1D40g) w\u1D40', ok:true,
+              doms:[{t:'E\u1D40g', d:'3\u00D71', c:'d-green'},{t:'w\u1D40', d:'1\u00D72', c:'d-gold'}],
+              msg:'Inner dims 1 = 1 click; product is 3\u00D72 = shape of X. \u2713' },
+            { label:'(E\u1D40g) w', ok:false,
+              doms:[{t:'E\u1D40g', d:'3\u00D71', c:'d-green'},{t:'w', d:'2\u00D71', c:'d-gold'}],
+              msg:'Inner dims 1 vs 2 clash \u2014 w must tip over into a row. \u2717' } ]}
+    ]
+};
+function dmTarget(i){ DM.target=i;
+    for(let k=0;k<3;k++) document.getElementById('dm-t'+k).classList.toggle('active', k===i);
+    const box=document.getElementById('dm-choices'); box.innerHTML='';
+    DM.data[i].choices.forEach((ch,idx)=>{
+        const b=document.createElement('button'); b.className='sum-type-btn'; b.textContent=ch.label;
+        b.onclick=()=>dmTry(idx,b); box.appendChild(b);
+    });
+    document.getElementById('dm-row').innerHTML='';
+    document.getElementById('dm-verdict').textContent='';
+    dmRenderIdle();
+}
+function dmRenderIdle(){
+    const row=document.getElementById('dm-row');
+    row.innerHTML='<div class="domino d-brown">L<span class="dim">scalar</span></div>'+
+        '<div style="font-weight:700;color:#4A4A4A;">needs</div>'+
+        '<div class="domino d-gold">'+DM.data[DM.target].name+'<span class="dim">'+DM.data[DM.target].want+'</span></div>';
+}
+function dmTry(idx,btn){
+    document.querySelectorAll('#dm-choices .sum-type-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const ch=DM.data[DM.target].choices[idx];
+    const row=document.getElementById('dm-row'); row.innerHTML='';
+    ch.doms.forEach((d,k)=>{
+        const el=document.createElement('div'); el.className='domino '+d.c;
+        el.innerHTML=d.t+'<span class="dim">'+d.d+'</span>'; row.appendChild(el);
+        if(k===0){ const times=document.createElement('div'); times.style.cssText='font-weight:700;font-size:18px;color:#4A4A4A;'; times.textContent='\u00D7'; row.appendChild(times); }
+    });
+    const verdict=document.getElementById('dm-verdict');
+    setTimeout(()=>{
+        row.querySelectorAll('.domino').forEach(el=>el.classList.add(ch.ok?'snap':'clash'));
+        verdict.className='verdict '+(ch.ok?'ok':'bad');
+        verdict.textContent=ch.msg;
+        if(ch.ok){
+            const eq=document.createElement('div'); eq.style.cssText='font-weight:700;font-size:18px;color:#4A4A4A;'; eq.textContent='=';
+            const res=document.createElement('div'); res.className='domino d-green snap';
+            res.innerHTML=DM.data[DM.target].name+'<span class="dim">'+DM.data[DM.target].want+'</span>';
+            row.appendChild(eq); row.appendChild(res);
+        }
+    }, 60);
+}
+
+
+
+/* ---------- Viz: Peel the onion (backprop as the chain rule) ---------- */
+const ON = {
+    // forward order; shapes are Jacobians (rows = outputs, cols = inputs); d=3, n1=4, n2=2, n3=1
+    layers: [
+        {sym:'W₁', jacRow:'W₁', jacCol:'W₁ᵀ', shape:[4,3], cls:'d-green',  name:'linear layer 1',
+         note:'Linear map z₁ = W₁x: its Jacobian is the matrix itself, 4×3. Nothing left to peel: x is the input.'},
+        {sym:'φ', jacRow:'D₁', jacCol:'D₁', shape:[4,4], cls:'d-greenL', name:'ReLU 1',
+         note:'Elementwise ReLU on z₁∈ℝ⁴: Jacobian is the diagonal 0/1 mask D₁ = Diag(1{z₁>0}), 4×4. Dead units zero out their row.'},
+        {sym:'W₂', jacRow:'W₂', jacCol:'W₂ᵀ', shape:[2,4], cls:'d-copper', name:'linear layer 2',
+         note:'Linear map z₂ = W₂h₁ with h₁∈ℝ⁴, z₂∈ℝ²: Jacobian W₂ is 2×4 (outputs × inputs).'},
+        {sym:'φ', jacRow:'D₂', jacCol:'D₂', shape:[2,2], cls:'d-greenL', name:'ReLU 2',
+         note:'Elementwise ReLU on z₂∈ℝ²: diagonal mask D₂, 2×2.'},
+        {sym:'W₃', jacRow:'W₃', jacCol:'W₃ᵀ', shape:[1,2], cls:'d-copper', name:'linear layer 3',
+         note:'Linear map z₃ = W₃h₂ from ℝ² to ℝ: Jacobian W₃ is a 1×2 row.'},
+        {sym:'σ', jacRow:'σ′', jacCol:'σ′', shape:[1,1], cls:'d-gold', name:'sigmoid',
+         note:'Scalar sigmoid ŷ = σ(z₃): derivative σ′ = σ(z₃)(1−σ(z₃)), a 1×1 number.'},
+        {sym:'ℓ', jacRow:'∂ℓ/∂ŷ', jacCol:'∇ℓ', shape:[1,1], cls:'d-dark', name:'loss',
+         note:'The outermost function. Differentiate the loss with respect to its own argument ŷ first: for binary cross-entropy that is (ŷ−y)/(ŷ(1−ŷ)), a 1×1 number.'}
+    ],
+    peeled: 0,          // how many layers peeled from the outside (0..7)
+    conv: 'row'
+};
+function onConv(c){ ON.conv=c; document.getElementById('on-row').classList.toggle('active',c==='row'); document.getElementById('on-col').classList.toggle('active',c==='col'); onRender(); }
+function onReset(){ ON.peeled=0; onRender(); }
+function onPeel(){ if(ON.peeled<ON.layers.length){ ON.peeled++; onRender(true);} }
+function onPeelAll(){ ON.peeled=ON.layers.length; onRender(true); }
+function onCurrentIdx(){ return ON.layers.length-1-ON.peeled; } // forward index of the outermost unpeeled layer, -1 if none
+function onRender(animate){
+    const L=ON.layers, n=L.length, cur=onCurrentIdx();
+    // network strip
+    const net=document.getElementById('on-net'); let h='';
+    h+='<div class="on-box io">x</div><span class="on-arrow">→</span>';
+    for(let i=0;i<n;i++){
+        const peeled = i>cur; const isCur = (i===cur+1 && ON.peeled>0); // the layer just peeled flashes
+        h+=`<div class="on-box ${L[i].cls}${peeled?' peeled':''}${isCur&&animate?' current':''}">${L[i].sym}</div>`;
+        if(i<n-1) h+='<span class="on-arrow">→</span>';
+    }
+    h+='<span class="on-arrow">→</span><div class="on-box io">L</div>';
+    net.innerHTML=h;
+    // nested expression (outermost first)
+    let expr='L = ';
+    for(let i=n-1;i>=0;i--){
+        const peeled = i>cur; const isCur = (i===cur);
+        expr+=`<span class="on-layer${peeled?' peeled':''}${isCur?' current':''}"><span class="on-sym">${L[i].sym}</span><span class="on-par">(</span>`;
+    }
+    expr+='x';
+    for(let i=0;i<n;i++) expr+='<span class="on-par">)</span></span>';
+    document.getElementById('on-expr').innerHTML=expr;
+    // product chips
+    const prod=document.getElementById('on-prod'); let p='';
+    const lhs = ON.conv==='row' ? '∂L/∂x =' : '∇ₓL =';
+    p+=`<span class="eq">${lhs}</span>`;
+    const order=[]; for(let k=0;k<ON.peeled;k++) order.push(n-1-k);   // peel order: outer first
+    const seq = ON.conv==='row' ? order : order.slice().reverse();
+    if(seq.length===0) p+='<span style="color:#888;font-size:14px;">(nothing peeled yet: the derivative of L with respect to itself is the 1×1 number 1)</span>';
+    seq.forEach((i,j)=>{
+        const lay=L[i]; const sh = ON.conv==='row' ? `${lay.shape[0]}×${lay.shape[1]}` : `${lay.shape[1]}×${lay.shape[0]}`;
+        const latest = (i===n-ON.peeled);
+        p+=`<div class="domino ${lay.cls}${latest&&animate?' snap':''}">${ON.conv==='row'?lay.jacRow:lay.jacCol}<span class="dim">${sh}</span></div>`;
+        if(j<seq.length-1) p+='<span class="dot">·</span>';
+    });
+    prod.innerHTML=p;
+    // readouts
+    const cols = ON.peeled===0 ? 1 : L[n-ON.peeled].shape[1];
+    document.getElementById('on-cur').textContent = ON.peeled===0 ? '—' : L[n-ON.peeled].name;
+    document.getElementById('on-fac').textContent = ON.peeled===0 ? '—' : (ON.conv==='row'?L[n-ON.peeled].jacRow:L[n-ON.peeled].jacCol);
+    document.getElementById('on-shape').textContent = ON.conv==='row' ? `1×${cols}` : `${cols}×1`;
+    // note
+    let note;
+    if(ON.peeled===0) note='Click <strong>Peel one layer</strong>. Each click removes the outermost function from the nesting and appends its Jacobian to the product. In row form the product grows to the right; in column form the transposed factor is prepended on the left. Either way the newest factor is the one closest to the input.';
+    else {
+        const lay=L[n-ON.peeled];
+        note=`<strong>Peel ${ON.peeled}: ${lay.name}.</strong> ${lay.note}`;
+        if(ON.peeled<n){ const nxt=L[n-ON.peeled-1]; note+=` Next outermost: ${nxt.sym}. Its Jacobian must have ${cols} rows to click onto the running ${ON.conv==='row'?'1×'+cols:cols+'×1'} shape; it is ${nxt.shape[0]}×${nxt.shape[1]}, so the inner dimensions match.`; }
+        else note+=' <strong>Done.</strong> The product is '+(ON.conv==='row'?'1×3, the shape of xᵀ':'3×1, the shape of x')+': seven factors, '+(ON.conv==='row'?'read left to right in exactly the order the network is read right to left.':'the row product transposed once, so the order reverses and every non-symmetric factor picks up a ᵀ.')+' For ∇<sub>W₁</sub>L stop one step earlier: the 1×4 row δ₁ᵀ = (everything before W₁) gives ∇<sub>W₁</sub>L = δ₁xᵀ, a 4×3 outer product, upstream on the left and input on the right.';
+    }
+    document.getElementById('on-note').innerHTML=note;
+}
+
+window.__onTabShown = function(name) {
+    if (name === 't1') { fmPlay(); opPlay(); }
+    if (name === 't2') { budDraw(); piDraw(); }
+    if (name === 't3') gwDraw();
+};
 window.__initSheet = function() {
     buildFlashcards('flash-main', FLASH2);
     shuffleProblems('drill-list');
     budDraw(); piReset(); gwMode('polar');
+    dmTarget(0); onRender(); fmPlay(); opPlay();
 };
 
 window.addEventListener('DOMContentLoaded', function() {

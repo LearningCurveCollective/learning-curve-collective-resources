@@ -1794,31 +1794,6 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
-   "id": "machine-learning--matrix-calculus-worksheet",
-   "path": "machine-learning/matrix-calculus-worksheet.html",
-   "title": "Matrix Calculus: Gradients & Shapes",
-   "description": "Work through matrix gradients and shape bookkeeping using one fixed running example, with visualizers, derivations, rule tables, and practice problems.",
-   "subject": "machine-learning",
-   "topic": "Math & stats foundations",
-   "order": 2,
-   "levels": [
-    "Advanced College"
-   ],
-   "format": "Interactive worksheet",
-   "tags": [
-    "matrix calculus",
-    "gradients",
-    "jacobian",
-    "tensor shapes",
-    "machine learning"
-   ],
-   "content": "theory+practice",
-   "builds_on": [
-    "calculus--differentiation-part-2",
-    "calculus--directional-derivative-worksheet"
-   ]
-  },
-  {
    "id": "machine-learning--decision-tree-step-through",
    "path": "machine-learning/Decision_Tree_Step_Through.html",
    "title": "Growing a Decision Tree",
@@ -1865,7 +1840,7 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "theory+practice",
    "builds_on": [
-    "machine-learning--matrix-calculus-worksheet",
+    "machine-learning--matrix-calculus-linear-algebra-toolkit",
     "calculus--projection-to-gradient-descent-conceptual-map"
    ]
   },
@@ -1942,7 +1917,7 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "theory",
    "builds_on": [
-    "machine-learning--matrix-calculus-worksheet",
+    "machine-learning--matrix-calculus-linear-algebra-toolkit",
     "machine-learning--stats-for-ml-cheat-sheet"
    ]
   },
@@ -1950,10 +1925,10 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "machine-learning--matrix-calculus-linear-algebra-toolkit",
    "path": "machine-learning/matrix-calculus-linear-algebra-toolkit.html",
    "title": "Matrix Calculus & Linear Algebra Toolkit",
-   "description": "Scalar rules translated to matrix form, the chain rule with the right order and transposes, norms and the spectral norm with an interactive budget picture and power iteration, and Jacobians with a grid-warp explorer.",
+   "description": "Gradients, Jacobians and shape bookkeeping from one fixed running example, the left/right law for matrix gradients with a filing-machine and outer-product animation, backprop as the chain rule read outer-to-inner with a peel-one-layer stepper, shape dominoes, norms and the spectral norm with a budget picture and power iteration, and Jacobians with a grid-warp explorer.",
    "subject": "machine-learning",
    "topic": "Math & stats foundations",
-   "order": 8,
+   "order": 2,
    "levels": [
     "College",
     "Advanced College"
@@ -1961,7 +1936,10 @@ window.OPEN_LEARNING_CATALOG = {
    "format": "Study sheet",
    "tags": [
     "matrix calculus",
+    "gradients",
     "chain rule",
+    "backpropagation",
+    "tensor shapes",
     "spectral norm",
     "eigenvectors",
     "jacobian",
@@ -1970,8 +1948,8 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "theory+practice",
    "builds_on": [
-    "machine-learning--matrix-calculus-worksheet",
-    "calculus--differentiation-part-2"
+    "calculus--differentiation-part-2",
+    "calculus--directional-derivative-worksheet"
    ]
   },
   {
