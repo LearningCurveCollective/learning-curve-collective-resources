@@ -494,6 +494,12 @@ html = replace_once(html,
     '<p style="font-size:14px; margin-top:10px;">For the calculator side',
     '<p style="font-size:14px; margin-top:10px;">The lines in these questions (slope, intercepts, the area a line encloses) are covered in <a href="' + LINEAR_URL + '" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Math 1: Linear Equations &#8594;</a></p>\n            <p style="font-size:14px; margin-top:10px;">For the calculator side')
 
+# --- forward link to the next sheet in the series (the shell's own link was stripped above)
+FUNCTIONS_URL = 'https://learningcurvecollective.github.io/learning-curve-collective-resources/test-prep/sat/SAT-Math-3-Functions.html'
+html = replace_once(html,
+    'SAT Math: Desmos Strategies &#8594;</a></p>',
+    'SAT Math: Desmos Strategies &#8594;</a></p>\n            <p style="font-size:14px; margin-top:10px;">Ready for the next topic? Continue the series with <a href="' + FUNCTIONS_URL + '" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Math 3: Functions &#8594;</a></p>')
+
 # --- Desmos guidance: swap the linear sheet's examples for quadratic ones
 html = replace_once(html,
     'finding an intersection, checking a slope, sliding a $k$. For a one-step slope read or a quick substitution, straight algebra is faster.',

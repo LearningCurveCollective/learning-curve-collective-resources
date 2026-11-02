@@ -2364,13 +2364,44 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-math-3-functions",
+   "path": "test-prep/sat/SAT-Math-3-Functions.html",
+   "title": "SAT Math 3: Functions",
+   "description": "Reviews function notation, domain and where a function is undefined, composition, equations true for all values of x, translations, and range on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Reading, writing & math",
+   "order": 13,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "functions",
+    "domain and range",
+    "composition of functions",
+    "identities",
+    "transformations",
+    "Desmos"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-2-quadratics"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Reading, writing & math",
-   "order": 13,
+   "order": 14,
    "levels": [
     "High School"
    ],
@@ -2592,7 +2623,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Timed tutor evaluation covering SAT Reading & Writing and Math, with Desmos, used to assess a tutor's skills in a single sitting.",
    "subject": "sat",
    "topic": "For tutors",
-   "order": 14,
+   "order": 15,
    "levels": [
     "High School"
    ],
