@@ -7,7 +7,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-10-30"
+  "updated": "2026-11-01"
  },
  "levels": [
   "Foundations",
@@ -1467,6 +1467,33 @@ window.OPEN_LEARNING_CATALOG = {
    "builds_on": [
     "econ--micro--exchange-economy-ge-micro",
     "econ--cost-curves-profit-max-micro"
+   ]
+  },
+  {
+   "id": "econ--micro--production-economy-blueprints",
+   "path": "econ/micro/Production Economy Blueprints.html",
+   "title": "Production Economy Blueprints: Robinson Crusoe, PPF & the Production Box",
+   "description": "Four step-by-step systems for production economy problems: the one-person Robinson Crusoe economy (Pareto optimum vs competitive equilibrium), the PPF from one input, and the production Edgeworth box with Leontief and linear technologies, with worked homework problems, whole-number practice sets, and a rapid-fire answer sheet.",
+   "subject": "econ",
+   "topic": "Microeconomics",
+   "order": 17,
+   "levels": [
+    "Advanced College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "Robinson Crusoe",
+    "production possibilities frontier",
+    "production Edgeworth box",
+    "Leontief",
+    "returns to scale",
+    "competitive equilibrium"
+   ],
+   "difficulty": "Challenge",
+   "content": "theory+practice",
+   "builds_on": [
+    "econ--micro--competitive-equilibrium-with-production-robinson-crusoe",
+    "econ--micro--exchange-economy-blueprints"
    ]
   },
   {
