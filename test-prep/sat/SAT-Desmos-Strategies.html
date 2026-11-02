@@ -2301,12 +2301,12 @@ function rkgReportHtml(d) {
 }
 /* ---- the panel ---- */
 function rkgStatus(t) { var el = document.getElementById('rkgStatus'); if (el) el.textContent = t; }
-function rkgSyncName() { var inp = document.getElementById('rkgName'); if (!inp) return; rkg.name = inp.value.trim(); rkgStore('lcc:student-name', rkg.name || null); rkgSave(); }
+function rkgSyncName() { var inp = document.getElementById('rkgName'); if (!inp) return; rkg.name = inp.value.trim(); rkgStore('lcc:student-name', rkg.name || null); if (RK_ADAPTER.setName && rkg.name) { try { RK_ADAPTER.setName(rkg.name); } catch (e) {} } rkgSave(); }
 function rkgOpen() {
     var ov = document.getElementById('rkgOverlay'); if (!ov) return;
     var d = rkgData();
     document.getElementById('rkgStats').innerHTML = d.sections.map(function(s) { return '<div class="rkg-stat"><b>' + s.correct + '/' + (s.finished ? s.total : s.attempted) + '</b><span>' + s.title.replace(/\(.*\)/, '').trim() + (s.finished ? '' : ', so far') + '</span></div>'; }).join('');
-    var inp = document.getElementById('rkgName'); inp.value = rkg.name || rkgRead('lcc:student-name') || '';
+    var inp = document.getElementById('rkgName'); inp.value = rkg.name || (RK_ADAPTER.getName ? RK_ADAPTER.getName() : '') || rkgRead('lcc:student-name') || '';
     rkgStatus(''); ov.classList.add('open'); if (!inp.value) inp.focus();
 }
 function rkgClose() { var ov = document.getElementById('rkgOverlay'); if (ov) ov.classList.remove('open'); }

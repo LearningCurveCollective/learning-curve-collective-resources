@@ -9,6 +9,8 @@ adapter per sheet family that says how to collect results and how to snapshot/re
            (KEY/NQ, radio inputs q<n>, submitAll/resetAll, timer with elapsed/started)
   wic      SAT-Words-in-Context sets 1 to 3 (QD/N, radio inputs q<n>, doSubmit, flags, countdown)
   desmos   SAT-Desmos-Strategies (the GQ gauntlet in G.results, plus the FP fill-in format drill)
+  worksheet  anything built by the sat-verbal-worksheet or sat-math-worksheet skills
+           (QUESTIONS/responses, pick/gridInput, submitAll, the student-name field, per-question notes)
 
 Usage:  python3 results_kit_generic.py <sheet.html> [...]     (family is detected from the file)
         python3 results_kit_generic.py --strip <sheet.html>    (remove the kit)
@@ -185,6 +187,45 @@ var RK_ADAPTER = {
 };
 '''
 
+
+ADAPTERS['worksheet'] = r"""
+var RK_ADAPTER = {
+    bannerHost: function() { return document.querySelector('.container'); },
+    fabBottom: 16,
+    hooks: ['submitAll', 'resetAll'],
+    afterHook: function(name) { if (name === 'submitAll' && submitted) rkgMountCard(document.querySelector('#results .score-card') || document.getElementById('results'), 'after'); },
+    getName: function() { var el = document.getElementById('student-name'); return el ? el.value.trim() : ''; },
+    setName: function(n) { var el = document.getElementById('student-name'); if (el && !el.value.trim()) { el.value = n; if (typeof syncName === 'function') syncName(); } },
+    snapshot: function() {
+        var notes = {}; document.querySelectorAll('textarea[data-qnote]').forEach(function(t) { if (t.value.trim()) notes[t.getAttribute('data-qnote')] = t.value; });
+        return { responses: responses, submitted: submitted, name: RK_ADAPTER.getName(), notes: notes };
+    },
+    restore: function(s) {
+        if (s.name) { var el = document.getElementById('student-name'); if (el) { el.value = s.name; if (typeof syncName === 'function') syncName(); } }
+        var tool = activeTool; activeTool = null;
+        Object.keys(s.responses || {}).forEach(function(k) {
+            var qn = +k, v = s.responses[k];
+            if (typeof v === 'number') { pick(qn, v); }
+            else { var inp = document.querySelector('input[data-grid="' + qn + '"]'); if (inp) { inp.value = v; if (typeof gridInput === 'function') gridInput(qn, inp); } }
+        });
+        activeTool = tool;
+        Object.keys(s.notes || {}).forEach(function(k) { var t = document.querySelector('textarea[data-qnote="' + k + '"]'); if (t) t.value = s.notes[k]; });
+        if (s.submitted) { var c = window.confirm; window.confirm = function() { return true; }; try { submitAll(); } finally { window.confirm = c; } }
+    },
+    collect: function() {
+        var items = [], answered = 0, correct = 0, strip = function(h) { var d = document.createElement('div'); d.innerHTML = h || ''; return d.textContent.replace(/\s+/g, ' ').trim(); };
+        QUESTIONS.forEach(function(q) {
+            var r = responses[q.n], has = r != null && r !== '', ok, yours, key;
+            if (q.format === 'grid') { ok = has && (typeof gridMatches === 'function' ? gridMatches(r, q.accepted || []) : false); yours = has ? String(r) : ''; key = (q.accepted || []).join(' or '); }
+            else { ok = has && r === q.answer; yours = has ? LETTERS[r] + '. ' + strip(q.options[r]) : ''; key = LETTERS[q.answer] + '. ' + strip(q.options[q.answer]); }
+            if (has) answered++; if (ok) correct++;
+            items.push({ n: q.n, label: 'Q' + q.n, tag: (q.subskill_label || q.skill_label || '') + (q.title ? ' / ' + q.title : ''), q: strip(q.prompt), yours: yours, correct: key, ok: !!ok, answered: !!has, note: q.rationale || '' });
+        });
+        return { sections: [{ key: 'practice', title: 'Practice set', total: TOTAL_Q, attempted: answered, correct: correct, finished: !!submitted, time: 0, items: items }] };
+    }
+};
+"""
+
 # ----------------------------------------------------------------- core (JS)
 CORE_JS = r'''
 /* ================= LCC results kit (generic) v1: autosave + results report ================= */
@@ -281,12 +322,12 @@ function rkgReportHtml(d) {
 }
 /* ---- the panel ---- */
 function rkgStatus(t) { var el = document.getElementById('rkgStatus'); if (el) el.textContent = t; }
-function rkgSyncName() { var inp = document.getElementById('rkgName'); if (!inp) return; rkg.name = inp.value.trim(); rkgStore('lcc:student-name', rkg.name || null); rkgSave(); }
+function rkgSyncName() { var inp = document.getElementById('rkgName'); if (!inp) return; rkg.name = inp.value.trim(); rkgStore('lcc:student-name', rkg.name || null); if (RK_ADAPTER.setName && rkg.name) { try { RK_ADAPTER.setName(rkg.name); } catch (e) {} } rkgSave(); }
 function rkgOpen() {
     var ov = document.getElementById('rkgOverlay'); if (!ov) return;
     var d = rkgData();
     document.getElementById('rkgStats').innerHTML = d.sections.map(function(s) { return '<div class="rkg-stat"><b>' + s.correct + '/' + (s.finished ? s.total : s.attempted) + '</b><span>' + s.title.replace(/\(.*\)/, '').trim() + (s.finished ? '' : ', so far') + '</span></div>'; }).join('');
-    var inp = document.getElementById('rkgName'); inp.value = rkg.name || rkgRead('lcc:student-name') || '';
+    var inp = document.getElementById('rkgName'); inp.value = rkg.name || (RK_ADAPTER.getName ? RK_ADAPTER.getName() : '') || rkgRead('lcc:student-name') || '';
     rkgStatus(''); ov.classList.add('open'); if (!inp.value) inp.focus();
 }
 function rkgClose() { var ov = document.getElementById('rkgOverlay'); if (ov) ov.classList.remove('open'); }
@@ -312,6 +353,7 @@ FAMILY_PATTERNS = [
     ('verbal', lambda h: 'function submitAll()' in h and 'var KEY = [' in h and 'var NQ = ' in h),
     ('wic', lambda h: 'const SETKEY=' in h and 'function doSubmit(' in h and 'const QD=[' in h),
     ('desmos', lambda h: 'var GQ = [' in h and 'function gFinish()' in h and 'var FP = [' in h),
+    ('worksheet', lambda h: 'const QUESTIONS = [' in h and 'const responses = {}' in h and 'function exportWork()' in h and 'function submitAll()' in h),
 ]
 
 
@@ -339,7 +381,7 @@ def inject(html, family=None, sheet_title=None, key=None, path=None):
     key = key or ('lcc-rk:' + re.sub(r'[^A-Za-z0-9]+', '-', base).lower() + ':progress')
     if sheet_title is None:
         m = re.search(r'<title>(.*?)</title>', html, flags=re.S)
-        sheet_title = re.sub(r'\s+', ' ', m.group(1)).strip() if m else base
+        sheet_title = __import__('html').unescape(re.sub(r'\s+', ' ', m.group(1)).strip()) if m else base
         sheet_title = re.split(r'\s*(?:\||:\s*Interactive Worksheet|— Learning Curve)', sheet_title)[0].strip()
     cfg = "var RK_CFG = " + __import__('json').dumps({'key': key, 'sheet': sheet_title, 'family': family}) + ";"
     js = '<script>/* rkg:js:begin */\n' + cfg + '\n' + ADAPTERS[family].strip('\n') + '\n' + CORE_JS.strip('\n') + '\n/* rkg:js:end */</script>\n'
