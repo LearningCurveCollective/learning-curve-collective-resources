@@ -181,6 +181,30 @@ three. The private-hub sheets use a different, older panel (`claude/results-pane
 in the project: `_build/add_results.py`, a `.txt` report, recipients from `portal.json`);
 this kit is the public-sheet equivalent and does not depend on a hub.
 
+### The generic edition, for the other SAT sheets
+
+`scripts/results_kit_generic.py` gives the same autosave, panel and report to the SAT
+sheets that are not built on the topic-sheet shell. One core (floating "Results for your
+tutor" pill at bottom-left, welcome-back banner, panel, report with embedded JSON) plus
+an adapter per family, detected from the file:
+
+| Family | Sheets | What it hooks |
+|---|---|---|
+| `verbal` | SAT-Reading-1, SAT-Grammar-1, SAT-Grammar-2 | `KEY`/`NQ`, radios `q<n>`, `submitAll`, flags, cross-outs, the elapsed timer |
+| `wic` | SAT-Words-in-Context sets 1 to 3 | `QD`/`N`, radios, `doSubmit`, flags, the countdown |
+| `desmos` | SAT-Desmos-Strategies | the `G`/`GQ` timed set (resumes mid-run, re-renders the summary when done) and the `FP` format drill |
+
+An adapter is four things: `snapshot()` / `restore(state)` for autosave, `collect()`
+returning `{sections: [{title, total, attempted, correct, finished, time, items: [{label,
+tag, q, yours, correct, ok, answered, note}]}]}` for the report, and `hooks` (host
+functions to wrap) with an `afterHook` that mounts the "Send these results" card into the
+sheet's own results area. Add a family by adding an entry to `ADAPTERS` and a detector to
+`FAMILY_PATTERNS`. `python3 results_kit_generic.py <sheet.html>` patches in place and is
+idempotent; `--strip` restores the original byte for byte. Applied 2026-11-02 to all
+seven. Not applied: the Full-Length Practice SAT (its own Export all sections button
+already writes a combined work report), the PSAT/SAT Diagnostic (its own submission and
+backup flow), the playbooks (no graded practice set), and the Tutor Evaluation.
+
 ## Verification (mandatory, before showing the user)
 
 1. **Math**: verify every answer, every rules example, and every accepted grid-in form
@@ -224,3 +248,4 @@ this kit is the public-sheet equivalent and does not depend on a hub.
   there and rebuild, never hand-edit the generated HTML).
 - `scripts/build_quadratics.py` - the same for sheet 2 (carries the forward link to 3).
 - `scripts/results_kit.py` - the autosave + tutor-report kit; patches the shell.
+- `scripts/results_kit_generic.py` - the same kit for the verbal, Words in Context and Desmos sheets.
