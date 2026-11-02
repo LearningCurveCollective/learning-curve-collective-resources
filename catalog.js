@@ -831,13 +831,40 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "calculus--maclaurin-series-worksheet",
+   "path": "calculus/maclaurin-series-worksheet.html",
+   "title": "Maclaurin Series: Turning Any Function into a Polynomial",
+   "description": "Derive the Maclaurin coefficient formula one step at a time, learn the six toolkit series, and watch polynomials hug sin, cos and e^x in an interactive builder, with error and Taylor-center explorers, flashcards, a sprint and two problem sets.",
+   "subject": "calculus",
+   "topic": "Series",
+   "order": 17,
+   "levels": [
+    "Advanced High School",
+    "College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "maclaurin series",
+    "taylor series",
+    "power series",
+    "polynomial approximation",
+    "error estimation",
+    "euler's formula"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "calculus--differentiation-rules-study-sheet",
+    "precalc--sequences-series-worksheet"
+   ]
+  },
+  {
    "id": "calculus--directional-derivative-worksheet",
    "path": "calculus/directional_derivative_worksheet.html",
    "title": "Gradient & Directional Derivatives",
    "description": "Learn the gradient, directional derivatives, and constrained optimization from core formulas, with interactive graphs, drag activities, and practice problems.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 17,
+   "order": 18,
    "levels": [
     "College"
    ],
@@ -861,7 +888,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Learn constrained optimization with theory and geometry, a step-by-step algorithm, solved problems, Desmos graphs, and cases where the method fails.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 18,
+   "order": 19,
    "levels": [
     "College"
    ],
@@ -886,7 +913,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Understand double integrals through visuals, theory, and integration techniques, then practice problems including the Gaussian integral.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 19,
+   "order": 20,
    "levels": [
     "College"
    ],
@@ -911,7 +938,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Work through line integrals with respect to arc length, coordinates, and vector fields, with practice for each type and a unifying summary.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 20,
+   "order": 21,
    "levels": [
     "College"
    ],
@@ -936,7 +963,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Follow a step-by-step chain from scalar components and directional derivatives to surface normals and the gradient descent algorithm used in machine learning.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 21,
+   "order": 22,
    "levels": [
     "College",
     "Advanced College"
