@@ -1473,7 +1473,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "econ--micro--production-economy-blueprints",
    "path": "econ/micro/Production Economy Blueprints.html",
    "title": "Production Economy Blueprints: Robinson Crusoe, PPF & the Production Box",
-   "description": "Four step-by-step systems for production economy problems: the one-person Robinson Crusoe economy (Pareto optimum vs competitive equilibrium), the PPF from one input, and the production Edgeworth box with Leontief and linear technologies, with worked homework problems, whole-number practice sets, and a rapid-fire answer sheet.",
+   "description": "Four step-by-step systems for production economy problems: the one-person Robinson Crusoe economy (Pareto optimum vs competitive equilibrium), the PPF from one input, and the production Edgeworth box with Leontief and linear technologies, with worked examples, whole-number practice sets, and a rapid-fire answer sheet.",
    "subject": "econ",
    "topic": "Microeconomics",
    "order": 17,
