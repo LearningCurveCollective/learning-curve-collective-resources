@@ -833,8 +833,8 @@ window.OPEN_LEARNING_CATALOG = {
   {
    "id": "calculus--maclaurin-series-worksheet",
    "path": "calculus/maclaurin-series-worksheet.html",
-   "title": "Maclaurin Series: Turning Any Function into a Polynomial",
-   "description": "Derive the Maclaurin coefficient formula one step at a time, learn the six toolkit series, and watch polynomials hug sin, cos and e^x in an interactive builder, with error and Taylor-center explorers, flashcards, a sprint and two problem sets.",
+   "title": "Maclaurin Series",
+   "description": "Derive the Maclaurin coefficient formula, learn the six essential series, and compare polynomial approximations with the original functions in an interactive builder, with error and Taylor-center explorers, flashcards, quick recall, and two problem sets.",
    "subject": "calculus",
    "topic": "Series",
    "order": 17,
