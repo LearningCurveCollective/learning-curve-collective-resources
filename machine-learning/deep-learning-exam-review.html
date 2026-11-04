@@ -522,7 +522,38 @@ li { margin-bottom: 8px; }
             </div>
         </div>
 
-        <div class="section-header"><div class="section-number">3</div><h2>Traps that cost points</h2></div>
+        <div class="section-header"><div class="section-number">3</div><h2>Classification metrics: which one, when</h2></div>
+        <div class="card">
+            <p>Everything starts from the confusion matrix. "Positive" is the class you care about finding (the disease, the giraffe).</p>
+            <div class="two-col">
+                <div>
+                    <table class="lcc">
+                        <tr><th></th><th>Predicted +</th><th>Predicted &minus;</th></tr>
+                        <tr><td><strong>Actually +</strong></td><td class="ok">TP</td><td class="bad">FN (miss)</td></tr>
+                        <tr><td><strong>Actually &minus;</strong></td><td class="bad">FP (false alarm)</td><td class="ok">TN</td></tr>
+                    </table>
+                    <p style="font-size:12.5px;color:var(--brown-medium);margin-top:6px;">Recall reads the <em>top row</em>: of all real positives, how many did I catch? Precision reads the <em>left column</em>: of all my alarms, how many were real?</p>
+                </div>
+                <div>
+                    $$\text{Accuracy} = \frac{TP+TN}{\text{all}}\qquad \text{Precision} = \frac{TP}{TP+FP}$$
+                    $$\text{Recall (TPR)} = \frac{TP}{TP+FN}\qquad F_1 = \frac{2PR}{P+R}$$
+                    $$\text{Balanced acc.} = \tfrac12\big(\text{TPR} + \text{TNR}\big)$$
+                </div>
+            </div>
+            <h3>Which metric for which scenario</h3>
+            <table class="lcc">
+                <tr><th>Scenario</th><th>Costly error</th><th>Optimize</th><th>Why</th></tr>
+                <tr><td>Rare disease screening (Fall 2024 Q1m)</td><td>FN: a missed case is severe</td><td class="ok">Recall</td><td>Tolerate some false alarms to catch every case</td></tr>
+                <tr><td>Spam filter on a work inbox</td><td>FP: a real email buried</td><td class="ok">Precision</td><td>Better to let some spam through than lose mail</td></tr>
+                <tr><td>Both errors matter, one number wanted</td><td>Both</td><td class="ok">F1</td><td>Harmonic mean punishes whichever of P, R is low</td></tr>
+                <tr><td>Imbalanced data, "overall correctness"</td><td>Being fooled by the majority class</td><td class="ok">Balanced accuracy</td><td>Averages per-class accuracies, so the rare class counts equally</td></tr>
+                <tr><td>Balanced data, equal costs</td><td>&mdash;</td><td class="ok">Accuracy</td><td>The only setting where plain accuracy is safe</td></tr>
+            </table>
+            <div class="warning-box"><strong>The imbalance traps (PS2-4).</strong> With a fraction $\rho$ of positives, accuracy decomposes as $A = \rho A_1 + (1-\rho)A_0$ (per-class accuracies weighted by class size). The trivial "always say majority" classifier scores $A \ge 1-\rho$ &mdash; 90% accuracy on a 10%-positive set while catching nothing &mdash; but its balanced accuracy is exactly 50%, which exposes it. And the two can move in <em>opposite directions</em>: a model can lose plain accuracy while balanced accuracy rises, because it started catching the rare class at the cost of some majority mistakes. Duplicating every example changes none of these metrics.</div>
+            <div class="idea-box"><strong>One-liners.</strong> Recall: "of the real ones, how many did I find?" Precision: "of my alarms, how many were real?" 100% recall is free (flag everyone), so recall is only meaningful next to precision. Accuracy is a weighted average that the majority class can buy outright.</div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Traps that cost points</h2></div>
         <div class="concept-list">
             <div class="concept-item"><div class="concept-body"><div class="concept-label">Order and transposes in the chain rule</div>Matrix chain rule is "outer on the left": $\frac{\partial h}{\partial z}\cdot\frac{\partial z}{\partial h^{[l-1]}} = DW$, never $WD$. Transposing the whole product reverses the order. Either write no transposes with the loss on the <strong>left</strong>, or transposes with the loss on the <strong>right</strong>. Never mix.</div></div>
             <div class="concept-item"><div class="concept-body"><div class="concept-label">$D$ must be a matrix, not a vector</div>$\mathbb{1}\{z>0\}$ is a vector of 0/1s. The Jacobian of elementwise ReLU is $\mathrm{Diag}$ of that vector. Writing "$W\cdot\mathbb{1}\{z>0\}$" loses the order point and the shape point.</div></div>
@@ -538,7 +569,7 @@ li { margin-bottom: 8px; }
             <div class="concept-item"><div class="concept-body"><div class="concept-label">Minimal networks: never leave a bias blank</div>If nothing is added, the bias is $0$. Plug in $X=0$ and one negative $X$ to check. Absolute value $= \mathrm{ReLU}(X)+\mathrm{ReLU}(-X)$.</div></div>
         </div>
 
-        <div class="section-header"><div class="section-number">4</div><h2>One-liners that earn the point</h2></div>
+        <div class="section-header"><div class="section-number">5</div><h2>One-liners that earn the point</h2></div>
         <div class="card">
             <table class="lcc">
                 <tr><th style="width:34%">Prompt</th><th>Answer in one breath</th></tr>
@@ -1429,7 +1460,7 @@ dZ1   = dA1_1 * (1 - np.power(out["A1_1"], 2)) + dA1_2 * (out["Z1"] >= 0)   <spa
     <!-- ═══════════════════════════ RAPID-FIRE QUIZ ═══════════════════════════ -->
     <div id="tab-quiz" class="tab-content">
         <div class="section-header"><div class="section-number">&#9889;</div><h2>Rapid-fire quiz</h2></div>
-        <div class="card"><p style="margin:0;">Twenty-five questions, instant feedback. Target: 22+ before the exam. Each explanation names the trap the wrong options set.</p></div>
+        <div class="card"><p style="margin:0;">Twenty-six questions, instant feedback. Target: 23+ before the exam. Each explanation names the trap the wrong options set.</p></div>
         <div id="quiz-main"></div>
     </div>
 </div><!-- end container -->
@@ -1680,7 +1711,8 @@ var QUIZ1 = [
  {q: R`With batch size 1, batch normalization`, opts: [R`Works but is slow`, R`Outputs $\beta$ for every input because $\sigma_B^2=0$ and $z-\mu_B=0$`, R`Divides by zero and crashes, which $\epsilon$ cannot prevent`, R`Becomes layer norm automatically`], a: 1, e: R`$\mu_B = z$, so the numerator is 0 and $\hat z = 0$. $\epsilon$ prevents the crash but not the information loss. Layer norm is the fix, not an automatic fallback.`},
  {q: R`In the row-vector convention, $\partial\mathcal{L}/\partial h^{[1]}$ for a plain ReLU network is`, opts: [R`$\delta\,W^{[L+1]}(D^{[L]}W^{[L]})\cdots(D^{[2]}W^{[2]})$`, R`$\delta\,W^{[L+1]}(D^{[2]}W^{[2]})\cdots(D^{[L]}W^{[L]})$`, R`$(W^{[L+1]})^\top\delta\prod_l(D^{[l]}W^{[l]})^\top$`, R`$\prod_l(D^{[l]}W^{[l]})\,\delta$`], a: 0, e: R`Loss on the left, no transposes, layers counting <em>down</em> from $L$ to 2 so shapes chain: $(1\times n_L)(n_L\times n_{L-1})\cdots$. Option C mixes transposes with the wrong order and fails the shape check.`},
  {q: R`Which loss plot signature says "learning rate too high"?`, opts: [R`Smooth, nearly flat lines near the starting loss`, R`Train loss dives, test loss rises early`, R`Spiky loss bouncing by 1+ between epochs`, R`Train and test flat and close, slower than default`], a: 2, e: R`Overshooting the minimum every step produces jagged, unstable curves. Flat = LR too low or too few steps; diverging lines = overfitting; close and slow = regularization.`},
- {q: R`$\hat Y = 3|X-4|-2$ as a two-ReLU network. Output bias $b_1^{[2]}$ and second-layer weights?`, opts: [R`$b_1^{[2]}=0$, $W^{[2]}=(1,1)$`, R`$b_1^{[2]}=-2$, $W^{[2]}=(3,3)$`, R`$b_1^{[2]}=3$, $W^{[2]}=(1,1)$`, R`$b_1^{[2]}=-2$, $W^{[2]}=(3,-3)$`], a: 1, e: R`$|u| = \text{ReLU}(u)+\text{ReLU}(-u)$ with $u = X-4$, so neurons $(1,-4)$ and $(-1,4)$, both scaled by 3, minus 2. Check $X=0$: $0+12-2 = 10 = 3|{-4}|-2$.`}
+ {q: R`$\hat Y = 3|X-4|-2$ as a two-ReLU network. Output bias $b_1^{[2]}$ and second-layer weights?`, opts: [R`$b_1^{[2]}=0$, $W^{[2]}=(1,1)$`, R`$b_1^{[2]}=-2$, $W^{[2]}=(3,3)$`, R`$b_1^{[2]}=3$, $W^{[2]}=(1,1)$`, R`$b_1^{[2]}=-2$, $W^{[2]}=(3,-3)$`], a: 1, e: R`$|u| = \text{ReLU}(u)+\text{ReLU}(-u)$ with $u = X-4$, so neurons $(1,-4)$ and $(-1,4)$, both scaled by 3, minus 2. Check $X=0$: $0+12-2 = 10 = 3|{-4}|-2$.`},
+ {q: R`A disease affects 2% of patients. A model predicts "healthy" for everyone. Its accuracy and balanced accuracy are`, opts: [R`98% and 98%`, R`98% and 50%`, R`50% and 50%`, R`2% and 50%`], a: 1, e: R`Accuracy $= 1-\rho = 98\%$ while catching zero cases; balanced accuracy averages the per-class accuracies: $\tfrac12(0\% + 100\%) = 50\%$. Imbalanced problems never use plain accuracy.`}
 ];
 var FLASH1 = [
  {f: R`Conv output size formula`, b: R`$n_{\text{out}} = \left\lfloor\frac{n+2p-f}{s}\right\rfloor+1$<br>floor first, then $+1$; depth = #filters`},
@@ -1717,7 +1749,10 @@ var FLASH1 = [
  {f: R`Two $3\times3$ vs one $5\times5$`, b: R`Same receptive field and output; $18C^2+2C$ vs $25C^2+C$ params; extra ReLU`},
  {f: R`Pool($k$,$k$) effect`, b: R`$n\to\lfloor n/k\rfloor$, channels unchanged, zero parameters, leftover pixels dropped`},
  {f: R`Transfer learning, a few thousand images`, b: R`Freeze early (generic) layers; fine-tune later layers + new head with a small LR`},
- {f: R`Why cross-entropy beats MSE for classification`, b: R`CE = max likelihood; gradient $\hat y-y$ stays large when confidently wrong, MSE's $(\hat y-y)\sigma'$ saturates`}
+ {f: R`Why cross-entropy beats MSE for classification`, b: R`CE = max likelihood; gradient $\hat y-y$ stays large when confidently wrong, MSE's $(\hat y-y)\sigma'$ saturates`},
+ {f: R`Precision vs. recall, one line each`, b: R`Precision: of my alarms, how many were real? $\frac{TP}{TP+FP}$. Recall: of the real ones, how many did I find? $\frac{TP}{TP+FN}$`},
+ {f: R`When recall, when precision, when F1?`, b: R`Costly miss (disease) &rarr; recall. Costly false alarm (spam filter) &rarr; precision. Both &rarr; F1 $= \frac{2PR}{P+R}$`},
+ {f: R`Balanced accuracy, and the trivial-classifier trap`, b: R`$\tfrac12(\text{TPR}+\text{TNR})$. "Always majority" gets $A\ge1-\rho$ plain accuracy but exactly 50% balanced`}
 ];
 
 FLASH1.push(

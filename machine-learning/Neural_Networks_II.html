@@ -499,6 +499,17 @@ table.cv-grid td.winc { outline: 3px solid var(--gold); outline-offset: -3px; fo
                 <div id="relu-out"></div>
             </div>
             <div class="idea-box"><strong>Compare with sigmoid.</strong> For a sigmoid layer the "mask" is $\text{Diag}(\sigma'(z)) = \text{Diag}(h\odot(1-h))$: every entry between $0$ and $\tfrac14$, none exactly $0$. Every row of $W$ survives but every row is shrunk. ReLU's mask is all-or-nothing, which is why the backward pass through ReLU is a copy-or-drop rather than a scaling.</div>
+
+            <h3 class="sub">Why saturating activations <em>must</em> shrink the gradient &mdash; and big weights don't save you</h3>
+            <p>The per-layer gradient factor is $\sigma'(z)\cdot w$ with $z = wx$. The hope: pick $w$ large enough that $\tfrac14 w > 1$ and the product grows. The trap: <strong>the weight is inside the sigmoid too.</strong> Large $w$ pushes $z$ into the tails, where the slope is not $\tfrac14$ but
+            $$\sigma'(z) \approx e^{-|z|}\quad\text{for large } |z|,$$
+            so the factor behaves like $w\,e^{-|wx|}$: the gain grows <em>linearly</em> in $w$, the slope dies <em>exponentially</em>. The exponential wins. The only region with slope near $\tfrac14$ is a band around $z = 0$ whose width in input space shrinks like $1/w$ &mdash; crank the weight and almost no data lives there. Big weights don't beat saturation; they cause it.</p>
+            <p><strong>A big weight at the end doesn't help either.</strong> $W^{[L+1]}$ enters the product once: one factor of $100$ against nineteen factors of $\tfrac14$ is $100\cdot4^{-19}\approx4\times10^{-10}$. A single factor cannot fight an exponential in $L$. (If training inflates <em>every</em> layer's weights to compensate, every layer saturates &mdash; the same squish &mdash; which is part of why batch norm exists.)</p>
+            <div class="highlight-box">
+                $$\text{depth enters the gradient as a product:}\quad \prod_l D^{[l]}W^{[l]}\qquad\qquad \text{width enters as a sum:}\quad dA_j = \sum_k W_{kj}\,dZ_k$$
+            </div>
+            <p>Products of sub-1 factors collapse exponentially; sums of parallel paths survive as long as one path is healthy. That is why <em>widening</em> is the cheap, safe fix (a silenced direction is covered by adding neurons beside it) while <em>deepening</em> is the dangerous one &mdash; and why ReLU matters: its slope is $1$ no matter how large $z$ grows, so confidence is never taxed. Sigmoid and tanh charge exponentially for distance from the boundary; ReLU charges nothing.</p>
+            <div class="warning-box"><strong>ReLU is not the whole fix.</strong> The product still contains the masks $D^{[l]}$ (a path through 30 layers must survive 30 of them) and the $\|W^{[l]}\|$'s. At 4 layers that's negligible &mdash; the exam's 4-layer ReLU ablation overfit, it didn't vanish &mdash; but at 50+ layers plain ReLU stacks degrade again, which is exactly why ResNets were needed even in the ReLU era. ReLU fixes the slope; residuals fix the product.</div>
         </div>
     </div>
 
@@ -1066,7 +1077,9 @@ var FLASH1 = [
  {f: R`Identity kernel`, b: R`A single 1 in the center. The identity <em>matrix</em> as a kernel is a diagonal blur.`},
  {f: R`Sobel-x detects…`, b: R`vertical edges (left-right brightness change). Its transpose detects horizontal edges.`},
  {f: R`FC layer as a conv`, b: R`One filter the size of the whole input per output unit; same parameter count, output $1\times1\times k$`},
- {f: R`Two $3\times3$ vs one $5\times5$`, b: R`Same receptive field; $18C^2$ vs $25C^2$ weights; extra nonlinearity`}
+ {f: R`Two $3\times3$ vs one $5\times5$`, b: R`Same receptive field; $18C^2$ vs $25C^2$ weights; extra nonlinearity`},
+ {f: R`Can a big weight beat sigmoid saturation?`, b: R`No: the factor is $w\,\sigma'(wx)\approx w\,e^{-|wx|}$ &mdash; linear gain, exponential decay. Big $w$ causes the saturation it tries to outrun`},
+ {f: R`Depth vs. width in the gradient`, b: R`Depth multiplies factors ($\prod D^{[l]}W^{[l]}$: can vanish); width adds parallel paths ($\sum_k W_{kj}dZ_k$: one healthy path survives)`}
 ];
 
 window.addEventListener('DOMContentLoaded', function() {
