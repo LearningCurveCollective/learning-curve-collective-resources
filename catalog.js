@@ -1983,6 +1983,34 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+     "id": "machine-learning--neural-networks-ii",
+     "path": "machine-learning/Neural_Networks_II.html",
+     "title": "Neural Networks II: Matrices, ReLU, Residuals, Convolutions",
+     "description": "Follow-up to Inside a Simple Neural Network. The same 2-3-1 network rewritten as matrices with a live batch calculator, the ReLU mask and layer Jacobian, backprop in matrix form stepped through on a real batch with every shape printed, residual blocks and why gradients survive depth, a convolution explorer with Sobel and identity kernels plus output-size and parameter calculators, a drill generator that draws random architectures (shapes, parameter count, backprop lines, find the bug), flashcards and a 12-question quiz.",
+     "subject": "machine-learning",
+     "topic": "Algorithms, step by step",
+     "order": 4.5,
+     "levels": [
+        "College",
+        "Advanced College"
+     ],
+     "format": "Step-through",
+     "tags": [
+        "neural networks",
+        "backpropagation",
+        "relu",
+        "residual connections",
+        "convolutional networks",
+        "matrix calculus",
+        "machine learning"
+     ],
+     "content": "theory+practice",
+     "builds_on": [
+        "machine-learning--neural-network-step-through",
+        "machine-learning--matrix-calculus-linear-algebra-toolkit"
+     ]
+  },
+  {
    "id": "machine-learning--kmeans-image-compression-worksheet",
    "path": "machine-learning/kmeans_image_compression_worksheet.html",
    "title": "K-Means Image Compression",
@@ -2119,6 +2147,35 @@ window.OPEN_LEARNING_CATALOG = {
     "machine-learning--neural-network-step-through",
     "machine-learning--ml-study-guide"
    ]
+  },
+  {
+     "id": "machine-learning--reading-training-curves",
+     "path": "machine-learning/reading-training-curves.html",
+     "title": "Reading Training Curves",
+     "description": "How to diagnose a training run from its loss plot: the anatomy of a curve (elbow, best epoch, test upturn, gap, noise floor), a playground where learning rate, batch size, width, depth, dropout, weight decay and dataset size reshape a stylized curve live with steps-per-epoch readouts, a four-step diagnosis method, a drill that generates random ablations to name, the CS230 nine-plot matching problem, and a bonus derivation of vanishing gradients with the flat curve it produces. Flashcards and a 12-question quiz.",
+     "subject": "machine-learning",
+     "topic": "Review",
+     "order": 8.5,
+     "levels": [
+        "College",
+        "Advanced College"
+     ],
+     "format": "Interactive worksheet",
+     "tags": [
+        "deep learning",
+        "loss curves",
+        "overfitting",
+        "learning rate",
+        "batch size",
+        "regularization",
+        "vanishing gradients",
+        "machine learning"
+     ],
+     "content": "theory+practice",
+     "builds_on": [
+        "machine-learning--neural-network-step-through",
+        "machine-learning--deep-learning-exam-review"
+     ]
   },
   {
    "id": "medical-study-sheets--hematology--inherited-thrombophilias-ashsap-ch19-study-sheet",
