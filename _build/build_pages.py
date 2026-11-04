@@ -9,6 +9,11 @@ Each page is a small shell: the title, description and heading are baked in (so 
 engines and bookmarks see them), and assets/site.js fills in the course cards from
 catalog.js when the page loads. Re-run this after adding or renaming an area; adding or
 retitling a sheet only needs catalog.js.
+
+An area with "layout": "guided" in catalog.js (test-prep today) renders as a walkthrough:
+a row of tiles in the band to pick a subject, then each subject's sheets as cards under
+numbered steps taken from that subject's "steps" list. Every other area keeps the plain
+course list.
 """
 import html
 import json
@@ -30,7 +35,7 @@ TEMPLATE = """<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body data-page="area" data-area="{key}">
+<body data-page="area" data-area="{key}" data-layout="{layout}">
 
 <header class="topbar">
     <div class="wrap">
@@ -65,6 +70,7 @@ TEMPLATE = """<!DOCTYPE html>
             <input id="bq" type="search" placeholder="Search every resource" autocomplete="off">
             <button class="btn btn-gold btn-sm" type="submit">Search</button>
         </form>
+        <div class="exam-tiles" id="area-tiles" hidden></div>
     </div>
 </section>
 
@@ -139,6 +145,7 @@ def main():
             problems += 1
             continue
         out = TEMPLATE.format(key=html.escape(a["key"]), name=html.escape(a["name"]),
+                              layout=html.escape(a.get("layout", "list")),
                               description=html.escape(a.get("blurb", cat["site"]["description"])))
         dest = os.path.join(ROOT, page)
         current = open(dest, encoding="utf-8").read() if os.path.isfile(dest) else None

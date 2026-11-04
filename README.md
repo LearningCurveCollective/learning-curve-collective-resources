@@ -55,6 +55,12 @@ The hub at [learningcurvecollective.github.io/learning-curve-collective-resource
 
 To add a sheet: drop the .html file in its subject folder, add a record to `catalog.js`, and run `00 Publish.command` (it rebuilds the search index and subject pages, then pushes). `python3 _build/check_catalog.py` lists any sheet that is missing a catalog entry.
 
+To take a sheet off the site without deleting it, add `"hidden": true` to its record in `catalog.js`; remove the flag to bring it back.
+
+The test-day playbook (`test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html`) is one sheet for all three tests: it opens on whichever test its link names (`?test=sat`, `?test=psat` or `?test=act`), and the reader can switch inside. Its catalog record carries a `variants` entry per section so the SAT & PSAT and ACT sections each link to it with the right default.
+
+A subject page can use the plain course list or the guided walkthrough (`"layout": "guided"` on the area in `catalog.js`; `test-prep.html` uses it). The guided page opens with a tile per subject, then lists each subject's sheets as cards under numbered steps taken from that subject's `steps` list; a sheet's `topic` names the step it sits in.
+
 ---
 
 © Learning Curve Collective

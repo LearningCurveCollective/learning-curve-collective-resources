@@ -1,5 +1,10 @@
 /* Open Learning resource catalog. Edit this file to add or retitle a resource; index.html renders from it.
-   builds_on lists the ids of sheets a resource assumes you already know; the page shows them as "Builds on" and the reverse as "Leads to". */
+   builds_on lists the ids of sheets a resource assumes you already know; the page shows them as "Builds on" and the reverse as "Leads to".
+   "hidden": true on a resource keeps the file and this record but leaves the sheet off every page until the flag is removed.
+   An area with "layout": "guided" renders as a walkthrough: tiles to pick a subject, then that subject's "steps" (name, blurb,
+   optional ids of sheets filed elsewhere) as numbered groups of cards; each sheet's "topic" names the step it belongs to.
+   "variants" on a resource, keyed by subject, gives a link suffix and note to use when that sheet is shown in that subject's
+   section (the test-day playbook opens with ?test=act from the ACT section, ?test=sat from SAT & PSAT). */
 window.OPEN_LEARNING_CATALOG = {
  "site": {
   "name": "Open Learning",
@@ -42,7 +47,9 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "test-prep",
    "name": "Test Prep",
    "page": "test-prep.html",
-   "blurb": "Diagnostics, topic practice, full tests, and test-day playbooks built around the digital SAT, the ACT, and the GRE."
+   "blurb": "Diagnostics, topic practice, full tests, and test-day playbooks built around the digital SAT, the ACT, and the GRE.",
+   "layout": "guided",
+   "prompt": "Which test are you preparing for?"
   },
   {
    "key": "econ",
@@ -104,19 +111,79 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "sat",
    "name": "SAT & PSAT",
    "area": "test-prep",
-   "blurb": "Reading, writing, and math sheets built around the digital SAT."
+   "blurb": "Reading, writing, and math sheets built around the digital SAT.",
+   "tag": "SAT",
+   "steps": [
+    {
+     "name": "Start here",
+     "blurb": "Open the playbook first so you know how the test runs (it opens set to the SAT; switch to PSAT inside), then take the diagnostic: your results point you to the skill sheets worth your time."
+    },
+    {
+     "name": "Reading & Writing",
+     "blurb": "One question type per sheet: learn the method, then practice it with instant checking."
+    },
+    {
+     "name": "Math",
+     "blurb": "Get fluent with Desmos first, then work the topic sheets in order."
+    },
+    {
+     "name": "Full-length practice",
+     "blurb": "A complete timed test once the skill sheets feel solid."
+    }
+   ]
   },
   {
    "key": "act",
    "name": "ACT",
    "area": "test-prep",
-   "blurb": "Grammar, math, and science practice for the ACT."
+   "blurb": "Grammar, math, and science practice for the ACT.",
+   "tag": "ACT",
+   "steps": [
+    {
+     "name": "Start here",
+     "blurb": "The test-day playbook, set to the ACT: how the test runs, what to bring, and the CLEAR pacing method.",
+     "ids": [
+      "test-prep--test-day-playbook-sat-psat-act"
+     ]
+    },
+    {
+     "name": "English",
+     "blurb": "Transitions and sentence boundaries, the two highest-yield grammar skills."
+    },
+    {
+     "name": "Math",
+     "blurb": "Formula and concept reviews with interactive diagrams and a mixed review."
+    },
+    {
+     "name": "Science",
+     "blurb": "How to read passages, graphs, and tables fast, then the harder question types."
+    }
+   ]
   },
   {
    "key": "gre",
    "name": "GRE",
    "area": "test-prep",
-   "blurb": "Quant topic sheets, a full practice test, and the Issue essay."
+   "blurb": "Quant topic sheets, a full practice test, and the Issue essay.",
+   "tag": "GRE",
+   "steps": [
+    {
+     "name": "Start here",
+     "blurb": "The 50 core Quant formulas, as a short list and as flash cards."
+    },
+    {
+     "name": "Quant topic sheets",
+     "blurb": "Worked examples, fluency drills, GRE-style questions, and an exit ticket for each topic."
+    },
+    {
+     "name": "Writing",
+     "blurb": "What separates each Issue essay score, with a prompt bank and model essays."
+    },
+    {
+     "name": "Full-length practice",
+     "blurb": "A timed 54-question test covering Quantitative and Verbal Reasoning."
+    }
+   ]
   },
   {
    "key": "econ",
@@ -2010,7 +2077,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "machine-learning--deep-learning-exam-review",
    "path": "machine-learning/deep-learning-exam-review.html",
    "title": "Deep Learning Exam Review",
-   "description": "Cheat sheet, flashcards, and worked derivations for a deep learning exam: gradient descent variants, batch norm, L1 and L2, backprop Jacobians, vanishing gradients and residual blocks, CNN shapes and parameter counts, LoRA, reading loss curves, and hand-built networks, plus a 20-question quiz.",
+   "description": "Cheat sheet, flashcards, and worked derivations for a deep learning exam: gradient descent variants, batch norm, L1 and L2, backprop Jacobians, vanishing gradients and residual blocks, CNN shapes and parameter counts, LoRA, reading loss curves, and hand-built networks, plus five full exam problems to reproduce from a blank page (logistic-regression chain rule, weighted-BCE backprop, vectorized backprop bug hunt, vanishing gradients, an interactive loss-plot matcher) and a 25-question quiz.",
    "subject": "machine-learning",
    "topic": "Review",
    "order": 9,
@@ -2065,7 +2132,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Untimed diagnostic covering SAT Reading & Writing and Math, with a built-in timer and Desmos, to show which skills to review next.",
    "subject": "sat",
    "topic": "Start here",
-   "order": 1,
+   "order": 2,
    "levels": [
     "High School"
    ],
@@ -2089,10 +2156,10 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "test-prep--test-day-playbook-sat-psat-act",
    "path": "test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html",
    "title": "Test Day Playbook: SAT, PSAT & ACT",
-   "description": "Interactive guide to test-day strategy for the SAT, PSAT, and ACT using the CLEAR method, with a true or false warm up and flashcards.",
+   "description": "Interactive guide to test-day strategy for the SAT, PSAT, and ACT using the CLEAR method. Pick your test and every number switches to match, with a true or false warm up, timers, flashcards, and Bluebook practice.",
    "subject": "sat",
    "topic": "Start here",
-   "order": 2,
+   "order": 1,
    "levels": [
     "High School"
    ],
@@ -2110,6 +2177,16 @@ window.OPEN_LEARNING_CATALOG = {
     "PSAT",
     "ACT"
    ],
+   "variants": {
+    "sat": {
+     "suffix": "?test=sat",
+     "note": "Opens set to the SAT"
+    },
+    "act": {
+     "suffix": "?test=act",
+     "note": "Opens set to the ACT"
+    }
+   },
    "content": "theory",
    "builds_on": []
   },
@@ -2119,8 +2196,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Reading 1: Student Notes (SCORE)",
    "description": "Teaches the SCORE method for Student Notes questions on SAT Reading & Writing, with a game plan, timed sprint, practice section, and answers.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 4,
+   "topic": "Reading & Writing",
+   "order": 2,
    "levels": [
     "High School"
    ],
@@ -2145,8 +2222,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Grammar 1: Transitions (LINK)",
    "description": "Teaches the LINK method for transition questions on SAT Reading & Writing, with a game plan, practice section, flashcards, and strategy tips.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 5,
+   "topic": "Reading & Writing",
+   "order": 3,
    "levels": [
     "High School"
    ],
@@ -2171,8 +2248,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Grammar 2: Sentence Boundaries",
    "description": "Teaches how to choose the right punctuation between sentence parts on the SAT, with fragment checks, eliminating twins, three boundary patterns, and practice.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 6,
+   "topic": "Reading & Writing",
+   "order": 4,
    "levels": [
     "High School"
    ],
@@ -2200,8 +2277,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Words in Context: Set 1 (Words 1–40)",
    "description": "Forty SAT vocabulary words with flashcards you can hide to quiz yourself, strategy tips, and 40 practice questions that test each word in context.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 7,
+   "topic": "Reading & Writing",
+   "order": 5,
    "levels": [
     "High School"
    ],
@@ -2225,8 +2302,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Words in Context: Set 2 (Words 41–80)",
    "description": "Forty more SAT vocabulary words with hideable flashcards for self-quizzing, strategy tips, and 40 practice questions that test each word in context.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 8,
+   "topic": "Reading & Writing",
+   "order": 6,
    "levels": [
     "High School"
    ],
@@ -2252,8 +2329,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Words in Context: Set 3 (Words 81–120)",
    "description": "Another forty SAT vocabulary words with hideable flashcards for self-quizzing, strategy tips, and 40 practice questions that test each word in context.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 9,
+   "topic": "Reading & Writing",
+   "order": 7,
    "levels": [
     "High School"
    ],
@@ -2279,8 +2356,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Math: Desmos Strategies",
    "description": "Shows how to use Desmos on every digital SAT Math question, with calculator basics, thirteen techniques, answer formatting tips, a formula list, practice, and a timed 15-question SAT Gauntlet.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 10,
+   "topic": "Math",
+   "order": 8,
    "levels": [
     "High School"
    ],
@@ -2307,8 +2384,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Math 1: Linear Equations",
    "description": "Reviews slope, intercepts, linear forms, and systems on the SAT, with worked examples, fluency drills, a gauntlet, challenge questions, and an exit ticket.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 11,
+   "topic": "Math",
+   "order": 9,
    "levels": [
     "High School"
    ],
@@ -2336,8 +2413,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Math 2: Quadratics",
    "description": "Reviews the three forms of a parabola, factoring, the vertex, the discriminant, and line-parabola systems on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 12,
+   "topic": "Math",
+   "order": 10,
    "levels": [
     "High School"
    ],
@@ -2369,8 +2446,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "SAT Math 3: Functions",
    "description": "Reviews function notation, domain and where a function is undefined, composition, equations true for all values of x, translations, and range on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 13,
+   "topic": "Math",
+   "order": 11,
    "levels": [
     "High School"
    ],
@@ -2400,8 +2477,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
-   "topic": "Reading, writing & math",
-   "order": 14,
+   "topic": "Full-length practice",
+   "order": 12,
    "levels": [
     "High School"
    ],
@@ -2428,8 +2505,9 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Test Day Playbook: SAT & PSAT",
    "description": "Interactive guide to test-day strategy for the SAT and PSAT using the CLEAR method, with a warm up, timers, flashcards, and Bluebook practice.",
    "subject": "sat",
-   "topic": "Start here",
-   "order": 3,
+   "hidden": true,
+   "topic": "Test day",
+   "order": 13,
    "levels": [
     "High School"
    ],
@@ -2457,7 +2535,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "ACT Grammar 1: Transitions (LINK)",
    "description": "Teaches the LINK method for transition questions in ACT English, with a game plan, practice section, flashcards, and strategy tips.",
    "subject": "act",
-   "topic": "Grammar, math & science",
+   "topic": "English",
    "order": 1,
    "levels": [
     "High School"
@@ -2483,7 +2561,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "ACT Grammar 2: Sentence Boundaries",
    "description": "Teaches how to choose the right punctuation between sentence parts on the ACT, with fragment checks, eliminating twins, three boundary patterns, and practice.",
    "subject": "act",
-   "topic": "Grammar, math & science",
+   "topic": "English",
    "order": 2,
    "levels": [
     "High School"
@@ -2512,7 +2590,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "ACT Math: Geometry Review",
    "description": "Reviews ACT geometry formulas for angles, triangles, polygons, circles, coordinate geometry, and trigonometry, with interactive diagrams and a mixed review.",
    "subject": "act",
-   "topic": "Grammar, math & science",
+   "topic": "Math",
    "order": 3,
    "levels": [
     "High School"
@@ -2539,7 +2617,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "ACT Math: Statistics & Probability Review",
    "description": "Reviews ACT formulas and concepts for data and graphs, center and spread, distributions, probability, and counting, with sliders and a mixed review.",
    "subject": "act",
-   "topic": "Grammar, math & science",
+   "topic": "Math",
    "order": 4,
    "levels": [
     "High School"
@@ -2566,7 +2644,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "ACT Science 1: Core Data Skills (CHART)",
    "description": "Teaches the CHART method for reading ACT Science passages, graphs, and tables, with a game plan, strategy tips, a timed practice section, and scoring.",
    "subject": "act",
-   "topic": "Grammar, math & science",
+   "topic": "Science",
    "order": 5,
    "levels": [
     "High School"
@@ -2593,7 +2671,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "ACT Science 2: Advanced Question Types (IMPACT)",
    "description": "Covers harder ACT Science question types with the IMPACT method, including missing data, inference, counting, plugging in, and averages, plus timed practice and scoring.",
    "subject": "act",
-   "topic": "Grammar, math & science",
+   "topic": "Science",
    "order": 6,
    "levels": [
     "High School"
@@ -2622,6 +2700,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Tutor Skills Evaluation",
    "description": "Timed tutor evaluation covering SAT Reading & Writing and Math, with Desmos, used to assess a tutor's skills in a single sitting.",
    "subject": "sat",
+   "hidden": true,
    "topic": "For tutors",
    "order": 15,
    "levels": [
@@ -2647,7 +2726,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Quant: Formula Sheet & Flash Cards",
    "description": "Memorize the 50 core GRE Quant formulas with a short list, a full formula reference, flash cards, and a review pile.",
    "subject": "gre",
-   "topic": "Quant: reference",
+   "topic": "Start here",
    "order": 1,
    "levels": [
     "College"
@@ -2673,7 +2752,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Quant: Simplifying Exponents",
    "description": "Learn the exponent rules with two worked examples each, then build fluency with timed drills, GRE-style questions, challenge problems, and an exit ticket.",
    "subject": "gre",
-   "topic": "Quant: topic sheets",
+   "topic": "Quant topic sheets",
    "order": 2,
    "levels": [
     "College"
@@ -2700,7 +2779,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Quant: Sequences",
    "description": "Translate between sequence rules and terms using worked examples, then practice with fluency drills, GRE-style questions, challenge problems, and an exit ticket.",
    "subject": "gre",
-   "topic": "Quant: topic sheets",
+   "topic": "Quant topic sheets",
    "order": 3,
    "levels": [
     "College"
@@ -2727,7 +2806,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Quant: Interest & Percent Change",
    "description": "Treat interest problems as percent change, with worked examples, fluency drills, GRE-style questions, challenge problems, and an exit ticket.",
    "subject": "gre",
-   "topic": "Quant: topic sheets",
+   "topic": "Quant topic sheets",
    "order": 4,
    "levels": [
     "College"
@@ -2754,7 +2833,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Quant: Circles",
    "description": "Learn the circle rules for radius, diameter, and central angles with worked examples, then practice using drills, GRE-style questions, and challenges.",
    "subject": "gre",
-   "topic": "Quant: topic sheets",
+   "topic": "Quant topic sheets",
    "order": 5,
    "levels": [
     "College"
@@ -2781,7 +2860,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Quant: Triangles",
    "description": "Master eight triangle rules with worked examples, then practice using fluency drills, GRE-style questions, challenge problems, and an exit ticket.",
    "subject": "gre",
-   "topic": "Quant: topic sheets",
+   "topic": "Quant topic sheets",
    "order": 6,
    "levels": [
     "College"
@@ -2809,7 +2888,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "GRE Essay: The Issue Essay Roadmap",
    "description": "Learn what separates each Issue essay score, then use the architecture, prompt types, example and prompt banks, model essays, and drills to improve.",
    "subject": "gre",
-   "topic": "Writing & full practice",
+   "topic": "Writing",
    "order": 7,
    "levels": [
     "College"
@@ -2835,7 +2914,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Full-Length GRE Practice Test",
    "description": "Take a timed 54-question practice test covering Quantitative and Verbal Reasoning, then review your results.",
    "subject": "gre",
-   "topic": "Writing & full practice",
+   "topic": "Full-length practice",
    "order": 8,
    "levels": [
     "College"

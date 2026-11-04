@@ -1156,7 +1156,11 @@ function addTabNav() {
 
 /* ── init ── */
 (function(){
-  setTest("sat", false);
+  /* The hub links here with ?test=sat, ?test=psat or ?test=act (a #act hash works too) so the
+     page opens on the test the reader is taking; the switcher still lets them change it. */
+  var want = '';
+  try { want = (new URLSearchParams(location.search).get('test') || location.hash.replace(/^#/, '') || '').toLowerCase(); } catch (e) {}
+  setTest(TEST_TABS[want] ? want : "sat", false);
   myStart();
   lqAddAbc();
   addTabNav();

@@ -5,7 +5,11 @@
     var C = window.OPEN_LEARNING_CATALOG;
     if (!C) return;
     var BASE = C.site.base;
-    var R = C.resources.slice().sort(function (a, b) { return a.subject === b.subject ? a.order - b.order : 0; });
+    /* A record with "hidden": true keeps its file and its catalog entry but is left off every
+       page (lists, search, counts) until the flag is removed. ALL is only used to tell the
+       GitHub safety net below that the file is accounted for. */
+    var ALL = C.resources.slice();
+    var R = ALL.filter(function (r) { return !r.hidden; }).sort(function (a, b) { return a.subject === b.subject ? a.order - b.order : 0; });
     var BYID = {}; R.forEach(function (r) { BYID[r.id] = r; });
     var SUBJ = {}; C.subjects.forEach(function (s) { SUBJ[s.key] = s; });
     var AREA = {}; C.areas.forEach(function (a) { AREA[a.key] = a; });
@@ -402,7 +406,7 @@
         return u;
     }
     function topicsOf(rs) { var t = []; rs.forEach(function (r) { if (t.indexOf(r.topic) === -1) t.push(r.topic); }); return t; }
-    function renderArea(key) {
+    var renderArea = function (key) {
         var a = AREA[key]; if (!a) return;
         var subs = subjectsIn(key);
         var rs = R.filter(function (r) { return SUBJ[r.subject].area === key; });
@@ -438,9 +442,116 @@
         if (key && !key.childNodes.length) {
             key.appendChild(el('span', { 'class': 'k', html: levelGlyph(1) + 'the dot marks each sheet’s academic level on the curve, from Foundations to Graduate. Hover a title for details.' }));
         }
+    };
+    /* ---------- guided layout (data-layout="guided"): tiles to pick a subject, then each
+       subject as numbered steps of cards. The steps come from the subject's "steps" list in
+       catalog.js; a step may also name "ids" of sheets filed under another subject (the
+       shared test-day playbook, say), shown with a note. Topics not in the list, such as
+       "Recently added", are appended as extra steps. ---------- */
+    function examBadge(s) { return el('span', { 'class': 'exam-badge', text: s.tag || s.name }); }
+    function sheetCard(r, forSubject, note) {
+        /* r.variants[subject] = { suffix, note }: the same sheet opens differently depending on
+           which section it is clicked from (the test-day playbook opens set to the ACT from
+           the ACT section). The suffix goes on the href; the note replaces any default note. */
+        var href = enc(r.path), v = r.variants && forSubject ? r.variants[forSubject] : null;
+        if (v) { href += v.suffix || ''; if (v.note) note = v.note; }
+        var fmt = el('span', { 'class': 'fmt', html: (r.content && ICON[r.content] ? ICON[r.content] : '') + '<span>' + r.format + '</span>' });
+        if (r.topic === 'Recently added') fmt.appendChild(el('span', { 'class': 'new', text: 'New' }));
+        var kids = [fmt, el('span', { 'class': 't', text: r.title })];
+        if (r.description) kids.push(el('span', { 'class': 'd', text: r.description }));
+        if (note) kids.push(el('span', { 'class': 'note', text: note }));
+        return el('a', { 'class': 'sheet', href: href }, kids);
+    }
+    function stepsFor(s, rs) {
+        var out = [], seen = {};
+        (s.steps || []).forEach(function (d) {
+            var own = rs.filter(function (r) { return r.topic === d.name; });
+            var shared = (d.ids || []).map(function (id) { return BYID[id]; }).filter(function (r) { return r && r.subject !== s.key; });
+            if (!own.length && !shared.length) return;
+            seen[d.name] = true;
+            out.push({ name: d.name, blurb: d.blurb || '', rs: own, shared: shared });
+        });
+        topicsOf(rs).forEach(function (t) {
+            if (!seen[t]) out.push({ name: t, blurb: '', rs: rs.filter(function (r) { return r.topic === t; }), shared: [] });
+        });
+        return out;
+    }
+    function watchSections(nav, ids) {
+        if (!('IntersectionObserver' in window)) return;
+        var links = {};
+        nav.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                Object.keys(links).forEach(function (k) { links[k].classList.toggle('current', k === e.target.id); });
+            });
+        }, { rootMargin: '-130px 0px -55% 0px' });
+        ids.forEach(function (id) { var t = document.getElementById(id); if (t) io.observe(t); });
+    }
+    function renderAreaGuided(key) {
+        var a = AREA[key]; if (!a) return;
+        var rs = R.filter(function (r) { return SUBJ[r.subject].area === key; });
+        var courses = [];
+        subjectsIn(key).forEach(function (s) {
+            var sr = rs.filter(function (r) { return r.subject === s.key; });
+            if (sr.length) courses.push({ s: s, rs: sr, steps: stepsFor(s, sr) });
+        });
+        var meta = document.getElementById('band-meta');
+        if (meta) meta.textContent = rs.length + ' free resources across ' + listNames(courses.map(function (c) { return c.s.name; }));
+
+        var tiles = document.getElementById('area-tiles');
+        if (tiles) {
+            tiles.innerHTML = ''; tiles.hidden = false;
+            tiles.appendChild(el('p', { 'class': 'tiles-label', text: a.prompt || 'Choose a subject' }));
+            var row = el('div', { 'class': 'tiles-row' });
+            courses.forEach(function (c) {
+                row.appendChild(el('a', { 'class': 'exam-tile', href: '#' + c.s.key }, [
+                    examBadge(c.s),
+                    el('span', { 'class': 'exam-text' }, [
+                        el('span', { 'class': 'exam-name', text: c.s.name }),
+                        el('span', { 'class': 'exam-count', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') }),
+                        el('span', { 'class': 'exam-steps', text: c.steps.map(function (st) { return st.name; }).join(' · ') })
+                    ]),
+                    el('span', { 'class': 'exam-go', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' })
+                ]));
+            });
+            tiles.appendChild(row);
+        }
+
+        var nav = document.getElementById('subnav-links');
+        if (nav) {
+            nav.innerHTML = '';
+            courses.forEach(function (c) { nav.appendChild(el('a', { href: '#' + c.s.key, html: c.s.name + '<span class="n">' + c.rs.length + '</span>' })); });
+        }
+
+        var root = document.getElementById('courses'); root.innerHTML = '';
+        courses.forEach(function (c) {
+            var sec = el('section', { 'class': 'exam', id: c.s.key, 'aria-labelledby': 'h-' + c.s.key });
+            sec.appendChild(el('div', { 'class': 'exam-head' }, [
+                examBadge(c.s),
+                el('div', null, [el('h2', { id: 'h-' + c.s.key, text: c.s.name }), c.s.blurb ? el('p', { 'class': 'blurb', text: c.s.blurb }) : null]),
+                el('span', { 'class': 'n', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') })
+            ]));
+            var ol = el('ol', { 'class': 'steps' });
+            c.steps.forEach(function (st, j) {
+                var grid = el('div', { 'class': 'sheet-grid' });
+                st.rs.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key)); });
+                st.shared.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key, 'Shared with ' + SUBJ[r.subject].name)); });
+                ol.appendChild(el('li', { 'class': 'step' }, [
+                    el('span', { 'class': 'num', text: String(j + 1), 'aria-hidden': 'true' }),
+                    el('div', { 'class': 'step-head' }, [el('h3', { text: st.name }), st.blurb ? el('p', { text: st.blurb }) : null]),
+                    grid
+                ]));
+            });
+            sec.appendChild(ol);
+            root.appendChild(sec);
+        });
+        if (nav) watchSections(nav, courses.map(function (c) { return c.s.key; }));
     }
     function initArea() {
         var key = document.body.getAttribute('data-area');
+        var guided = document.body.getAttribute('data-layout') === 'guided';
+        renderArea = guided ? renderAreaGuided : renderArea;
         renderArea(key);
         var f = document.getElementById('band-search');
         if (f) f.addEventListener('submit', function (e) {
@@ -458,7 +569,7 @@
     /* ---------- safety net: list any published .html not yet in the catalog ---------- */
     (function () {
         var API = 'https://api.github.com/repos/LearningCurveCollective/learning-curve-collective-resources/git/trees/main?recursive=1';
-        var known = {}; R.forEach(function (r) { known[r.path] = true; });
+        var known = {}; ALL.forEach(function (r) { known[r.path] = true; });
         var folderToSubject = { 'medical study sheets': 'medicine', 'test-prep': 'sat' };
         fetch(API).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
             if (!data || !data.tree) return;
