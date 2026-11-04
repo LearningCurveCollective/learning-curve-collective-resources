@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Final 48 Hours: Test Day Checklist: Learning Curve Collective</title>
-<meta name="description" content="A short, calm checklist for the two days before the SAT, PSAT or ACT: sleep, food, movement, a last pass through your revision bank, the bag, the morning, and the playbook compressed to one screen.">
+<meta name="description" content="A short, calm checklist for the two days before the SAT, PSAT or ACT: a clickable timeline from two nights before to the room, sleep, food, movement, a last pass through your revision bank, the bag (ID first), and the playbook on one screen.">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
 <style>
@@ -61,107 +61,125 @@ a { color: var(--green-dark); }
 @media (max-width: 760px) { .nav { display: none; } .bar .in { padding: 8px 16px; } }
 
 /* ---------- page ---------- */
-.container { max-width: 960px; margin: 0 auto; padding: 28px 24px 48px; }
-.lede { background: white; border-left: 5px solid var(--gold); border-radius: 8px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 22px; }
-.lede p { margin: 0; font-size: 17px; line-height: 1.6; }
-.lede p + p { margin-top: 10px; font-size: 15px; color: var(--text-medium); }
+.container { max-width: 960px; margin: 0 auto; padding: 24px 24px 44px; }
+.lede { background: white; border-left: 5px solid var(--gold); border-radius: 8px; padding: 16px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 18px; }
+.lede p { margin: 0; font-size: 16.5px; line-height: 1.55; }
+.lede p + p { margin-top: 6px; font-size: 14.5px; color: var(--text-medium); }
 
-.clear { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 0 0 8px; }
-.clear div { background: white; border-radius: 10px; padding: 12px 12px 12px; border-top: 4px solid var(--green-dark); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-.clear div:nth-child(2) { border-top-color: var(--gold); }
-.clear div:nth-child(3) { border-top-color: var(--copper); }
-.clear div:nth-child(4) { border-top-color: var(--green-light); }
-.clear div:nth-child(5) { border-top-color: var(--brown-dark); }
-.clear b { display: block; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; line-height: 1; color: var(--green-dark); margin-bottom: 6px; }
-.clear strong { display: block; font-size: 13.5px; margin-bottom: 3px; }
-.clear span { font-size: 12.5px; color: var(--text-medium); line-height: 1.4; display: block; }
-.clear-foot { font-size: 13.5px; color: var(--text-medium); margin: 10px 0 0; }
-@media (max-width: 760px) { .clear { grid-template-columns: repeat(2, 1fr); } .clear div:last-child { grid-column: 1 / -1; } }
+/* ---------- clickable timeline ---------- */
+.tl-wrap { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 18px 22px 14px; margin-bottom: 18px; }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+.tl::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: 23px; height: 3px; background: var(--cream-dark); border-radius: 3px; }
+.tl a { display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; color: var(--text-dark); position: relative; padding: 0 6px; }
+.tl .dot { width: 48px; height: 48px; border-radius: 50%; background: white; border: 3px solid var(--gold); color: var(--brown-dark); font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13.5px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; box-shadow: 0 0 0 4px white; }
+.tl .name { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--green-dark); margin-top: 8px; line-height: 1.2; }
+.tl .sub { font-size: 12.5px; color: var(--text-medium); margin-top: 2px; line-height: 1.35; }
+.tl a:hover .dot { background: var(--gold-pale); transform: translateY(-2px); }
+.tl li.current .dot { border-color: var(--green-dark); box-shadow: 0 0 0 4px white, 0 0 0 7px rgba(33,68,43,0.18); }
+.tl li.done .dot { background: var(--green-dark); border-color: var(--green-dark); color: white; }
+.tl li.done .dot::after { content: "\2713"; margin-left: 4px; font-size: 12px; }
+.tl-foot { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 14px 0 0; padding-top: 12px; border-top: 1px dashed var(--cream-dark); font-size: 13.5px; color: var(--text-medium); }
+.tl-foot a { color: var(--green-dark); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--gold-light); }
+.tl-foot a:hover { border-color: var(--green-dark); }
+@media (max-width: 640px) { .tl { grid-template-columns: repeat(2, 1fr); gap: 16px 0; } .tl::before { display: none; } .tl .sub { display: none; } }
 
-section.sec { margin-top: 38px; scroll-margin-top: 70px; }
-.section-header { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; }
-.section-number { width: 40px; height: 40px; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Switzer', 'Space Grotesk', sans-serif; }
-.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--green-dark); margin: 0; line-height: 1.2; }
-.section-header .when { display: block; font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 2px; }
-.sec > p.intro { margin: 6px 0 16px 54px; color: var(--text-medium); font-size: 15.5px; max-width: 64ch; }
+/* ---------- CLEAR strip ---------- */
+.clear { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 4px; }
+.clear .k { font-size: 11.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); margin-right: 4px; }
+.clear span.p { display: inline-flex; align-items: center; gap: 7px; background: white; border-radius: 20px; padding: 6px 13px 6px 7px; font-size: 13.5px; font-weight: 600; color: var(--text-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.clear span.p b { width: 24px; height: 24px; border-radius: 50%; background: var(--green-dark); color: white; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.clear span.p:nth-child(3) b { background: var(--gold); color: var(--brown-dark); }
+.clear span.p:nth-child(4) b { background: var(--copper); }
+.clear span.p:nth-child(5) b { background: var(--green-light); }
+.clear span.p:nth-child(6) b { background: var(--brown-dark); }
+.clear-foot { font-size: 13.5px; color: var(--text-medium); margin: 8px 0 0; }
+
+/* ---------- sections ---------- */
+section.sec { margin-top: 30px; scroll-margin-top: 66px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin: 0 0 4px; }
+.section-number { width: 38px; height: 38px; border-radius: 50%; background: var(--gold); color: var(--brown-dark); font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Switzer', 'Space Grotesk', sans-serif; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--green-dark); margin: 0; line-height: 1.2; }
+.section-header h2 small { display: block; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 400; color: var(--text-medium); margin-top: 1px; }
+.sec > p.intro { margin: 4px 0 12px 50px; color: var(--text-medium); font-size: 14.5px; max-width: 66ch; }
 @media (max-width: 640px) { .sec > p.intro { margin-left: 0; } }
 
-.card { background: white; border-radius: 8px; border-left: 5px solid var(--gold); padding: 18px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 14px; }
+.card { background: white; border-radius: 8px; border-left: 5px solid var(--gold); padding: 6px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 12px; }
 .card.green { border-left-color: var(--green-dark); }
-.card.brown { border-left-color: #8B5E3C; }
-.card h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 17px; margin: 0 0 10px; color: var(--green-dark); }
-.idea-box { background: rgba(33,68,43,0.07); border-left: 4px solid var(--green-dark); border-radius: 0 8px 8px 0; padding: 13px 18px; margin: 14px 0 0; font-size: 14.5px; }
-.idea-box strong { color: var(--green-dark); }
-.warn-box { background: rgba(221,162,94,0.14); border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; padding: 13px 18px; margin: 14px 0 0; font-size: 14.5px; }
+.card.brown { border-left-color: #8B5E3C; padding: 16px 20px; }
+.card h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 16px; margin: 0 0 8px; color: var(--green-dark); }
+.calm { display: flex; align-items: center; gap: 10px; margin: 10px 0 0; font-size: 14px; color: var(--green-dark); }
+.calm::before { content: ""; width: 22px; height: 3px; background: var(--gold); border-radius: 3px; flex-shrink: 0; }
 
 /* checklists */
 .ck-list { list-style: none; margin: 0; padding: 0; }
 .ck-list li { border-bottom: 1px solid #EFEAE0; }
 .ck-list li:last-child { border-bottom: 0; }
-.ck-list label { display: flex; align-items: flex-start; gap: 14px; padding: 12px 4px; cursor: pointer; }
-.ck-list input { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border: 2px solid var(--green-medium); border-radius: 7px; background: white; flex-shrink: 0; margin: 2px 0 0; cursor: pointer; position: relative; transition: background 0.15s, border-color 0.15s; }
+.ck-list label { display: flex; align-items: flex-start; gap: 12px; padding: 10px 2px; cursor: pointer; }
+.ck-list input { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border: 2px solid var(--green-medium); border-radius: 7px; background: white; flex-shrink: 0; margin: 2px 0 0; cursor: pointer; position: relative; transition: background 0.15s, border-color 0.15s; }
 .ck-list input:checked { background: var(--green-dark); border-color: var(--green-dark); }
-.ck-list input:checked::after { content: ""; position: absolute; left: 7px; top: 2px; width: 6px; height: 12px; border: solid white; border-width: 0 3px 3px 0; transform: rotate(45deg); }
+.ck-list input:checked::after { content: ""; position: absolute; left: 6px; top: 1px; width: 6px; height: 11px; border: solid white; border-width: 0 3px 3px 0; transform: rotate(45deg); }
 .ck-list input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.ck-list .t { font-size: 15.5px; line-height: 1.5; }
+.ck-list .t { font-size: 15px; line-height: 1.5; }
 .ck-list .t b { color: var(--green-dark); }
-.ck-list .t small { display: block; color: var(--text-medium); font-size: 13.5px; margin-top: 2px; }
+.ck-list .t small { display: block; color: var(--text-medium); font-size: 13.5px; margin-top: 1px; }
 .ck-list input:checked ~ .t { color: var(--text-medium); }
 .ck-list input:checked ~ .t b { color: var(--green-medium); }
+.id-flag { display: inline-block; background: var(--gold); color: var(--brown-dark); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-left: 4px; vertical-align: 2px; }
 
 /* bag list */
-.bag { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 18px; }
-.bag li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; padding: 6px 0; border-bottom: 1px dashed #EFEAE0; }
-.bag li::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 7px; }
+.bag { list-style: none; margin: 4px 0 2px; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px 18px; }
+.bag li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; padding: 5px 0; border-bottom: 1px dashed #EFEAE0; line-height: 1.45; }
+.bag li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 7px; }
+.bag li.id { grid-column: 1 / -1; background: var(--gold-pale); border-radius: 8px; padding: 9px 12px; border-bottom: 0; font-weight: 600; margin-bottom: 4px; }
+.bag li.id::before { background: var(--copper); }
 @media (max-width: 640px) { .bag { grid-template-columns: 1fr; } }
 
-/* in the room: numbered moves */
-.moves { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.moves li { background: white; border-radius: 8px; padding: 14px 16px 14px 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; gap: 12px; align-items: flex-start; border-left: 4px solid var(--green-dark); }
+/* in the room: eight moves */
+.moves { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.moves li { background: white; border-radius: 8px; padding: 11px 14px 11px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start; border-left: 4px solid var(--green-dark); font-size: 14.5px; line-height: 1.45; }
 .moves li:nth-child(3n+2) { border-left-color: var(--gold); }
 .moves li:nth-child(3n) { border-left-color: #8B5E3C; }
-.moves .n { width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-.moves b { display: block; font-size: 15px; color: var(--green-dark); margin-bottom: 2px; }
-.moves li > div > span { font-size: 14px; color: var(--text-medium); line-height: 1.5; }
+.moves .n { width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: var(--brown-dark); font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.moves b { color: var(--green-dark); }
+.moves-foot { font-size: 13.5px; color: var(--text-medium); margin: 10px 0 0; background: rgba(221,162,94,0.14); border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; padding: 9px 14px; }
 @media (max-width: 640px) { .moves { grid-template-columns: 1fr; } }
 
 /* two ideas */
-.ideas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.idea { background: white; border-radius: 10px; padding: 16px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 5px solid var(--gold); }
+.ideas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.idea { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 5px solid var(--gold); }
 .idea:nth-child(2) { border-top-color: var(--green-dark); }
-.idea label { display: block; font-size: 11.5px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 700; color: var(--copper); margin-bottom: 8px; }
+.idea label { display: block; font-size: 11.5px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 700; color: var(--copper); margin-bottom: 7px; }
 .idea:nth-child(2) label { color: var(--green-dark); }
-.idea textarea, .rb input { width: 100%; font-family: 'Inter', sans-serif; font-size: 16px; border: 1.5px solid var(--cream-dark); border-radius: 8px; padding: 10px 12px; resize: vertical; min-height: 64px; color: var(--text-dark); background: #FCFBF8; }
+.idea textarea, .rb input { width: 100%; font-family: 'Inter', sans-serif; font-size: 15px; border: 1.5px solid var(--cream-dark); border-radius: 8px; padding: 9px 11px; resize: vertical; min-height: 56px; color: var(--text-dark); background: #FCFBF8; }
 .idea textarea:focus, .rb input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(221,162,94,0.25); }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.chips .l { width: 100%; font-size: 12.5px; color: var(--text-medium); margin-bottom: 2px; }
-.chip { border: 1.5px solid var(--cream-dark); background: white; color: var(--green-dark); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; padding: 5px 11px; border-radius: 14px; cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center; }
+.chips .l { font-size: 12.5px; color: var(--text-medium); margin-right: 2px; }
+.chip { border: 1.5px solid var(--cream-dark); background: white; color: var(--green-dark); font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 500; padding: 4px 10px; border-radius: 14px; cursor: pointer; }
 .chip:hover { border-color: var(--gold); background: var(--gold-pale); }
 @media (max-width: 640px) { .ideas { grid-template-columns: 1fr; } }
-.rb { margin-top: 14px; }
+.rb { margin-top: 12px; }
 .rb table { width: 100%; border-collapse: collapse; }
-.rb th { text-align: left; font-size: 11.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); font-weight: 700; padding: 0 8px 6px 0; }
-.rb td { padding: 4px 8px 4px 0; vertical-align: top; }
-.rb td:first-child { width: 36px; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; color: var(--gold); font-size: 20px; padding-top: 10px; }
-.rb input { min-height: 0; font-size: 15px; padding: 9px 11px; }
-@media (max-width: 640px) { .rb th:nth-child(2), .rb td:nth-child(2) { display: none; } .rb table, .rb tbody, .rb tr, .rb td { display: block; } .rb td:first-child { display: none; } .rb td { padding: 4px 0; } }
+.rb th { text-align: left; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); font-weight: 700; padding: 0 8px 4px 0; }
+.rb td { padding: 3px 8px 3px 0; vertical-align: top; }
+.rb td:first-child { width: 30px; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; color: var(--gold); font-size: 18px; padding-top: 8px; }
+.rb input { min-height: 0; font-size: 14.5px; padding: 8px 10px; }
+@media (max-width: 640px) { .rb thead { display: none; } .rb table, .rb tbody, .rb tr, .rb td { display: block; } .rb td:first-child { display: none; } .rb td { padding: 3px 0; } }
 
 /* quick facts */
-.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
-.facts div { background: white; border-radius: 8px; padding: 12px 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid var(--green-dark); }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+.facts div { background: white; border-radius: 8px; padding: 10px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid var(--green-dark); }
 .facts div:nth-child(2) { border-top-color: var(--gold); }
 .facts div:nth-child(3) { border-top-color: #8B5E3C; }
 .facts div:nth-child(4) { border-top-color: var(--green-light); }
-.facts small { display: block; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); font-weight: 700; }
-.facts b { display: block; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; color: var(--green-dark); margin-top: 3px; line-height: 1.15; }
-.facts span { font-size: 12.5px; color: var(--text-medium); display: block; margin-top: 2px; }
+.facts small { display: block; font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); font-weight: 700; }
+.facts b { display: block; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 19px; color: var(--green-dark); margin-top: 2px; line-height: 1.15; }
+.facts span { font-size: 12px; color: var(--text-medium); display: block; margin-top: 1px; }
 @media (max-width: 640px) { .facts { grid-template-columns: repeat(2, 1fr); } }
-.ft { width: 100%; border-collapse: collapse; font-size: 14.5px; }
-.ft th { text-align: left; font-size: 11.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); padding: 6px 10px 6px 0; border-bottom: 2px solid var(--cream-dark); }
-.ft td { padding: 8px 10px 8px 0; border-bottom: 1px solid #EFEAE0; vertical-align: top; }
-.ft td:first-child { font-weight: 600; color: var(--green-dark); }
-.ft tr:last-child td { border-bottom: 0; }
-.full-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; background: var(--green-dark); color: white; text-decoration: none; font-weight: 700; font-size: 14.5px; padding: 11px 18px; border-radius: 14px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); }
+.sections { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+.sections span { background: white; border-radius: 8px; padding: 7px 12px; font-size: 13.5px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.sections span b { color: var(--green-dark); }
+.sections span.brk { background: var(--gold-pale); }
+.full-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; background: var(--green-dark); color: white; text-decoration: none; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 14px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); }
 .full-link:hover { background: #2F5A3C; }
 .full-link .k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
 
@@ -171,20 +189,21 @@ body[data-test="sat"] .tv[data-t~="sat"], body[data-test="psat"] .tv[data-t~="ps
 body[data-test="sat"] .tvb[data-t~="sat"], body[data-test="psat"] .tvb[data-t~="psat"], body[data-test="act"] .tvb[data-t~="act"] { display: block; }
 body[data-test="sat"] .chip.tv[data-t~="sat"], body[data-test="psat"] .chip.tv[data-t~="psat"], body[data-test="act"] .chip.tv[data-t~="act"] { display: inline-block; }
 body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-t~="psat"], body[data-test="act"] ul.tvb[data-t~="act"] { display: grid; }
+body[data-test="sat"] li.tvb[data-t~="sat"], body[data-test="psat"] li.tvb[data-t~="psat"], body[data-test="act"] li.tvb[data-t~="act"] { display: flex; }
 .tsw-toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--green-dark); color: white; font-size: 13.5px; font-weight: 600; padding: 9px 16px; border-radius: 20px; opacity: 0; transition: all 0.25s; pointer-events: none; z-index: 60; }
 .tsw-toast.on { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- footer ---------- */
-.footer { background: var(--brown-dark); color: white; text-align: center; padding: 28px 24px; border-top: 4px solid var(--gold); margin-top: 20px; opacity: 0.95; }
+.footer { background: var(--brown-dark); color: white; text-align: center; padding: 26px 24px; border-top: 4px solid var(--gold); margin-top: 18px; opacity: 0.95; }
 .footer p { margin: 0; font-size: 14px; }
 
 @media print {
-    .bar, .printb, .chips, .full-link, .prog { display: none !important; }
+    .bar, .printb, .chips, .full-link, .prog, .tl-foot { display: none !important; }
     body { background: white; }
     .header { background: var(--green-dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .card, .moves li, .clear div, .facts div, .idea { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+    .card, .moves li, .facts div, .idea, .tl-wrap { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
     section.sec { break-inside: avoid-page; }
-    .ck-list input { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .ck-list input, .bag li.id, .tl .dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
@@ -213,12 +232,12 @@ body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-
             <button class="tsw-b" data-t="act" onclick="setTest('act')">ACT</button>
         </div>
         <nav class="nav" aria-label="On this page">
-            <a href="#two-nights">Two nights out</a>
-            <a href="#night-before">Night before</a>
+            <a href="#two-nights">48h</a>
+            <a href="#night-before">24h</a>
             <a href="#morning">Morning</a>
             <a href="#room">In the room</a>
             <a href="#ideas">Two ideas</a>
-            <a href="#facts">Quick facts</a>
+            <a href="#facts">Facts</a>
         </nav>
         <span class="prog"><span class="track"><span class="fill" id="prog-fill"></span></span><span id="prog-text">0 of 0 done</span><button type="button" onclick="resetChecks()" title="Clear every checkmark">reset</button></span>
         <button class="printb" type="button" onclick="window.print()">Print</button>
@@ -228,134 +247,138 @@ body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-
 <div class="container">
 
     <div class="lede">
-        <p>The studying is done. These two days have one job: get you to the room rested, fed, and calm, with a plan you can say in five letters.</p>
-        <p>Everything below is a reminder, not new material. If you meet something new in the next two days, skip it. The test rewards what you already know. Tick things off as you go; this page remembers your checkmarks on this device.</p>
+        <p>The studying is done. The next two days have one job: get you to the room rested, fed, and calm.</p>
+        <p>Nothing here is new. It is a short reminder of what you already know, and this page remembers your checkmarks on this device.</p>
+    </div>
+
+    <div class="tl-wrap">
+        <ol class="tl" id="tl">
+            <li data-sec="two-nights"><a href="#two-nights"><span class="dot">48h</span><span class="name">Two nights before</span><span class="sub">Sleep, move, last real review</span></a></li>
+            <li data-sec="night-before"><a href="#night-before"><span class="dot">24h</span><span class="name">The night before</span><span class="sub">Light review, pack the bag</span></a></li>
+            <li data-sec="morning"><a href="#morning"><span class="dot">AM</span><span class="name">Test morning</span><span class="sub">Eat, ID, leave early</span></a></li>
+            <li data-sec="room"><a href="#room"><span class="dot">Go</span><span class="name">In the room</span><span class="sub">The playbook on one screen</span></a></li>
+        </ol>
+        <p class="tl-foot"><span>Also on this page:</span><a href="#ideas">Your two ideas</a><a href="#facts">Quick facts for the <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT</span><span class="tv" data-t="act">ACT</span></a></p>
     </div>
 
     <div class="clear" aria-label="The CLEAR method">
-        <div><b>C</b><strong>Clock it</strong><span>Know your pace. One glance at the halfway point.</span></div>
-        <div><b>L</b><strong>Lead with the question</strong><span>Read the question before the passage, every time.</span></div>
-        <div><b>E</b><strong>Eliminate on screen</strong><span>Cross out what is wrong so you never see it again.</span></div>
-        <div><b>A</b><strong>Answer everything</strong><span>No penalty for guessing. A blank is the only sure zero.</span></div>
-        <div><b>R</b><strong>Return, don't stall</strong><span>Stuck for 30 seconds? Mark it, move on, come back.</span></div>
+        <span class="k">CLEAR</span>
+        <span class="p"><b>C</b>Clock it</span>
+        <span class="p"><b>L</b>Lead with the question</span>
+        <span class="p"><b>E</b>Eliminate on screen</span>
+        <span class="p"><b>A</b>Answer everything</span>
+        <span class="p"><b>R</b>Return, don't stall</span>
     </div>
-    <p class="clear-foot">Five letters, said at the start of every <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span>. That is the whole strategy; the rest of this page is about arriving in shape to use it. <a id="pb-link-top" href="Test-Day-Playbook-SAT-PSAT-ACT.html">Open the full Test Day Playbook</a> if you want the long version.</p>
+    <p class="clear-foot">Five letters, said at the start of every <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span>. That is the whole strategy. <a id="pb-link-top" href="Test-Day-Playbook-SAT-PSAT-ACT.html">The full playbook</a> has the long version if you want it.</p>
 
     <!-- === 1. Two nights before === -->
     <section class="sec" id="two-nights">
-        <div class="section-header"><div class="section-number">1</div><h2><span class="when">48 hours out</span>Two nights before: the night that matters most</h2></div>
-        <p class="intro">Tonight is your real night of sleep. The night before a test is usually a little restless no matter what you do, so bank the rest now.</p>
+        <div class="section-header"><div class="section-number">48h</div><h2>Two nights before<small>The night that matters most</small></h2></div>
+        <p class="intro">Tonight is your real night of sleep. The night before a test is often a little restless no matter what, so bank the rest now.</p>
         <div class="card green">
             <ul class="ck-list">
-                <li><label><input type="checkbox" class="ck" data-k="s1"><span class="t"><b>Sleep:</b> a full night at your normal bedtime.<small>Phone charging outside the bedroom. Screens off an hour before. This is the single most useful thing on this page.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s2"><span class="t"><b>Move:</b> 30 to 45 minutes of exercise today.<small>A run, a walk, a practice, a bike ride. It makes tonight's sleep deeper. Nothing that leaves you sore tomorrow.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s3"><span class="t"><b>Revision bank, last real pass:</b> redo your 10 to 15 trickiest problems cold.<small>The ones you have missed before, not the ones you like. For each one, say the trap out loud and then the fix. This is the highest-value hour of the week.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s4"><span class="t"><b>No full practice test today.</b><small>That belonged to last week. Today is review, not endurance.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s5"><span class="t"><b>Logistics:</b> confirm the test center, the report time, and how you are getting there.<small><span class="tv" data-t="sat">Find your admission ticket and check the report time printed on it.</span><span class="tv" data-t="psat">Check your school's instructions for the room and the start time.</span><span class="tv" data-t="act">Find your admission ticket and check the report time printed on it. Decide now whether you are testing on paper or online if you had a choice; your ticket says which.</span></small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s6"><span class="t"><b><span class="tv" data-t="sat">Bluebook check:</span><span class="tv" data-t="psat">Device check:</span><span class="tv" data-t="act">Calculator check:</span></b> <span class="tv" data-t="sat">open Bluebook on the device you will use. It is installed, updated, and signed in, and the practice test loads.</span><span class="tv" data-t="psat">if your school asked you to bring a device, open Bluebook on it: installed, updated, signed in. If the school provides devices, there is nothing to do here.</span><span class="tv" data-t="act">an approved model, fresh batteries in, a spare set in the bag. There is no built-in calculator on the ACT.</span></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s1"><span class="t"><b>A full night's sleep</b> at your normal bedtime.<small>Phone out of the bedroom, screens off an hour before. The single most useful thing on this page.</small></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s2"><span class="t"><b>30 to 45 minutes of exercise.</b> It makes tonight's sleep deeper.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s3"><span class="t"><b>Revision bank, last real pass:</b> redo your 10 to 15 trickiest misses cold and say the fix out loud.<small>Not a full practice test; that was last week.</small></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s5"><span class="t"><b>Logistics:</b> test center, report time, how you get there. Find your <span class="tv" data-t="sat act">admission ticket</span><span class="tv" data-t="psat">school's instructions</span> and your <b>photo ID</b>.<small><span class="tv" data-t="sat">Open Bluebook on the device you will use: updated and signed in.</span><span class="tv" data-t="psat">If your school asked you to bring a device, open Bluebook on it: updated and signed in.</span><span class="tv" data-t="act">Calculator: an approved model with fresh batteries. There is no built-in one.</span></small></span></label></li>
             </ul>
         </div>
-        <div class="idea-box"><strong>Why tonight?</strong> Sleep is when the week's practice gets filed. Two solid nights in a row is ideal; if you can only count on one, make it this one.</div>
+        <p class="calm">That is all for tonight. Sleep is the work.</p>
     </section>
 
     <!-- === 2. The night before === -->
     <section class="sec" id="night-before">
-        <div class="section-header"><div class="section-number">2</div><h2><span class="when">24 hours out</span>The night before: light and early</h2></div>
-        <p class="intro">Twenty to thirty minutes of review, then the bag, then dinner, then bed. Tomorrow's score was earned already.</p>
+        <div class="section-header"><div class="section-number">24h</div><h2>The night before<small>Light and early</small></h2></div>
+        <p class="intro">Twenty minutes of review, then the bag, then dinner, then bed. Tomorrow's score was earned already.</p>
         <div class="card green">
             <ul class="ck-list">
-                <li><label><input type="checkbox" class="ck" data-k="n1"><span class="t"><b>Review, 20 to 30 minutes, no more.</b><small>Say the five letters. Read your two ideas (below). Skim the one-line fixes from your revision bank, not the full problems. Stop by early evening. No new topics, no new question types.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n2"><span class="t"><b>Pack the bag</b> and put it by the door.<small>The list is just below. Everything goes in tonight, not in the morning.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n3"><span class="t"><b>Dinner:</b> a normal meal you have eaten a hundred times.<small>Nothing new, nothing heavy, water with it.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n4"><span class="t"><b>Set two alarms.</b> Lay out clothes, including a layer: test rooms run cold.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n5"><span class="t"><b>Screens off an hour before bed.</b> Bed at your usual time, not earlier.<small>Going to bed two hours early usually means two hours of staring at the ceiling.</small></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n1"><span class="t"><b>Review for 20 to 30 minutes, then stop.</b> Say CLEAR, read your two ideas, skim your revision-bank fixes. Nothing new.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n2"><span class="t"><b>Pack the bag</b> and put it by the door. ID goes in first.<span class="id-flag">ID</span></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n3"><span class="t"><b>A normal dinner,</b> two alarms set, clothes laid out with a layer: test rooms run cold.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n5"><span class="t"><b>Screens off an hour before bed;</b> bed at your usual time, not earlier.</span></label></li>
             </ul>
         </div>
         <div class="card">
             <h3>In the bag<span class="tv" data-t="sat">: SAT</span><span class="tv" data-t="psat">: PSAT</span><span class="tv" data-t="act">: ACT</span></h3>
             <ul class="bag tvb" data-t="sat">
-                <li>Your device with Bluebook installed, charged to 100%, plus the charger (or nothing, if you are using a school device)</li>
+                <li class="id">Photo ID. You will not be admitted without it; check it is in the bag tonight and in your pocket tomorrow.</li>
                 <li>Admission ticket</li>
-                <li>Photo ID</li>
-                <li>Approved calculator with fresh batteries (Desmos is built in; this is your backup)</li>
-                <li>Two pencils (scratch paper is handed out in the room)</li>
+                <li>Your device with Bluebook, charged to 100%, plus the charger (nothing, if you are using a school device)</li>
+                <li>Approved calculator with fresh batteries (Desmos is built in; this is backup)</li>
+                <li>Two pencils (scratch paper is provided)</li>
                 <li>Snack and water for the break</li>
                 <li>A layer</li>
             </ul>
             <ul class="bag tvb" data-t="psat">
-                <li>Whatever your school's instructions list; many schools provide the device</li>
+                <li class="id">Photo ID. Required if you test anywhere but your own school, and worth bringing regardless: in the bag tonight, in your pocket tomorrow.</li>
+                <li>Whatever your school's instructions list (many schools provide the device)</li>
                 <li>If you were asked to bring a device: charged to 100%, Bluebook installed, plus the charger</li>
                 <li>Approved calculator if you want a backup to Desmos</li>
-                <li>Two pencils (scratch paper is handed out in the room)</li>
+                <li>Two pencils (scratch paper is provided)</li>
                 <li>Snack and water for the break</li>
                 <li>A layer</li>
             </ul>
             <ul class="bag tvb" data-t="act">
+                <li class="id">Photo ID, current and acceptable. You will not be admitted without it; check it is in the bag tonight and in your pocket tomorrow.</li>
                 <li>Admission ticket</li>
-                <li>Acceptable photo ID</li>
-                <li>Approved calculator with fresh batteries, plus a spare set (there is no built-in calculator)</li>
+                <li>Approved calculator with fresh batteries, plus spares (there is no built-in one)</li>
                 <li>Sharpened No. 2 pencils if you are testing on paper</li>
                 <li>Snack and water for the break</li>
                 <li>A layer</li>
             </ul>
         </div>
-        <div class="idea-box"><strong>Can't sleep?</strong> Lying still in the dark with your eyes closed is still rest, and you banked a full night two days ago. Do not check the clock; it only makes the math worse.</div>
+        <p class="calm">Can't sleep? Resting in the dark still counts, and you banked a full night yesterday.</p>
     </section>
 
     <!-- === 3. Test morning === -->
     <section class="sec" id="morning">
-        <div class="section-header"><div class="section-number">3</div><h2><span class="when">The morning</span>Test morning: nothing rushed, nothing new</h2></div>
-        <p class="intro">The plan is already in your head. This morning only has to deliver you to the room on time, fed, and awake.</p>
+        <div class="section-header"><div class="section-number">AM</div><h2>Test morning<small>Nothing rushed, nothing new</small></h2></div>
         <div class="card green">
             <ul class="ck-list">
-                <li><label><input type="checkbox" class="ck" data-k="m1"><span class="t"><b>Wake up early enough that nothing is hurried.</b><small>A short walk or a stretch wakes the body up faster than a second alarm.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m2"><span class="t"><b>Breakfast with protein</b> and a glass of water.<small>Eggs, yogurt, peanut butter, oatmeal. Your normal amount of caffeine, not more.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m3"><span class="t"><b>Two minutes, not twenty:</b> say the five letters, read your two ideas.<small>That is all the studying this morning gets.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m4"><span class="t"><b>Leave early.</b> Arrive before the report time on your <span class="tv" data-t="sat act">ticket</span><span class="tv" data-t="psat">school's schedule</span>.<small>The calm of being early is worth more than ten extra minutes of sleep.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m5"><span class="t"><b>Bathroom before you sit down.</b> Phone off and away.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m6"><span class="t"><b>One sentence, to yourself:</b> "I prepared. My only job now is to run the plan."</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m1"><span class="t"><b>Up early enough that nothing is hurried.</b> A short walk or a stretch wakes you up faster than a second alarm.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m2"><span class="t"><b>Breakfast with protein</b> and a glass of water. Your normal caffeine, not more.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m7"><span class="t"><b>ID in your pocket, <span class="tv" data-t="sat act">ticket</span><span class="tv" data-t="psat">instructions</span> with it, bag on your shoulder.</b> Check all three before the door closes behind you.<span class="id-flag">ID</span></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m4"><span class="t"><b>Leave early.</b> Two minutes of review at most: the five letters and your two ideas. Phone off and away before you sit down.</span></label></li>
             </ul>
         </div>
+        <p class="calm">You prepared. The only job now is to run the plan.</p>
     </section>
 
     <!-- === 4. In the room === -->
     <section class="sec" id="room">
-        <div class="section-header"><div class="section-number">4</div><h2><span class="when">Test day</span>In the room: the playbook on one screen</h2></div>
-        <p class="intro">This is the whole Test Day Playbook compressed. If you remember nothing else, remember the five letters.</p>
+        <div class="section-header"><div class="section-number">Go</div><h2>In the room<small>The playbook on one screen</small></h2></div>
         <ol class="moves">
-            <li><span class="n">1</span><div><b>First minute of every <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span></b><span>Say C L E A R. Breathe once. Go.<span class="tv" data-t="act"> On paper, write your halfway checkpoint at the top of the section first.</span></span></div></li>
-            <li><span class="n">2</span><div><b>Lead with the question</b><span>Read the question before the passage, every question, every section. The single habit with the biggest payoff.</span></div></li>
-            <li><span class="n">3</span><div><b>Halfway glance</b><span>One look at the clock at the halfway question. Adjust once, not constantly.</span></div></li>
-            <li><span class="n">4</span><div><b>Thirty seconds without a plan</b><span>Pick a placeholder answer, <span class="tv" data-t="sat psat">mark it for review</span><span class="tv" data-t="act">flag it (online) or circle the number (paper)</span>, move on. Come back with the time you saved.</span></div></li>
-            <li><span class="n">5</span><div><b>Cross out, don't remember</b><span><span class="tv" data-t="sat psat">Use the ABC eliminator on every question</span><span class="tv" data-t="act">Use the eliminator online, or cross out letters in your booklet on paper</span>. If you know a choice is wrong, you should never see it again.</span></div></li>
-            <li><span class="n">6</span><div><b>Answer everything</b><span>No penalty for wrong answers. Never leave a question blank on the way past; once a <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span> ends, it is closed for good.</span></div></li>
-            <li><span class="n">7</span><div><b>Last 90 seconds</b><span>Stop solving. Fill every blank with your letter of the day, then return to one marked question.<span class="tv" data-t="sat psat"> Bluebook warns you at five minutes.</span><span class="tv" data-t="act"> On paper you get a five-minute warning, nothing else.</span></span></div></li>
-            <li><span class="n">8</span><div><b>The break: ten minutes</b><span>Stand up, eat, drink water. Do not relive the section you just finished. It is over and it went fine.</span></div></li>
+            <li><span class="n">1</span><div><b>First minute of every <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span>:</b> say C L E A R, breathe once, go.<span class="tv" data-t="act"> On paper, write your halfway checkpoint at the top first.</span></div></li>
+            <li><span class="n">2</span><div><b>Read the question before the passage.</b> Every question, every time.</div></li>
+            <li><span class="n">3</span><div><b>One clock check at the halfway question.</b> Adjust once, not constantly.</div></li>
+            <li><span class="n">4</span><div><b>Thirty seconds without a plan:</b> placeholder answer, <span class="tv" data-t="sat psat">mark it</span><span class="tv" data-t="act">flag or circle it</span>, move on.</div></li>
+            <li><span class="n">5</span><div><b>Cross out wrong choices</b> <span class="tv" data-t="sat psat">with the ABC eliminator</span><span class="tv" data-t="act">on screen or in the booklet</span>, not in your head.</div></li>
+            <li><span class="n">6</span><div><b>Answer everything.</b> No penalty for wrong answers; a blank is the only sure zero.</div></li>
+            <li><span class="n">7</span><div><b>Last 90 seconds:</b> fill every blank with your letter of the day, then return to one marked question.</div></li>
+            <li><span class="n">8</span><div><b>The break:</b> stand up, eat, drink water. Do not relive the section. It is over and it went fine.</div></li>
         </ol>
-        <div class="warn-box tvb" data-t="sat"><strong>One SAT-specific thing.</strong> Module 1 sets your ceiling: the harder Module 2 is the only path to the top of the scale, so give Module 1 your sharpest focus. When you type an answer, type fractions as fractions (2/3); a decimal needs at least three digits (.667, never .67).</div>
-        <div class="warn-box tvb" data-t="psat"><strong>One PSAT-specific thing.</strong> Module 1 sets your ceiling: the harder Module 2 is the only path to the top of the scale, so give Module 1 your sharpest focus. When you type an answer, type fractions as fractions (2/3); a decimal needs at least three digits (.667, never .67).</div>
-        <div class="warn-box tvb" data-t="act"><strong>One ACT-specific thing.</strong> The ACT is not adaptive: everyone gets the same questions in the same order, so an early stumble changes nothing later. Every question is multiple choice, four choices each, so there is nothing to type. Calculator for all of Math.</div>
+        <p class="moves-foot tvb" data-t="sat"><b>One SAT-specific thing:</b> Module 1 sets your ceiling, so bring your sharpest focus to it. Type fractions as fractions (2/3); decimals need three digits (.667, never .67).</p>
+        <p class="moves-foot tvb" data-t="psat"><b>One PSAT-specific thing:</b> Module 1 sets your ceiling, so bring your sharpest focus to it. Type fractions as fractions (2/3); decimals need three digits (.667, never .67).</p>
+        <p class="moves-foot tvb" data-t="act"><b>One ACT-specific thing:</b> it is not adaptive, so an early stumble changes nothing later. Four choices on every question, nothing to type, calculator for all of Math.</p>
     </section>
 
     <!-- === 5. Your two ideas === -->
     <section class="sec" id="ideas">
-        <div class="section-header"><div class="section-number">5</div><h2><span class="when">Write these down</span>Your two ideas</h2></div>
-        <p class="intro">You will not carry a playbook into the room. You will carry two ideas: one about pacing, one about the mistake you make most and its fix. Write them here, read them tomorrow morning. They save on this device.</p>
+        <div class="section-header"><div class="section-number">2</div><h2>Your two ideas<small>What you carry into the room</small></h2></div>
+        <p class="intro">Not the whole playbook: two ideas. One about pacing, one about the mistake you make most and its fix. Write them here and read them in the morning; they save on this device.</p>
         <div class="ideas">
             <div class="idea"><label for="idea1">Idea 1: pacing</label><textarea id="idea1" class="mem" data-k="idea1" placeholder="e.g. Halfway glance, adjust once."></textarea></div>
             <div class="idea"><label for="idea2">Idea 2: my usual mistake, and the fix</label><textarea id="idea2" class="mem" data-k="idea2" placeholder="e.g. I misread what is being asked. Fix: underline the last sentence before I solve."></textarea></div>
         </div>
         <div class="chips">
-            <span class="l">Tap one to drop it into an empty box:</span>
+            <span class="l">Tap to use:</span>
             <button class="chip" type="button" onclick="useChip(this)">Read the question first, every time</button>
             <button class="chip" type="button" onclick="useChip(this)">30 seconds, then mark and move</button>
             <button class="chip" type="button" onclick="useChip(this)">Halfway glance, adjust once</button>
             <button class="chip" type="button" onclick="useChip(this)">Fill every blank before time is called</button>
             <button class="chip" type="button" onclick="useChip(this)">Underline what the question is actually asking</button>
-            <button class="chip" type="button" onclick="useChip(this)">Check the sign and the units before I pick</button>
             <button class="chip tv" data-t="sat psat" type="button" onclick="useChip(this)">Type fractions as fractions</button>
-            <button class="chip tv" data-t="sat psat" type="button" onclick="useChip(this)">Graph it in Desmos before I solve by hand</button>
-            <button class="chip tv" data-t="act" type="button" onclick="useChip(this)">Write my halfway checkpoint at the top of each section</button>
+            <button class="chip tv" data-t="act" type="button" onclick="useChip(this)">Halfway checkpoint at the top of each section</button>
         </div>
         <div class="card brown rb">
             <h3>From my revision bank: the three I miss most</h3>
@@ -372,8 +395,7 @@ body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-
 
     <!-- === 6. Quick facts === -->
     <section class="sec" id="facts">
-        <div class="section-header"><div class="section-number">6</div><h2><span class="when">Reference</span>Quick facts: the <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT/NMSQT</span><span class="tv" data-t="act">ACT</span> at a glance</h2></div>
-        <p class="intro">The numbers from the full playbook, for the test you picked at the top. No surprises on the day.</p>
+        <div class="section-header"><div class="section-number">i</div><h2>Quick facts<small>The <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT/NMSQT</span><span class="tv" data-t="act">ACT</span> at a glance, so nothing surprises you</small></h2></div>
 
         <div class="tvb" data-t="sat">
             <div class="facts">
@@ -382,19 +404,8 @@ body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-
                 <div><small>Score range</small><b>400 to 1600</b><span>two sections, 200 to 800 each</span></div>
                 <div><small>Adaptive?</small><b>Yes</b><span>Module 1 picks your Module 2</span></div>
             </div>
-            <div class="card">
-                <table class="ft">
-                    <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Per question</th></tr></thead>
-                    <tbody>
-                        <tr><td>Reading &amp; Writing</td><td>54 (2 modules of 27)</td><td>64 min (2 &times; 32)</td><td>about 1 min 11 sec</td></tr>
-                        <tr><td>Break</td><td colspan="3">10 minutes between the sections</td></tr>
-                        <tr><td>Math</td><td>44 (2 modules of 22)</td><td>70 min (2 &times; 35)</td><td>about 1 min 35 sec</td></tr>
-                    </tbody>
-                </table>
-                <p style="margin: 12px 0 0; font-size: 14px; color: var(--text-medium);">No essay. No penalty for wrong answers. Desmos is built into every Math question; scratch paper and a formula reference sheet are provided. Scores arrive about two weeks after a weekend test date.</p>
-            </div>
+            <div class="sections"><span><b>Reading &amp; Writing</b> 54 questions &middot; 64 min (2 modules of 32)</span><span class="brk">10-minute break</span><span><b>Math</b> 44 questions &middot; 70 min (2 modules of 35) &middot; Desmos built in</span></div>
         </div>
-
         <div class="tvb" data-t="psat">
             <div class="facts">
                 <div><small>Total time</small><b>2 h 14 min</b><span>plus a 10-minute break</span></div>
@@ -402,19 +413,8 @@ body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-
                 <div><small>Score range</small><b>320 to 1520</b><span>two sections, 160 to 760 each</span></div>
                 <div><small>Adaptive?</small><b>Yes</b><span>Module 1 picks your Module 2</span></div>
             </div>
-            <div class="card">
-                <table class="ft">
-                    <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Per question</th></tr></thead>
-                    <tbody>
-                        <tr><td>Reading &amp; Writing</td><td>54 (2 modules of 27)</td><td>64 min (2 &times; 32)</td><td>about 1 min 11 sec</td></tr>
-                        <tr><td>Break</td><td colspan="3">10 minutes between the sections</td></tr>
-                        <tr><td>Math</td><td>44 (2 modules of 22)</td><td>70 min (2 &times; 35)</td><td>about 1 min 35 sec</td></tr>
-                    </tbody>
-                </table>
-                <p style="margin: 12px 0 0; font-size: 14px; color: var(--text-medium);">Same app, structure, timing and question types as the SAT, scored 320 to 1520. No essay. No penalty for wrong answers. Scores go to you and your school, not to colleges; for juniors they also go to National Merit.</p>
-            </div>
+            <div class="sections"><span><b>Reading &amp; Writing</b> 54 questions &middot; 64 min (2 modules of 32)</span><span class="brk">10-minute break</span><span><b>Math</b> 44 questions &middot; 70 min (2 modules of 35) &middot; Desmos built in</span></div>
         </div>
-
         <div class="tvb" data-t="act">
             <div class="facts">
                 <div><small>Core time</small><b>2 h 05 min</b><span>plus 40 min if you added Science</span></div>
@@ -422,21 +422,8 @@ body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-
                 <div><small>Score range</small><b>1 to 36</b><span>composite = average of English, Math, Reading</span></div>
                 <div><small>Adaptive?</small><b>No</b><span>everyone sees the same form</span></div>
             </div>
-            <div class="card">
-                <table class="ft">
-                    <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Per question</th></tr></thead>
-                    <tbody>
-                        <tr><td>English</td><td>50 (5 passages)</td><td>35 min</td><td>about 42 sec</td></tr>
-                        <tr><td>Math</td><td>45</td><td>50 min</td><td>about 67 sec</td></tr>
-                        <tr><td>Break</td><td colspan="3">10 minutes after Math</td></tr>
-                        <tr><td>Reading</td><td>36 (4 passages)</td><td>40 min</td><td>about 67 sec</td></tr>
-                        <tr><td>Science (optional)</td><td>40 (6 passages)</td><td>40 min</td><td>60 sec</td></tr>
-                    </tbody>
-                </table>
-                <p style="margin: 12px 0 0; font-size: 14px; color: var(--text-medium);">No penalty for wrong answers. Four answer choices on every question, Math included. Bring your own approved calculator; there is no built-in one. Science and the optional Writing essay are reported separately from the composite. Scores usually arrive two to four weeks after the test.</p>
-            </div>
+            <div class="sections"><span><b>English</b> 50 q &middot; 35 min</span><span><b>Math</b> 45 q &middot; 50 min</span><span class="brk">10-minute break</span><span><b>Reading</b> 36 q &middot; 40 min</span><span><b>Science</b> (optional) 40 q &middot; 40 min</span></div>
         </div>
-
         <a id="pb-link" class="full-link" href="Test-Day-Playbook-SAT-PSAT-ACT.html"><span class="k">Full version</span>Open the Test Day Playbook &rarr;</a>
     </section>
 
@@ -475,12 +462,17 @@ function toast(msg) {
     clearTimeout(el._t); el._t = setTimeout(function () { el.classList.remove('on'); }, 1500);
 }
 
-/* checklists: remembered on this device; progress counts the visible items for the chosen test */
+/* checklists: remembered on this device; the bar counts every item, the timeline marks a stop done when its list is */
 function updateProgress() {
-    var all = Array.from(document.querySelectorAll('input.ck')).filter(function (c) { return c.offsetParent !== null; });
+    var all = Array.from(document.querySelectorAll('input.ck'));
     var done = all.filter(function (c) { return c.checked; }).length;
     document.getElementById('prog-text').textContent = done + ' of ' + all.length + ' done';
     document.getElementById('prog-fill').style.width = (all.length ? Math.round(100 * done / all.length) : 0) + '%';
+    document.querySelectorAll('#tl li[data-sec]').forEach(function (li) {
+        var sec = document.getElementById(li.getAttribute('data-sec'));
+        var boxes = sec ? Array.from(sec.querySelectorAll('input.ck')) : [];
+        li.classList.toggle('done', boxes.length > 0 && boxes.every(function (c) { return c.checked; }));
+    });
 }
 function resetChecks() {
     document.querySelectorAll('input.ck').forEach(function (c) { c.checked = false; delete store['ck:' + c.getAttribute('data-k')]; });
@@ -505,17 +497,19 @@ function useChip(btn) {
     target.value = text; target.dispatchEvent(new Event('input')); target.focus();
 }
 
-/* highlight the section in view in the sticky nav */
+/* highlight the stop in view, in the timeline and the sticky nav */
 (function () {
     if (!('IntersectionObserver' in window)) return;
-    var links = {};
-    document.querySelectorAll('.nav a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+    var navLinks = {}, tlItems = {};
+    document.querySelectorAll('.nav a').forEach(function (a) { navLinks[a.getAttribute('href').slice(1)] = a; });
+    document.querySelectorAll('#tl li[data-sec]').forEach(function (li) { tlItems[li.getAttribute('data-sec')] = li; });
     var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
             if (!e.isIntersecting) return;
-            Object.keys(links).forEach(function (k) { links[k].classList.toggle('current', k === e.target.id); });
+            Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.toggle('current', k === e.target.id); });
+            Object.keys(tlItems).forEach(function (k) { tlItems[k].classList.toggle('current', k === e.target.id); });
         });
-    }, { rootMargin: '-80px 0px -60% 0px' });
+    }, { rootMargin: '-70px 0px -60% 0px' });
     document.querySelectorAll('section.sec').forEach(function (s) { io.observe(s); });
 })();
 

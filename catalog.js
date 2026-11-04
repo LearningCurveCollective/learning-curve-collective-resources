@@ -137,7 +137,7 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "The final 48 hours",
-     "blurb": "A short checklist for the two days before: sleep, food, movement, a last pass through your revision bank, the bag, and the playbook on one screen."
+     "blurb": "A short, reassuring checklist for the two days before: sleep, food, movement, a last pass through your revision bank, the bag with your ID first, and the playbook on one screen."
     }
    ],
    "step_start": 0
@@ -170,7 +170,7 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "The final 48 hours",
-     "blurb": "A short checklist for the two days before, set to the ACT: sleep, food, movement, a last pass through your revision bank, the bag, and the playbook on one screen.",
+     "blurb": "A short, reassuring checklist for the two days before, set to the ACT: sleep, food, movement, a last pass through your revision bank, the bag with your ID first, and the playbook on one screen.",
      "ids": [
       "test-prep--final-48-hours-sat-psat-act"
      ]
@@ -2520,7 +2520,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "test-prep--final-48-hours-sat-psat-act",
    "path": "test-prep/Final-48-Hours-SAT-PSAT-ACT.html",
    "title": "The Final 48 Hours: Test Day Checklist",
-   "description": "A short, calm checklist for the two days before the SAT, PSAT, or ACT: sleep two nights out, food, movement, a last pass through your revision bank, the bag, the morning, and the playbook compressed to one screen. Pick your test, tick things off, and write down the two ideas you will carry into the room.",
+   "description": "A short, calm checklist for the two days before the SAT, PSAT, or ACT with a clickable timeline: sleep two nights out, a last pass through your revision bank, the bag with your ID first, the morning, and the playbook on one screen. Pick your test, tick things off, and write down the two ideas you will carry into the room.",
    "subject": "sat",
    "topic": "The final 48 hours",
    "order": 13,
