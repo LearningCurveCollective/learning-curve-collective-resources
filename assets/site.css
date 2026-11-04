@@ -258,6 +258,14 @@ section.block { padding: 56px 0 20px; }
     .exam-head .n { display: none; }   /* the count is already on the tile and in the jump bar */
 }
 
+/* ---------- the Index page: a table of contents ---------- */
+.course.ix { scroll-margin-top: 118px; }
+.course.ix .course-head .ix-go { margin-left: auto; font-size: 13.5px; font-weight: 500; color: var(--leaf); text-decoration: none; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.course.ix .course-head .ix-go:hover { border-color: var(--leaf); }
+.course.ix .ix-sub { font-family: var(--display); font-weight: 700; font-size: 17px; color: var(--ink); margin: 22px 0 2px; padding-bottom: 4px; border-bottom: 2px solid var(--leaf-soft); }
+.course.ix .ix-sub + .unit { margin-top: 10px; }
+@media (max-width: 560px) { .course.ix .course-head .ix-go { margin-left: 0; } }
+
 .more-areas { padding: 40px 0 56px; border-top: 1px solid var(--line); margin-top: 24px; }
 .more-areas h2 { font-family: var(--display); font-size: 22px; margin: 0 0 18px; color: var(--ink); text-align: center; }
 

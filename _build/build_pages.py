@@ -10,7 +10,7 @@ engines and bookmarks see them), and assets/site.js fills in the course cards fr
 catalog.js when the page loads. Re-run this after adding or renaming an area; adding or
 retitling a sheet only needs catalog.js.
 
-An area with "layout": "guided" in catalog.js (test-prep today) renders as a walkthrough:
+An area with "layout": "guided" in catalog.js renders as a walkthrough:
 a row of tiles in the band to pick a subject, then each subject's sheets as cards under
 numbered steps taken from that subject's "steps" list. Every other area keeps the plain
 course list.
@@ -35,7 +35,7 @@ TEMPLATE = """<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body data-page="area" data-area="{key}" data-layout="{layout}">
+<body data-page="{page}" data-area="{key}" data-layout="{layout}">
 
 <header class="topbar">
     <div class="wrap">
@@ -49,6 +49,7 @@ TEMPLATE = """<!DOCTYPE html>
         <nav class="topnav" aria-label="Site">
             <a class="hide-sm" href="index.html#explore">Subjects</a>
             <a class="hide-sm" href="index.html#featured">Featured</a>
+            <a class="hide-sm" href="sheet-index.html">Index</a>
             <a class="hide-sm" href="https://learningcurvecollective.com" target="_blank" rel="noopener">Learning Curve Collective</a>
             <a class="btn btn-gold btn-sm" href="index.html#all">All resources</a>
         </nav>
@@ -115,6 +116,7 @@ TEMPLATE = """<!DOCTYPE html>
                 <li><a href="index.html#explore">Browse by subject</a></li>
                 <li><a href="index.html#featured">Featured resources</a></li>
                 <li><a href="index.html#all">All resources</a></li>
+                <li><a href="sheet-index.html">Index of every sheet</a></li>
                 <li><a href="https://github.com/LearningCurveCollective/learning-curve-collective-resources" target="_blank" rel="noopener">Source on GitHub</a></li>
             </ul>
         </div>
@@ -144,7 +146,7 @@ def main():
             print(f"AREA {a['key']}: needs a \"page\" like \"{a['key']}.html\" in catalog.js")
             problems += 1
             continue
-        out = TEMPLATE.format(key=html.escape(a["key"]), name=html.escape(a["name"]),
+        out = TEMPLATE.format(page="area", key=html.escape(a["key"]), name=html.escape(a["name"]),
                               layout=html.escape(a.get("layout", "list")),
                               description=html.escape(a.get("blurb", cat["site"]["description"])))
         dest = os.path.join(ROOT, page)
@@ -156,6 +158,18 @@ def main():
         else:
             open(dest, "w", encoding="utf-8").write(out)
             print(f"wrote      {page}")
+    # the Index: every sheet grouped by subject, a table of contents (assets/site.js fills it in)
+    out = TEMPLATE.format(page="sheet-index", key="sheet-index", name="Index", layout="list",
+                          description="Every sheet in the library, grouped by subject and listed in course order: a table of contents to glance at.")
+    dest = os.path.join(ROOT, "sheet-index.html")
+    current = open(dest, encoding="utf-8").read() if os.path.isfile(dest) else None
+    if current == out:
+        print("unchanged  sheet-index.html")
+    elif check:
+        print("would write sheet-index.html")
+    else:
+        open(dest, "w", encoding="utf-8").write(out)
+        print("wrote      sheet-index.html")
     sys.exit(1 if problems else 0)
 
 

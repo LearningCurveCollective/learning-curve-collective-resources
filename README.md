@@ -50,6 +50,7 @@ The hub at [learningcurvecollective.github.io/learning-curve-collective-resource
 
 - `index.html` is the home page: the hero, a search box that looks inside every sheet, the subject pills, and featured resources.
 - `math.html`, `test-prep.html`, `economics.html`, `science.html`, `machine-learning.html` and `social-science.html` are the subject pages: one card per course with every sheet listed in course order. They are written by `_build/build_pages.py` from the areas in `catalog.js`.
+- `sheet-index.html` is the Index: every sheet grouped by subject in course order, a table of contents. It is also written by `_build/build_pages.py`.
 - `assets/site.css` and `assets/site.js` are shared by all of those pages.
 - `search-index.js` is written by `_build/build_search_index.py` and holds the searchable words from each sheet.
 
@@ -59,7 +60,7 @@ To take a sheet off the site without deleting it, add `"hidden": true` to its re
 
 The test-day playbook (`test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html`) is one sheet for all three tests: it opens on whichever test its link names (`?test=sat`, `?test=psat` or `?test=act`), and the reader can switch inside. Its catalog record carries a `variants` entry per section so the SAT & PSAT and ACT sections each link to it with the right default. `test-prep/Final-48-Hours-SAT-PSAT-ACT.html`, the short checklist for the two days before the test, works the same way and closes both sections.
 
-A subject page can use the plain course list or the guided walkthrough (`"layout": "guided"` on the area in `catalog.js`; Test Prep, Mathematics and Economics use it). The guided page opens with a tile per subject (skipped when the area has a single subject, like Economics, where the jump bar lists the steps instead), then lists each subject's sheets as cards under numbered steps taken from that subject's `steps` list; a sheet's `topic` names the step it sits in, and each card shows the sheet's schooling level.
+A subject page can use the plain course list or the guided walkthrough (`"layout": "guided"` on the area in `catalog.js`; every subject page uses it now, and the Index keeps the plain list). The guided page opens with a tile per subject (skipped when the area has a single subject, like Economics, where the jump bar lists the steps instead), then lists each subject's sheets as cards under numbered steps taken from that subject's `steps` list; a sheet's `topic` names the step it sits in, and each card shows the sheet's schooling level.
 
 ---
 

@@ -114,6 +114,13 @@
                 ]));
                 box.appendChild(li);
             });
+            /* the Index: every sheet by subject, a table of contents */
+            var ix = el('li');
+            ix.appendChild(el('a', { 'class': 'pill-link gold' + (current === 'sheet-index' ? ' current' : ''), href: 'sheet-index.html', 'aria-current': current === 'sheet-index' ? 'page' : null }, [
+                el('span', { 'class': 'p-ic', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>' }),
+                el('span', null, [el('span', { 'class': 'p-name', text: 'Index' }), el('span', { 'class': 'p-count', text: 'every sheet, by subject' })])
+            ]));
+            box.appendChild(ix);
         });
         document.querySelectorAll('[data-quick]').forEach(function (q) {
             q.innerHTML = '';
@@ -571,6 +578,47 @@
         });
         if (nav) watchSections(nav, navIds);
     }
+    /* ---------- the Index page: every area, every subject, every sheet, in course order ---------- */
+    function renderIndexPage() {
+        var meta = document.getElementById('band-meta');
+        var nav = document.getElementById('subnav-links'), navIds = [];
+        var root = document.getElementById('courses'); root.innerHTML = '';
+        if (nav) nav.innerHTML = '';
+        var areasShown = 0;
+        C.areas.forEach(function (a) {
+            var subs = subjectsIn(a.key).map(function (s) { return { s: s, rs: R.filter(function (r) { return r.subject === s.key; }) }; }).filter(function (x) { return x.rs.length; });
+            var n = subs.reduce(function (t, x) { return t + x.rs.length; }, 0);
+            if (!n) return;
+            areasShown++;
+            var id = 'ix-' + a.key; navIds.push(id);
+            if (nav) nav.appendChild(el('a', { href: '#' + id, html: a.name + '<span class="n">' + n + '</span>' }));
+            var sec = el('section', { 'class': 'course ix', id: id, 'aria-labelledby': 'h-' + id });
+            sec.appendChild(el('div', { 'class': 'course-head' }, [
+                el('h2', { id: 'h-' + id, text: a.name }),
+                el('span', { 'class': 'n', text: n + (n === 1 ? ' sheet' : ' sheets') }),
+                el('a', { 'class': 'ix-go', href: a.page, text: 'Open the ' + a.name + ' page' })
+            ]));
+            subs.forEach(function (x) {
+                if (subs.length > 1) sec.appendChild(el('h3', { 'class': 'ix-sub', text: x.s.name + ' (' + x.rs.length + ')' }));
+                topicsOf(x.rs).forEach(function (t) { sec.appendChild(unit(t, x.rs.filter(function (r) { return r.topic === t; }))); });
+            });
+            root.appendChild(sec);
+        });
+        if (meta) meta.textContent = R.length + ' sheets across ' + areasShown + ' areas, in course order';
+        var key = document.getElementById('key');
+        if (key && !key.childNodes.length) key.appendChild(el('span', { 'class': 'k', html: levelGlyph(1) + 'the dot marks each sheet’s academic level on the curve, from Foundations to Graduate. Hover a title for its description.' }));
+        if (nav) watchSections(nav, navIds);
+    }
+    function initIndexPage() {
+        renderIndexPage();
+        var f = document.getElementById('band-search');
+        if (f) f.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var q = document.getElementById('bq').value.trim();
+            location.href = 'index.html#search?q=' + encodeURIComponent(q);
+        });
+        if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) setTimeout(function () { t.scrollIntoView(); }, 50); }
+    }
     function initArea() {
         var key = document.body.getAttribute('data-area');
         var guided = document.body.getAttribute('data-layout') === 'guided';
@@ -587,7 +635,7 @@
 
     /* ---------- boot ---------- */
     drawHeroCurve(); renderPills();
-    if (PAGE === 'home') initHome(); else initArea();
+    if (PAGE === 'home') initHome(); else if (PAGE === 'sheet-index') initIndexPage(); else initArea();
 
     /* ---------- safety net: list any published .html not yet in the catalog ---------- */
     (function () {
@@ -609,6 +657,7 @@
             if (!extra.length) return;
             R = R.concat(extra); extra.forEach(function (x) { BYID[x.id] = x; });
             if (PAGE === 'home') { if (view !== 'home') renderResults(); }
+            else if (PAGE === 'sheet-index') { renderIndexPage(); }
             else { var key = document.body.getAttribute('data-area'); if (extra.some(function (x) { return SUBJ[x.subject].area === key; })) renderArea(key); }
         }).catch(function () {});
     })();

@@ -66,19 +66,25 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "science",
    "name": "Science",
    "page": "science.html",
-   "blurb": "Interactive physics labs, biology foundations, and clinical study sheets."
+   "blurb": "Interactive physics labs, biology foundations, and clinical study sheets.",
+   "layout": "guided",
+   "prompt": "Which subject are you studying?"
   },
   {
    "key": "ml",
    "name": "Machine Learning & Data",
    "page": "machine-learning.html",
-   "blurb": "Algorithms stepped through by hand, plus the math and statistics behind them."
+   "blurb": "Algorithms stepped through by hand, plus the math and statistics behind them.",
+   "layout": "guided",
+   "prompt": "Where are you in the sequence?"
   },
   {
    "key": "social",
    "name": "Social Science",
    "page": "social-science.html",
-   "blurb": "Psychology research methods and study sheets."
+   "blurb": "Psychology research methods and study sheets.",
+   "layout": "guided",
+   "prompt": "Where are you in the sequence?"
   }
  ],
  "subjects": [
@@ -310,31 +316,74 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "physics",
    "name": "Physics",
    "area": "science",
-   "blurb": "Interactive labs for fields and circuits."
+   "blurb": "Interactive labs for fields and circuits.",
+   "tag": "Phys",
+   "steps": [
+    {
+     "name": "Electricity & magnetism",
+     "blurb": "Point charges on a live field visualizer, then circuits you build by dragging batteries and bulbs onto a board."
+    }
+   ]
   },
   {
    "key": "biology",
    "name": "Biology",
    "area": "science",
-   "blurb": "The chemistry of life and beyond."
+   "blurb": "The chemistry of life and beyond.",
+   "tag": "Bio",
+   "steps": [
+    {
+     "name": "Foundations",
+     "blurb": "The chemistry of life: atoms, bonds, and water, with an atom builder, flashcards, and a self-quiz."
+    }
+   ]
   },
   {
    "key": "machine-learning",
    "name": "Machine Learning & Data",
    "area": "ml",
-   "blurb": "Algorithms stepped through by hand, plus the math behind them."
+   "blurb": "Algorithms stepped through by hand, plus the math behind them.",
+   "tag": "ML",
+   "steps": [
+    {
+     "name": "Math & stats foundations",
+     "blurb": "The probability, statistics, and matrix calculus results everything else leans on."
+    },
+    {
+     "name": "Algorithms, step by step",
+     "blurb": "Decision trees, neural networks, k-means, and EM, each run by hand on real data."
+    },
+    {
+     "name": "Review",
+     "blurb": "A nine-part study guide, how to read a training curve, and a deep learning exam review."
+    }
+   ]
   },
   {
    "key": "psychology",
    "name": "Psychology",
    "area": "social",
-   "blurb": "Research methods and study sheets."
+   "blurb": "Research methods and study sheets.",
+   "tag": "Psy",
+   "steps": [
+    {
+     "name": "Research methods",
+     "blurb": "Observational research: types, ethics, sampling, recording, and the classic studies."
+    }
+   ]
   },
   {
    "key": "medicine",
    "name": "Medicine",
    "area": "science",
-   "blurb": "Graduate-level study sheets for clinical topics."
+   "blurb": "Graduate-level study sheets for clinical topics.",
+   "tag": "Med",
+   "steps": [
+    {
+     "name": "Hematology",
+     "blurb": "The five inherited thrombophilias: mechanisms, assay pitfalls, and the 2023 ASH testing recommendations."
+    }
+   ]
   }
  ],
  "resources": [
