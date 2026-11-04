@@ -533,12 +533,13 @@
                 el('span', { 'class': 'n', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') })
             ]));
             var ol = el('ol', { 'class': 'steps' });
+            var first = typeof c.s.step_start === 'number' ? c.s.step_start : 1;   // SAT & PSAT counts from 0: the diagnostic
             c.steps.forEach(function (st, j) {
                 var grid = el('div', { 'class': 'sheet-grid' });
                 st.rs.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key)); });
                 st.shared.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key, 'Shared with ' + SUBJ[r.subject].name)); });
                 ol.appendChild(el('li', { 'class': 'step' }, [
-                    el('span', { 'class': 'num', text: String(j + 1), 'aria-hidden': 'true' }),
+                    el('span', { 'class': 'num', text: String(first + j), 'aria-hidden': 'true' }),
                     el('div', { 'class': 'step-head' }, [el('h3', { text: st.name }), st.blurb ? el('p', { text: st.blurb }) : null]),
                     grid
                 ]));

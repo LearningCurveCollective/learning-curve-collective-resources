@@ -4,7 +4,8 @@
    An area with "layout": "guided" renders as a walkthrough: tiles to pick a subject, then that subject's "steps" (name, blurb,
    optional ids of sheets filed elsewhere) as numbered groups of cards; each sheet's "topic" names the step it belongs to.
    "variants" on a resource, keyed by subject, gives a link suffix and note to use when that sheet is shown in that subject's
-   section (the test-day playbook opens with ?test=act from the ACT section, ?test=sat from SAT & PSAT). */
+   section (the test-day playbook opens with ?test=act from the ACT section, ?test=sat from SAT & PSAT).
+   "step_start" on a subject sets the number of its first step (SAT & PSAT counts from 0: the diagnostic). */
 window.OPEN_LEARNING_CATALOG = {
  "site": {
   "name": "Open Learning",
@@ -115,8 +116,12 @@ window.OPEN_LEARNING_CATALOG = {
    "tag": "SAT",
    "steps": [
     {
-     "name": "Start here",
-     "blurb": "Open the playbook first so you know how the test runs (it opens set to the SAT; switch to PSAT inside), then take the diagnostic: your results point you to the skill sheets worth your time."
+     "name": "Take the diagnostic",
+     "blurb": "Before anything else. Untimed, with Desmos built in; your results point you to the skill sheets worth your time."
+    },
+    {
+     "name": "Know the test",
+     "blurb": "The test-day playbook: how the test runs, what to bring, and the CLEAR pacing method. It opens set to the SAT; switch to PSAT inside."
     },
     {
      "name": "Reading & Writing",
@@ -129,8 +134,13 @@ window.OPEN_LEARNING_CATALOG = {
     {
      "name": "Full-length practice",
      "blurb": "A complete timed test once the skill sheets feel solid."
+    },
+    {
+     "name": "The final 48 hours",
+     "blurb": "A short checklist for the two days before: sleep, food, movement, a last pass through your revision bank, the bag, and the playbook on one screen."
     }
-   ]
+   ],
+   "step_start": 0
   },
   {
    "key": "act",
@@ -140,7 +150,7 @@ window.OPEN_LEARNING_CATALOG = {
    "tag": "ACT",
    "steps": [
     {
-     "name": "Start here",
+     "name": "Know the test",
      "blurb": "The test-day playbook, set to the ACT: how the test runs, what to bring, and the CLEAR pacing method.",
      "ids": [
       "test-prep--test-day-playbook-sat-psat-act"
@@ -157,6 +167,13 @@ window.OPEN_LEARNING_CATALOG = {
     {
      "name": "Science",
      "blurb": "How to read passages, graphs, and tables fast, then the harder question types."
+    },
+    {
+     "name": "The final 48 hours",
+     "blurb": "A short checklist for the two days before, set to the ACT: sleep, food, movement, a last pass through your revision bank, the bag, and the playbook on one screen.",
+     "ids": [
+      "test-prep--final-48-hours-sat-psat-act"
+     ]
     }
    ]
   },
@@ -2131,8 +2148,8 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "PSAT / SAT Diagnostic",
    "description": "Untimed diagnostic covering SAT Reading & Writing and Math, with a built-in timer and Desmos, to show which skills to review next.",
    "subject": "sat",
-   "topic": "Start here",
-   "order": 2,
+   "topic": "Take the diagnostic",
+   "order": 0,
    "levels": [
     "High School"
    ],
@@ -2158,7 +2175,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Test Day Playbook: SAT, PSAT & ACT",
    "description": "Interactive guide to test-day strategy for the SAT, PSAT, and ACT using the CLEAR method. Pick your test and every number switches to match, with a true or false warm up, timers, flashcards, and Bluebook practice.",
    "subject": "sat",
-   "topic": "Start here",
+   "topic": "Know the test",
    "order": 1,
    "levels": [
     "High School"
@@ -2497,6 +2514,48 @@ window.OPEN_LEARNING_CATALOG = {
    "content": "practice",
    "builds_on": [
     "test-prep--sat-psat-diagnostic"
+   ]
+  },
+  {
+   "id": "test-prep--final-48-hours-sat-psat-act",
+   "path": "test-prep/Final-48-Hours-SAT-PSAT-ACT.html",
+   "title": "The Final 48 Hours: Test Day Checklist",
+   "description": "A short, calm checklist for the two days before the SAT, PSAT, or ACT: sleep two nights out, food, movement, a last pass through your revision bank, the bag, the morning, and the playbook compressed to one screen. Pick your test, tick things off, and write down the two ideas you will carry into the room.",
+   "subject": "sat",
+   "topic": "The final 48 hours",
+   "order": 13,
+   "levels": [
+    "High School"
+   ],
+   "format": "Checklist",
+   "tags": [
+    "SAT",
+    "PSAT",
+    "ACT",
+    "test day",
+    "night before",
+    "sleep",
+    "checklist",
+    "revision bank"
+   ],
+   "exams": [
+    "SAT",
+    "PSAT",
+    "ACT"
+   ],
+   "variants": {
+    "sat": {
+     "suffix": "?test=sat",
+     "note": "Opens set to the SAT"
+    },
+    "act": {
+     "suffix": "?test=act",
+     "note": "Opens set to the ACT"
+    }
+   },
+   "content": "reference",
+   "builds_on": [
+    "test-prep--test-day-playbook-sat-psat-act"
    ]
   },
   {

@@ -57,7 +57,7 @@ To add a sheet: drop the .html file in its subject folder, add a record to `cata
 
 To take a sheet off the site without deleting it, add `"hidden": true` to its record in `catalog.js`; remove the flag to bring it back.
 
-The test-day playbook (`test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html`) is one sheet for all three tests: it opens on whichever test its link names (`?test=sat`, `?test=psat` or `?test=act`), and the reader can switch inside. Its catalog record carries a `variants` entry per section so the SAT & PSAT and ACT sections each link to it with the right default.
+The test-day playbook (`test-prep/Test-Day-Playbook-SAT-PSAT-ACT.html`) is one sheet for all three tests: it opens on whichever test its link names (`?test=sat`, `?test=psat` or `?test=act`), and the reader can switch inside. Its catalog record carries a `variants` entry per section so the SAT & PSAT and ACT sections each link to it with the right default. `test-prep/Final-48-Hours-SAT-PSAT-ACT.html`, the short checklist for the two days before the test, works the same way and closes both sections.
 
 A subject page can use the plain course list or the guided walkthrough (`"layout": "guided"` on the area in `catalog.js`; `test-prep.html` uses it). The guided page opens with a tile per subject, then lists each subject's sheets as cards under numbered steps taken from that subject's `steps` list; a sheet's `topic` names the step it sits in.
 
