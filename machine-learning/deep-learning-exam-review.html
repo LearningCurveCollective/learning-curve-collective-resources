@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Learning Exam Review — Learning Curve Collective</title>
+    <title>Deep Learning Exam Review: Learning Curve Collective</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
     <script>
@@ -76,7 +76,7 @@ body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: 
 .concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
 .concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
 .concept-visual { flex-shrink: 0; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; }
-.concept-visual svg { width: 100%; height: 100%; }
+.concept-visual > svg { width: 100%; height: 100%; }
 .concept-body { flex: 1; }
 .concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
 .formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
@@ -123,7 +123,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
 .pill.red { background: #C0564F; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .diagram { background: white; border: 2px solid var(--gold-light); border-radius: 10px; padding: 14px; margin: 14px 0; }
-.diagram svg { width: 100%; height: auto; display: block; }
+.diagram > svg { width: 100%; height: auto; display: block; }   /* the diagram itself only: MathJax also emits <svg> inside captions */
 .diagram .cap { font-size: 12.5px; color: var(--text-medium); text-align: center; margin: 8px 0 0; }
 .viz-container { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
 .viz-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--cream-dark); }
@@ -223,7 +223,7 @@ li { margin-bottom: 8px; }
 /* derivations tab: loss-plot matcher */
 .plot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
 .plot-card { background: white; border: 2px solid var(--gold-light); border-radius: 10px; padding: 8px; }
-.plot-card svg { width: 100%; height: auto; display: block; }
+.plot-card > svg { width: 100%; height: auto; display: block; }
 .plot-cap { font-size: 13px; margin-top: 6px; text-align: center; color: var(--text-dark); }
 .plot-sel { padding: 3px 8px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; background: var(--cream); color: var(--text-dark); }
 .plot-mark { display: inline-block; min-width: 16px; font-weight: 700; }
@@ -385,7 +385,7 @@ li { margin-bottom: 8px; }
                     <tr><td>High</td><td>High</td><td>Underfitting (bias). Bigger model, train longer.</td></tr>
                     <tr><td>Low</td><td>Low, close</td><td>Good fit.</td></tr>
                     <tr><td>Low, falling</td><td>Rising</td><td>Overfitting (variance). More data, L2, dropout, early stop.</td></tr>
-                    <tr><td>Exploding</td><td>&mdash;</td><td>LR too high.</td></tr>
+                    <tr><td>Exploding</td><td>n/a</td><td>LR too high.</td></tr>
                 </table>
                 <p style="font-size:13px;margin:0;">$\text{avoidable bias} = \text{train} - \text{Bayes proxy}$; $\text{variance} = \text{val} - \text{train}$. Use the <em>best</em> human performance as the Bayes-error proxy.</p>
                 <div class="diagram" style="margin:12px 0 0;padding:10px;"><svg viewBox="0 0 440 236" xmlns="http://www.w3.org/2000/svg" role="img"><title>Bias and variance against model capacity</title>

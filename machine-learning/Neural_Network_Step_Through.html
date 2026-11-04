@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inside a Simple Neural Network — Learning Curve Collective</title>
+<title>Inside a Simple Neural Network: Learning Curve Collective</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
 <script>
@@ -455,18 +455,18 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
     </div>
 
     <div class="card" style="border-left-color: var(--green-dark);">
-        <p><strong>The gold-boxed labels under each circle are the biases</strong> &mdash; four extra trainable constants, one owned by each neuron, added to that neuron's sum <em>before</em> the sigmoid. They have no arrows in the diagram (the standard convention hides them), but you can picture each as a weight on a phantom input pinned to the constant $1$.</p>
+        <p><strong>The gold-boxed labels under each circle are the biases</strong>: four extra trainable constants, one owned by each neuron, added to that neuron's sum <em>before</em> the sigmoid. They have no arrows in the diagram (the standard convention hides them), but you can picture each as a weight on a phantom input pinned to the constant $1$.</p>
         <ul style="margin-bottom: 10px;">
             <li><strong>Hidden biases</strong> ($-0.5$, $-0.5$, $+3$) <em>position</em> each detector line: $h_1$'s bias of $-0.5$ is what puts its line at $x_1 = 0.5$ instead of through the origin. Weights set a line's <em>orientation</em>; the bias slides it into place.</li>
             <li><strong>Output bias</strong> ($-5$) sets the <em>firing threshold</em>: the vote-sum $2h_1{+}2h_2{+}2h_3$ must exceed $5$ before $u &gt; 0$. Without it, $u$ would be positive everywhere and the network could never say &ldquo;no.&rdquo;</li>
         </ul>
-        <p style="margin-bottom:0;"><strong>Are biases trained?</strong> Yes &mdash; all 13 parameters (9 weights + 4 biases) are updated by gradient descent together. A bias is just a weight whose input is always $1$, so its backprop chain is identical to a weight's except the final factor is $\times\,1$ instead of $\times\,x_1^{(i)}$. Weights learn orientations; biases learn positions and thresholds &mdash; simultaneously.</p>
+        <p style="margin-bottom:0;"><strong>Are biases trained?</strong> Yes: all 13 parameters (9 weights + 4 biases) are updated by gradient descent together. A bias is just a weight whose input is always $1$, so its backprop chain is identical to a weight's except the final factor is $\times\,1$ instead of $\times\,x_1^{(i)}$. Weights learn orientations; biases learn positions and thresholds, simultaneously.</p>
     </div>
     <div class="idea-box">
-        <p style="margin-bottom:0;"><strong>What to notice as you step:</strong> the hidden layer is <em>three logistic regressions run in parallel</em> on $(x_1,x_2)$, and the output is <em>one more logistic regression</em> whose inputs are the hidden outputs $(h_1,h_2,h_3)$ instead of the raw coordinates. Networks are stacked logistic regressions &mdash; the same building block, used four times.</p>
+        <p style="margin-bottom:0;"><strong>What to notice as you step:</strong> the hidden layer is <em>three logistic regressions run in parallel</em> on $(x_1,x_2)$, and the output is <em>one more logistic regression</em> whose inputs are the hidden outputs $(h_1,h_2,h_3)$ instead of the raw coordinates. Networks are stacked logistic regressions: the same building block, used four times.</p>
     </div>
     <div class="warning-box">
-        <p style="margin-bottom:0;"><strong>Try all four presets and compare $o$.</strong> Inside the triangle (A) and far outside (B, C, D) all land near $o \approx 0.25$ &mdash; these hand-picked weights are <em>mediocre</em>. Soft sigmoid votes near the lines are wishy-washy, so the &ldquo;all three detectors agree&rdquo; signal never gets strong. The Geometry Lab tab has a sharpness slider that fixes exactly this.</p>
+        <p style="margin-bottom:0;"><strong>Try all four presets and compare $o$.</strong> Inside the triangle (A) and far outside (B, C, D) all land near $o \approx 0.25$: these hand-picked weights are <em>mediocre</em>. Soft sigmoid votes near the lines are wishy-washy, so the &ldquo;all three detectors agree&rdquo; signal never gets strong. The Geometry Lab tab has a sharpness slider that fixes exactly this.</p>
     </div>
 </div>
 
@@ -477,8 +477,8 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <h2>What Each Hidden Neuron Sees</h2>
     </div>
     <div class="card">
-        <p><strong>What we're building, from the ground up.</strong> The circles live in a triangular island with crosses all around &mdash; and one logistic regression is one line, which can't enclose anything. The plan: <em>build the triangle out of lines</em>, since a triangle is three lines plus the logic &ldquo;inside all three.&rdquo;</p>
-        <p><strong>One hidden neuron = one line + a side-choice.</strong> Each neuron's pre-activation $z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2$ is zero along a line; the sigmoid paints the whole plane in two shades &mdash; high on the neuron's chosen side, low on the other. Three neurons = three independent two-shade paintings over the same plane:</p>
+        <p><strong>What we're building, from the ground up.</strong> The circles live in a triangular island with crosses all around, and one logistic regression is one line, which can't enclose anything. The plan: <em>build the triangle out of lines</em>, since a triangle is three lines plus the logic &ldquo;inside all three.&rdquo;</p>
+        <p><strong>One hidden neuron = one line + a side-choice.</strong> Each neuron's pre-activation $z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2$ is zero along a line; the sigmoid paints the whole plane in two shades: high on the neuron's chosen side, low on the other. Three neurons = three independent two-shade paintings over the same plane:</p>
         <table class="weights-table">
             <tr><th>Neuron</th><th>bias</th><th>weight on x&#8321;</th><th>weight on x&#8322;</th><th>z = 0 along</th><th>votes &ldquo;1&rdquo; when&hellip;</th></tr>
             <tr><td><strong>h&#8321;</strong></td><td>&minus;0.5</td><td>1</td><td>0</td><td>x&#8321; = 0.5</td><td>right of the vertical line</td></tr>
@@ -494,7 +494,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
             <tr><td>Beyond the roof</td><td>$(1,1,0)$-ish</td><td>~2</td></tr>
             <tr><td>Far corner (fails two)</td><td>e.g. $(0,0,1)$</td><td>~1</td></tr>
         </table>
-        <p><strong>Only the inside scores 3.</strong> The output unit $u = 2(h_1{+}h_2{+}h_3) - 5$ thresholds that sum: the vote total must clear $2.5$, which only &ldquo;all three high&rdquo; achieves. The triangle is never drawn explicitly &mdash; it <em>emerges</em> as the set of points passing all three tests at once: three half-plane stencils overlapped, and the triangle is where all three are open. (It generalizes: 4 neurons &rarr; quadrilaterals, $n$ &rarr; any convex polygon; more layers &rarr; unions of pieces, hence any shape.)</p>
+        <p><strong>Only the inside scores 3.</strong> The output unit $u = 2(h_1{+}h_2{+}h_3) - 5$ thresholds that sum: the vote total must clear $2.5$, which only &ldquo;all three high&rdquo; achieves. The triangle is never drawn explicitly; it <em>emerges</em> as the set of points passing all three tests at once: three half-plane stencils overlapped, and the triangle is where all three are open. (It generalizes: 4 neurons &rarr; quadrilaterals, $n$ &rarr; any convex polygon; more layers &rarr; unions of pieces, hence any shape.)</p>
         <p style="margin-bottom:0;">Click the map to move the test point and read its vote profile live; drag the sharpness slider to multiply all hidden-layer weights and biases by $k$ (steeper sigmoids &rarr; more decisive votes).</p>
     </div>
 
@@ -511,25 +511,25 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         </div>
         <div class="readout-panel">
             <div class="readout-item"><div class="readout-label">point</div><div class="readout-value exact-val" id="gpt">(1.5, 1.5)</div></div>
-            <div class="readout-item"><div class="readout-label">h&#8321;</div><div class="readout-value" id="gh1">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">h&#8322;</div><div class="readout-value" id="gh2">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">h&#8323;</div><div class="readout-value" id="gh3">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">output o</div><div class="readout-value exact-val" id="go">&mdash;</div></div>
+            <div class="readout-item"><div class="readout-label">h&#8321;</div><div class="readout-value" id="gh1">?</div></div>
+            <div class="readout-item"><div class="readout-label">h&#8322;</div><div class="readout-value" id="gh2">?</div></div>
+            <div class="readout-item"><div class="readout-label">h&#8323;</div><div class="readout-value" id="gh3">?</div></div>
+            <div class="readout-item"><div class="readout-label">output o</div><div class="readout-value exact-val" id="go">?</div></div>
         </div>
     </div>
 
     <div class="card" style="border-left-color: var(--green-dark);">
-        <p><strong>What is $k$?</strong> The slider multiplies every hidden-layer weight and bias by the same factor, so each neuron computes $\sigma(k z_j)$ instead of $\sigma(z_j)$. The lines <em>do not move</em> &mdash; $kz_j = 0$ exactly where $z_j = 0$ &mdash; only the transition sharpens: $k$ rescales distance-from-the-line into confidence, turning mumbled votes into decisive ones. Sliding $k$ up is <em>approaching better weights by hand</em>, not training:</p>
+        <p><strong>What is $k$?</strong> The slider multiplies every hidden-layer weight and bias by the same factor, so each neuron computes $\sigma(k z_j)$ instead of $\sigma(z_j)$. The lines <em>do not move</em> ($kz_j = 0$ exactly where $z_j = 0$); only the transition sharpens: $k$ rescales distance-from-the-line into confidence, turning mumbled votes into decisive ones. Sliding $k$ up is <em>approaching better weights by hand</em>, not training:</p>
         <ul style="margin-bottom: 10px;">
-            <li><strong>Training</strong> = gradient descent choosing the 13 parameters <em>from data</em>, each free to move independently &mdash; lines rotating, sliding, votes reweighting, threshold adjusting. Direction and destination determined by the loss.</li>
-            <li><strong>The $k$ slider</strong> = moving 9 of those parameters by hand in one rigidly coordinated way (all scaled together), lines frozen by construction. No data consulted, no loss descended &mdash; a demonstration knob, not a learning process.</li>
+            <li><strong>Training</strong> = gradient descent choosing the 13 parameters <em>from data</em>, each free to move independently: lines rotating, sliding, votes reweighting, threshold adjusting. Direction and destination determined by the loss.</li>
+            <li><strong>The $k$ slider</strong> = moving 9 of those parameters by hand in one rigidly coordinated way (all scaled together), lines frozen by construction. No data consulted, no loss descended: a demonstration knob, not a learning process.</li>
         </ul>
-        <p style="margin-bottom:0;">That said, training on this data <em>would</em> push in a $k$-like direction: with the line placements already good, the gradients' main discovery is &ldquo;be more confident about these boundaries,&rdquo; i.e. grow the weight magnitudes &mdash; while also fine-tuning positions and the output layer. The slider isolates that one direction so you can watch it.</p>
+        <p style="margin-bottom:0;">That said, training on this data <em>would</em> push in a $k$-like direction: with the line placements already good, the gradients' main discovery is &ldquo;be more confident about these boundaries,&rdquo; i.e. grow the weight magnitudes, while also fine-tuning positions and the output layer. The slider isolates that one direction so you can watch it.</p>
     </div>
 
     <div class="idea-box">
-        <p><strong>Watch what sharpness does.</strong> At $k=1$ the map is a blur &mdash; every point scores $o\approx 0.25$, inside or out. By $k=8$ a crisp triangle emerges: votes snap toward 0 / 1, the AND becomes reliable, and $o$ separates the regions. The limit $k\to\infty$ turns each sigmoid into the <em>step function</em>, whose perfectly binary votes make the triangle detector exact.</p>
-        <p style="margin-bottom:0;"><strong>One label flip to note:</strong> if a dataset labels <em>inside</em>-the-triangle points as class 0, our $o$ (an inside-detector, high inside) still works: predict class 0 when $o &gt; 0.5$ &mdash; equivalently, negate the output layer's weights and bias. Sign conventions are free; the geometry is the substance.</p>
+        <p><strong>Watch what sharpness does.</strong> At $k=1$ the map is a blur: every point scores $o\approx 0.25$, inside or out. By $k=8$ a crisp triangle emerges: votes snap toward 0 / 1, the AND becomes reliable, and $o$ separates the regions. The limit $k\to\infty$ turns each sigmoid into the <em>step function</em>, whose perfectly binary votes make the triangle detector exact.</p>
+        <p style="margin-bottom:0;"><strong>One label flip to note:</strong> if a dataset labels <em>inside</em>-the-triangle points as class 0, our $o$ (an inside-detector, high inside) still works: predict class 0 when $o &gt; 0.5$, or equivalently negate the output layer's weights and bias. Sign conventions are free; the geometry is the substance.</p>
     </div>
 </div>
 
@@ -578,7 +578,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
     </div>
 
     <div class="idea-box">
-        <p style="margin-bottom:0;"><strong>Why this can hit 100% when the sigmoid version hovered at &ldquo;everything &asymp; 0.25&rdquo;:</strong> hard votes leave no ambiguity &mdash; the sum is an integer, 3 inside and &le;2 outside, and one threshold separates them perfectly. The price, from the Training &amp; Backprop tab: the step function's slope is zero everywhere, so no gradient exists &mdash; these weights can only be <em>designed</em>, never learned. Perfect confidence and perfect untrainability are the same coin.</p>
+        <p style="margin-bottom:0;"><strong>Why this can hit 100% when the sigmoid version hovered at &ldquo;everything &asymp; 0.25&rdquo;:</strong> hard votes leave no ambiguity: the sum is an integer, 3 inside and &le;2 outside, and one threshold separates them perfectly. The price, from the Training &amp; Backprop tab: the step function's slope is zero everywhere, so no gradient exists; these weights can only be <em>designed</em>, never learned. Perfect confidence and perfect untrainability are the same coin.</p>
     </div>
 </div>
 
@@ -596,11 +596,11 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
             <p style="text-align:center; margin-bottom: 0;">$$\ell = \frac{1}{n}\sum_{i=1}^{n}\big(o^{(i)} - y^{(i)}\big)^2$$</p>
         </div>
         <div class="highlight-box">
-            <p style="text-align:center; margin-bottom: 6px;"><strong>The gradient descent rule</strong> &mdash; applied to every parameter $w$ (all 9 weights <em>and</em> all 4 biases), simultaneously, each iteration:</p>
+            <p style="text-align:center; margin-bottom: 6px;"><strong>The gradient descent rule</strong>, applied to every parameter $w$ (all 9 weights <em>and</em> all 4 biases), simultaneously, each iteration:</p>
             <p style="text-align:center; margin-bottom: 0;">$$w^{\,t+1} \;=\; w^{\,t} \;-\; \alpha\,\frac{\partial \ell}{\partial w}\bigg|_{w^{t}}$$</p>
-            <p style="text-align:center; font-size: 13px; color: var(--text-medium); margin-bottom: 0;">($t$ indexes the iteration; the gradient is evaluated at the <em>current</em> parameters $w^t$ &mdash; all 13 step simultaneously from the same shared values. You will also see this written $w := w - \alpha\,\partial\ell/\partial w$, assignment-style; identical meaning.)</p>
+            <p style="text-align:center; font-size: 13px; color: var(--text-medium); margin-bottom: 0;">($t$ indexes the iteration; the gradient is evaluated at the <em>current</em> parameters $w^t$; all 13 step simultaneously from the same shared values. You will also see this written $w := w - \alpha\,\partial\ell/\partial w$, assignment-style; identical meaning.)</p>
         </div>
-        <p style="margin-bottom:0;">where $\alpha$ is the learning rate. Thirteen partial derivatives are computed (that computation is <em>backpropagation</em> &mdash; the chain rule run along each parameter's path to the loss), then all thirteen parameters step at once, using the shared current values. Same simultaneous-update discipline as GLM gradient descent.</p>
+        <p style="margin-bottom:0;">where $\alpha$ is the learning rate. Thirteen partial derivatives are computed (that computation is <em>backpropagation</em>: the chain rule run along each parameter's path to the loss), then all thirteen parameters step at once, using the shared current values. Same simultaneous-update discipline as GLM gradient descent.</p>
     </div>
 
     <div class="section-header">
@@ -608,11 +608,11 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <h2>Backpropagation: A Worked Derivation</h2>
     </div>
     <div class="card">
-        <p style="margin-bottom: 8px;">Here is one full gradient, derived from scratch &mdash; the update for $w^{[1]}_{1,2}$, the weight on the arrow from $x_1$ into $h_2$. This computation <em>is</em> backpropagation: the chain rule run along the weight's path to the loss.</p>
+        <p style="margin-bottom: 8px;">Here is one full gradient, derived from scratch: the update for $w^{[1]}_{1,2}$, the weight on the arrow from $x_1$ into $h_2$. This computation <em>is</em> backpropagation: the chain rule run along the weight's path to the loss.</p>
 
         <div class="highlight-box">
             <p style="margin-bottom: 6px;"><strong>Givens.</strong> Forward pass: $z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2$, &nbsp;$h_j = \sigma(z_j)$, &nbsp;$u = w^{[2]}_0 + \sum_j w^{[2]}_j h_j$, &nbsp;$o = \sigma(u)$. Loss: $\ell = \frac{1}{n}\sum_i (o^{(i)} - y^{(i)})^2$.</p>
-            <p style="margin-bottom: 0;"><strong>Lemma (sigmoid derivative).</strong> $\sigma'(z) = \sigma(z)(1-\sigma(z))$ &mdash; derived on the Cheat Sheet; cited below as <em>(lemma)</em>.</p>
+            <p style="margin-bottom: 0;"><strong>Lemma (sigmoid derivative).</strong> $\sigma'(z) = \sigma(z)(1-\sigma(z))$, derived on the Cheat Sheet; cited below as <em>(lemma)</em>.</p>
         </div>
 
         <p><strong>Plan.</strong> $w^{[1]}_{1,2}$ influences $\ell$ through exactly one path:</p>
@@ -676,7 +676,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
             <p style="text-align:center; margin-bottom:0;">$$\frac{\partial z_2}{\partial w^{[1]}_{1,2}} = x_1$$</p>
         </div></div>
 
-        <p><strong>Now just apply the chain rule</strong> &mdash; multiply the five links, restore example indices, and average (differentiation passes through the sum; the 2 comes out front):</p>
+        <p><strong>Now just apply the chain rule</strong>: multiply the five links, restore example indices, and average (differentiation passes through the sum; the 2 comes out front):</p>
         <div class="highlight-box">
             <p style="text-align:center; margin-bottom:0;">$$\frac{\partial\ell}{\partial w^{[1]}_{1,2}} = \frac{2}{n}\sum_{i=1}^{n}\big(o^{(i)}-y^{(i)}\big)\,o^{(i)}\big(1-o^{(i)}\big)\,w^{[2]}_2\,h_2^{(i)}\big(1-h_2^{(i)}\big)\,x_1^{(i)}$$</p>
         </div>
@@ -684,11 +684,11 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <div class="highlight-box">
             <p style="text-align:center; margin-bottom:0;">$$w^{[1],\,t+1}_{1,2} = w^{[1],\,t}_{1,2} - \alpha\,\frac{\partial\ell}{\partial w^{[1]}_{1,2}} \qquad \blacksquare$$</p>
         </div>
-        <p style="margin-bottom:0;"><em>Factor audit:</em> (output error) &times; (output sigmoid&rsquo;s slope) &times; (the wire $w^{[2]}_2$) &times; ($h_2$&rsquo;s slope) &times; (the input that fed the weight). Note only $w^{[2]}_2$ appears &mdash; no sum over $j$ &mdash; because the path is unique: this weight touches the loss only through $h_2$.</p>
+        <p style="margin-bottom:0;"><em>Factor audit:</em> (output error) &times; (output sigmoid&rsquo;s slope) &times; (the wire $w^{[2]}_2$) &times; ($h_2$&rsquo;s slope) &times; (the input that fed the weight). Note only $w^{[2]}_2$ appears (no sum over $j$) because the path is unique: this weight touches the loss only through $h_2$.</p>
     </div>
 
     <div class="idea-box">
-        <p style="margin-bottom:0;"><strong>The chain rule is doing all the heavy lifting.</strong> There is no new mathematics in backpropagation &mdash; every gradient in the roster below is just the chain rule applied along a path, with only three derivative species ever needed: a power rule (the loss), the sigmoid lemma (each activation), and &ldquo;pick off the matching coefficient&rdquo; (each linear sum). Backpropagation&rsquo;s only extra idea is <em>bookkeeping</em>: paths through the network share their early links, so compute the shared prefix once (the error signal $2(o{-}y)\,o(1{-}o)$) and reuse it for every parameter. Chain rule + caching &mdash; that is the entire algorithm.</p>
+        <p style="margin-bottom:0;"><strong>The chain rule is doing all the heavy lifting.</strong> There is no new mathematics in backpropagation: every gradient in the roster below is just the chain rule applied along a path, with only three derivative species ever needed: a power rule (the loss), the sigmoid lemma (each activation), and &ldquo;pick off the matching coefficient&rdquo; (each linear sum). Backpropagation&rsquo;s only extra idea is <em>bookkeeping</em>: paths through the network share their early links, so compute the shared prefix once (the error signal $2(o{-}y)\,o(1{-}o)$) and reuse it for every parameter. Chain rule + caching: that is the entire algorithm.</p>
     </div>
 
     <div class="section-header">
@@ -696,24 +696,24 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <h2>The Full Update Roster</h2>
     </div>
     <div class="card">
-        <p>Every parameter's gradient is a product of chain-rule factors along its path to the loss. The paths share most of their links &mdash; only the tail differs:</p>
+        <p>Every parameter's gradient is a product of chain-rule factors along its path to the loss. The paths share most of their links; only the tail differs:</p>
         <table class="weights-table">
             <tr><th>Parameter (count)</th><th>Path tail</th><th>Gradient (per example)</th></tr>
-            <tr><td><strong>$w^{[2]}_j$</strong> &mdash; hidden&rarr;output weights (3)</td><td>$u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot h_j$</td></tr>
-            <tr><td><strong>$w^{[2]}_0$</strong> &mdash; output bias (1)</td><td>$u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot 1$</td></tr>
-            <tr><td><strong>$w^{[1]}_{i,j}$</strong> &mdash; input&rarr;hidden weights (6)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot x_i$</td></tr>
-            <tr><td><strong>$w^{[1]}_{0,j}$</strong> &mdash; hidden biases (3)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot 1$</td></tr>
+            <tr><td><strong>$w^{[2]}_j$</strong>: hidden&rarr;output weights (3)</td><td>$u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot h_j$</td></tr>
+            <tr><td><strong>$w^{[2]}_0$</strong>: output bias (1)</td><td>$u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot 1$</td></tr>
+            <tr><td><strong>$w^{[1]}_{i,j}$</strong>: input&rarr;hidden weights (6)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot x_i$</td></tr>
+            <tr><td><strong>$w^{[1]}_{0,j}$</strong>: hidden biases (3)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot 1$</td></tr>
         </table>
         <p style="margin-bottom:0;">Read down the last column: the shared prefix $2(o{-}y)\,o(1{-}o)$ is the <em>output error signal</em> computed once and reused by all 13; deeper parameters multiply on more links; and a bias is always its layer's weight formula with the final input replaced by $1$. For a concrete instance of row 3, pick $w^{[1]}_{1,2}$ in the path explorer above.</p>
     </div>
 
     <div class="idea-box">
         <p><strong>What each kind of parameter learns.</strong> As the updates run: the input&rarr;hidden <em>weights</em> rotate the three detector lines; the hidden <em>biases</em> slide those lines into position; the hidden&rarr;output <em>weights</em> decide how much each detector's vote counts (and its sign); the output <em>bias</em> sets how much total evidence is demanded before firing. Training is all four kinds negotiating simultaneously until the loss stops improving.</p>
-        <p style="margin-bottom:0;"><strong>Connection to logistic regression:</strong> each row's update has the familiar shape (error signal) &times; (local input) &mdash; the output layer's rule is literally logistic-regression-like with $h$'s as features, except squared loss leaves the extra $o(1{-}o)$ factor that NLL would have cancelled. And unlike GLM training, this loss is <em>not convex</em> in the 13 parameters &mdash; hidden units can be permuted without changing the function, so the surface has multiple equivalent minima and no global-optimum guarantee of the kind convex models enjoy. Gradient descent still works in practice; it just loses its convexity warranty.</p>
+        <p style="margin-bottom:0;"><strong>Connection to logistic regression:</strong> each row's update has the familiar shape (error signal) &times; (local input); the output layer's rule is literally logistic-regression-like with $h$'s as features, except squared loss leaves the extra $o(1{-}o)$ factor that NLL would have cancelled. And unlike GLM training, this loss is <em>not convex</em> in the 13 parameters: hidden units can be permuted without changing the function, so the surface has multiple equivalent minima and no global-optimum guarantee of the kind convex models enjoy. Gradient descent still works in practice; it just loses its convexity warranty.</p>
     </div>
 
     <div class="warning-box">
-        <p style="margin-bottom:0;"><strong>Saturation warning (why step functions can't be trained).</strong> Every hidden-layer gradient carries the factors $o(1{-}o)$ and $h_j(1{-}h_j)$ &mdash; the sigmoids' slopes. When a sigmoid saturates (output near 0 or 1), its slope is near zero and the gradient dies. Crank the Geometry Lab's sharpness slider and imagine training at $k=8$: crisp predictions, nearly-zero gradients. The limit is the step function: slope exactly zero everywhere, gradient descent completely blind &mdash; which is why step-activated networks must have their weights <em>constructed</em> by hand rather than learned.</p>
+        <p style="margin-bottom:0;"><strong>Saturation warning (why step functions can't be trained).</strong> Every hidden-layer gradient carries the factors $o(1{-}o)$ and $h_j(1{-}h_j)$, the sigmoids' slopes. When a sigmoid saturates (output near 0 or 1), its slope is near zero and the gradient dies. Crank the Geometry Lab's sharpness slider and imagine training at $k=8$: crisp predictions, nearly-zero gradients. The limit is the step function: slope exactly zero everywhere, gradient descent completely blind, which is why step-activated networks must have their weights <em>constructed</em> by hand rather than learned.</p>
     </div>
 </div>
 
@@ -738,7 +738,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
                         <p>$z_1 = -0.5 + 3.5 = 3.0$, &nbsp; $z_2 = -0.5 + 3.5 = 3.0$, &nbsp; $z_3 = 3 - 3.5 - 3.5 = -4.0$</p>
                         <p>$h_1 = \sigma(3.0) \approx 0.95$, &nbsp; $h_2 \approx 0.95$, &nbsp; $h_3 = \sigma(-4.0) \approx 0.02$</p>
                         <p>$u = -5 + 2(0.95 + 0.95 + 0.02) = -5 + 3.84 = -1.16$</p>
-                        <p style="margin-bottom:0;">$o = \sigma(-1.16) \approx \mathbf{0.24}$ &mdash; the diagonal detector $h_3$ vetoes hard, but note $o$ is barely different from point A's $0.25$.</p>
+                        <p style="margin-bottom:0;">$o = \sigma(-1.16) \approx \mathbf{0.24}$. The diagonal detector $h_3$ vetoes hard, but note $o$ is barely different from point A's $0.25$.</p>
                     </div>
                 </div>
             </div>
@@ -756,7 +756,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
                         <p>$z_1 = -0.5 + 1.0 = 0.5 \Rightarrow h_1 \approx 0.62$</p>
                         <p>$z_2 = -0.5 + 0.3 = -0.2 \Rightarrow h_2 \approx 0.45$</p>
                         <p>$z_3 = 3 - 1.0 - 0.3 = 1.7 \Rightarrow h_3 \approx 0.85$</p>
-                        <p style="margin-bottom:0;">$u = -5 + 2(0.62+0.45+0.85) = -5 + 3.84 = -1.16 \Rightarrow o \approx \mathbf{0.24}$. The point fails $h_2$'s &ldquo;above $x_2 = 0.5$&rdquo; test &mdash; a different detector vetoes than in problem 1, yet the output is identical.</p>
+                        <p style="margin-bottom:0;">$u = -5 + 2(0.62+0.45+0.85) = -5 + 3.84 = -1.16 \Rightarrow o \approx \mathbf{0.24}$. The point fails $h_2$'s &ldquo;above $x_2 = 0.5$&rdquo; test: a different detector vetoes than in problem 1, yet the output is identical.</p>
                     </div>
                 </div>
             </div>
@@ -767,12 +767,12 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <div style="display: flex; align-items: flex-start; gap: 14px;">
             <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
             <div style="flex: 1;">
-                <p><strong>Conceptual:</strong> problems 1 and 2 gave $o \approx 0.24$ for two very different red-region points, and the blue-region point A also gives $o \approx 0.25$. Explain <em>mechanically</em> why this network barely separates anything &mdash; and name the two fixes.</p>
+                <p><strong>Conceptual:</strong> problems 1 and 2 gave $o \approx 0.24$ for two very different red-region points, and the blue-region point A also gives $o \approx 0.25$. Explain <em>mechanically</em> why this network barely separates anything, and name the two fixes.</p>
                 <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
                 <div class="solution-body">
                     <div class="highlight-box">
-                        <p>With $k=1$ sigmoids, points near any detector line produce lukewarm votes ($h \approx 0.4$&ndash;$0.7$), so the sum $h_1+h_2+h_3$ hovers near $\approx 1.9$ for almost everyone &mdash; inside points don't reach the $\approx 2.5$ the output bias $-5$ demands (with weights 2), and outside points aren't pushed much lower. The pre-activation $u$ barely moves, so $o$ barely moves.</p>
-                        <p style="margin-bottom:0;"><strong>Fixes:</strong> (1) sharpen the hidden units &mdash; scale up layer-1 weights/biases so votes commit toward 0/1 (the Geometry Lab slider; the $k\to\infty$ limit is the step function); (2) retune the output layer's weights/bias to the votes actually produced &mdash; which is precisely what gradient descent would do.</p>
+                        <p>With $k=1$ sigmoids, points near any detector line produce lukewarm votes ($h \approx 0.4$&ndash;$0.7$), so the sum $h_1+h_2+h_3$ hovers near $\approx 1.9$ for almost everyone: inside points don't reach the $\approx 2.5$ the output bias $-5$ demands (with weights 2), and outside points aren't pushed much lower. The pre-activation $u$ barely moves, so $o$ barely moves.</p>
+                        <p style="margin-bottom:0;"><strong>Fixes:</strong> (1) sharpen the hidden units: scale up layer-1 weights/biases so votes commit toward 0/1 (the Geometry Lab slider; the $k\to\infty$ limit is the step function); (2) retune the output layer's weights/bias to the votes actually produced, which is precisely what gradient descent would do.</p>
                     </div>
                 </div>
             </div>
@@ -788,7 +788,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
                 <div class="solution-body">
                     <div class="highlight-box">
                         <p>$2(o-y) = 2(0.25) = 0.50$; &nbsp; $o(1-o) = 0.25 \times 0.75 \approx 0.19$; &nbsp; $w^{[2]}_2 = 2$; &nbsp; $h_2(1-h_2) = 0.73\times 0.27 \approx 0.20$; &nbsp; $x_1 = 1.5$.</p>
-                        <p style="margin-bottom:0;">Product: $0.50 \times 0.19 \times 2 \times 0.20 \times 1.5 \approx \mathbf{0.057}$. A positive gradient, so a descent step <em>decreases</em> $w^{[1]}_{1,2}$ slightly &mdash; sensible, since the network over-predicted ($o = 0.25$ against $y = 0$) and this path contributed to it.</p>
+                        <p style="margin-bottom:0;">Product: $0.50 \times 0.19 \times 2 \times 0.20 \times 1.5 \approx \mathbf{0.057}$. A positive gradient, so a descent step <em>decreases</em> $w^{[1]}_{1,2}$ slightly: sensible, since the network over-predicted ($o = 0.25$ against $y = 0$) and this path contributed to it.</p>
                     </div>
                 </div>
             </div>
