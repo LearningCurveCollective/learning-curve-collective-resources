@@ -1943,7 +1943,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "machine-learning--neural-network-step-through",
    "path": "machine-learning/Neural_Network_Step_Through.html",
    "title": "Inside a Simple Neural Network",
-   "description": "Step through a forward pass in a small sigmoid network, explore its geometry, see how training works, and practice with problems.",
+   "description": "Cheat sheet, flashcards, and a four-part walkthrough of a 2-3-1 sigmoid network: step through the forward pass, see what each hidden neuron detects, swap in step activations, then derive backprop with an interactive chain-rule path explorer that lights up any parameter's route to the loss. Practice problems and a 12-question quiz.",
    "subject": "machine-learning",
    "topic": "Algorithms, step by step",
    "order": 4,

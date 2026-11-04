@@ -44,7 +44,9 @@ body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: 
 
 .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
 
-.tab-buttons { display: flex; gap: 6px; margin-bottom: 30px; position: sticky; top: 0; background: var(--cream); z-index: 100; padding: 12px 0 10px; flex-wrap: wrap; border-bottom: 2px solid #E8E0D0; }
+.tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
+.tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.tab-row-label { width:92px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); opacity:0.75; }
 .tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
 .tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
 .tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
@@ -52,10 +54,14 @@ body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: 
 .tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
 .tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
 .tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
-.tab-button[data-group="techniques"] { border-color: #21442B; }
-.tab-button[data-group="techniques"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
-.tab-button[data-group="techniques"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
-.tab-button[data-group="techniques"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"] { border-color: #21442B; }
+.tab-button[data-group="study"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="study"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="sprint"] { border-color: #BC6C26; }
+.tab-button[data-group="sprint"].active { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="sprint"]:hover { border-color: #BC6C26; background: rgba(188,108,38,0.1); }
+.tab-button[data-group="sprint"].active:hover { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
 .tab-button[data-group="practice"] { border-color: #8B5E3C; }
 .tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
 .tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
@@ -149,6 +155,76 @@ ul, ol { margin-left: 20px; margin-bottom: 15px; }
 li { margin-bottom: 10px; }
 .mjx-container { overflow-x: auto; }
 
+
+/* ---- ported from the exam-review format ---- */
+.card h3, h3.sub { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 19px; color: var(--green-dark); margin-bottom: 10px; }
+.formula-grid .formula-tile:nth-child(3n+1) { background: rgba(33,68,43,0.08); border-color: #21442B; }
+.formula-grid .formula-tile:nth-child(3n+2) { background: rgba(221,162,94,0.10); border-color: #DDA25E; }
+.formula-grid .formula-tile:nth-child(3n+3) { background: rgba(66,38,13,0.08); border-color: #8B5E3C; }
+table.lcc { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+table.lcc th { background: var(--green-dark); color: white; text-align: left; padding: 10px 12px; font-weight: 600; font-size: 13px; letter-spacing: 0.3px; }
+table.lcc td { padding: 9px 12px; border-bottom: 1px solid var(--cream-dark); vertical-align: top; }
+table.lcc tr:nth-child(even) td { background: rgba(221,162,94,0.06); }
+table.lcc tr:last-child td { border-bottom: none; }
+table.lcc td.ok { color: var(--green-dark); font-weight: 600; }
+table.lcc td.bad { color: #B23B3B; font-weight: 600; }
+.pill { display: inline-block; background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-right: 6px; }
+.pill.green { background: var(--green-dark); } .pill.brown { background: #8B5E3C; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.kbd { font-family: 'Inter', monospace; background: var(--cream-dark); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+.quiz-q { background: white; border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; border-left: 5px solid #8B5E3C; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.quiz-q .qtext { font-weight: 600; margin-bottom: 10px; }
+.quiz-opt { display: block; width: 100%; text-align: left; background: var(--cream); border: 2px solid var(--cream-dark); border-radius: 6px; padding: 9px 12px; margin: 6px 0; font-family: 'Inter', sans-serif; font-size: 14px; cursor: pointer; color: var(--text-dark); transition: all 0.15s; }
+.quiz-opt:hover { border-color: var(--gold); }
+.quiz-opt.correct { background: #E8F5E9; border-color: var(--green-light); font-weight: 600; }
+.quiz-opt.wrong { background: #FFEBEE; border-color: #E57373; }
+.quiz-opt:disabled { cursor: default; }
+.quiz-expl { display: none; margin-top: 10px; padding: 10px 14px; background: rgba(33,68,43,0.06); border-radius: 6px; font-size: 14px; }
+.quiz-expl.show { display: block; }
+.score-bar { background: var(--green-dark); color: white; border-radius: 8px; padding: 12px 18px; font-weight: 600; margin: 10px 0 18px; display: flex; justify-content: space-between; align-items: center; }
+.score-bar button { background: var(--gold); border: none; color: var(--brown-dark); font-weight: 700; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; }
+.flash-wrap { perspective: 1000px; margin: 14px 0; }
+.flash-card { position: relative; width: 100%; min-height: 170px; cursor: pointer; transition: transform 0.5s; transform-style: preserve-3d; }
+.flash-card.flipped { transform: rotateY(180deg); }
+.flash-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px; padding: 22px 26px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-size: 16px; }
+.flash-front { background: white; border: 2px solid var(--gold); color: var(--text-dark); }
+.flash-back { background: var(--green-dark); color: white; transform: rotateY(180deg); }
+.flash-back .mjx-container { color: white !important; }
+.flash-back svg { color: white; }
+.flash-controls { display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.flash-controls button { background: var(--gold); border: none; color: var(--brown-dark); font-weight: 700; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; }
+.flash-controls button.alt { background: var(--cream-dark); color: var(--text-medium); }
+.flash-hint { font-size: 12px; color: var(--text-medium); margin-top: 6px; text-align: center; }
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.25); transition: all 0.2s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+/* ---- chain-rule path explorer ---- */
+.chain-svg-wrap svg { width: 100%; height: auto; display: block; }
+.chain-cap { font-size: 13px; color: var(--text-medium); text-align: center; margin: 8px 0 0; }
+.ch-edge line { stroke: #9FB2A5; stroke-width: 2; marker-end: url(#ch-arr); transition: stroke 0.25s, stroke-width 0.25s; }
+.ch-edge.zero line { stroke: #D8D8D8; stroke-width: 1.2; stroke-dasharray: 5 5; marker-end: url(#ch-arr-zero); }
+.ch-edge.path line { stroke: #DDA25E; stroke-width: 4; stroke-dasharray: none; marker-end: url(#ch-arr-path); }
+.ch-edge.lit line { stroke: #BC6C26; marker-end: url(#ch-arr-lit); }
+.ch-edge.cur line { stroke: #C0564A; stroke-width: 5; marker-end: url(#ch-arr-cur); }
+.ch-wlab { fill: #7A7A7A; font-weight: 600; }
+.ch-wlab.path { fill: #BC6C26; font-weight: 700; }
+.ch-node circle, .ch-node rect { fill: #fff; stroke: #21442B; stroke-width: 2.5; transition: fill 0.25s; }
+.ch-node.in circle { stroke: #39864E; } .ch-node.out circle { stroke: #BC6C26; } .ch-node.lossn rect { stroke: #C0564A; } .ch-node.yn circle { stroke: #39864E; stroke-dasharray: 4 3; }
+.ch-node .t1 { fill: #21442B; } .ch-node .t2 { fill: #6A6A6A; }
+.ch-node.path circle, .ch-node.path rect { fill: #FDF3E3; stroke-width: 3.5; }
+.ch-node.lit circle, .ch-node.lit rect { fill: #F5E4CC; }
+.ch-node.cur circle, .ch-node.cur rect { stroke: #C0564A; }
+.ch-bias rect { fill: rgba(221,162,94,0.18); stroke: #DDA25E; stroke-width: 1.2; }
+.ch-bias text { fill: #8B5E3C; }
+.ch-bias.path rect { fill: #F5E4CC; stroke-width: 2.5; } .ch-bias.cur rect { stroke: #C0564A; }
+#chain-svg .ch-badge { fill: #21442B; stroke: #fff; stroke-width: 2; display: none; }
+#chain-svg .ch-badge.on { display: block; }
+#chain-svg .ch-badge-t { fill: #fff; pointer-events: none; }
+#chain-svg .cur .ch-badge { fill: #C0564A; }
+@media print { .tab-nav { display: none !important; } .tab-content { display: block !important; } .tab-buttons { display: none; } }
 @media (max-width: 768px) {
     .header { flex-direction: column; text-align: center; gap: 15px; }
     .header-left { flex-direction: column; }
@@ -156,7 +232,8 @@ li { margin-bottom: 10px; }
     .tab-buttons { flex-wrap: wrap; gap: 6px; }
     .tab-button { font-size: 12px; padding: 6px 12px; }
     .container { padding: 20px 10px; }
-    .formula-grid { grid-template-columns: 1fr; }
+    .formula-grid, .two-col { grid-template-columns: 1fr; }
+    .tab-row-label { width: 100%; }
 }
 </style>
 </head>
@@ -167,7 +244,7 @@ li { margin-bottom: 10px; }
         <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
         <div class="header-text">
             <h1>Inside a Simple Neural Network</h1>
-            <div class="subtitle">INTERACTIVE WORKSHEET</div>
+            <div class="subtitle">STUDY SHEET &bull; FORWARD PASS, GEOMETRY, BACKPROP</div>
         </div>
     </div>
     <div class="header-right">
@@ -179,16 +256,150 @@ li { margin-bottom: 10px; }
 <div class="container">
 
 <div class="tab-buttons">
-    <button class="tab-button active" data-group="core" onclick="switchTab('step', this)">&#9655; Step-Through Model</button>
-    <button class="tab-button" data-group="techniques" onclick="switchTab('geometry', this)">Geometry Lab</button>
-    <button class="tab-button" data-group="techniques" onclick="switchTab('stepnet', this)">Step Network: 100%</button>
-    <button class="tab-button" data-group="techniques" onclick="switchTab('training', this)">How Training Works</button>
-    <button class="tab-button" data-group="core" onclick="switchTab('reference', this)">Reference</button>
-    <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">Practice</button>
+    <div class="tab-row"><span class="tab-row-label">Reference</span>
+        <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('flash', this)">&#9646; Flashcards</button>
+    </div>
+    <div class="tab-row"><span class="tab-row-label">Walkthrough</span>
+        <button class="tab-button" data-group="study" onclick="switchTab('step', this)">1 Forward Pass Step-Through</button>
+        <button class="tab-button" data-group="study" onclick="switchTab('geometry', this)">2 Geometry Lab: What Each Neuron Sees</button>
+        <button class="tab-button" data-group="study" onclick="switchTab('stepnet', this)">3 Step Activations: a Perfect Classifier</button>
+        <button class="tab-button" data-group="study" onclick="switchTab('training', this)">4 Training &amp; Backprop</button>
+    </div>
+    <div class="tab-row"><span class="tab-row-label">Practice</span>
+        <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">&#9998; Practice Problems</button>
+        <button class="tab-button" data-group="sprint" onclick="switchTab('quiz', this)">&#9889; Rapid-Fire Quiz</button>
+    </div>
 </div>
 
 <!-- ============ TAB: STEP-THROUGH ============ -->
-<div class="tab-content active" id="tab-step">
+<!-- ============ TAB: CHEAT SHEET ============ -->
+<div class="tab-content active" id="tab-cheat">
+    <div class="section-header"><div class="section-number">&#9733;</div><h2>Formulas to know cold</h2></div>
+    <div class="formula-grid">
+        <div class="formula-tile">
+            <h4>Hidden layer (for $j = 1, 2, 3$)</h4>
+            <p>$$z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2, \qquad h_j = \sigma(z_j)$$</p>
+            <p class="formula-note">Three logistic regressions run in parallel on the raw point. Read $w^{[1]}_{i,j}$ as <em>from</em> $x_i$ <em>to</em> $h_j$; a first subscript of $0$ is the bias.</p>
+        </div>
+        <div class="formula-tile">
+            <h4>Output layer</h4>
+            <p>$$u = w^{[2]}_{0} + \textstyle\sum_{j=1}^{3} w^{[2]}_{j}h_j, \qquad o = \sigma(u)$$</p>
+            <p class="formula-note">One more logistic regression whose inputs are $(h_1, h_2, h_3)$ instead of $(x_1, x_2)$.</p>
+        </div>
+        <div class="formula-tile">
+            <h4>Sigmoid and its derivative</h4>
+            <p>$$\sigma(z) = \frac{1}{1+e^{-z}}, \qquad \sigma'(z) = \sigma(z)\big(1-\sigma(z)\big) \le \tfrac14$$</p>
+            <p class="formula-note">Write the slope with the neuron's own output: $o(1-o)$, $h_j(1-h_j)$. Also $1-\sigma(-z) = \sigma(z)$.</p>
+        </div>
+        <div class="formula-tile">
+            <h4>Loss (squared, averaged)</h4>
+            <p>$$\ell = \frac{1}{n}\sum_{i=1}^{n}\big(o^{(i)} - y^{(i)}\big)^2, \qquad \frac{\partial \ell}{\partial o^{(i)}} = \frac{2}{n}\big(o^{(i)} - y^{(i)}\big)$$</p>
+            <p class="formula-note">Not cross-entropy, so the $o(1-o)$ factor does <em>not</em> cancel here.</p>
+        </div>
+        <div class="formula-tile">
+            <h4>Gradient descent, every parameter at once</h4>
+            <p>$$w^{\,t+1} = w^{\,t} - \alpha\,\frac{\partial\ell}{\partial w}\Big|_{w^{t}}$$</p>
+            <p class="formula-note">All 13 gradients are evaluated at the <em>current</em> values, then all 13 parameters step together.</p>
+        </div>
+        <div class="formula-tile">
+            <h4>Backprop = chain rule along the path</h4>
+            <p>$$\frac{\partial\ell}{\partial w^{[1]}_{i,j}} = \underbrace{2(o-y)\,o(1-o)}_{\text{error signal}}\cdot w^{[2]}_j\cdot h_j(1-h_j)\cdot x_i$$</p>
+            <p class="formula-note">Per example; average over $i = 1..n$. For a bias, replace the last factor by $1$. For $w^{[2]}_j$, stop after the error signal and multiply by $h_j$.</p>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">1</div><h2>The network at a glance</h2></div>
+    <div class="card">
+        <div class="two-col">
+            <div>
+                <h3 class="sub">Parameter census</h3>
+                <table class="lcc">
+                    <tr><th>Kind</th><th>Symbols</th><th>Count</th></tr>
+                    <tr><td>Input &rarr; hidden weights</td><td>$w^{[1]}_{i,j}$</td><td>$2\times3 = 6$</td></tr>
+                    <tr><td>Hidden biases</td><td>$w^{[1]}_{0,j}$</td><td>$3$</td></tr>
+                    <tr><td>Hidden &rarr; output weights</td><td>$w^{[2]}_{j}$</td><td>$3$</td></tr>
+                    <tr><td>Output bias</td><td>$w^{[2]}_{0}$</td><td>$1$</td></tr>
+                    <tr><td class="ok">Total</td><td></td><td class="ok">$13$</td></tr>
+                </table>
+                <p class="formula-note" style="margin-top:6px;">General rule for a dense layer: (inputs + 1) &times; neurons. Here $(2+1)\cdot3 + (3+1)\cdot1 = 13$.</p>
+            </div>
+            <div>
+                <h3 class="sub">The hand-picked weights</h3>
+                <table class="lcc">
+                    <tr><th>Neuron</th><th>bias</th><th>on $x_1$</th><th>on $x_2$</th><th>$z = 0$ along</th></tr>
+                    <tr><td>$h_1$</td><td>$-0.5$</td><td>$1$</td><td>$0$</td><td>$x_1 = 0.5$</td></tr>
+                    <tr><td>$h_2$</td><td>$-0.5$</td><td>$0$</td><td>$1$</td><td>$x_2 = 0.5$</td></tr>
+                    <tr><td>$h_3$</td><td>$3$</td><td>$-1$</td><td>$-1$</td><td>$x_1 + x_2 = 3$</td></tr>
+                    <tr><td>$o$</td><td>$-5$</td><td colspan="2">$2, 2, 2$ on $h_1, h_2, h_3$</td><td>fires when votes $> 2.5$</td></tr>
+                </table>
+                <p class="formula-note" style="margin-top:6px;">Weights set a line's orientation; the bias slides it into place; the output bias sets the firing threshold.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header"><div class="section-number">2</div><h2>Decision tables</h2></div>
+    <div class="card">
+        <h3 class="sub">Which factor does each parameter pick up?</h3>
+        <table class="lcc">
+            <tr><th>Parameter</th><th>Path to the loss</th><th>Gradient per example</th></tr>
+            <tr><td>$w^{[2]}_j$ (3)</td><td>$u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot h_j$</td></tr>
+            <tr><td>$w^{[2]}_0$ (1)</td><td>$u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot 1$</td></tr>
+            <tr><td>$w^{[1]}_{i,j}$ (6)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot x_i$</td></tr>
+            <tr><td>$w^{[1]}_{0,j}$ (3)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot 1$</td></tr>
+        </table>
+        <h3 class="sub">What each kind of parameter learns</h3>
+        <table class="lcc">
+            <tr><th>Parameter</th><th>Geometric job</th></tr>
+            <tr><td>Input &rarr; hidden weights</td><td>Rotate the three detector lines</td></tr>
+            <tr><td>Hidden biases</td><td>Slide the lines into position</td></tr>
+            <tr><td>Hidden &rarr; output weights</td><td>How much (and which sign) each vote counts</td></tr>
+            <tr><td>Output bias</td><td>How much total evidence is needed before firing</td></tr>
+        </table>
+        <h3 class="sub">Sharpness $k$ and the step limit</h3>
+        <table class="lcc">
+            <tr><th>Setting</th><th>Votes look like</th><th>Output map</th><th>Trainable?</th></tr>
+            <tr><td>$k = 1$</td><td>Lukewarm, $0.4$&ndash;$0.7$ near any line</td><td>Blur: $o\approx0.25$ everywhere</td><td>Yes, gradients healthy</td></tr>
+            <tr><td>$k = 8$</td><td>Nearly $0$ or $1$</td><td>Crisp triangle</td><td>Barely: slopes $\sigma'\approx0$</td></tr>
+            <tr><td>$k\to\infty$ (step function)</td><td>Exactly $0$ or $1$</td><td>Perfect triangle, 100%</td><td>No: slope is $0$ everywhere</td></tr>
+        </table>
+    </div>
+
+    <div class="section-header"><div class="section-number">3</div><h2>Traps that cost points</h2></div>
+    <div class="card">
+        <ul>
+            <li><strong>Reading the subscripts backwards.</strong> $w^{[1]}_{1,2}$ is <em>from</em> $x_1$ <em>to</em> $h_2$; its last chain-rule factor is $x_1$, not $x_2$.</li>
+            <li><strong>Forgetting the biases in the count.</strong> 9 weights is wrong; the answer is 13. A bias is a weight on a phantom input pinned to $1$.</li>
+            <li><strong>Summing over $j$ in a hidden-weight gradient.</strong> $w^{[1]}_{i,j}$ reaches the loss through $h_j$ only, so only $w^{[2]}_j$ appears, with no sum.</li>
+            <li><strong>Dropping the $o(1-o)$ factor.</strong> That cancellation belongs to cross-entropy. With squared loss it stays.</li>
+            <li><strong>Losing the $2$ and the $\frac1n$.</strong> $\frac{\partial}{\partial o}(o-y)^2 = 2(o-y)$, and the average passes through differentiation.</li>
+            <li><strong>Treating the step function as trainable.</strong> Its slope is $0$ everywhere, so every gradient is $0$; those weights are designed, not learned.</li>
+            <li><strong>Calling the $k$ slider "training."</strong> It moves 9 parameters in one rigid direction with no data consulted. Training moves all 13 independently, downhill on the loss.</li>
+        </ul>
+    </div>
+
+    <div class="section-header"><div class="section-number">4</div><h2>One-liners that earn the point</h2></div>
+    <div class="card">
+        <ul>
+            <li>A network is stacked logistic regressions: three on the inputs, then one on the hidden outputs.</li>
+            <li>One hidden neuron is one line plus a side-choice; three lines and an AND make a triangle.</li>
+            <li>Backprop is the chain rule along a parameter's path to the loss, plus caching the shared prefix $2(o-y)\,o(1-o)$.</li>
+            <li>A bias's gradient is its layer's weight formula with the final input replaced by $1$.</li>
+            <li>Saturated sigmoids have slope $\approx0$, so confident networks learn slowly; the step function is the limit where learning stops.</li>
+            <li>Hidden units can be permuted without changing the function, so the loss is not convex: many equivalent minima, no global-optimum guarantee.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ============ TAB: FLASHCARDS ============ -->
+<div class="tab-content" id="tab-flash">
+    <div class="section-header"><div class="section-number">&#9646;</div><h2>Flashcards</h2></div>
+    <div class="card"><p style="margin:0;">Front: a prompt. Back: the answer. Shuffle before each pass and say the answer out loud before flipping.</p></div>
+    <div id="flash-main"></div>
+</div>
+
+<!-- ============ TAB: STEP-THROUGH ============ -->
+<div class="tab-content" id="tab-step">
     <div class="section-header">
         <div class="section-number">1</div>
         <h2>Step Through the Forward Pass</h2>
@@ -254,7 +465,7 @@ li { margin-bottom: 10px; }
             <li><strong>Hidden biases</strong> ($-0.5$, $-0.5$, $+3$) <em>position</em> each detector line: $h_1$'s bias of $-0.5$ is what puts its line at $x_1 = 0.5$ instead of through the origin. Weights set a line's <em>orientation</em>; the bias slides it into place.</li>
             <li><strong>Output bias</strong> ($-5$) sets the <em>firing threshold</em>: the vote-sum $2h_1{+}2h_2{+}2h_3$ must exceed $5$ before $u &gt; 0$. Without it, $u$ would be positive everywhere and the network could never say &ldquo;no.&rdquo;</li>
         </ul>
-        <p style="margin-bottom:0;"><strong>Are biases trained?</strong> Yes &mdash; all 13 parameters (9 weights + 4 biases) are updated by gradient descent together. A bias is just a weight whose input is always $1$, so its backprop chain is identical to a weight's except the final factor is $	imes\,1$ instead of $	imes\,x_1^{(i)}$. Weights learn orientations; biases learn positions and thresholds &mdash; simultaneously.</p>
+        <p style="margin-bottom:0;"><strong>Are biases trained?</strong> Yes &mdash; all 13 parameters (9 weights + 4 biases) are updated by gradient descent together. A bias is just a weight whose input is always $1$, so its backprop chain is identical to a weight's except the final factor is $\times\,1$ instead of $\times\,x_1^{(i)}$. Weights learn orientations; biases learn positions and thresholds &mdash; simultaneously.</p>
     </div>
     <div class="idea-box">
         <p style="margin-bottom:0;"><strong>What to notice as you step:</strong> the hidden layer is <em>three logistic regressions run in parallel</em> on $(x_1,x_2)$, and the output is <em>one more logistic regression</em> whose inputs are the hidden outputs $(h_1,h_2,h_3)$ instead of the raw coordinates. Networks are stacked logistic regressions &mdash; the same building block, used four times.</p>
@@ -330,7 +541,7 @@ li { margin-bottom: 10px; }
 <!-- ============ TAB: STEP NETWORK ============ -->
 <div class="tab-content" id="tab-stepnet">
     <div class="section-header">
-        <div class="section-number">S</div>
+        <div class="section-number">1</div>
         <h2>Swap in Step Activations &mdash; and Classify Everything</h2>
     </div>
     <div class="card">
@@ -370,14 +581,14 @@ li { margin-bottom: 10px; }
     </div>
 
     <div class="idea-box">
-        <p style="margin-bottom:0;"><strong>Why this can hit 100% when the sigmoid version hovered at &ldquo;everything &asymp; 0.25&rdquo;:</strong> hard votes leave no ambiguity &mdash; the sum is an integer, 3 inside and &le;2 outside, and one threshold separates them perfectly. The price, from the training tab: the step function's slope is zero everywhere, so no gradient exists &mdash; these weights can only be <em>designed</em>, never learned. Perfect confidence and perfect untrainability are the same coin.</p>
+        <p style="margin-bottom:0;"><strong>Why this can hit 100% when the sigmoid version hovered at &ldquo;everything &asymp; 0.25&rdquo;:</strong> hard votes leave no ambiguity &mdash; the sum is an integer, 3 inside and &le;2 outside, and one threshold separates them perfectly. The price, from the Training &amp; Backprop tab: the step function's slope is zero everywhere, so no gradient exists &mdash; these weights can only be <em>designed</em>, never learned. Perfect confidence and perfect untrainability are the same coin.</p>
     </div>
 </div>
 
 <!-- ============ TAB: TRAINING ============ -->
 <div class="tab-content" id="tab-training">
     <div class="section-header">
-        <div class="section-number">T</div>
+        <div class="section-number">1</div>
         <h2>What Training Actually Does</h2>
     </div>
 
@@ -396,7 +607,7 @@ li { margin-bottom: 10px; }
     </div>
 
     <div class="section-header">
-        <div class="section-number">T</div>
+        <div class="section-number">2</div>
         <h2>Backpropagation: A Worked Derivation</h2>
     </div>
     <div class="card">
@@ -404,13 +615,44 @@ li { margin-bottom: 10px; }
 
         <div class="highlight-box">
             <p style="margin-bottom: 6px;"><strong>Givens.</strong> Forward pass: $z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2$, &nbsp;$h_j = \sigma(z_j)$, &nbsp;$u = w^{[2]}_0 + \sum_j w^{[2]}_j h_j$, &nbsp;$o = \sigma(u)$. Loss: $\ell = \frac{1}{n}\sum_i (o^{(i)} - y^{(i)})^2$.</p>
-            <p style="margin-bottom: 0;"><strong>Lemma (sigmoid derivative).</strong> $\sigma'(z) = \sigma(z)(1-\sigma(z))$ &mdash; derived on the Reference tab; cited below as <em>(lemma)</em>.</p>
+            <p style="margin-bottom: 0;"><strong>Lemma (sigmoid derivative).</strong> $\sigma'(z) = \sigma(z)(1-\sigma(z))$ &mdash; derived on the Cheat Sheet; cited below as <em>(lemma)</em>.</p>
         </div>
 
         <p><strong>Plan.</strong> $w^{[1]}_{1,2}$ influences $\ell$ through exactly one path:</p>
         <p style="text-align:center;">$$w^{[1]}_{1,2} \to z_2 \to h_2 \to u \to o \to \ell$$</p>
         <p>so we differentiate each link (five factors), multiply them (chain rule), average over examples, then plug into the GD rule. Observe the nesting $\ell = \ell\big(o\big(u\big(h_2\big(z_2(w)\big)\big)\big)\big)$, so by the chain rule of differentiation:</p>
         <p style="text-align:center;">$$\frac{\partial \ell}{\partial w^{[1]}_{1,2}} = \frac{\partial \ell}{\partial o}\cdot\frac{\partial o}{\partial u}\cdot\frac{\partial u}{\partial h_2}\cdot\frac{\partial h_2}{\partial z_2}\cdot\frac{\partial z_2}{\partial w^{[1]}_{1,2}}$$</p>
+
+        <p><strong>See the path on the network.</strong> The diagram lights up every arrow and neuron the chosen parameter passes through on its way to the loss, and nothing else. Each badge is one chain-rule link; walk them from the loss backward and watch the product build.</p>
+        <div class="viz-container" id="chain-explorer">
+            <div class="viz-controls" style="margin-bottom:12px;padding-bottom:12px;">
+                <div class="control-group">
+                    <label>Pick a parameter</label>
+                    <div class="sum-type-buttons" id="chain-params">
+                        <button type="button" class="sum-type-btn active" data-p="w1_1_2" onclick="chainPick('w1_1_2', this)">w&#185;<sub>1,2</sub> (x&#8321; &rarr; h&#8322;)</button>
+                        <button type="button" class="sum-type-btn" data-p="w1_2_3" onclick="chainPick('w1_2_3', this)">w&#185;<sub>2,3</sub> (x&#8322; &rarr; h&#8323;)</button>
+                        <button type="button" class="sum-type-btn" data-p="w1_0_1" onclick="chainPick('w1_0_1', this)">w&#185;<sub>0,1</sub> (bias of h&#8321;)</button>
+                        <button type="button" class="sum-type-btn" data-p="w2_3" onclick="chainPick('w2_3', this)">w&#178;<sub>3</sub> (h&#8323; &rarr; o)</button>
+                        <button type="button" class="sum-type-btn" data-p="w2_0" onclick="chainPick('w2_0', this)">w&#178;<sub>0</sub> (output bias)</button>
+                    </div>
+                </div>
+            </div>
+            <div class="chain-svg-wrap" id="chain-svg"></div>
+            <p class="chain-cap">Gold = the parameter's only path to the loss. Numbered badges are the chain-rule links, counted from the loss backward. Walk them one at a time:</p>
+            <div class="step-nav" style="margin-top:6px;">
+                <button type="button" class="step-btn secondary" id="chainPrev" onclick="chainStep(-1)">&#9664; Back</button>
+                <div class="progress-dots" id="chainDots"></div>
+                <button type="button" class="step-btn primary" id="chainNext" onclick="chainStep(1)">Next link &#9654;</button>
+                <button type="button" class="step-btn secondary" onclick="chainReset()">Reset</button>
+            </div>
+            <div class="step-panel" style="min-height:110px;">
+                <div class="step-title" id="chainTitle">Ready</div>
+                <div id="chainMath" style="font-size:17px;"></div>
+                <div class="step-note" id="chainNote">Press Next link to start at the loss and multiply one factor per link until you reach the parameter.</div>
+            </div>
+        </div>
+
+        <p style="margin-top:18px;"><strong>Now the five links, written out.</strong> The explorer above shows them for any parameter; here is the full derivation for $w^{[1]}_{1,2}$:</p>
 
         <div class="derivation-step"><div class="step-num">1</div><div class="step-body">
             <p style="margin-bottom:4px;"><strong>Link 1: $\partial\ell/\partial o$.</strong> The loss for one example is $\ell = (o-y)^2$, so by the power rule:</p>
@@ -453,7 +695,7 @@ li { margin-bottom: 10px; }
     </div>
 
     <div class="section-header">
-        <div class="section-number">T</div>
+        <div class="section-number">3</div>
         <h2>The Full Update Roster</h2>
     </div>
     <div class="card">
@@ -465,7 +707,7 @@ li { margin-bottom: 10px; }
             <tr><td><strong>$w^{[1]}_{i,j}$</strong> &mdash; input&rarr;hidden weights (6)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot x_i$</td></tr>
             <tr><td><strong>$w^{[1]}_{0,j}$</strong> &mdash; hidden biases (3)</td><td>$z_j \to h_j \to u \to o \to \ell$</td><td>$2(o{-}y)\cdot o(1{-}o)\cdot w^{[2]}_j\cdot h_j(1{-}h_j)\cdot 1$</td></tr>
         </table>
-        <p style="margin-bottom:0;">Read down the last column: the shared prefix $2(o{-}y)\,o(1{-}o)$ is the <em>output error signal</em> computed once and reused by all 13; deeper parameters multiply on more links; and a bias is always its layer's weight formula with the final input replaced by $1$. For a concrete instance of row 3, see the worked backprop path on the Reference tab.</p>
+        <p style="margin-bottom:0;">Read down the last column: the shared prefix $2(o{-}y)\,o(1{-}o)$ is the <em>output error signal</em> computed once and reused by all 13; deeper parameters multiply on more links; and a bias is always its layer's weight formula with the final input replaced by $1$. For a concrete instance of row 3, pick $w^{[1]}_{1,2}$ in the path explorer above.</p>
     </div>
 
     <div class="idea-box">
@@ -478,69 +720,10 @@ li { margin-bottom: 10px; }
     </div>
 </div>
 
-<!-- ============ TAB: REFERENCE ============ -->
-<div class="tab-content" id="tab-reference">
-    <div class="section-header">
-        <div class="section-number">3</div>
-        <h2>The Forward Pass, Formally</h2>
-    </div>
-
-    <div class="formula-grid">
-        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
-            <h4>Hidden layer (for j = 1, 2, 3)</h4>
-            <p>$$z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2, \qquad h_j = \sigma(z_j)$$</p>
-            <p class="formula-note">Three parallel &ldquo;little logistic regressions&rdquo; on the raw features. Each has its own bias $w^{[1]}_{0,j}$.</p>
-        </div>
-        <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
-            <h4>Output layer</h4>
-            <p>$$u = w^{[2]}_{0} + \textstyle\sum_{j=1}^{3} w^{[2]}_{j}h_j, \qquad o = \sigma(u)$$</p>
-            <p class="formula-note">One more logistic regression &mdash; but its inputs are $(h_1,h_2,h_3)$, the hidden layer's re-description of the point.</p>
-        </div>
-        <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
-            <h4>Sigmoid &amp; its derivative</h4>
-            <p>$$\sigma(z) = \frac{1}{1+e^{-z}}, \qquad \sigma'(z) = \sigma(z)\big(1-\sigma(z)\big)$$</p>
-            <p class="formula-note">The derivative identity powers every backprop slope factor below. Also: $1-\sigma(-z) = \sigma(z)$.</p>
-        </div>
-        <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
-            <h4>Loss (this problem uses squared loss)</h4>
-            <p>$$\ell = \frac{1}{n}\sum_{i=1}^{n}\big(o^{(i)} - y^{(i)}\big)^2$$</p>
-            <p class="formula-note">Not the usual NLL &mdash; so the convenient sigmoid/log cancellations from logistic regression do <em>not</em> occur here.</p>
-        </div>
-    </div>
-
-    <div class="section-header">
-        <div class="section-number">4</div>
-        <h2>Parameter Census</h2>
-    </div>
-    <div class="card">
-        <p>Everything gradient descent tunes, in one count:</p>
-        <ul>
-            <li><strong>Input &rarr; hidden weights:</strong> $2 \times 3 = 6$ &nbsp;(the $w^{[1]}_{i,j}$)</li>
-            <li><strong>Hidden biases:</strong> $3$ &nbsp;(the $w^{[1]}_{0,j}$)</li>
-            <li><strong>Hidden &rarr; output weights:</strong> $3$ &nbsp;(the $w^{[2]}_{j}$)</li>
-            <li><strong>Output bias:</strong> $1$ &nbsp;(the $w^{[2]}_{0}$)</li>
-        </ul>
-        <div class="highlight-box"><p style="margin-bottom:0;">$$\textbf{Total: } 6 + 3 + 3 + 1 = 13 \text{ parameters}$$</p></div>
-    </div>
-
-    <div class="section-header">
-        <div class="section-number">5</div>
-        <h2>A Backprop Path, Worked</h2>
-    </div>
-    <div class="card">
-        <div class="derivation-step"><div class="step-num">0</div><div class="step-body"><p style="margin-bottom:0;"><strong>The plan.</strong> The weight $w^{[1]}_{1,2}$ (arrow from $x_1$ into $h_2$) touches the loss through exactly one path. The gradient is the chain rule multiplied along that path, link by link.</p></div></div>
-        <div class="highlight-box">
-            <p style="text-align:center; margin-bottom: 8px;">$$w^{[1]}_{1,2} \;\to\; z_2 \;\to\; h_2 \;\to\; u \;\to\; o \;\to\; \ell$$</p>
-            <p style="text-align:center; margin-bottom:0;">$$\frac{\partial \ell}{\partial w^{[1]}_{1,2}} = \frac{1}{n}\sum_{i=1}^n \underbrace{2(o^{(i)}{-}y^{(i)})}_{\ell\to o}\cdot \underbrace{o^{(i)}(1{-}o^{(i)})}_{o\to u}\cdot \underbrace{w^{[2]}_{2}}_{u\to h_2}\cdot \underbrace{h^{(i)}_2(1{-}h^{(i)}_2)}_{h_2\to z_2}\cdot \underbrace{x^{(i)}_1}_{z_2\to w}$$</p>
-        </div>
-        <p style="margin-bottom:0;">Every factor is a number you can point at in the Step-Through tab: the output error, the output sigmoid's slope, the wire $w^{[2]}_2$, $h_2$'s own slope, and the input that fed it. Note only $w^{[2]}_2$ appears &mdash; $h_1$ and $h_3$ are separate paths that this weight never touches.</p>
-    </div>
-</div>
-
 <!-- ============ TAB: PRACTICE ============ -->
 <div class="tab-content" id="tab-practice">
     <div class="section-header">
-        <div class="section-number">6</div>
+        <div class="section-number">&#9998;</div>
         <h2>Run the Numbers Yourself</h2>
     </div>
     <div class="card">
@@ -614,6 +797,14 @@ li { margin-bottom: 10px; }
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- ============ TAB: QUIZ ============ -->
+<div class="tab-content" id="tab-quiz">
+    <div class="section-header"><div class="section-number">&#9889;</div><h2>Rapid-fire quiz</h2></div>
+    <div class="card"><p style="margin:0;">Twelve questions, instant feedback. Each explanation names the trap the wrong options set.</p></div>
+    <div id="quiz-main"></div>
 </div>
 
 </div><!-- /container -->
@@ -907,23 +1098,270 @@ function onK(){
 })();
 
 // ============ Tabs & toggles ============
+function typesetSoon(delay) {
+    setTimeout(function() { if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise().catch(function(){}); } }, delay || 60);
+}
 function switchTab(name, btn){
     document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
     document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
     document.getElementById('tab-'+name).classList.add('active');
     if (btn) btn.classList.add('active');
+    else { document.querySelectorAll('.tab-buttons .tab-button').forEach(function(b){ var oc = b.getAttribute('onclick') || ''; if (oc.indexOf("'" + name + "'") >= 0) b.classList.add('active'); }); }
     if (name==='step') drawNet();
     if (name==='geometry') drawGeo();
     if (name==='stepnet') drawStepNet();
-    setTimeout(function(){ if (window.MathJax && MathJax.typeset) MathJax.typeset(); }, 100);
+    if (name==='training') chainRender();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    typesetSoon(100);
 }
+function goTab(name) { switchTab(name, null); }
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+/* ---- Quiz engine ---- */
+function buildQuiz(containerId, questions) {
+    var c = document.getElementById(containerId); if (!c) return;
+    var state = { answered: 0, correct: 0 };
+    var bar = document.createElement('div'); bar.className = 'score-bar';
+    bar.innerHTML = '<span>Score: <span class="qs">0</span> / ' + questions.length + '</span><button type="button">Reset</button>';
+    c.appendChild(bar);
+    var wrap = document.createElement('div'); c.appendChild(wrap);
+    function render() {
+        wrap.innerHTML = ''; state.answered = 0; state.correct = 0; bar.querySelector('.qs').textContent = '0';
+        questions.forEach(function(q, qi) {
+            var d = document.createElement('div'); d.className = 'quiz-q';
+            d.innerHTML = '<div class="qtext">' + (qi+1) + '. ' + q.q + '</div>';
+            q.opts.forEach(function(o, oi) {
+                var b = document.createElement('button'); b.className = 'quiz-opt'; b.type = 'button'; b.innerHTML = String.fromCharCode(65+oi) + '.&nbsp; ' + o;
+                b.onclick = function() {
+                    var all = d.querySelectorAll('.quiz-opt'); all.forEach(function(x){ x.disabled = true; });
+                    if (oi === q.a) { b.classList.add('correct'); state.correct++; } else { b.classList.add('wrong'); all[q.a].classList.add('correct'); }
+                    state.answered++; bar.querySelector('.qs').textContent = state.correct;
+                    d.querySelector('.quiz-expl').classList.add('show'); typesetSoon(30);
+                };
+                d.appendChild(b);
+            });
+            var e = document.createElement('div'); e.className = 'quiz-expl'; e.innerHTML = q.e; d.appendChild(e);
+            wrap.appendChild(d);
+        });
+        typesetSoon(80);
+    }
+    bar.querySelector('button').onclick = render;
+    render();
+}
+/* ---- Flashcards ---- */
+function buildFlashcards(containerId, cards) {
+    var c = document.getElementById(containerId); if (!c) return;
+    var i = 0, order = cards.map(function(_, k){ return k; });
+    c.innerHTML = '<div class="flash-wrap"><div class="flash-card" id="' + containerId + '-card"><div class="flash-face flash-front"></div><div class="flash-face flash-back"></div></div></div>' +
+        '<div class="flash-controls"><button type="button" class="alt" data-act="prev">&larr; Prev</button><button type="button" data-act="flip">Flip</button><button type="button" class="alt" data-act="next">Next &rarr;</button><button type="button" class="alt" data-act="shuffle">Shuffle</button></div>' +
+        '<div class="flash-hint">Card <span class="fi">1</span> of ' + cards.length + ' &middot; click the card to flip</div>';
+    var card = c.querySelector('.flash-card'), front = c.querySelector('.flash-front'), back = c.querySelector('.flash-back');
+    function show() { card.classList.remove('flipped'); front.innerHTML = cards[order[i]].f; back.innerHTML = cards[order[i]].b; c.querySelector('.fi').textContent = i+1; typesetSoon(40); }
+    card.onclick = function(){ card.classList.toggle('flipped'); };
+    c.querySelectorAll('.flash-controls button').forEach(function(b){
+        b.onclick = function(){
+            var a = b.getAttribute('data-act');
+            if (a === 'flip') card.classList.toggle('flipped');
+            if (a === 'next') { i = (i+1) % cards.length; show(); }
+            if (a === 'prev') { i = (i-1+cards.length) % cards.length; show(); }
+            if (a === 'shuffle') { for (var k = order.length-1; k > 0; k--) { var j = Math.floor(Math.random()*(k+1)); var t = order[k]; order[k] = order[j]; order[j] = t; } i = 0; show(); }
+        };
+    });
+    show();
+}
+var R = String.raw;
+var QUIZ1 = [
+ {q: R`How many trainable parameters does the 2-3-1 network have?`, opts: [R`$9$`, R`$12$`, R`$13$`, R`$16$`], a: 2, e: R`$6$ input-to-hidden weights $+\,3$ hidden biases $+\,3$ hidden-to-output weights $+\,1$ output bias. $9$ forgets every bias; $12$ forgets the output bias.`},
+ {q: R`In $u = w^{[2]}_0 + w^{[2]}_1h_1 + w^{[2]}_2h_2 + w^{[2]}_3h_3$, what is $\partial u/\partial h_2$?`, opts: [R`$h_2$`, R`$w^{[2]}_2$`, R`$w^{[2]}_1 + w^{[2]}_2 + w^{[2]}_3$`, R`$o(1-o)$`], a: 1, e: R`Only the term containing $h_2$ survives, leaving its coefficient. $h_2$ is the answer to the <em>other</em> question, $\partial u/\partial w^{[2]}_2$.`},
+ {q: R`The last chain-rule factor for the weight $w^{[1]}_{1,2}$ (from $x_1$ into $h_2$) is`, opts: [R`$x_2$`, R`$h_2$`, R`$x_1$`, R`$w^{[2]}_2$`], a: 2, e: R`$z_2 = w^{[1]}_{0,2} + w^{[1]}_{1,2}x_1 + w^{[1]}_{2,2}x_2$; the coefficient of $w^{[1]}_{1,2}$ is the input it multiplies, $x_1$. Reading the subscripts as "to, from" gives the wrong input.`},
+ {q: R`The gradient of a hidden bias $w^{[1]}_{0,j}$ equals the gradient of $w^{[1]}_{i,j}$ with`, opts: [R`$x_i$ replaced by $0$`, R`$x_i$ replaced by $1$`, R`$h_j(1-h_j)$ removed`, R`the error signal removed`], a: 1, e: R`A bias is a weight on a phantom input pinned to $1$, so its chain is identical except the final factor is $1$.`},
+ {q: R`Which factor does the gradient of $w^{[2]}_j$ NOT contain?`, opts: [R`$2(o-y)$`, R`$o(1-o)$`, R`$h_j(1-h_j)$`, R`$h_j$`], a: 2, e: R`$w^{[2]}_j$ reaches the loss through $u \to o \to \ell$ only; it never passes through a hidden sigmoid, so no hidden slope appears. Its last factor is the input it multiplies, $h_j$.`},
+ {q: R`The maximum value of $\sigma'(z) = \sigma(z)(1-\sigma(z))$ is`, opts: [R`$1$`, R`$\tfrac12$`, R`$\tfrac14$`, R`$e^{-1}$`], a: 2, e: R`At $z = 0$, $\sigma = \tfrac12$ and $\tfrac12\cdot\tfrac12 = \tfrac14$. Every sigmoid link in a chain multiplies the gradient by at most $\tfrac14$.`},
+ {q: R`Why does the hidden-weight gradient contain $w^{[2]}_j$ alone and not $\sum_j w^{[2]}_j$?`, opts: [R`The other weights are zero`, R`The weight reaches the loss through $h_j$ only, a single path`, R`The sum is absorbed into $2(o-y)$`, R`It does contain the sum; the sheet simplifies`], a: 1, e: R`$w^{[1]}_{i,j}$ feeds $z_j$, which feeds $h_j$, and nothing else. One path, one wire. A sum appears only when a variable feeds several downstream paths.`},
+ {q: R`As the sharpness $k \to \infty$, each sigmoid becomes a step function. Training then`, opts: [R`Converges faster`, R`Stops: every gradient is $0$ because the slope is $0$ everywhere`, R`Becomes convex`, R`Needs a smaller learning rate`], a: 1, e: R`The chain contains $\sigma'$ factors; a step function's slope is $0$ except at a single point. Step networks must be designed by hand.`},
+ {q: R`Sliding the sharpness slider $k$ is`, opts: [R`One step of gradient descent`, R`Moving 9 parameters together in one rigid direction, with no data consulted`, R`Changing the loss function`, R`Adding a layer`], a: 1, e: R`It multiplies every hidden weight and bias by $k$. The lines don't move; only the transitions sharpen. Training moves all 13 parameters independently, downhill on the loss.`},
+ {q: R`Why is the squared loss not convex in the 13 parameters?`, opts: [R`Sigmoids are not differentiable`, R`Hidden units can be permuted without changing the function, so the surface has multiple equivalent minima`, R`The loss has no minimum`, R`Because $n > 13$`], a: 1, e: R`Swapping $h_1$ and $h_2$ (with their weights) gives the same network, so there are several equally good minima. Convex functions have one.`},
+ {q: R`With the hand-picked weights at $k = 1$, points inside and far outside the triangle all give $o \approx 0.25$. Mechanically, this is because`, opts: [R`The output bias is too large`, R`Lukewarm votes keep $h_1 + h_2 + h_3 \approx 1.9$ for almost every point, so $u$ barely moves`, R`$x_1$ and $x_2$ are too small`, R`The loss is squared`], a: 1, e: R`Near any line a sigmoid vote is $0.4$&ndash;$0.7$. The sum never reaches the $2.5$ the output threshold demands, nor falls far below it. Sharpen the votes or retune the output layer.`},
+ {q: R`With squared loss, the output layer's gradient keeps a factor that cross-entropy would cancel. Which one?`, opts: [R`$h_j$`, R`$2(o-y)$`, R`$o(1-o)$`, R`$\tfrac1n$`], a: 2, e: R`Cross-entropy's $\partial\ell/\partial o = -y/o + (1-y)/(1-o)$ multiplies $o(1-o)$ down to $o - y$. Squared loss has no such cancellation, so the sigmoid slope stays.`}
+];
+var FLASH1 = [
+ {f: R`Hidden layer, formally`, b: R`$z_j = w^{[1]}_{0,j} + w^{[1]}_{1,j}x_1 + w^{[1]}_{2,j}x_2$, $\;h_j = \sigma(z_j)$`},
+ {f: R`Output layer, formally`, b: R`$u = w^{[2]}_0 + \sum_j w^{[2]}_j h_j$, $\;o = \sigma(u)$`},
+ {f: R`Index convention for $w^{[1]}_{i,j}$`, b: R`From $x_i$ to $h_j$. First subscript $0$ = bias. Superscript = layer.`},
+ {f: R`$\sigma'(z)$, in terms of the neuron's output`, b: R`$\sigma(z)(1-\sigma(z))$: write $o(1-o)$ or $h_j(1-h_j)$. Max $\tfrac14$.`},
+ {f: R`The loss and its derivative`, b: R`$\ell = \frac1n\sum(o-y)^2$, $\;\partial\ell/\partial o = \frac2n(o-y)$`},
+ {f: R`Gradient descent rule`, b: R`$w^{t+1} = w^t - \alpha\,\partial\ell/\partial w$, all 13 at once from the same current values`},
+ {f: R`Path of $w^{[1]}_{1,2}$ to the loss`, b: R`$w \to z_2 \to h_2 \to u \to o \to \ell$ (one path, five links)`},
+ {f: R`Five factors for $\partial\ell/\partial w^{[1]}_{1,2}$`, b: R`$2(o-y)\cdot o(1-o)\cdot w^{[2]}_2\cdot h_2(1-h_2)\cdot x_1$`},
+ {f: R`The error signal (shared prefix)`, b: R`$2(o-y)\,o(1-o)$: computed once, reused by all 13 parameters`},
+ {f: R`Gradient of $w^{[2]}_j$`, b: R`$2(o-y)\,o(1-o)\,h_j$: no hidden slope, path is $u\to o\to\ell$`},
+ {f: R`Gradient of any bias`, b: R`Its layer's weight formula with the final input replaced by $1$`},
+ {f: R`Parameter count`, b: R`$6 + 3 + 3 + 1 = 13$; rule: (inputs $+1$) $\times$ neurons per layer`},
+ {f: R`What does the sharpness $k$ do?`, b: R`Multiplies hidden weights and biases by $k$: lines stay put, transitions sharpen. A demo knob, not training.`},
+ {f: R`Why can't a step network be trained?`, b: R`Slope $0$ everywhere, so every $\sigma'$ factor is $0$ and every gradient is $0$`},
+ {f: R`What each parameter kind learns`, b: R`$w^{[1]}_{i,j}$ rotate lines; $w^{[1]}_{0,j}$ slide them; $w^{[2]}_j$ weight votes; $w^{[2]}_0$ sets the threshold`},
+ {f: R`Why $o\approx0.25$ everywhere at $k=1$`, b: R`Lukewarm votes: $h_1+h_2+h_3\approx1.9$ for nearly all points, never reaching the $2.5$ threshold`},
+ {f: R`Is the loss convex in the 13 parameters?`, b: R`No: permuting hidden units gives equivalent minima; no global-optimum guarantee`},
+ {f: R`Backprop in one sentence`, b: R`The chain rule along each parameter's path to the loss, with the shared prefix cached`}
+];
+/* ============ Chain-rule path explorer ============ */
+var CH = {
+    pos: { x1: [80, 134], x2: [80, 254], h1: [320, 84], h2: [320, 194], h3: [320, 304], o: [560, 194], loss: [720, 194], y: [720, 84] },
+    edgesIn: [['x1','h1','1'],['x1','h2','0'],['x1','h3','-1'],['x2','h1','0'],['x2','h2','1'],['x2','h3','-1']],
+    edgesOut: [['h1','o','2'],['h2','o','2'],['h3','o','2']],
+    bias: { h1: '-0.5', h2: '-0.5', h3: '+3', o: '-5' }
+};
+function chainSub(i, j) { return 'w<tspan baseline-shift="super" font-size="9">[1]</tspan><tspan baseline-shift="sub" font-size="9">' + i + ',' + j + '</tspan>'; }
+function chainBuildSvg() {
+    var P = CH.pos, s = '';
+    s += '<svg viewBox="0 0 800 386" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The 2-3-1 network with the loss node; the selected parameter\'s path to the loss is highlighted">';
+    s += '<defs>' + ['ch-arr|#9FB2A5','ch-arr-zero|#D8D8D8','ch-arr-path|#DDA25E','ch-arr-lit|#BC6C26','ch-arr-cur|#C0564A'].map(function(m){ var q = m.split('|'); return '<marker id="' + q[0] + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="' + q[1] + '" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>'; }).join('') + '</defs>';
+    s += '<g font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#4A4A4A" text-anchor="middle"><text x="80" y="24">INPUTS</text><text x="320" y="24">HIDDEN: sum + bias, then &#963;</text><text x="560" y="24">OUTPUT</text><text x="720" y="24">LOSS</text></g>';
+    function edge(a, b, label, id, r1, r2, tOff) {
+        var A = P[a], B = P[b], dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx, dy);
+        var sx = A[0]+dx*r1/L, sy = A[1]+dy*r1/L, ex = B[0]-dx*r2/L, ey = B[1]-dy*r2/L;
+        var mx = sx+(ex-sx)*tOff, my = sy+(ey-sy)*tOff;
+        var tB = Math.min(0.85, tOff + 0.18), bx = sx+(ex-sx)*tB, by = sy+(ey-sy)*tB;
+        var zero = (label === '0');
+        var out = '<g class="ch-edge' + (zero ? ' zero' : '') + '" id="' + id + '">';
+        out += '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" marker-end="url(#ch-arr)"/>';
+        out += '<text x="' + mx.toFixed(1) + '" y="' + (my-7).toFixed(1) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">' + (label === null ? '' : label) + '</text>';
+        out += '<circle class="ch-badge" cx="' + bx.toFixed(1) + '" cy="' + (by+13).toFixed(1) + '" r="10"/><text class="ch-badge-t" x="' + bx.toFixed(1) + '" y="' + (by+17).toFixed(1) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text>';
+        out += '</g>';
+        return out;
+    }
+    var offs = [0.40, 0.30, 0.22, 0.78, 0.30, 0.42];
+    CH.edgesIn.forEach(function(e, k) { s += edge(e[0], e[1], null, 'e-' + e[0] + '-' + e[1], 34, 42, offs[k]); });
+    CH.edgesOut.forEach(function(e) { s += edge(e[0], e[1], null, 'e-' + e[0] + '-o', 42, 46, 0.45); });
+    s += edge('o', 'loss', null, 'e-o-loss', 46, 44, 0.5);
+    s += edge('y', 'loss', null, 'e-y-loss', 20, 24, 0.5);
+    /* weight labels as separate text so they can use proper sub/superscripts */
+    function wlab(id, x, y, html) { s += '<text class="ch-wlab" data-for="' + id + '" x="' + x + '" y="' + y + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">' + html + '</text>'; }
+    CH.edgesIn.forEach(function(e, k) {
+        var A = P[e[0]], B = P[e[1]], dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx, dy);
+        var sx = A[0]+dx*34/L, sy = A[1]+dy*34/L, ex = B[0]-dx*42/L, ey = B[1]-dy*42/L;
+        var mx = sx+(ex-sx)*offs[k], my = sy+(ey-sy)*offs[k];
+        wlab('e-' + e[0] + '-' + e[1], mx.toFixed(1), (my-7).toFixed(1), chainSub(e[0].slice(1), e[1].slice(1)) + ' = ' + e[2]);
+    });
+    CH.edgesOut.forEach(function(e) {
+        var A = P[e[0]], B = P.o, dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx, dy);
+        var sx = A[0]+dx*42/L, sy = A[1]+dy*42/L, ex = B[0]-dx*46/L, ey = B[1]-dy*46/L;
+        var mx = sx+(ex-sx)*0.45, my = sy+(ey-sy)*0.45;
+        wlab('e-' + e[0] + '-o', mx.toFixed(1), (my-7).toFixed(1), 'w<tspan baseline-shift="super" font-size="9">[2]</tspan><tspan baseline-shift="sub" font-size="9">' + e[0].slice(1) + '</tspan> = ' + e[2]);
+    });
+    function node(id, lines, r, cls) {
+        var p = P[id];
+        var out = '<g class="ch-node ' + cls + '" id="n-' + id + '"><circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + r + '"/>';
+        var y0 = p[1] - (lines.length-1)*8;
+        lines.forEach(function(t, k) { out += '<text class="' + (k === 0 ? 't1' : 't2') + '" x="' + p[0] + '" y="' + (y0 + k*17 + 5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="' + (k === 0 ? 15 : 11.5) + '" font-weight="' + (k === 0 ? 700 : 600) + '">' + t + '</text>'; });
+        out += '<circle class="ch-badge" cx="' + (p[0]) + '" cy="' + (p[1]-r) + '" r="10"/><text class="ch-badge-t" x="' + p[0] + '" y="' + (p[1]-r+4) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text>';
+        out += '</g>';
+        return out;
+    }
+    function biasTag(id, label) {
+        var p = P[id], r = 42, w = 74;
+        return '<g class="ch-bias" id="b-' + id + '"><rect x="' + (p[0]-w/2) + '" y="' + (p[1]+r+5) + '" width="' + w + '" height="19" rx="5"/><text x="' + p[0] + '" y="' + (p[1]+r+18.5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700">' + label + '</text>' +
+            '<circle class="ch-badge" cx="' + (p[0]+w/2+2) + '" cy="' + (p[1]+r+14) + '" r="10"/><text class="ch-badge-t" x="' + (p[0]+w/2+2) + '" y="' + (p[1]+r+18) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text></g>';
+    }
+    s += node('x1', ['x&#8321;'], 34, 'in') + node('x2', ['x&#8322;'], 34, 'in');
+    s += node('h1', ['h&#8321;', 'z&#8321; &rarr; &#963;'], 42, 'hid') + node('h2', ['h&#8322;', 'z&#8322; &rarr; &#963;'], 42, 'hid') + node('h3', ['h&#8323;', 'z&#8323; &rarr; &#963;'], 42, 'hid');
+    s += node('o', ['o', 'u &rarr; &#963;'], 46, 'out');
+    s += biasTag('h1', 'bias = ' + CH.bias.h1) + biasTag('h2', 'bias = ' + CH.bias.h2) + biasTag('h3', 'bias = ' + CH.bias.h3) + biasTag('o', 'bias = ' + CH.bias.o);
+    s += '<g class="ch-node lossn" id="n-loss"><rect x="' + (P.loss[0]-44) + '" y="' + (P.loss[1]-26) + '" width="88" height="52" rx="10"/><text x="' + P.loss[0] + '" y="' + (P.loss[1]-3) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" class="t1">&#8467;</text><text class="t2" x="' + P.loss[0] + '" y="' + (P.loss[1]+15) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600">(o &#8722; y)&#178;</text>' +
+         '<circle class="ch-badge" cx="' + P.loss[0] + '" cy="' + (P.loss[1]-26) + '" r="10"/><text class="ch-badge-t" x="' + P.loss[0] + '" y="' + (P.loss[1]-22) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text></g>';
+    s += '<g class="ch-node yn" id="n-y"><circle cx="' + P.y[0] + '" cy="' + P.y[1] + '" r="20"/><text x="' + P.y[0] + '" y="' + (P.y[1]+5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" class="t1">y</text></g>';
+    s += '</svg>';
+    document.getElementById('chain-svg').innerHTML = s;
+}
+/* Each link: {hl: [ids to light], badgeOn: id to carry the badge number, title, factor (TeX), note} */
+function chainLinks(p) {
+    var L1 = { hl: ['e-o-loss','n-loss','n-y','e-y-loss'], badge: 'n-loss', title: 'Link 1: loss → output, ∂ℓ/∂o', factor: '2(o-y)', note: 'The loss for one example is (o − y)². Power rule: 2(o − y). The label y enters only here.' };
+    var L2 = { hl: ['n-o'], badge: 'n-o', title: 'Link 2: inside the output neuron, ∂o/∂u', factor: 'o(1-o)', note: 'o = σ(u), so the slope is σ′(u) = o(1 − o) by the lemma. This factor is the sigmoid’s slope at the current output.' };
+    function L3(j) { return { hl: ['e-h' + j + '-o'], badge: 'e-h' + j + '-o', title: 'Link 3: output sum → h' + sub(j) + ', ∂u/∂h' + sub(j), factor: 'w^{[2]}_{' + j + '}', note: 'u = w²₀ + w²₁h₁ + w²₂h₂ + w²₃h₃. Only the term containing h' + sub(j) + ' survives differentiation, leaving its coefficient: the wire w²' + sub(j) + '.' }; }
+    function L4(j) { return { hl: ['n-h' + j], badge: 'n-h' + j, title: 'Link 4: inside h' + sub(j) + ', ∂h' + sub(j) + '/∂z' + sub(j), factor: 'h_' + j + '(1-h_' + j + ')', note: 'h' + sub(j) + ' = σ(z' + sub(j) + '), so the lemma again, one layer down.' }; }
+    function L5w(i, j) { return { hl: ['e-x' + i + '-h' + j, 'n-x' + i], badge: 'e-x' + i + '-h' + j, title: 'Link 5: z' + sub(j) + ' → the weight, ∂z' + sub(j) + '/∂w¹' + sub(i) + '‚' + sub(j), factor: 'x_' + i, note: 'z' + sub(j) + ' = w¹₀' + sub(j) + ' + w¹₁' + sub(j) + 'x₁ + w¹₂' + sub(j) + 'x₂. The coefficient of the target weight is the input it multiplies: x' + sub(i) + '.' }; }
+    function L5b(j) { return { hl: ['b-h' + j], badge: 'b-h' + j, title: 'Link 5: z' + sub(j) + ' → the bias, ∂z' + sub(j) + '/∂w¹₀‚' + sub(j), factor: '1', note: 'A bias is a weight on a phantom input pinned to 1, so its coefficient is 1. Same chain as a weight, final factor 1 instead of x.' }; }
+    function L3w(j) { return { hl: ['e-h' + j + '-o', 'n-h' + j], badge: 'e-h' + j + '-o', title: 'Link 3: output sum → the weight, ∂u/∂w²' + sub(j), factor: 'h_' + j, note: 'The coefficient of w²' + sub(j) + ' in u is the input it multiplies: h' + sub(j) + '. The path ends here; this weight never passes through a hidden sigmoid.' }; }
+    function L3b() { return { hl: ['b-o'], badge: 'b-o', title: 'Link 3: output sum → the bias, ∂u/∂w²₀', factor: '1', note: 'The output bias multiplies a phantom 1. Shortest path in the network: error signal times 1.' }; }
+    function sub(j) { return ['₀','₁','₂','₃'][j]; }
+    switch (p) {
+        case 'w1_1_2': return { name: 'w^{[1]}_{1,2}', links: [L1, L2, L3(2), L4(2), L5w(1, 2)] };
+        case 'w1_2_3': return { name: 'w^{[1]}_{2,3}', links: [L1, L2, L3(3), L4(3), L5w(2, 3)] };
+        case 'w1_0_1': return { name: 'w^{[1]}_{0,1}', links: [L1, L2, L3(1), L4(1), L5b(1)] };
+        case 'w2_3':   return { name: 'w^{[2]}_{3}',   links: [L1, L2, L3w(3)] };
+        case 'w2_0':   return { name: 'w^{[2]}_{0}',   links: [L1, L2, L3b()] };
+    }
+}
+var chainState = { p: 'w1_1_2', k: 0 };
+function chainPick(p, btn) {
+    chainState.p = p; chainState.k = 0;
+    document.querySelectorAll('#chain-params .sum-type-btn').forEach(function(b){ b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    chainRender();
+}
+function chainStep(d) { var n = chainLinks(chainState.p).links.length; chainState.k = Math.max(0, Math.min(n, chainState.k + d)); chainRender(); }
+function chainReset() { chainState.k = 0; chainRender(); }
+function chainRender() {
+    var svg = document.getElementById('chain-svg'); if (!svg || !svg.firstChild) chainBuildSvg();
+    var def = chainLinks(chainState.p), links = def.links, n = links.length, k = chainState.k;
+    document.querySelectorAll('#chain-svg .ch-edge, #chain-svg .ch-node, #chain-svg .ch-bias').forEach(function(el){ el.classList.remove('path','lit','cur'); var bg = el.querySelector('.ch-badge'), bt = el.querySelector('.ch-badge-t'); if (bg) bg.classList.remove('on'); if (bt) bt.textContent=''; });
+    document.querySelectorAll('#chain-svg .ch-wlab').forEach(function(t){ t.classList.remove('path'); });
+    links.forEach(function(lk, i) {
+        lk.hl.forEach(function(id){ var el = document.getElementById(id); if (el) { el.classList.add('path'); if (i < k) el.classList.add('lit'); if (i === k-1) el.classList.add('cur'); } });
+        var b = document.getElementById(lk.badge);
+        if (b && b.querySelector('.ch-badge')) { b.querySelector('.ch-badge').classList.add('on'); b.querySelector('.ch-badge-t').textContent = String(i+1); }
+        lk.hl.forEach(function(id){ var t = document.querySelector('#chain-svg .ch-wlab[data-for="' + id + '"]'); if (t) t.classList.add('path'); });
+    });
+    var dots = document.getElementById('chainDots'); dots.innerHTML = '';
+    for (var i = 1; i <= n; i++) { var d = document.createElement('div'); d.className = 'dot' + (i < k ? ' done' : (i === k ? ' current' : '')); dots.appendChild(d); }
+    document.getElementById('chainPrev').disabled = (k === 0);
+    document.getElementById('chainNext').disabled = (k === n);
+    var title = document.getElementById('chainTitle'), math = document.getElementById('chainMath'), note = document.getElementById('chainNote');
+    var prod = links.slice(0, k).map(function(l){ return l.factor; }).join('\\cdot ');
+    if (k === 0) {
+        title.textContent = 'Path for ' + chainPathText(def);
+        math.innerHTML = '$$\\frac{\\partial\\ell}{\\partial ' + def.name + '} = \\underbrace{\\;?\\;}_{\\text{link 1}}\\cdot\\underbrace{\\;?\\;}_{\\text{link 2}}' + (n > 2 ? '\\cdots' : '') + '$$';
+        note.textContent = 'Press Next link to start at the loss and multiply one factor per link until you reach the parameter. ' + n + ' links on this path.';
+    } else {
+        var lk = links[k-1];
+        title.textContent = lk.title;
+        math.innerHTML = '$$\\frac{\\partial\\ell}{\\partial ' + def.name + '} = ' + prod + (k < n ? '\\cdot\\;\\cdots' : '') + '$$';
+        note.textContent = lk.note + (k === n ? ' Done: multiply the ' + n + ' factors, restore the example index, and average over n.' : '');
+    }
+    if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise([math]).catch(function(){}); }
+}
+function chainPathText(def) {
+    switch (chainState.p) {
+        case 'w1_1_2': return 'w¹₁‚₂:  w → z₂ → h₂ → u → o → ℓ';
+        case 'w1_2_3': return 'w¹₂‚₃:  w → z₃ → h₃ → u → o → ℓ';
+        case 'w1_0_1': return 'w¹₀‚₁ (bias):  w → z₁ → h₁ → u → o → ℓ';
+        case 'w2_3': return 'w²₃:  w → u → o → ℓ';
+        case 'w2_0': return 'w²₀ (bias):  w → u → o → ℓ';
+    }
+}
+
 function toggleSolution(btn){
     var body = btn.nextElementSibling;
     body.classList.toggle('open');
     btn.classList.toggle('open');
-    if (body.classList.contains('open') && window.MathJax && MathJax.typeset){
-        setTimeout(function(){ MathJax.typeset(); }, 50);
-    }
+    if (body.classList.contains('open')) typesetSoon(50);
 }
 
 // ============ Step-network tab ============
@@ -1055,6 +1493,11 @@ function resetStepNet(){ stepClassified = false; stepTestPt = null;
 // init
 drawNet();
 drawGeo();
+chainBuildSvg();
+chainRender();
+buildQuiz('quiz-main', QUIZ1);
+buildFlashcards('flash-main', FLASH1);
+addTabNav();
 </script>
 </body>
 </html>
