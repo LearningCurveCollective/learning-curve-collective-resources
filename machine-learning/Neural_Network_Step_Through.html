@@ -220,10 +220,24 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
 .ch-bias rect { fill: rgba(221,162,94,0.18); stroke: #DDA25E; stroke-width: 1.2; }
 .ch-bias text { fill: #8B5E3C; }
 .ch-bias.path rect { fill: #F5E4CC; stroke-width: 2.5; } .ch-bias.cur rect { stroke: #C0564A; }
-#chain-svg .ch-badge { fill: #21442B; stroke: #fff; stroke-width: 2; display: none; }
-#chain-svg .ch-badge.on { display: block; }
-#chain-svg .ch-badge-t { fill: #fff; pointer-events: none; }
-#chain-svg .cur .ch-badge { fill: #C0564A; }
+.chain-svg-wrap g circle.ch-badge { fill: #21442B; stroke: #fff; stroke-width: 2; display: none; }
+.chain-svg-wrap g circle.ch-badge.on { display: block; }
+.chain-svg-wrap .ch-badge-t { fill: #fff; pointer-events: none; }
+.chain-svg-wrap g.cur circle.ch-badge { fill: #C0564A; }
+/* forward-pass walker: the verdict box and revealed values */
+.ch-node.vern rect { stroke: #21442B; stroke-dasharray: 4 3; }
+.ch-node.vern.path rect { stroke-dasharray: none; }
+.ch-node text.val { fill: #21442B; font-weight: 700; }
+.ch-node text.val.hot { fill: #BC6C26; }
+/* step-network walker: the vote tiles */
+.vote-tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 14px; }
+.vote-tile { background: var(--cream); border: 1px solid var(--gold-pale); border-radius: 8px; padding: 10px 12px; text-align: center; transition: opacity 0.2s; }
+.vote-tile.dim { opacity: 0.35; }
+.vote-tile .vt-label { font-size: 12px; font-weight: 700; color: var(--green-dark); margin-bottom: 2px; }
+.vote-tile .vt-value { font-size: 22px; font-weight: 700; color: var(--green-dark); line-height: 1.2; }
+.vote-tile .vt-value.cross { color: #C0564A; } .vote-tile .vt-value.circle { color: #2255CC; }
+.vote-tile .vt-note { font-size: 12px; color: var(--text-medium); margin-top: 3px; line-height: 1.4; }
+@media (max-width: 760px) { .vote-tiles { grid-template-columns: repeat(2, 1fr); } }
 @media print { .tab-nav { display: none !important; } .tab-content { display: block !important; } .tab-buttons { display: none; } }
 @media (max-width: 768px) {
     .header { flex-direction: column; text-align: center; gap: 15px; }
@@ -258,17 +272,17 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
 <div class="tab-buttons">
     <div class="tab-row"><span class="tab-row-label">Reference</span>
         <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
-        <button class="tab-button" data-group="core" onclick="switchTab('flash', this)">&#9646; Flashcards</button>
     </div>
     <div class="tab-row"><span class="tab-row-label">Walkthrough</span>
         <button class="tab-button" data-group="study" onclick="switchTab('step', this)">1 Forward Pass Step-Through</button>
-        <button class="tab-button" data-group="study" onclick="switchTab('geometry', this)">2 Geometry Lab: What Each Neuron Sees</button>
-        <button class="tab-button" data-group="study" onclick="switchTab('stepnet', this)">3 Step Activations: a Perfect Classifier</button>
-        <button class="tab-button" data-group="study" onclick="switchTab('training', this)">4 Training &amp; Backprop</button>
+        <button class="tab-button" data-group="study" onclick="switchTab('training', this)">2 Training &amp; Backprop</button>
+        <button class="tab-button" data-group="study" onclick="switchTab('geometry', this)">3 Geometry Lab: What Each Neuron Sees</button>
+        <button class="tab-button" data-group="study" onclick="switchTab('stepnet', this)">4 Step Activations: a Perfect Classifier</button>
     </div>
     <div class="tab-row"><span class="tab-row-label">Practice</span>
         <button class="tab-button" data-group="practice" onclick="switchTab('practice', this)">&#9998; Practice Problems</button>
         <button class="tab-button" data-group="sprint" onclick="switchTab('quiz', this)">&#9889; Rapid-Fire Quiz</button>
+        <button class="tab-button" data-group="core" onclick="switchTab('flash', this)">&#9646; Flashcards</button>
     </div>
 </div>
 
@@ -295,7 +309,7 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <div class="formula-tile">
             <h4>Loss (squared, averaged)</h4>
             <p>$$\ell = \frac{1}{n}\sum_{i=1}^{n}\big(o^{(i)} - y^{(i)}\big)^2, \qquad \frac{\partial \ell}{\partial o^{(i)}} = \frac{2}{n}\big(o^{(i)} - y^{(i)}\big)$$</p>
-            <p class="formula-note">Not cross-entropy, so the $o(1-o)$ factor does <em>not</em> cancel here.</p>
+            <p class="formula-note">$o^{(i)}$ is the network's output for example $i$ (its confidence, in $(0,1)$, that the point is class 1); $y^{(i)}$ is that example's true label, $0$ or $1$. This problem scores the network with <em>squared error</em>. The usual choice for a sigmoid output is cross-entropy, $-[y\log o + (1-y)\log(1-o)]$, whose slope $\frac{o-y}{o(1-o)}$ cancels the sigmoid's slope $o(1-o)$ and leaves the clean error signal $o-y$. With squared loss nothing cancels: the error signal is $2(o-y)\,o(1-o)$, one factor longer, and it shrinks toward zero when the output is saturated near $0$ or $1$, even if that output is wrong.</p>
         </div>
         <div class="formula-tile">
             <h4>Gradient descent, every parameter at once</h4>
@@ -391,13 +405,6 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
     </div>
 </div>
 
-<!-- ============ TAB: FLASHCARDS ============ -->
-<div class="tab-content" id="tab-flash">
-    <div class="section-header"><div class="section-number">&#9646;</div><h2>Flashcards</h2></div>
-    <div class="card"><p style="margin:0;">Front: a prompt. Back: the answer. Shuffle before each pass and say the answer out loud before flipping.</p></div>
-    <div id="flash-main"></div>
-</div>
-
 <!-- ============ TAB: STEP-THROUGH ============ -->
 <div class="tab-content" id="tab-step">
     <div class="section-header">
@@ -405,19 +412,19 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
         <h2>Step Through the Forward Pass</h2>
     </div>
     <div class="card">
-        <p><strong>The network:</strong> two inputs $(x_1, x_2)$, three hidden neurons $(h_1, h_2, h_3)$ with sigmoid activations, one sigmoid output $o$. Pick a point, then press <strong>Next Step</strong> to watch the numbers flow: each arrow multiplies by its weight, each circle adds up its arrivals <em>plus its bias</em>, then squashes through $\sigma(z) = 1/(1+e^{-z})$.</p>
+        <p><strong>The network:</strong> two inputs $(x_1, x_2)$, three hidden neurons $(h_1, h_2, h_3)$ with sigmoid activations, one sigmoid output $o$. Pick a point, then press <strong>Next step</strong> to watch the numbers flow: each arrow multiplies by its weight, each circle adds up its arrivals <em>plus its bias</em>, then squashes through $\sigma(z) = 1/(1+e^{-z})$.</p>
         <p style="margin-bottom:0;">The weights are fixed to make each hidden neuron a <em>line detector</em> (see the Geometry Lab tab for why these particular values).</p>
     </div>
 
-    <div class="viz-container">
-        <div class="viz-controls">
+    <div class="viz-container" id="fp-explorer">
+        <div class="viz-controls" style="margin-bottom:12px;padding-bottom:12px;">
             <div class="control-group">
-                <label>Preset points</label>
-                <div class="sum-type-buttons">
-                    <button class="sum-type-btn active" onclick="setPoint(1.5,1.5,this)">A (1.5, 1.5)</button>
-                    <button class="sum-type-btn" onclick="setPoint(3.5,3.5,this)">B (3.5, 3.5)</button>
-                    <button class="sum-type-btn" onclick="setPoint(0.2,2.0,this)">C (0.2, 2.0)</button>
-                    <button class="sum-type-btn" onclick="setPoint(1.0,0.3,this)">D (1.0, 0.3)</button>
+                <label>Pick a point</label>
+                <div class="sum-type-buttons" id="fp-presets">
+                    <button type="button" class="sum-type-btn active" onclick="setPoint(1.5,1.5,this)">A (1.5, 1.5)</button>
+                    <button type="button" class="sum-type-btn" onclick="setPoint(3.5,3.5,this)">B (3.5, 3.5)</button>
+                    <button type="button" class="sum-type-btn" onclick="setPoint(0.2,2.0,this)">C (0.2, 2.0)</button>
+                    <button type="button" class="sum-type-btn" onclick="setPoint(1.0,0.3,this)">D (1.0, 0.3)</button>
                 </div>
             </div>
             <div class="slider-group">
@@ -429,33 +436,21 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
                 <div class="slider-row"><input type="range" id="x2slider" min="0" max="4" step="0.1" value="1.5" oninput="onSlider()"></div>
             </div>
         </div>
-
-        <div class="viz-canvas-wrap">
-            <canvas id="netCanvas" width="880" height="470"></canvas>
-            <div style="font-size:12.5px; color: var(--text-medium); margin-top: 8px; line-height:1.6;">
-                <strong>Index convention:</strong> $w^{[1]}_{i,j}$ is the layer-1 weight from input $x_i$ into hidden neuron $h_j$ (read the subscripts as <em>from,&nbsp;to</em>); $w^{[2]}_j$ is the layer-2 weight from $h_j$ into the output; a first subscript of $0$ marks a bias (the phantom input pinned to $1$). Superscript = layer.
-            </div>
-        </div>
-
-        <div class="step-panel">
-            <div class="step-title" id="stepTitle">Ready</div>
-            <div class="step-math" id="stepMath">Press &ldquo;Next Step&rdquo; to begin the forward pass.</div>
-            <div class="step-note" id="stepNote">The pass has 10 steps: load inputs &rarr; (z then &sigma;) for each hidden neuron &rarr; output sum &rarr; output &sigma; &rarr; verdict.</div>
-        </div>
-
-        <div class="step-nav">
-            <button class="step-btn secondary" id="prevBtn" onclick="prevStep()">&#9664; Back</button>
+        <div class="chain-svg-wrap" id="fp-svg"></div>
+        <p class="chain-cap">Gold = computed so far, red = this step. The badge on a circle is the step that filled it in. Walk the pass one step at a time:</p>
+        <div class="step-nav" style="margin-top:6px;">
+            <button type="button" class="step-btn secondary" id="prevBtn" onclick="prevStep()">&#9664; Back</button>
             <div class="progress-dots" id="dots"></div>
-            <button class="step-btn primary" id="nextBtn" onclick="nextStep()">Next Step &#9654;</button>
-            <button class="step-btn secondary" onclick="resetSteps()">Reset</button>
+            <button type="button" class="step-btn primary" id="nextBtn" onclick="nextStep()">Next step &#9654;</button>
+            <button type="button" class="step-btn secondary" onclick="resetSteps()">Reset</button>
         </div>
-
-        <div class="readout-panel">
-            <div class="readout-item"><div class="readout-label">z&#8321; / h&#8321;</div><div class="readout-value dim-val" id="ro1">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">z&#8322; / h&#8322;</div><div class="readout-value dim-val" id="ro2">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">z&#8323; / h&#8323;</div><div class="readout-value dim-val" id="ro3">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">u (output pre-act)</div><div class="readout-value dim-val" id="rou">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">o = &sigma;(u)</div><div class="readout-value dim-val" id="roo">&mdash;</div></div>
+        <div class="step-panel" style="min-height:110px;">
+            <div class="step-title" id="stepTitle">Ready</div>
+            <div id="stepMath" style="font-size:17px;"></div>
+            <div class="step-note" id="stepNote"></div>
+        </div>
+        <div style="font-size:12.5px; color: var(--text-medium); margin-top: 12px; line-height:1.6;">
+            <strong>Index convention:</strong> $w^{[1]}_{i,j}$ is the layer-1 weight from input $x_i$ into hidden neuron $h_j$ (read the subscripts as <em>from,&nbsp;to</em>); $w^{[2]}_j$ is the layer-2 weight from $h_j$ into the output; a first subscript of $0$ marks a bias (the phantom input pinned to $1$). Superscript = layer.
         </div>
     </div>
 
@@ -542,11 +537,11 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
 <div class="tab-content" id="tab-stepnet">
     <div class="section-header">
         <div class="section-number">1</div>
-        <h2>Swap in Step Activations &mdash; and Classify Everything</h2>
+        <h2>Swap in Step Activations and Classify Everything</h2>
     </div>
     <div class="card">
-        <p>Here is the payoff of the whole triangle story. Replace every sigmoid with the <strong>step function</strong> $f(z) = 1$ if $z &gt; 0$, else $0$ &mdash; the infinite-sharpness limit. Votes are now <em>exactly</em> 0 or 1, so the inside-vs-outside logic becomes exact: inside the triangle the vote sum is exactly 3; outside, at most 2.</p>
-        <p>The dataset below mirrors the classic setup: <strong>class-0 circles</strong> (blue) filling the triangular island, <strong>class-1 crosses</strong> (red) surrounding it. Since <em>inside</em> must be class 0, the output unit fires when the vote count <em>falls short</em> of 3 &mdash; a NAND rather than an AND:</p>
+        <p>Here is the payoff of the whole triangle story. Replace every sigmoid with the <strong>step function</strong> $f(z) = 1$ if $z &gt; 0$, else $0$: the infinite-sharpness limit. Votes are now <em>exactly</em> 0 or 1, so the inside-vs-outside logic becomes exact: inside the triangle the vote sum is exactly 3; outside, at most 2.</p>
+        <p>The dataset below mirrors the classic setup: <strong>class-0 circles</strong> (blue) filling the triangular island, <strong>class-1 crosses</strong> (red) surrounding it. Since <em>inside</em> must be class 0, the output unit fires when the vote count <em>falls short</em> of 3, a NAND rather than an AND:</p>
         <table class="weights-table">
             <tr><th>Unit</th><th>Computation</th><th>Fires 1 when&hellip;</th></tr>
             <tr><td>$h_1$</td><td>$f(x_1 - 0.5)$</td><td>right of the left wall</td></tr>
@@ -554,29 +549,31 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
             <tr><td>$h_3$</td><td>$f(3 - x_1 - x_2)$</td><td>below-left of the roof</td></tr>
             <tr><td>$o$</td><td>$f(3 - h_1 - h_2 - h_3)$</td><td>any vote is missing &rarr; predict cross (class 1)</td></tr>
         </table>
-        <p style="margin-bottom:0;">Inside: sum $= 3 \Rightarrow u = 0 \Rightarrow o = f(0) = 0$ &rarr; circle &check;. Outside: sum $\leq 2 \Rightarrow u \geq 1 \Rightarrow o = 1$ &rarr; cross &check;. (Note $f(0) = 0$ quietly handles the boundary case.) Press the button to run the network over every point.</p>
+        <p style="margin-bottom:0;">Inside: sum $= 3 \Rightarrow u = 0 \Rightarrow o = f(0) = 0$ &rarr; circle &check;. Outside: sum $\leq 2 \Rightarrow u \geq 1 \Rightarrow o = 1$ &rarr; cross &check;. (Note $f(0) = 0$ quietly handles the boundary case.) Below, build the classifier one unit at a time and watch the triangle appear where the three half-planes overlap.</p>
     </div>
 
-    <div class="viz-container">
-        <div class="viz-controls">
-            <div class="control-group">
-                <label>Run it</label>
-                <div class="sum-type-buttons">
-                    <button class="sum-type-btn active" id="classifyBtn" onclick="runStepClassify()">Classify all points</button>
-                    <button class="sum-type-btn" onclick="resetStepNet()">Reset</button>
-                </div>
-            </div>
-        </div>
+    <div class="viz-container" id="sn-explorer">
         <div class="viz-canvas-wrap">
             <canvas id="stepCanvas" width="520" height="520" style="cursor: crosshair;"></canvas>
-            <div style="font-size:12.5px; color: var(--text-medium); margin-top: 6px;">Shading = the step network's predicted class everywhere (blue &rarr; circle, red &rarr; cross). Click anywhere to test a point by hand.</div>
         </div>
-        <div class="readout-panel">
-            <div class="readout-item"><div class="readout-label">verdict</div><div class="readout-value exact-val" id="stepVerdict">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">test point</div><div class="readout-value exact-val" id="spt">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">votes h&#8321;, h&#8322;, h&#8323;</div><div class="readout-value" id="svotes">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">u = 3 &minus; sum</div><div class="readout-value" id="su">&mdash;</div></div>
-            <div class="readout-item"><div class="readout-label">output o</div><div class="readout-value exact-val" id="so">&mdash;</div></div>
+        <p class="chain-cap">Each hidden unit shades the side of its line where it votes 1; darker = more votes. The gold dot is your test point: click anywhere to move it. Add the units one at a time:</p>
+        <div class="step-nav" style="margin-top:6px;">
+            <button type="button" class="step-btn secondary" id="snPrev" onclick="snStep(-1)">&#9664; Back</button>
+            <div class="progress-dots" id="snDots"></div>
+            <button type="button" class="step-btn primary" id="snNext" onclick="snStep(1)">Next unit &#9654;</button>
+            <button type="button" class="step-btn secondary" onclick="snReset()">Reset</button>
+        </div>
+        <div class="step-panel" style="min-height:110px;">
+            <div class="step-title" id="snTitle">Ready</div>
+            <div id="snMath" style="font-size:17px;"></div>
+            <div class="step-note" id="snNote"></div>
+        </div>
+        <div class="vote-tiles" id="sn-tiles">
+            <div class="vote-tile" id="vt-h1"><div class="vt-label">h&#8321; = f(x&#8321; &minus; 0.5)</div><div class="vt-value">&ndash;</div><div class="vt-note"></div></div>
+            <div class="vote-tile" id="vt-h2"><div class="vt-label">h&#8322; = f(x&#8322; &minus; 0.5)</div><div class="vt-value">&ndash;</div><div class="vt-note"></div></div>
+            <div class="vote-tile" id="vt-h3"><div class="vt-label">h&#8323; = f(3 &minus; x&#8321; &minus; x&#8322;)</div><div class="vt-value">&ndash;</div><div class="vt-note"></div></div>
+            <div class="vote-tile" id="vt-sum"><div class="vt-label">votes = h&#8321; + h&#8322; + h&#8323;</div><div class="vt-value">&ndash;</div><div class="vt-note"></div></div>
+            <div class="vote-tile" id="vt-o"><div class="vt-label">o = f(3 &minus; sum)</div><div class="vt-value">&ndash;</div><div class="vt-note"></div></div>
         </div>
     </div>
 
@@ -807,6 +804,13 @@ table.lcc td.bad { color: #B23B3B; font-weight: 600; }
     <div id="quiz-main"></div>
 </div>
 
+<!-- ============ TAB: FLASHCARDS ============ -->
+<div class="tab-content" id="tab-flash">
+    <div class="section-header"><div class="section-number">&#9646;</div><h2>Flashcards</h2></div>
+    <div class="card"><p style="margin:0;">Front: a prompt. Back: the answer. Shuffle before each pass and say the answer out loud before flipping.</p></div>
+    <div id="flash-main"></div>
+</div>
+
 </div><!-- /container -->
 
 <div class="footer">
@@ -835,167 +839,127 @@ function fwd(x1, x2, k){
 }
 function f2(v){ return (Math.round(v*100)/100).toFixed(2); }
 function f3(v){ return (Math.round(v*1000)/1000).toFixed(3); }
-function sigWork(z, name, val){
-    // "h = sigma(z) = 1/(1+e^-z) = 1/(1+X) = 1/Y = result"
-    var ez = Math.exp(-z);
-    return name+' = \u03C3('+f2(z)+') = 1/(1+e^{\u2212'+f2(z)+'}) = 1/(1+'+f3(ez)+') = 1/'+f3(1+ez)+' = '+f2(val);
-}
 
 // ============ Step-through state ============
 var px1 = 1.5, px2 = 1.5, curStep = 0;
 var NSTEPS = 10;
 
-// node positions on canvas
-var P = {
-    x1:{x:120,y:165}, x2:{x:120,y:345},
-    h1:{x:440,y:105}, h2:{x:440,y:250}, h3:{x:440,y:395},
-    o:{x:740,y:250}
+// ============ Forward-pass walker (SVG, same look as the chain-rule walker) ============
+var FP = {
+    pos: { x1: [80, 134], x2: [80, 254], h1: [320, 84], h2: [320, 194], h3: [320, 304], o: [560, 194], verdict: [720, 194] },
+    edgesIn: [['x1','h1','1'],['x1','h2','0'],['x1','h3','-1'],['x2','h1','0'],['x2','h2','1'],['x2','h3','-1']],
+    edgesOut: [['h1','o','2'],['h2','o','2'],['h3','o','2']],
+    bias: { h1: '-0.5', h2: '-0.5', h3: '+3', o: '-5' }
 };
-var edgesIn = [ // [from, to, weight, name]  name: w[1]_{i,j} = x_i -> h_j
-    ['x1','h1', 1, 'w\u00B9\u2081\u201A\u2081'], ['x2','h1', 0, 'w\u00B9\u2082\u201A\u2081'],
-    ['x1','h2', 0, 'w\u00B9\u2081\u201A\u2082'], ['x2','h2', 1, 'w\u00B9\u2082\u201A\u2082'],
-    ['x1','h3',-1, 'w\u00B9\u2081\u201A\u2083'], ['x2','h3',-1, 'w\u00B9\u2082\u201A\u2083']
-];
-var edgesOut = [ ['h1','o',2,'w\u00B2\u2081'], ['h2','o',2,'w\u00B2\u2082'], ['h3','o',2,'w\u00B2\u2083'] ];
-
-function stepInfo(s, v){
-    // returns {title, math, note, edges:[], nodes:[], reveal:{}}
-    var t = {
-        0:{title:'Ready', math:'Press \u201CNext Step\u201D to begin the forward pass.', note:'10 steps: inputs \u2192 (z, \u03C3) \u00D73 \u2192 output sum \u2192 output \u03C3 \u2192 verdict.', edges:[], nodes:[]},
-        1:{title:'Step 1 \u2014 Load the inputs', math:'x\u2081 = '+f2(px1)+',  x\u2082 = '+f2(px2), note:'Both input circles now hold their values. Every arrow leaving a circle carries that circle\u2019s value, multiplied by the arrow\u2019s weight.', edges:[], nodes:['x1','x2']},
-        2:{title:'Step 2 \u2014 h\u2081 pre-activation', math:'z\u2081 = \u22120.5 + (1)('+f2(px1)+') + (0)('+f2(px2)+') = '+f2(v.z[0]), note:'Sum the two weighted arrivals, plus h\u2081\u2019s bias (\u22120.5). This is a plain linear combination \u2014 \u03B8\u1D40x with a bias, exactly like a GLM\u2019s \u03B7.', edges:['x1-h1','x2-h1'], nodes:['x1','x2','h1']},
-        3:{title:'Step 3 \u2014 h\u2081 activation', math: sigWork(v.z[0], 'h\u2081', v.h[0]), note:'Three moves: exponentiate the negation (e^{\u2212z}), add 1, take the reciprocal. h\u2081 is now a soft vote in (0,1) for \u201Cright of the line x\u2081 = 0.5\u201D.', edges:[], nodes:['h1']},
-        4:{title:'Step 4 \u2014 h\u2082 pre-activation', math:'z\u2082 = \u22120.5 + (0)('+f2(px1)+') + (1)('+f2(px2)+') = '+f2(v.z[1]), note:'Same recipe, h\u2082\u2019s own weights: only x\u2082 matters here (its x\u2081 weight is 0).', edges:['x1-h2','x2-h2'], nodes:['x1','x2','h2']},
-        5:{title:'Step 5 \u2014 h\u2082 activation', math: sigWork(v.z[1], 'h\u2082', v.h[1]), note:'Soft vote for \u201Cabove the line x\u2082 = 0.5\u201D.', edges:[], nodes:['h2']},
-        6:{title:'Step 6 \u2014 h\u2083 pre-activation', math:'z\u2083 = 3 + (\u22121)('+f2(px1)+') + (\u22121)('+f2(px2)+') = '+f2(v.z[2]), note:'h\u2083 leans on both inputs with negative weights and a +3 bias: it measures 3 \u2212 x\u2081 \u2212 x\u2082.', edges:['x1-h3','x2-h3'], nodes:['x1','x2','h3']},
-        7:{title:'Step 7 \u2014 h\u2083 activation', math: sigWork(v.z[2], 'h\u2083', v.h[2]), note:'Soft vote for \u201Cbelow-left of the diagonal x\u2081 + x\u2082 = 3\u201D. The hidden layer is done: the point is now re-described as three votes.', edges:[], nodes:['h3']},
-        8:{title:'Step 8 \u2014 Output pre-activation', math:'u = \u22125 + 2('+f2(v.h[0])+') + 2('+f2(v.h[1])+') + 2('+f2(v.h[2])+') = '+f2(v.u), note:'The output circle runs the SAME recipe \u2014 weighted sum plus bias \u2014 but its inputs are the hidden outputs, not the raw coordinates.', edges:['h1-o','h2-o','h3-o'], nodes:['h1','h2','h3','o']},
-        9:{title:'Step 9 \u2014 Output activation', math: sigWork(v.u, 'o', v.o), note:'One last squash. This is the network\u2019s prediction: its confidence that the point is inside the triangle.', edges:[], nodes:['o']},
-        10:{title:'Step 10 \u2014 Verdict', math:'o = '+f2(v.o)+'  \u2192  '+(v.o>0.5?'\u201Cinside\u201D (score > 0.5)':'\u201Cnot confidently inside\u201D (score \u2264 0.5)'), note:'With these mediocre weights nearly every point lands near 0.25 \u2014 compare presets A\u2013D! The Geometry Lab\u2019s sharpness slider shows what fixing this looks like.', edges:[], nodes:['o']}
-    };
-    return t[s];
+function fpBuildSvg() {
+    var P = FP.pos, s = '';
+    s += '<svg viewBox="0 0 800 386" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The 2-3-1 network; arrows and neurons light up as the forward pass computes them">';
+    s += '<defs>' + ['ch-arr|#9FB2A5','ch-arr-zero|#D8D8D8','ch-arr-path|#DDA25E','ch-arr-lit|#BC6C26','ch-arr-cur|#C0564A'].map(function(m){ var q = m.split('|'); return '<marker id="' + q[0] + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="' + q[1] + '" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>'; }).join('') + '</defs>';
+    s += '<g font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#4A4A4A" text-anchor="middle"><text x="80" y="24">INPUTS</text><text x="320" y="24">HIDDEN: sum + bias, then &#963;</text><text x="560" y="24">OUTPUT: sum + bias, then &#963;</text><text x="720" y="24">VERDICT</text></g>';
+    function edge(a, b, id, r1, r2) {
+        var A = P[a], B = P[b], dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx, dy);
+        var sx = A[0]+dx*r1/L, sy = A[1]+dy*r1/L, ex = B[0]-dx*r2/L, ey = B[1]-dy*r2/L;
+        var zero = (id === 'e-x1-h2' || id === 'e-x2-h1');
+        return '<g class="ch-edge' + (zero ? ' zero' : '') + '" id="fp-' + id + '"><line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" marker-end="url(#ch-arr)"/></g>';
+    }
+    var offs = [0.40, 0.30, 0.22, 0.78, 0.30, 0.42];
+    FP.edgesIn.forEach(function(e) { s += edge(e[0], e[1], 'e-' + e[0] + '-' + e[1], 34, 42); });
+    FP.edgesOut.forEach(function(e) { s += edge(e[0], 'o', 'e-' + e[0] + '-o', 42, 46); });
+    s += edge('o', 'verdict', 'e-o-verdict', 46, 50);
+    function wlab(id, x, y, html) { s += '<text class="ch-wlab" data-for="fp-' + id + '" x="' + x + '" y="' + y + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="12">' + html + '</text>'; }
+    FP.edgesIn.forEach(function(e, k) {
+        var A = P[e[0]], B = P[e[1]], dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx, dy);
+        var sx = A[0]+dx*34/L, sy = A[1]+dy*34/L, ex = B[0]-dx*42/L, ey = B[1]-dy*42/L;
+        var mx = sx+(ex-sx)*offs[k], my = sy+(ey-sy)*offs[k];
+        wlab('e-' + e[0] + '-' + e[1], mx.toFixed(1), (my-7).toFixed(1), chainSub(e[0].slice(1), e[1].slice(1)) + ' = ' + e[2]);
+    });
+    FP.edgesOut.forEach(function(e) {
+        var A = P[e[0]], B = P.o, dx = B[0]-A[0], dy = B[1]-A[1], L = Math.hypot(dx, dy);
+        var sx = A[0]+dx*42/L, sy = A[1]+dy*42/L, ex = B[0]-dx*46/L, ey = B[1]-dy*46/L;
+        var mx = sx+(ex-sx)*0.45, my = sy+(ey-sy)*0.45;
+        wlab('e-' + e[0] + '-o', mx.toFixed(1), (my-7).toFixed(1), 'w<tspan baseline-shift="super" font-size="9">[2]</tspan><tspan baseline-shift="sub" font-size="9">' + e[0].slice(1) + '</tspan> = ' + e[2]);
+    });
+    function node(id, r, cls, lines) {   // lines: [{id, t}] first line is the name
+        var p = P[id], out = '<g class="ch-node ' + cls + '" id="fp-n-' + id + '"><circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + r + '"/>';
+        var y0 = p[1] - (lines.length-1)*8;
+        lines.forEach(function(ln, k) { out += '<text id="' + ln.id + '" class="' + (k === 0 ? 't1' : 't2') + '" x="' + p[0] + '" y="' + (y0 + k*17 + 5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="' + (k === 0 ? 15 : 11.5) + '" font-weight="' + (k === 0 ? 700 : 600) + '">' + ln.t + '</text>'; });
+        out += '<circle class="ch-badge" cx="' + p[0] + '" cy="' + (p[1]-r) + '" r="10"/><text class="ch-badge-t" x="' + p[0] + '" y="' + (p[1]-r+4) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text></g>';
+        return out;
+    }
+    function biasTag(id, label) {
+        var p = P[id], r = id === 'o' ? 46 : 42, w = 74;
+        return '<g class="ch-bias" id="fp-b-' + id + '"><rect x="' + (p[0]-w/2) + '" y="' + (p[1]+r+5) + '" width="' + w + '" height="19" rx="5"/><text x="' + p[0] + '" y="' + (p[1]+r+18.5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700">' + label + '</text></g>';
+    }
+    s += biasTag('h1', 'bias = ' + FP.bias.h1) + biasTag('h2', 'bias = ' + FP.bias.h2) + biasTag('h3', 'bias = ' + FP.bias.h3) + biasTag('o', 'bias = ' + FP.bias.o);
+    s += node('x1', 34, 'in', [{id:'fp-x1-n', t:'x&#8321;'}, {id:'fp-x1', t:'?'}]) + node('x2', 34, 'in', [{id:'fp-x2-n', t:'x&#8322;'}, {id:'fp-x2', t:'?'}]);
+    [1,2,3].forEach(function(j) { s += node('h' + j, 42, 'hid', [{id:'fp-h' + j + '-n', t:'h' + ['','&#8321;','&#8322;','&#8323;'][j]}, {id:'fp-h' + j + '-z', t:'z = ?'}, {id:'fp-h' + j + '-s', t:'&#963; &rarr; ?'}]); });
+    s += node('o', 46, 'out', [{id:'fp-o-n', t:'o'}, {id:'fp-o-u', t:'u = ?'}, {id:'fp-o-s', t:'&#963; &rarr; ?'}]);
+    s += '<g class="ch-node vern" id="fp-n-verdict"><rect x="' + (P.verdict[0]-50) + '" y="' + (P.verdict[1]-26) + '" width="100" height="52" rx="10"/><text id="fp-v1" class="t1" x="' + P.verdict[0] + '" y="' + (P.verdict[1]-3) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700">verdict</text><text id="fp-v2" class="t2" x="' + P.verdict[0] + '" y="' + (P.verdict[1]+15) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600">o &gt; 0.5?</text>' +
+         '<circle class="ch-badge" cx="' + P.verdict[0] + '" cy="' + (P.verdict[1]-26) + '" r="10"/><text class="ch-badge-t" x="' + P.verdict[0] + '" y="' + (P.verdict[1]-22) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text></g>';
+    s += '</svg>';
+    document.getElementById('fp-svg').innerHTML = s;
 }
-
-// ============ Canvas drawing ============
-function drawNet(){
-    var c = document.getElementById('netCanvas'); if(!c) return;
-    var ctx = c.getContext('2d');
-    var v = fwd(px1, px2, 1);
-    var info = stepInfo(curStep, v);
-    var hiEdges = info.edges, hiNodes = info.nodes;
-    var revealed = {
-        x: curStep>=1, z1: curStep>=2, h1: curStep>=3, z2: curStep>=4, h2: curStep>=5,
-        z3: curStep>=6, h3: curStep>=7, u: curStep>=8, o: curStep>=9
-    };
-    ctx.clearRect(0,0,c.width,c.height);
-    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0,0,c.width,c.height);
-
-    // layer labels
-    ctx.font = '600 13px Inter, sans-serif'; ctx.fillStyle = '#4A4A4A'; ctx.textAlign='center';
-    ctx.fillText('INPUTS', P.x1.x, 40);
-    ctx.fillText('HIDDEN LAYER \u2014 sum + bias, then \u03C3', P.h2.x, 40);
-    ctx.fillText('OUTPUT \u2014 bias \u22125', P.o.x, 40);
-
-    function edgeId(e){ return e[0]+'-'+e[1]; }
-    function drawEdge(e, wlabel, tOff){
-        var a = P[e[0]], b = P[e[1]];
-        var hot = hiEdges.indexOf(edgeId(e)) >= 0;
-        var zero = (e[2] === 0);
-        // shrink to node edges
-        var dx=b.x-a.x, dy=b.y-a.y, L=Math.hypot(dx,dy);
-        var r1=38, r2=44;
-        var sx=a.x+dx*r1/L, sy=a.y+dy*r1/L, ex=b.x-dx*r2/L, ey=b.y-dy*r2/L;
-        ctx.beginPath();
-        ctx.moveTo(sx,sy); ctx.lineTo(ex,ey);
-        ctx.strokeStyle = hot ? '#DDA25E' : (zero ? '#D8D8D8' : '#9FB2A5');
-        ctx.lineWidth = hot ? 4 : (zero ? 1.2 : 2);
-        if (zero && !hot) ctx.setLineDash([5,5]); else ctx.setLineDash([]);
-        ctx.stroke(); ctx.setLineDash([]);
-        // arrowhead
-        var ang = Math.atan2(ey-sy, ex-sx);
-        ctx.beginPath();
-        ctx.moveTo(ex,ey);
-        ctx.lineTo(ex-10*Math.cos(ang-0.4), ey-10*Math.sin(ang-0.4));
-        ctx.lineTo(ex-10*Math.cos(ang+0.4), ey-10*Math.sin(ang+0.4));
-        ctx.closePath();
-        ctx.fillStyle = hot ? '#DDA25E' : (zero ? '#D8D8D8' : '#9FB2A5');
-        ctx.fill();
-        // weight label
-        var mx = sx + (ex-sx)*tOff, my = sy + (ey-sy)*tOff;
-        ctx.font = (hot?'700':'600')+' 13px Inter, sans-serif';
-        ctx.fillStyle = hot ? '#BC6C26' : '#7A7A7A';
-        ctx.fillText(e[3]+' = '+wlabel, mx, my - 7);
+function sigTex(z, name, val) {
+    // h = sigma(z) = 1/(1+e^{-z}) = 1/(1+X) = 1/Y = result, with X and Y from the exact z
+    var ez = Math.exp(-z);
+    return name + ' = \\sigma(' + f2(z) + ') = \\frac{1}{1+e^{' + f2(-z) + '}} = \\frac{1}{1+' + f3(ez) + '} = \\frac{1}{' + f3(1+ez) + '} = ' + f2(val);
+}
+/* One entry per step: what to light (hl), which circle gets the step's badge, the panel text. */
+function fpSteps(v) {
+    var X1 = f2(px1), X2 = f2(px2);
+    var inside = v.o > 0.5;
+    return [
+        { title: 'Ready', math: '$$(x_1, x_2)\\;\\to\\; z_j = \\text{sum} + \\text{bias} \\;\\to\\; h_j = \\sigma(z_j) \\;\\to\\; u \\;\\to\\; o = \\sigma(u) \\;\\to\\; \\text{verdict}$$', note: 'Press Next step to begin the forward pass. 10 steps: load the inputs, then z and σ for each hidden neuron, then the output sum, the output σ, and the verdict.', hl: [], badges: {} },
+        { title: 'Step 1: load the inputs', math: '$$x_1 = ' + X1 + ', \\qquad x_2 = ' + X2 + '$$', note: 'Both input circles now hold their values. Every arrow leaving a circle carries that circle’s value, multiplied by the arrow’s weight.', hl: ['n-x1','n-x2'], badges: {'n-x1': 1, 'n-x2': 1} },
+        { title: 'Step 2: h₁ pre-activation', math: '$$z_1 = -0.5 + (1)(' + X1 + ') + (0)(' + X2 + ') = ' + f2(v.z[0]) + '$$', note: 'Sum the two weighted arrivals, plus h₁’s bias (−0.5). This is a plain linear combination, θᵀx with a bias, exactly like a GLM’s η.', hl: ['e-x1-h1','e-x2-h1','n-h1','b-h1'], badges: {'n-h1': 2} },
+        { title: 'Step 3: h₁ activation', math: '$$' + sigTex(v.z[0], 'h_1', v.h[0]) + '$$', note: 'Three moves: exponentiate the negation, add 1, take the reciprocal. h₁ is now a soft vote in (0, 1) for “right of the line x₁ = 0.5”.', hl: ['n-h1'], badges: {'n-h1': 3} },
+        { title: 'Step 4: h₂ pre-activation', math: '$$z_2 = -0.5 + (0)(' + X1 + ') + (1)(' + X2 + ') = ' + f2(v.z[1]) + '$$', note: 'Same recipe with h₂’s own weights: only x₂ matters here (its x₁ weight is 0).', hl: ['e-x1-h2','e-x2-h2','n-h2','b-h2'], badges: {'n-h2': 4} },
+        { title: 'Step 5: h₂ activation', math: '$$' + sigTex(v.z[1], 'h_2', v.h[1]) + '$$', note: 'Soft vote for “above the line x₂ = 0.5”.', hl: ['n-h2'], badges: {'n-h2': 5} },
+        { title: 'Step 6: h₃ pre-activation', math: '$$z_3 = 3 + (-1)(' + X1 + ') + (-1)(' + X2 + ') = ' + f2(v.z[2]) + '$$', note: 'h₃ leans on both inputs with negative weights and a +3 bias: it measures 3 − x₁ − x₂.', hl: ['e-x1-h3','e-x2-h3','n-h3','b-h3'], badges: {'n-h3': 6} },
+        { title: 'Step 7: h₃ activation', math: '$$' + sigTex(v.z[2], 'h_3', v.h[2]) + '$$', note: 'Soft vote for “below-left of the diagonal x₁ + x₂ = 3”. The hidden layer is done: the point is now re-described as three votes.', hl: ['n-h3'], badges: {'n-h3': 7} },
+        { title: 'Step 8: output pre-activation', math: '$$u = -5 + 2(' + f2(v.h[0]) + ') + 2(' + f2(v.h[1]) + ') + 2(' + f2(v.h[2]) + ') = ' + f2(v.u) + '$$', note: 'The output circle runs the same recipe, weighted sum plus bias, but its inputs are the hidden outputs, not the raw coordinates.', hl: ['e-h1-o','e-h2-o','e-h3-o','n-o','b-o'], badges: {'n-o': 8} },
+        { title: 'Step 9: output activation', math: '$$' + sigTex(v.u, 'o', v.o) + '$$', note: 'One last squash. This is the network’s prediction: its confidence that the point is inside the triangle.', hl: ['n-o'], badges: {'n-o': 9} },
+        { title: 'Step 10: verdict', math: '$$o = ' + f2(v.o) + (inside ? ' > 0.5 \\;\\Rightarrow\\; \\text{inside}' : ' \\le 0.5 \\;\\Rightarrow\\; \\text{not confidently inside}') + '$$', note: 'With these mediocre weights nearly every point lands near 0.25; compare presets A to D. The Geometry Lab’s sharpness slider shows what fixing this looks like.', hl: ['e-o-verdict','n-verdict'], badges: {'n-verdict': 10} }
+    ];
+}
+function drawNet() {   // kept under its old name: the presets, sliders and tab switch all call it
+    var wrap = document.getElementById('fp-svg'); if (!wrap) return;
+    if (!wrap.firstChild) fpBuildSvg();
+    var v = fwd(px1, px2, 1), steps = fpSteps(v), k = curStep;
+    wrap.querySelectorAll('.ch-edge, .ch-node, .ch-bias').forEach(function(el){ el.classList.remove('path','lit','cur'); var bg = el.querySelector('.ch-badge'), bt = el.querySelector('.ch-badge-t'); if (bg) bg.classList.remove('on'); if (bt) bt.textContent = ''; });
+    wrap.querySelectorAll('.ch-wlab').forEach(function(t){ t.classList.remove('path'); });
+    var badges = {};
+    for (var i = 1; i <= k; i++) {
+        steps[i].hl.forEach(function(id) {
+            var el = document.getElementById('fp-' + id); if (!el) return;   // ids are prefixed so they never collide with the chain-rule walker's
+            el.classList.add('path'); el.classList.add(i < k ? 'lit' : 'cur');
+            var t = wrap.querySelector('.ch-wlab[data-for="fp-' + id + '"]'); if (t) t.classList.add('path');
+        });
+        Object.keys(steps[i].badges).forEach(function(id){ badges[id] = steps[i].badges[id]; });
     }
-    // input->hidden edges (varied label offsets to avoid overlap)
-    var offs = [0.42, 0.30, 0.30, 0.42, 0.55, 0.42];
-    for (var i=0;i<edgesIn.length;i++) drawEdge(edgesIn[i], edgesIn[i][2], offs[i]);
-    for (var i=0;i<edgesOut.length;i++) drawEdge(edgesOut[i], edgesOut[i][2], 0.45);
-
-    // nodes
-    function drawNode(id, lines, biasLabel){
-        var p = P[id];
-        var hot = hiNodes.indexOf(id) >= 0;
-        var isInput = (id==='x1'||id==='x2');
-        var r = isInput ? 38 : 44;
-        ctx.beginPath(); ctx.arc(p.x,p.y,r,0,2*Math.PI);
-        ctx.fillStyle = hot ? '#FDF3E3' : '#FFFFFF';
-        ctx.fill();
-        ctx.lineWidth = hot ? 3.5 : 2.5;
-        ctx.strokeStyle = isInput ? '#39864E' : (id==='o' ? '#BC6C26' : '#21442B');
-        ctx.stroke();
-        ctx.textAlign='center';
-        var y0 = p.y - (lines.length-1)*9;
-        for (var li=0; li<lines.length; li++){
-            ctx.font = lines[li].b ? '700 15px Inter, sans-serif' : '600 12px Inter, sans-serif';
-            ctx.fillStyle = lines[li].b ? '#21442B' : '#6A6A6A';
-            ctx.fillText(lines[li].t, p.x, y0 + li*18 + 5);
-        }
-        if (biasLabel){
-            ctx.font = '700 11.5px Inter, sans-serif';
-            var tw = ctx.measureText(biasLabel).width;
-            ctx.fillStyle = 'rgba(221,162,94,0.18)';
-            ctx.strokeStyle = '#DDA25E'; ctx.lineWidth = 1.2;
-            var bx = p.x - tw/2 - 7, by = p.y + r + 5, bw = tw + 14, bh = 20;
-            ctx.beginPath();
-            if (ctx.roundRect) { ctx.roundRect(bx, by, bw, bh, 5); } else { ctx.rect(bx, by, bw, bh); }
-            ctx.fill(); ctx.stroke();
-            ctx.fillStyle = '#8B5E3C';
-            ctx.fillText(biasLabel, p.x, by + 14);
-        }
-    }
-    drawNode('x1', [{t:'x\u2081'}, {t: revealed.x ? f2(px1) : '?', b:true}]);
-    drawNode('x2', [{t:'x\u2082'}, {t: revealed.x ? f2(px2) : '?', b:true}]);
-    drawNode('h1', [{t:'h\u2081'}, {t: revealed.z1 ? ('z='+f2(v.z[0])) : 'z = ?'}, {t: revealed.h1 ? ('\u03C3\u2192 '+f2(v.h[0])) : '\u03C3\u2192 ?', b:revealed.h1}], 'w\u00B9\u2080\u201A\u2081 = \u22120.5 (bias)');
-    drawNode('h2', [{t:'h\u2082'}, {t: revealed.z2 ? ('z='+f2(v.z[1])) : 'z = ?'}, {t: revealed.h2 ? ('\u03C3\u2192 '+f2(v.h[1])) : '\u03C3\u2192 ?', b:revealed.h2}], 'w\u00B9\u2080\u201A\u2082 = \u22120.5 (bias)');
-    drawNode('h3', [{t:'h\u2083'}, {t: revealed.z3 ? ('z='+f2(v.z[2])) : 'z = ?'}, {t: revealed.h3 ? ('\u03C3\u2192 '+f2(v.h[2])) : '\u03C3\u2192 ?', b:revealed.h3}], 'w\u00B9\u2080\u201A\u2083 = +3 (bias)');
-    drawNode('o', [{t:'o'}, {t: revealed.u ? ('u='+f2(v.u)) : 'u = ?'}, {t: revealed.o ? ('\u03C3\u2192 '+f2(v.o)) : '\u03C3\u2192 ?', b:revealed.o}], 'w\u00B2\u2080 = \u22125 (bias)');
-
-    // step panel text
-    document.getElementById('stepTitle').textContent = info.title;
-    document.getElementById('stepMath').textContent = info.math;
-    document.getElementById('stepNote').textContent = info.note;
-
-    // readouts
-    function setRO(id, txt, on){
-        var el = document.getElementById(id);
-        el.textContent = txt;
-        el.className = 'readout-value ' + (on ? 'exact-val' : 'dim-val');
-    }
-    setRO('ro1', revealed.z1 ? (f2(v.z[0]) + (revealed.h1 ? (' / '+f2(v.h[0])) : ' / \u2014')) : '\u2014', revealed.z1);
-    setRO('ro2', revealed.z2 ? (f2(v.z[1]) + (revealed.h2 ? (' / '+f2(v.h[1])) : ' / \u2014')) : '\u2014', revealed.z2);
-    setRO('ro3', revealed.z3 ? (f2(v.z[2]) + (revealed.h3 ? (' / '+f2(v.h[2])) : ' / \u2014')) : '\u2014', revealed.z3);
-    setRO('rou', revealed.u ? f2(v.u) : '\u2014', revealed.u);
-    setRO('roo', revealed.o ? f2(v.o) : '\u2014', revealed.o);
-
-    // progress dots
-    var dots = document.getElementById('dots'); dots.innerHTML='';
-    for (var s=1; s<=NSTEPS; s++){
-        var d = document.createElement('div');
-        d.className = 'dot' + (s<curStep ? ' done' : (s===curStep ? ' current' : ''));
-        dots.appendChild(d);
-    }
-    document.getElementById('prevBtn').disabled = (curStep===0);
-    document.getElementById('nextBtn').disabled = (curStep===NSTEPS);
+    Object.keys(badges).forEach(function(id) { var el = document.getElementById('fp-' + id); if (!el) return; var bg = el.querySelector('.ch-badge'), bt = el.querySelector('.ch-badge-t'); if (bg) bg.classList.add('on'); if (bt) bt.textContent = String(badges[id]); });
+    /* reveal values as they are computed; the value from this step is in red */
+    function set(id, txt, on, hot) { var el = document.getElementById(id); if (!el) return; el.textContent = txt; el.classList.toggle('val', !!on); el.classList.toggle('hot', !!hot); }
+    set('fp-x1', k >= 1 ? f2(px1) : '?', k >= 1, k === 1); set('fp-x2', k >= 1 ? f2(px2) : '?', k >= 1, k === 1);
+    [1,2,3].forEach(function(j) {
+        var kz = 2*j, ks = 2*j + 1;
+        set('fp-h' + j + '-z', k >= kz ? 'z = ' + f2(v.z[j-1]) : 'z = ?', k >= kz, k === kz);
+        set('fp-h' + j + '-s', k >= ks ? 'σ → ' + f2(v.h[j-1]) : 'σ → ?', k >= ks, k === ks);
+    });
+    set('fp-o-u', k >= 8 ? 'u = ' + f2(v.u) : 'u = ?', k >= 8, k === 8);
+    set('fp-o-s', k >= 9 ? 'σ → ' + f2(v.o) : 'σ → ?', k >= 9, k === 9);
+    set('fp-v1', k >= 10 ? (v.o > 0.5 ? 'inside' : 'not inside') : 'verdict', k >= 10, k === 10);
+    set('fp-v2', k >= 10 ? ('o = ' + f2(v.o) + (v.o > 0.5 ? ' > 0.5' : ' ≤ 0.5')) : 'o > 0.5?', false, false);
+    /* panel, dots, buttons */
+    var st = steps[k];
+    document.getElementById('stepTitle').textContent = st.title;
+    var math = document.getElementById('stepMath'); math.innerHTML = st.math;
+    document.getElementById('stepNote').textContent = st.note;
+    if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise([math]).catch(function(){}); }
+    var dots = document.getElementById('dots'); dots.innerHTML = '';
+    for (var d = 1; d <= NSTEPS; d++) { var el = document.createElement('div'); el.className = 'dot' + (d < k ? ' done' : (d === k ? ' current' : '')); dots.appendChild(el); }
+    document.getElementById('prevBtn').disabled = (k === 0);
+    document.getElementById('nextBtn').disabled = (k === NSTEPS);
 }
 
 function nextStep(){ if(curStep<NSTEPS){ curStep++; drawNet(); } }
@@ -1280,10 +1244,10 @@ function chainBuildSvg() {
         return '<g class="ch-bias" id="b-' + id + '"><rect x="' + (p[0]-w/2) + '" y="' + (p[1]+r+5) + '" width="' + w + '" height="19" rx="5"/><text x="' + p[0] + '" y="' + (p[1]+r+18.5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700">' + label + '</text>' +
             '<circle class="ch-badge" cx="' + (p[0]+w/2+2) + '" cy="' + (p[1]+r+14) + '" r="10"/><text class="ch-badge-t" x="' + (p[0]+w/2+2) + '" y="' + (p[1]+r+18) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text></g>';
     }
+    s += biasTag('h1', 'bias = ' + CH.bias.h1) + biasTag('h2', 'bias = ' + CH.bias.h2) + biasTag('h3', 'bias = ' + CH.bias.h3) + biasTag('o', 'bias = ' + CH.bias.o);
     s += node('x1', ['x&#8321;'], 34, 'in') + node('x2', ['x&#8322;'], 34, 'in');
     s += node('h1', ['h&#8321;', 'z&#8321; &rarr; &#963;'], 42, 'hid') + node('h2', ['h&#8322;', 'z&#8322; &rarr; &#963;'], 42, 'hid') + node('h3', ['h&#8323;', 'z&#8323; &rarr; &#963;'], 42, 'hid');
     s += node('o', ['o', 'u &rarr; &#963;'], 46, 'out');
-    s += biasTag('h1', 'bias = ' + CH.bias.h1) + biasTag('h2', 'bias = ' + CH.bias.h2) + biasTag('h3', 'bias = ' + CH.bias.h3) + biasTag('o', 'bias = ' + CH.bias.o);
     s += '<g class="ch-node lossn" id="n-loss"><rect x="' + (P.loss[0]-44) + '" y="' + (P.loss[1]-26) + '" width="88" height="52" rx="10"/><text x="' + P.loss[0] + '" y="' + (P.loss[1]-3) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" class="t1">&#8467;</text><text class="t2" x="' + P.loss[0] + '" y="' + (P.loss[1]+15) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600">(o &#8722; y)&#178;</text>' +
          '<circle class="ch-badge" cx="' + P.loss[0] + '" cy="' + (P.loss[1]-26) + '" r="10"/><text class="ch-badge-t" x="' + P.loss[0] + '" y="' + (P.loss[1]-22) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700"></text></g>';
     s += '<g class="ch-node yn" id="n-y"><circle cx="' + P.y[0] + '" cy="' + P.y[1] + '" r="20"/><text x="' + P.y[0] + '" y="' + (P.y[1]+5) + '" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" class="t1">y</text></g>';
@@ -1365,7 +1329,7 @@ function toggleSolution(btn){
 }
 
 // ============ Step-network tab ============
-var stepClassified = false, stepTestPt = null;
+var snK = 0, SN_STEPS = 5, stepTestPt = { x: 1.2, y: 1.2 };
 function stepf(z){ return z > 0 ? 1 : 0; }
 function stepFwd(x1,x2){
     var h1 = stepf(x1 - 0.5), h2 = stepf(x2 - 0.5), h3 = stepf(3 - x1 - x2);
@@ -1377,13 +1341,11 @@ function makeRng(seed){ var s = seed>>>0; return function(){ s = (1664525*s + 10
 var stepData = (function(){
     var rng = makeRng(42), pts = [], m = 0.18;
     function inside(x,y,mar){ return x > 0.5+mar && y > 0.5+mar && (x+y) < 3-mar; }
-    // circles: class 0, inside with margin
     var n0 = 0;
     while (n0 < 45){
         var x = 0.5 + rng()*2.5, y = 0.5 + rng()*2.5;
         if (inside(x,y,m)){ pts.push({x:x,y:y,label:0}); n0++; }
     }
-    // crosses: class 1, outside with margin
     var n1 = 0;
     while (n1 < 90){
         var x = rng()*4, y = rng()*4;
@@ -1392,20 +1354,41 @@ var stepData = (function(){
     }
     return pts;
 })();
+/* The build-up: 0 data only; 1-3 add one hidden unit (its line and the side it votes for); 4 count the votes; 5 the output unit classifies. */
+function snSteps() {
+    var nC = 0; stepData.forEach(function(p){ if (stepFwd(p.x,p.y).o === p.label) nC++; });
+    return [
+        { title: 'Ready: the data', math: '$$f(z) = \\begin{cases} 1 & z > 0 \\\\ 0 & z \\le 0 \\end{cases}$$', note: '45 circles (class 0) fill the triangular island and 90 crosses (class 1) surround it. No single line separates them. Press Next unit to add the hidden neurons one at a time.' },
+        { title: 'Unit h₁: the left wall', math: '$$h_1 = f(x_1 - 0.5)$$', note: 'h₁ votes 1 for every point to the right of the line x₁ = 0.5 (shaded) and 0 for every point to its left. One neuron, one line, one side.' },
+        { title: 'Unit h₂: the floor', math: '$$h_2 = f(x_2 - 0.5)$$', note: 'h₂ votes 1 above the line x₂ = 0.5. Where the two shaded half-planes overlap, both votes are 1. The island is still open along its upper-right side.' },
+        { title: 'Unit h₃: the roof', math: '$$h_3 = f(3 - x_1 - x_2)$$', note: 'h₃ votes 1 below-left of the diagonal x₁ + x₂ = 3. Three half-planes overlap in exactly one region, and that region is the triangle. The darkest shade is where all three votes are 1.' },
+        { title: 'Count the votes', math: '$$\\text{sum} = h_1 + h_2 + h_3 \\in \\{1, 2, 3\\}$$', note: 'Only the inside collects all three votes. Each strip along a side is missing exactly one vote (sum 2) and each corner is missing two (sum 1). No point scores 0: nowhere is on the wrong side of all three lines at once.' },
+        { title: 'Output unit: the NAND', math: '$$o = f(3 - \\text{sum}): \\quad \\text{sum} = 3 \\Rightarrow o = f(0) = 0 \\;\\text{(circle)}, \\qquad \\text{sum} \\le 2 \\Rightarrow o = f(\\ge 1) = 1 \\;\\text{(cross)}$$', note: 'The output fires when any vote is missing, so the triangle is class 0 and everything else is class 1: ' + nC + ' of ' + stepData.length + ' points correct. Hard votes make the logic exact; the price, from the Training & Backprop tab, is that a step function has zero slope everywhere, so these weights can only be designed, never learned.' }
+    ];
+}
 function drawStepNet(){
     var c = document.getElementById('stepCanvas'); if(!c) return;
     var ctx = c.getContext('2d');
-    var W=c.width, H=c.height, pad=40;
+    var W=c.width, H=c.height, pad=40, k = snK;
     ctx.clearRect(0,0,W,H);
-    // crisp region shading via the step net
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0,0,W,H);
+    // shading: each introduced unit paints the side it votes for; step 4 colours by vote count; step 5 by class
     var cells=96, cw=(W-2*pad)/cells, ch=(H-2*pad)/cells;
-    for (var i=0;i<cells;i++){
-        for (var j=0;j<cells;j++){
-            var xx=(i+0.5)/cells*4, yy=(j+0.5)/cells*4;
-            var o = stepFwd(xx,yy).o;
-            ctx.fillStyle = o===0 ? 'rgba(96,142,219,0.28)' : 'rgba(229,115,115,0.24)';
-            var p = geoToPx(xx-2/cells, yy+2/cells, W,H,pad);
-            ctx.fillRect(p[0], p[1], cw+1, ch+1);
+    if (k >= 1) {
+        for (var i=0;i<cells;i++){
+            for (var j=0;j<cells;j++){
+                var xx=(i+0.5)/cells*4, yy=(j+0.5)/cells*4, r = stepFwd(xx,yy), fill = null;
+                if (k <= 3) {
+                    var votes = 0; for (var q=0;q<k;q++) votes += r.h[q];
+                    if (votes) fill = 'rgba(57,134,78,' + (0.13*votes).toFixed(2) + ')';
+                } else if (k === 4) {
+                    var sum = r.h[0]+r.h[1]+r.h[2];
+                    fill = sum === 3 ? 'rgba(57,134,78,0.40)' : (sum === 2 ? 'rgba(221,162,94,0.34)' : 'rgba(221,162,94,0.13)');
+                } else {
+                    fill = r.o === 0 ? 'rgba(96,142,219,0.28)' : 'rgba(229,115,115,0.24)';
+                }
+                if (fill) { ctx.fillStyle = fill; var p = geoToPx(xx-2/cells, yy+2/cells, W,H,pad); ctx.fillRect(p[0], p[1], cw+1, ch+1); }
+            }
         }
     }
     // frame + axes
@@ -1417,24 +1400,35 @@ function drawStepNet(){
         ctx.fillText(t.toFixed(0), p1[0], H-pad+18);
         ctx.fillText(t.toFixed(0), pad-16, p2[1]+4);
     }
-    ctx.fillText('x\u2081', W/2, H-8);
-    ctx.save(); ctx.translate(14,H/2); ctx.rotate(-Math.PI/2); ctx.fillText('x\u2082',0,0); ctx.restore();
-    // the three lines (solid now: hard boundaries)
-    function hline(x0,y0,x1,y1){
+    ctx.fillText('x₁', W/2, H-8);
+    ctx.save(); ctx.translate(14,H/2); ctx.rotate(-Math.PI/2); ctx.fillText('x₂',0,0); ctx.restore();
+    // the lines, one per unit introduced so far, labelled with the unit that owns them
+    function hline(x0,y0,x1,y1, label, lx, ly, hot){
         var a=geoToPx(x0,y0,W,H,pad), b=geoToPx(x1,y1,W,H,pad);
         ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]);
-        ctx.strokeStyle='#21442B'; ctx.lineWidth=2; ctx.stroke();
+        ctx.strokeStyle = hot ? '#C0564A' : '#21442B'; ctx.lineWidth = hot ? 3 : 2; ctx.stroke();
+        var q = geoToPx(lx, ly, W,H,pad);
+        ctx.font = '700 12px Inter, sans-serif';
+        var tw = ctx.measureText(label).width;
+        ctx.fillStyle = hot ? '#C0564A' : '#21442B';
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(q[0]-tw/2-6, q[1]-10, tw+12, 20, 5); else ctx.rect(q[0]-tw/2-6, q[1]-10, tw+12, 20); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.fillText(label, q[0], q[1]+4);
     }
-    hline(0.5,0,0.5,4); hline(0,0.5,4,0.5); hline(0,3,3,0);
-    // dataset points
+    if (k >= 1) hline(0.5,0,0.5,4, 'h₁: x₁ = 0.5', 0.5, 3.75, k === 1);
+    if (k >= 2) hline(0,0.5,4,0.5, 'h₂: x₂ = 0.5', 3.3, 0.5, k === 2);
+    if (k >= 3) hline(0,3,3,0, 'h₃: x₁ + x₂ = 3', 2.35, 1.0, k === 3);
+    // vote counts written on each region
+    if (k === 4) {
+        ctx.font = '700 15px Inter, sans-serif'; ctx.fillStyle = '#21442B';
+        [[1.0,1.0,'3'],[0.25,1.9,'2'],[1.9,0.25,'2'],[2.55,2.55,'2'],[0.25,0.25,'1'],[0.25,3.3,'1'],[3.6,0.25,'1']].forEach(function(l){ var q = geoToPx(l[0], l[1], W,H,pad); ctx.beginPath(); ctx.arc(q[0], q[1], 12, 0, 2*Math.PI); ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill(); ctx.fillStyle = '#21442B'; ctx.fillText(l[2], q[0], q[1]+5); });
+    }
+    // dataset points; at the last step every point is rung green if the network got it right
     for (var p of stepData){
         var q = geoToPx(p.x,p.y,W,H,pad);
-        var pred = stepFwd(p.x,p.y).o;
-        var correct = (pred === p.label);
         if (p.label === 0){
             ctx.beginPath(); ctx.arc(q[0],q[1],5,0,2*Math.PI);
             ctx.strokeStyle = '#2255CC'; ctx.lineWidth=2; ctx.stroke();
-            if (stepClassified && correct){ ctx.fillStyle='rgba(34,85,204,0.25)'; ctx.fill(); }
+            if (k === 5){ ctx.fillStyle='rgba(34,85,204,0.25)'; ctx.fill(); }
         } else {
             ctx.strokeStyle = '#CC3333'; ctx.lineWidth=2;
             ctx.beginPath();
@@ -1442,8 +1436,8 @@ function drawStepNet(){
             ctx.moveTo(q[0]-4,q[1]+4); ctx.lineTo(q[0]+4,q[1]-4);
             ctx.stroke();
         }
-        if (stepClassified){
-            // green ring for correct (all should be)
+        if (k === 5){
+            var correct = (stepFwd(p.x,p.y).o === p.label);
             ctx.beginPath(); ctx.arc(q[0],q[1],8,0,2*Math.PI);
             ctx.strokeStyle = correct ? 'rgba(57,134,78,0.8)' : 'rgba(200,0,0,0.9)';
             ctx.lineWidth = 1.4; ctx.stroke();
@@ -1456,23 +1450,34 @@ function drawStepNet(){
         ctx.fillStyle='#DDA25E'; ctx.fill();
         ctx.lineWidth=2.5; ctx.strokeStyle='#42260D'; ctx.stroke();
     }
-    // verdict readout
-    var v = document.getElementById('stepVerdict');
-    if (stepClassified){
-        var nCorrect = 0;
-        for (var p of stepData){ if (stepFwd(p.x,p.y).o === p.label) nCorrect++; }
-        v.textContent = nCorrect + '/' + stepData.length + ' correct \u2014 ' + (100*nCorrect/stepData.length).toFixed(0) + '%';
-    } else {
-        v.textContent = '\u2014';
-    }
+    snPanel();
 }
-function runStepClassify(){ stepClassified = true; drawStepNet(); }
-function resetStepNet(){ stepClassified = false; stepTestPt = null;
-    document.getElementById('spt').textContent='\u2014';
-    document.getElementById('svotes').textContent='\u2014';
-    document.getElementById('su').textContent='\u2014';
-    document.getElementById('so').textContent='\u2014';
-    drawStepNet(); }
+function snPanel() {
+    var k = snK, steps = snSteps(), st = steps[k];
+    document.getElementById('snTitle').textContent = st.title;
+    var math = document.getElementById('snMath'); math.innerHTML = st.math;
+    document.getElementById('snNote').textContent = st.note;
+    if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise([math]).catch(function(){}); }
+    var dots = document.getElementById('snDots'); dots.innerHTML = '';
+    for (var d = 1; d <= SN_STEPS; d++) { var el = document.createElement('div'); el.className = 'dot' + (d < k ? ' done' : (d === k ? ' current' : '')); dots.appendChild(el); }
+    document.getElementById('snPrev').disabled = (k === 0);
+    document.getElementById('snNext').disabled = (k === SN_STEPS);
+    /* the vote tiles follow the test point; a tile stays dim until its unit has been added */
+    var r = stepFwd(stepTestPt.x, stepTestPt.y), X1 = f2(stepTestPt.x), X2 = f2(stepTestPt.y);
+    var z = [stepTestPt.x - 0.5, stepTestPt.y - 0.5, 3 - stepTestPt.x - stepTestPt.y];
+    var sides = ['right of the wall', 'above the floor', 'below the roof'], nots = ['left of the wall', 'below the floor', 'beyond the roof'];
+    function tile(id, on, value, note, cls) {
+        var t = document.getElementById(id); t.classList.toggle('dim', !on);
+        var v = t.querySelector('.vt-value'); v.textContent = on ? value : '–'; v.className = 'vt-value' + (on && cls ? ' ' + cls : '');
+        t.querySelector('.vt-note').textContent = on ? note : '';
+    }
+    [0,1,2].forEach(function(j) { tile('vt-h' + (j+1), k >= j+1, String(r.h[j]), 'f(' + f2(z[j]) + ') = ' + r.h[j] + ': ' + (r.h[j] ? sides[j] : nots[j])); });
+    var sum = r.h[0] + r.h[1] + r.h[2];
+    tile('vt-sum', k >= 4, sum + ' of 3', 'at (' + X1 + ', ' + X2 + ')');
+    tile('vt-o', k >= 5, r.o === 0 ? '0: circle' : '1: cross', 'u = 3 − ' + sum + ' = ' + r.u + ', f(' + r.u + ') = ' + r.o, r.o === 0 ? 'circle' : 'cross');
+}
+function snStep(d) { snK = Math.max(0, Math.min(SN_STEPS, snK + d)); drawStepNet(); }
+function snReset() { snK = 0; stepTestPt = { x: 1.2, y: 1.2 }; drawStepNet(); }
 (function(){
     var c = document.getElementById('stepCanvas');
     if (c) c.addEventListener('click', function(ev){
@@ -1481,11 +1486,6 @@ function resetStepNet(){ stepClassified = false; stepTestPt = null;
         var px=(ev.clientX-rect.left)*scaleX, py=(ev.clientY-rect.top)*scaleY;
         var g = pxToGeo(px,py,c.width,c.height,40);
         stepTestPt = { x: Math.max(0,Math.min(4,g[0])), y: Math.max(0,Math.min(4,g[1])) };
-        var r = stepFwd(stepTestPt.x, stepTestPt.y);
-        document.getElementById('spt').textContent='('+f2(stepTestPt.x)+', '+f2(stepTestPt.y)+')';
-        document.getElementById('svotes').textContent=r.h.join(', ');
-        document.getElementById('su').textContent=r.u;
-        document.getElementById('so').textContent=r.o + (r.o===0 ? ' (circle)' : ' (cross)');
         drawStepNet();
     });
 })();
