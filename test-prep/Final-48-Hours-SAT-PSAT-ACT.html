@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Final 48 Hours: Test Day Checklist: Learning Curve Collective</title>
-<meta name="description" content="A short, calm checklist for the two days before the SAT, PSAT or ACT: a clickable timeline from two nights before to the room, sleep, food, movement, a last pass through your revision bank, the bag (ID first), and the playbook on one screen.">
+<title>The Final 48 Hours: Your Test Day Checklist: Learning Curve Collective</title>
+<meta name="description" content="Your test day checklist for the two days before the SAT, PSAT or ACT: sleep, targeted review of your revision bank, what to bring, test morning, your strategy during the test, and your own personal reminders.">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
 <style>
@@ -62,9 +62,10 @@ a { color: var(--green-dark); }
 
 /* ---------- page ---------- */
 .container { max-width: 960px; margin: 0 auto; padding: 24px 24px 44px; }
-.lede { background: white; border-left: 5px solid var(--gold); border-radius: 8px; padding: 16px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 18px; }
-.lede p { margin: 0; font-size: 16.5px; line-height: 1.55; }
-.lede p + p { margin-top: 6px; font-size: 14.5px; color: var(--text-medium); }
+.lede { background: white; border-left: 5px solid var(--gold); border-radius: 8px; padding: 18px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 18px; }
+.lede .tag { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; color: var(--green-dark); margin: 0 0 8px; }
+.lede p { margin: 0 0 8px; font-size: 15px; line-height: 1.55; color: var(--text-dark); }
+.lede p:last-child { margin-bottom: 0; color: var(--text-medium); font-size: 14px; }
 
 /* ---------- clickable timeline ---------- */
 .tl-wrap { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 18px 22px 14px; margin-bottom: 18px; }
@@ -83,32 +84,42 @@ a { color: var(--green-dark); }
 .tl-foot a:hover { border-color: var(--green-dark); }
 @media (max-width: 640px) { .tl { grid-template-columns: repeat(2, 1fr); gap: 16px 0; } .tl::before { display: none; } .tl .sub { display: none; } }
 
-/* ---------- CLEAR strip ---------- */
-.clear { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 4px; }
-.clear .k { font-size: 11.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); margin-right: 4px; }
-.clear span.p { display: inline-flex; align-items: center; gap: 7px; background: white; border-radius: 20px; padding: 6px 13px 6px 7px; font-size: 13.5px; font-weight: 600; color: var(--text-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-.clear span.p b { width: 24px; height: 24px; border-radius: 50%; background: var(--green-dark); color: white; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
-.clear span.p:nth-child(3) b { background: var(--gold); color: var(--brown-dark); }
-.clear span.p:nth-child(4) b { background: var(--copper); }
-.clear span.p:nth-child(5) b { background: var(--green-light); }
-.clear span.p:nth-child(6) b { background: var(--brown-dark); }
+/* ---------- CLEAR: a visual reminder ---------- */
+.clear-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; }
+.clear-head h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 17px; color: var(--green-dark); margin: 0; }
+.clear-head span { font-size: 13.5px; color: var(--text-medium); }
+.clear { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 0; }
+.clear div { background: white; border-radius: 8px; padding: 10px 12px; border-top: 3px solid var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: 3px; }
+.clear div:nth-child(2) { border-top-color: var(--gold); }
+.clear div:nth-child(3) { border-top-color: var(--copper); }
+.clear div:nth-child(4) { border-top-color: var(--green-light); }
+.clear div:nth-child(5) { border-top-color: var(--brown-dark); }
+.clear b { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 13.5px; color: var(--green-dark); display: flex; align-items: flex-start; gap: 7px; line-height: 1.3; }
+.clear b i { font-style: normal; display: inline-flex; flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--green-dark); color: white; font-size: 12px; align-items: center; justify-content: center; margin-top: -1px; }
+.clear div:nth-child(2) b i { background: var(--gold); color: var(--brown-dark); }
+.clear div:nth-child(3) b i { background: var(--copper); }
+.clear div:nth-child(4) b i { background: var(--green-light); }
+.clear div:nth-child(5) b i { background: var(--brown-dark); }
+.clear span { font-size: 12.5px; color: var(--text-medium); line-height: 1.4; }
 .clear-foot { font-size: 13.5px; color: var(--text-medium); margin: 8px 0 0; }
+@media (max-width: 760px) { .clear { grid-template-columns: repeat(2, 1fr); } .clear div:last-child { grid-column: 1 / -1; } }
 
 /* ---------- sections ---------- */
-section.sec { margin-top: 30px; scroll-margin-top: 66px; }
+section.sec { margin-top: 32px; scroll-margin-top: 66px; }
 .section-header { display: flex; align-items: center; gap: 12px; margin: 0 0 4px; }
-.section-number { width: 38px; height: 38px; border-radius: 50%; background: var(--gold); color: var(--brown-dark); font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Switzer', 'Space Grotesk', sans-serif; }
+.section-number { width: 38px; height: 38px; border-radius: 50%; background: var(--gold); color: var(--brown-dark); font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Switzer', 'Space Grotesk', sans-serif; }
 .section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--green-dark); margin: 0; line-height: 1.2; }
 .section-header h2 small { display: block; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 400; color: var(--text-medium); margin-top: 1px; }
-.sec > p.intro { margin: 4px 0 12px 50px; color: var(--text-medium); font-size: 14.5px; max-width: 66ch; }
+.sec > p.intro { margin: 6px 0 12px 50px; color: var(--text-medium); font-size: 14.5px; max-width: 68ch; line-height: 1.55; }
 @media (max-width: 640px) { .sec > p.intro { margin-left: 0; } }
 
 .card { background: white; border-radius: 8px; border-left: 5px solid var(--gold); padding: 6px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 12px; }
 .card.green { border-left-color: var(--green-dark); }
 .card.brown { border-left-color: #8B5E3C; padding: 16px 20px; }
+.card.pad { padding: 16px 20px; }
 .card h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 16px; margin: 0 0 8px; color: var(--green-dark); }
-.calm { display: flex; align-items: center; gap: 10px; margin: 10px 0 0; font-size: 14px; color: var(--green-dark); }
-.calm::before { content: ""; width: 22px; height: 3px; background: var(--gold); border-radius: 3px; flex-shrink: 0; }
+.note { background: rgba(33,68,43,0.06); border-left: 4px solid var(--green-dark); border-radius: 0 8px 8px 0; padding: 11px 16px; margin: 10px 0 0; font-size: 14px; line-height: 1.5; }
+.note b { color: var(--green-dark); }
 
 /* checklists */
 .ck-list { list-style: none; margin: 0; padding: 0; }
@@ -119,9 +130,8 @@ section.sec { margin-top: 30px; scroll-margin-top: 66px; }
 .ck-list input:checked { background: var(--green-dark); border-color: var(--green-dark); }
 .ck-list input:checked::after { content: ""; position: absolute; left: 6px; top: 1px; width: 6px; height: 11px; border: solid white; border-width: 0 3px 3px 0; transform: rotate(45deg); }
 .ck-list input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.ck-list .t { font-size: 15px; line-height: 1.5; }
+.ck-list .t { font-size: 14.5px; line-height: 1.5; }
 .ck-list .t b { color: var(--green-dark); }
-.ck-list .t small { display: block; color: var(--text-medium); font-size: 13.5px; margin-top: 1px; }
 .ck-list input:checked ~ .t { color: var(--text-medium); }
 .ck-list input:checked ~ .t b { color: var(--green-medium); }
 .id-flag { display: inline-block; background: var(--gold); color: var(--brown-dark); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-left: 4px; vertical-align: 2px; }
@@ -134,22 +144,30 @@ section.sec { margin-top: 30px; scroll-margin-top: 66px; }
 .bag li.id::before { background: var(--copper); }
 @media (max-width: 640px) { .bag { grid-template-columns: 1fr; } }
 
-/* in the room: eight moves */
+/* during the test: eight points */
 .moves { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.moves li { background: white; border-radius: 8px; padding: 11px 14px 11px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start; border-left: 4px solid var(--green-dark); font-size: 14.5px; line-height: 1.45; }
+.moves li { background: white; border-radius: 8px; padding: 11px 14px 11px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start; border-left: 4px solid var(--green-dark); font-size: 14px; line-height: 1.5; }
 .moves li:nth-child(3n+2) { border-left-color: var(--gold); }
 .moves li:nth-child(3n) { border-left-color: #8B5E3C; }
 .moves .n { width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: var(--brown-dark); font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-.moves b { color: var(--green-dark); }
-.moves-foot { font-size: 13.5px; color: var(--text-medium); margin: 10px 0 0; background: rgba(221,162,94,0.14); border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; padding: 9px 14px; }
+.moves b { display: block; color: var(--green-dark); margin-bottom: 1px; }
 @media (max-width: 640px) { .moves { grid-template-columns: 1fr; } }
+.spec { margin-top: 12px; }
+.spec h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 16px; color: var(--green-dark); margin: 0 0 6px; }
+.spec dl { margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.spec dl.tvb { display: none; }   /* only the chosen test's reminders show (see the .tvb rules below) */
+.spec dl > div { background: white; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-top: 3px solid var(--gold); font-size: 13.5px; line-height: 1.5; }
+.spec dt { font-weight: 700; color: var(--green-dark); margin-bottom: 2px; }
+.spec dd { margin: 0; color: var(--text-medium); }
+@media (max-width: 760px) { .spec dl { grid-template-columns: 1fr; } }
 
-/* two ideas */
+/* personal reminders */
 .ideas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .idea { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 5px solid var(--gold); }
 .idea:nth-child(2) { border-top-color: var(--green-dark); }
-.idea label { display: block; font-size: 11.5px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 700; color: var(--copper); margin-bottom: 7px; }
+.idea label { display: block; font-size: 11.5px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 700; color: var(--copper); margin-bottom: 4px; }
 .idea:nth-child(2) label { color: var(--green-dark); }
+.idea .eg { font-size: 12.5px; color: var(--text-medium); font-style: italic; margin: 0 0 8px; }
 .idea textarea, .rb input { width: 100%; font-family: 'Inter', sans-serif; font-size: 15px; border: 1.5px solid var(--cream-dark); border-radius: 8px; padding: 9px 11px; resize: vertical; min-height: 56px; color: var(--text-dark); background: #FCFBF8; }
 .idea textarea:focus, .rb input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(221,162,94,0.25); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center; }
@@ -158,6 +176,7 @@ section.sec { margin-top: 30px; scroll-margin-top: 66px; }
 .chip:hover { border-color: var(--gold); background: var(--gold-pale); }
 @media (max-width: 640px) { .ideas { grid-template-columns: 1fr; } }
 .rb { margin-top: 12px; }
+.rb p { margin: 0 0 10px; font-size: 14px; color: var(--text-medium); line-height: 1.5; }
 .rb table { width: 100%; border-collapse: collapse; }
 .rb th { text-align: left; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); font-weight: 700; padding: 0 8px 4px 0; }
 .rb td { padding: 3px 8px 3px 0; vertical-align: top; }
@@ -165,23 +184,34 @@ section.sec { margin-top: 30px; scroll-margin-top: 66px; }
 .rb input { min-height: 0; font-size: 14.5px; padding: 8px 10px; }
 @media (max-width: 640px) { .rb thead { display: none; } .rb table, .rb tbody, .rb tr, .rb td { display: block; } .rb td:first-child { display: none; } .rb td { padding: 3px 0; } }
 
-/* quick facts */
+/* quick reference */
 .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
 .facts div { background: white; border-radius: 8px; padding: 10px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid var(--green-dark); }
 .facts div:nth-child(2) { border-top-color: var(--gold); }
 .facts div:nth-child(3) { border-top-color: #8B5E3C; }
 .facts div:nth-child(4) { border-top-color: var(--green-light); }
 .facts small { display: block; font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); font-weight: 700; }
-.facts b { display: block; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 19px; color: var(--green-dark); margin-top: 2px; line-height: 1.15; }
+.facts b { display: block; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; color: var(--green-dark); margin-top: 2px; line-height: 1.15; }
 .facts span { font-size: 12px; color: var(--text-medium); display: block; margin-top: 1px; }
 @media (max-width: 640px) { .facts { grid-template-columns: repeat(2, 1fr); } }
-.sections { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
-.sections span { background: white; border-radius: 8px; padding: 7px 12px; font-size: 13.5px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-.sections span b { color: var(--green-dark); }
-.sections span.brk { background: var(--gold-pale); }
+.ft { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ft th { text-align: left; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); padding: 4px 10px 6px 0; border-bottom: 2px solid var(--cream-dark); }
+.ft td { padding: 7px 10px 7px 0; border-bottom: 1px solid #EFEAE0; vertical-align: top; }
+.ft td:first-child { font-weight: 600; color: var(--green-dark); }
+.ft tr:last-child td { border-bottom: 0; }
+.ft tr.brk td { background: var(--gold-pale); font-size: 13px; }
+.know { margin: 10px 0 0; padding-left: 18px; font-size: 14px; color: var(--text-medium); line-height: 1.55; }
+.know li { margin: 2px 0; }
 .full-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; background: var(--green-dark); color: white; text-decoration: none; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 14px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); }
 .full-link:hover { background: #2F5A3C; }
 .full-link .k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+
+/* final thought */
+.final { background: linear-gradient(135deg, var(--green-dark) 0%, #2b5537 100%); color: white; border-radius: 10px; padding: 22px 26px; margin-top: 32px; }
+.final h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin: 0 0 10px; color: var(--gold-light); }
+.final p { margin: 0 0 10px; font-size: 15px; line-height: 1.55; color: rgba(255,255,255,0.92); }
+.final p.big { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; color: white; margin-top: 14px; }
+.final p:last-child { margin-bottom: 0; }
 
 /* test-specific text: inline (.tv) and block (.tvb). data-t lists one or more tests, space-separated. */
 .tv, .tvb { display: none; }
@@ -189,7 +219,9 @@ body[data-test="sat"] .tv[data-t~="sat"], body[data-test="psat"] .tv[data-t~="ps
 body[data-test="sat"] .tvb[data-t~="sat"], body[data-test="psat"] .tvb[data-t~="psat"], body[data-test="act"] .tvb[data-t~="act"] { display: block; }
 body[data-test="sat"] .chip.tv[data-t~="sat"], body[data-test="psat"] .chip.tv[data-t~="psat"], body[data-test="act"] .chip.tv[data-t~="act"] { display: inline-block; }
 body[data-test="sat"] ul.tvb[data-t~="sat"], body[data-test="psat"] ul.tvb[data-t~="psat"], body[data-test="act"] ul.tvb[data-t~="act"] { display: grid; }
+body[data-test="sat"] dl.tvb[data-t~="sat"], body[data-test="psat"] dl.tvb[data-t~="psat"], body[data-test="act"] dl.tvb[data-t~="act"] { display: grid; }
 body[data-test="sat"] li.tvb[data-t~="sat"], body[data-test="psat"] li.tvb[data-t~="psat"], body[data-test="act"] li.tvb[data-t~="act"] { display: flex; }
+body[data-test="sat"] tr.tvb[data-t~="sat"], body[data-test="psat"] tr.tvb[data-t~="psat"], body[data-test="act"] tr.tvb[data-t~="act"] { display: table-row; }
 .tsw-toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--green-dark); color: white; font-size: 13.5px; font-weight: 600; padding: 9px 16px; border-radius: 20px; opacity: 0; transition: all 0.25s; pointer-events: none; z-index: 60; }
 .tsw-toast.on { opacity: 1; transform: translate(-50%, 0); }
 
@@ -200,8 +232,8 @@ body[data-test="sat"] li.tvb[data-t~="sat"], body[data-test="psat"] li.tvb[data-
 @media print {
     .bar, .printb, .chips, .full-link, .prog, .tl-foot { display: none !important; }
     body { background: white; }
-    .header { background: var(--green-dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .card, .moves li, .facts div, .idea, .tl-wrap { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+    .header, .final { background: var(--green-dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card, .moves li, .facts div, .idea, .tl-wrap, .spec dl > div, .clear div { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
     section.sec { break-inside: avoid-page; }
     .ck-list input, .bag li.id, .tl .dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
@@ -214,12 +246,12 @@ body[data-test="sat"] li.tvb[data-t~="sat"], body[data-test="psat"] li.tvb[data-
         <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
         <div class="header-text">
             <h1>The Final 48 Hours</h1>
-            <div class="subtitle">Test day checklist</div>
+            <div class="subtitle">Your test day checklist</div>
         </div>
     </div>
     <div class="header-right">
         <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
-        <div class="subtitle" style="margin-top: 4px;">SAT &bull; PSAT/NMSQT &bull; ACT &bull; The two days before</div>
+        <div class="subtitle" style="margin-top: 4px;">SAT &bull; PSAT/NMSQT &bull; ACT</div>
     </div>
 </div>
 
@@ -235,9 +267,9 @@ body[data-test="sat"] li.tvb[data-t~="sat"], body[data-test="psat"] li.tvb[data-
             <a href="#two-nights">48h</a>
             <a href="#night-before">24h</a>
             <a href="#morning">Morning</a>
-            <a href="#room">In the room</a>
-            <a href="#ideas">Two ideas</a>
-            <a href="#facts">Facts</a>
+            <a href="#room">During the test</a>
+            <a href="#ideas">Reminders</a>
+            <a href="#facts">Reference</a>
         </nav>
         <span class="prog"><span class="track"><span class="fill" id="prog-fill"></span></span><span id="prog-text">0 of 0 done</span><button type="button" onclick="resetChecks()" title="Clear every checkmark">reset</button></span>
         <button class="printb" type="button" onclick="window.print()">Print</button>
@@ -247,190 +279,277 @@ body[data-test="sat"] li.tvb[data-t~="sat"], body[data-test="psat"] li.tvb[data-
 <div class="container">
 
     <div class="lede">
-        <p>The studying is done. The next two days have one job: get you to the room rested, fed, and calm.</p>
-        <p>Nothing here is new. It is a short reminder of what you already know, and this page remembers your checkmarks on this device.</p>
+        <p class="tag">You've put in the work. Here's how to make the most of it on test day.</p>
+        <p>At this point, the goal isn't to learn anything new. It's to give yourself the best chance to demonstrate what you already know. Over the next two days, we'll focus on a few things that really matter: sleep, some targeted review, getting organized, and having a clear strategy for test day.</p>
+        <p>Use this checklist to keep yourself on track. You can check things off as you go, and your progress will be saved on this device.</p>
     </div>
 
     <div class="tl-wrap">
         <ol class="tl" id="tl">
-            <li data-sec="two-nights"><a href="#two-nights"><span class="dot">48h</span><span class="name">Two nights before</span><span class="sub">Sleep, move, last real review</span></a></li>
-            <li data-sec="night-before"><a href="#night-before"><span class="dot">24h</span><span class="name">The night before</span><span class="sub">Light review, pack the bag</span></a></li>
-            <li data-sec="morning"><a href="#morning"><span class="dot">AM</span><span class="name">Test morning</span><span class="sub">Eat, ID, leave early</span></a></li>
-            <li data-sec="room"><a href="#room"><span class="dot">Go</span><span class="name">In the room</span><span class="sub">The playbook on one screen</span></a></li>
+            <li data-sec="two-nights"><a href="#two-nights"><span class="dot">48h</span><span class="name">48 Hours Before</span><span class="sub">Two nights before your test</span></a></li>
+            <li data-sec="night-before"><a href="#night-before"><span class="dot">24h</span><span class="name">24 Hours Before</span><span class="sub">The night before your test</span></a></li>
+            <li data-sec="morning"><a href="#morning"><span class="dot">AM</span><span class="name">Test Morning</span><span class="sub">Give yourself plenty of time</span></a></li>
+            <li data-sec="room"><a href="#room"><span class="dot">Go</span><span class="name">During the Test</span><span class="sub">Putting your strategies to work</span></a></li>
         </ol>
-        <p class="tl-foot"><span>Also on this page:</span><a href="#ideas">Your two ideas</a><a href="#facts">Quick facts for the <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT</span><span class="tv" data-t="act">ACT</span></a></p>
+        <p class="tl-foot"><span>Also on this page:</span><a href="#ideas">Your personal reminders</a><a href="#facts">Quick reference: the <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT</span><span class="tv" data-t="act">ACT</span></a></p>
     </div>
 
-    <div class="clear" aria-label="The CLEAR method">
-        <span class="k">CLEAR</span>
-        <span class="p"><b>C</b>Clock it</span>
-        <span class="p"><b>L</b>Lead with the question</span>
-        <span class="p"><b>E</b>Eliminate on screen</span>
-        <span class="p"><b>A</b>Answer everything</span>
-        <span class="p"><b>R</b>Return, don't stall</span>
+    <div class="clear-head"><h2>Your test day strategy: CLEAR</h2><span>Five reminders to keep in mind throughout the test.</span></div>
+    <div class="clear" aria-label="The CLEAR strategy">
+        <div><b><i>C</i>Check the clock</b><span>Know your pace. Check in around the halfway point so you know when to speed up.</span></div>
+        <div><b><i>L</i>Lead with the question</b><span><span class="tv" data-t="sat psat">For Reading &amp; Writing, start</span><span class="tv" data-t="act">On Reading and Science passages, start</span> by figuring out what the question is asking before diving into the passage.</span></div>
+        <div><b><i>E</i>Eliminate wrong answers</b><span><span class="tv" data-t="sat psat">Use the elimination tool</span><span class="tv" data-t="act">Use the elimination tool online, or cross out in your booklet on paper,</span> to remove answers you know are wrong. Narrowing your choices makes the remaining decision easier.</span></div>
+        <div><b><i>A</i>Answer every question</b><span>There's no penalty for guessing. Even when you're unsure, make your best choice.</span></div>
+        <div><b><i>R</i>Return to difficult questions</b><span>If you're stuck and don't have a clear next step, <span class="tv" data-t="sat psat">mark the question</span><span class="tv" data-t="act">flag the question (or circle it on paper)</span> and move on. You can come back if time allows.</span></div>
     </div>
-    <p class="clear-foot">Five letters, said at the start of every <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span>. That is the whole strategy. <a id="pb-link-top" href="Test-Day-Playbook-SAT-PSAT-ACT.html">The full playbook</a> has the long version if you want it.</p>
+    <p class="clear-foot">Keep these five reminders in mind as you work through each section. For more detailed strategies, you can always review <a id="pb-link-top" href="Test-Day-Playbook-SAT-PSAT-ACT.html">our full Test Day Playbook</a>.</p>
 
-    <!-- === 1. Two nights before === -->
+    <!-- === 1. 48 hours before === -->
     <section class="sec" id="two-nights">
-        <div class="section-header"><div class="section-number">48h</div><h2>Two nights before<small>The night that matters most</small></h2></div>
-        <p class="intro">Tonight is your real night of sleep. The night before a test is often a little restless no matter what, so bank the rest now.</p>
+        <div class="section-header"><div class="section-number">1</div><h2>48 Hours Before<small>Two nights before your test</small></h2></div>
+        <p class="intro">Getting a good night's sleep tonight is especially important. It's normal to feel a little nervous the night before a big test, so we want to make sure you're well rested heading into that final night.</p>
         <div class="card green">
             <ul class="ck-list">
-                <li><label><input type="checkbox" class="ck" data-k="s1"><span class="t"><b>A full night's sleep</b> at your normal bedtime.<small>Phone out of the bedroom, screens off an hour before. The single most useful thing on this page.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s2"><span class="t"><b>30 to 45 minutes of exercise.</b> It makes tonight's sleep deeper.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s3"><span class="t"><b>Revision bank, last real pass:</b> redo your 10 to 15 trickiest misses cold and say the fix out loud.<small>Not a full practice test; that was last week.</small></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="s5"><span class="t"><b>Logistics:</b> test center, report time, how you get there. Find your <span class="tv" data-t="sat act">admission ticket</span><span class="tv" data-t="psat">school's instructions</span> and your <b>photo ID</b>.<small><span class="tv" data-t="sat">Open Bluebook on the device you will use: updated and signed in.</span><span class="tv" data-t="psat">If your school asked you to bring a device, open Bluebook on it: updated and signed in.</span><span class="tv" data-t="act">Calculator: an approved model with fresh batteries. There is no built-in one.</span></small></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s1"><span class="t"><b>Get a full night's sleep.</b> Stick to your normal bedtime and aim for at least 8 hours if possible. Put your phone away and give yourself some time to wind down before bed.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s2"><span class="t"><b>Get some exercise.</b> Go for a walk, run, bike ride, or do whatever helps you relax. Nothing too strenuous or different from your normal routine.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s3"><span class="t"><b>Give your revision bank one final review.</b> Choose 10 to 15 questions you've previously missed or struggled with. Try them again without looking at your solutions. Pay particular attention to understanding what went wrong the first time and how to avoid repeating the same mistake.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s4"><span class="t"><b>Skip the full-length practice test.</b> At this point, targeted review is a better use of your time. We want to reinforce what you've learned, not wear you out.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s5"><span class="t"><b>Confirm your test day logistics.</b> <span class="tv" data-t="sat act">Double-check your test center, arrival time, transportation, and any documents you'll need.</span><span class="tv" data-t="psat">Double-check where and when your school is giving the test, how you're getting there, and anything your school has asked you to bring.</span></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="s6"><span class="t"><span class="tv" data-t="sat"><b>Make sure your testing device is ready.</b> Open Bluebook on the device you'll be using, complete the required exam setup when available, and make sure everything is working properly.</span><span class="tv" data-t="psat"><b>Make sure your testing device is ready.</b> Many schools provide the device. If you've been asked to bring your own, open Bluebook on it, complete the exam setup when available, and make sure everything is working properly.</span><span class="tv" data-t="act"><b>Make sure your calculator is ready.</b> The ACT has no built-in calculator, so check that yours is an approved model with fresh batteries, and put a spare set in your bag. If you're testing online, check your admission ticket for any device instructions.</span></span></label></li>
             </ul>
         </div>
-        <p class="calm">That is all for tonight. Sleep is the work.</p>
+        <div class="note"><b>A note on sleep:</b> The goal is to get two good nights of sleep before your test. If you're a little restless the night before, that's okay. Getting plenty of rest tonight will help.</div>
     </section>
 
-    <!-- === 2. The night before === -->
+    <!-- === 2. 24 hours before === -->
     <section class="sec" id="night-before">
-        <div class="section-header"><div class="section-number">24h</div><h2>The night before<small>Light and early</small></h2></div>
-        <p class="intro">Twenty minutes of review, then the bag, then dinner, then bed. Tomorrow's score was earned already.</p>
+        <div class="section-header"><div class="section-number">2</div><h2>24 Hours Before<small>The night before your test</small></h2></div>
+        <p class="intro">Today should be pretty relaxed. A little review is fine, but there's no reason to spend hours studying. Focus on wrapping up your preparation, getting organized, and giving yourself time to unwind.</p>
         <div class="card green">
             <ul class="ck-list">
-                <li><label><input type="checkbox" class="ck" data-k="n1"><span class="t"><b>Review for 20 to 30 minutes, then stop.</b> Say CLEAR, read your two ideas, skim your revision-bank fixes. Nothing new.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n2"><span class="t"><b>Pack the bag</b> and put it by the door. ID goes in first.<span class="id-flag">ID</span></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n3"><span class="t"><b>A normal dinner,</b> two alarms set, clothes laid out with a layer: test rooms run cold.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="n5"><span class="t"><b>Screens off an hour before bed;</b> bed at your usual time, not earlier.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n1"><span class="t"><b>Keep studying to 20 to 30 minutes.</b> Review your CLEAR strategy, look over your personal reminders, and skim the corrections in your revision bank. Avoid new material or especially difficult problems.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n2"><span class="t"><b>Pack everything tonight.</b> Use the checklist below so you're not scrambling to find something in the morning.<span class="id-flag">ID</span></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n3"><span class="t"><b>Eat a normal dinner.</b> Stick with foods you know agree with you and drink plenty of water.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n4"><span class="t"><b>Set two alarms.</b> Give yourself plenty of time to get ready and travel to <span class="tv" data-t="sat act">the test center</span><span class="tv" data-t="psat">school</span>.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n5"><span class="t"><b>Lay out your clothes.</b> Wear something comfortable and bring an extra layer in case the testing room is cold.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="n6"><span class="t"><b>Wind down before bed.</b> Put your screens away if you can, and stick as closely as possible to your regular sleep schedule.</span></label></li>
             </ul>
         </div>
         <div class="card">
-            <h3>In the bag<span class="tv" data-t="sat">: SAT</span><span class="tv" data-t="psat">: PSAT</span><span class="tv" data-t="act">: ACT</span></h3>
+            <h3>What to bring<span class="tv" data-t="sat">: SAT checklist</span><span class="tv" data-t="psat">: PSAT checklist</span><span class="tv" data-t="act">: ACT checklist</span></h3>
             <ul class="bag tvb" data-t="sat">
-                <li class="id">Photo ID. You will not be admitted without it; check it is in the bag tonight and in your pocket tomorrow.</li>
+                <li class="id">Acceptable photo ID. Bring one even if you're not sure it's required.</li>
+                <li>Fully charged testing device with Bluebook and completed exam setup</li>
+                <li>Device charger</li>
                 <li>Admission ticket</li>
-                <li>Your device with Bluebook, charged to 100%, plus the charger (nothing, if you are using a school device)</li>
-                <li>Approved calculator with fresh batteries (Desmos is built in; this is backup)</li>
-                <li>Two pencils (scratch paper is provided)</li>
-                <li>Snack and water for the break</li>
-                <li>A layer</li>
+                <li>Approved calculator, if you'd like a backup to Desmos</li>
+                <li>Two pencils</li>
+                <li>Water and a snack for the break</li>
+                <li>Sweatshirt or extra layer</li>
             </ul>
             <ul class="bag tvb" data-t="psat">
-                <li class="id">Photo ID. Required if you test anywhere but your own school, and worth bringing regardless: in the bag tonight, in your pocket tomorrow.</li>
-                <li>Whatever your school's instructions list (many schools provide the device)</li>
-                <li>If you were asked to bring a device: charged to 100%, Bluebook installed, plus the charger</li>
-                <li>Approved calculator if you want a backup to Desmos</li>
-                <li>Two pencils (scratch paper is provided)</li>
-                <li>Snack and water for the break</li>
-                <li>A layer</li>
+                <li class="id">Photo ID, if required. Bring one if you're testing anywhere other than your own school.</li>
+                <li>Fully charged testing device with Bluebook and completed exam setup, if your school asked you to bring one</li>
+                <li>Device charger, if you're bringing a device</li>
+                <li>Anything else your school's instructions list</li>
+                <li>Approved calculator, if you'd like a backup to Desmos</li>
+                <li>Two pencils</li>
+                <li>Water and a snack for the break</li>
+                <li>Sweatshirt or extra layer</li>
             </ul>
             <ul class="bag tvb" data-t="act">
-                <li class="id">Photo ID, current and acceptable. You will not be admitted without it; check it is in the bag tonight and in your pocket tomorrow.</li>
+                <li class="id">Acceptable photo ID. It's required, so check it's in the bag tonight.</li>
                 <li>Admission ticket</li>
-                <li>Approved calculator with fresh batteries, plus spares (there is no built-in one)</li>
-                <li>Sharpened No. 2 pencils if you are testing on paper</li>
-                <li>Snack and water for the break</li>
-                <li>A layer</li>
+                <li>Approved calculator with fresh batteries (the ACT has no built-in calculator)</li>
+                <li>Spare batteries</li>
+                <li>Sharpened No. 2 pencils, if you're testing on paper</li>
+                <li>Water and a snack for the break</li>
+                <li>Sweatshirt or extra layer</li>
             </ul>
         </div>
-        <p class="calm">Can't sleep? Resting in the dark still counts, and you banked a full night yesterday.</p>
+        <div class="note"><b>Having trouble falling asleep?</b> That's normal before a big test. Don't stress about getting a perfect night's sleep, and try not to keep checking the clock. You've prepared, and one imperfect night doesn't undo that work.</div>
     </section>
 
     <!-- === 3. Test morning === -->
     <section class="sec" id="morning">
-        <div class="section-header"><div class="section-number">AM</div><h2>Test morning<small>Nothing rushed, nothing new</small></h2></div>
+        <div class="section-header"><div class="section-number">3</div><h2>Test Morning<small>Give yourself plenty of time</small></h2></div>
+        <p class="intro">The most important thing this morning is to avoid rushing. You should have everything packed and ready, so all you need to do is get up, eat breakfast, and get to <span class="tv" data-t="sat act">your test center</span><span class="tv" data-t="psat">school</span>.</p>
         <div class="card green">
             <ul class="ck-list">
-                <li><label><input type="checkbox" class="ck" data-k="m1"><span class="t"><b>Up early enough that nothing is hurried.</b> A short walk or a stretch wakes you up faster than a second alarm.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m2"><span class="t"><b>Breakfast with protein</b> and a glass of water. Your normal caffeine, not more.</span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m7"><span class="t"><b>ID in your pocket, <span class="tv" data-t="sat act">ticket</span><span class="tv" data-t="psat">instructions</span> with it, bag on your shoulder.</b> Check all three before the door closes behind you.<span class="id-flag">ID</span></span></label></li>
-                <li><label><input type="checkbox" class="ck" data-k="m4"><span class="t"><b>Leave early.</b> Two minutes of review at most: the five letters and your two ideas. Phone off and away before you sit down.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m1"><span class="t"><b>Get up with plenty of time.</b> Give yourself a little extra room in your schedule so you don't feel rushed. A short walk or some stretching can help you wake up.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m2"><span class="t"><b>Eat breakfast.</b> Have something filling with protein and carbohydrates. Stick with your normal caffeine routine, if you have one.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m3"><span class="t"><b>Review your two reminders.</b> Take two minutes to look over your pacing strategy and the mistake you're working to avoid. That's enough studying for this morning.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m7"><span class="t"><b>Check your bag, <span class="tv" data-t="sat act">ticket, and ID</span><span class="tv" data-t="psat">and anything your school asked you to bring</span>.</b> Make sure <span class="tv" data-t="sat act">all three are</span><span class="tv" data-t="psat">it's all</span> with you before you walk out the door.<span class="id-flag tv" data-t="sat act">ID</span></span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m4"><span class="t"><b>Leave early.</b> Plan to arrive before your scheduled reporting time. You don't want traffic or parking to be what you're thinking about before the test.</span></label></li>
+                <li><label><input type="checkbox" class="ck" data-k="m5"><span class="t"><b>Use the bathroom before the test begins.</b> Follow the <span class="tv" data-t="sat act">testing center's</span><span class="tv" data-t="psat">proctor's</span> instructions for putting away your phone and personal belongings.</span></label></li>
             </ul>
         </div>
-        <p class="calm">You prepared. The only job now is to run the plan.</p>
+        <div class="note"><b>One last reminder:</b> You don't need to get every question right to earn a great score. Focus on one question at a time, use the strategies you've practiced, and keep moving.</div>
     </section>
 
-    <!-- === 4. In the room === -->
+    <!-- === 4. During the test === -->
     <section class="sec" id="room">
-        <div class="section-header"><div class="section-number">Go</div><h2>In the room<small>The playbook on one screen</small></h2></div>
+        <div class="section-header"><div class="section-number">4</div><h2>During the Test<small>Putting your strategies to work</small></h2></div>
+        <p class="intro">The best test-taking strategies are the ones you've practiced enough that they feel natural. Here's what we want you to remember when you're in the room.</p>
         <ol class="moves">
-            <li><span class="n">1</span><div><b>First minute of every <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span>:</b> say C L E A R, breathe once, go.<span class="tv" data-t="act"> On paper, write your halfway checkpoint at the top first.</span></div></li>
-            <li><span class="n">2</span><div><b>Read the question before the passage.</b> Every question, every time.</div></li>
-            <li><span class="n">3</span><div><b>One clock check at the halfway question.</b> Adjust once, not constantly.</div></li>
-            <li><span class="n">4</span><div><b>Thirty seconds without a plan:</b> placeholder answer, <span class="tv" data-t="sat psat">mark it</span><span class="tv" data-t="act">flag or circle it</span>, move on.</div></li>
-            <li><span class="n">5</span><div><b>Cross out wrong choices</b> <span class="tv" data-t="sat psat">with the ABC eliminator</span><span class="tv" data-t="act">on screen or in the booklet</span>, not in your head.</div></li>
-            <li><span class="n">6</span><div><b>Answer everything.</b> No penalty for wrong answers; a blank is the only sure zero.</div></li>
-            <li><span class="n">7</span><div><b>Last 90 seconds:</b> fill every blank with your letter of the day, then return to one marked question.</div></li>
-            <li><span class="n">8</span><div><b>The break:</b> stand up, eat, drink water. Do not relive the section. It is over and it went fine.</div></li>
+            <li><span class="n">1</span><div><b>Start each <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span> with a plan.</b> Remind yourself of CLEAR. Take a breath, get focused, and get started.<span class="tv" data-t="act"> If you're testing on paper, jot your halfway checkpoint at the top of the section, since you'll be working from the room clock.</span></div></li>
+            <li><span class="n">2</span><div><b>Read carefully before you solve.</b> <span class="tv" data-t="sat psat">On Reading &amp; Writing, identify what the question is asking before working through the passage. On Math, identify the givens and what you're solving for before jumping into calculations.</span><span class="tv" data-t="act">On English and Reading, identify what the question is asking before working through the passage. On Math, identify the givens and what you're solving for before jumping into calculations. On Science, find the table or graph the question refers to before reading the whole passage.</span></div></li>
+            <li><span class="n">3</span><div><b>Keep an eye on your pacing.</b> Check your time around the halfway point. If you're behind, make an adjustment. You don't need to watch the clock after every question.<span class="tv" data-t="act"> The ACT moves faster per question than the SAT, so that halfway check matters even more.</span></div></li>
+            <li><span class="n">4</span><div><b>Don't get stuck on one question.</b> If you've spent time on a problem without making progress, choose your best answer, <span class="tv" data-t="sat psat">mark it for review</span><span class="tv" data-t="act">flag it (or circle the number in your booklet)</span>, and move on. Remember that the questions you haven't reached are worth points too.</div></li>
+            <li><span class="n">5</span><div><b>Use elimination whenever you can.</b> Even when you aren't sure of the correct answer, you can often identify choices that are clearly wrong. Use that information to improve your odds.</div></li>
+            <li><span class="n">6</span><div><b>Answer every question.</b> There's no guessing penalty. Make sure you've selected an answer before moving on, even if you plan to revisit it.</div></li>
+            <li><span class="n">7</span><div><b>Use your final minutes wisely.</b> Check that every question has an answer. If you have extra time, return to the questions you marked and focus on the ones where you think another look could make a difference.</div></li>
+            <li><span class="n">8</span><div><b>Take advantage of your break.</b> Get up, stretch, drink some water, and have a snack. Try not to spend the break replaying questions from the previous section. Your attention is better spent on what's ahead.</div></li>
         </ol>
-        <p class="moves-foot tvb" data-t="sat"><b>One SAT-specific thing:</b> Module 1 sets your ceiling, so bring your sharpest focus to it. Type fractions as fractions (2/3); decimals need three digits (.667, never .67).</p>
-        <p class="moves-foot tvb" data-t="psat"><b>One PSAT-specific thing:</b> Module 1 sets your ceiling, so bring your sharpest focus to it. Type fractions as fractions (2/3); decimals need three digits (.667, never .67).</p>
-        <p class="moves-foot tvb" data-t="act"><b>One ACT-specific thing:</b> it is not adaptive, so an early stumble changes nothing later. Four choices on every question, nothing to type, calculator for all of Math.</p>
+        <div class="spec">
+            <h3>A few <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT</span><span class="tv" data-t="act">ACT</span>-specific reminders</h3>
+            <dl class="tvb" data-t="sat">
+                <div><dt>Adaptive modules</dt><dd>Your performance on Module 1 helps determine the difficulty of Module 2. Take the first module seriously, but remember that careful work matters throughout the test.</dd></div>
+                <div><dt>Math answers</dt><dd>Pay attention to the required answer format, especially when entering fractions and decimals. Check your calculations and follow Bluebook's answer-entry instructions.</dd></div>
+                <div><dt>Desmos</dt><dd>Remember that you have a built-in graphing calculator available throughout the Math section. Use it when it makes a problem easier, but don't force it when a simpler method will do.</dd></div>
+            </dl>
+            <dl class="tvb" data-t="psat">
+                <div><dt>Adaptive modules</dt><dd>Your performance on Module 1 helps determine the difficulty of Module 2. Take the first module seriously, but remember that careful work matters throughout the test.</dd></div>
+                <div><dt>Math answers</dt><dd>Pay attention to the required answer format, especially when entering fractions and decimals. Check your calculations and follow Bluebook's answer-entry instructions.</dd></div>
+                <div><dt>Desmos</dt><dd>Remember that you have a built-in graphing calculator available throughout the Math section. Use it when it makes a problem easier, but don't force it when a simpler method will do.</dd></div>
+            </dl>
+            <dl class="tvb" data-t="act">
+                <div><dt>Same test for everyone</dt><dd>The ACT isn't adaptive. Everyone sees the same questions in the same order, so a tough question early on doesn't change what comes later. Just keep working.</dd></div>
+                <div><dt>Four choices, nothing to type</dt><dd>Every question is multiple choice with four options, including Math. If you narrow it to two, you're already in good shape.</dd></div>
+                <div><dt>Your own calculator</dt><dd>There's no built-in calculator, so the one in your bag is the one you'll use for all of Math. Make sure you're comfortable with it before test day.</dd></div>
+            </dl>
+        </div>
     </section>
 
-    <!-- === 5. Your two ideas === -->
+    <!-- === 5. Personal reminders === -->
     <section class="sec" id="ideas">
-        <div class="section-header"><div class="section-number">2</div><h2>Your two ideas<small>What you carry into the room</small></h2></div>
-        <p class="intro">Not the whole playbook: two ideas. One about pacing, one about the mistake you make most and its fix. Write them here and read them in the morning; they save on this device.</p>
+        <div class="section-header"><div class="section-number">5</div><h2>Your Personal Test Day Reminders<small>The two things I want to remember</small></h2></div>
+        <p class="intro">Every student has different strengths and different mistakes they're working to avoid. Before test day, take a minute to identify the two reminders that will be most useful to you. One should be about pacing. The other should be about a mistake you've made before and how you're going to prevent it.</p>
         <div class="ideas">
-            <div class="idea"><label for="idea1">Idea 1: pacing</label><textarea id="idea1" class="mem" data-k="idea1" placeholder="e.g. Halfway glance, adjust once."></textarea></div>
-            <div class="idea"><label for="idea2">Idea 2: my usual mistake, and the fix</label><textarea id="idea2" class="mem" data-k="idea2" placeholder="e.g. I misread what is being asked. Fix: underline the last sentence before I solve."></textarea></div>
+            <div class="idea"><label for="idea1">Reminder 1: My pacing strategy</label><p class="eg">Example: I'll check the clock halfway through each <span class="tv" data-t="sat psat">module</span><span class="tv" data-t="act">section</span> and adjust my pace if needed.</p><textarea id="idea1" class="mem" data-k="idea1" placeholder="Write your pacing reminder here"></textarea></div>
+            <div class="idea"><label for="idea2">Reminder 2: A mistake I want to avoid</label><p class="eg">Example: Sometimes I solve for the wrong thing in Math. I'll underline what the question is asking before I start.</p><textarea id="idea2" class="mem" data-k="idea2" placeholder="Write the mistake and what you'll do differently"></textarea></div>
         </div>
         <div class="chips">
-            <span class="l">Tap to use:</span>
-            <button class="chip" type="button" onclick="useChip(this)">Read the question first, every time</button>
-            <button class="chip" type="button" onclick="useChip(this)">30 seconds, then mark and move</button>
-            <button class="chip" type="button" onclick="useChip(this)">Halfway glance, adjust once</button>
-            <button class="chip" type="button" onclick="useChip(this)">Fill every blank before time is called</button>
-            <button class="chip" type="button" onclick="useChip(this)">Underline what the question is actually asking</button>
-            <button class="chip tv" data-t="sat psat" type="button" onclick="useChip(this)">Type fractions as fractions</button>
-            <button class="chip tv" data-t="act" type="button" onclick="useChip(this)">Halfway checkpoint at the top of each section</button>
+            <span class="l">Need some ideas? Tap any reminder to add it to your notes:</span>
+            <button class="chip" type="button" onclick="useChip(this)">Read the question before the passage.</button>
+            <button class="chip" type="button" onclick="useChip(this)">If I'm stuck, mark it and move on.</button>
+            <button class="chip" type="button" onclick="useChip(this)">Check my time halfway through <span class="tv" data-t="sat psat">the module</span><span class="tv" data-t="act">the section</span>.</button>
+            <button class="chip" type="button" onclick="useChip(this)">Make sure every question has an answer.</button>
+            <button class="chip" type="button" onclick="useChip(this)">Underline exactly what I'm solving for.</button>
+            <button class="chip" type="button" onclick="useChip(this)">Double-check signs, units, and calculations.</button>
+            <button class="chip tv" data-t="sat psat" type="button" onclick="useChip(this)">Pay attention to fraction and decimal formatting.</button>
+            <button class="chip tv" data-t="sat psat" type="button" onclick="useChip(this)">Use Desmos when it makes a problem easier.</button>
+            <button class="chip tv" data-t="act" type="button" onclick="useChip(this)">Jot my halfway checkpoint at the top of each section.</button>
+            <button class="chip tv" data-t="act" type="button" onclick="useChip(this)">Find the table or graph before reading the Science passage.</button>
         </div>
         <div class="card brown rb">
-            <h3>From my revision bank: the three I miss most</h3>
+            <h3>Three mistakes I don't want to repeat</h3>
+            <p>Think back to your revision bank. What are three question types or mistakes that have given you trouble in the past? Keep your reminders short and specific. The goal is to recognize the mistake and know what to do differently.</p>
             <table>
-                <thead><tr><th></th><th>What I missed</th><th>The fix, in one line</th></tr></thead>
+                <thead><tr><th></th><th>What I tend to miss</th><th>What I'll do differently</th></tr></thead>
                 <tbody>
-                    <tr><td>1</td><td><input type="text" class="mem" data-k="rb1a" placeholder="Topic or question type" aria-label="Miss 1"></td><td><input type="text" class="mem" data-k="rb1b" placeholder="What I do instead" aria-label="Fix 1"></td></tr>
-                    <tr><td>2</td><td><input type="text" class="mem" data-k="rb2a" placeholder="Topic or question type" aria-label="Miss 2"></td><td><input type="text" class="mem" data-k="rb2b" placeholder="What I do instead" aria-label="Fix 2"></td></tr>
-                    <tr><td>3</td><td><input type="text" class="mem" data-k="rb3a" placeholder="Topic or question type" aria-label="Miss 3"></td><td><input type="text" class="mem" data-k="rb3b" placeholder="What I do instead" aria-label="Fix 3"></td></tr>
+                    <tr><td>1</td><td><input type="text" class="mem" data-k="rb1a" placeholder="Question type or mistake" aria-label="Mistake 1"></td><td><input type="text" class="mem" data-k="rb1b" placeholder="What I'll do differently" aria-label="Fix 1"></td></tr>
+                    <tr><td>2</td><td><input type="text" class="mem" data-k="rb2a" placeholder="Question type or mistake" aria-label="Mistake 2"></td><td><input type="text" class="mem" data-k="rb2b" placeholder="What I'll do differently" aria-label="Fix 2"></td></tr>
+                    <tr><td>3</td><td><input type="text" class="mem" data-k="rb3a" placeholder="Question type or mistake" aria-label="Mistake 3"></td><td><input type="text" class="mem" data-k="rb3b" placeholder="What I'll do differently" aria-label="Fix 3"></td></tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <!-- === 6. Quick facts === -->
+    <!-- === 6. Quick reference === -->
     <section class="sec" id="facts">
-        <div class="section-header"><div class="section-number">i</div><h2>Quick facts<small>The <span class="tv" data-t="sat">SAT</span><span class="tv" data-t="psat">PSAT/NMSQT</span><span class="tv" data-t="act">ACT</span> at a glance, so nothing surprises you</small></h2></div>
+        <div class="section-header"><div class="section-number">6</div><h2>Quick Reference<small>Your test at a glance</small></h2></div>
+        <p class="intro">A few things worth knowing before test day. Select your test at the top of this page to see its format, timing, and other important details.</p>
 
         <div class="tvb" data-t="sat">
             <div class="facts">
-                <div><small>Total time</small><b>2 h 14 min</b><span>plus a 10-minute break</span></div>
-                <div><small>Questions</small><b>98</b><span>all in Bluebook</span></div>
-                <div><small>Score range</small><b>400 to 1600</b><span>two sections, 200 to 800 each</span></div>
-                <div><small>Adaptive?</small><b>Yes</b><span>Module 1 picks your Module 2</span></div>
+                <div><small>Total testing time</small><b>2 hours, 14 minutes</b><span>plus a 10-minute break</span></div>
+                <div><small>Total questions</small><b>98</b><span>across two sections</span></div>
+                <div><small>Score range</small><b>400&ndash;1600</b><span>200&ndash;800 per section</span></div>
+                <div><small>Format</small><b>Digital and adaptive</b><span>taken in Bluebook</span></div>
             </div>
-            <div class="sections"><span><b>Reading &amp; Writing</b> 54 questions &middot; 64 min (2 modules of 32)</span><span class="brk">10-minute break</span><span><b>Math</b> 44 questions &middot; 70 min (2 modules of 35) &middot; Desmos built in</span></div>
+            <div class="card pad">
+                <table class="ft">
+                    <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Approx. time per question</th></tr></thead>
+                    <tbody>
+                        <tr><td>Reading &amp; Writing</td><td>54, across two modules</td><td>64 minutes</td><td>1 min 11 sec</td></tr>
+                        <tr class="brk"><td>Break</td><td></td><td>10 minutes</td><td></td></tr>
+                        <tr><td>Math</td><td>44, across two modules</td><td>70 minutes</td><td>1 min 35 sec</td></tr>
+                    </tbody>
+                </table>
+                <ul class="know">
+                    <li>No essay and no penalty for incorrect answers.</li>
+                    <li>Desmos is available throughout the Math section.</li>
+                    <li>Scratch paper and a formula reference sheet are provided.</li>
+                    <li>Scores are generally released within a few weeks, depending on the test administration.</li>
+                </ul>
+            </div>
         </div>
         <div class="tvb" data-t="psat">
             <div class="facts">
-                <div><small>Total time</small><b>2 h 14 min</b><span>plus a 10-minute break</span></div>
-                <div><small>Questions</small><b>98</b><span>all in Bluebook</span></div>
-                <div><small>Score range</small><b>320 to 1520</b><span>two sections, 160 to 760 each</span></div>
-                <div><small>Adaptive?</small><b>Yes</b><span>Module 1 picks your Module 2</span></div>
+                <div><small>Total testing time</small><b>2 hours, 14 minutes</b><span>plus a 10-minute break</span></div>
+                <div><small>Total questions</small><b>98</b><span>across two sections</span></div>
+                <div><small>Score range</small><b>320&ndash;1520</b><span>160&ndash;760 per section</span></div>
+                <div><small>Format</small><b>Digital and adaptive</b><span>taken in Bluebook</span></div>
             </div>
-            <div class="sections"><span><b>Reading &amp; Writing</b> 54 questions &middot; 64 min (2 modules of 32)</span><span class="brk">10-minute break</span><span><b>Math</b> 44 questions &middot; 70 min (2 modules of 35) &middot; Desmos built in</span></div>
+            <div class="card pad">
+                <table class="ft">
+                    <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Approx. time per question</th></tr></thead>
+                    <tbody>
+                        <tr><td>Reading &amp; Writing</td><td>54, across two modules</td><td>64 minutes</td><td>1 min 11 sec</td></tr>
+                        <tr class="brk"><td>Break</td><td></td><td>10 minutes</td><td></td></tr>
+                        <tr><td>Math</td><td>44, across two modules</td><td>70 minutes</td><td>1 min 35 sec</td></tr>
+                    </tbody>
+                </table>
+                <ul class="know">
+                    <li>Same app, structure, timing, and question types as the SAT, so it's a fair preview of an SAT score.</li>
+                    <li>No essay and no penalty for incorrect answers. Desmos is available throughout the Math section.</li>
+                    <li>Scores go to you and your school, not to colleges. For juniors, the score is also used for National Merit.</li>
+                    <li>Scores are generally released in the late fall, with a practice plan keyed to your results.</li>
+                </ul>
+            </div>
         </div>
         <div class="tvb" data-t="act">
             <div class="facts">
-                <div><small>Core time</small><b>2 h 05 min</b><span>plus 40 min if you added Science</span></div>
-                <div><small>Questions</small><b>131</b><span>plus 40 with Science; all multiple choice</span></div>
-                <div><small>Score range</small><b>1 to 36</b><span>composite = average of English, Math, Reading</span></div>
-                <div><small>Adaptive?</small><b>No</b><span>everyone sees the same form</span></div>
+                <div><small>Total testing time</small><b>2 hours, 5 minutes</b><span>plus a 10-minute break; add 40 minutes for Science</span></div>
+                <div><small>Total questions</small><b>131</b><span>plus 40 if you're taking Science</span></div>
+                <div><small>Score range</small><b>1&ndash;36</b><span>composite of English, Math, and Reading</span></div>
+                <div><small>Format</small><b>Not adaptive</b><span>online or on paper</span></div>
             </div>
-            <div class="sections"><span><b>English</b> 50 q &middot; 35 min</span><span><b>Math</b> 45 q &middot; 50 min</span><span class="brk">10-minute break</span><span><b>Reading</b> 36 q &middot; 40 min</span><span><b>Science</b> (optional) 40 q &middot; 40 min</span></div>
+            <div class="card pad">
+                <table class="ft">
+                    <thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Approx. time per question</th></tr></thead>
+                    <tbody>
+                        <tr><td>English</td><td>50, across five passages</td><td>35 minutes</td><td>42 sec</td></tr>
+                        <tr><td>Math</td><td>45</td><td>50 minutes</td><td>1 min 7 sec</td></tr>
+                        <tr class="brk"><td>Break</td><td></td><td>10 minutes</td><td></td></tr>
+                        <tr><td>Reading</td><td>36, across four passages</td><td>40 minutes</td><td>1 min 7 sec</td></tr>
+                        <tr><td>Science (optional)</td><td>40, across six passages</td><td>40 minutes</td><td>1 min</td></tr>
+                    </tbody>
+                </table>
+                <ul class="know">
+                    <li>No penalty for incorrect answers. Every question is multiple choice with four options, including Math.</li>
+                    <li>Bring your own approved calculator; there's no built-in one.</li>
+                    <li>Science and the optional Writing essay are reported separately from your composite score.</li>
+                    <li>Scores are generally released within two to four weeks of the test date.</li>
+                </ul>
+            </div>
         </div>
-        <a id="pb-link" class="full-link" href="Test-Day-Playbook-SAT-PSAT-ACT.html"><span class="k">Full version</span>Open the Test Day Playbook &rarr;</a>
+        <a id="pb-link" class="full-link" href="Test-Day-Playbook-SAT-PSAT-ACT.html"><span class="k">More detail</span>Review the full Test Day Playbook &rarr;</a>
     </section>
+
+    <div class="final">
+        <h2>Final thought</h2>
+        <p>You've spent time learning the material, practicing strategies, and working through mistakes. Now the goal is to put that preparation to use.</p>
+        <p>There will probably be a few questions you don't know immediately. That's expected. What matters is how you respond: stay organized, use what you know, make good decisions with your time, and keep going.</p>
+        <p class="big">Trust your preparation. Focus on the question in front of you.</p>
+        <p>Good luck!</p>
+    </div>
 
 </div>
 
 <div class="footer">
-    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: The Final 48 Hours: Test Day Checklist</p>
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Personalized tutoring, test preparation, and academic mentorship.</p>
     <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
     <p style="font-size: 11px; margin-top: 10px; opacity: 0.8;">SAT&reg; and PSAT/NMSQT&reg; are registered trademarks of College Board. ACT&reg; is a registered trademark of ACT, Inc. Neither organization is affiliated with or endorses this material.</p>
 </div>
@@ -484,14 +603,15 @@ document.querySelectorAll('input.ck').forEach(function (c) {
     c.addEventListener('change', function () { if (c.checked) store[k] = 1; else delete store[k]; save(); updateProgress(); });
 });
 
-/* the two ideas and the revision-bank lines */
+/* the two reminders and the revision-bank lines */
 document.querySelectorAll('.mem').forEach(function (f) {
     var k = 'mem:' + f.getAttribute('data-k');
     if (store[k]) f.value = store[k];
     f.addEventListener('input', function () { if (f.value.trim()) store[k] = f.value; else delete store[k]; save(); });
 });
 function useChip(btn) {
-    var text = btn.textContent.trim();
+    /* innerText respects the test switch, so a chip reads "module" or "section" as shown */
+    var text = btn.innerText.replace(/\s+/g, ' ').trim();
     var boxes = [document.getElementById('idea1'), document.getElementById('idea2')];
     var target = boxes.filter(function (b) { return !b.value.trim(); })[0] || boxes[0];
     target.value = text; target.dispatchEvent(new Event('input')); target.focus();

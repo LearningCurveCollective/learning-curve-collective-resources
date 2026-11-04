@@ -137,7 +137,7 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "The final 48 hours",
-     "blurb": "A short, reassuring checklist for the two days before: sleep, food, movement, a last pass through your revision bank, the bag with your ID first, and the playbook on one screen."
+     "blurb": "Your test day checklist for the two days before: sleep, a final pass through your revision bank, what to bring, the morning, your strategy in the room, and your own two reminders."
     }
    ],
    "step_start": 0
@@ -170,7 +170,7 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "The final 48 hours",
-     "blurb": "A short, reassuring checklist for the two days before, set to the ACT: sleep, food, movement, a last pass through your revision bank, the bag with your ID first, and the playbook on one screen.",
+     "blurb": "Your test day checklist for the two days before, set to the ACT: sleep, a final pass through your revision bank, what to bring, the morning, your strategy in the room, and your own two reminders.",
      "ids": [
       "test-prep--final-48-hours-sat-psat-act"
      ]
@@ -2519,8 +2519,8 @@ window.OPEN_LEARNING_CATALOG = {
   {
    "id": "test-prep--final-48-hours-sat-psat-act",
    "path": "test-prep/Final-48-Hours-SAT-PSAT-ACT.html",
-   "title": "The Final 48 Hours: Test Day Checklist",
-   "description": "A short, calm checklist for the two days before the SAT, PSAT, or ACT with a clickable timeline: sleep two nights out, a last pass through your revision bank, the bag with your ID first, the morning, and the playbook on one screen. Pick your test, tick things off, and write down the two ideas you will carry into the room.",
+   "title": "The Final 48 Hours: Your Test Day Checklist",
+   "description": "A checklist for the two days before the SAT, PSAT, or ACT, with a clickable timeline: sleep, a final review of your revision bank, what to bring (ID first), test morning, your strategy during the test, and the two personal reminders you'll carry into the room. Pick your test and every section updates.",
    "subject": "sat",
    "topic": "The final 48 hours",
    "order": 13,
@@ -2536,7 +2536,8 @@ window.OPEN_LEARNING_CATALOG = {
     "night before",
     "sleep",
     "checklist",
-    "revision bank"
+    "revision bank",
+    "personal reminders"
    ],
    "exams": [
     "SAT",
