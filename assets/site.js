@@ -459,8 +459,19 @@
         if (r.topic === 'Recently added') fmt.appendChild(el('span', { 'class': 'new', text: 'New' }));
         var kids = [fmt, el('span', { 'class': 't', text: r.title })];
         if (r.description) kids.push(el('span', { 'class': 'd', text: r.description }));
-        if (note) kids.push(el('span', { 'class': 'note', text: note }));
+        var foot = el('span', { 'class': 'lv' });
+        (r.levels || []).forEach(function (l) { foot.appendChild(el('span', { 'class': 'pill pill-level', html: levelGlyph(C.levels.indexOf(l)) + '<span>' + l + '</span>' })); });
+        if (note) foot.appendChild(el('span', { 'class': 'note', text: note }));
+        if (foot.childNodes.length) kids.push(foot);
         return el('a', { 'class': 'sheet', href: href }, kids);
+    }
+    /* "High School to College": the span of schooling levels a set of sheets covers */
+    function levelRange(rs) {
+        var idx = [];
+        rs.forEach(function (r) { (r.levels || []).forEach(function (l) { var i = C.levels.indexOf(l); if (i !== -1 && idx.indexOf(i) === -1) idx.push(i); }); });
+        if (!idx.length) return '';
+        var lo = Math.min.apply(null, idx), hi = Math.max.apply(null, idx);
+        return lo === hi ? C.levels[lo] : C.levels[lo] + ' to ' + C.levels[hi];
     }
     function stepsFor(s, rs) {
         var out = [], seen = {};
@@ -496,49 +507,60 @@
             var sr = rs.filter(function (r) { return r.subject === s.key; });
             if (sr.length) courses.push({ s: s, rs: sr, steps: stepsFor(s, sr) });
         });
+        var single = courses.length === 1;   // one course (Economics): the steps are the roadmap, so no tile row and no course header
+        function stepId(c, st) { return 'st-' + c.s.key + '-' + slug(st.name); }
         var meta = document.getElementById('band-meta');
-        if (meta) meta.textContent = rs.length + ' free resources across ' + listNames(courses.map(function (c) { return c.s.name; }));
+        if (meta) meta.textContent = rs.length + ' free resources ' + (single ? 'in ' + courses[0].steps.length + ' steps' : 'across ' + listNames(courses.map(function (c) { return c.s.name; })));
 
         var tiles = document.getElementById('area-tiles');
         if (tiles) {
-            tiles.innerHTML = ''; tiles.hidden = false;
-            tiles.appendChild(el('p', { 'class': 'tiles-label', text: a.prompt || 'Choose a subject' }));
-            var row = el('div', { 'class': 'tiles-row' });
-            courses.forEach(function (c) {
-                row.appendChild(el('a', { 'class': 'exam-tile', href: '#' + c.s.key }, [
-                    examBadge(c.s),
-                    el('span', { 'class': 'exam-text' }, [
-                        el('span', { 'class': 'exam-name', text: c.s.name }),
-                        el('span', { 'class': 'exam-count', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') }),
-                        el('span', { 'class': 'exam-steps', text: c.steps.map(function (st) { return st.name; }).join(' · ') })
-                    ]),
-                    el('span', { 'class': 'exam-go', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' })
-                ]));
-            });
-            tiles.appendChild(row);
+            tiles.innerHTML = ''; tiles.hidden = single;
+            if (!single) {
+                tiles.appendChild(el('p', { 'class': 'tiles-label', text: a.prompt || 'Choose a subject' }));
+                var row = el('div', { 'class': 'tiles-row' });
+                courses.forEach(function (c) {
+                    var range = levelRange(c.rs);
+                    row.appendChild(el('a', { 'class': 'exam-tile', href: '#' + c.s.key }, [
+                        examBadge(c.s),
+                        el('span', { 'class': 'exam-text' }, [
+                            el('span', { 'class': 'exam-name', text: c.s.name }),
+                            el('span', { 'class': 'exam-count', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') + (range ? ' \u00b7 ' + range : '') }),
+                            el('span', { 'class': 'exam-steps', text: c.steps.map(function (st) { return st.name; }).join(' \u00b7 ') })
+                        ]),
+                        el('span', { 'class': 'exam-go', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' })
+                    ]));
+                });
+                tiles.appendChild(row);
+            }
         }
 
-        var nav = document.getElementById('subnav-links');
+        var nav = document.getElementById('subnav-links'), navIds = [];
         if (nav) {
             nav.innerHTML = '';
-            courses.forEach(function (c) { nav.appendChild(el('a', { href: '#' + c.s.key, html: c.s.name + '<span class="n">' + c.rs.length + '</span>' })); });
+            if (single) {
+                courses[0].steps.forEach(function (st) { var id = stepId(courses[0], st), n = st.rs.length + st.shared.length; navIds.push(id); nav.appendChild(el('a', { href: '#' + id, html: st.name + '<span class="n">' + n + '</span>' })); });
+            } else {
+                courses.forEach(function (c) { navIds.push(c.s.key); nav.appendChild(el('a', { href: '#' + c.s.key, html: c.s.name + '<span class="n">' + c.rs.length + '</span>' })); });
+            }
         }
 
         var root = document.getElementById('courses'); root.innerHTML = '';
         courses.forEach(function (c) {
-            var sec = el('section', { 'class': 'exam', id: c.s.key, 'aria-labelledby': 'h-' + c.s.key });
-            sec.appendChild(el('div', { 'class': 'exam-head' }, [
-                examBadge(c.s),
-                el('div', null, [el('h2', { id: 'h-' + c.s.key, text: c.s.name }), c.s.blurb ? el('p', { 'class': 'blurb', text: c.s.blurb }) : null]),
-                el('span', { 'class': 'n', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') })
-            ]));
+            var sec = el('section', { 'class': 'exam', id: c.s.key, 'aria-labelledby': single ? null : 'h-' + c.s.key });
+            if (!single) {
+                sec.appendChild(el('div', { 'class': 'exam-head' }, [
+                    examBadge(c.s),
+                    el('div', null, [el('h2', { id: 'h-' + c.s.key, text: c.s.name }), c.s.blurb ? el('p', { 'class': 'blurb', text: c.s.blurb }) : null]),
+                    el('span', { 'class': 'n', text: c.rs.length + (c.rs.length === 1 ? ' resource' : ' resources') })
+                ]));
+            }
             var ol = el('ol', { 'class': 'steps' });
             var first = typeof c.s.step_start === 'number' ? c.s.step_start : 1;   // SAT & PSAT counts from 0: the diagnostic
             c.steps.forEach(function (st, j) {
                 var grid = el('div', { 'class': 'sheet-grid' });
                 st.rs.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key)); });
                 st.shared.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key, 'Shared with ' + SUBJ[r.subject].name)); });
-                ol.appendChild(el('li', { 'class': 'step' }, [
+                ol.appendChild(el('li', { 'class': 'step', id: stepId(c, st) }, [
                     el('span', { 'class': 'num', text: String(first + j), 'aria-hidden': 'true' }),
                     el('div', { 'class': 'step-head' }, [el('h3', { text: st.name }), st.blurb ? el('p', { text: st.blurb }) : null]),
                     grid
@@ -547,7 +569,7 @@
             sec.appendChild(ol);
             root.appendChild(sec);
         });
-        if (nav) watchSections(nav, courses.map(function (c) { return c.s.key; }));
+        if (nav) watchSections(nav, navIds);
     }
     function initArea() {
         var key = document.body.getAttribute('data-area');

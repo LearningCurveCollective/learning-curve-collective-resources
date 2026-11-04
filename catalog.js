@@ -42,7 +42,9 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "math",
    "name": "Mathematics",
    "page": "math.html",
-   "blurb": "Algebra through multivariable calculus and statistics, listed in the order you meet it in a course."
+   "blurb": "Algebra through multivariable calculus and statistics, listed in the order you meet it in a course.",
+   "layout": "guided",
+   "prompt": "Which course are you in?"
   },
   {
    "key": "test-prep",
@@ -56,7 +58,9 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "econ",
    "name": "Economics",
    "page": "economics.html",
-   "blurb": "Principles, microeconomics, environmental and public economics, and econometrics."
+   "blurb": "Principles, intermediate microeconomics, public economics, and econometrics, in course order.",
+   "layout": "guided",
+   "prompt": "Where are you in the sequence?"
   },
   {
    "key": "science",
@@ -82,31 +86,98 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "algebra",
    "name": "Algebra",
    "area": "math",
-   "blurb": "Foundations, functions, and symbolic reasoning."
+   "blurb": "Foundations, functions, and symbolic reasoning.",
+   "tag": "Alg",
+   "steps": [
+    {
+     "name": "Foundations",
+     "blurb": "Factoring, then solving systems and quadratics: the moves everything later assumes."
+    },
+    {
+     "name": "Functions",
+     "blurb": "Parent functions and their transformations, then polynomials and rational functions."
+    },
+    {
+     "name": "Proofs",
+     "blurb": "A full proof of the Rational Root Theorem, walked through step by step."
+    }
+   ]
   },
   {
    "key": "geometry",
    "name": "Geometry",
    "area": "math",
-   "blurb": "Shapes, constructions, and spatial reasoning."
+   "blurb": "Shapes, constructions, and spatial reasoning.",
+   "tag": "Geo",
+   "steps": [
+    {
+     "name": "Triangles",
+     "blurb": "Drag a triangle's vertices and watch its four centers move."
+    }
+   ]
   },
   {
    "key": "precalc",
    "name": "Precalculus",
    "area": "math",
-   "blurb": "The bridge from algebra to calculus."
+   "blurb": "The bridge from algebra to calculus.",
+   "tag": "PreC",
+   "steps": [
+    {
+     "name": "Functions & their graphs",
+     "blurb": "Exponentials and logarithms, then the asymptotes of rational functions."
+    },
+    {
+     "name": "Analytic geometry",
+     "blurb": "Conic sections, then polar and parametric curves."
+    },
+    {
+     "name": "Sequences",
+     "blurb": "Arithmetic and geometric sequences, sigma notation, and series."
+    }
+   ]
   },
   {
    "key": "calculus",
    "name": "Calculus",
    "area": "math",
-   "blurb": "Rates of change, integrals, and multivariable ideas."
+   "blurb": "Rates of change, integrals, and multivariable ideas.",
+   "tag": "Calc",
+   "steps": [
+    {
+     "name": "Limits & derivatives",
+     "blurb": "From average to instantaneous rate of change, then every differentiation rule with practice."
+    },
+    {
+     "name": "Applications of derivatives",
+     "blurb": "Related rates, the existence theorems, derivative tests and justification, and optimization."
+    },
+    {
+     "name": "Integration",
+     "blurb": "Area under a curve and the techniques, volumes of revolution, moments and center of mass, and a convergence proof."
+    },
+    {
+     "name": "Series",
+     "blurb": "Maclaurin series and polynomial approximation."
+    },
+    {
+     "name": "Multivariable",
+     "blurb": "Gradients and directional derivatives, Lagrange multipliers, double and line integrals, and the road to gradient descent."
+    }
+   ]
   },
   {
    "key": "stats",
    "name": "Statistics",
    "area": "math",
-   "blurb": "Describing data and reasoning about uncertainty."
+   "blurb": "Describing data and reasoning about uncertainty.",
+   "tag": "Stats",
+   "steps": [
+    {
+     "name": "Descriptive statistics",
+     "blurb": "Variance, standard deviation, standard error, covariance, and correlation, side by side."
+    }
+   ]
   },
   {
    "key": "sat",
@@ -206,7 +277,34 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "econ",
    "name": "Economics",
    "area": "econ",
-   "blurb": "Principles, micro, environmental, public econ, and econometrics."
+   "blurb": "Principles, intermediate micro, public economics, and econometrics.",
+   "tag": "Econ",
+   "steps": [
+    {
+     "name": "Reference sheets",
+     "blurb": "Every graph from micro and macro in one place, and the four market structures side by side. Keep these open while you work."
+    },
+    {
+     "name": "Principles of economics",
+     "blurb": "Taxes, externalities, costs, competition, monopoly, labor, and consumer choice, with flashcards and a numbers drill."
+    },
+    {
+     "name": "Micro 1: consumer theory",
+     "blurb": "Intermediate micro in course order: the math it leans on, preferences and the budget, the consumer's optimum, demand, elasticity, and income and substitution effects."
+    },
+    {
+     "name": "Micro 2: firms, games & equilibrium",
+     "blurb": "Cost curves and profit maximization, game theory, and general equilibrium in exchange and production economies."
+    },
+    {
+     "name": "Public economics",
+     "blurb": "Public goods and local finance: decentralization, tax capitalization, and welfare loss."
+    },
+    {
+     "name": "Econometrics",
+     "blurb": "OLS theory with an interactive regression line, plus two cheat sheets of key results."
+    }
+   ]
   },
   {
    "key": "physics",
@@ -1238,7 +1336,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Math Foundations for Microeconomics",
    "description": "Review of the math behind micro: derivatives, optimization, partial derivatives, exponents, logs, and systems of equations, with interactive graphs and a mixed practice set.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 4,
    "levels": [
     "College",
@@ -1265,7 +1363,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Preferences, Utility & the Budget",
    "description": "Builds consumer theory from preferences, utility, marginal utility, and MRS through the budget line, using interactive graphs, a function tour, and bonus slope practice.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 5,
    "levels": [
     "College",
@@ -1293,7 +1391,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Solving the Consumer's Problem",
    "description": "Combines preferences and the budget line to find the optimal bundle using the tangency rule, with Cobb-Douglas, quasilinear, substitutes, and complements cases plus practice.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 6,
    "levels": [
     "College",
@@ -1320,7 +1418,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "From Optimum to Demand",
    "description": "Extends the consumer optimum to a full demand curve by varying price, with interactive graphs for Cobb-Douglas, quasilinear, complements, and substitutes.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 7,
    "levels": [
     "College",
@@ -1347,7 +1445,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Elasticity & Market Demand",
    "description": "Explains elasticity and market demand along a line and with constant elasticity, linking revenue and marginal revenue to income and cross elasticities, with practice.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 8,
    "levels": [
     "College",
@@ -1374,7 +1472,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Income & Substitution Effects",
    "description": "Splits a price change into substitution and income effects using the Slutsky and Hicks methods, with interactive graphs, comparison, and practice.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 9,
    "levels": [
     "College",
@@ -1401,7 +1499,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Normal, Inferior & Giffen Goods",
    "description": "Sorts goods as normal, inferior, or Giffen by separating substitution and income effects, with a lab, a three-step chain, practice, and a classification game.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 10,
    "levels": [
     "College",
@@ -1428,7 +1526,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Advanced Microeconomics: Unit 1 Study Guide",
    "description": "Unit 1 consumer theory and exchange economy review with a formula cheat sheet, flashcards, box match, study guide tabs, practice, and timed quizzes.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 1: consumer theory",
    "order": 11,
    "levels": [
     "Advanced College"
@@ -1454,7 +1552,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Cost Curves, Revenue & Profit Maximization",
    "description": "Walks through production, revenue, cost curves, and profit maximization for a firm, with interactive graphs, practice problems, and a bonus on Nash versus Pareto.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 2: firms, games & equilibrium",
    "order": 12,
    "levels": [
     "College"
@@ -1480,7 +1578,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Game Theory",
    "description": "Introduces strategic behavior with definitions, simultaneous and sequential games, repeated games, mixed strategies, and a Cournot bridge, using interactive tools and practice.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 2: firms, games & equilibrium",
    "order": 13,
    "levels": [
     "Advanced College"
@@ -1507,7 +1605,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "General Equilibrium in an Exchange Economy",
    "description": "Covers general equilibrium in an exchange economy with a sandbox, Edgeworth box, Pareto efficiency, contract curve, offer curves, and competitive equilibrium derivations.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 2: firms, games & equilibrium",
    "order": 14,
    "levels": [
     "Advanced College"
@@ -1533,7 +1631,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Exchange Economy Blueprints: Contract Curve, Core, Equilibrium & Taxes",
    "description": "Step-by-step blueprints for two-person exchange economy problems: contract curve, core, competitive equilibrium, and lump-sum taxes for every pairing of Cobb-Douglas, quasilinear, Leontief, and linear preferences, with worked examples, try-it problems, and a drag-and-drop Spot the Plan drill.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 2: firms, games & equilibrium",
    "order": 15,
    "levels": [
     "Advanced College"
@@ -1559,7 +1657,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Competitive Equilibrium with Production: The Robinson Crusoe Economy",
    "description": "Finds competitive equilibrium with production in the Robinson Crusoe economy, covering the planner, firm and consumer choices, welfare, a sprint, and a mock test.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 2: firms, games & equilibrium",
    "order": 16,
    "levels": [
     "Advanced College"
@@ -1586,7 +1684,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Production Economy Blueprints: Robinson Crusoe, PPF & the Production Box",
    "description": "Four step-by-step systems for production economy problems: the one-person Robinson Crusoe economy (Pareto optimum vs competitive equilibrium), the PPF from one input, and the production Edgeworth box with Leontief and linear technologies, with worked examples, whole-number practice sets, and a rapid-fire answer sheet.",
    "subject": "econ",
-   "topic": "Microeconomics",
+   "topic": "Micro 2: firms, games & equilibrium",
    "order": 17,
    "levels": [
     "Advanced College"
@@ -1613,6 +1711,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "The Evolution of Environmental Economics",
    "description": "Compares two readings on how environmental economics developed as a field, with research trends, a timeline, a connections map, quiz questions, and flashcards.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 16,
    "levels": [
@@ -1637,6 +1736,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Comparing Environmental Policies (Fullerton 2001)",
    "description": "Turns the guide questions on Fullerton's policy comparison into a practice quiz with a model figure, area quiz, flashcards, and a table reference.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 17,
    "levels": [
@@ -1662,6 +1762,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Carbon Taxes vs. Cap and Trade",
    "description": "Compares carbon taxes with cap and trade using a model, guide-question quiz, exam-style graph questions, an area quiz, flashcards, and a side-by-side cheat sheet.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 18,
    "levels": [
@@ -1687,6 +1788,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Carbon Tax Salience & Polluter Lists",
    "description": "Studies how carbon tax salience and public polluter lists change behavior, with a salience model, identification notes, results reading, a cheat sheet, and flashcards.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 19,
    "levels": [
@@ -1713,6 +1815,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Voluntary & Information-Based Approaches",
    "description": "Covers voluntary and information-based environmental policies such as eco-labels and disclosure programs, with a model, guide-question quizzes, flashcards, and a concept map.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 20,
    "levels": [
@@ -1738,6 +1841,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Monitoring & Local Conditions",
    "description": "Examines how monitoring and local conditions shape regulator behavior through three theories, variables and signs, table reading, results, a cheat sheet, and flashcards.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 21,
    "levels": [
@@ -1764,6 +1868,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Bridging the Energy Efficiency Gap",
    "description": "Explains the energy efficiency gap and whether it is real, with a model, quiz questions, a policy matcher, flashcards, and a gap map.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 22,
    "levels": [
@@ -1788,6 +1893,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "The Rebound Effect & Efficiency Standards",
    "description": "Explores why per-unit efficiency standards may not cut total energy use, covering the rebound effect with a model, quiz questions, flashcards, and a map.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 23,
    "levels": [
@@ -1812,6 +1918,7 @@ window.OPEN_LEARNING_CATALOG = {
    "title": "Environmental Policy: Review Study Sheet",
    "description": "Review of environmental policy with a cheat sheet, flashcards, graph gallery, and study tabs on externalities, Coase, Fullerton's eight policies, and taxes versus permits.",
    "subject": "econ",
+   "hidden": true,
    "topic": "Environmental economics",
    "order": 24,
    "levels": [
@@ -1983,32 +2090,32 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
-     "id": "machine-learning--neural-networks-ii",
-     "path": "machine-learning/Neural_Networks_II.html",
-     "title": "Neural Networks II: Matrices, ReLU, Residuals, Convolutions",
-     "description": "Follow-up to Inside a Simple Neural Network. The same 2-3-1 network rewritten as matrices with a live batch calculator, the ReLU mask and layer Jacobian, backprop in matrix form stepped through on a real batch with every shape printed, residual blocks and why gradients survive depth, a convolution explorer with Sobel and identity kernels plus output-size and parameter calculators, a drill generator that draws random architectures (shapes, parameter count, backprop lines, find the bug), flashcards and a 12-question quiz.",
-     "subject": "machine-learning",
-     "topic": "Algorithms, step by step",
-     "order": 4.5,
-     "levels": [
-        "College",
-        "Advanced College"
-     ],
-     "format": "Step-through",
-     "tags": [
-        "neural networks",
-        "backpropagation",
-        "relu",
-        "residual connections",
-        "convolutional networks",
-        "matrix calculus",
-        "machine learning"
-     ],
-     "content": "theory+practice",
-     "builds_on": [
-        "machine-learning--neural-network-step-through",
-        "machine-learning--matrix-calculus-linear-algebra-toolkit"
-     ]
+   "id": "machine-learning--neural-networks-ii",
+   "path": "machine-learning/Neural_Networks_II.html",
+   "title": "Neural Networks II: Matrices, ReLU, Residuals, Convolutions",
+   "description": "Follow-up to Inside a Simple Neural Network. The same 2-3-1 network rewritten as matrices with a live batch calculator, the ReLU mask and layer Jacobian, backprop in matrix form stepped through on a real batch with every shape printed, residual blocks and why gradients survive depth, a convolution explorer with Sobel and identity kernels plus output-size and parameter calculators, a drill generator that draws random architectures (shapes, parameter count, backprop lines, find the bug), flashcards and a 12-question quiz.",
+   "subject": "machine-learning",
+   "topic": "Algorithms, step by step",
+   "order": 4.5,
+   "levels": [
+    "College",
+    "Advanced College"
+   ],
+   "format": "Step-through",
+   "tags": [
+    "neural networks",
+    "backpropagation",
+    "relu",
+    "residual connections",
+    "convolutional networks",
+    "matrix calculus",
+    "machine learning"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "machine-learning--neural-network-step-through",
+    "machine-learning--matrix-calculus-linear-algebra-toolkit"
+   ]
   },
   {
    "id": "machine-learning--kmeans-image-compression-worksheet",
@@ -2149,33 +2256,33 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
-     "id": "machine-learning--reading-training-curves",
-     "path": "machine-learning/reading-training-curves.html",
-     "title": "Reading Training Curves",
-     "description": "How to diagnose a training run from its loss plot: the anatomy of a curve (elbow, best epoch, test upturn, gap, noise floor), a playground where learning rate, batch size, width, depth, dropout, weight decay and dataset size reshape a stylized curve live with steps-per-epoch readouts, a four-step diagnosis method, a drill that generates random ablations to name, the CS230 nine-plot matching problem, and a bonus derivation of vanishing gradients with the flat curve it produces. Flashcards and a 12-question quiz.",
-     "subject": "machine-learning",
-     "topic": "Review",
-     "order": 8.5,
-     "levels": [
-        "College",
-        "Advanced College"
-     ],
-     "format": "Interactive worksheet",
-     "tags": [
-        "deep learning",
-        "loss curves",
-        "overfitting",
-        "learning rate",
-        "batch size",
-        "regularization",
-        "vanishing gradients",
-        "machine learning"
-     ],
-     "content": "theory+practice",
-     "builds_on": [
-        "machine-learning--neural-network-step-through",
-        "machine-learning--deep-learning-exam-review"
-     ]
+   "id": "machine-learning--reading-training-curves",
+   "path": "machine-learning/reading-training-curves.html",
+   "title": "Reading Training Curves",
+   "description": "How to diagnose a training run from its loss plot: the anatomy of a curve (elbow, best epoch, test upturn, gap, noise floor), a playground where learning rate, batch size, width, depth, dropout, weight decay and dataset size reshape a stylized curve live with steps-per-epoch readouts, a four-step diagnosis method, a drill that generates random ablations to name, the CS230 nine-plot matching problem, and a bonus derivation of vanishing gradients with the flat curve it produces. Flashcards and a 12-question quiz.",
+   "subject": "machine-learning",
+   "topic": "Review",
+   "order": 8.5,
+   "levels": [
+    "College",
+    "Advanced College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "deep learning",
+    "loss curves",
+    "overfitting",
+    "learning rate",
+    "batch size",
+    "regularization",
+    "vanishing gradients",
+    "machine learning"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "machine-learning--neural-network-step-through",
+    "machine-learning--deep-learning-exam-review"
+   ]
   },
   {
    "id": "medical-study-sheets--hematology--inherited-thrombophilias-ashsap-ch19-study-sheet",
