@@ -1755,6 +1755,35 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "econ--micro--choice-under-uncertainty",
+   "path": "econ/micro/Choice Under Uncertainty.html",
+   "title": "Choice Under Uncertainty: Expected Utility and Risk",
+   "description": "Lotteries and compound lotteries, the four von Neumann-Morgenstern axioms, an informal proof of the expected utility theorem, the Allais and Ellsberg paradoxes, risk aversion, certainty equivalents and risk premiums, and a preview of insurance, with live widgets, a computation drill, flashcards, and two quizzes.",
+   "subject": "econ",
+   "topic": "Micro 2: firms, games & equilibrium",
+   "order": 18,
+   "levels": [
+    "Advanced College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "expected utility",
+    "lotteries",
+    "independence axiom",
+    "Allais paradox",
+    "Ellsberg paradox",
+    "risk aversion",
+    "certainty equivalent",
+    "risk premium",
+    "insurance"
+   ],
+   "difficulty": "Core",
+   "content": "theory+practice",
+   "builds_on": [
+    "econ--micro--preferences-utility-budget-micro"
+   ]
+  },
+  {
    "id": "econ--environmental-econ--evolution-of-environmental-economics",
    "path": "econ/environmental-econ/Evolution of Environmental Economics.html",
    "title": "The Evolution of Environmental Economics",
