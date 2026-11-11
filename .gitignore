@@ -10,3 +10,6 @@ index.v2.html
 
 __pycache__/
 *.backup*.html
+
+# local-only working files (never published)
+Claude outputs/
