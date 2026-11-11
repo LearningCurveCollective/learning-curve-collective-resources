@@ -13,7 +13,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-11-01"
+  "updated": "2026-11-11"
  },
  "levels": [
   "Foundations",
@@ -834,13 +834,40 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "calculus--implicit-differentiation-study-sheet",
+   "path": "calculus/implicit-differentiation-study-sheet.html",
+   "title": "Implicit Differentiation Study Sheet",
+   "description": "Learn implicit differentiation as the chain rule on a hidden function, with a four-step method, tangent and normal lines, horizontal and vertical tangents, second derivatives, interactive curve explorers, flashcards, a term-by-term drill, and two quizzes.",
+   "subject": "calculus",
+   "topic": "Limits & derivatives",
+   "order": 8,
+   "levels": [
+    "Advanced High School",
+    "College"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "implicit differentiation",
+    "chain rule",
+    "tangent lines",
+    "second derivative",
+    "product rule",
+    "AP Calculus"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "calculus--differentiation-part-2",
+    "calculus--differentiation-rules-study-sheet"
+   ]
+  },
+  {
    "id": "calculus--related-rates-study-sheet",
    "path": "calculus/related-rates-study-sheet.html",
    "title": "Related Rates Study Sheet",
    "description": "Learn a step-by-step process for related rates, with a geometry toolbox, sign and snapshot practice, worked examples, flashcards, and practice problems.",
    "subject": "calculus",
    "topic": "Applications of derivatives",
-   "order": 8,
+   "order": 9,
    "levels": [
     "Advanced High School",
     "College"
@@ -855,7 +882,8 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "theory+practice",
    "builds_on": [
-    "calculus--differentiation-part-2"
+    "calculus--differentiation-part-2",
+    "calculus--implicit-differentiation-study-sheet"
    ]
   },
   {
@@ -865,7 +893,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Quick reference for the Intermediate Value, Extreme Value and Mean Value Theorems, with max and min rules, AP justification language, and practice.",
    "subject": "calculus",
    "topic": "Applications of derivatives",
-   "order": 9,
+   "order": 10,
    "levels": [
     "Advanced High School"
    ],
@@ -889,7 +917,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Practice absolute and local extrema and the Mean Value Theorem using a one-page cheat sheet, a concept sprint, and problem sets.",
    "subject": "calculus",
    "topic": "Applications of derivatives",
-   "order": 10,
+   "order": 11,
    "levels": [
     "Advanced High School"
    ],
@@ -913,7 +941,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Use first and second derivative tests to find extrema and concavity, read graphs of f prime, analyze particle motion, and practice writing justifications.",
    "subject": "calculus",
    "topic": "Applications of derivatives",
-   "order": 11,
+   "order": 12,
    "levels": [
     "Advanced High School",
     "College"
@@ -939,7 +967,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Explore extrema, the Mean Value Theorem, curve shape, sketching, and optimization with interactive visualizers, a reference tab, and practice problems.",
    "subject": "calculus",
    "topic": "Applications of derivatives",
-   "order": 12,
+   "order": 13,
    "levels": [
     "Advanced High School",
     "College"
@@ -965,7 +993,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Approximate area under a curve, review theory, and learn integration techniques with practice sets organized by AB, BC, and advanced levels.",
    "subject": "calculus",
    "topic": "Integration",
-   "order": 13,
+   "order": 14,
    "levels": [
     "Advanced High School",
     "College"
@@ -991,7 +1019,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Compare the disk and washer methods for volumes of revolution with a decision flow, common traps, and practice problems.",
    "subject": "calculus",
    "topic": "Integration",
-   "order": 14,
+   "order": 15,
    "levels": [
     "Advanced High School",
     "College"
@@ -1016,7 +1044,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "See how center of mass and expected value share one idea, with interactive rods, laminas, 3D solids, and second moments to practice.",
    "subject": "calculus",
    "topic": "Integration",
-   "order": 15,
+   "order": 16,
    "levels": [
     "College",
     "Advanced College"
@@ -1042,7 +1070,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Follow a Taylor series proof of midpoint rule convergence, with a visualizer and comparisons to left, right and trapezoidal sums.",
    "subject": "calculus",
    "topic": "Integration",
-   "order": 16,
+   "order": 17,
    "levels": [
     "College",
     "Advanced College"
@@ -1068,7 +1096,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Derive the Maclaurin coefficient formula, learn the six essential series, and compare polynomial approximations with the original functions in an interactive builder, with error and Taylor-center explorers, flashcards, quick recall, and two problem sets.",
    "subject": "calculus",
    "topic": "Series",
-   "order": 17,
+   "order": 18,
    "levels": [
     "Advanced High School",
     "College"
@@ -1095,7 +1123,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Learn the gradient, directional derivatives, and constrained optimization from core formulas, with interactive graphs, drag activities, and practice problems.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 18,
+   "order": 19,
    "levels": [
     "College"
    ],
@@ -1119,7 +1147,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Learn constrained optimization with theory and geometry, a step-by-step algorithm, solved problems, Desmos graphs, and cases where the method fails.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 19,
+   "order": 20,
    "levels": [
     "College"
    ],
@@ -1144,7 +1172,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Understand double integrals through visuals, theory, and integration techniques, then practice problems including the Gaussian integral.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 20,
+   "order": 21,
    "levels": [
     "College"
    ],
@@ -1169,7 +1197,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Work through line integrals with respect to arc length, coordinates, and vector fields, with practice for each type and a unifying summary.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 21,
+   "order": 22,
    "levels": [
     "College"
    ],
@@ -1194,7 +1222,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Follow a step-by-step chain from scalar components and directional derivatives to surface normals and the gradient descent algorithm used in machine learning.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 22,
+   "order": 23,
    "levels": [
     "College",
     "Advanced College"
