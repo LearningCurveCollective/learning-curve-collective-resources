@@ -632,6 +632,14 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
             <p style="margin-bottom:0;">Implicit differentiation works on <strong>every</strong> row, including the last one. That is its whole appeal: one method, and you never have to solve for $y$.</p>
         </div>
 
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Sort each equation as explicit or implicit. For the implicit ones, say whether you could solve for $y$ if you had to: &nbsp; (a) $y=3x^2-1$ &nbsp; (b) $x^2+y^2=9$ &nbsp; (c) $3x+2y=12$ &nbsp; (d) $y=\sin x$ &nbsp; (e) $y^5+y=x$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Explicit: $y$ is alone on one side, $y=f(x)$</li><li>Implicit: $x$ and $y$ are mixed and nobody has solved for $y$</li></ul></div>
+            <p><strong>Explicit:</strong> (a) and (d). $y$ is already alone.</p>
+            <p><strong>Implicit, easy to solve:</strong> (c) gives $y=6-\frac32x$, one clean formula.</p>
+            <p><strong>Implicit, solvable but split:</strong> (b) gives $y=\sqrt{9-x^2}$ and $y=-\sqrt{9-x^2}$, two formulas for one circle.</p>
+            <p style="margin-bottom:0;"><strong>Implicit, cannot be solved:</strong> (e). No algebra isolates $y$ in $y^5+y=x$. Implicit differentiation still handles it.</p></div></div>
+
         <div class="card">
             <h3>The long way and the short way land on the same slope</h3>
             <div class="two-col">
@@ -646,6 +654,13 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
             </div>
             <div class="highlight-box hap"><p style="margin-bottom:0;"><strong>They are the same formula.</strong> On the top half $y=\sqrt{25-x^2}$, so $-\dfrac{x}{y}=\dfrac{-x}{\sqrt{25-x^2}}$. The implicit answer simply leaves $y$ written as $y$. Where did that extra $\frac{dy}{dx}$ come from in the short way? That is the chain rule, and it is all of Tab 2.</p></div>
         </div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Use $\frac{dy}{dx}=-\dfrac{x}{y}$ on the circle $x^2+y^2=25$. (a) Find the slope at $(4,3)$ and at $(4,-3)$. (b) Find the slope at $(-3,4)$. (c) At which points is the tangent line horizontal? Vertical?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Curve: $x^2+y^2=25$, with $\frac{dy}{dx}=-\dfrac{x}{y}$</li><li>Every point listed is on the circle: $16+9=25$ and $9+16=25$</li></ul></div>
+            <p><strong>(a)</strong> At $(4,3)$: $-\dfrac43$. At $(4,-3)$: $-\dfrac{4}{-3}=+\dfrac43$. Same $x$, opposite slopes, which is why the formula needs $y$.</p>
+            <p><strong>(b)</strong> At $(-3,4)$: $-\dfrac{-3}{4}=\dfrac34$.</p>
+            <p style="margin-bottom:0;"><strong>(c)</strong> Horizontal means slope 0, so the top is 0: $x=0$, at $(0,5)$ and $(0,-5)$. Vertical means the bottom is 0: $y=0$, at $(5,0)$ and $(-5,0)$. Check all of these in the Tangent Explorer.</p></div></div>
 
         <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>The hyperbola $xy=12$ passes through $(3,4)$. Find the slope there two ways: by solving for $y$ first, and by differentiating $xy=12$ as it stands. (Hint for the second way: $xy$ is a product.)</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
@@ -751,6 +766,12 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">$(x^2+y^2)^3$: a sum inside a power</div><p style="margin-bottom:0;">$\frac{d}{dx}\big[(x^2+y^2)^3\big]=3(x^2+y^2)^2\cdot\Big(2x+2y\,\textcolor{#BC6C26}{\frac{dy}{dx}}\Big)$. Keep the inside's derivative in parentheses.</p></div></div>
             </div>
         </div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it</span>Mixed terms. Differentiate each with respect to $x$: &nbsp; (a) $x^2y$ &nbsp; (b) $xy^2$ &nbsp; (c) $x\cos y$ &nbsp; (d) $\cos(xy)$ &nbsp; (e) $(x^2+y)^4$</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>(a), (b), (c) are products: product rule first</li><li>(d), (e) have an inside containing $y$: chain rule, with the inside's derivative in parentheses</li></ul></div>
+            <p>(a) $2x\cdot y+x^2\cdot\frac{dy}{dx}$ &nbsp;&nbsp; (b) $1\cdot y^2+x\cdot2y\,\frac{dy}{dx}$ &nbsp;&nbsp; (c) $\cos y-x\sin y\,\frac{dy}{dx}$</p>
+            <p style="margin-bottom:0;">(d) $-\sin(xy)\cdot\Big(y+x\,\frac{dy}{dx}\Big)$ &nbsp;&nbsp; (e) $4(x^2+y)^3\cdot\Big(2x+\frac{dy}{dx}\Big)$. In (e) the inside is $x^2+y$, so its derivative is $2x$ plus the tag.</p></div></div>
 
         <div class="card ifig">
             <span class="lead-tag">Play</span>
