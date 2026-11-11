@@ -384,6 +384,7 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
 .box3-k { font-size:10.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:var(--green-dark); }
 .box3-item.gold .box3-k { color: var(--copper); }
 .box3-item p { font-size:13px; margin-bottom:4px; line-height:1.55; }
+.box3-item mjx-container[display="true"] { font-size:86% !important; max-width:100%; overflow-x:auto; overflow-y:hidden; }
 .tg-stage { background:#FBF8F2; border:1px solid #EFE6D6; border-radius:8px; padding:4px 10px; margin-bottom:8px; min-height:84px; display:flex; align-items:center; justify-content:center; }
 .tg-term { font-size:21px; }
 .stp-line { display:flex; gap:10px; align-items:baseline; margin:7px 0; }
@@ -424,7 +425,6 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
             <button class="tab-button" data-group="study" onclick="switchTab('t5', this)">5 Worked Problems</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Practice</span>
-            <button class="tab-button" data-group="sprint" onclick="switchTab('flash', this)">&#9998; Flashcards</button>
             <button class="tab-button" data-group="sprint" onclick="switchTab('drill', this)">Term-by-Term Drill</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('quiza', this)">Quiz A &middot; Overview</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('quizb', this)">Quiz B &middot; Apply It</button>
@@ -704,10 +704,11 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
             <h3>Now close the box</h3>
             <p>Look at the same derivative three times. The only thing that changes is how much you know about the inside.</p>
             <div class="box3">
-                <div class="box3-item"><div class="box3-k">Inside is $3x+1$</div>$$\frac{d}{dx}\Big[\big(3x+1\big)^2\Big]=2\,(3x+1)\cdot\textcolor{#BC6C26}{3}$$<p>The inside's derivative is $3$.</p></div>
-                <div class="box3-item"><div class="box3-k">Inside is $\sin x$</div>$$\frac{d}{dx}\Big[\big(\sin x\big)^2\Big]=2\,(\sin x)\cdot\textcolor{#BC6C26}{\cos x}$$<p>The inside's derivative is $\cos x$.</p></div>
-                <div class="box3-item gold"><div class="box3-k">Inside is $y$</div>$$\frac{d}{dx}\Big[\big(\,y\,\big)^2\Big]=2\,y\cdot\textcolor{#BC6C26}{\frac{dy}{dx}}$$<p>The inside's derivative is $\frac{dy}{dx}$. We cannot compute it yet, so we write its name.</p></div>
+                <div class="box3-item"><div class="box3-k">Inside is $3x+1$</div>$$\frac{d}{dx}\Big[\big(3x+1\big)^2\Big]=2\,(3x+1)\cdot\textcolor{#BC6C26}{3}\cdot\cancel{\frac{dx}{dx}}$$<p>The inside's derivative is $3\cdot\frac{dx}{dx}$. Since $\frac{dx}{dx}=1$, it cancels and leaves $3$.</p></div>
+                <div class="box3-item"><div class="box3-k">Inside is $\sin x$</div>$$\frac{d}{dx}\Big[\big(\sin x\big)^2\Big]=2\,(\sin x)\cdot\textcolor{#BC6C26}{\cos x}\cdot\cancel{\frac{dx}{dx}}$$<p>The inside's derivative is $\cos x\cdot\frac{dx}{dx}$. Again $\frac{dx}{dx}=1$, so it cancels.</p></div>
+                <div class="box3-item gold"><div class="box3-k">Inside is $y$</div>$$\frac{d}{dx}\Big[\big(\,y\,\big)^2\Big]=2\,y\cdot\textcolor{#BC6C26}{\frac{dy}{dx}}$$<p>The inside's derivative is $\frac{dy}{dx}$. This one is <strong>not</strong> 1, so nothing cancels. We cannot compute it yet, so we write its name.</p></div>
             </div>
+            <p><strong>The last chain-rule move is always "d(something) over $dx$."</strong> When the something is $x$, you get $\frac{dx}{dx}=1$, which cancels, and that is why you have never had to write it. When the something is $y$, you get $\frac{dy}{dx}$, which does not cancel, so it stays.</p>
             <p style="margin-bottom:0;">That is the entire idea. $y$ is a closed box with some function of $x$ inside. The chain rule does not care that the box is closed. It just asks for the derivative of the inside, and the derivative of $y$ is called $\frac{dy}{dx}$.</p>
         </div>
 
@@ -1102,210 +1103,6 @@ mjx-container[display="true"] { display:block; max-width:100%; overflow-x:auto; 
             <p style="margin-bottom:0;"><strong>Trap check.</strong> In (a), the minus sign must reach both pieces of the product rule: $-(y+xy')=-y-xy'$. In (c), $y=2x$ alone is not an answer. In (d), the $x$ cancels, so you never need a decimal for $2\sqrt3$.</p></div></div>
     </div>
 
-    <div id="tab-flash" class="tab-content">
-        <div class="section-header"><div class="section-number">&#9998;</div><h2>Flashcard Studier</h2></div>
-
-        <div class="card" style="border-left-color:var(--green-dark);">
-            <p style="margin-bottom:12px; font-size:14.5px;"><strong>How it works.</strong> Pick a deck, read the term, say the answer out loud, flip, mark yourself. Anything you miss is saved to the <strong>Missed</strong> deck (it stays saved next time you open this file) until you get it right there. Click any term in the list to jump straight to that card. Any deck (including My deck and Missed) can be downloaded as an Anki file.</p>
-            <div class="fc-controls">
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Deck</span>
-                    <button class="fc-chip on" data-filter="all" onclick="fcSetFilter('all',this)">All <span class="fc-n" id="fcn-all"></span></button>
-                    <button class="fc-chip" data-filter="id" onclick="fcSetFilter('id',this)">The idea <span class="fc-n" id="fcn-id"></span></button>
-                    <button class="fc-chip" data-filter="ch" onclick="fcSetFilter('ch',this)">Chain rule link <span class="fc-n" id="fcn-ch"></span></button>
-                    <button class="fc-chip" data-filter="me" onclick="fcSetFilter('me',this)">The method <span class="fc-n" id="fcn-me"></span></button>
-                    <button class="fc-chip" data-filter="us" onclick="fcSetFilter('us',this)">Using dy/dx <span class="fc-n" id="fcn-us"></span></button>
-                    <button class="fc-chip" data-filter="ex" onclick="fcSetFilter('ex',this)">Worked examples <span class="fc-n" id="fcn-ex"></span></button>
-                    <button class="fc-chip miss" data-filter="missed" onclick="fcSetFilter('missed',this)">&#10007; Missed <span class="fc-n" id="fcn-missed"></span></button>
-                    <button class="fc-chip custom" data-filter="custom" onclick="fcSetFilter('custom',this)">&#9733; My deck <span class="fc-n" id="fcn-custom"></span></button>
-                    <button class="fc-chip pick" id="fc-pick-btn" onclick="fcTogglePick()">Pick cards&hellip;</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Show first</span>
-                    <button class="fc-chip on" data-side="term" onclick="fcSetSide('term',this)">Term first</button>
-                    <button class="fc-chip" data-side="def" onclick="fcSetSide('def',this)">Definition first</button>
-                    <button class="fc-chip" data-side="random" onclick="fcSetSide('random',this)">Random</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Order</span>
-                    <button class="fc-chip on" data-order="inorder" onclick="fcSetOrder('inorder',this)">In order</button>
-                    <button class="fc-chip" data-order="shuffle" onclick="fcSetOrder('shuffle',this)">Shuffle</button>
-                    <button class="fc-chip" data-order="quick" onclick="fcSetOrder('quick',this)">&#9889; Quick test (10 random)</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">&nbsp;</span>
-                    <button class="btn-small" onclick="fcRestart()">Restart deck</button>
-                    <button class="btn-small" style="background:#8B5E3C;" onclick="fcClearMissed()">Clear missed list</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Anki</span>
-                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('deck')">&#11015; Download this deck for Anki</button>
-                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('all')">&#11015; Download all cards for Anki</button>
-                    <button class="fc-chip" onclick="fcToggleAnkiHelp()">How do I import?</button>
-                </div>
-            </div>
-            <div id="fc-anki-help" style="display:none; margin-top:12px;" class="idea-box">
-                <p style="margin-bottom:8px;"><strong>Importing into Anki (desktop app, free at apps.ankiweb.net).</strong> The download is a plain text file Anki reads directly; formatting and formulas come through.</p>
-                <ol style="margin-bottom:6px;">
-                    <li>Download a deck above. &ldquo;This deck&rdquo; exports whatever is currently selected: a topic, your <strong>My deck</strong> picks, or just your <strong>Missed</strong> cards.</li>
-                    <li>In Anki: <strong>File &rarr; Import&hellip;</strong> and choose the file.</li>
-                    <li>Anki should auto-detect the tab separator, the deck name, and that HTML is allowed. If it asks: note type <strong>Basic</strong>, field 1 &rarr; Front, field 2 &rarr; Back, field 3 &rarr; Tags, and tick <strong>Allow HTML in fields</strong>.</li>
-                    <li>Click Import. Cards land in a deck called <em>Calculus :: Implicit Differentiation</em>, tagged by topic so you can filter later.</li>
-                </ol>
-                <p style="margin:0; font-size:13px;">On mobile: import the file on desktop once and sync, or use AnkiDroid&rsquo;s import from a text file. Re-importing the same file later updates rather than duplicates the cards.</p>
-            </div>
-        </div>
-
-        <div class="card fc-pick-panel" id="fc-pick-panel" style="display:none; border-left-color:var(--gold);">
-            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Build my own deck</span><span class="fc-legend"><strong id="fc-pick-count">0</strong>&nbsp;selected &nbsp;<button class="btn-small" style="background:#E2E2E2; color:var(--text-medium); padding:4px 10px;" onclick="fcPickAll(false)">Clear</button></span></div>
-            <p style="font-size:13.5px; color:var(--text-medium); margin-bottom:10px;">Tick the cards you want, then hit <strong>Study my deck</strong>. Your picks are remembered next time you open this file.</p>
-            <div id="fc-pick-groups"></div>
-            <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;"><button class="btn-small" onclick="fcStudyCustom()">&#9733; Study my deck</button><button class="btn-small" style="background:#8B5E3C;" onclick="fcTogglePick()">Close</button></div>
-        </div>
-
-        <div class="card">
-            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Terms in this deck</span><span class="fc-legend"><span class="lg unseen"></span>not yet &nbsp;<span class="lg got"></span>got it &nbsp;<span class="lg miss"></span>missed</span></div>
-            <div class="fc-list" id="fc-list"></div>
-        </div>
-
-        <div class="card" style="border-left-color:var(--green-dark);">
-            <div class="fc-wrap">
-                <div class="fc-top"><span id="fc-count">Card 1</span><span>Got: <strong id="fc-got">0</strong> &nbsp; Missed: <strong id="fc-miss">0</strong></span><span id="fc-deckname" class="fc-deckname">All terms</span></div>
-                <div class="fc-card" id="fc-card" onclick="fcFlip()">
-                    <div class="fc-label" id="fc-label">TERM</div>
-                    <div class="fc-front" id="fc-front"></div>
-                    <div class="fc-back" id="fc-back"></div>
-                    <div class="fc-hint" id="fc-hint">click to flip</div>
-                </div>
-                <div class="fc-actions">
-                    <button class="btn-small" style="background:var(--gold); color:var(--brown-dark);" onclick="fcFlip()">Flip</button>
-                    <button class="btn-small" onclick="fcMark(true)">&#10003; Got it</button>
-                    <button class="btn-small" style="background:#C0392B;" onclick="fcMark(false)">&#10007; Missed</button>
-                    <button class="btn-small" style="background:#E2E2E2; color:var(--text-medium);" onclick="fcSkip()">Skip &rarr;</button>
-                </div>
-                <div id="fc-done" class="idea-box" style="display:none; margin-top:14px;"></div>
-            </div>
-        </div>
-
-<script type="text/plain" id="fc-data">
-id ||| Explicit function ||| An equation with <strong>$y$ alone on one side</strong>: $y=f(x)$. Example: $y=\sqrt{25-x^2}$. Every derivative before this topic started from this form.
----
-id ||| Implicit equation ||| An equation that <strong>ties $x$ and $y$ together without solving for $y$</strong>, such as $x^2+y^2=25$ or $x^3+y^3=6xy$.
----
-id ||| Implicit differentiation ||| Finding $\frac{dy}{dx}$ <strong>directly from an equation that mixes $x$ and $y$</strong>, without solving for $y$ first. Differentiate both sides, then solve for $\frac{dy}{dx}$.
----
-id ||| Why can't a circle be written as one $y=f(x)$? ||| It <strong>fails the vertical line test</strong>: one $x$ gives two $y$-values. $x^2+y^2=25$ needs both $y=\sqrt{25-x^2}$ and $y=-\sqrt{25-x^2}$.
----
-id ||| The one assumption behind implicit differentiation ||| <strong>$y$ is a function of $x$</strong>, even though its formula is hidden. So $y$ changes when $x$ changes, and its derivative is $\frac{dy}{dx}$, not 0.
----
-id ||| What should an implicit derivative look like? ||| <strong>A formula containing both $x$ and $y$</strong>, such as $-\frac{x}{y}$. That is expected. Do not try to remove the $y$.
----
-id ||| Trigger: "find $\frac{dy}{dx}$" and $y$ is not alone ||| <strong>Use implicit differentiation.</strong> Clues: $y^2$, a product like $xy$, or $y$ inside a function like $\sin y$.
----
-id ||| Trigger: "slope of the curve at the point $(a,b)$" ||| Being given <strong>both coordinates</strong> signals an implicit problem: $\frac{dy}{dx}$ will need $x$ and $y$.
----
-id ||| Why does the slope formula for a circle need $y$? ||| One $x$ has <strong>two points with different slopes</strong>. At $x=3$ on $x^2+y^2=25$: slope $-\frac34$ at $(3,4)$ and $+\frac34$ at $(3,-4)$.
----
-id ||| The hammer-throw picture ||| A ball spun in a circle and released <strong>flies off along the tangent line</strong>. Its direction is the slope of the circle at the release point: $-\frac{x}{y}$.
----
-ch ||| Chain rule ||| $\frac{d}{dx}\big[f(g(x))\big]=f'(g(x))\cdot g'(x)$: <strong>derivative of the outside (inside left alone) times derivative of the inside</strong>.
----
-ch ||| $\frac{d}{dx}\big[y\big]$ ||| $\frac{dy}{dx}$. <strong>The derivative of $y$ is its own name</strong>, because we do not have a formula for it yet.
----
-ch ||| $\frac{d}{dx}\big[y^2\big]$ ||| $2y\cdot\frac{dy}{dx}$. Power rule on the outside, then <strong>multiply by the derivative of the inside</strong>, which is $\frac{dy}{dx}$.
----
-ch ||| $\frac{d}{dx}\big[y^n\big]$ ||| $n\,y^{n-1}\cdot\frac{dy}{dx}$. The <strong>power rule plus the chain-rule tag</strong>.
----
-ch ||| $\frac{d}{dx}\big[\sin y\big]$ ||| $\cos y\cdot\frac{dy}{dx}$. The tag <strong>multiplies outside</strong> the cosine. It never goes inside.
----
-ch ||| $\frac{d}{dx}\big[\cos y\big]$ ||| $-\sin y\cdot\frac{dy}{dx}$. Keep the <strong>negative sign</strong> from the cosine rule.
----
-ch ||| $\frac{d}{dx}\big[xy\big]$ ||| $y+x\,\frac{dy}{dx}$. <strong>Product rule</strong>: $(1)(y)+(x)\big(\frac{dy}{dx}\big)$. Two pieces, always.
----
-ch ||| $\frac{d}{dx}\big[x^2y^3\big]$ ||| $2x\,y^3+x^2\cdot3y^2\,\frac{dy}{dx}$. <strong>Product rule first</strong>, chain rule on the $y^3$ factor.
----
-ch ||| $\frac{d}{dx}\Big[\frac{y}{x}\Big]$ ||| $\dfrac{x\,\frac{dy}{dx}-y}{x^2}$. <strong>Quotient rule</strong>: bottom times derivative of top, minus top times derivative of bottom, over bottom squared.
----
-ch ||| $\frac{d}{dx}\big[\sin(xy)\big]$ ||| $\cos(xy)\cdot\big(y+x\,\frac{dy}{dx}\big)$. <strong>Chain rule outside, product rule inside.</strong>
----
-ch ||| $\frac{d}{dx}\big[(x^2+y^2)^3\big]$ ||| $3(x^2+y^2)^2\cdot\big(2x+2y\,\frac{dy}{dx}\big)$. The inside's derivative stays <strong>in parentheses</strong>.
----
-ch ||| Why does $x^2$ get no $\frac{dy}{dx}$ tag? ||| It gets $\frac{dx}{dx}$, which <strong>equals 1</strong>. Only terms containing $y$ show a visible tag.
----
-ch ||| $\frac{d}{dx}[\;\;]$ versus $\frac{dy}{dx}$ ||| $\frac{d}{dx}[\;\;]$ is a <strong>command</strong> (differentiate this). $\frac{dy}{dx}$ is a <strong>thing</strong>: the result of that command acting on $y$. Also written $y'$.
----
-ch ||| The "toll" memory hook ||| <strong>Every $y$ you differentiate pays a $\frac{dy}{dx}$ toll.</strong> $x$ pays a toll of 1. Constants vanish.
----
-ch ||| The balloon connection ||| $V=\frac43\pi r^3$ gives $\frac{dV}{dt}=4\pi r^2\cdot\frac{dr}{dt}$ with no formula for $r(t)$. <strong>Same move</strong> as $\frac{d}{dx}[y^3]=3y^2\,\frac{dy}{dx}$.
----
-me ||| Step 1 of the four-step method ||| <strong>Differentiate both sides with respect to $x$</strong>, term by term. $y$-terms get $\frac{dy}{dx}$, products get the product rule, constants become 0.
----
-me ||| Step 2 of the four-step method ||| <strong>Collect</strong>: every term with $\frac{dy}{dx}$ on the left, everything else on the right. Signs flip when a term crosses the equals sign.
----
-me ||| Step 3 of the four-step method ||| <strong>Factor</strong> $\frac{dy}{dx}$ out of the left side, for example $x\,y'+2y\,y'=y'(x+2y)$.
----
-me ||| Step 4 of the four-step method ||| <strong>Divide</strong> by whatever multiplies $\frac{dy}{dx}$, then simplify. Plug in the point now if one is given.
----
-me ||| Which of the four steps contains the calculus? ||| <strong>Only Step 1.</strong> Steps 2 to 4 are algebra: solving a linear equation for the unknown $\frac{dy}{dx}$.
----
-me ||| $\frac{d}{dx}\big[-xy\big]$ ||| $-y-x\,\frac{dy}{dx}$. The minus sign hits <strong>both</strong> product-rule pieces: $-\big(y+x\,y'\big)$.
----
-me ||| Derivative of the right side of $x^2+y^2=25$ ||| <strong>0.</strong> A constant's derivative is 0, never the constant itself.
----
-me ||| Derivative of the right side of $x^3+y^3=6xy$ ||| $6y+6x\,\frac{dy}{dx}$. The right side is a product and <strong>needs the product rule too</strong>.
----
-me ||| Shortcut when only the slope at one point is wanted ||| <strong>Plug the point in right after Step 1</strong>, then solve for $y'$ as a number. Never plug in before differentiating.
----
-me ||| Why not plug in the point before differentiating? ||| The equation turns into a true statement about numbers, like $7=7$, whose derivative is $0=0$. <strong>The slope information is gone.</strong>
----
-me ||| Are $-\frac{2x+y}{x+2y}$ and $\frac{2x+y}{-x-2y}$ different answers? ||| <strong>No.</strong> Multiply the top and bottom by $-1$. Check this before deciding your answer is not among the choices.
----
-me ||| "Show that $\frac{dy}{dx}=\dots$" questions ||| The answer is given, so <strong>all the credit is for the work</strong>: the differentiated line with product and chain rule visible, then collect, factor, divide.
----
-me ||| How to check Step 1 quickly ||| <strong>Count the tags.</strong> One $y'$ for each $y$-term you differentiated. $x^2+xy+y^2$ has two $y$-terms, so two tags.
----
-us ||| Slope of a curve at $(a,b)$ ||| <strong>Plug both coordinates</strong> into $\frac{dy}{dx}$. First check that the point satisfies the original equation.
----
-us ||| A problem gives only $x$. How do you get the slope? ||| <strong>Find $y$ from the original equation first.</strong> There may be two $y$-values, which means two points and two slopes.
----
-us ||| Tangent line at $(a,b)$ ||| $y-b=m\,(x-a)$ where <strong>$m$ is $\frac{dy}{dx}$ evaluated at $(a,b)$</strong>.
----
-us ||| Normal line at $(a,b)$ ||| $y-b=-\frac{1}{m}(x-a)$: <strong>perpendicular to the tangent</strong>, so its slope is the negative reciprocal of $m$.
----
-us ||| Where is the tangent line horizontal? ||| Where the <strong>top of $\frac{dy}{dx}$ equals 0</strong> (and the bottom does not). Then use the original equation to find the points.
----
-us ||| Where is the tangent line vertical? ||| Where the <strong>bottom of $\frac{dy}{dx}$ equals 0</strong> (and the top does not). Then use the original equation to find the points.
----
-us ||| After "top $=0$" gives $y=-2x$, what next? ||| <strong>Substitute into the original equation.</strong> $y=-2x$ is a line, not an answer. The answer is the points where it meets the curve.
----
-us ||| Three moves for $\frac{d^2y}{dx^2}$ ||| <strong>(1)</strong> Differentiate $y'$ again (quotient rule; every $y$ still gets $y'$). <strong>(2)</strong> Replace $y'$ with its formula. <strong>(3)</strong> Simplify using the original equation.
----
-us ||| $\frac{d^2y}{dx^2}$ for $x^2+y^2=25$ ||| $-\dfrac{25}{y^3}$. From $y'=-\frac{x}{y}$: $y''=-\frac{y^2+x^2}{y^3}$, and <strong>$x^2+y^2=25$</strong>.
----
-us ||| What does the sign of $y''$ say about a circle? ||| $y''=-\frac{25}{y^3}$: <strong>the top half ($y&gt;0$) is concave down</strong>, and the bottom half ($y&lt;0$) is concave up.
----
-us ||| Related rates in one line ||| Differentiate with respect to <strong>$t$</strong>: every variable is a hidden function of time, so $x^2+y^2=25$ becomes $2x\frac{dx}{dt}+2y\frac{dy}{dt}=0$.
----
-us ||| On a circle, the normal line at any point is... ||| <strong>The radius.</strong> Radius slope $\frac{y}{x}$, tangent slope $-\frac{x}{y}$: negative reciprocals.
----
-ex ||| $\frac{dy}{dx}$ for $x^2+y^2=25$ ||| $-\dfrac{x}{y}$. From $2x+2y\,y'=0$. <strong>Slope $-\frac34$ at $(3,4)$.</strong>
----
-ex ||| $\frac{dy}{dx}$ for $xy=12$ ||| $-\dfrac{y}{x}$. From $y+x\,y'=0$. <strong>Slope $-\frac43$ at $(3,4)$.</strong>
----
-ex ||| $\frac{dy}{dx}$ for $x^2+xy+y^2=7$ ||| $-\dfrac{2x+y}{x+2y}$. <strong>Slope $-\frac45$ at $(1,2)$.</strong> The same formula works for any constant on the right.
----
-ex ||| $\frac{dy}{dx}$ for the folium $x^3+y^3=6xy$ ||| $\dfrac{2y-x^2}{y^2-2x}$. <strong>Slope $-1$ at $(3,3)$.</strong>
----
-ex ||| $\frac{dy}{dx}$ for $x^2y^3=8$ ||| $-\dfrac{2y}{3x}$. From $2xy^3+3x^2y^2\,y'=0$. <strong>Slope $-\frac43$ at $(1,2)$.</strong>
----
-ex ||| $\frac{dy}{dx}$ for $\sqrt{x}+\sqrt{y}=5$ ||| $-\dfrac{\sqrt{y}}{\sqrt{x}}$. <strong>Slope $-\frac32$ at $(4,9)$</strong>, so the normal slope there is $\frac23$.
----
-ex ||| $\frac{dy}{dx}$ for $4x^2+9y^2=36$ ||| $-\dfrac{4x}{9y}$. From $8x+18y\,y'=0$, reduced.
----
-ex ||| Horizontal and vertical tangents of $x^2+xy+y^2=3$ ||| <strong>Horizontal</strong> at $(1,-2)$ and $(-1,2)$ (from $y=-2x$). <strong>Vertical</strong> at $(2,-1)$ and $(-2,1)$ (from $x=-2y$).
----
-ex ||| $\frac{d^2y}{dx^2}$ for $x^3+y^3=1$ ||| $-\dfrac{2x}{y^5}$. From $y'=-\frac{x^2}{y^2}$, then the quotient rule and <strong>$x^3+y^3=1$</strong>.
----
-ex ||| Slope of $2(x^2+y^2)^2=25(x^2-y^2)$ at $(3,1)$ ||| $-\dfrac{9}{13}$. Differentiate, then <strong>plug in right away</strong>: $40(6+2y')=25(6-2y')$.
----
-ex ||| $\frac{dy}{dx}$ for $2\sin x\cos y=1$ ||| $\dfrac{\cos x\cos y}{\sin x\sin y}=\cot x\cot y$. <strong>Equals 1 at $\left(\frac{\pi}{4},\frac{\pi}{4}\right)$.</strong>
-</script>
-    </div>
 
     <!-- ═══════════════ TERM-BY-TERM DRILL ═══════════════ -->
     <div id="tab-drill" class="tab-content">
@@ -1510,111 +1307,7 @@ function answer(btn, id) {
     document.getElementById('score-' + id).textContent = 'Score: ' + s.score + ' / ' + QUIZ[id].length + (s.answered === QUIZ[id].length ? '  ·  done' : '');
 }
 
-/* ── Flashcards: decks, term list, custom deck, persisted missed set ── */
-var FC = [], fcDeck = [], fcIdx = 0, fcGot = 0, fcMiss = 0, fcRunMissed = [], fcFlipped = false, fcRound = 1;
-var fcFilter = 'all', fcOrder = 'inorder', fcSide = 'term', fcStatus = {}, fcMissedSet = {}, fcCustomSet = {}, fcDefFirst = false;
-var FC_TOPICS = ['id','ch','me','us','ex'];   // must match the fc-data codes and the deck chips
-var FC_TOPIC = { id: 'The idea', ch: 'Chain rule link', me: 'The method', us: 'Using dy/dx', ex: 'Worked examples', all: 'All terms', missed: 'Missed cards', custom: 'My deck' };
-var FC_CKEY = 'lcc-calc-implicit-differentiation-flashcards-custom';   // unique per sheet so decks don't collide in localStorage
-var FC_KEY = 'lcc-calc-implicit-differentiation-flashcards-missed';
-function fcLoadMissed(){ try { var v = localStorage.getItem(FC_KEY); if (v) fcMissedSet = JSON.parse(v) || {}; var c = localStorage.getItem(FC_CKEY); if (c) fcCustomSet = JSON.parse(c) || {}; } catch(e){} }
-function fcSaveCustom(){ try { localStorage.setItem(FC_CKEY, JSON.stringify(fcCustomSet)); } catch(e){} }
-function fcSaveMissed(){ try { localStorage.setItem(FC_KEY, JSON.stringify(fcMissedSet)); } catch(e){} }
 function fcHaptic(){ try { if (navigator.vibrate) navigator.vibrate(12); } catch(e){} }
-function fcInit(){ var raw = document.getElementById('fc-data').textContent.trim();
-    FC = raw.split(/\n---\n/).map(function(s, i){ var p = s.split('|||'); return { id: i, t: p[0].trim(), f: p[1].trim(), b: p[2].trim() }; });
-    fcLoadMissed(); fcCounts(); fcRenderPick(); fcBuildDeck(); }
-function fcCounts(){ ['all'].concat(FC_TOPICS).forEach(function(k){ var n = k==='all' ? FC.length : FC.filter(function(c){ return c.t===k; }).length; var el=document.getElementById('fcn-'+k); if (el) el.textContent='('+n+')'; });
-    var el=document.getElementById('fcn-missed'); if (el) el.textContent='('+Object.keys(fcMissedSet).length+')';
-    var ec=document.getElementById('fcn-custom'); if (ec) ec.textContent='('+Object.keys(fcCustomSet).length+')';
-    var pc=document.getElementById('fc-pick-count'); if (pc) pc.textContent=Object.keys(fcCustomSet).length; }
-function fcSetFilter(f, btn){ fcFilter = f; document.querySelectorAll('.fc-chip[data-filter]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
-function fcSetOrder(o, btn){ fcOrder = o; document.querySelectorAll('.fc-chip[data-order]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
-function fcBuildDeck(){ var ids = FC.filter(function(c){ return fcFilter==='all' || (fcFilter==='missed' ? !!fcMissedSet[c.id] : fcFilter==='custom' ? !!fcCustomSet[c.id] : c.t===fcFilter); }).map(function(c){ return c.id; });
-    if (fcOrder !== 'inorder'){ for (var i = ids.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; } }
-    if (fcOrder === 'quick') ids = ids.slice(0, 10);
-    fcDeck = ids; fcIdx = 0; fcGot = 0; fcMiss = 0; fcRunMissed = []; fcStatus = {}; fcRound = 1;
-    document.getElementById('fc-done').style.display='none';
-    var nm = FC_TOPIC[fcFilter] + (fcOrder==='quick' ? ' · quick test' : fcOrder==='shuffle' ? ' · shuffled' : '');
-    document.getElementById('fc-deckname').textContent = nm;
-    fcRenderList(); fcRender(); }
-function fcRestart(){ fcBuildDeck(); }
-function fcClearMissed(){ fcMissedSet = {}; fcSaveMissed(); fcCounts(); if (fcFilter==='missed') fcBuildDeck(); else fcRenderList(); }
-function fcRenderList(){ var box = document.getElementById('fc-list'); if (!box) return; var html = '';
-    if (!fcDeck.length){ box.innerHTML = '<p style="margin:0; color:var(--text-medium); font-size:13.5px;">Nothing in this deck yet' + (fcFilter==='missed' ? '. Cards you mark &#10007; Missed land here.' : fcFilter==='custom' ? '. Use <strong>Pick cards&hellip;</strong> above to choose some.' : '.') + '</p>'; return; }
-    fcDeck.forEach(function(id, k){ var c = FC[id]; var st = fcStatus[id] || (fcMissedSet[id] ? 'miss' : '');
-        html += '<button class="fc-term ' + st + (k===fcIdx ? ' current' : '') + '" onclick="fcJump(' + k + ')"><span class="fc-term-n">' + (k+1) + '</span>' + c.f + '</button>'; });
-    box.innerHTML = html; if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
-function fcJump(k){ fcIdx = k; document.getElementById('fc-done').style.display='none'; fcHaptic(); fcRender(); }
-function fcRender(){ var card = document.getElementById('fc-card'); fcFlipped = false; card.classList.remove('flipped');
-    document.getElementById('fc-got').textContent = fcGot; document.getElementById('fc-miss').textContent = fcMiss;
-    document.querySelectorAll('#fc-list .fc-term').forEach(function(b, k){ b.classList.toggle('current', k===fcIdx); });
-    if (!fcDeck.length){ document.getElementById('fc-count').textContent = 'Empty deck'; document.getElementById('fc-front').innerHTML = 'Pick another deck above.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent=''; return; }
-    if (fcIdx >= fcDeck.length){ fcFinish(); return; }
-    var c = FC[fcDeck[fcIdx]];
-    fcDefFirst = (fcSide === 'def') || (fcSide === 'random' && Math.random() < 0.5);
-    document.getElementById('fc-count').textContent = (fcRound > 1 ? 'Review round · ' : '') + 'Card ' + (fcIdx+1) + ' / ' + fcDeck.length;
-    document.getElementById('fc-label').textContent = fcDefFirst ? 'DEFINITION: name the term' : 'TERM';
-    document.getElementById('fc-front').innerHTML = fcDefFirst ? c.b : c.f; document.getElementById('fc-back').innerHTML = fcDefFirst ? c.f : c.b;
-    document.getElementById('fc-hint').textContent = 'click to flip';
-    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([card]); }, 30); }
-function fcFlip(){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; var card = document.getElementById('fc-card'); fcFlipped = !fcFlipped; card.classList.toggle('flipped', fcFlipped); fcHaptic();
-    document.getElementById('fc-label').textContent = fcFlipped ? (fcDefFirst ? 'TERM' : 'ANSWER') : (fcDefFirst ? 'DEFINITION: name the term' : 'TERM'); document.getElementById('fc-hint').textContent = fcFlipped ? 'mark yourself below' : 'click to flip'; }
-function fcMark(ok){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; if (!fcFlipped){ fcFlip(); return; }
-    var id = fcDeck[fcIdx];
-    if (ok){ fcGot++; fcStatus[id] = 'got'; delete fcMissedSet[id]; }
-    else { fcMiss++; fcStatus[id] = 'miss'; fcMissedSet[id] = 1; fcRunMissed.push(id); }
-    fcSaveMissed(); fcCounts(); fcHaptic();
-    var b = document.querySelectorAll('#fc-list .fc-term')[fcIdx]; if (b){ b.classList.remove('got','miss'); b.classList.add(ok ? 'got' : 'miss'); }
-    fcIdx++; fcRender(); }
-function fcSkip(){ if (!fcDeck.length) return; fcIdx = (fcIdx + 1) % fcDeck.length; fcHaptic(); fcRender(); }
-function fcFinish(){ var d = document.getElementById('fc-done'); d.style.display='block';
-    document.getElementById('fc-count').textContent = 'Deck complete';
-    document.getElementById('fc-front').innerHTML = 'Round done: ' + fcGot + ' got, ' + fcMiss + ' missed.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent='';
-    if (fcRunMissed.length){ d.innerHTML = '<p style="margin-bottom:8px;"><strong>' + fcRunMissed.length + ' missed this round.</strong> They are saved in the Missed deck; review them now or come back later.</p><button class="btn-small" onclick="fcReview()">Review ' + fcRunMissed.length + ' missed now</button>';
-    } else { d.innerHTML = '<p style="margin:0;"><strong>Clean sweep.</strong> Try the shuffled or quick-test order next time.</p>'; } }
-function fcReview(){ fcDeck = fcRunMissed.slice(); fcRunMissed = []; fcIdx = 0; fcRound++; fcStatus = {}; document.getElementById('fc-done').style.display='none'; fcRenderList(); fcRender(); }
-function fcSetSide(s, btn){ fcSide = s; document.querySelectorAll('.fc-chip[data-side]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcRender(); }
-/* custom deck picker */
-function fcTogglePick(){ var p = document.getElementById('fc-pick-panel'), b = document.getElementById('fc-pick-btn'); var open = p.style.display === 'none'; p.style.display = open ? 'block' : 'none'; b.classList.toggle('on', open); fcHaptic(); if (open && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([p]); }, 30); }
-function fcRenderPick(){ var box = document.getElementById('fc-pick-groups'); if (!box) return; var html = '';
-    FC_TOPICS.forEach(function(t){ html += '<div class="fc-pick-group"><div class="fc-pick-head">' + FC_TOPIC[t] + ' <button onclick="fcPickTopic(\'' + t + '\',true)">select all</button><button onclick="fcPickTopic(\'' + t + '\',false)">none</button></div><div class="fc-pick-grid">';
-        FC.filter(function(c){ return c.t===t; }).forEach(function(c){ var on = !!fcCustomSet[c.id]; html += '<label class="fc-pick' + (on ? ' on' : '') + '"><input type="checkbox" ' + (on ? 'checked' : '') + ' onchange="fcPickOne(' + c.id + ', this.checked)"><span>' + c.f + '</span></label>'; });
-        html += '</div></div>'; });
-    box.innerHTML = html; fcCounts(); if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
-function fcPickOne(id, on){ if (on) fcCustomSet[id] = 1; else delete fcCustomSet[id]; fcSaveCustom(); fcHaptic();
-    var inp = document.querySelector('#fc-pick-groups input[onchange*="fcPickOne(' + id + ',"]'); if (inp) inp.parentElement.classList.toggle('on', on);
-    fcCounts(); if (fcFilter==='custom') fcBuildDeck(); }
-function fcPickTopic(t, on){ FC.filter(function(c){ return c.t===t; }).forEach(function(c){ if (on) fcCustomSet[c.id] = 1; else delete fcCustomSet[c.id]; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
-function fcPickAll(on){ fcCustomSet = {}; if (on) FC.forEach(function(c){ fcCustomSet[c.id] = 1; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
-function fcStudyCustom(){ var btn = document.querySelector('.fc-chip[data-filter="custom"]'); fcSetFilter('custom', btn); document.getElementById('fc-pick-panel').style.display='none'; document.getElementById('fc-pick-btn').classList.remove('on'); }
-/* Anki export: tab-separated text with Anki file headers; $..$ math -> \( .. \) which Anki's MathJax renders */
-var FC_ANKI_DECK = 'Calculus::Implicit Differentiation';
-function fcAnkiField(s){
-    s = String(s).replace(/\$\$([\s\S]+?)\$\$/g, function(_, m){ return '\\[' + m + '\\]'; });
-    s = s.replace(/\$([^$]+?)\$/g, function(_, m){ return '\\(' + m + '\\)'; });
-    return s.replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim();
-}
-function fcExportAnki(scope){
-    var ids = scope === 'all' ? FC.map(function(c){ return c.id; }) : fcDeck.slice();
-    if (!ids.length){ alert('This deck is empty. Pick a deck with cards in it first.'); return; }
-    var lines = ['#separator:tab', '#html:true', '#tags column:3', '#deck:' + FC_ANKI_DECK, '#notetype:Basic'];
-    ids.forEach(function(id){ var c = FC[id];
-        var tags = 'Calculus Implicit_Differentiation ' + (FC_TOPIC[c.t] || c.t).replace(/[^A-Za-z0-9]+/g, '_') + (fcMissedSet[id] ? ' missed' : '');
-        lines.push(fcAnkiField(c.f) + '\t' + fcAnkiField(c.b) + '\t' + tags); });
-    var label = scope === 'all' ? 'all' : (FC_TOPIC[fcFilter] || fcFilter).replace(/[^A-Za-z0-9]+/g, '_');
-    var blob = new Blob([lines.join('\n') + '\n'], { type: 'text/plain;charset=utf-8' });
-    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'calc_implicit_differentiation_anki_' + label + '.txt';
-    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500); fcHaptic();
-}
-function fcToggleAnkiHelp(){ var h = document.getElementById('fc-anki-help'); h.style.display = h.style.display === 'none' ? 'block' : 'none'; }
-document.addEventListener('keydown', function(e) {
-    if (!document.getElementById('tab-flash').classList.contains('active')) return;
-    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
-    if (e.key === 'ArrowRight') fcSkip(); else if (e.key === ' ') { e.preventDefault(); fcFlip(); }
-    else if (e.key === 'g' || e.key === 'G') fcMark(true); else if (e.key === 'm' || e.key === 'M') fcMark(false);
-});
 
 /* ── Next / Back navigation at the bottom of every tab ── */
 function addTabNav() {
@@ -1639,7 +1332,6 @@ function addTabNav() {
 
 window.addEventListener('DOMContentLoaded', function() {
     buildQuiz('qa'); buildQuiz('qb');
-    fcInit();
     addTabNav();
     initFigs(); w1Draw(); stpInit('w2'); stpInit('w4'); tgStart(); w5Init(); drLoad(); drRender();
 });

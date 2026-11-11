@@ -837,7 +837,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "calculus--implicit-differentiation-study-sheet",
    "path": "calculus/implicit-differentiation-study-sheet.html",
    "title": "Implicit Differentiation Study Sheet",
-   "description": "Learn implicit differentiation as the chain rule on a hidden function, with a four-step method, tangent and normal lines, horizontal and vertical tangents, second derivatives, interactive curve explorers, flashcards, a term-by-term drill, and two quizzes.",
+   "description": "Learn implicit differentiation as the chain rule on a hidden function, with a four-step method, tangent and normal lines, horizontal and vertical tangents, second derivatives, interactive curve explorers, a term-by-term drill, and two quizzes.",
    "subject": "calculus",
    "topic": "Limits & derivatives",
    "order": 8,
