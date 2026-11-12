@@ -13,7 +13,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-11-11"
+  "updated": "2026-11-12"
  },
  "levels": [
   "Foundations",
@@ -1809,6 +1809,36 @@ window.OPEN_LEARNING_CATALOG = {
    "content": "theory+practice",
    "builds_on": [
     "econ--micro--preferences-utility-budget-micro"
+   ]
+  },
+  {
+   "id": "econ--micro--risk-expected-utility-adverse-selection",
+   "path": "econ/micro/Risk Expected Utility and Adverse Selection.html",
+   "title": "Risk, Expected Utility & Adverse Selection",
+   "description": "The lemons market worked start to finish: a formula cheat sheet, a translation table from problem wording to setup, a five-step solving routine, a setup-recognition sprint, and scaffolded problems on expected value, expected utility, certainty equivalents, minimum-belief bets, and the share of high quality sellers a market needs, with a hint before every solution.",
+   "subject": "econ",
+   "topic": "Micro 2: firms, games & equilibrium",
+   "order": 19,
+   "levels": [
+    "College",
+    "Advanced College"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "adverse selection",
+    "lemons market",
+    "asymmetric information",
+    "expected value",
+    "expected utility",
+    "certainty equivalent",
+    "risk premium",
+    "risk aversion",
+    "reservation price"
+   ],
+   "difficulty": "Core",
+   "content": "practice",
+   "builds_on": [
+    "econ--micro--choice-under-uncertainty"
    ]
   },
   {
