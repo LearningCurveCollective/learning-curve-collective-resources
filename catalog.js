@@ -1815,7 +1815,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "econ--micro--risk-expected-utility-adverse-selection",
    "path": "econ/micro/Risk Expected Utility and Adverse Selection.html",
    "title": "Risk, Expected Utility & Adverse Selection",
-   "description": "The lemons market worked start to finish: a formula cheat sheet, a translation table from problem wording to setup, a five-step solving routine, a setup-recognition sprint, and scaffolded problems on expected value, expected utility, certainty equivalents, minimum-belief bets, and the share of high quality sellers a market needs, with a hint before every solution.",
+   "description": "The lemons market worked start to finish: a formula cheat sheet, a translation table from problem wording to setup, a five-step solving routine, a setup-recognition sprint, and three scaffolded problem sets on expected value, expected utility, certainty equivalents, minimum-belief bets, and the share of high quality sellers a market needs, with a hint before every solution.",
    "subject": "econ",
    "topic": "Micro 2: firms, games & equilibrium",
    "order": 19,

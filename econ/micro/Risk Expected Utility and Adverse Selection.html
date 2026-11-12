@@ -357,7 +357,9 @@ li { margin-bottom: 10px; }
     </div>
     <div class="tab-row"><span class="tab-row-label">Practice</span>
         <button class="tab-button" data-group="sprint" onclick="switchTab('sprint', this)">&#9889; Setup Sprint</button>
-        <button class="tab-button" data-group="practice" onclick="switchTab('probs', this)">Problem Set</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('probs', this)">Problem Set A</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('probsb', this)">Problem Set B</button>
+        <button class="tab-button" data-group="practice" onclick="switchTab('probsc', this)">Problem Set C</button>
     </div>
 </div>
 
@@ -987,6 +989,505 @@ li { margin-bottom: 10px; }
                         $$3 + 5\sqrt{CE} = 78 \;\Rightarrow\; \sqrt{CE} = 15 \;\Rightarrow\; CE = \$225$$
                     </div>
                     <p style="margin-bottom:0;">Same \$225 as before, so every accept-or-reject decision comes out identical. The happiness numbers changed; the choices did not.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ============ TAB: PROBLEM SET B ============ -->
+<div class="tab-content" id="tab-probsb">
+
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>The Refurbished Laptop Market</h2>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+            <div style="flex: 1;">
+                <p>An online shop sells refurbished laptops. There are two types: high quality ($h$) and low quality ($l$). All market participants know that 50 percent of the laptops are high quality and 50 percent are low quality.</p>
+                <table class="givens-table">
+                    <tr><th></th><th>Maximum price buyers are willing to pay</th><th>Minimum price sellers are willing to accept</th></tr>
+                    <tr><td>High quality laptop ($h$)</td><td>\$2,500</td><td>\$2,100</td></tr>
+                    <tr><td>Low quality laptop ($l$)</td><td>\$900</td><td>\$700</td></tr>
+                </table>
+
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 0: Gather your givens</button>
+                <div class="example-body">
+                    <table class="givens-table">
+                        <tr><th>Type</th><th>$P$</th><th>$RP_B$</th><th>$RP_S$</th></tr>
+                        <tr><td>$h$</td><td>$0.5$</td><td>\$2,500</td><td>\$2,100</td></tr>
+                        <tr><td>$l$</td><td>$0.5$</td><td>\$900</td><td>\$700</td></tr>
+                    </table>
+                    <p style="margin-bottom:0;">Worth computing now: $EV_B = 0.5(2500) + 0.5(900) = \$1{,}700$.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(a)</strong> Under perfect information, where buyers and sellers both know each laptop's type with certainty, will both types be sold? Explain briefly.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Perfect information: two separate markets, no probabilities. Check $RP_B \ge RP_S$ for each type.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        <p style="margin-bottom:4px;">Market $h$: $\;2500 > 2100 \;\Rightarrow\; 2100 \le \text{Price}_h \le 2500$ &nbsp;&#10003; trade</p>
+                        <p style="margin-bottom:0;">Market $l$: $\;900 > 700 \;\Rightarrow\; 700 \le \text{Price}_l \le 900$ &nbsp;&#10003; trade</p>
+                    </div>
+                    <p style="margin-bottom:0;"><strong>Yes, both types sell.</strong> Each type gets its own price, each buyer's max beats the matching seller's min, and the 50/50 split never enters.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(b)</strong> Now buyers cannot tell the types apart, but sellers know. Buyers are risk neutral and pay at most the expected value of a random laptop. Will both types be sold? What happens over time?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Asymmetric information, risk neutral: $WTP = EV_B$. Compare it to $RP_S^h$.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EV_B = 0.5(2500) + 0.5(900) = 1250 + 450 = \$1{,}700$$
+                    </div>
+                    <p>$1700 < RP_S^h = 2100$, so high quality sellers refuse. $1700 > RP_S^l = 700$, so low quality sellers take it.</p>
+                    <p style="margin-bottom:0;"><strong>No, only low quality laptops sell.</strong> Buyers learn every unit is a lemon, update to $P_l = 1$, and cut their offer to \$900. The price settles between \$700 and \$900. Adverse selection again.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(c)</strong> Calculate the minimum fraction of the market that must be high quality for both types to sell.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">"Minimum fraction" means solve for $P$. Set $EV_B(P) = RP_S^h = 2100$.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$2500P + 900(1 - P) \ge 2100$$
+                        $$900 + 1600P \ge 2100$$
+                        $$1600P \ge 1200 \;\Rightarrow\; P \ge 0.75$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>At least 75% must be high quality.</strong> Check: $0.75(2500) + 0.25(900) = 1875 + 225 = 2100$. &#10003;</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(d)</strong> Suppose instead that buyers and sellers have utility $U(f) = f^{1/2}$, where $f$ is the value of the laptop. What is the maximum a buyer will pay for a laptop chosen at random? Will both types be sold?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Average happiness equals what value? $EU$ first, then undo the square root.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$\sqrt{2500} = 50$ and $\sqrt{900} = 30$, so:</p>
+                    <div class="highlight-box">
+                        $$EU_B = 0.5(50) + 0.5(30) = 40$$
+                        $$\sqrt{WTP} = 40 \;\Rightarrow\; WTP = 40^2 = \$1{,}600$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>The max price is \$1,600, and only low quality sells</strong> ($1600 < 2100$). The offer fell from \$1,700 to \$1,600, so the risk premium is \$100.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(e)</strong> Given this utility function, what is the minimum fraction of the market that must be high quality for both types to sell?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Same as (c), but work in happiness units: $EU(P) = \sqrt{2100}$. Keep 4+ decimals on the square root.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$50P + 30(1 - P) \ge \sqrt{2100} = 45.8258$$
+                        $$30 + 20P \ge 45.8258$$
+                        $$20P \ge 15.8258 \;\Rightarrow\; P \ge 0.7913$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>At least about 79.13%</strong>, up from 75% in the risk neutral case. Risk aversion always pushes this cutoff up.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>The Bet, Two Sizes</h2>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+            <div style="flex: 1;">
+                <p>Jordan is seen placing an even-money bet of \$50,000 that the Lakers win the title. His initial wealth is \$400,000, and his utility over wealth is $U(W) = \ln(W)$.</p>
+
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 0: Gather your givens</button>
+                <div class="example-body">
+                    <table class="givens-table">
+                        <tr><th>Outcome</th><th>Wealth</th><th>$\ln(W)$, kept to 6 decimals</th></tr>
+                        <tr><td>Win (prob $P$)</td><td>\$450,000</td><td>$13.017003$</td></tr>
+                        <tr><td>Lose (prob $1-P$)</td><td>\$350,000</td><td>$12.765688$</td></tr>
+                        <tr><td>No bet</td><td>\$400,000</td><td>$12.899220$</td></tr>
+                    </table>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(a)</strong> What must he believe to be the minimum probability that the Lakers win?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">He took the bet, so $EU(\text{bet}) \ge U(400{,}000)$. Plug the numbers into each $\ln$ and keep 6 decimals.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$P(13.017003) + (1-P)(12.765688) \ge 12.899220$$
+                        $$12.765688 + 0.251315P \ge 12.899220$$
+                        $$0.251315P \ge 0.133532 \;\Rightarrow\; P \ge 0.5313$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>He must believe the Lakers win with probability of at least about 53.13%.</strong> Above 50% because $\ln$ is concave: the \$50,000 loss costs more happiness than the \$50,000 win adds.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(b)</strong> Suppose instead the bet were only \$10,000, same wealth and same utility. What minimum probability does he need now? Why did the answer move?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Same equation, new outcomes: \$410,000 and \$390,000. Before computing, predict the direction: does a smaller gamble need a bigger or smaller edge?</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$P\ln(410{,}000) + (1-P)\ln(390{,}000) \ge \ln(400{,}000)$$
+                        $$P(12.923912) + (1-P)(12.873902) \ge 12.899220$$
+                        $$0.050010P \ge 0.025318 \;\Rightarrow\; P \ge 0.5063$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>Only about 50.63% now.</strong> The smaller the bet relative to wealth, the closer the cutoff sits to 50%. Over a tiny slice of the curve, $\ln(W)$ is nearly a straight line, so a small gambler behaves almost risk neutrally. Big bets bend across the curve and demand a real edge. Notice also that the subtraction here ($12.923912 - 12.873902$) cancels almost every digit, which is exactly why the givens keep 6 decimals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>Noor's Gamble</h2>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+            <div style="flex: 1;">
+                <p>Noor faces the following gamble over wealth: 50% chance of \$27, 50% chance of \$125. Her utility function is $U(w) = w^{1/3}$.</p>
+
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 0: Gather your givens</button>
+                <div class="example-body">
+                    <table class="givens-table">
+                        <tr><th>Outcome</th><th>$P$</th><th>$w$</th><th>$U(w) = w^{1/3}$</th></tr>
+                        <tr><td>Low</td><td>$0.5$</td><td>\$27</td><td>$3$</td></tr>
+                        <tr><td>High</td><td>$0.5$</td><td>\$125</td><td>$5$</td></tr>
+                    </table>
+                    <p style="margin-bottom:0;">Both wealth levels are perfect cubes, so the utilities are exact.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(a)</strong> Calculate Noor's expected wealth.</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EV = 0.5(27) + 0.5(125) = 13.5 + 62.5 = \$76$$
+                    </div>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(b)</strong> Calculate her expected utility from the gamble.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Utility of each outcome first, then the weighted average.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EU = 0.5(27)^{1/3} + 0.5(125)^{1/3} = 0.5(3) + 0.5(5) = 4$$
+                    </div>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(c)</strong> Calculate the utility she would receive if given the expected value for certain. Is she risk averse, risk neutral, or risk loving?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Run \$76 through the utility function, then compare $U(EV)$ to $EU$. Opposite order of operations from (b).</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$U(EV) = 76^{1/3} = 4.2358 \;>\; EU = 4$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>Risk averse.</strong> A sure \$76 beats a gamble averaging \$76, which is what concave utility means.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(d)</strong> Calculate the certainty equivalent and the risk premium of the gamble.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Average happiness equals what value? Cube root utility means you cube both sides to undo it.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$CE^{1/3} = 4 \;\Rightarrow\; CE = 4^3 = \$64$$
+                        $$RP = EV - CE = 76 - 64 = \$12$$
+                    </div>
+                    <p style="margin-bottom:0;">A sure \$64 feels the same as the gamble, and she would give up \$12 of expected wealth to escape the risk.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(e)</strong> Suppose Noor is offered \$70 for certain instead of the gamble. Does she accept? Explain.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Compare the sure offer to the certainty equivalent, or $U(70)$ to $EU$.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$70 > CE = 64 \quad\text{(or } 70^{1/3} = 4.1213 > EU = 4\text{)}$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>Yes, she accepts</strong>, even though \$70 is below her expected wealth of \$76. Any sure amount above \$64 beats the gamble for her.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(f)</strong> Suppose instead that her utility were $V(w) = 10 + 3w^{1/3}$. Would her choices change? Explain briefly.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">$V$ is the old utility times a positive number, plus a constant. What does that do to rankings? If unsure, recompute the $CE$ under $V$.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p><strong>No, nothing changes.</strong> It is a relabeling of the happiness scale. Check with the certainty equivalent: $V(27) = 10 + 3(3) = 19$ and $V(125) = 10 + 3(5) = 25$, so:</p>
+                    <div class="highlight-box">
+                        $$E[V] = 0.5(19) + 0.5(25) = 22$$
+                        $$10 + 3\,CE^{1/3} = 22 \;\Rightarrow\; CE^{1/3} = 4 \;\Rightarrow\; CE = \$64$$
+                    </div>
+                    <p style="margin-bottom:0;">Same \$64, so every accept-or-reject decision is identical.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ============ TAB: PROBLEM SET C ============ -->
+<div class="tab-content" id="tab-probsc">
+
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <h2>The Road Bike Market (Watch the Probabilities)</h2>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">1</div>
+            <div style="flex: 1;">
+                <p>A consignment shop sells used road bikes. There are two types: high quality ($h$) and low quality ($l$). All market participants know that <strong>40 percent</strong> of the bikes are high quality and <strong>60 percent</strong> are low quality.</p>
+                <table class="givens-table">
+                    <tr><th></th><th>Maximum price buyers are willing to pay</th><th>Minimum price sellers are willing to accept</th></tr>
+                    <tr><td>High quality bike ($h$)</td><td>\$4,900</td><td>\$3,700</td></tr>
+                    <tr><td>Low quality bike ($l$)</td><td>\$2,500</td><td>\$1,900</td></tr>
+                </table>
+
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 0: Gather your givens</button>
+                <div class="example-body">
+                    <table class="givens-table">
+                        <tr><th>Type</th><th>$P$</th><th>$RP_B$</th><th>$RP_S$</th></tr>
+                        <tr><td>$h$</td><td>$0.4$</td><td>\$4,900</td><td>\$3,700</td></tr>
+                        <tr><td>$l$</td><td>$0.6$</td><td>\$2,500</td><td>\$1,900</td></tr>
+                    </table>
+                    <p style="margin-bottom:0;">The split is not 50/50 this time. Half the mistakes on problems like this come from writing $0.5$ on autopilot.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(a)</strong> Under perfect information, will both types be sold?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        <p style="margin-bottom:4px;">Market $h$: $\;4900 > 3700$ &nbsp;&#10003; trade</p>
+                        <p style="margin-bottom:0;">Market $l$: $\;2500 > 1900$ &nbsp;&#10003; trade</p>
+                    </div>
+                    <p style="margin-bottom:0;"><strong>Yes, both sell.</strong> With perfect information the 40/60 split is irrelevant.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(b)</strong> Buyers cannot tell the types apart, sellers can, and buyers are risk neutral. Will both types be sold?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">$WTP = EV_B$, with the weights the problem actually gave you: 0.4 and 0.6.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EV_B = 0.4(4900) + 0.6(2500) = 1960 + 1500 = \$3{,}460$$
+                    </div>
+                    <p style="margin-bottom:0;">$3460 < RP_S^h = 3700$, so <strong>only low quality bikes sell</strong>, and the price eventually settles between \$1,900 and \$2,500.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(c)</strong> Calculate the minimum fraction of the market that must be high quality for both types to sell. How does it compare to the actual 40%?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Solve for $P$: set $EV_B(P) = 3700$. The 40% given in the problem plays no role in this equation; it only matters for the comparison afterward.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$4900P + 2500(1 - P) \ge 3700$$
+                        $$2500 + 2400P \ge 3700$$
+                        $$2400P \ge 1200 \;\Rightarrow\; P \ge 0.50$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>The market needs at least 50% high quality, and it only has 40%.</strong> That gap is exactly why (b) unraveled.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(d)</strong> Now suppose buyers and sellers have utility $U(f) = f^{1/2}$. What is the maximum a buyer pays for a random bike? Will both types sell?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Average happiness equals what value, with the 0.4/0.6 weights.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <p>$\sqrt{4900} = 70$ and $\sqrt{2500} = 50$, so:</p>
+                    <div class="highlight-box">
+                        $$EU_B = 0.4(70) + 0.6(50) = 28 + 30 = 58$$
+                        $$\sqrt{WTP} = 58 \;\Rightarrow\; WTP = 58^2 = \$3{,}364$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>The max price is \$3,364, still below \$3,700, so only low quality sells.</strong> The risk premium is $3460 - 3364 = \$96$.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(e)</strong> Given this utility function, what is the minimum fraction of high quality bikes needed for both types to sell?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Happiness units: $EU(P) = \sqrt{3700}$. Keep the square root at 4+ decimals.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$70P + 50(1 - P) \ge \sqrt{3700} = 60.8276$$
+                        $$50 + 20P \ge 60.8276$$
+                        $$20P \ge 10.8276 \;\Rightarrow\; P \ge 0.5414$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>At least about 54.14%</strong>, up from 50%. Same direction as always: risk aversion shrinks the number of lemons a market can carry.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <h2>The Bet with Square Root Utility</h2>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">2</div>
+            <div style="flex: 1;">
+                <p>Sasha has wealth of \$42,500 and utility $U(W) = W^{1/2}$. She is offered an even-money bet of \$20,000 on the outcome of a match.</p>
+
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 0: Gather your givens</button>
+                <div class="example-body">
+                    <table class="givens-table">
+                        <tr><th>Outcome</th><th>Wealth</th><th>$\sqrt{W}$</th></tr>
+                        <tr><td>Win (prob $P$)</td><td>\$62,500</td><td>$250$</td></tr>
+                        <tr><td>Lose (prob $1-P$)</td><td>\$22,500</td><td>$150$</td></tr>
+                        <tr><td>No bet</td><td>\$42,500</td><td>$206.1553$</td></tr>
+                    </table>
+                    <p style="margin-bottom:0;">Same structure as the $\ln$ bets, different utility function. The method does not care which $U$ you were handed.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(a)</strong> What minimum probability of winning does she need to take the bet?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">$EU(\text{bet}) \ge U(42{,}500)$. Same equation as the $\ln$ problems, just with square roots.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$P(250) + (1-P)(150) \ge 206.1553$$
+                        $$150 + 100P \ge 206.1553$$
+                        $$100P \ge 56.1553 \;\Rightarrow\; P \ge 0.5616$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>She needs at least about a 56.16% chance of winning.</strong> Big bet relative to her wealth, so the required edge is large.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(b)</strong> Suppose the match is actually a fair coin flip ($P = 0.5$) and she takes the bet anyway. Find the certainty equivalent of her post-bet wealth and her risk premium. What do they say about the deal she made?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Her post-bet wealth is a 50/50 gamble over \$62,500 and \$22,500. Find $EU$, then the value that gives that happiness, then compare to her \$42,500.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EU = 0.5(250) + 0.5(150) = 200$$
+                        $$\sqrt{CE} = 200 \;\Rightarrow\; CE = \$40{,}000$$
+                        $$RP = EV - CE = 42{,}500 - 40{,}000 = \$2{,}500$$
+                    </div>
+                    <p style="margin-bottom:0;">Her expected wealth is unchanged at \$42,500 (fair bet), but in happiness terms the gamble is only worth a sure \$40,000 to her. <strong>Taking a fair 50/50 bet cost her the equivalent of \$2,500.</strong> That is why a risk averse person never takes a fair bet, and why (a) demanded an edge.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <h2>The Vintage Guitar Market (Big Spread)</h2>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;">3</div>
+            <div style="flex: 1;">
+                <p>A vintage shop sells used guitars: genuine vintage instruments ($h$) and ordinary ones dressed up to look vintage ($l$). Half of each. Buyers cannot tell them apart; sellers can.</p>
+                <table class="givens-table">
+                    <tr><th></th><th>Maximum price buyers are willing to pay</th><th>Minimum price sellers are willing to accept</th></tr>
+                    <tr><td>Genuine vintage ($h$)</td><td>\$8,000</td><td>\$5,000</td></tr>
+                    <tr><td>Dressed up ($l$)</td><td>\$1,000</td><td>\$800</td></tr>
+                </table>
+
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Step 0: Gather your givens</button>
+                <div class="example-body">
+                    <table class="givens-table">
+                        <tr><th>Type</th><th>$P$</th><th>$RP_B$</th><th>$RP_S$</th></tr>
+                        <tr><td>$h$</td><td>$0.5$</td><td>\$8,000</td><td>\$5,000</td></tr>
+                        <tr><td>$l$</td><td>$0.5$</td><td>\$1,000</td><td>\$800</td></tr>
+                    </table>
+                    <p style="margin-bottom:0;">Notice how far apart the two types sit. Keep an eye on what that spread does to the answers.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(a)</strong> Buyers are risk neutral. Will both types be sold?</p>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EV_B = 0.5(8000) + 0.5(1000) = \$4{,}500 < RP_S^h = \$5{,}000$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>No, only the dressed up guitars sell.</strong> Note the genuine article is worth \$3,000 more to buyers than sellers need, and that surplus still dies.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(b)</strong> Calculate the minimum fraction of genuine guitars needed for both types to sell, with risk neutral buyers.</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Solve for $P$: $EV_B(P) = 5000$.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$8000P + 1000(1 - P) \ge 5000$$
+                        $$1000 + 7000P \ge 5000$$
+                        $$7000P \ge 4000 \;\Rightarrow\; P \ge 0.5714$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>At least about 57.14% genuine.</strong></p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(c)</strong> Now buyers and sellers have utility $U(f) = f^{1/3}$. What is the maximum a buyer pays for a random guitar? Will both types sell?</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Cube root this time: $8000^{1/3} = 20$ and $1000^{1/3} = 10$. Average happiness equals what value, then cube both sides.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$EU_B = 0.5(20) + 0.5(10) = 15$$
+                        $$WTP^{1/3} = 15 \;\Rightarrow\; WTP = 15^3 = \$3{,}375$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>The max price is \$3,375, and only the dressed up guitars sell.</strong> Compare to the risk neutral \$4,500: the risk premium here is \$1,125, enormous because the two outcomes sit so far apart. Big spread, big risk, big discount.</p>
+                </div>
+
+                <p style="margin-top: 18px;"><strong>(d)</strong> Given this utility function, what is the minimum fraction of genuine guitars needed for both types to sell? Compare it to (b).</p>
+                <button class="example-toggle" onclick="toggleExample(this)"><span class="arrow">&#9654;</span> Set it up</button>
+                <div class="example-body">
+                    <p style="margin-bottom:0;">Happiness units: $EU(P) = 5000^{1/3}$. Keep the cube root at 4+ decimals.</p>
+                </div>
+                <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+                <div class="solution-body">
+                    <div class="highlight-box">
+                        $$20P + 10(1 - P) \ge 5000^{1/3} = 17.0998$$
+                        $$10 + 10P \ge 17.0998$$
+                        $$10P \ge 7.0998 \;\Rightarrow\; P \ge 0.7100$$
+                    </div>
+                    <p style="margin-bottom:0;"><strong>At least about 71%, versus 57.14% when risk neutral.</strong> That is a 14 point jump, much larger than in the e-bike or laptop markets, because the wider the gap between the good and bad outcome, the more a risk averse buyer discounts the gamble. Spread drives the size of the risk premium, and the risk premium drives how fragile the market is.</p>
                 </div>
             </div>
         </div>
