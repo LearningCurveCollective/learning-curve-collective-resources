@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared builder for the SAT Desmos series (build_desmos1.py, build_desmos2.py). Reuses the SAT Math topic-sheet shell
+"""Shared builder for the SAT Desmos series (build_desmos1.py, build_desmos2.py, build_desmos3.py). Reuses the SAT Math topic-sheet shell
 (SAT-Math-1-Linear-Equations.html: CSS, tabs, graders, Desmos panel, results kit) and swaps
 in Desmos content. Adds, on top of the shell:
   - a "Desmos lines" mock (dz) that shows what to type and what Desmos reports
@@ -8,7 +8,9 @@ in Desmos content. Adds, on top of the shell:
   - an optional Bluebook Tools tab ported from SAT-Desmos-Strategies.html (sheet 1); its source is the
     snapshot desmos_tools_tab.json, so the build does not depend on that older sheet staying as it is
   - the LCCo voice pass (desmos_voice.py): visible shell, results-kit and tools-tab copy, applied last
-Run build_desmos1.py / build_desmos2.py; they write straight into test-prep/sat/.
+  - an optional drills-only layout (drills=True, sheet 3): no stepper tab, the challenge tab becomes
+    Practice by Move with a By move / Shuffled switch, and the practice set becomes the Timed Practice Set
+Run build_desmos1.py / build_desmos2.py / build_desmos3.py; they write straight into test-prep/sat/.
 """
 import json, re, sys, os
 
@@ -24,7 +26,7 @@ FUNC_BUILDER = os.path.join(HERE, 'build_functions.py')                  # figur
 if not os.path.exists(FUNC_BUILDER):                                     # e.g. when run from the _build staging folder
     FUNC_BUILDER = os.path.join(ROOT, '.claude', 'skills', 'sat-math-topic-sheet', 'scripts', 'build_functions.py')
 TOOLS_SNAPSHOT = os.path.join(HERE, 'desmos_tools_tab.json')             # Bluebook Tools tab source
-OLD_DESMOS = os.path.join(SAT_DIR, 'SAT-Desmos-Strategies.html')         # only read if the snapshot is missing
+OLD_DESMOS = os.path.join(ROOT, 'retired-sheets', 'SAT-Desmos-Strategies.html')   # retired 2026-11-12; only read if the snapshot is missing
 SITE = 'https://learningcurvecollective.github.io/learning-curve-collective-resources/'
 
 
@@ -56,7 +58,7 @@ def nw_all(o):
     if isinstance(o, list):
         return [nw_all(v) for v in o]
     if isinstance(o, dict):
-        return {k: (v if k in ('desmos', 'accept', 'fig', 'type', 'diff', 'sec') else nw_all(v)) for k, v in o.items()}
+        return {k: (v if k in ('desmos', 'accept', 'fig', 'type', 'diff', 'sec', 'grp') else nw_all(v)) for k, v in o.items()}
     return o
 
 
@@ -227,6 +229,85 @@ def bluebook_tools_parts():
     return html, css, js
 
 
+# ------------------------------------------------------------------ drills-only layout (SAT Desmos 3)
+CH_ORDER_JS = r"""
+/* Practice by Move: grouped by move, or shuffled so the student identifies the move */
+var chShuffle = false, chPerm = null;
+function chOrder() {
+    var n = CHALLENGE.length, a = [];
+    for (var k = 0; k < n; k++) a.push(k);
+    if (!chShuffle) return a;
+    if (!chPerm || chPerm.length !== n) {
+        chPerm = a.slice();
+        for (var j = n - 1; j > 0; j--) { var r = Math.floor(Math.random() * (j + 1)); var t = chPerm[j]; chPerm[j] = chPerm[r]; chPerm[r] = t; }
+    }
+    return chPerm;
+}
+function chSetOrder(sh) { chShuffle = sh; if (sh) chPerm = null; renderChallenge(); }
+"""
+
+
+def drills_mode(html):
+    """No worked-example stepper. The challenge tab becomes Practice by Move (grouped, with a Shuffled
+    switch) and the practice set becomes the Timed Practice Set. Applied after the voice pass, so the
+    anchors below are the shell's strings as the voice table leaves them."""
+    r = replace_once
+    # --- tab bar: drop the stepper tab, put Practice by Move before the timed set, renumber
+    html = r(html, """<button class="tab-button" data-group="core" onclick="switchTab('core', this)">2. Worked Examples &amp; Practice</button>""", '')
+    html = sub1(html, r'    <!-- ============ TAB 2: STEPPER ============ -->.*?(?=    <!-- ============ TAB 3: FLUENCY)', '', flags=re.S)
+    html = r(html, '<span class="row-label">Learn</span>', '<span class="row-label">Start</span>')
+    html = r(html, '>3. Skill Practice</button>', '>2. Skill Practice</button>')
+    html = r(html, """onclick="switchTab('gauntlet', this)">4. SAT-Style Practice</button>""", """onclick="switchTab('challenge', this)">3. Practice by Move</button>""")
+    html = r(html, """onclick="switchTab('challenge', this)">5. Challenge Questions</button>""", """onclick="switchTab('gauntlet', this)">4. Timed Practice Set</button>""")
+    html = r(html, '>6. Exit Ticket</button>', '>5. Exit Ticket</button>')
+    html = r(html, '<div class="section-number">3</div><h2>Skill Practice drills: mixed reps</h2>', '<div class="section-number">2</div><h2>Skill Practice: quick drills</h2>')
+    html = r(html, '<div class="section-number">4</div><h2>SAT-Style Practice: Choose Your Approach</h2>', '<div class="section-number">4</div><h2>Timed Practice Set</h2>')
+    html = r(html, '<div class="section-number">5</div><h2>Challenge questions</h2>', '<div class="section-number">3</div><h2>Practice by move</h2>')
+    html = r(html, '<div class="section-number">6</div><h2>Exit ticket</h2>', '<div class="section-number">5</div><h2>Exit ticket</h2>')
+    # --- no stepper: guard its renderer, and take quick checks out of the results kit
+    html = r(html, "function renderStep() {\n    var i = stepState.idx, s = STEPS[i];", "function renderStep() {\n    if (!STEPS.length) return;\n    var i = stepState.idx, s = STEPS[i];")
+    html = sub1(html, r"\n[ \t]*L\.push\('Quick checks: '[^\n]*", '')
+    html = sub1(html, r"\n[ \t]*tile\(s\.quick\.correct \+ '/' \+ s\.quick\.attempted, 'quick checks \(of ' \+ s\.quick\.total \+ '\)'\) \+", '')
+    html = r(html, "tile(s.quick.correct + '/' + s.quick.attempted, 'quick checks') + ", '')
+    html = sub1(html, r"\n[ \t]*h \+= '<h2>Quick checks \(worked examples\)</h2>'[^\n]*", '')
+    # --- results kit labels for this layout
+    html = r(html, "L.push('Practice set: '", "L.push('Timed practice set: '")
+    html = r(html, "L.push('Challenge: '", "L.push('Practice by move: '")
+    if html.count("'practice set'") != 2:
+        sys.exit("drills: expected two 'practice set' tile labels")
+    html = html.replace("'practice set'", "'timed set'")
+    html = r(html, "'practice answered, not scored'", "'timed set answered, not scored'")
+    html = r(html, "'practice answered'", "'timed set answered'")
+    html = r(html, "'challenge (of '", "'by move (of '")
+    html = r(html, "tile(s.challenge.correct + '/' + s.challenge.checked, 'challenge')", "tile(s.challenge.correct + '/' + s.challenge.checked, 'by move')")
+    html = r(html, "h += '<h2>Practice set' + ", "h += '<h2>Timed practice set' + ")
+    html = r(html, '&#8635; Retake practice set</button>', '&#8635; Retake timed set</button>')
+    html = r(html, "{ tag: 'Practice Q' + i.n, i: i }", "{ tag: 'Timed set Q' + i.n, i: i }")
+    html = r(html, "{ tag: 'Challenge ' + i.n, i: i }", "{ tag: 'By move, question ' + i.n, i: i }")
+    html = r(html, "row(['C' + i.n + (i.starred", "row([i.n + (i.starred")
+    html = r(html, "h += '<h2>Challenge questions</h2>' + table(['#', 'Difficulty',", "h += '<h2>Practice by move</h2>' + table(['#', 'Move',")
+    html = r(html, 'saves your responses from the practice set, challenge questions, drills, quick checks, exit ticket, and takeaway in one file.',
+             'saves your responses from the skill practice, the practice by move, the timed set, the exit ticket, and your takeaway in one file.')
+    # --- Practice by Move: group headings, question numbers, the order switch
+    html = r(html, "function renderChallenge() {\n    var host = document.getElementById('challengeArea');\n    var html = '';\n",
+             CH_ORDER_JS.strip('\n') + "\nfunction renderChallenge() {\n    var host = document.getElementById('challengeArea');\n    var html = '';\n"
+             "    var order = chOrder();\n"
+             "    html += '<div class=\"toolbar\" style=\"margin-bottom:6px;\"><span style=\"font-size:13px; font-weight:700; color:var(--brown-dark);\">Question order</span> ' +\n"
+             "        '<button class=\"btn btn-sm ' + (chShuffle ? 'btn-ghost' : 'btn-green') + '\" onclick=\"chSetOrder(false)\">By move</button> ' +\n"
+             "        '<button class=\"btn btn-sm ' + (chShuffle ? 'btn-green' : 'btn-ghost') + '\" onclick=\"chSetOrder(true)\">Shuffled</button> ' +\n"
+             "        '<span style=\"font-size:13px; color:var(--text-medium);\">' + (chShuffle ? 'The move label appears after you check each answer.' : 'Questions are grouped by the move they practice.') + '</span></div>';\n")
+    html = r(html, "    CHALLENGE.forEach(function(p, i) {\n        var st = chState[i] || {};\n        html += '<div class=\"drill\" style=\"border-left-color: var(--gold);\">",
+             "    order.forEach(function(i, pos) {\n        var p = CHALLENGE[i];\n        var st = chState[i] || {};\n"
+             "        if (!chShuffle && p.grp && (pos === 0 || CHALLENGE[order[pos - 1]].grp !== p.grp)) html += '<h3 style=\"font-family:\\'Switzer\\',\\'Space Grotesk\\',sans-serif; color:var(--green-dark); margin:22px 0 10px;\">' + p.grp + '</h3>';\n"
+             "        html += '<div class=\"drill\" style=\"border-left-color: var(--gold);\">")
+    html = r(html, ">Challenge ' + (i+1) + ' of ' + CHALLENGE.length + (p.diff ? '<span class=\"diff-chip dark\">' + p.diff + '</span>' : '')",
+             ">Question ' + (pos+1) + ' of ' + CHALLENGE.length + ((p.diff && (!chShuffle || st.checked)) ? '<span class=\"diff-chip dark\">' + p.diff + '</span>' : '') + ((chShuffle && st.checked) ? '<span style=\"text-transform:none; letter-spacing:0; font-weight:600;\">No. ' + (i+1) + ' in the by-move order</span>' : '')")
+    # in the shuffled view the starred / extra chip also waits until the answer is checked
+    html = r(html, "(p.ess ? '<span class=\"diff-chip dark star-chip\" title=\"Uses a starred move\">&#9733; starred move</span>' : '<span class=\"diff-chip dark\" style=\"opacity:0.7\" title=\"Uses an unstarred move\">extra</span>') + '</div>';",
+             "((chShuffle && !st.checked) ? '' : (p.ess ? '<span class=\"diff-chip dark star-chip\" title=\"Uses a starred move\">&#9733; starred move</span>' : '<span class=\"diff-chip dark\" style=\"opacity:0.7\" title=\"Uses an unstarred move\">extra</span>')) + '</div>';")
+    return html
+
+
 # ------------------------------------------------------------------ the build
 def build(c):
     html = open(SRC, encoding='utf-8').read()
@@ -338,6 +419,8 @@ def build(c):
 
     # --- LCCo voice pass: visible shell and results-kit copy
     html = voice.apply(html, voice.SHELL, 'shell')
+    if c.get('drills'):
+        html = drills_mode(html)
 
     if '\u2014' in html:
         i = html.index('\u2014')

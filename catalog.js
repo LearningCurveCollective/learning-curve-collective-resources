@@ -206,7 +206,7 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "Math",
-     "blurb": "Get fluent with Desmos first, then work the topic sheets in order."
+     "blurb": "Start with SAT Desmos 1, work the topic sheets in order, then use SAT Desmos 2 and the mixed practice in SAT Desmos 3."
     },
     {
      "name": "Full-length practice",
@@ -2671,8 +2671,9 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "test-prep--sat--sat-desmos-strategies",
    "path": "test-prep/sat/SAT-Desmos-Strategies.html",
    "title": "SAT Math: Desmos Strategies",
-   "description": "Shows how to use Desmos on every digital SAT Math question, with calculator basics, thirteen techniques, answer formatting tips, a formula list, practice, and a timed 15-question SAT Gauntlet.",
+   "description": "Retired on 2026-11-12 and replaced by the SAT Desmos series (SAT Desmos 1, 2 and 3). This address now holds a short forwarding page that links to the three sheets; the original sheet is kept in retired-sheets/.",
    "subject": "sat",
+   "hidden": true,
    "topic": "Math",
    "order": 8,
    "levels": [
@@ -2691,7 +2692,6 @@ window.OPEN_LEARNING_CATALOG = {
    "exams": [
     "SAT"
    ],
-   "featured": 1,
    "content": "theory+practice",
    "builds_on": []
   },
@@ -2720,6 +2720,7 @@ window.OPEN_LEARNING_CATALOG = {
    "exams": [
     "SAT"
    ],
+   "featured": 1,
    "content": "theory+practice",
    "builds_on": []
   },
@@ -2749,7 +2750,7 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "practice",
    "builds_on": [
-    "test-prep--sat--sat-desmos-strategies"
+    "test-prep--sat--sat-desmos-1-core-moves"
    ]
   },
   {
@@ -2849,13 +2850,45 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-desmos-3-mixed-practice",
+   "path": "test-prep/sat/SAT-Desmos-3-Mixed-Practice.html",
+   "title": "SAT Desmos 3: Mixed Practice",
+   "description": "Practice for the 17 Desmos skills from SAT Desmos 1 and 2, with no new teaching: quick skill-practice questions, 37 questions grouped by move with a shuffle option, a 15-question timed SAT-style set with Desmos and algebra solutions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "order": 14,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "Desmos",
+    "calculator",
+    "mixed practice",
+    "timed practice",
+    "regression",
+    "systems of equations"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-desmos-1-core-moves",
+    "test-prep--sat--sat-desmos-2-next-steps"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Full-length practice",
-   "order": 14,
+   "order": 15,
    "levels": [
     "High School"
    ],
@@ -2883,7 +2916,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "A checklist for the two days before the SAT, PSAT, or ACT, with a clickable timeline: sleep, a final review of your revision bank, what to bring (ID first), test morning, your strategy during the test, and the two personal reminders you'll carry into the room. Pick your test and every section updates.",
    "subject": "sat",
    "topic": "The final 48 hours",
-   "order": 15,
+   "order": 16,
    "levels": [
     "High School"
    ],
@@ -2927,7 +2960,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "Test day",
-   "order": 15,
+   "order": 16,
    "levels": [
     "High School"
    ],
@@ -3122,7 +3155,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "For tutors",
-   "order": 17,
+   "order": 18,
    "levels": [
     "High School"
    ],

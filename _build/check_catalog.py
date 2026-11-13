@@ -11,7 +11,8 @@ cat = json.loads(js[js.index('{'):js.rindex('}') + 1])
 known = {r['path'] for r in cat['resources']}
 disk = set()
 for d, dirs, files in os.walk(root):
-    dirs[:] = [x for x in dirs if not x.startswith('.') and not x.startswith('_') and x != 'assets']
+    # retired-sheets/ holds sheets taken off the site for good: unlisted, so no catalog entry is expected
+    dirs[:] = [x for x in dirs if not x.startswith('.') and not x.startswith('_') and x not in ('assets', 'retired-sheets')]
     for f in files:
         if f.endswith('.html'):
             p = os.path.relpath(os.path.join(d, f), root)

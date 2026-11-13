@@ -405,7 +405,8 @@ CONFIG = dict(
     exit_links=('<p style="font-size:14px; margin-top:10px;"><strong>Practice in the College Board version of Desmos.</strong> Desmos publishes this version of its graphing calculator, and the outputs on this sheet were read there. <a href="' + CB_DESMOS + '" ' + A_STYLE + '>Open the College Board version of Desmos &#8594;</a></p>\n'
                 '            <p style="font-size:14px; margin-top:10px;">For skill-by-skill practice, <strong>Khan Academy\'s Official Digital SAT Prep</strong> sorts questions by topic: the units on <em>nonlinear functions</em>, <em>equivalent expressions</em>, and <em>circles</em> are good places to use these moves. <a href="https://www.khanacademy.org/digital-sat" ' + A_STYLE + '>Open Khan Academy &#8594;</a></p>\n'
                 '            <p style="font-size:14px; margin-top:10px;">The algebra behind these moves is in <a href="' + QUAD_URL + '" ' + A_STYLE + '>SAT Math 2: Quadratics &#8594;</a> and <a href="' + FUNC_URL + '" ' + A_STYLE + '>SAT Math 3: Functions &#8594;</a></p>\n'
-                '            <p style="font-size:14px; margin-top:10px;">New to Desmos, or want to review the basics? Start with <a href="' + SITE + 'test-prep/sat/SAT-Desmos-1-Core-Moves.html" ' + A_STYLE + '>SAT Desmos 1: Core Moves &#8594;</a></p>'),
+                '            <p style="font-size:14px; margin-top:10px;">New to Desmos, or want to review the basics? Start with <a href="' + SITE + 'test-prep/sat/SAT-Desmos-1-Core-Moves.html" ' + A_STYLE + '>SAT Desmos 1: Core Moves &#8594;</a></p>\n'
+                '            <p style="font-size:14px; margin-top:10px;">For mixed practice on the moves from both guides, including a timed set, go to <a href="' + SITE + 'test-prep/sat/SAT-Desmos-3-Mixed-Practice.html" ' + A_STYLE + '>SAT Desmos 3: Mixed Practice &#8594;</a></p>'),
 )
 
 if __name__ == '__main__':

@@ -1,0 +1,442 @@
+{
+ "note": "Practice questions (26) and timed-set questions (15) taken from SAT-Desmos-Strategies.html on 2026-11-12, before any rewording. build_desmos3.py adapts them.",
+ "practice": [
+  {
+   "n": 1,
+   "tech": 1,
+   "stem": "<p>In the parabola $y = 2x^{2} - 7$, what is the $x$-coordinate of the positive $x$-intercept, rounded to the nearest hundredth?</p>",
+   "sol": "<p><strong>Given:</strong> $y = 2x^{2} - 7$; want the positive root.</p><p>Graph and hover the right-hand $x$-intercept: $(1.871,\\,0)$. Or: $2x^2 = 7 \\Rightarrow x = \\sqrt{3.5} \\approx 1.87$.</p><span class=\"answer-pill\">1.87</span>",
+   "pill": [
+    "1.87"
+   ]
+  },
+  {
+   "n": 2,
+   "tech": 1,
+   "stem": "<p>The graph of $y = -x^{2} + 4x + 6$ has two $x$-intercepts. What is the $x$-coordinate of the one that is positive, rounded to the nearest hundredth?</p>",
+   "sol": "<p><strong>Given:</strong> $y = -x^{2} + 4x + 6$.</p><p>Hover the right-hand intercept: $(5.162,\\,0)$. Quadratic formula check: $x = 2 \\pm \\sqrt{10}$, and $2 + \\sqrt{10} \\approx 5.16$.</p><span class=\"answer-pill\">5.16</span>",
+   "pill": [
+    "5.16"
+   ]
+  },
+  {
+   "n": 3,
+   "tech": 2,
+   "stem": "<p>$$4x - 3y = 10$$ $$x + 2y = 8$$ If $(x,\\,y)$ is the solution to the system above, what is the value of $x + y$?</p>",
+   "sol": "<p><strong>Given:</strong> two lines; want $x + y$ at their intersection.</p><p>Graph both; they cross at $(4,\\,2)$. So $x + y = 6$. (Read the question twice: it asks for the sum, not $x$.)</p><span class=\"answer-pill\">6</span>",
+   "pill": [
+    "6"
+   ]
+  },
+  {
+   "n": 4,
+   "tech": 2,
+   "stem": "<p>$$y = -3x + 11$$ $$y = x - 5$$ The solution to the system above is $(x,\\,y)$. What is the value of $y$?</p>",
+   "sol": "<p><strong>Given:</strong> two lines in slope-intercept form; want the $y$-value of the intersection.</p><p>Hover the crossing: $(4,\\,-1)$. Check: $-3x + 11 = x - 5 \\Rightarrow 4x = 16 \\Rightarrow x = 4$, $y = -1$.</p><span class=\"answer-pill\">−1</span>",
+   "pill": [
+    "−1"
+   ]
+  },
+  {
+   "n": 5,
+   "tech": 3,
+   "stem": "<p>The function $f(x) = x^{2} - 6x + 5$ intersects the $x$-axis at two points. What is the sum of the $x$-coordinates of those points?</p>",
+   "sol": "<p><strong>Given:</strong> $f(x) = x^{2} - 6x + 5$.</p><p>The $x$-intercepts read $(1,\\,0)$ and $(5,\\,0)$, so the sum is $6$. Check: $(x-1)(x-5) = 0$.</p><span class=\"answer-pill\">6</span>",
+   "pill": [
+    "6"
+   ]
+  },
+  {
+   "n": 6,
+   "tech": 3,
+   "stem": "<p>At what positive value of $x$ does the graph of $f(x) = 2x^{2} - 5x - 3$ cross the $x$-axis?</p>",
+   "sol": "<p><strong>Given:</strong> $f(x) = 2x^{2} - 5x - 3$; want the positive zero.</p><p>Intercepts at $(-0.5,\\,0)$ and $(3,\\,0)$. Check: $(2x+1)(x-3) = 0$.</p><span class=\"answer-pill\">3</span>",
+   "pill": [
+    "3"
+   ]
+  },
+  {
+   "n": 7,
+   "tech": 4,
+   "stem": "<p>How many solutions does the following system have? $$6x - 4y = 10$$ $$3x - 2y = 5$$<ul class=\"choices\"><li><span class=\"ltr\">A</span>Zero</li><li><span class=\"ltr\">B</span>Exactly one</li><li><span class=\"ltr\">C</span>Exactly two</li><li><span class=\"ltr\">D</span>Infinitely many</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> two equations in standard form.</p><p>Graph both: only <em>one</em> line appears, because the first equation is exactly twice the second. Every point on the line satisfies both.</p><span class=\"answer-pill\">D, infinitely many</span>",
+   "pill": [
+    "D, infinitely many"
+   ]
+  },
+  {
+   "n": 8,
+   "tech": 4,
+   "stem": "<p>How many solutions does the following system have? $$2x + 3y = 6$$ $$4x + 6y = 9$$<ul class=\"choices\"><li><span class=\"ltr\">A</span>Zero</li><li><span class=\"ltr\">B</span>Exactly one</li><li><span class=\"ltr\">C</span>Exactly two</li><li><span class=\"ltr\">D</span>Infinitely many</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> two equations in standard form.</p><p>The graphs are parallel: both have slope $-\\tfrac{2}{3}$ but different intercepts ($y=2$ vs. $y=1.5$). Parallel lines never meet.</p><span class=\"answer-pill\">A, zero</span>",
+   "pill": [
+    "A, zero"
+   ]
+  },
+  {
+   "n": 9,
+   "tech": 5,
+   "stem": "<p>How many times does the circle $(x - 2)^{2} + (y - 3)^{2} = 9$ intersect the $x$-axis?</p>",
+   "sol": "<p><strong>Given:</strong> center $(2,\\,3)$, radius $3$.</p><p>The lowest point is at $y = 3 - 3 = 0$, exactly on the axis. The circle is <em>tangent</em> to the $x$-axis, touching it once at $(2,\\,0)$.</p><span class=\"answer-pill\">1</span>",
+   "pill": [
+    "1"
+   ]
+  },
+  {
+   "n": 10,
+   "tech": 5,
+   "stem": "<p>How many times does the graph of $(x + 2)^{2} + (y - 1)^{2} = 25$ intersect the $x$-axis?</p>",
+   "sol": "<p><strong>Given:</strong> center $(-2,\\,1)$, radius $5$.</p><p>The center is only 1 unit above the axis and the radius is 5, so the circle dips well below it and crosses twice, at $x \\approx 2.90$ and $x \\approx -6.90$.</p><span class=\"answer-pill\">2</span>",
+   "pill": [
+    "2"
+   ]
+  },
+  {
+   "n": 11,
+   "tech": 6,
+   "stem": "<p>$$h(x) = -(x - 1)(x + 7)$$ For what value of $x$ does $h$ reach its maximum value, and what is that maximum?</p>",
+   "sol": "<p><strong>Given:</strong> zeros at $x = 1$ and $x = -7$; parabola opens down.</p><p>Vertex $x$ is the midpoint of the zeros: $\\dfrac{1 + (-7)}{2} = -3$. Then $h(-3) = -(-4)(4) = 16$. Desmos shows the vertex dot at $(-3,\\,16)$.</p><span class=\"answer-pill\">x = −3, maximum 16</span>",
+   "pill": [
+    "x = −3, maximum 16"
+   ]
+  },
+  {
+   "n": 12,
+   "tech": 6,
+   "stem": "<p>What is the minimum value of the function $f(x) = 2x^{2} + 8x - 3$?</p>",
+   "sol": "<p><strong>Given:</strong> $f(x) = 2x^{2} + 8x - 3$, opening upward.</p><p>Hover the vertex: $(-2,\\,-11)$. The question asks for the minimum <em>value</em>, which is the $y$-coordinate. Check: $x = -\\dfrac{b}{2a} = -2$, $f(-2) = 8 - 16 - 3 = -11$.</p><span class=\"answer-pill\">−11</span>",
+   "pill": [
+    "−11"
+   ]
+  },
+  {
+   "n": 13,
+   "tech": 7,
+   "stem": "<p>$$f(x) = x^{2} - 6x + 10$$ The graph of $f$ is translated down 4 units. How many times does the translated graph intersect the $x$-axis?</p>",
+   "sol": "<p><strong>Given:</strong> $f(x) = x^{2} - 6x + 10$; new graph is $f(x) - 4$.</p><p>Vertex of $f$: $(3,\\,1)$, above the axis, so $f$ has no real zeros. Down 4 puts the vertex at $(3,\\,-3)$; an upward parabola with vertex below the axis crosses twice.</p><span class=\"answer-pill\">2</span>",
+   "pill": [
+    "2"
+   ]
+  },
+  {
+   "n": 14,
+   "tech": 7,
+   "stem": "<p>$$f(x) = -x^{2} + 2x + 3$$ The graph of $f$ is translated up 3 units. What is the maximum value of the translated function?</p>",
+   "sol": "<p><strong>Given:</strong> $f(x) = -x^{2} + 2x + 3$; new graph is $f(x) + 3$.</p><p>Vertex of $f$ reads $(1,\\,4)$. Shifting up 3 moves it to $(1,\\,7)$, so the new maximum value is $7$.</p><span class=\"answer-pill\">7</span>",
+   "pill": [
+    "7"
+   ]
+  },
+  {
+   "n": 15,
+   "tech": 8,
+   "stem": "<p>The data set $\\{4,\\ 4,\\ 9,\\ 11,\\ 15,\\ 20,\\ 21\\}$ has mean $m$ and median $d$. What is $m - d$?</p>",
+   "sol": "<p><strong>Given:</strong> seven values (already sorted).</p><p><span class=\"kbd\">mean(...)</span> gives $\\dfrac{84}{7} = 12$; <span class=\"kbd\">median(...)</span> gives the 4th value, $11$.</p>$$m - d = 12 - 11 = 1$$<span class=\"answer-pill\">1</span>",
+   "pill": [
+    "1"
+   ]
+  },
+  {
+   "n": 16,
+   "tech": 8,
+   "stem": "<p>What is the sum of the mean and the median of the data set $\\{6,\\ 9,\\ 10,\\ 10,\\ 14,\\ 17,\\ 22,\\ 24\\}$?</p>",
+   "sol": "<p><strong>Given:</strong> eight values.</p><p>Mean $= \\dfrac{112}{8} = 14$. With an even count, the median is the average of the 4th and 5th values: $\\dfrac{10 + 14}{2} = 12$.</p>$$14 + 12 = 26$$<span class=\"answer-pill\">26</span>",
+   "pill": [
+    "26"
+   ]
+  },
+  {
+   "n": 17,
+   "tech": 9,
+   "stem": "<p>What is the sum of the solutions to $|2x + 3| = 9$?</p>",
+   "sol": "<p><strong>Given:</strong> $|2x + 3| = 9$.</p><p>Graph $y = |2x+3|$ and $y = 9$; intersections at $x = 3$ and $x = -6$.</p>$$3 + (-6) = -3$$<span class=\"answer-pill\">−3</span>",
+   "pill": [
+    "−3"
+   ]
+  },
+  {
+   "n": 18,
+   "tech": 9,
+   "stem": "<p>What is the sum of the solutions to $|3x - 4| = 8$? Enter your answer as a fraction or a decimal.</p>",
+   "sol": "<p><strong>Given:</strong> $|3x - 4| = 8$.</p><p>Crossings at $x = 4$ and $x = -\\dfrac{4}{3}$ (Desmos shows $-1.333$).</p>$$4 + \\left(-\\dfrac{4}{3}\\right) = \\dfrac{8}{3}$$<p>Enter <span class=\"kbd\">8/3</span> or <span class=\"kbd\">2.666</span> or <span class=\"kbd\">2.667</span>, not <span class=\"kbd\">2.67</span>.</p><span class=\"answer-pill\">8/3</span>",
+   "pill": [
+    "8/3"
+   ]
+  },
+  {
+   "n": 19,
+   "tech": 10,
+   "stem": "<p>$$y \\le 2x - 1$$ $$y \\ge -x + 5$$ The point $(3,\\,y)$ is a solution to the system of inequalities above. What is one possible value of $y$?</p>",
+   "sol": "<p><strong>Given:</strong> $x = 3$; want $y$ inside both shaded regions.</p><p>Along the vertical line $x = 3$, the overlap runs from $y = 2$ up to $y = 5$ (solid boundaries, so both endpoints count).</p><p>Check: $y \\le 5$ and $y \\ge 2$.</p><span class=\"answer-pill\">any y with 2 ≤ y ≤ 5</span>",
+   "pill": [
+    "any y with 2 ≤ y ≤ 5"
+   ]
+  },
+  {
+   "n": 20,
+   "tech": 10,
+   "stem": "<p>$$y > x + 1$$ $$y < -2x + 10$$ Which of the following points is a solution to the system of inequalities above?<ul class=\"choices\"><li><span class=\"ltr\">A</span>$(1,\\,1)$</li><li><span class=\"ltr\">B</span>$(2,\\,4)$</li><li><span class=\"ltr\">C</span>$(0,\\,12)$</li><li><span class=\"ltr\">D</span>$(4,\\,3)$</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> four candidate points; want the one in the doubly-shaded region.</p><p>Plot the points on top of the inequalities: only $(2,\\,4)$ lands in the overlap. Check: $4 > 3$ ✓ and $4 < 6$ ✓. $(0,\\,12)$ fails the second inequality, the other two fail the first.</p><span class=\"answer-pill\">B</span>",
+   "pill": [
+    "B"
+   ]
+  },
+  {
+   "n": 21,
+   "tech": 11,
+   "stem": "<p>Which of the following is an equation of a line with slope $-2$ and $y$-intercept $6$?<ul class=\"choices\"><li><span class=\"ltr\">A</span>$x + 2y = 6$</li><li><span class=\"ltr\">B</span>$2x - y = 6$</li><li><span class=\"ltr\">C</span>$2x + y = 6$</li><li><span class=\"ltr\">D</span>$y = 2x + 6$</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> the line must pass through $(0,\\,6)$ and fall 2 for every 1 to the right.</p><p>Graph all four. Only $2x + y = 6$ crosses the $y$-axis at 6 <em>and</em> slopes downward. Rewritten: $y = -2x + 6$.</p><span class=\"answer-pill\">C</span>",
+   "pill": [
+    "C"
+   ]
+  },
+  {
+   "n": 22,
+   "tech": 11,
+   "stem": "<p>Which of the following is an equation of a line that has an $x$-intercept of $3$ and passes through the point $(6,\\,-4)$?<ul class=\"choices\"><li><span class=\"ltr\">A</span>$3x + 4y = 12$</li><li><span class=\"ltr\">B</span>$4x - 3y = 12$</li><li><span class=\"ltr\">C</span>$3x - 4y = 12$</li><li><span class=\"ltr\">D</span>$4x + 3y = 12$</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> the line must pass through $(3,\\,0)$ and $(6,\\,-4)$.</p><p>Plot the point $(6,\\,-4)$ with the four lines; only $4x + 3y = 12$ goes through it while also hitting $(3,\\,0)$. Check: $4(6) + 3(-4) = 12$ ✓. Choice B has the right $x$-intercept but the wrong slope.</p><span class=\"answer-pill\">D</span>",
+   "pill": [
+    "D"
+   ]
+  },
+  {
+   "n": 23,
+   "tech": 12,
+   "stem": "<p>$$5x - 2y = 7$$ $$10x + ky = 3$$ In the system above, $k$ is a constant. For what value of $k$ does the system have no solutions?</p>",
+   "sol": "<p><strong>Given:</strong> no solutions means parallel, distinct lines.</p><p>Slope of line 1: $\\dfrac{5}{2}$. Slope of line 2: $-\\dfrac{10}{k}$. Parallel when $-\\dfrac{10}{k} = \\dfrac{5}{2} \\Rightarrow k = -4$. The slider confirms the lines never meet at $k = -4$, and $10x - 4y = 3$ is not a multiple of $5x - 2y = 7$, so they're distinct.</p><span class=\"answer-pill\">k = −4</span>",
+   "pill": [
+    "k = −4"
+   ]
+  },
+  {
+   "n": 24,
+   "tech": 12,
+   "stem": "<p>$$2x + 5y = 12$$ $$kx + 10y = 24$$ In the system above, $k$ is a constant. For what value of $k$ does the system have infinitely many solutions?</p>",
+   "sol": "<p><strong>Given:</strong> infinitely many solutions means the two equations describe the <em>same</em> line.</p><p>Slide $k$ until the second line sits exactly on top of the first; that happens at $k = 4$. Check: doubling $2x + 5y = 12$ gives $4x + 10y = 24$.</p><span class=\"answer-pill\">k = 4</span>",
+   "pill": [
+    "k = 4"
+   ]
+  },
+  {
+   "n": 25,
+   "tech": 13,
+   "stem": "<p>Which equation best approximates the line of best fit for the points $(1, 3)$, $(4, 8)$, $(6, 11)$, and $(10, 18)$?<ul class=\"choices\"><li><span class=\"ltr\">A</span>$y = 1.7x + 1.3$</li><li><span class=\"ltr\">B</span>$y = 1.3x + 1.7$</li><li><span class=\"ltr\">C</span>$y = 2.1x - 0.4$</li><li><span class=\"ltr\">D</span>$y = 0.6x + 4.5$</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> four data points; want $y \\approx mx + b$.</p><p>Table, then <span class=\"kbd\">y1 ~ m x1 + b</span>: Desmos reports $m \\approx 1.661$, $b \\approx 1.281$. Closest choice: A. (B swaps the two numbers.)</p><span class=\"answer-pill\">A</span>",
+   "pill": [
+    "A"
+   ]
+  },
+  {
+   "n": 26,
+   "tech": 13,
+   "stem": "<p>A line of best fit is drawn through the points $(0, 4)$, $(3, 7)$, $(5, 10)$, and $(8, 12)$. Which of the following best approximates its slope and $y$-intercept?<ul class=\"choices\"><li><span class=\"ltr\">A</span>slope $\\approx 4.1$, intercept $\\approx 1.0$</li><li><span class=\"ltr\">B</span>slope $\\approx 1.0$, intercept $\\approx 4.1$</li><li><span class=\"ltr\">C</span>slope $\\approx 0.5$, intercept $\\approx 4.0$</li><li><span class=\"ltr\">D</span>slope $\\approx 1.5$, intercept $\\approx 2.0$</li></ul></p>",
+   "sol": "<p><strong>Given:</strong> four data points.</p><p>Regression output: $m \\approx 1.029$, $b \\approx 4.132$. Slope about 1, intercept about 4.1: choice B. Choice A swaps them.</p><span class=\"answer-pill\">B</span>",
+   "pill": [
+    "B"
+   ]
+  }
+ ],
+ "timed": [
+  {
+   "tier": "easy",
+   "format": "mc",
+   "title": "Ticket sales system",
+   "prompt": "A movie theater sold a total of 240 tickets to a showing. Adult tickets cost $12 each and child tickets cost $8 each, and the theater collected $2{,}480 from the sale. How many child tickets were sold?",
+   "options": [
+    "100",
+    "120",
+    "140",
+    "160"
+   ],
+   "answer": 0,
+   "desmos": "Let $x$ be adult tickets and $y$ child tickets. Type <span class=\"kbd\">x + y = 240</span> and <span class=\"kbd\">12x + 8y = 2480</span>; the lines meet at $(140,\\,100)$. The question asks for child tickets, the $y$-value: $100$.",
+   "algebra": "$a + c = 240$ and $12a + 8c = 2480$. Substitute $a = 240 - c$: $2880 - 4c = 2480$, so $c = 100$."
+  },
+  {
+   "tier": "easy",
+   "format": "grid",
+   "title": "Ball hits the ground",
+   "prompt": "A ball is thrown upward from a platform. The height of the ball above the ground, in feet, $t$ seconds after it is thrown is given by the function $h(t) = -16t^{2} + 48t + 64$. How many seconds after it is thrown does the ball hit the ground?",
+   "accepted": [
+    "4"
+   ],
+   "desmos": "Graph $y = -16x^{2} + 48x + 64$ (use $x$ for $t$). Zoom out until the parabola crosses the $x$-axis on the right; the grey dot reads $(4,\\,0)$. The other intercept, $x = -1$, is before the throw and does not count.",
+   "algebra": "Set $h(t) = 0$: $-16(t^{2} - 3t - 4) = 0 \\Rightarrow (t - 4)(t + 1) = 0$. Time is positive, so $t = 4$."
+  },
+  {
+   "tier": "easy",
+   "format": "mc",
+   "title": "Mean from a frequency table",
+   "prompt": "The table shows the number of pets owned by each of 20 households in a survey.",
+   "figure": "<table style=\"border-collapse:collapse;margin:8px 0 12px;font-size:14px;\"><tr><th style=\"border:1px solid #BBB;padding:6px 14px;background:rgba(33,68,43,0.08);\">Number of pets</th><td style=\"border:1px solid #BBB;padding:6px 14px;\">0</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">1</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">2</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">3</td></tr><tr><th style=\"border:1px solid #BBB;padding:6px 14px;background:rgba(33,68,43,0.08);\">Number of households</th><td style=\"border:1px solid #BBB;padding:6px 14px;\">6</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">8</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">4</td><td style=\"border:1px solid #BBB;padding:6px 14px;\">2</td></tr></table>",
+   "prompt2": "What is the mean number of pets per household for the 20 households?",
+   "options": [
+    "1.0",
+    "1.1",
+    "1.5",
+    "2.0"
+   ],
+   "answer": 1,
+   "desmos": "Type <span class=\"kbd\">(0*6 + 1*8 + 2*4 + 3*2)/20</span> and Desmos shows $1.1$. (Or build a table with the pet counts and frequencies and type <span class=\"kbd\">total(x1*y1)/total(y1)</span>.)",
+   "algebra": "Total pets $= 0 + 8 + 8 + 6 = 22$ across $20$ households, so the mean is $\\dfrac{22}{20} = 1.1$."
+  },
+  {
+   "tier": "easy",
+   "format": "grid",
+   "title": "Gym fee from two bills",
+   "prompt": "A gym charges members a fixed monthly fee plus a constant charge for each visit. One member who visited 6 times in a month was charged $57, and another member who visited 11 times in the same month was charged $77. What is the fixed monthly fee, in dollars?",
+   "accepted": [
+    "33"
+   ],
+   "desmos": "Put the two points $(6,\\,57)$ and $(11,\\,77)$ in a table and type <span class=\"kbd\">y1 ~ m x1 + b</span>. Desmos reports $m = 4$ and $b = 33$. The intercept $b$ is the charge with zero visits: the monthly fee.",
+   "algebra": "Per-visit charge $= \\dfrac{77 - 57}{11 - 6} = 4$. Then $57 - 6(4) = 33$."
+  },
+  {
+   "tier": "easy",
+   "format": "mc",
+   "title": "Equation of a circle",
+   "prompt": "In the $xy$-plane, a circle has center $(-4,\\,6)$, and the point $(-4,\\,1)$ lies on the circle. Which equation represents the circle?",
+   "options": [
+    "$(x + 4)^{2} + (y - 6)^{2} = 25$",
+    "$(x - 4)^{2} + (y + 6)^{2} = 25$",
+    "$(x + 4)^{2} + (y - 6)^{2} = 5$",
+    "$(x - 4)^{2} + (y + 6)^{2} = 5$"
+   ],
+   "answer": 0,
+   "desmos": "Type the point $(-4,6)$, the point $(-4,1)$, and then each answer choice. Only choice A draws a circle centered on the first point that passes through the second.",
+   "algebra": "The radius is the distance from $(-4,\\,6)$ to $(-4,\\,1)$, which is $5$, so $r^{2} = 25$. In $(x - h)^{2} + (y - k)^{2} = r^{2}$ the center $(-4,\\,6)$ gives $(x + 4)^{2} + (y - 6)^{2}$."
+  },
+  {
+   "tier": "medium",
+   "format": "grid",
+   "title": "Linear function values",
+   "prompt": "The function $f$ is linear. If $f(2) = 7$ and $f(5) = 16$, what is the value of $f(10)$?",
+   "accepted": [
+    "31"
+   ],
+   "desmos": "Enter $(2,\\,7)$ and $(5,\\,16)$ in a table and run <span class=\"kbd\">y1 ~ m x1 + b</span>: $m = 3$, $b = 1$. Then type <span class=\"kbd\">3(10) + 1</span>, or define $f(x) = 3x + 1$ and type <span class=\"kbd\">f(10)</span>.",
+   "algebra": "Slope $= \\dfrac{16 - 7}{5 - 2} = 3$, so $f(x) = 3x + b$ with $7 = 6 + b$, giving $b = 1$. $f(10) = 31$."
+  },
+  {
+   "tier": "medium",
+   "format": "mc",
+   "title": "Car value halves",
+   "prompt": "A car was purchased for $24{,}000. The value of the car decreases by 15% each year after the purchase. According to this model, what is the least whole number of years after the purchase at which the value of the car will be less than half of the purchase price?",
+   "options": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "answer": 2,
+   "desmos": "Graph $y = 24000(0.85)^{x}$ and $y = 12000$ (set the window to $x$ from $0$ to $10$ and $y$ up to $25{,}000$). They cross at $x \\approx 4.27$. After 4 years the value is still above half; after 5 whole years it is below.",
+   "algebra": "$24000(0.85)^{t} < 12000 \\Rightarrow 0.85^{t} < 0.5$. Check: $0.85^{4} \\approx 0.522$ (not yet) and $0.85^{5} \\approx 0.444$. So $5$ years."
+  },
+  {
+   "tier": "medium",
+   "format": "mc",
+   "title": "Predict from a line of best fit",
+   "prompt": "The scatterplot shows the daily ice cream sales, in dollars, at a shop on five days and the high temperature, in degrees Celsius, on each of those days. A line of best fit is also shown.",
+   "figure": "<svg viewBox=\"0 0 420 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"max-width:420px;width:100%;display:block;margin:10px 0 14px;background:#fff;border:1px solid #E2E2E2;border-radius:8px;\" role=\"img\" aria-label=\"Scatterplot of sales versus high temperature with a line of best fit\"><line x1=\"56.0\" y1=\"16\" x2=\"56.0\" y2=\"256\" stroke=\"#EEE\"/><text x=\"56.0\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">18</text><line x1=\"105.7\" y1=\"16\" x2=\"105.7\" y2=\"256\" stroke=\"#EEE\"/><text x=\"105.7\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">20</text><line x1=\"155.4\" y1=\"16\" x2=\"155.4\" y2=\"256\" stroke=\"#EEE\"/><text x=\"155.4\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">22</text><line x1=\"205.1\" y1=\"16\" x2=\"205.1\" y2=\"256\" stroke=\"#EEE\"/><text x=\"205.1\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">24</text><line x1=\"254.9\" y1=\"16\" x2=\"254.9\" y2=\"256\" stroke=\"#EEE\"/><text x=\"254.9\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">26</text><line x1=\"304.6\" y1=\"16\" x2=\"304.6\" y2=\"256\" stroke=\"#EEE\"/><text x=\"304.6\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">28</text><line x1=\"354.3\" y1=\"16\" x2=\"354.3\" y2=\"256\" stroke=\"#EEE\"/><text x=\"354.3\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">30</text><line x1=\"404.0\" y1=\"16\" x2=\"404.0\" y2=\"256\" stroke=\"#EEE\"/><text x=\"404.0\" y=\"272\" font-size=\"11\" text-anchor=\"middle\" fill=\"#4A4A4A\">32</text><line x1=\"56\" y1=\"256.0\" x2=\"404\" y2=\"256.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"260.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">220</text><line x1=\"56\" y1=\"216.0\" x2=\"404\" y2=\"216.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"220.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">250</text><line x1=\"56\" y1=\"176.0\" x2=\"404\" y2=\"176.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"180.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">280</text><line x1=\"56\" y1=\"136.0\" x2=\"404\" y2=\"136.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"140.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">310</text><line x1=\"56\" y1=\"96.0\" x2=\"404\" y2=\"96.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"100.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">340</text><line x1=\"56\" y1=\"56.0\" x2=\"404\" y2=\"56.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"60.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">370</text><line x1=\"56\" y1=\"16.0\" x2=\"404\" y2=\"16.0\" stroke=\"#EEE\"/><text x=\"50\" y=\"20.0\" font-size=\"11\" text-anchor=\"end\" fill=\"#4A4A4A\">400</text><line x1=\"56\" y1=\"16\" x2=\"56\" y2=\"256\" stroke=\"#555\"/><line x1=\"56\" y1=\"256\" x2=\"404\" y2=\"256\" stroke=\"#555\"/><line x1=\"68.4\" y1=\"254.1\" x2=\"391.6\" y2=\"39.4\" stroke=\"#21442B\" stroke-width=\"2\"/><circle cx=\"105.7\" cy=\"229.3\" r=\"4.5\" fill=\"#DDA25E\" stroke=\"#42260D\" stroke-width=\"1\"/><circle cx=\"155.4\" cy=\"196.0\" r=\"4.5\" fill=\"#DDA25E\" stroke=\"#42260D\" stroke-width=\"1\"/><circle cx=\"230.0\" cy=\"149.3\" r=\"4.5\" fill=\"#DDA25E\" stroke=\"#42260D\" stroke-width=\"1\"/><circle cx=\"279.7\" cy=\"109.3\" r=\"4.5\" fill=\"#DDA25E\" stroke=\"#42260D\" stroke-width=\"1\"/><circle cx=\"329.4\" cy=\"82.7\" r=\"4.5\" fill=\"#DDA25E\" stroke=\"#42260D\" stroke-width=\"1\"/><text x=\"230\" y=\"294\" font-size=\"12\" text-anchor=\"middle\" fill=\"#2D2D2D\">High temperature (°C)</text><text transform=\"translate(14,136) rotate(-90)\" font-size=\"12\" text-anchor=\"middle\" fill=\"#2D2D2D\">Sales (dollars)</text></svg>",
+   "prompt2": "Based on the line of best fit, which of the following is closest to the predicted sales, in dollars, on a day with a high temperature of $30^{\\circ}$C?",
+   "options": [
+    "350",
+    "358",
+    "364",
+    "376"
+   ],
+   "answer": 2,
+   "desmos": "Read the five points off the graph, put them in a table, and type <span class=\"kbd\">y1 ~ m x1 + b</span>: Desmos redraws the same line ($m \\approx 12.4$, $b \\approx -7.7$). Then type <span class=\"kbd\">m*30 + b</span> to get $363.9$, closest to $364$. Reading the drawn line at $30$ by eye gives the same answer; Desmos just removes the guesswork.",
+   "algebra": "The line rises about $12$ dollars per degree (from $240$ at $20^{\\circ}$ to about $350$ at $29^{\\circ}$). One degree past the last point: $350 + 12 \\approx 362$, so $364$ is the closest choice."
+  },
+  {
+   "tier": "medium",
+   "format": "mc",
+   "title": "Equivalent expression",
+   "prompt": "Which of the following expressions is equivalent to $(x + 3)(x - 5) + 2(x - 1)$?",
+   "options": [
+    "$x^{2} - 17$",
+    "$x^{2} - 4x - 17$",
+    "$x^{2} + 2x - 13$",
+    "$x^{2} - 2x - 17$"
+   ],
+   "answer": 0,
+   "desmos": "Graph $y = (x + 3)(x - 5) + 2(x - 1)$, then graph each choice. The choice whose curve lies exactly on top of the first one (only one curve visible) is equivalent: choice A.",
+   "algebra": "$(x + 3)(x - 5) = x^{2} - 2x - 15$ and $2(x - 1) = 2x - 2$. Adding: $x^{2} - 2x - 15 + 2x - 2 = x^{2} - 17$."
+  },
+  {
+   "tier": "medium",
+   "format": "grid",
+   "title": "Minimum deliveries",
+   "prompt": "A delivery driver is paid $18 per hour plus $4 for each delivery completed. The driver works 7 hours in one day and wants to earn at least $200 that day. What is the minimum number of deliveries the driver must complete?",
+   "accepted": [
+    "19"
+   ],
+   "desmos": "Graph $y = 18(7) + 4x$ and $y = 200$. They cross at $x = 18.5$. Deliveries are whole numbers and the pay must reach at least $200$, so round <em>up</em> to $19$.",
+   "algebra": "$126 + 4d \\ge 200 \\Rightarrow 4d \\ge 74 \\Rightarrow d \\ge 18.5$. The smallest whole number is $19$. (18 deliveries gives only $198.)"
+  },
+  {
+   "tier": "hard",
+   "format": "grid",
+   "title": "Exactly one solution",
+   "prompt": "The equation $2x^{2} + bx + 8 = 0$, where $b$ is a positive constant, has exactly one solution. What is the value of $b$?",
+   "accepted": [
+    "8"
+   ],
+   "desmos": "Graph $y = 2x^{2} + bx + 8$ and add a slider for $b$. Drag $b$ until the parabola just touches the $x$-axis at a single point. That happens at $b = 8$ (and at $b = -8$, which is ruled out because $b$ is positive).",
+   "algebra": "One solution means the discriminant is zero: $b^{2} - 4(2)(8) = 0 \\Rightarrow b^{2} = 64 \\Rightarrow b = 8$ since $b > 0$."
+  },
+  {
+   "tier": "hard",
+   "format": "mc",
+   "title": "Yearly percent increase",
+   "prompt": "The function $A(t) = 300(2)^{t/5}$ models the value, in dollars, of an investment $t$ years after it was made. Which of the following is closest to the percent increase in the value of the investment each year, according to the model?",
+   "options": [
+    "5%",
+    "15%",
+    "20%",
+    "40%"
+   ],
+   "answer": 1,
+   "desmos": "Rewrite the growth factor per year: $2^{t/5} = \\left(2^{1/5}\\right)^{t}$. Type <span class=\"kbd\">2^(1/5)</span> and Desmos shows $1.1487$, a yearly increase of about $14.9\\%$. (Or graph $A$ and compare $A(1)/A(0)$.)",
+   "algebra": "Each year multiplies the value by $2^{1/5} \\approx 1.149$, which is a $14.9\\%$ increase, closest to $15\\%$."
+  },
+  {
+   "tier": "hard",
+   "format": "mc",
+   "title": "Circle and line",
+   "prompt": "In the $xy$-plane, the graph of $x^{2} + y^{2} - 6x + 4y = 12$ is a circle. How many points do the circle and the line $y = x - 1$ have in common?",
+   "options": [
+    "Zero",
+    "Exactly one",
+    "Exactly two",
+    "More than two"
+   ],
+   "answer": 2,
+   "desmos": "Desmos graphs the circle from the general form as written, no completing the square needed. Add $y = x - 1$: the line cuts through the circle at two grey dots.",
+   "algebra": "Complete the square: $(x - 3)^{2} + (y + 2)^{2} = 25$, center $(3,\\,-2)$, radius $5$. The distance from the center to the line $x - y - 1 = 0$ is $\\dfrac{|3 + 2 - 1|}{\\sqrt{2}} \\approx 2.83 < 5$, so the line crosses the circle twice."
+  },
+  {
+   "tier": "hard",
+   "format": "grid",
+   "title": "Area between graphs",
+   "prompt": "In the $xy$-plane, the graphs of $y = |x - 3| + 1$ and $y = 5$ intersect at two points. What is the area of the triangle formed by those two points and the vertex of the graph of $y = |x - 3| + 1$?",
+   "accepted": [
+    "16"
+   ],
+   "desmos": "Graph both. The V has its vertex at $(3,\\,1)$ and crosses $y = 5$ at $(-1,\\,5)$ and $(7,\\,5)$. The base along $y = 5$ is $8$ and the height down to the vertex is $4$: area $\\tfrac{1}{2}(8)(4) = 16$.",
+   "algebra": "$|x - 3| + 1 = 5 \\Rightarrow |x - 3| = 4 \\Rightarrow x = 7$ or $x = -1$. Base $= 7 - (-1) = 8$; height $= 5 - 1 = 4$; area $= 16$."
+  },
+  {
+   "tier": "hard",
+   "format": "grid",
+   "title": "Tangent line, constant k",
+   "prompt": "$$y = x^{2} + 4x + k$$ $$y = 2x + 1$$ In the given system of equations, $k$ is a constant. The system has exactly one solution. What is the value of $k$?",
+   "accepted": [
+    "2"
+   ],
+   "desmos": "Type both equations and add a slider for $k$. Drag $k$ until the line just touches the parabola (one grey dot instead of two or none). That is $k = 2$.",
+   "algebra": "Set equal: $x^{2} + 4x + k = 2x + 1 \\Rightarrow x^{2} + 2x + (k - 1) = 0$. One solution when the discriminant is zero: $4 - 4(k - 1) = 0 \\Rightarrow k = 2$."
+  }
+ ]
+}
