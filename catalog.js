@@ -2696,13 +2696,41 @@ window.OPEN_LEARNING_CATALOG = {
    "builds_on": []
   },
   {
+   "id": "test-prep--sat--sat-desmos-1-core-moves",
+   "path": "test-prep/sat/SAT-Desmos-1-Core-Moves.html",
+   "title": "SAT Desmos 1: Core Moves",
+   "description": "Teaches nine core Desmos skills for the digital SAT, from typing equations as printed to intersections, sliders, and a line of best fit, with worked examples, skill practice, an SAT-style practice set, challenge questions, Bluebook answer-entry practice, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "order": 9,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "Desmos",
+    "calculator",
+    "graphing",
+    "systems of equations",
+    "answer formatting"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "theory+practice",
+   "builds_on": []
+  },
+  {
    "id": "test-prep--sat--sat-math-1-linear-equations",
    "path": "test-prep/sat/SAT-Math-1-Linear-Equations.html",
    "title": "SAT Math 1: Linear Equations",
    "description": "Reviews slope, intercepts, linear forms, and systems on the SAT, with worked examples, fluency drills, a gauntlet, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
-   "order": 9,
+   "order": 10,
    "levels": [
     "High School"
    ],
@@ -2731,7 +2759,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Reviews the three forms of a parabola, factoring, the vertex, the discriminant, and line-parabola systems on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
-   "order": 10,
+   "order": 11,
    "levels": [
     "High School"
    ],
@@ -2764,7 +2792,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Reviews function notation, domain and where a function is undefined, composition, equations true for all values of x, translations, and range on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
-   "order": 11,
+   "order": 12,
    "levels": [
     "High School"
    ],
@@ -2789,13 +2817,45 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-desmos-2-next-steps",
+   "path": "test-prep/sat/SAT-Desmos-2-Next-Steps.html",
+   "title": "SAT Desmos 2: Next Steps",
+   "description": "Teaches eight further Desmos skills for the digital SAT, built around the tilde: finding unknown constants, reading the RMSE report, bracket systems, identities, the touching condition, circles, statistics lists, and degree mode, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "order": 13,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "Desmos",
+    "calculator",
+    "regression",
+    "systems of equations",
+    "circles",
+    "statistics"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "test-prep--sat--sat-desmos-1-core-moves",
+    "test-prep--sat--sat-math-3-functions"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Full-length practice",
-   "order": 12,
+   "order": 14,
    "levels": [
     "High School"
    ],
@@ -2823,7 +2883,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "A checklist for the two days before the SAT, PSAT, or ACT, with a clickable timeline: sleep, a final review of your revision bank, what to bring (ID first), test morning, your strategy during the test, and the two personal reminders you'll carry into the room. Pick your test and every section updates.",
    "subject": "sat",
    "topic": "The final 48 hours",
-   "order": 13,
+   "order": 15,
    "levels": [
     "High School"
    ],
@@ -2867,7 +2927,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "Test day",
-   "order": 13,
+   "order": 15,
    "levels": [
     "High School"
    ],
@@ -3062,7 +3122,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "For tutors",
-   "order": 15,
+   "order": 17,
    "levels": [
     "High School"
    ],
