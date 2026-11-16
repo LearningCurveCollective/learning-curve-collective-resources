@@ -288,7 +288,7 @@ window.OPEN_LEARNING_CATALOG = {
    "steps": [
     {
      "name": "Reference sheets",
-     "blurb": "Every graph from micro and macro in one place, and the four market structures side by side. Keep these open while you work."
+     "blurb": "Every graph from micro and macro in one place, the four market structures side by side, and a translation sheet that turns economics questions into calculus. Keep these open while you work."
     },
     {
      "name": "Principles of economics",
@@ -1381,6 +1381,32 @@ window.OPEN_LEARNING_CATALOG = {
    "content": "reference",
    "builds_on": [
     "econ--cost-curves-profit-max-micro"
+   ]
+  },
+  {
+   "id": "econ--econ-to-calc-translation-sheet",
+   "path": "econ/econ-to-calc-translation-sheet.html",
+   "title": "Econ to Calculus Translation Sheet",
+   "description": "Match each economics question to the calculus that answers it: profit, revenue, and cost optimization, marginal and average curves, and a step-by-step plan for graphing a cubic, with worked examples, tap-and-drag practice, and solutions you can step through.",
+   "subject": "econ",
+   "topic": "Reference sheets",
+   "order": 2.5,
+   "levels": [
+    "College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "calculus for economics",
+    "optimization",
+    "profit maximization",
+    "marginal cost",
+    "curve sketching",
+    "price discrimination"
+   ],
+   "difficulty": "Core",
+   "content": "theory+practice",
+   "builds_on": [
+    "calculus--differentiation-part-1"
    ]
   },
   {
