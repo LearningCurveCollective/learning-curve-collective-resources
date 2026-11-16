@@ -13,7 +13,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-11-12"
+  "updated": "2026-11-15"
  },
  "levels": [
   "Foundations",
@@ -292,7 +292,7 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "Principles of economics",
-     "blurb": "Taxes, externalities, costs, competition, monopoly, labor, and consumer choice, with flashcards and a numbers drill."
+     "blurb": "Taxes, externalities, costs, competition, monopoly, labor, and consumer choice, then GDP, inflation, saving, and money. Each sheet has flashcards and a drill."
     },
     {
      "name": "Micro 1: consumer theory",
@@ -1406,6 +1406,32 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "theory+practice",
    "builds_on": []
+  },
+  {
+   "id": "econ--principles-of-econ--principles-of-economics-gdp-prices-saving-and-money",
+   "path": "econ/Principles of Econ/Principles of Economics - GDP Prices Saving and Money.html",
+   "title": "Principles of Economics: GDP, Prices, Saving & Money",
+   "description": "Cheat sheet, study guide, flashcards, and worked practice covering data and causality, GDP, the CPI and inflation, productivity and growth, saving and investment, banks and the Fed, and the labor force, with a calculation drill.",
+   "subject": "econ",
+   "topic": "Principles of economics",
+   "order": 3.5,
+   "levels": [
+    "Advanced High School",
+    "College"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "GDP",
+    "inflation",
+    "CPI",
+    "saving & investment",
+    "money & banking",
+    "macro"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "econ--principles-of-econ--principles-of-econ-midterm-2-study-sheet"
+   ]
   },
   {
    "id": "econ--micro--micro-module0-math-foundations",
