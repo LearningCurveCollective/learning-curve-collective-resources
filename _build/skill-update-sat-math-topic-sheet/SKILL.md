@@ -17,6 +17,7 @@ of auditing. Read this whole file before building; the conventions below are the
 | 1 | `SAT-Math-1-Linear-Equations.html` | Linear equations (this file is the SHELL SOURCE) | (hand-built; results kit injected) |
 | 2 | `SAT-Math-2-Quadratics.html` | Quadratics | `scripts/build_quadratics.py` |
 | 3 | `SAT-Math-3-Functions.html` | Functions: notation, domain, composition, identities, translations, range | `scripts/build_functions.py` |
+| 4 | `SAT-Math-4-Triangles.html` | Triangles: parallel lines, triangle angles, Pythagorean theorem, special right triangles, triangle inequality, shared height, altitude to the hypotenuse | `scripts/build_triangles.py` |
 | D1 | `SAT-Desmos-1-Core-Moves.html` | Desmos, part 1: what a graph shows (9 moves, plus a Bluebook Tools tab) | `scripts/build_desmos1.py` |
 | D2 | `SAT-Desmos-2-Next-Steps.html` | Desmos, part 2: the tilde (8 moves) | `scripts/build_desmos2.py` |
 | D3 | `SAT-Desmos-3-Mixed-Practice.html` | Desmos, part 3: drills only for the 17 moves (quick skill practice, practice by move, a timed set) | `scripts/build_desmos3.py` |
@@ -31,7 +32,7 @@ Timed Practice Set, and relabels the results kit. It carries the practice questi
 sheet 0, the older calculator sheet the series replaces (snapshot: `scripts/desmos3_source.json`).
 
 Source material so far: Dr. Chung's "DSAT Math 63 Tips" (sheet 2 from the quadratics
-tips; sheet 3 from Tips 13, 14, 15, 16 and 43). Torin assigns the book itself as the second
+tips; sheet 3 from Tips 13, 14, 15, 16 and 43; sheet 4 from Tips 37 to 42). Torin assigns the book itself as the second
 rep, so the sheets use the book's question TYPES with new numbers, never its questions.
 
 Live URLs follow `https://learningcurvecollective.github.io/learning-curve-collective-resources/<path>`.
@@ -83,6 +84,18 @@ inject more, and `build_functions.py` carries the full set; copy its `CURVES_JS`
 
 Every figure gets an `alt`. Label placement is checked by screenshot (below); plan on one
 or two passes of nudging `dx`/`dy`.
+
+**Geometry figures (sheet 4).** `build_triangles.py` adds `geoSVG`, a renderer for plain
+geometry with no axes and equal scale. A `FIGS` entry with a `box` key (`[xmin, ymin, xmax,
+ymax]`) is drawn by it; anything else still goes to `graphSVG`. The specs are Python dicts,
+so coordinates are computed (law of sines, special-triangle lengths) and dumped to JS. Keys:
+`segs` (`cls`: `ln`, `dash`, `thin`), `polys` (`shade`, `shade2`, `tile`), `semis`, `circles`,
+`rights` (right-angle marks), `arcs` (an angle arc plus a label on the bisector; `r: 0` for the
+label alone), `ticks` (equal-length marks), `sides` (a label beside a segment; `off` > 0 is to the
+left of a to b), `pts` (vertex letters by direction), `texts`, and `note` (the "not drawn to
+scale" line). Copy that builder for the next geometry sheet. It also carries each question's
+figure into the tutor report, since most geometry questions depend on one, and it applies the
+voice table as its last step.
 
 ## Content conventions (the audit checklist)
 
@@ -276,6 +289,7 @@ backup flow), the playbooks (no graded practice set), and the Tutor Evaluation.
   renderer. Copy it for a new topic; it is the source of truth for sheet 3 (fix content
   there and rebuild, never hand-edit the generated HTML).
 - `scripts/build_quadratics.py` - the same for sheet 2 (carries the forward link to 3).
+- `scripts/build_triangles.py` - sheet 4 (source of truth), with the geometry figure renderer; `scripts/verify_triangles.py` - 90 answer-key recomputations for it (needs sympy).
 - `scripts/results_kit.py` - the autosave + tutor-report kit; patches the shell.
 - `scripts/results_kit_generic.py` - the same kit for the verbal, Words in Context and Desmos sheets.
 - `scripts/build_desmos1.py`, `scripts/build_desmos2.py`, `scripts/build_desmos3.py` - content for the three Desmos sheets (source of truth).

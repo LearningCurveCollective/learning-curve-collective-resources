@@ -2952,13 +2952,46 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-math-4-triangles",
+   "path": "test-prep/sat/SAT-Math-4-Triangles.html",
+   "title": "SAT Math 4: Triangles",
+   "description": "Reviews parallel lines and transversals, the angles of a triangle, the Pythagorean theorem, special right triangles, the triangle inequality, triangles that share a height, and the altitude to the hypotenuse on the SAT, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 15,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "geometry",
+    "triangles",
+    "parallel lines",
+    "angles",
+    "Pythagorean theorem",
+    "special right triangles",
+    "triangle inequality"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-3-functions"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Full-length practice",
-   "order": 15,
+   "order": 16,
    "levels": [
     "High School"
    ],
@@ -2986,7 +3019,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "A checklist for the two days before the SAT, PSAT, or ACT, with a clickable timeline: sleep, a final review of your revision bank, what to bring (ID first), test morning, your strategy during the test, and the two personal reminders you'll carry into the room. Pick your test and every section updates.",
    "subject": "sat",
    "topic": "The final 48 hours",
-   "order": 16,
+   "order": 17,
    "levels": [
     "High School"
    ],
@@ -3030,7 +3063,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "Test day",
-   "order": 16,
+   "order": 17,
    "levels": [
     "High School"
    ],
@@ -3225,7 +3258,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "For tutors",
-   "order": 18,
+   "order": 19,
    "levels": [
     "High School"
    ],

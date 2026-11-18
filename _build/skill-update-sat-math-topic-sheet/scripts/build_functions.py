@@ -594,6 +594,11 @@ DESMOS2_URL = 'https://learningcurvecollective.github.io/learning-curve-collecti
 html = replace_once(html,
     'SAT Desmos 1: Core Moves &#8594;</a></p>',
     'SAT Desmos 1: Core Moves &#8594;</a></p>\n            <p style="font-size:14px; margin-top:10px;">Ready for the next step? Continue with <a href="' + DESMOS2_URL + '" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Desmos 2: Next Steps &#8594;</a></p>')
+# --- forward link: the next topic sheet in the series
+TRIANGLES_URL = SITE + 'test-prep/sat/SAT-Math-4-Triangles.html'
+html = replace_once(html,
+    'SAT Desmos 2: Next Steps &#8594;</a></p>',
+    'SAT Desmos 2: Next Steps &#8594;</a></p>\n            <p style="font-size:14px; margin-top:10px;">Ready for the next topic? Continue the series with <a href="' + TRIANGLES_URL + '" target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;">SAT Math 4: Triangles &#8594;</a></p>')
 
 # --- Desmos guidance: swap the linear sheet's examples for function ones
 html = replace_once(html,
