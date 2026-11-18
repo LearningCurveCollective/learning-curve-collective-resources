@@ -304,6 +304,7 @@ li { margin-bottom: 8px; }
     <div id="tab-cheat" class="tab-content active">
         <div class="section-header"><div class="section-number">&#9733;</div><h2>One-Page Cheat Sheet</h2></div>
         <p>Related rates in one place: the four-step process, the geometry toolbox, the sign rules, and the moves that rescue you when a rate seems to be missing. Everything here is unpacked in the study tabs and backed by six fully worked examples. If you can explain every row below in your own words, you are ready for the quiz.</p>
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Coming from implicit differentiation?</strong> Related rates uses the same chain-rule step. The difference is that you differentiate with respect to time $t$, so each changing quantity picks up its own rate. Tab 1 puts the two side by side. <a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/implicit-differentiation-study-sheet.html" target="_blank" rel="noopener" style="color:var(--green-dark); font-weight:600;">Implicit Differentiation Study Sheet &rarr;</a></p></div>
 
         <div class="cs-row">
             <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
@@ -549,6 +550,28 @@ li { margin-bottom: 8px; }
         </div>
 
         <div class="card">
+            <h3>The bridge from implicit differentiation: same step, new letter</h3>
+            <p>If you have worked through implicit differentiation, you have already done the calculus in a related-rates problem. There, $y$ was a hidden function of $x$, so each $y$-term picked up a $\frac{dy}{dx}$. Here the quantities change with <strong>time</strong>, so each one is a hidden function of $t$ and picks up its own rate.</p>
+            <div class="two-col">
+                <div><div class="step-concept"><span class="step-label">Implicit differentiation: with respect to $x$</span></div>
+                    <div style="overflow-x:auto; overflow-y:hidden;">$$x^2+y^2=25\;\;\Longrightarrow\;\;2x+2y\,\underbrace{\frac{dy}{dx}}_{\text{tag}}=0$$</div>
+                    <p style="margin-bottom:0;">$x$ is the input, so its tag is $\frac{dx}{dx}=1$ and it cancels. Only $y$ keeps a tag. You solve for $\frac{dy}{dx}$ as a formula: the slope of the curve.</p></div>
+                <div><div class="step-example"><span class="step-label">Related rates: with respect to $t$</span></div>
+                    <div style="overflow-x:auto; overflow-y:hidden;">$$x^2+y^2=25\;\;\Longrightarrow\;\;2x\,\underbrace{\frac{dx}{dt}}_{\text{tag}}+2y\,\underbrace{\frac{dy}{dt}}_{\text{tag}}=0$$</div>
+                    <p style="margin-bottom:0;">Now the input is $t$, and neither letter is $t$. Both $x$ and $y$ change with time, so both keep a tag. You plug in the values for one instant and solve for one rate.</p></div>
+            </div>
+            <div class="tbl-wrap"><table class="cmp">
+                <tr><th>What you differentiate</th><th>Implicit differentiation ($\frac{d}{dx}$)</th><th>Related rates ($\frac{d}{dt}$)</th></tr>
+                <tr><td>A power</td><td>$\frac{d}{dx}\big[y^3\big]=3y^2\,\frac{dy}{dx}$</td><td>$\frac{d}{dt}\big[h^3\big]=3h^2\,\frac{dh}{dt}$</td></tr>
+                <tr><td>A product</td><td>$\frac{d}{dx}\big[xy\big]=y+x\,\frac{dy}{dx}$</td><td>$\frac{d}{dt}\big[\ell w\big]=\frac{d\ell}{dt}\,w+\ell\,\frac{dw}{dt}$</td></tr>
+                <tr><td>The letter $x$</td><td>$\frac{d}{dx}\big[x^2\big]=2x$ &nbsp; (the tag is $\frac{dx}{dx}=1$)</td><td>$\frac{d}{dt}\big[x^2\big]=2x\,\frac{dx}{dt}$ &nbsp; (the tag stays)</td></tr>
+                <tr><td>A constant</td><td>$\frac{d}{dx}\big[25\big]=0$</td><td>$\frac{d}{dt}\big[13^2\big]=0$ &nbsp; (a ladder's fixed length)</td></tr>
+                <tr><td>What comes next</td><td>Collect, factor and divide to get $\frac{dy}{dx}$ as a formula.</td><td>Plug in the snapshot values and solve for the one rate you want.</td></tr>
+            </table></div>
+            <p style="margin-bottom:0;">The equation $x^2+y^2=25$ is the same in both columns. In related rates it describes a ladder of length 5 sliding down a wall, and the differentiated line links how fast the base moves to how fast the top drops. Want to review where the tag comes from first? <a href="https://learningcurvecollective.github.io/learning-curve-collective-resources/calculus/implicit-differentiation-study-sheet.html" target="_blank" rel="noopener" style="color:var(--green-dark); font-weight:600;">Implicit Differentiation Study Sheet &rarr;</a></p>
+        </div>
+
+        <div class="card">
             <h3>The process, step by step</h3>
             <div class="concept-list">
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 1: gather your givens</div>
@@ -556,7 +579,7 @@ li { margin-bottom: 8px; }
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 2: come up with a simple equation</div>
                     <p>You need <strong>one formula</strong> that connects the variable whose rate you want to the variable whose rate you have. The units of the target rate point to it: a ft&sup3;/hr question wants a volume formula; mph between two cars wants $x^2+y^2=z^2$. If the formula has an extra variable, hunt for a constraint that removes it (Tab 2).</p></div></div>
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 3: differentiate with respect to $t$</div>
-                    <p>Differentiate both sides implicitly. Every changing variable picks up its own rate by the chain rule: $\frac{d}{dt}(h^3)=3h^2\frac{dh}{dt}$, and a product of two changing variables needs the product rule: $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$. Plain constants (like a frozen height of 10) just ride along in front.</p></div></div>
+                    <p>Differentiate both sides implicitly. This is the same chain-rule step as in implicit differentiation, with $t$ in place of $x$. Every changing variable picks up its own rate by the chain rule: $\frac{d}{dt}(h^3)=3h^2\frac{dh}{dt}$, and a product of two changing variables needs the product rule: $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$. Plain constants (like a frozen height of 10) just ride along in front.</p></div></div>
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 4: plug in last, then interpret</div>
                     <p>Only now do the snapshot values enter. Substitute, solve for the unknown rate, and close with a sentence: sign (increasing or decreasing?), magnitude, and <strong>units</strong>. "$\frac{dV}{dt}=-2\pi$, so water is leaving the tank at $2\pi$ ft&sup3;/hr."</p></div></div>
             </div>
