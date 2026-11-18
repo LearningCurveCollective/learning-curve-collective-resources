@@ -3,6 +3,8 @@
    "hidden": true on a resource keeps the file and this record but leaves the sheet off every page until the flag is removed.
    An area with "layout": "guided" renders as a walkthrough: tiles to pick a subject, then that subject's "steps" (name, blurb,
    optional ids of sheets filed elsewhere) as numbered groups of cards; each sheet's "topic" names the step it belongs to.
+   A step may also carry "groups" (name, optional blurb): sub-headings inside the step, shown in the order listed; a sheet
+   joins one with "group", and sheets in the step with no group follow below them.
    "variants" on a resource, keyed by subject, gives a link suffix and note to use when that sheet is shown in that subject's
    section (the test-day playbook opens with ?test=act from the ACT section, ?test=sat from SAT & PSAT).
    "step_start" on a subject sets the number of its first step (SAT & PSAT counts from 0: the diagnostic). */
@@ -206,7 +208,17 @@ window.OPEN_LEARNING_CATALOG = {
     },
     {
      "name": "Math",
-     "blurb": "Start with SAT Desmos 1, work the topic sheets in order, then use SAT Desmos 2 and the mixed practice in SAT Desmos 3."
+     "blurb": "Get fluent with Desmos first, then work the topic sheets in order.",
+     "groups": [
+      {
+       "name": "Desmos",
+       "blurb": "The built-in graphing calculator, in three sheets: core moves, the tilde, then mixed practice."
+      },
+      {
+       "name": "Topic sheets",
+       "blurb": "One topic per sheet: rules, worked examples, and SAT-style practice."
+      }
+     ]
     },
     {
      "name": "Full-length practice",
@@ -2754,6 +2766,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Teaches nine core Desmos skills for the digital SAT, from typing equations as printed to intersections, sliders, and a line of best fit, with worked examples, skill practice, an SAT-style practice set, challenge questions, Bluebook answer-entry practice, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
+   "group": "Desmos",
    "order": 9,
    "levels": [
     "High School"
@@ -2777,13 +2790,80 @@ window.OPEN_LEARNING_CATALOG = {
    "builds_on": []
   },
   {
+   "id": "test-prep--sat--sat-desmos-2-next-steps",
+   "path": "test-prep/sat/SAT-Desmos-2-Next-Steps.html",
+   "title": "SAT Desmos 2: Next Steps",
+   "description": "Teaches eight further Desmos skills for the digital SAT, built around the tilde: finding unknown constants, reading the RMSE report, bracket systems, identities, the touching condition, circles, statistics lists, and degree mode, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Desmos",
+   "order": 10,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "Desmos",
+    "calculator",
+    "regression",
+    "systems of equations",
+    "circles",
+    "statistics"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "test-prep--sat--sat-desmos-1-core-moves",
+    "test-prep--sat--sat-math-3-functions"
+   ]
+  },
+  {
+   "id": "test-prep--sat--sat-desmos-3-mixed-practice",
+   "path": "test-prep/sat/SAT-Desmos-3-Mixed-Practice.html",
+   "title": "SAT Desmos 3: Mixed Practice",
+   "description": "Practice for the 17 Desmos skills from SAT Desmos 1 and 2, with no new teaching: quick skill-practice questions, 37 questions grouped by move with a shuffle option, a 15-question timed SAT-style set with Desmos and algebra solutions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Desmos",
+   "order": 11,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "Desmos",
+    "calculator",
+    "mixed practice",
+    "timed practice",
+    "regression",
+    "systems of equations"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-desmos-1-core-moves",
+    "test-prep--sat--sat-desmos-2-next-steps"
+   ]
+  },
+  {
    "id": "test-prep--sat--sat-math-1-linear-equations",
    "path": "test-prep/sat/SAT-Math-1-Linear-Equations.html",
    "title": "SAT Math 1: Linear Equations",
    "description": "Reviews slope, intercepts, linear forms, and systems on the SAT, with worked examples, fluency drills, a gauntlet, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
-   "order": 10,
+   "group": "Topic sheets",
+   "order": 12,
    "levels": [
     "High School"
    ],
@@ -2812,7 +2892,8 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Reviews the three forms of a parabola, factoring, the vertex, the discriminant, and line-parabola systems on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
-   "order": 11,
+   "group": "Topic sheets",
+   "order": 13,
    "levels": [
     "High School"
    ],
@@ -2845,7 +2926,8 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Reviews function notation, domain and where a function is undefined, composition, equations true for all values of x, translations, and range on the SAT, with worked examples, fluency drills, an SAT-style practice set, challenge questions, and an exit ticket.",
    "subject": "sat",
    "topic": "Math",
-   "order": 12,
+   "group": "Topic sheets",
+   "order": 14,
    "levels": [
     "High School"
    ],
@@ -2867,70 +2949,6 @@ window.OPEN_LEARNING_CATALOG = {
    "content": "practice",
    "builds_on": [
     "test-prep--sat--sat-math-2-quadratics"
-   ]
-  },
-  {
-   "id": "test-prep--sat--sat-desmos-2-next-steps",
-   "path": "test-prep/sat/SAT-Desmos-2-Next-Steps.html",
-   "title": "SAT Desmos 2: Next Steps",
-   "description": "Teaches eight further Desmos skills for the digital SAT, built around the tilde: finding unknown constants, reading the RMSE report, bracket systems, identities, the touching condition, circles, statistics lists, and degree mode, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
-   "subject": "sat",
-   "topic": "Math",
-   "order": 13,
-   "levels": [
-    "High School"
-   ],
-   "format": "Practice set",
-   "tags": [
-    "SAT",
-    "math",
-    "Desmos",
-    "calculator",
-    "regression",
-    "systems of equations",
-    "circles",
-    "statistics"
-   ],
-   "difficulty": "Core",
-   "exams": [
-    "SAT"
-   ],
-   "content": "theory+practice",
-   "builds_on": [
-    "test-prep--sat--sat-desmos-1-core-moves",
-    "test-prep--sat--sat-math-3-functions"
-   ]
-  },
-  {
-   "id": "test-prep--sat--sat-desmos-3-mixed-practice",
-   "path": "test-prep/sat/SAT-Desmos-3-Mixed-Practice.html",
-   "title": "SAT Desmos 3: Mixed Practice",
-   "description": "Practice for the 17 Desmos skills from SAT Desmos 1 and 2, with no new teaching: quick skill-practice questions, 37 questions grouped by move with a shuffle option, a 15-question timed SAT-style set with Desmos and algebra solutions, and an exit ticket.",
-   "subject": "sat",
-   "topic": "Math",
-   "order": 14,
-   "levels": [
-    "High School"
-   ],
-   "format": "Practice set",
-   "tags": [
-    "SAT",
-    "math",
-    "Desmos",
-    "calculator",
-    "mixed practice",
-    "timed practice",
-    "regression",
-    "systems of equations"
-   ],
-   "difficulty": "Core",
-   "exams": [
-    "SAT"
-   ],
-   "content": "practice",
-   "builds_on": [
-    "test-prep--sat--sat-desmos-1-core-moves",
-    "test-prep--sat--sat-desmos-2-next-steps"
    ]
   },
   {

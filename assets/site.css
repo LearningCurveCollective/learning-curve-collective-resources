@@ -236,6 +236,11 @@ section.block { padding: 56px 0 20px; }
 .step-head h3 { font-family: var(--display); font-weight: 700; font-size: 20px; margin: 0; color: var(--ink); line-height: 32px; letter-spacing: -.01em; }
 .step-head p { margin: 2px 0 0; color: var(--muted); font-size: 14.5px; max-width: 64ch; }
 .sheet-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+/* groups inside a step: "groups" on the step in catalog.js, "group" on each sheet */
+.step-group + .step-group, .step-group + .sheet-grid { margin-top: 24px; }
+.group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0 0 10px; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.group-head h4 { font-family: var(--display); font-weight: 700; font-size: 16px; line-height: 1.3; margin: 0; color: var(--ink); letter-spacing: -.005em; }
+.group-head p { margin: 0; color: var(--muted); font-size: 13.5px; }
 .sheet { display: flex; flex-direction: column; gap: 7px; min-width: 0; background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 15px; text-decoration: none; color: var(--text); transition: border-color .15s, box-shadow .2s, transform .15s; }
 .sheet:hover { border-color: var(--leaf); box-shadow: 0 6px 18px rgba(33,68,43,.09); transform: translateY(-1px); }
 .sheet .fmt { display: flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--moss); }

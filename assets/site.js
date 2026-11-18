@@ -453,8 +453,9 @@
     /* ---------- guided layout (data-layout="guided"): tiles to pick a subject, then each
        subject as numbered steps of cards. The steps come from the subject's "steps" list in
        catalog.js; a step may also name "ids" of sheets filed under another subject (the
-       shared test-day playbook, say), shown with a note. Topics not in the list, such as
-       "Recently added", are appended as extra steps. ---------- */
+       shared test-day playbook, say), shown with a note. A step may also split its own sheets
+       into named "groups" (name, optional blurb); a sheet joins one with "group". Topics not in
+       the list, such as "Recently added", are appended as extra steps. ---------- */
     function examBadge(s) { return el('span', { 'class': 'exam-badge', text: s.tag || s.name }); }
     function sheetCard(r, forSubject, note) {
         /* r.variants[subject] = { suffix, note }: the same sheet opens differently depending on
@@ -487,7 +488,7 @@
             var shared = (d.ids || []).map(function (id) { return BYID[id]; }).filter(function (r) { return r && r.subject !== s.key; });
             if (!own.length && !shared.length) return;
             seen[d.name] = true;
-            out.push({ name: d.name, blurb: d.blurb || '', rs: own, shared: shared });
+            out.push({ name: d.name, blurb: d.blurb || '', rs: own, shared: shared, groups: d.groups || null });
         });
         topicsOf(rs).forEach(function (t) {
             if (!seen[t]) out.push({ name: t, blurb: '', rs: rs.filter(function (r) { return r.topic === t; }), shared: [] });
@@ -564,14 +565,33 @@
             var ol = el('ol', { 'class': 'steps' });
             var first = typeof c.s.step_start === 'number' ? c.s.step_start : 1;   // SAT & PSAT counts from 0: the diagnostic
             c.steps.forEach(function (st, j) {
-                var grid = el('div', { 'class': 'sheet-grid' });
-                st.rs.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key)); });
-                st.shared.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key, 'Shared with ' + SUBJ[r.subject].name)); });
+                function gridOf(own, shared) {
+                    var grid = el('div', { 'class': 'sheet-grid' });
+                    own.forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key)); });
+                    (shared || []).forEach(function (r) { grid.appendChild(sheetCard(r, c.s.key, 'Shared with ' + SUBJ[r.subject].name)); });
+                    return grid;
+                }
+                /* Groups show in the order the step lists them, each under its own small heading.
+                   Sheets with no listed group, and shared sheets, follow in a plain grid. */
+                var parts = [], rest = st.rs;
+                if (st.groups && st.groups.length) {
+                    var listed = {};
+                    st.groups.forEach(function (g) {
+                        listed[g.name] = true;
+                        var inGroup = st.rs.filter(function (r) { return r.group === g.name; });
+                        if (!inGroup.length) return;
+                        parts.push(el('div', { 'class': 'step-group' }, [
+                            el('div', { 'class': 'group-head' }, [el('h4', { text: g.name }), g.blurb ? el('p', { text: g.blurb }) : null]),
+                            gridOf(inGroup)
+                        ]));
+                    });
+                    rest = st.rs.filter(function (r) { return !listed[r.group]; });
+                }
+                if (rest.length || st.shared.length) parts.push(gridOf(rest, st.shared));
                 ol.appendChild(el('li', { 'class': 'step', id: stepId(c, st) }, [
                     el('span', { 'class': 'num', text: String(first + j), 'aria-hidden': 'true' }),
-                    el('div', { 'class': 'step-head' }, [el('h3', { text: st.name }), st.blurb ? el('p', { text: st.blurb }) : null]),
-                    grid
-                ]));
+                    el('div', { 'class': 'step-head' }, [el('h3', { text: st.name }), st.blurb ? el('p', { text: st.blurb }) : null])
+                ].concat(parts)));
             });
             sec.appendChild(ol);
             root.appendChild(sec);
