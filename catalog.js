@@ -15,7 +15,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-11-15"
+  "updated": "2026-11-18"
  },
  "levels": [
   "Foundations",
@@ -876,7 +876,7 @@ window.OPEN_LEARNING_CATALOG = {
    "id": "calculus--related-rates-study-sheet",
    "path": "calculus/related-rates-study-sheet.html",
    "title": "Related Rates Study Sheet",
-   "description": "Learn a step-by-step process for related rates, with a geometry toolbox, sign and snapshot practice, worked examples, flashcards, and practice problems.",
+   "description": "Learn a step-by-step process for related rates, with a geometry toolbox, sign and snapshot practice, worked examples, try-it problems with worked solutions, a setup drill, and two quizzes.",
    "subject": "calculus",
    "topic": "Applications of derivatives",
    "order": 9,
@@ -899,11 +899,38 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "calculus--ivt-mvt-rolles-theorem-study-sheet",
+   "path": "calculus/ivt-mvt-rolles-theorem-study-sheet.html",
+   "title": "IVT, MVT & Rolle's Theorem Study Sheet",
+   "description": "Learn the Intermediate Value Theorem, the Mean Value Theorem and Rolle's Theorem through one drive to a friend's house, with interactive graphs, justification sentence frames, worked problems, a which-theorem drill, and two quizzes.",
+   "subject": "calculus",
+   "topic": "Applications of derivatives",
+   "order": 10,
+   "levels": [
+    "Advanced High School",
+    "College"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "intermediate value theorem",
+    "mean value theorem",
+    "rolle's theorem",
+    "extreme value theorem",
+    "existence theorems",
+    "ap justification"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "calculus--derivative-definition-continuity-differentiability-study-sheet"
+   ]
+  },
+  {
    "id": "calculus--ivt-evt-mvt-extrema-sheet",
    "path": "calculus/IVT_EVT_MVT_Extrema_Sheet.html",
    "title": "IVT, EVT, MVT & Extrema: Existence Theorems",
-   "description": "Quick reference for the Intermediate Value, Extreme Value and Mean Value Theorems, with max and min rules, AP justification language, and practice.",
+   "description": "Retired on 2026-11-18 and replaced by the IVT, MVT & Rolle's Theorem Study Sheet. This address now holds a short forwarding page that links to it and to the two extrema sheets; the original sheet is kept in retired-sheets/.",
    "subject": "calculus",
+   "hidden": true,
    "topic": "Applications of derivatives",
    "order": 10,
    "levels": [
@@ -943,7 +970,7 @@ window.OPEN_LEARNING_CATALOG = {
    ],
    "content": "practice",
    "builds_on": [
-    "calculus--ivt-evt-mvt-extrema-sheet"
+    "calculus--ivt-mvt-rolles-theorem-study-sheet"
    ]
   },
   {

@@ -263,6 +263,21 @@ li { margin-bottom: 8px; }
     .container { padding: 20px 10px; }
     .two-col { grid-template-columns: 1fr; }
 }
+
+/* ===== Try It problems (added 2026-11-18) ===== */
+.givens { background:rgba(33,68,43,0.05); border:1px dashed rgba(33,68,43,0.35); border-radius:6px; padding:10px 14px; margin:8px 0 10px; font-size:14px; }
+.givens .gk { font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--green-dark); display:block; margin-bottom:4px; }
+.givens ul { margin-bottom:0; }
+.givens li { font-size:14px; margin-bottom:3px; }
+.tryit { background:#FFFFFF; border:1.5px solid #E2D7C3; border-left:5px solid #39864E; border-radius:8px; padding:14px 18px; margin:0 0 14px; box-shadow:0 1px 4px rgba(0,0,0,0.05); min-width:0; }
+.tryit .try-k { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; background:#39864E; color:#FFFFFF; padding:2px 9px; border-radius:9px; margin-right:8px; }
+.tryit .try-q { font-weight:600; margin-bottom:4px; line-height:1.8; }
+.tryit p, .tryit li { overflow-x:auto; overflow-y:hidden; }
+.tryit .solution-body p { line-height:1.9; }
+.tryit-fig { max-width:340px; margin:6px 0 2px; }
+/* long display equations scroll inside themselves on a phone instead of widening the page */
+mjx-container[display="true"] { max-width:100%; overflow-x:auto; overflow-y:hidden; padding:2px 0; }
+.tryit-fig svg { width:100%; height:auto; display:block; }
 </style>
 </head>
 <body>
@@ -293,7 +308,6 @@ li { margin-bottom: 8px; }
             <button class="tab-button" data-group="study" onclick="switchTab('t4', this)">4 Worked Examples</button>
         </div>
         <div class="tab-row"><span class="tab-row-label">Practice</span>
-            <button class="tab-button" data-group="sprint" onclick="switchTab('flash', this)">&#9998; Flashcards</button>
             <button class="tab-button" data-group="sprint" onclick="switchTab('drill', this)">Setup Drill</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('quiza', this)">Quiz A &middot; Overview</button>
             <button class="tab-button" data-group="practice" onclick="switchTab('quizb', this)">Quiz B &middot; Apply It</button>
@@ -527,7 +541,7 @@ li { margin-bottom: 8px; }
                 <text x="110" y="58" font-size="9" text-anchor="middle" fill="#21442B">sign + number + units</text>
                 <rect x="18" y="84" width="184" height="40" rx="6" fill="rgba(221,162,94,0.14)" stroke="#DDA25E"/>
                 <text x="110" y="101" font-size="10" text-anchor="middle" fill="#8B5E3C" font-weight="bold">"Water is leaving at 2&#960; ft&#179;/hr."</text>
-                <text x="110" y="116" font-size="9" text-anchor="middle" fill="#8B5E3C">the sentence the grader wants</text>
+                <text x="110" y="116" font-size="9" text-anchor="middle" fill="#8B5E3C">the sentence that completes it</text>
             </svg></div>
             <div class="cs-body">
                 <h4>Interpret the answer <span class="slide-ref">Tab 1</span></h4>
@@ -541,7 +555,7 @@ li { margin-bottom: 8px; }
         </div>
 
         <div class="idea-box">
-            <p style="margin-bottom:0;"><strong>How free-response graders score these.</strong> Related-rates FRQs typically award separate points for (1) the <strong>equation</strong> relating the variables, (2) the <strong>derivative</strong> with correct chain-rule factors, (3) the <strong>plug-in and solve</strong>, and (4) the <strong>answer with units</strong> and the right sign or direction. Writing the four-step process down in order earns the points in order.</p>
+            <p style="margin-bottom:0;"><strong>What a complete free-response answer shows.</strong> Four things, in order: (1) the <strong>equation</strong> relating the variables, (2) the <strong>derivative</strong> with correct chain-rule factors, (3) the <strong>plug-in and solve</strong>, and (4) the <strong>answer with units</strong> and the right sign or direction. Writing the four-step process down in order puts all four on the page.</p>
         </div>
     </div>
 
@@ -668,6 +682,36 @@ li { margin-bottom: 8px; }
         </div>
 
         <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> A free-response part often reads like this: "A 10-ft ladder is sliding down a wall. The bottom moves away from the wall at 1 ft/s. Find the rate at which the top is moving when the bottom is 6 ft from the wall. Indicate units of measure." A complete answer shows the equation, the differentiated equation, the substitution, and a sentence with the sign and units: the four steps, in order.</p></div>
+
+        <div class="section-header" style="margin-top:34px;"><div class="section-number">&#9998;</div><h2>Try It</h2></div>
+        <p>Three problems on this tab's ideas. Work each one on paper first, then open the worked solution and compare.</p>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 1</span>A 25-ft ladder leans against a wall. The bottom slides away from the wall at 3 ft/s. How fast is the top sliding down when the bottom is 7 ft from the wall?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$x$ = distance from the wall to the bottom of the ladder. $y$ = height of the top on the wall</li><li>Ladder: 25 ft, and it stays 25</li><li>Rate given: $\frac{dx}{dt}=3$ ft/s. Snapshot: $x=7$. Want: $\frac{dy}{dt}$</li></ul></div>
+            <p><strong>Step 2: one simple equation.</strong> The tops of the two rates are $x$ and $y$, and the picture is a right triangle: $x^2+y^2=25^2$.</p>
+            <p><strong>Step 3: differentiate with respect to $t$.</strong> $2x\,\frac{dx}{dt}+2y\,\frac{dy}{dt}=0$. The $25^2$ is constant, so it becomes $0$.</p>
+            <p><strong>Step 4: plug in last.</strong> From the original equation, $49+y^2=625$, so $y=24$. Then $2(7)(3)+2(24)\,\frac{dy}{dt}=0$, which gives $\frac{dy}{dt}=-\frac{42}{48}=-\frac78$ ft/s.</p>
+            <p style="margin-bottom:0;"><strong>Answer.</strong> The top is sliding down at $\frac78$ ft/s. The negative sign says $y$ is shrinking.</p></div></div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 2</span>For each situation, write the given rate and the wanted rate as fractions, name their tops, and write the equation that links the tops. You do not need to solve. &nbsp; (a) A circular ripple's radius grows at 3 cm/s. How fast is its area growing? &nbsp; (b) A snowball melts, losing 2 cm&sup3; of volume each minute. How fast is its radius shrinking? &nbsp; (c) A square's side grows at 4 in/s. How fast is its area growing?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>The tops of the two rates tell you which equation to write (Step 2)</li><li>The bottoms tell you what to differentiate with respect to (Step 3)</li></ul></div>
+            <div class="tbl-wrap"><table class="cmp">
+                <tr><th></th><th>Given rate</th><th>Wanted rate</th><th>Tops</th><th>Equation that links them</th><th>After differentiating</th></tr>
+                <tr><td>(a)</td><td>$\frac{dr}{dt}=3$</td><td>$\frac{dA}{dt}$</td><td>$r$ and $A$</td><td>$A=\pi r^2$</td><td>$\frac{dA}{dt}=2\pi r\,\frac{dr}{dt}$</td></tr>
+                <tr><td>(b)</td><td>$\frac{dV}{dt}=-2$</td><td>$\frac{dr}{dt}$</td><td>$V$ and $r$</td><td>$V=\frac43\pi r^3$</td><td>$\frac{dV}{dt}=4\pi r^2\,\frac{dr}{dt}$</td></tr>
+                <tr><td>(c)</td><td>$\frac{ds}{dt}=4$</td><td>$\frac{dA}{dt}$</td><td>$s$ and $A$</td><td>$A=s^2$</td><td>$\frac{dA}{dt}=2s\,\frac{ds}{dt}$</td></tr>
+            </table></div>
+            <p style="margin-bottom:0;">Each bottom is $dt$, so each equation is differentiated with respect to $t$. In (b) the given rate is negative because the volume is going down.</p></div></div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 3</span>A cylindrical tank has a radius of 3 m. Water flows in at 2 m&sup3;/min. First sort the numbers into rate, true constant and snapshot. Then find how fast the depth is rising when the depth is 4 m.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Rate: $\frac{dV}{dt}=2$ m&sup3;/min</li><li>True constant: $r=3$ m. The tank's radius stays the same</li><li>Snapshot: $h=4$ m. Want: $\frac{dh}{dt}$</li></ul></div>
+            <p><strong>Step 2: one simple equation.</strong> $V=\pi r^2h$. Build the constant in right away: $V=\pi(3)^2h=9\pi h$.</p>
+            <p><strong>Step 3: differentiate with respect to $t$.</strong> $\frac{dV}{dt}=9\pi\,\frac{dh}{dt}$.</p>
+            <p><strong>Step 4: plug in last.</strong> $2=9\pi\,\frac{dh}{dt}$, so $\frac{dh}{dt}=\frac{2}{9\pi}\approx0.0707$ m/min.</p>
+            <p style="margin-bottom:0;"><strong>What to notice.</strong> The snapshot $h=4$ was not used. The differentiated equation has no $h$ in it, so the depth rises at the same rate at any depth. Sorting the givens showed where each number belongs, and this time one of them had nowhere to go.</p></div></div>
     </div>
 
     <!-- TAB 2: GEOMETRY TOOLBOX -->
@@ -741,6 +785,33 @@ li { margin-bottom: 8px; }
         <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam trap: distributing the constant to only one term.</strong> With $\frac{dV}{dt}=10[\,\ell'w+\ell w'\,]$ and a bracket of $12-32=-20$, the answer is $10(-20)=-200$. Applying the 10 to only the first term gives $120-32=88$, which will not be among the answer choices, and on a grid-in it is simply wrong. Finish the bracket, then multiply.</p></div>
 
         <div class="idea-box"><p style="margin-bottom:0;"><strong>Memory hook.</strong> Match the complaint to the cure: "two variables, one rate" &rarr; similar triangles (cone). "Three variables" &rarr; one of them is probably frozen (box). "No rate for $r$" &rarr; eliminate $r$ before differentiating. "Two rates, no snapshot" &rarr; divide the equations (cube). "Two moving objects" &rarr; Pythagoras with positions at the asked time.</p></div>
+
+        <div class="section-header" style="margin-top:34px;"><div class="section-number">&#9998;</div><h2>Try It</h2></div>
+        <p>Three problems on this tab's ideas. Work each one on paper first, then open the worked solution and compare.</p>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 1</span>A paper cup is a cone, point down, 10 cm tall with a top radius of 5 cm. Water is poured in at 9 cm&sup3;/s. How fast is the water level rising when the water is 6 cm deep?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>The cup: height 10 cm, top radius 5 cm. These describe the container</li><li>$r$ and $h$ = radius and depth of the water</li><li>Rate given: $\frac{dV}{dt}=9$ cm&sup3;/s. Snapshot: $h=6$. Want: $\frac{dh}{dt}$</li></ul></div>
+            <p><strong>Similar triangles.</strong> $\frac{r}{h}=\frac{5}{10}=\frac12$, so $r=\frac{h}{2}$.</p>
+            <p><strong>One variable.</strong> $V=\frac13\pi r^2h=\frac13\pi\left(\frac{h}{2}\right)^2h=\frac{\pi h^3}{12}$.</p>
+            <p><strong>Differentiate.</strong> $\frac{dV}{dt}=\frac{\pi h^2}{4}\,\frac{dh}{dt}$.</p>
+            <p style="margin-bottom:0;"><strong>Plug in last.</strong> $9=\frac{\pi(6)^2}{4}\,\frac{dh}{dt}=9\pi\,\frac{dh}{dt}$, so $\frac{dh}{dt}=\frac{1}{\pi}\approx0.3183$ cm/s. The level is rising at about 0.32 cm/s.</p></div></div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 2</span>A box has a fixed height of 5 cm. Its length is growing at 2 cm/s and its width is shrinking at 1 cm/s. How fast is the volume changing when the length is 8 cm and the width is 6 cm?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>True constant: height $=5$ cm</li><li>Rates: $\frac{d\ell}{dt}=2$ cm/s and $\frac{dw}{dt}=-1$ cm/s (shrinking, so negative)</li><li>Snapshot: $\ell=8$, $w=6$. Want: $\frac{dV}{dt}$</li></ul></div>
+            <p><strong>Freeze the constant.</strong> $V=\ell wh=5\,\ell w$.</p>
+            <p><strong>Product rule on the two that change.</strong> $\frac{dV}{dt}=5\left[\frac{d\ell}{dt}\,w+\ell\,\frac{dw}{dt}\right]$.</p>
+            <p><strong>Plug in last.</strong> $\frac{dV}{dt}=5\big[(2)(6)+(8)(-1)\big]=5\,[12-8]=20$ cm&sup3;/s. The volume is increasing at 20 cm&sup3;/s.</p>
+            <p style="margin-bottom:0;"><strong>What to check.</strong> The 5 multiplies the whole bracket. Finish the bracket first, then multiply.</p></div></div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 3</span>A kite flies at a constant height of 60 ft. The wind carries it horizontally away from you at 8 ft/s. How fast is the string being let out when 100 ft of string is out?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$x$ = horizontal distance to the kite. $z$ = length of string</li><li>True constant: height $=60$ ft</li><li>Rate given: $\frac{dx}{dt}=8$ ft/s. Snapshot: $z=100$. Want: $\frac{dz}{dt}$</li></ul></div>
+            <p><strong>Equation.</strong> The string, the ground distance and the height make a right triangle: $x^2+60^2=z^2$.</p>
+            <p><strong>Differentiate.</strong> $2x\,\frac{dx}{dt}=2z\,\frac{dz}{dt}$. The $60^2$ is constant, so it becomes $0$.</p>
+            <p><strong>Plug in last.</strong> From the original equation, $x^2=100^2-60^2=6400$, so $x=80$. Then $2(80)(8)=2(100)\,\frac{dz}{dt}$, which gives $\frac{dz}{dt}=6.4$ ft/s.</p>
+            <p style="margin-bottom:0;"><strong>What to notice.</strong> On the ladder the hypotenuse was the constant. Here a leg is the constant. Either way, the fixed length differentiates to $0$.</p></div></div>
     </div>
 
     <!-- TAB 3: SIGNS, SNAPSHOTS, TWO-RATE PROBLEMS -->
@@ -830,7 +901,33 @@ li { margin-bottom: 8px; }
 
         <div class="warning-box"><p style="margin-bottom:0;"><strong>Common exam trap: plugging in the container instead of the contents.</strong> In the draining-tank problem, the 18 and the 6 describe the tank; they enter only through the ratio $c=\frac{1}{3}$. The value that goes into $\frac{dV}{dt}=\frac{\pi h^2}{9}h'$ is the water's snapshot depth. Substituting the tank's full depth is a tempting slip, and multiple-choice writers know it: the "full depth" answer is usually sitting among the options.</p></div>
 
-        <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> "Is $h$ increasing at an increasing or decreasing rate? Justify." The justification is the sign of the <em>second</em> derivative (or the sign of $\frac{d}{dh}\big(\frac{dh}{dt}\big)$): state $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}>0$ so $h$ increases, and since $h$ increases, $\frac{k}{\pi c^2 h^2}$ decreases, so $h$ increases at a decreasing rate. Two sentences, full credit.</p></div>
+        <div class="idea-box"><p style="margin-bottom:0;"><strong>Exam framing.</strong> "Is $h$ increasing at an increasing or decreasing rate? Justify." The justification is the sign of the <em>second</em> derivative (or the sign of $\frac{d}{dh}\big(\frac{dh}{dt}\big)$): state $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}>0$ so $h$ increases, and since $h$ increases, $\frac{k}{\pi c^2 h^2}$ decreases, so $h$ increases at a decreasing rate. Two sentences complete the justification.</p></div>
+
+        <div class="section-header" style="margin-top:34px;"><div class="section-number">&#9998;</div><h2>Try It</h2></div>
+        <p>Three problems on this tab's ideas. Work each one on paper first, then open the worked solution and compare.</p>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 1</span>Write each phrase as a signed rate. &nbsp; (a) The water level is falling at 3 cm/min. &nbsp; (b) A balloon is losing 20 cm&sup3; of air each second. &nbsp; (c) A car is approaching an intersection at 50 mph, where $x$ is its distance from the intersection. &nbsp; (d) A circle's radius grows by 2 mm each second.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>A quantity that is getting smaller has a negative rate</li><li>A quantity that is getting larger has a positive rate</li></ul></div>
+            <p><strong>(a)</strong> $\frac{dh}{dt}=-3$ cm/min. The depth is decreasing.</p>
+            <p><strong>(b)</strong> $\frac{dV}{dt}=-20$ cm&sup3;/s. The volume is decreasing.</p>
+            <p><strong>(c)</strong> $\frac{dx}{dt}=-50$ mph. The distance to the intersection is shrinking.</p>
+            <p style="margin-bottom:0;"><strong>(d)</strong> $\frac{dr}{dt}=2$ mm/s. Growing is positive. Read the sign of your final answer the same way: negative means decreasing.</p></div></div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 2</span>Two ships leave the same port at noon. Ship A sails east at 15 km/h. Ship B sails north at 20 km/h. How fast is the distance between them growing at 2:00 PM?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$x$ = ship A's distance east of the port. $y$ = ship B's distance north. $z$ = distance between the ships</li><li>Rates: $\frac{dx}{dt}=15$ and $\frac{dy}{dt}=20$ km/h. Both are positive: each ship is moving away from the port</li><li>Asked time: 2 hours after noon. Want: $\frac{dz}{dt}$</li></ul></div>
+            <p><strong>Where is everything at 2:00?</strong> $x=15(2)=30$ km and $y=20(2)=40$ km. Then $z=\sqrt{30^2+40^2}=50$ km (a scaled 3-4-5 triangle).</p>
+            <p><strong>Equation and derivative.</strong> $x^2+y^2=z^2$ gives $x\,\frac{dx}{dt}+y\,\frac{dy}{dt}=z\,\frac{dz}{dt}$.</p>
+            <p style="margin-bottom:0;"><strong>Plug in last.</strong> $(30)(15)+(40)(20)=50\,\frac{dz}{dt}$, so $1250=50\,\frac{dz}{dt}$ and $\frac{dz}{dt}=25$ km/h. The ships are moving apart at 25 km/h.</p></div></div>
+
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 3</span>A spherical balloon is being inflated. At one instant its volume is growing at 30 cm&sup3;/s and its surface area is growing at 12 cm&sup2;/s. What is the radius at that instant?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$V=\frac43\pi r^3$ and surface area $S=4\pi r^2$</li><li>Rates: $\frac{dV}{dt}=30$ and $\frac{dS}{dt}=12$</li><li>No snapshot. Want: $r$. The rate $\frac{dr}{dt}$ is unknown too</li></ul></div>
+            <p><strong>Differentiate both formulas.</strong> $30=4\pi r^2\,\frac{dr}{dt}$ and $12=8\pi r\,\frac{dr}{dt}$.</p>
+            <p><strong>Divide the equations.</strong> $\dfrac{30}{12}=\dfrac{4\pi r^2\,\frac{dr}{dt}}{8\pi r\,\frac{dr}{dt}}=\dfrac{r}{2}$. The unknown rate cancels.</p>
+            <p><strong>Solve.</strong> $\frac{r}{2}=2.5$, so $r=5$ cm.</p>
+            <p style="margin-bottom:0;"><strong>Check.</strong> With $r=5$, the second equation gives $\frac{dr}{dt}=\frac{12}{40\pi}=\frac{3}{10\pi}$, and then $4\pi(25)\cdot\frac{3}{10\pi}=30$. Both rates agree.</p></div></div>
     </div>
 
     <!-- TAB 4: WORKED EXAMPLES -->
@@ -925,197 +1022,51 @@ li { margin-bottom: 8px; }
                 <p style="margin-bottom:0;"><strong>Certify it.</strong> That expression is positive and falls as $h$ grows. Differentiating again gives $\frac{d^2h}{dt^2}=-\frac{2k}{\pi c^2h^3}\frac{dh}{dt}<0$, which is itself not constant, so $h(t)$ is concave down and $\frac{dh}{dt}$ is genuinely nonlinear. Contrast: a cylinder gives $\frac{dh}{dt}=\frac{k}{\pi r^2}$, a true constant.</p>
             </div>
         </div>
-    </div>
 
-    <!-- FLASHCARDS -->
-    <div id="tab-flash" class="tab-content">
-        <div class="section-header"><div class="section-number">&#9998;</div><h2>Flashcard Studier</h2></div>
+        <div class="section-header" style="margin-top:34px;"><div class="section-number">&#9998;</div><h2>Try It</h2></div>
+        <p>Three problems on this tab's ideas. Work each one on paper first, then open the worked solution and compare.</p>
 
-        <div class="card" style="border-left-color:var(--green-dark);">
-            <p style="margin-bottom:12px; font-size:14.5px;"><strong>How it works.</strong> Pick a deck, read the term, say the answer out loud, flip, mark yourself. Anything you miss is saved to the <strong>Missed</strong> deck (it stays saved next time you open this file) until you get it right there. Click any term in the list to jump straight to that card. Any deck, including My deck and Missed, can be downloaded as an Anki file.</p>
-            <div class="fc-controls">
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Deck</span>
-                    <button class="fc-chip on" data-filter="all" onclick="fcSetFilter('all',this)">All <span class="fc-n" id="fcn-all"></span></button>
-                    <button class="fc-chip" data-filter="pr" onclick="fcSetFilter('pr',this)">The process <span class="fc-n" id="fcn-pr"></span></button>
-                    <button class="fc-chip" data-filter="eq" onclick="fcSetFilter('eq',this)">Equations &amp; shapes <span class="fc-n" id="fcn-eq"></span></button>
-                    <button class="fc-chip" data-filter="tr" onclick="fcSetFilter('tr',this)">Signs &amp; traps <span class="fc-n" id="fcn-tr"></span></button>
-                    <button class="fc-chip" data-filter="ex" onclick="fcSetFilter('ex',this)">Examples <span class="fc-n" id="fcn-ex"></span></button>
-                    <button class="fc-chip miss" data-filter="missed" onclick="fcSetFilter('missed',this)">&#10007; Missed <span class="fc-n" id="fcn-missed"></span></button>
-                    <button class="fc-chip custom" data-filter="custom" onclick="fcSetFilter('custom',this)">&#9733; My deck <span class="fc-n" id="fcn-custom"></span></button>
-                    <button class="fc-chip pick" id="fc-pick-btn" onclick="fcTogglePick()">Pick cards&hellip;</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Show first</span>
-                    <button class="fc-chip on" data-side="term" onclick="fcSetSide('term',this)">Term first</button>
-                    <button class="fc-chip" data-side="def" onclick="fcSetSide('def',this)">Definition first</button>
-                    <button class="fc-chip" data-side="random" onclick="fcSetSide('random',this)">Random</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Order</span>
-                    <button class="fc-chip on" data-order="inorder" onclick="fcSetOrder('inorder',this)">In order</button>
-                    <button class="fc-chip" data-order="shuffle" onclick="fcSetOrder('shuffle',this)">Shuffle</button>
-                    <button class="fc-chip" data-order="quick" onclick="fcSetOrder('quick',this)">&#9889; Quick test (10 random)</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">&nbsp;</span>
-                    <button class="btn-small" onclick="fcRestart()">Restart deck</button>
-                    <button class="btn-small" style="background:#8B5E3C;" onclick="fcClearMissed()">Clear missed list</button>
-                </div>
-                <div class="fc-ctl-group"><span class="fc-ctl-label">Anki</span>
-                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('deck')">&#11015; Download this deck for Anki</button>
-                    <button class="btn-small" style="background:var(--copper);" onclick="fcExportAnki('all')">&#11015; Download all cards for Anki</button>
-                    <button class="fc-chip" onclick="fcToggleAnkiHelp()">How do I import?</button>
-                </div>
-            </div>
-            <div id="fc-anki-help" style="display:none; margin-top:12px;" class="idea-box">
-                <p style="margin-bottom:8px;"><strong>Importing into Anki (desktop app, free at apps.ankiweb.net).</strong> The download is a plain text file Anki reads directly; formatting and formulas come through.</p>
-                <ol style="margin-bottom:6px;">
-                    <li>Download a deck above. &ldquo;This deck&rdquo; exports whatever is currently selected: a topic, your <strong>My deck</strong> picks, or just your <strong>Missed</strong> cards.</li>
-                    <li>In Anki: <strong>File &rarr; Import&hellip;</strong> and choose the file.</li>
-                    <li>Anki should auto-detect the tab separator, the deck name, and that HTML is allowed. If it asks: note type <strong>Basic</strong>, field 1 &rarr; Front, field 2 &rarr; Back, field 3 &rarr; Tags, and tick <strong>Allow HTML in fields</strong>.</li>
-                    <li>Click Import. Cards land in a deck called <em>AP Calculus :: Related Rates</em>, tagged by topic so you can filter later.</li>
-                </ol>
-                <p style="margin:0; font-size:13px;">On mobile: import the file on desktop once and sync, or use AnkiDroid&rsquo;s import from a text file. Re-importing the same file later updates rather than duplicates the cards.</p>
-            </div>
-        </div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 1</span>Air leaks from a spherical balloon at $36\pi$ cm&sup3;/min. How fast is the radius changing when the radius is 3 cm?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$V=\frac43\pi r^3$</li><li>Rate given: $\frac{dV}{dt}=-36\pi$ cm&sup3;/min. Leaking means the volume is decreasing</li><li>Snapshot: $r=3$. Want: $\frac{dr}{dt}$</li></ul></div>
+            <p><strong>Differentiate.</strong> $\frac{dV}{dt}=4\pi r^2\,\frac{dr}{dt}$.</p>
+            <p><strong>Plug in last.</strong> $-36\pi=4\pi(3)^2\,\frac{dr}{dt}=36\pi\,\frac{dr}{dt}$, so $\frac{dr}{dt}=-1$ cm/min.</p>
+            <p style="margin-bottom:0;"><strong>Answer.</strong> The radius is shrinking at 1 cm/min.</p></div></div>
 
-        <div class="card fc-pick-panel" id="fc-pick-panel" style="display:none; border-left-color:var(--gold);">
-            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Build my own deck</span><span class="fc-legend"><strong id="fc-pick-count">0</strong>&nbsp;selected &nbsp;<button class="btn-small" style="background:#E2E2E2; color:var(--text-medium); padding:4px 10px;" onclick="fcPickAll(false)">Clear</button></span></div>
-            <p style="font-size:13.5px; color:var(--text-medium); margin-bottom:10px;">Tick the cards you want, then hit <strong>Study my deck</strong>. Your picks are remembered next time you open this file.</p>
-            <div id="fc-pick-groups"></div>
-            <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;"><button class="btn-small" onclick="fcStudyCustom()">&#9733; Study my deck</button><button class="btn-small" style="background:#8B5E3C;" onclick="fcTogglePick()">Close</button></div>
-        </div>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 2</span>Sand falls onto a conical pile at 10 ft&sup3;/min. The pile keeps a shape in which its height equals the diameter of its base. How fast is the height growing when the pile is 5 ft tall?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>Rate given: $\frac{dV}{dt}=10$ ft&sup3;/min. Sand is being added, so it is positive</li><li>The shape: height $=$ diameter, so $h=2r$ and $r=\frac{h}{2}$</li><li>Snapshot: $h=5$. Want: $\frac{dh}{dt}$</li></ul></div>
+            <p><strong>One variable.</strong> $V=\frac13\pi r^2h=\frac13\pi\left(\frac{h}{2}\right)^2h=\frac{\pi h^3}{12}$.</p>
+            <p><strong>Differentiate.</strong> $\frac{dV}{dt}=\frac{\pi h^2}{4}\,\frac{dh}{dt}$.</p>
+            <p><strong>Plug in last.</strong> $10=\frac{\pi(5)^2}{4}\,\frac{dh}{dt}=\frac{25\pi}{4}\,\frac{dh}{dt}$, so $\frac{dh}{dt}=\frac{40}{25\pi}=\frac{8}{5\pi}\approx0.5093$ ft/min.</p>
+            <p style="margin-bottom:0;"><strong>What to notice.</strong> No tank is given, but the sentence about the pile's shape does the same job as similar triangles: it ties $r$ to $h$ so the formula has one variable.</p></div></div>
 
-        <div class="card">
-            <div class="fc-list-head"><span class="h3s" style="margin:0; font-size:16px;">Terms in this deck</span><span class="fc-legend"><span class="lg unseen"></span>not yet &nbsp;<span class="lg got"></span>got it &nbsp;<span class="lg miss"></span>missed</span></div>
-            <div class="fc-list" id="fc-list"></div>
-        </div>
-
-        <div class="card" style="border-left-color:var(--green-dark);">
-            <div class="fc-wrap">
-                <div class="fc-top"><span id="fc-count">Card 1</span><span>Got: <strong id="fc-got">0</strong> &nbsp; Missed: <strong id="fc-miss">0</strong></span><span id="fc-deckname" class="fc-deckname">All terms</span></div>
-                <div class="fc-card" id="fc-card" onclick="fcFlip()">
-                    <div class="fc-label" id="fc-label">TERM</div>
-                    <div class="fc-front" id="fc-front"></div>
-                    <div class="fc-back" id="fc-back"></div>
-                    <div class="fc-hint" id="fc-hint">click to flip</div>
-                </div>
-                <div class="fc-actions">
-                    <button class="btn-small" style="background:var(--gold); color:var(--brown-dark);" onclick="fcFlip()">Flip</button>
-                    <button class="btn-small" onclick="fcMark(true)">&#10003; Got it</button>
-                    <button class="btn-small" style="background:#C0392B;" onclick="fcMark(false)">&#10007; Missed</button>
-                    <button class="btn-small" style="background:#E2E2E2; color:var(--text-medium);" onclick="fcSkip()">Skip &rarr;</button>
-                </div>
-                <div id="fc-done" class="idea-box" style="display:none; margin-top:14px;"></div>
-            </div>
-        </div>
-
-<script type="text/plain" id="fc-data">
-pr ||| Step 1 of the related-rates process ||| <strong>Gather your givens.</strong> Write down every quantity and every rate, with signs, before touching calculus. Pay special attention to the rate the problem hands you, like $\frac{dh}{dt}=-\frac{1}{2}$.
----
-pr ||| Step 2 of the related-rates process ||| <strong>Come up with one simple equation</strong> connecting the variable whose rate you want to the variable whose rate you know: a volume, area, or Pythagorean formula.
----
-pr ||| Step 3 of the related-rates process ||| <strong>Differentiate both sides with respect to $t$</strong> (implicitly). Every changing variable picks up its own rate by the chain rule.
----
-pr ||| Step 4 of the related-rates process ||| <strong>Plug in the snapshot values last</strong>, solve for the unknown rate, then interpret the sign and attach units in a closing sentence.
----
-pr ||| How do units identify the rate a problem gives you? ||| Units are a name tag: <strong>ft&sup3;/hr means $\frac{dV}{dt}$</strong>, ft/hr means a length rate like $\frac{dh}{dt}$, ft&sup2;/min means $\frac{dA}{dt}$, mph is a distance rate.
----
-pr ||| Snapshot value ||| A value that holds <strong>only at the instant in question</strong> ("when the water is 6 ft deep"). It gets plugged in <strong>after</strong> differentiating, never before.
----
-pr ||| True constant ||| A quantity that never changes during the motion: a tank's dimensions, a frozen box height, a ladder's length. Constants <strong>may</strong> be substituted before differentiating.
----
-pr ||| Why can't a snapshot value go in before differentiating? ||| Substituting $h=6$ early freezes $h$ into a constant, its derivative becomes 0, and <strong>the rate you wanted vanishes</strong> from the equation.
----
-pr ||| "The rate at which water is leaving" asks for what? ||| The magnitude of $\frac{dV}{dt}$: compute it, expect a <strong>negative</strong> value for a draining tank, and report the leaving rate as $\left|\frac{dV}{dt}\right|$.
----
-pr ||| The two things a full-credit final answer states ||| The <strong>sign or direction</strong> (increasing or decreasing) and the <strong>units</strong> (ft&sup3;/hr, in&sup3;/sec, mph, ft/s).
----
-pr ||| Implicit differentiation in related rates ||| Treat every letter as a function of $t$: $\frac{d}{dt}(x^2)=2x\frac{dx}{dt}$ and $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$.
----
-pr ||| Typical FRQ point structure for related rates ||| Roughly one point each for the <strong>equation</strong>, the <strong>derivative</strong>, the <strong>plug-in and solve</strong>, and the <strong>answer with units</strong> and direction.
----
-pr ||| First thing to draw on any related-rates problem ||| A labeled <strong>picture</strong>: letter every changing length, mark the fixed numbers, and arrow the given rate with its sign.
----
-pr ||| Translate: "How fast is X changing when ... ?" ||| Find $\frac{dX}{dt}$ <strong>at the single instant</strong> described by the "when" values; those values are the snapshot.
----
-eq ||| Volume of a cone ||| $V=\frac{1}{3}\pi r^2h$. Two variables change, so pair it with the <strong>similar-triangles ratio</strong> before differentiating.
----
-eq ||| Similar-triangles ratio in a cone ||| The water cone stays similar to the tank, so $\frac{r}{h}=\frac{R}{H}=c$, a <strong>constant</strong>. With $R=6$, $H=18$: $r=\frac{h}{3}$.
----
-eq ||| The substitute-first move ||| Use $r=ch$ to rewrite $V$ in <strong>one variable</strong>: $V=\frac{\pi c^2}{3}h^3$. Now the derivative needs no unknown $\frac{dr}{dt}$ and no product rule.
----
-eq ||| Cone with $r=\frac{h}{2}$: the one-variable volume ||| $V=\frac{1}{3}\pi\left(\frac{h}{2}\right)^2h=\frac{\pi h^3}{12}$, so $\frac{dV}{dt}=\frac{\pi h^2}{4}\frac{dh}{dt}$.
----
-eq ||| Box volume setup when one dimension is fixed ||| $V=\ell wh$; a <strong>constant</strong> dimension becomes a plain number first. Fixed $h=10$ gives $V=10\,\ell w$, ready to product-rule.
----
-eq ||| Derivative of $V=10\,\ell w$ ||| Product rule inside, constant outside: $\frac{dV}{dt}=10\left[\frac{d\ell}{dt}w+\ell\frac{dw}{dt}\right]$. The 10 multiplies <strong>both</strong> terms of the bracket.
----
-eq ||| Box surface area ||| $A=2(\ell w+\ell h+wh)$: the other box formula, for problems that hand you a surface-area rate.
----
-eq ||| Distance equation for two movers on perpendicular roads ||| $x^2+y^2=z^2$, where $x$ and $y$ are each object's <strong>distance from the intersection</strong> and $z$ is the separation.
----
-eq ||| Derivative of $x^2+y^2=z^2$ ||| $2x\frac{dx}{dt}+2y\frac{dy}{dt}=2z\frac{dz}{dt}$; cancel the 2s to get $\frac{dz}{dt}=\frac{x\,x'+y\,y'}{z}$.
----
-eq ||| Sphere formulas and their derivatives ||| $V=\frac{4}{3}\pi r^3$ and $A=4\pi r^2$, so $\frac{dV}{dt}=4\pi r^2\frac{dr}{dt}$ and $\frac{dA}{dt}=8\pi r\frac{dr}{dt}$.
----
-eq ||| Circle (ripple) formulas and their derivatives ||| $A=\pi r^2$ and $C=2\pi r$: $\frac{dA}{dt}=2\pi r\frac{dr}{dt}$ and $\frac{dC}{dt}=2\pi\frac{dr}{dt}$.
----
-eq ||| Cylinder volume and why cylinders fill linearly ||| $V=\pi r^2h$; with radius fixed, $\frac{dV}{dt}=\pi r^2\frac{dh}{dt}$, so a constant inflow makes $\frac{dh}{dt}$ a <strong>constant</strong>.
----
-eq ||| The cube pair of formulas ||| $V=s^3$ and $A=6s^2$: differentiated, $\frac{dV}{dt}=3s^2\frac{ds}{dt}$ and $\frac{dA}{dt}=12s\frac{ds}{dt}$.
----
-eq ||| Ladder-on-a-wall setup ||| The ladder's length is the <strong>constant</strong> hypotenuse: $x^2+y^2=L^2$, so differentiating gives $x\,x'+y\,y'=0$.
----
-tr ||| Sign of $\frac{dh}{dt}$ when a surface is falling ||| <strong>Negative.</strong> "Falling at $\frac{1}{2}$ ft/hr" means $\frac{dh}{dt}=-\frac{1}{2}$; the phrase carries the sign, the number is just the speed.
----
-tr ||| Sign for an object moving toward the intersection ||| Its distance $x$ from the corner is shrinking, so $\frac{dx}{dt}<0$: "toward at 80 mph" means $\frac{dx}{dt}=-80$.
----
-tr ||| The sign-word cheat list ||| Negative: falling, draining, leaking, shrinking, deflating, <strong>toward</strong>. Positive: rising, filling, growing, inflating, <strong>away from</strong>.
----
-tr ||| The constant-distribution trap ||| $10[\,12-32\,]=-200$, not $120-32=88$: a constant outside a product rule multiplies <strong>the entire bracket</strong>, not just the first term.
----
-tr ||| The tank-dimensions trap ||| $H=18$ and $R=6$ describe the <strong>container</strong> and enter only through the ratio $c=\frac{1}{3}$. The number that gets plugged in is the water's snapshot depth.
----
-tr ||| What to do when you "don't have $\frac{dr}{dt}$" ||| Not a dead end: use the constraint $r=ch$ to <strong>eliminate $r$ before differentiating</strong>, or differentiate the constraint to get $\frac{dr}{dt}=c\frac{dh}{dt}$.
----
-tr ||| Positions at the asked time ||| If the setup is given at noon but the question asks about 1 PM, first advance everyone: <strong>distance = rate &times; time</strong>, then build the triangle.
----
-tr ||| What a negative $\frac{dz}{dt}$ means ||| The separation is <strong>shrinking</strong>: the objects are approaching each other at $\left|\frac{dz}{dt}\right|$. Positive means they are pulling apart.
----
-tr ||| The moment when $\frac{dz}{dt}=0$ for two movers ||| Their <strong>closest approach</strong>: the distance stops shrinking and starts growing. Found by setting $x\,x'+y\,y'=0$.
----
-tr ||| Two rates given and no snapshot values: what are you solving for? ||| Probably a <strong>dimension</strong>. Differentiate both formulas, treat the unknown rate as a variable, and <strong>divide the equations</strong> so it cancels.
----
-tr ||| Dividing the cube equations ||| $\frac{dV/dt}{dA/dt}=\frac{3s^2\,s'}{12s\,s'}=\frac{s}{4}$: the unknown $s'$ cancels and the edge pops out as $s=4\cdot\frac{dV/dt}{dA/dt}$.
----
-tr ||| Behavior of $\frac{dh}{dt}$ for a constant-rate fill of a cone ||| $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}$: <strong>positive, decreasing, nonlinear</strong>. The level rises fastest at the narrow vertex and slows as the cone widens.
----
-tr ||| How to prove a rate is nonlinear ||| Differentiate <strong>again</strong>: a linear function has a constant derivative. Here $\frac{d^2h}{dt^2}$ is negative and depends on $h$, so the rate is neither constant nor linear.
----
-tr ||| Cylinder fill vs cone fill at the same constant inflow ||| The <strong>cylinder's</strong> level rises at a constant rate ($\frac{dh}{dt}=\frac{k}{\pi r^2}$); the vertex-down <strong>cone's</strong> rise keeps slowing as the water widens.
----
-ex ||| Ex. 1: the draining conical tank ||| Tank 18 ft deep, radius 6; surface falls $\frac{1}{2}$ ft/hr at $h=6$. $r=\frac{h}{3}$, $V=\frac{\pi h^3}{27}$, $\frac{dV}{dt}=\frac{\pi h^2}{9}h'$, giving $-2\pi$: <strong>water leaves at $2\pi$ ft&sup3;/hr</strong>.
----
-ex ||| Ex. 2: the box with a frozen height ||| $h=5$ fixed, $\ell'=3$, $w'=-2$ at $\ell=10$, $w=4$: $\frac{dV}{dt}=5[(3)(4)+(10)(-2)]=5(-8)$, so <strong>$-40$ in&sup3;/sec</strong>.
----
-ex ||| Ex. 3: two cars on perpendicular roads ||| At 1 PM, $x=80$, $y=60$, $z=100$ (scaled 3-4-5). $\frac{dz}{dt}=\frac{80(-80)+60(60)}{100}=-28$: <strong>closing at 28 mph</strong>.
----
-ex ||| Ex. 4: the cube with two given rates ||| $\frac{dV}{dt}=36$, $\frac{dA}{dt}=16$: dividing gives $\frac{s}{4}=\frac{36}{16}$, so <strong>$s=9$ in</strong>. Check: $\frac{ds}{dt}=\frac{4}{27}$ satisfies both equations.
----
-ex ||| Ex. 5: the sliding ladder ||| 13-ft ladder, base 5 ft out moving away at 2 ft/s: $y=12$ and $y'=-\frac{(5)(2)}{12}$, so <strong>the top slides down at $\frac{5}{6}$ ft/s</strong>.
----
-ex ||| Ex. 6: filling a cone at a constant rate ||| With nothing but the shape, $\frac{dh}{dt}=\frac{k}{\pi c^2h^2}$: <strong>nonlinear and decreasing</strong>, like a cup of water barely moving a lake.
----
-ex ||| Right-triangle families to spot instantly ||| $(3,4,5)$ and multiples $(6,8,10)$, $(30,40,50)$, $(60,80,100)$, plus $(5,12,13)$ and $(7,24,25)$: <strong>spotting one skips the square root</strong>.
----
-ex ||| The leaking balloon pattern ||| $V=\frac{4}{3}\pi r^3$ with $\frac{dV}{dt}=-36\pi$ at $r=3$: $-36\pi=4\pi(9)\frac{dr}{dt}$, so $\frac{dr}{dt}=-1$: <strong>the radius shrinks 1 unit per minute</strong>.
----
-ex ||| The pond-ripple pattern ||| $A=\pi r^2$ with $\frac{dr}{dt}=2$ ft/s at $r=15$: $\frac{dA}{dt}=2\pi(15)(2)=60\pi$ ft&sup2;/s: <strong>area grows fastest when the circle is already big</strong>.
-</script>
+        <div class="tryit"><p class="try-q"><span class="try-k">Try it 3</span>A person 6 ft tall walks away from a 15-ft lamppost at 5 ft/s. &nbsp; (a) How fast is the person's shadow getting longer? &nbsp; (b) How fast is the tip of the shadow moving?</p>
+            <div class="tryit-fig"><svg viewBox="0 0 300 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A 15-foot lamppost, a 6-foot person standing x feet from it, and the person's shadow of length s on the ground beyond the person.">
+                <line x1="14" y1="104" x2="290" y2="104" stroke="#8C7B64" stroke-width="2.5"/>
+                <line x1="40" y1="104" x2="40" y2="14" stroke="#42260D" stroke-width="4" stroke-linecap="round"/><circle cx="40" cy="12" r="6" fill="#DDA25E" stroke="#42260D"/>
+                <line x1="40" y1="14" x2="243" y2="104" stroke="#DDA25E" stroke-width="1.6" stroke-dasharray="5 4"/>
+                <line x1="162" y1="104" x2="162" y2="68" stroke="#21442B" stroke-width="5" stroke-linecap="round"/><circle cx="162" cy="62" r="6" fill="#21442B"/>
+                <line x1="162" y1="104" x2="243" y2="104" stroke="#21442B" stroke-width="5" stroke-linecap="round" opacity="0.45"/>
+                <text x="28" y="62" font-size="11" text-anchor="end" fill="#42260D" font-weight="bold">15 ft</text>
+                <text x="174" y="88" font-size="11" fill="#21442B" font-weight="bold">6 ft</text>
+                <text x="101" y="120" font-size="12" text-anchor="middle" fill="#42260D" font-weight="bold" font-style="italic">x</text>
+                <text x="202" y="120" font-size="12" text-anchor="middle" fill="#42260D" font-weight="bold" font-style="italic">s</text>
+                <text x="247" y="120" font-size="10.5" fill="#8B5E3C" font-weight="bold">tip</text>
+            </svg></div>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Worked solution</button>
+            <div class="solution-body"><div class="givens"><span class="gk">Givens</span><ul><li>$x$ = distance from the lamppost to the person. $s$ = length of the shadow</li><li>True constants: lamppost 15 ft, person 6 ft</li><li>Rate given: $\frac{dx}{dt}=5$ ft/s. Want: $\frac{ds}{dt}$, then the rate of $x+s$</li></ul></div>
+            <p><strong>Similar triangles.</strong> The big triangle (lamppost, ground out to the tip) and the small triangle (person, shadow) have the same shape: $\dfrac{15}{x+s}=\dfrac{6}{s}$.</p>
+            <p><strong>Simplify before differentiating.</strong> $15s=6x+6s$, so $9s=6x$ and $s=\frac23x$.</p>
+            <p><strong>(a)</strong> $\frac{ds}{dt}=\frac23\,\frac{dx}{dt}=\frac23(5)=\frac{10}{3}\approx3.3333$ ft/s.</p>
+            <p><strong>(b)</strong> The tip is $x+s=x+\frac23x=\frac53x$ from the lamppost, so it moves at $\frac53(5)=\frac{25}{3}\approx8.3333$ ft/s.</p>
+            <p style="margin-bottom:0;"><strong>What to notice.</strong> No snapshot was given, and none was needed. The differentiated equations have no $x$ in them, so these rates are the same wherever the person is.</p></div></div>
     </div>
 
     <!-- SETUP DRILL -->
     <div id="tab-drill" class="tab-content">
         <div class="section-header"><div class="section-number">&#9881;</div><h2>Setup Drill</h2></div>
-        <p>Free-response graders give most of their points for the <em>setup</em>: the givens with correct signs, the one equation, the derivative. This drill trains exactly that. Type your setup (or say it out loud), reveal the model answer, compare against what a grader looks for, and mark yourself. Missed prompts are remembered next time you open this file.</p>
+        <p>Most of the work in a related-rates problem is the <em>setup</em>: the givens with correct signs, the one equation, and the derivative. This drill practices that part on its own. Type your setup (or say it out loud), reveal the model answer, compare it with the checklist, and mark yourself. There is no time limit. Missed prompts are remembered the next time you open this file.</p>
         <div class="quiz-top"><span class="score-pill" id="dr-score">Marked: 0 / 12</span><button class="quiz-btn" onclick="drReset()">Reset marks</button></div>
         <div id="drill-list"></div>
     </div>
@@ -1268,7 +1219,7 @@ var DRILL = [
  { q: 'Water fills a vertex-down cone at a constant rate. In one sentence each: what is $\\frac{dh}{dt}$ doing, and how would you justify it?',
    model: 'It is positive but decreasing, nonlinearly: $\\frac{dh}{dt}=\\frac{k}{\\pi c^2h^2}$, and as $h$ grows the $h^2$ downstairs grows. Justify with that formula, or by showing the second derivative is negative (and itself non-constant), or with the intuition that a cup of water barely moves a nearly full, wide tank.',
    grader: ['Direction: positive, water rises', 'Behavior: decreasing, with the h-squared denominator named', 'A justification offered: formula, second derivative, or the pouring intuition'] },
- { q: 'Your computation gives $\\frac{dV}{dt}=-6\\pi$ ft&sup3;/hr for a draining tank. Write the final sentence a grader wants to see.',
+ { q: 'Your computation gives $\\frac{dV}{dt}=-6\\pi$ ft&sup3;/hr for a draining tank. Write the sentence that completes the answer.',
    model: '"The volume is decreasing: water is leaving the tank at $6\\pi$ ft&sup3;/hr." The sign is interpreted, the magnitude is reported as the leaving rate, and the units are attached.',
    grader: ['Negative sign read as "decreasing"', 'Leaving rate reported as the magnitude', 'Units stated in the sentence'] }
 ];
@@ -1285,7 +1236,7 @@ function drInit() {
         html += '<textarea placeholder="Type your setup here (or just say it out loud), then reveal the model answer."></textarea>';
         html += '<button class="solution-toggle" onclick="drReveal(this)"><span class="arrow">&#9654;</span> Reveal model answer</button>';
         html += '<div class="dr-model"><div class="highlight-box" style="margin-top:0;"><p style="margin-bottom:0;">' + d.model + '</p></div>';
-        html += '<div class="dr-grader"><strong>What a grader looks for:</strong><ul>' + d.grader.map(function(g){ return '<li>' + g + '</li>'; }).join('') + '</ul></div>';
+        html += '<div class="dr-grader"><strong>What to check in your setup:</strong><ul>' + d.grader.map(function(g){ return '<li>' + g + '</li>'; }).join('') + '</ul></div>';
         html += '<div class="dr-mark"><button class="btn-small" onclick="drMark(' + i + ',true,this)">&#10003; I had it</button><button class="btn-small" style="background:#C0392B;" onclick="drMark(' + i + ',false,this)">&#10007; Missed it</button><span class="dr-badge got" id="dr-badge-got-' + i + '">HAD IT</span><span class="dr-badge miss" id="dr-badge-miss-' + i + '">MISSED: review this one</span></div>';
         html += '</div></div>';
     });
@@ -1364,12 +1315,12 @@ qa: [
           "Positive and growing over time, since more total water keeps arriving in the tank",
           "Negative and nonlinear, because the cone keeps widening toward its very top edge"],
    exp: "dh/dt = k/(&pi;c&sup2;h&sup2;): positive (water rises) with h&sup2; downstairs, so it shrinks as the level climbs, and not along a line. Constant dh/dt belongs to the cylinder; \"growing\" reverses the behavior; and the level never falls while water pours in, so the rate is not negative.", ref: "Tab 3" },
- { q: "Which final answer earns full credit for a draining-tank question asking how fast water leaves?",
+ { q: "Which final answer is complete for a draining-tank question asking how fast water leaves?",
    opts: ["\"$dV/dt=-2\\pi$ ft&sup3;/hr; the negative means $V$ is decreasing, so water leaves at $2\\pi$ ft&sup3;/hr\"",
-          "\"$dV/dt=-2\\pi$,\" with the sign's meaning and the units left for the grader to infer from context",
+          "\"$dV/dt=-2\\pi$,\" with the sign's meaning and the units left for the reader to infer from context",
           "\"Water is leaving at $2\\pi$,\" since the units are obvious from the wording of the question itself",
           "\"$dV/dt=+2\\pi$ ft&sup3;/hr,\" because a rate of leaving ought to be reported as a positive derivative"],
-   exp: "Full credit states the computed rate, interprets the sign, and attaches units. Bare numbers without units or interpretation drop the answer point; and writing dV/dt as +2&pi; is wrong because the volume is decreasing, even though the leaving rate (a magnitude) is 2&pi;.", ref: "Tab 1" }
+   exp: "A complete answer states the computed rate, interprets the sign, and attaches units. A bare number without units or interpretation leaves the answer unfinished. And dV/dt is not +2&pi;, because the volume is decreasing, even though the leaving rate (a magnitude) is 2&pi;.", ref: "Tab 1" }
 ],
 qb: [
  { q: "A conical tank, vertex down, is 12 ft deep with a top radius of 3 ft. Water drains so the surface falls at 1 ft/hr. When the water is 4 ft deep, at what rate is water leaving the tank?",
@@ -1440,112 +1391,6 @@ function answer(btn, id) {
     document.getElementById('score-' + id).textContent = 'Score: ' + s.score + ' / ' + QUIZ[id].length + (s.answered === QUIZ[id].length ? '  ·  done' : '');
 }
 
-/* ── Flashcards: decks, term list, custom deck, persisted missed set ── */
-var FC = [], fcDeck = [], fcIdx = 0, fcGot = 0, fcMiss = 0, fcRunMissed = [], fcFlipped = false, fcRound = 1;
-var fcFilter = 'all', fcOrder = 'inorder', fcSide = 'term', fcStatus = {}, fcMissedSet = {}, fcCustomSet = {}, fcDefFirst = false;
-var FC_TOPICS = ['pr','eq','tr','ex'];
-var FC_TOPIC = { pr: 'The process', eq: 'Equations & shapes', tr: 'Signs & traps', ex: 'Examples', all: 'All terms', missed: 'Missed cards', custom: 'My deck' };
-var FC_CKEY = 'lcc-related-rates-flashcards-custom';
-var FC_KEY = 'lcc-related-rates-flashcards-missed';
-function fcLoadMissed(){ try { var v = localStorage.getItem(FC_KEY); if (v) fcMissedSet = JSON.parse(v) || {}; var c = localStorage.getItem(FC_CKEY); if (c) fcCustomSet = JSON.parse(c) || {}; } catch(e){} }
-function fcSaveCustom(){ try { localStorage.setItem(FC_CKEY, JSON.stringify(fcCustomSet)); } catch(e){} }
-function fcSaveMissed(){ try { localStorage.setItem(FC_KEY, JSON.stringify(fcMissedSet)); } catch(e){} }
-function fcHaptic(){ try { if (navigator.vibrate) navigator.vibrate(12); } catch(e){} }
-function fcInit(){ var raw = document.getElementById('fc-data').textContent.trim();
-    FC = raw.split(/\n---\n/).map(function(s, i){ var p = s.split('|||'); return { id: i, t: p[0].trim(), f: p[1].trim(), b: p[2].trim() }; });
-    fcLoadMissed(); fcCounts(); fcRenderPick(); fcBuildDeck(); }
-function fcCounts(){ ['all'].concat(FC_TOPICS).forEach(function(k){ var n = k==='all' ? FC.length : FC.filter(function(c){ return c.t===k; }).length; var el=document.getElementById('fcn-'+k); if (el) el.textContent='('+n+')'; });
-    var el=document.getElementById('fcn-missed'); if (el) el.textContent='('+Object.keys(fcMissedSet).length+')';
-    var ec=document.getElementById('fcn-custom'); if (ec) ec.textContent='('+Object.keys(fcCustomSet).length+')';
-    var pc=document.getElementById('fc-pick-count'); if (pc) pc.textContent=Object.keys(fcCustomSet).length; }
-function fcSetFilter(f, btn){ fcFilter = f; document.querySelectorAll('.fc-chip[data-filter]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
-function fcSetOrder(o, btn){ fcOrder = o; document.querySelectorAll('.fc-chip[data-order]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcBuildDeck(); }
-function fcBuildDeck(){ var ids = FC.filter(function(c){ return fcFilter==='all' || (fcFilter==='missed' ? !!fcMissedSet[c.id] : fcFilter==='custom' ? !!fcCustomSet[c.id] : c.t===fcFilter); }).map(function(c){ return c.id; });
-    if (fcOrder !== 'inorder'){ for (var i = ids.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; } }
-    if (fcOrder === 'quick') ids = ids.slice(0, 10);
-    fcDeck = ids; fcIdx = 0; fcGot = 0; fcMiss = 0; fcRunMissed = []; fcStatus = {}; fcRound = 1;
-    document.getElementById('fc-done').style.display='none';
-    var nm = FC_TOPIC[fcFilter] + (fcOrder==='quick' ? ' · quick test' : fcOrder==='shuffle' ? ' · shuffled' : '');
-    document.getElementById('fc-deckname').textContent = nm;
-    fcRenderList(); fcRender(); }
-function fcRestart(){ fcBuildDeck(); }
-function fcClearMissed(){ fcMissedSet = {}; fcSaveMissed(); fcCounts(); if (fcFilter==='missed') fcBuildDeck(); else fcRenderList(); }
-function fcRenderList(){ var box = document.getElementById('fc-list'); if (!box) return; var html = '';
-    if (!fcDeck.length){ box.innerHTML = '<p style="margin:0; color:var(--text-medium); font-size:13.5px;">Nothing in this deck yet' + (fcFilter==='missed' ? ': cards you mark &#10007; Missed land here.' : fcFilter==='custom' ? ': use <strong>Pick cards&hellip;</strong> above to choose some.' : '.') + '</p>'; return; }
-    fcDeck.forEach(function(id, k){ var c = FC[id]; var st = fcStatus[id] || (fcMissedSet[id] ? 'miss' : '');
-        html += '<button class="fc-term ' + st + (k===fcIdx ? ' current' : '') + '" onclick="fcJump(' + k + ')"><span class="fc-term-n">' + (k+1) + '</span>' + c.f + '</button>'; });
-    box.innerHTML = html; if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
-function fcJump(k){ fcIdx = k; document.getElementById('fc-done').style.display='none'; fcHaptic(); fcRender(); }
-function fcRender(){ var card = document.getElementById('fc-card'); fcFlipped = false; card.classList.remove('flipped');
-    document.getElementById('fc-got').textContent = fcGot; document.getElementById('fc-miss').textContent = fcMiss;
-    document.querySelectorAll('#fc-list .fc-term').forEach(function(b, k){ b.classList.toggle('current', k===fcIdx); });
-    if (!fcDeck.length){ document.getElementById('fc-count').textContent = 'Empty deck'; document.getElementById('fc-front').innerHTML = 'Pick another deck above.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent=''; return; }
-    if (fcIdx >= fcDeck.length){ fcFinish(); return; }
-    var c = FC[fcDeck[fcIdx]];
-    fcDefFirst = (fcSide === 'def') || (fcSide === 'random' && Math.random() < 0.5);
-    document.getElementById('fc-count').textContent = (fcRound > 1 ? 'Review round · ' : '') + 'Card ' + (fcIdx+1) + ' / ' + fcDeck.length;
-    document.getElementById('fc-label').textContent = fcDefFirst ? 'DEFINITION: name the term' : 'TERM';
-    document.getElementById('fc-front').innerHTML = fcDefFirst ? c.b : c.f; document.getElementById('fc-back').innerHTML = fcDefFirst ? c.f : c.b;
-    document.getElementById('fc-hint').textContent = 'click to flip';
-    if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([card]); }, 30); }
-function fcFlip(){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; var card = document.getElementById('fc-card'); fcFlipped = !fcFlipped; card.classList.toggle('flipped', fcFlipped); fcHaptic();
-    document.getElementById('fc-label').textContent = fcFlipped ? (fcDefFirst ? 'TERM' : 'ANSWER') : (fcDefFirst ? 'DEFINITION: name the term' : 'TERM'); document.getElementById('fc-hint').textContent = fcFlipped ? 'mark yourself below' : 'click to flip'; }
-function fcMark(ok){ if (fcIdx >= fcDeck.length || !fcDeck.length) return; if (!fcFlipped){ fcFlip(); return; }
-    var id = fcDeck[fcIdx];
-    if (ok){ fcGot++; fcStatus[id] = 'got'; delete fcMissedSet[id]; }
-    else { fcMiss++; fcStatus[id] = 'miss'; fcMissedSet[id] = 1; fcRunMissed.push(id); }
-    fcSaveMissed(); fcCounts(); fcHaptic();
-    var b = document.querySelectorAll('#fc-list .fc-term')[fcIdx]; if (b){ b.classList.remove('got','miss'); b.classList.add(ok ? 'got' : 'miss'); }
-    fcIdx++; fcRender(); }
-function fcSkip(){ if (!fcDeck.length) return; fcIdx = (fcIdx + 1) % fcDeck.length; fcHaptic(); fcRender(); }
-function fcFinish(){ var d = document.getElementById('fc-done'); d.style.display='block';
-    document.getElementById('fc-count').textContent = 'Deck complete';
-    document.getElementById('fc-front').innerHTML = 'Round done: ' + fcGot + ' got, ' + fcMiss + ' missed.'; document.getElementById('fc-back').innerHTML=''; document.getElementById('fc-hint').textContent='';
-    if (fcRunMissed.length){ d.innerHTML = '<p style="margin-bottom:8px;"><strong>' + fcRunMissed.length + ' missed this round.</strong> They are saved in the Missed deck; review them now or come back later.</p><button class="btn-small" onclick="fcReview()">Review ' + fcRunMissed.length + ' missed now</button>';
-    } else { d.innerHTML = '<p style="margin:0;"><strong>Clean sweep.</strong> Try the shuffled or quick-test order next time.</p>'; } }
-function fcReview(){ fcDeck = fcRunMissed.slice(); fcRunMissed = []; fcIdx = 0; fcRound++; fcStatus = {}; document.getElementById('fc-done').style.display='none'; fcRenderList(); fcRender(); }
-function fcSetSide(s, btn){ fcSide = s; document.querySelectorAll('.fc-chip[data-side]').forEach(function(b){ b.classList.toggle('on', b===btn); }); fcHaptic(); fcRender(); }
-/* custom deck picker */
-function fcTogglePick(){ var p = document.getElementById('fc-pick-panel'), b = document.getElementById('fc-pick-btn'); var open = p.style.display === 'none'; p.style.display = open ? 'block' : 'none'; b.classList.toggle('on', open); fcHaptic(); if (open && window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([p]); }, 30); }
-function fcRenderPick(){ var box = document.getElementById('fc-pick-groups'); if (!box) return; var html = '';
-    FC_TOPICS.forEach(function(t){ html += '<div class="fc-pick-group"><div class="fc-pick-head">' + FC_TOPIC[t] + ' <button onclick="fcPickTopic(\'' + t + '\',true)">select all</button><button onclick="fcPickTopic(\'' + t + '\',false)">none</button></div><div class="fc-pick-grid">';
-        FC.filter(function(c){ return c.t===t; }).forEach(function(c){ var on = !!fcCustomSet[c.id]; html += '<label class="fc-pick' + (on ? ' on' : '') + '"><input type="checkbox" ' + (on ? 'checked' : '') + ' onchange="fcPickOne(' + c.id + ', this.checked)"><span>' + c.f + '</span></label>'; });
-        html += '</div></div>'; });
-    box.innerHTML = html; fcCounts(); if (window.MathJax && MathJax.typeset) setTimeout(function(){ MathJax.typeset([box]); }, 30); }
-function fcPickOne(id, on){ if (on) fcCustomSet[id] = 1; else delete fcCustomSet[id]; fcSaveCustom(); fcHaptic();
-    var inp = document.querySelector('#fc-pick-groups input[onchange*="fcPickOne(' + id + ',"]'); if (inp) inp.parentElement.classList.toggle('on', on);
-    fcCounts(); if (fcFilter==='custom') fcBuildDeck(); }
-function fcPickTopic(t, on){ FC.filter(function(c){ return c.t===t; }).forEach(function(c){ if (on) fcCustomSet[c.id] = 1; else delete fcCustomSet[c.id]; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
-function fcPickAll(on){ fcCustomSet = {}; if (on) FC.forEach(function(c){ fcCustomSet[c.id] = 1; }); fcSaveCustom(); fcRenderPick(); if (fcFilter==='custom') fcBuildDeck(); }
-function fcStudyCustom(){ var btn = document.querySelector('.fc-chip[data-filter="custom"]'); fcSetFilter('custom', btn); document.getElementById('fc-pick-panel').style.display='none'; document.getElementById('fc-pick-btn').classList.remove('on'); }
-/* Anki export: tab-separated text with Anki file headers; $..$ math -> \( .. \) which Anki's MathJax renders */
-var FC_ANKI_DECK = 'AP Calculus::Related Rates';
-function fcAnkiField(s){
-    s = String(s).replace(/\$\$([\s\S]+?)\$\$/g, function(_, m){ return '\\[' + m + '\\]'; });
-    s = s.replace(/\$([^$]+?)\$/g, function(_, m){ return '\\(' + m + '\\)'; });
-    return s.replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim();
-}
-function fcExportAnki(scope){
-    var ids = scope === 'all' ? FC.map(function(c){ return c.id; }) : fcDeck.slice();
-    if (!ids.length){ alert('This deck is empty: pick a deck with cards in it first.'); return; }
-    var lines = ['#separator:tab', '#html:true', '#tags column:3', '#deck:' + FC_ANKI_DECK, '#notetype:Basic'];
-    ids.forEach(function(id){ var c = FC[id];
-        var tags = 'APCalc Related_Rates ' + (FC_TOPIC[c.t] || c.t).replace(/[^A-Za-z0-9]+/g, '_') + (fcMissedSet[id] ? ' missed' : '');
-        lines.push(fcAnkiField(c.f) + '\t' + fcAnkiField(c.b) + '\t' + tags); });
-    var label = scope === 'all' ? 'all' : (FC_TOPIC[fcFilter] || fcFilter).replace(/[^A-Za-z0-9]+/g, '_');
-    var blob = new Blob([lines.join('\n') + '\n'], { type: 'text/plain;charset=utf-8' });
-    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'related_rates_anki_' + label + '.txt';
-    document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500); fcHaptic();
-}
-function fcToggleAnkiHelp(){ var h = document.getElementById('fc-anki-help'); h.style.display = h.style.display === 'none' ? 'block' : 'none'; }
-document.addEventListener('keydown', function(e) {
-    if (!document.getElementById('tab-flash').classList.contains('active')) return;
-    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
-    if (e.key === 'ArrowRight') fcSkip(); else if (e.key === ' ') { e.preventDefault(); fcFlip(); }
-    else if (e.key === 'g' || e.key === 'G') fcMark(true); else if (e.key === 'm' || e.key === 'M') fcMark(false);
-});
-
 /* ── Next / Back navigation at the bottom of every tab ── */
 function addTabNav() {
     var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
@@ -1568,7 +1413,6 @@ function addTabNav() {
 }
 window.addEventListener('DOMContentLoaded', function() {
     buildQuiz('qa'); buildQuiz('qb');
-    fcInit();
     drInit();
     stRender();
     triUpdate();

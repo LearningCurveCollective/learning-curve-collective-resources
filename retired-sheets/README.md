@@ -5,8 +5,11 @@ Sheets that have been taken off Open Learning but kept on file. Nothing in this 
 | Sheet | Retired | Replaced by |
 |---|---|---|
 | `SAT-Desmos-Strategies.html` (SAT Math: Desmos Strategies) | 2026-11-12 | The SAT Desmos series in `test-prep/sat/`: `SAT-Desmos-1-Core-Moves.html`, `SAT-Desmos-2-Next-Steps.html`, `SAT-Desmos-3-Mixed-Practice.html` |
+| `IVT_EVT_MVT_Extrema_Sheet.html` (IVT, EVT, MVT & Extrema: Existence Theorems) | 2026-11-18 | `calculus/ivt-mvt-rolles-theorem-study-sheet.html` for the theorems; the max and min rules are covered by `calculus/practice-extrema-mvt-worksheet.html` and `calculus/Derivative Tests Study Sheet.html` |
 
 The old address, `test-prep/sat/SAT-Desmos-Strategies.html`, now holds a short forwarding page that points to the series, so existing links and bookmarks still lead somewhere useful. Its catalog record is marked `"hidden": true`.
+
+The same goes for `calculus/IVT_EVT_MVT_Extrema_Sheet.html`: that address holds a forwarding page to the new study sheet and the two extrema sheets, and its catalog record is marked `"hidden": true`.
 
 ## Retiring another sheet
 
