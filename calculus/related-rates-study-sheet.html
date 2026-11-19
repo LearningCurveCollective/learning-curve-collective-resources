@@ -343,6 +343,29 @@ li { margin-bottom: 8px; }
 
         <div class="cs-row">
             <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+                <text x="110" y="14" font-size="9.5" text-anchor="middle" fill="#8B5E3C" font-weight="bold">tops: V and r</text>
+                <text x="110" y="26" font-size="8.5" text-anchor="middle" fill="#42260D">an equation linking V and r</text>
+                <path d="M76 46 L96 31 M144 46 L124 31" stroke="#BC6C26" stroke-width="1.6" fill="none"/>
+                <rect x="58" y="46" width="36" height="25" rx="5" fill="rgba(221,162,94,0.22)" stroke="#BC6C26"/><text x="76" y="64" font-size="15" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#42260D">dV</text>
+                <line x1="55" y1="75" x2="97" y2="75" stroke="#42260D" stroke-width="1.6"/>
+                <rect x="58" y="79" width="36" height="25" rx="5" fill="rgba(57,134,78,0.16)" stroke="#39864E"/><text x="76" y="97" font-size="15" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#21442B">dt</text>
+                <rect x="126" y="46" width="36" height="25" rx="5" fill="rgba(221,162,94,0.22)" stroke="#BC6C26"/><text x="144" y="64" font-size="15" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#42260D">dr</text>
+                <line x1="123" y1="75" x2="165" y2="75" stroke="#42260D" stroke-width="1.6"/>
+                <rect x="126" y="79" width="36" height="25" rx="5" fill="rgba(57,134,78,0.16)" stroke="#39864E"/><text x="144" y="97" font-size="15" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#21442B">dt</text>
+                <text x="30" y="79" font-size="9" text-anchor="middle" fill="#4A4A4A">given</text><text x="191" y="79" font-size="9" text-anchor="middle" fill="#4A4A4A">want</text>
+                <path d="M76 104 L96 119 M144 104 L124 119" stroke="#39864E" stroke-width="1.6" fill="none"/>
+                <text x="110" y="131" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">bottoms: dt and dt</text>
+                <text x="110" y="143" font-size="8.5" text-anchor="middle" fill="#42260D">differentiate with respect to t</text>
+            </svg></div>
+            <div class="cs-body">
+                <h4>Read the two rates: tops and bottoms <span class="slide-ref">Tab 1</span></h4>
+                <p class="cs-econ"><span class="cs-k">Calc</span>Write the given rate and the wanted rate as fractions, such as $\frac{dV}{dt}$ and $\frac{dr}{dt}$. The bottoms ($dt$) name the variable you differentiate with respect to. The tops ($V$ and $r$) name the two quantities your Step 2 equation has to connect: $V=\frac43\pi r^3$.</p>
+                <p class="cs-plain"><span class="cs-k">Plain English</span>The two rates tell you how to start. Bottoms: what to differentiate with respect to. Tops: which formula to write. That formula has no derivatives in it; they arrive when you differentiate.</p>
+            </div>
+        </div>
+
+        <div class="cs-row">
+            <div class="cs-fig"><svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
                 <rect x="14" y="18" width="90" height="114" rx="6" fill="rgba(57,134,78,0.08)" stroke="#39864E"/>
                 <path d="M59 108 L59 46" stroke="#21442B" stroke-width="3"/><path d="M52 54 L59 42 L66 54" fill="none" stroke="#21442B" stroke-width="3"/>
                 <text x="59" y="126" font-size="9.5" text-anchor="middle" fill="#21442B" font-weight="bold">rising, filling,</text><text x="59" y="30" font-size="12" text-anchor="middle" fill="#21442B" font-weight="bold">+ away</text>
@@ -577,12 +600,74 @@ li { margin-bottom: 8px; }
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 1: gather your givens</div>
                     <p>Read the whole problem once, then write down everything you know before touching any calculus. In particular, <strong>pay attention to the rate they give you</strong>: every related-rates problem hands you at least one derivative, disguised as a phrase like "the surface is falling at $\frac{1}{2}$ ft/hr" ($\frac{dh}{dt}=-\frac{1}{2}$). Record signs now, list the snapshot values ("when the water is 6 ft deep") separately, and write what you want: "find $\frac{dV}{dt}$."</p></div></div>
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 2: come up with a simple equation</div>
-                    <p>You need <strong>one formula</strong> that connects the variable whose rate you want to the variable whose rate you have. The units of the target rate point to it: a ft&sup3;/hr question wants a volume formula; mph between two cars wants $x^2+y^2=z^2$. If the formula has an extra variable, hunt for a constraint that removes it (Tab 2).</p></div></div>
+                    <p>You need <strong>one formula</strong> that connects the variable whose rate you want to the variable whose rate you have. Those two variables are the tops of the two rates: $\frac{dV}{dt}$ and $\frac{dr}{dt}$ call for a formula with $V$ and $r$. The units of the target rate point to it: a ft&sup3;/hr question wants a volume formula; mph between two cars wants $x^2+y^2=z^2$. If the formula has an extra variable, hunt for a constraint that removes it (Tab 2).</p></div></div>
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 3: differentiate with respect to $t$</div>
-                    <p>Differentiate both sides implicitly. This is the same chain-rule step as in implicit differentiation, with $t$ in place of $x$. Every changing variable picks up its own rate by the chain rule: $\frac{d}{dt}(h^3)=3h^2\frac{dh}{dt}$, and a product of two changing variables needs the product rule: $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$. Plain constants (like a frozen height of 10) just ride along in front.</p></div></div>
+                    <p>Differentiate both sides implicitly. This is the same chain-rule step as in implicit differentiation, with $t$ in place of $x$. The bottom of the rate in your givens, $dt$, is how you know. Every changing variable picks up its own rate by the chain rule: $\frac{d}{dt}(h^3)=3h^2\frac{dh}{dt}$, and a product of two changing variables needs the product rule: $\frac{d}{dt}(\ell w)=\frac{d\ell}{dt}w+\ell\frac{dw}{dt}$. Plain constants (like a frozen height of 10) just ride along in front.</p></div></div>
                 <div class="concept-item"><div class="concept-body"><div class="concept-label">Step 4: plug in last, then interpret</div>
                     <p>Only now do the snapshot values enter. Substitute, solve for the unknown rate, and close with a sentence: sign (increasing or decreasing?), magnitude, and <strong>units</strong>. "$\frac{dV}{dt}=-2\pi$, so water is leaving the tank at $2\pi$ ft&sup3;/hr."</p></div></div>
             </div>
+        </div>
+
+        <div class="card">
+            <h3>Read the two rates first: tops and bottoms</h3>
+            <p>Before any calculus, write the rate you are given and the rate you want as fractions. Those two fractions tell you how to do Step 2 and Step 3.</p>
+            <div style="max-width:560px; margin:6px auto 16px; overflow-x:auto; overflow-y:hidden;"><svg viewBox="0 0 520 232" xmlns="http://www.w3.org/2000/svg" style="width:100%; min-width:430px; height:auto; display:block;" role="img" aria-label="The given rate dV over dt and the wanted rate dr over dt. Their tops, V and r, point to the equation for Step 2. Their bottoms, both dt, point to differentiating with respect to t in Step 3.">
+                <rect x="50" y="6" width="420" height="32" rx="6" fill="rgba(221,162,94,0.18)" stroke="#BC6C26"/>
+                <text x="260" y="27" font-size="12.5" text-anchor="middle" fill="#42260D" font-weight="bold">Tops: V and r. Step 2 needs an equation that links V and r.</text>
+                <path d="M227 78 L245 38 M293 78 L275 38" stroke="#BC6C26" stroke-width="2" fill="none"/>
+                <rect x="200" y="78" width="54" height="38" rx="6" fill="rgba(221,162,94,0.22)" stroke="#BC6C26" stroke-width="1.5"/><text x="227" y="106" font-size="26" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#42260D">dV</text>
+                <line x1="196" y1="121" x2="258" y2="121" stroke="#42260D" stroke-width="2"/>
+                <rect x="200" y="126" width="54" height="38" rx="6" fill="rgba(57,134,78,0.16)" stroke="#39864E" stroke-width="1.5"/><text x="227" y="154" font-size="26" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#21442B">dt</text>
+                <rect x="266" y="78" width="54" height="38" rx="6" fill="rgba(221,162,94,0.22)" stroke="#BC6C26" stroke-width="1.5"/><text x="293" y="106" font-size="26" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#42260D">dr</text>
+                <line x1="262" y1="121" x2="324" y2="121" stroke="#42260D" stroke-width="2"/>
+                <rect x="266" y="126" width="54" height="38" rx="6" fill="rgba(57,134,78,0.16)" stroke="#39864E" stroke-width="1.5"/><text x="293" y="154" font-size="26" font-style="italic" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" fill="#21442B">dt</text>
+                <text x="186" y="117" font-size="12" text-anchor="end" fill="#4A4A4A">the rate you are given</text><text x="186" y="134" font-size="12" text-anchor="end" fill="#42260D" font-weight="bold">100 cm&#179;/s</text>
+                <text x="334" y="117" font-size="12" fill="#4A4A4A">the rate you want</text><text x="334" y="134" font-size="12" fill="#42260D" font-weight="bold">unknown</text>
+                <path d="M227 164 L245 194 M293 164 L275 194" stroke="#39864E" stroke-width="2" fill="none"/>
+                <rect x="50" y="194" width="420" height="32" rx="6" fill="rgba(57,134,78,0.14)" stroke="#39864E"/>
+                <text x="260" y="215" font-size="12.5" text-anchor="middle" fill="#21442B" font-weight="bold">Bottoms: both dt. Step 3 is to differentiate with respect to t.</text>
+            </svg></div>
+            <div class="concept-list">
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">The bottoms tell you what to differentiate with respect to</div>
+                    <p style="margin-bottom:0;">The rate in your givens looks like $\frac{dx}{dt}=1$ ft/s. Its bottom is <span style="white-space:nowrap;">$dt$,</span> so in Step 3 you differentiate with respect to $t$. If you find yourself writing $\frac{dy}{dx}$ out of habit, look back at the bottom of the given rate.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">The tops tell you which equation to write</div>
+                    <p style="margin-bottom:0;">The top of the given rate and the top of the wanted rate are the two quantities your Step 2 equation has to connect. Given $\frac{dV}{dt}$ and asked for $\frac{dr}{dt}$? You need an equation with $V$ and $r$ in it. That equation has no derivatives: it is plain geometry. The calculus arrives in Step 3.</p></div></div>
+            </div>
+            <div class="tbl-wrap"><table class="cmp">
+                <tr><th>Situation</th><th>Given rate</th><th>Wanted rate</th><th>Tops</th><th>Equation that links them</th></tr>
+                <tr><td>Balloon filling with air</td><td>$\frac{dV}{dt}$</td><td>$\frac{dr}{dt}$</td><td>$V$ and $r$</td><td>$V=\frac43\pi r^3$</td></tr>
+                <tr><td>Oil slick spreading in a circle</td><td>$\frac{dr}{dt}$</td><td>$\frac{dA}{dt}$</td><td>$r$ and $A$</td><td>$A=\pi r^2$</td></tr>
+                <tr><td>Cube growing</td><td>$\frac{ds}{dt}$</td><td>$\frac{dV}{dt}$</td><td>$s$ and $V$</td><td>$V=s^3$</td></tr>
+                <tr><td>Ladder sliding down a wall</td><td>$\frac{dx}{dt}$</td><td>$\frac{dy}{dt}$</td><td>$x$ and $y$</td><td>$x^2+y^2=L^2$</td></tr>
+                <tr><td>Cylindrical tank filling, radius fixed at 2</td><td>$\frac{dh}{dt}$</td><td>$\frac{dV}{dt}$</td><td>$h$ and $V$</td><td>$V=\pi(2)^2h=4\pi h$</td></tr>
+            </table></div>
+            <div class="highlight-box">
+                <p><strong>See it work.</strong> Air is pumped into a spherical balloon at 100 cm&sup3;/s. How fast is the radius growing when the radius is 5 cm?</p>
+                <p><strong>Givens.</strong> $\frac{dV}{dt}=100$ cm&sup3;/s. Snapshot: $r=5$ cm. Want: $\frac{dr}{dt}$.</p>
+                <p><strong>Tops are $V$ and $r$,</strong> so the equation is $V=\frac43\pi r^3$. <strong>Bottoms are $dt$,</strong> so differentiate with respect to $t$, then plug in:</p>
+                <div style="overflow-x:auto; overflow-y:hidden;">$$\frac{dV}{dt}=4\pi r^2\,\frac{dr}{dt}\;\;\Longrightarrow\;\;100=4\pi(5)^2\,\frac{dr}{dt}\;\;\Longrightarrow\;\;\frac{dr}{dt}=\frac{100}{100\pi}=\frac{1}{\pi}\text{ cm/s}$$</div>
+                <p style="margin-bottom:0;">That is about 0.318 cm/s. The radius is growing, so the rate is positive.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Common mistakes and what to check</h3>
+            <p>These are common setup and bookkeeping mistakes. Review them so you know what to check when an answer seems off.</p>
+            <div class="concept-list">
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Turn the question into a symbol before you start</div>
+                    <p style="margin-bottom:0;">"How fast is the radius growing?" is asking for $\frac{dr}{dt}$. "How fast is the area growing?" is $\frac{dA}{dt}$. "How fast is the top sliding down?" is $\frac{dy}{dt}$. Write "Want: $\frac{dr}{dt}$" next to your givens so you know what you are solving for.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">The tag matches the letter you just differentiated</div>
+                    <p style="margin-bottom:0;">$\frac{d}{dt}\big[r^3\big]=3r^2\,\frac{dr}{dt}$ and $\frac{d}{dt}\big[y^2\big]=2y\,\frac{dy}{dt}$. The top of the tag is the same letter as the term it came from. Differentiate both sides, too: the $V$ on the left becomes $\frac{dV}{dt}$, not $0$, because the volume is changing.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">A length in the snapshot is a value of a variable, not a time</div>
+                    <p style="margin-bottom:0;">"When the bottom is 6 feet from the wall" means $x=6$. It does not mean 6 seconds have passed. The units help: feet go with a length.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">You may need the original equation twice</div>
+                    <p style="margin-bottom:0;">Once to differentiate, and once more to find a snapshot value the problem did not state. On a 10-ft ladder with $x=6$: $36+y^2=100$, so $y=8$. A length is positive, so take the positive root.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">A measurement that stays the same has no rate</div>
+                    <p style="margin-bottom:0;">In a cylindrical tank of radius 2, the radius is 2 at every fuel level. Treat it as the number 2, not as a variable: $V=4\pi h$, so $\frac{dV}{dt}=4\pi\,\frac{dh}{dt}$. "The fuel level is rising" describes $h$, so that phrase gives you $\frac{dh}{dt}$.</p></div></div>
+                <div class="concept-item"><div class="concept-body"><div class="concept-label">Read the sign, then add units</div>
+                    <p style="margin-bottom:0;">A negative rate means the quantity is getting smaller. $\frac{dy}{dt}=-\frac34$ ft/s says the top of the ladder is sliding <em>down</em> at $\frac34$ ft/s. Units come from the fraction itself: units of the top per units of the bottom, such as cm&sup3; per second for $\frac{dV}{dt}$.</p></div></div>
+            </div>
+            <p style="margin-bottom:0;">Related rates asks for several things at once: a picture, a formula, a derivative and careful bookkeeping. If a problem feels hard, that is normal for this topic. Work it one step at a time.</p>
         </div>
 
         <div class="card" style="border-left-color: var(--green-dark);">
