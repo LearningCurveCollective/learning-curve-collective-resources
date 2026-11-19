@@ -254,6 +254,25 @@ table.lcc td.hi { background: rgba(221,162,94,0.22) !important; font-weight: 600
 .tree-node p:last-child { margin-bottom: 0; }
 
 /* ─── Next / Back navigation ─── */
+
+/* ─── Try it yourself blocks ─── */
+.try-box { background: rgba(66,38,13,0.05); border-left: 4px solid #8B5E3C; border-radius: 10px; padding: 16px 18px 14px; margin: 20px 0; }
+.try-box > .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.try-box .try-intro { font-size: 13.5px; color: var(--text-medium); margin: 0 0 6px; }
+.try-item { background: white; border: 1.5px solid var(--cream-dark); border-radius: 10px; padding: 12px 14px; margin-top: 12px; }
+.try-item .try-q { margin: 0 0 8px; display: flex; gap: 10px; align-items: flex-start; }
+.try-item .try-n { flex-shrink: 0; display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background: #8B5E3C; color: white; font-weight: 700; font-size: 12px; align-items: center; justify-content: center; margin-top: 1px; }
+.sol-vertical .sol-step { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 4px 12px; padding: 9px 0; border-top: 1px dashed rgba(66,38,13,0.2); align-items: start; }
+.sol-vertical .sol-step:first-child { border-top: none; padding-top: 0; }
+.sol-vertical .sol-step:last-child { padding-bottom: 0; }
+.sol-vertical .sol-k { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #8B5E3C; padding-top: 4px; }
+.sol-vertical .sol-v { min-width: 0; }
+.sol-vertical .sol-v p { margin: 0 0 6px; }
+.sol-vertical .sol-v p:last-child { margin-bottom: 0; }
+.sol-vertical .sol-v mjx-container[display="true"] { text-align: left !important; margin: 6px 0 !important; }
+.sol-vertical .sol-v .highlight-box { margin: 4px 0 0; }
+@media (max-width: 600px) { .sol-vertical .sol-step { grid-template-columns: 1fr; gap: 2px; } }
+
 .tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
 .tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
 .tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
@@ -664,6 +683,39 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Write the tangent line to $f(x) = \cos x$ at $x = 0$ and use it to estimate $\cos(0.1)$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Tangent line $y = f(0) + f'(0)\,x$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f(0) = \cos 0 = 1$ and $f'(x) = -\sin x$, so $f'(0) = 0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$y = 1 + 0\cdot x = 1$$<p>At $x = 0.1$ the tangent line gives $1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Tangent line $y = 1$; estimate $\cos(0.1) \approx 1$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The true value is $\cos(0.1) \approx 0.9950$. A horizontal tangent cannot see the curve bending down; the next term, $-\frac{x^2}{2} = -0.005$, is exactly what is missing.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Write $P_2(x)$ for $f(x) = e^x$ and use it to estimate $e^{0.1}$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Add the quadratic correction to the tangent line.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f(0) = f'(0) = f''(0) = 1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$P_2(x) = 1 + x + \frac{f''(0)}{2}x^2 = 1 + x + \frac{x^2}{2}$$$$P_2(0.1) = 1 + 0.1 + 0.005 = 1.105$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$P_2(x) = 1 + x + \frac{x^2}{2}$, and $e^{0.1} \approx 1.105$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The true value is $e^{0.1} \approx 1.10517$. The tangent line alone gives $1.1$ (error $0.005$); the quadratic term cuts the error to about $0.00017$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>For $f(x) = \ln(1+x)$, the tangent line at $0$ is $y = x$. Estimate $\ln(1.2)$ with it and say whether the estimate is too high or too low.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Tangent line, then concavity.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$x = 0.2$ gives $\ln(1.2) \approx 0.2$. $f''(x) = -\dfrac{1}{(1+x)^2} < 0$, so $f$ is concave down.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>A concave-down curve lies below its tangent line, so the tangent line overestimates.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$\ln(1.2) \approx 0.2$, an overestimate.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>True value $\ln(1.2) \approx 0.1823$. The next term of the series, $-\frac{x^2}{2} = -0.02$, brings the estimate down to $0.18$.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">4</div><h2>Why do the factorials appear?</h2></div>
         <div class="two-col">
             <div>
@@ -824,6 +876,39 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Build the third-degree Maclaurin polynomial for $f(x) = e^{2x}$ from derivatives.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Differentiate, evaluate at $0$, divide by factorials.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f = e^{2x}$, $f' = 2e^{2x}$, $f'' = 4e^{2x}$, $f''' = 8e^{2x}$. At $0$: $1, 2, 4, 8$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$a_0 = 1, \quad a_1 = \frac{2}{1!} = 2, \quad a_2 = \frac{4}{2!} = 2, \quad a_3 = \frac{8}{3!} = \frac43$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$P_3(x) = 1 + 2x + 2x^2 + \dfrac43 x^3$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Substituting $2x$ into the $e^x$ series gives $1 + 2x + \frac{(2x)^2}{2} + \frac{(2x)^3}{6}$, the same polynomial.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>A function has Maclaurin series $f(x) = 3 - x + 5x^2 - 2x^3 + \cdots$. Find $f\'(0)$, $f\'\'(0)$, and $f\'\'\'(0)$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Read the coefficients and multiply by factorials: $f^{(n)}(0) = n!\,a_n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_1 = -1$, $a_2 = 5$, $a_3 = -2$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$f'(0) = 1!\cdot(-1) = -1, \qquad f''(0) = 2!\cdot 5 = 10, \qquad f'''(0) = 3!\cdot(-2) = -12$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$f'(0) = -1$, $f''(0) = 10$, $f'''(0) = -12$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Differentiate the polynomial directly: $f''(x) = 10 - 12x + \cdots$, so $f''(0) = 10$ and $f'''(0) = -12$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Build $P_2(x)$ for $f(x) = \sqrt{1+x}$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Differentiate, evaluate at $0$, divide by factorials.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f = (1+x)^{1/2}$, $f' = \tfrac12(1+x)^{-1/2}$, $f'' = -\tfrac14(1+x)^{-3/2}$. At $0$: $1, \tfrac12, -\tfrac14$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$P_2(x) = 1 + \frac12 x + \frac{-1/4}{2!}x^2 = 1 + \frac{x}{2} - \frac{x^2}{8}$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$P_2(x) = 1 + \dfrac{x}{2} - \dfrac{x^2}{8}$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>At $x = 0.21$: $P_2 = 1 + 0.105 - 0.0055 = 1.0995$ and $\sqrt{1.21} = 1.1$. Close, and slightly low because the omitted cubic term is positive.</p></div></div>
+</div></div></div>
+</div>
         <div class="warning-box">
             <span class="box-label">Common errors to check</span>
             <ol style="margin-bottom:0;">
@@ -966,6 +1051,49 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Write the first five terms and the general term of the series for $e^{-x}$ without differentiating.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Substitution into a known series.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Put $u = -x$ into $e^u = \sum\frac{u^n}{n!}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$e^{-x} = 1 + (-x) + \frac{(-x)^2}{2!} + \frac{(-x)^3}{3!} + \frac{(-x)^4}{4!} + \cdots$$$$= 1 - x + \frac{x^2}{2} - \frac{x^3}{6} + \frac{x^4}{24} - \cdots$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$e^{-x} = 1 - x + \dfrac{x^2}{2} - \dfrac{x^3}{6} + \dfrac{x^4}{24} - \cdots$, general term $\dfrac{(-1)^n x^n}{n!}$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The odd-power terms flip sign and the even-power terms do not, which is what $(-1)^n$ does.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Write the first four nonzero terms of the series for $x\cos x$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Multiply a known series by $x$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots$</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$x\cos x = x - \frac{x^3}{2!} + \frac{x^5}{4!} - \frac{x^7}{6!} + \cdots = x - \frac{x^3}{2} + \frac{x^5}{24} - \frac{x^7}{720} + \cdots$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$x\cos x = x - \dfrac{x^3}{2} + \dfrac{x^5}{24} - \dfrac{x^7}{720} + \cdots$</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The exponents went up by one but the factorials stayed: the $x^5$ term has $4!$ under it, not $5!$. Compare with $\sin x$, whose $x^5$ term has $5!$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Use series to evaluate $\displaystyle\lim_{x\to 0}\frac{1 - \cos x}{x^2}$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Expand the numerator, cancel the lowest power.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$1 - \cos x = \frac{x^2}{2} - \frac{x^4}{24} + \cdots$</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\frac{1 - \cos x}{x^2} = \frac{\frac{x^2}{2} - \frac{x^4}{24} + \cdots}{x^2} = \frac12 - \frac{x^2}{24} + \cdots$$<p>Every term after the first contains $x$ and goes to $0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$\dfrac12$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>L'Hôpital's rule twice gives $\lim\frac{\sin x}{2x} = \lim\frac{\cos x}{2} = \frac12$, the same answer with more work.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">4</span><span>Write the series for $\dfrac{1}{1+x^2}$ and state where it converges.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Substitution into the geometric series.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$\dfrac{1}{1-u} = \sum u^n$ for $|u| < 1$, with $u = -x^2$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\frac{1}{1+x^2} = 1 + (-x^2) + (-x^2)^2 + (-x^2)^3 + \cdots = 1 - x^2 + x^4 - x^6 + \cdots$$<p>Converges when $|-x^2| < 1$, that is, $|x| < 1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$\dfrac{1}{1+x^2} = \sum_{n=0}^{\infty}(-1)^n x^{2n}$ for $|x| < 1$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Integrating term by term from $0$ gives $x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots$, the $\tan^{-1}x$ series, as it should since $\frac{d}{dx}\tan^{-1}x = \frac{1}{1+x^2}$.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">4</div><h2>When does a series represent its function? <span class="beyond-badge" style="cursor:pointer;" onclick="goTab('t6')" title="Go to Tab 6">continued in Tab 6</span></h2></div>
         <div class="card">
             <p>A power series does not necessarily converge for every value of $x$. Consider the geometric series $1 + x + x^2 + \cdots$. It equals $\frac{1}{1-x}$ only when $|x| < 1$. At $x = 2$ the function's value is $\frac{1}{1-2} = -1$, but the partial sums are $3, 7, 15, 31, \ldots$</p>
@@ -1114,6 +1242,39 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Write the Taylor series for $e^x$ centered at $a = 2$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Taylor formula with derivatives evaluated at $2$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Every derivative of $e^x$ is $e^x$, so $f^{(n)}(2) = e^2$ for all $n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$e^x = \sum_{n=0}^{\infty}\frac{e^2}{n!}(x-2)^n = e^2 + e^2(x-2) + \frac{e^2}{2!}(x-2)^2 + \frac{e^2}{3!}(x-2)^3 + \cdots$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$e^x = e^2\displaystyle\sum_{n=0}^{\infty}\frac{(x-2)^n}{n!}$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Factor: $e^x = e^2\cdot e^{x-2}$, and $e^{x-2}$ is the $e^u$ series with $u = x - 2$. Same thing.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Write the third-degree Taylor polynomial for $\ln x$ about $a = 1$ and use it to estimate $\ln(1.1)$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Taylor formula at $a = 1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f = \ln x$, $f' = x^{-1}$, $f'' = -x^{-2}$, $f''' = 2x^{-3}$. At $1$: $0, 1, -1, 2$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$P_3(x) = 0 + 1\cdot(x-1) + \frac{-1}{2!}(x-1)^2 + \frac{2}{3!}(x-1)^3 = (x-1) - \frac{(x-1)^2}{2} + \frac{(x-1)^3}{3}$$$$P_3(1.1) = 0.1 - \frac{0.01}{2} + \frac{0.001}{3} = 0.1 - 0.005 + 0.000333 \approx 0.09533$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$P_3(x) = (x-1) - \dfrac{(x-1)^2}{2} + \dfrac{(x-1)^3}{3}$, and $\ln(1.1) \approx 0.0953$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>True value $\ln(1.1) \approx 0.09531$. This is the $\ln(1+u)$ series with $u = x - 1 = 0.1$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Write the third-degree Taylor polynomial for $f(x) = \sqrt{x}$ about $a = 4$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Taylor formula at $a = 4$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f = x^{1/2}$, $f' = \tfrac12 x^{-1/2}$, $f'' = -\tfrac14 x^{-3/2}$, $f''' = \tfrac38 x^{-5/2}$. At $4$: $2,\ \tfrac14,\ -\tfrac1{32},\ \tfrac{3}{256}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$a_0 = 2, \quad a_1 = \frac14, \quad a_2 = \frac{-1/32}{2!} = -\frac{1}{64}, \quad a_3 = \frac{3/256}{3!} = \frac{1}{512}$$$$P_3(x) = 2 + \frac{x-4}{4} - \frac{(x-4)^2}{64} + \frac{(x-4)^3}{512}$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$P_3(x) = 2 + \dfrac{x-4}{4} - \dfrac{(x-4)^2}{64} + \dfrac{(x-4)^3}{512}$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>At $x = 4.41$: $P_3 \approx 2 + 0.1025 - 0.00263 + 0.00013 = 2.1000$, and $\sqrt{4.41} = 2.1$ exactly.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">4</div><h2>Where this goes next</h2></div>
         <div class="concept-list">
             <div class="concept-item">
@@ -1300,6 +1461,39 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Let $f(x) = 2 + 3x - x^2 + \dfrac56 x^3 + \cdots$. Find $f\'\'\'(0)$ and write the first four terms of the series for $g(x) = \displaystyle\int_0^x f(t)\,dt$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Read the coefficient, then integrate term by term.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_3 = \tfrac56$, so $f'''(0) = 3!\cdot\tfrac56 = 5$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$g(x) = \int_0^x\left(2 + 3t - t^2 + \tfrac56 t^3 + \cdots\right)dt = 2x + \frac{3}{2}x^2 - \frac{x^3}{3} + \frac{5}{24}x^4 + \cdots$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$f'''(0) = 5$; $g(x) = 2x + \dfrac32 x^2 - \dfrac{x^3}{3} + \dfrac{5}{24}x^4 + \cdots$</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$g(0) = 0$, as it must be for an integral from $0$. Differentiating $g$ term by term gives $f$ back.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>With the same $f$, let $h(x) = f(2x)$. Write the first three terms of $h$ and find $h\'(0)$ and $h\'\'(0)$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Substitute $2x$ for $x$, then read coefficients.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Keep parentheses: $(2x)^2 = 4x^2$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$h(x) = 2 + 3(2x) - (2x)^2 + \cdots = 2 + 6x - 4x^2 + \cdots$$$$h'(0) = 1!\cdot 6 = 6, \qquad h''(0) = 2!\cdot(-4) = -8$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$h(x) = 2 + 6x - 4x^2 + \cdots$; $h'(0) = 6$, $h''(0) = -8$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Chain rule: $h'(x) = 2f'(2x)$, so $h'(0) = 2f'(0) = 2\cdot 3 = 6$; $h''(0) = 4f''(0) = 4\cdot(-2) = -8$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>With the same $f$, let $k(x) = f(x^2)$. Write the sixth-degree polynomial for $k$ and decide whether $k$ has a relative maximum, minimum, or neither at $x = 0$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Substitute $x^2$ for $x$, then the second derivative test from the coefficients.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Every exponent doubles, so $P_3$ for $f$ gives degree $6$ for $k$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$k(x) \approx 2 + 3x^2 - x^4 + \frac56 x^6$$<p>The coefficient of $x$ is $0$, so $k'(0) = 0$. The coefficient of $x^2$ is $3$, so $k''(0) = 2!\cdot 3 = 6 > 0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Relative minimum at $x = 0$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$k(x) = f(x^2)$ and $f$ is increasing near $0$ (since $f'(0) = 3 > 0$), so $k$ is smallest where $x^2$ is smallest, at $x = 0$.</p></div></div>
+</div></div></div>
+</div>
         <div class="warning-box">
             <span class="box-label">Common mistakes and what to check</span>
             <ol style="margin-bottom:0;">
@@ -1447,6 +1641,49 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Find the interval of convergence of $\displaystyle\sum_{n=1}^{\infty}\frac{(x-3)^n}{n\,2^n}$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test with $x$ left in, then test the endpoints.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Center $3$, since the powers are $(x-3)^n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\left|\frac{(x-3)^{n+1}}{(n+1)2^{n+1}}\cdot\frac{n\,2^n}{(x-3)^n}\right| = \frac{|x-3|}{2}\cdot\lim\frac{n}{n+1} = \frac{|x-3|}{2} < 1$$<p>So $|x - 3| < 2$, giving $1 < x < 5$ and $R = 2$.</p><p>At $x = 5$: $\sum\frac{2^n}{n 2^n} = \sum\frac1n$, diverges. At $x = 1$: $\sum\frac{(-2)^n}{n 2^n} = \sum\frac{(-1)^n}{n}$, converges (alternating harmonic).</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$[1,\ 5)$, with center $3$ and $R = 2$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The endpoints $1$ and $5$ are each $2$ from the center $3$. The function is $-\ln\left(1 - \frac{x-3}{2}\right)$, which is undefined at $x = 5$, so the series could not have included that endpoint.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Find the interval of convergence of $\displaystyle\sum_{n=1}^{\infty}\frac{(3x)^n}{n^2}$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test, then endpoints.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Center $0$. Note $(3x)^n = 3^n x^n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\left|\frac{(3x)^{n+1}}{(n+1)^2}\cdot\frac{n^2}{(3x)^n}\right| = 3|x|\cdot\lim\left(\frac{n}{n+1}\right)^2 = 3|x| < 1$$<p>So $|x| < \tfrac13$ and $R = \tfrac13$.</p><p>At $x = \tfrac13$: $\sum\frac{1}{n^2}$, converges ($p = 2$). At $x = -\tfrac13$: $\sum\frac{(-1)^n}{n^2}$, converges absolutely.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$\left[-\tfrac13,\ \tfrac13\right]$, with $R = \tfrac13$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The $3^n$ in the coefficient shrank the radius to $\tfrac13$; the $n^2$ did not change $R$ but made both endpoints converge.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Find the radius of convergence of $\displaystyle\sum_{n=0}^{\infty} n!\,(x-1)^n$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Center $1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\left|\frac{(n+1)!\,(x-1)^{n+1}}{n!\,(x-1)^n}\right| = \lim_{n\to\infty}(n+1)|x-1|$$<p>This limit is infinite for every $x \ne 1$, and $0$ at $x = 1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$R = 0$: the series converges only at its center, $x = 1$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>A factorial in the numerator of the coefficients is the opposite of the $e^x$ situation. Any fixed $|x - 1| > 0$ is eventually beaten by $n!$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">4</span><span>Find the radius of convergence of $\displaystyle\sum_{n=0}^{\infty}\frac{x^{2n}}{(2n)!}$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test on consecutive nonzero terms.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>The exponents go up by $2$ each term, so the ratio involves $x^2$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\left|\frac{x^{2n+2}}{(2n+2)!}\cdot\frac{(2n)!}{x^{2n}}\right| = \lim_{n\to\infty}\frac{x^2}{(2n+2)(2n+1)} = 0$$<p>The limit is $0 < 1$ for every $x$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$R = \infty$: converges for every real $x$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>This is the cosine series without the alternating signs, which is $\cosh x = \frac{e^x + e^{-x}}{2}$. Factorials in the denominator give $R = \infty$.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">4</div><h2>Answering the three questions</h2></div>
         <div class="concept-list">
             <div class="concept-item">
@@ -1583,6 +1820,39 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Approximate $\cos(0.5)$ with $P_2(x) = 1 - \dfrac{x^2}{2}$ and give an error bound.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Alternating series error bound.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>At $x = 0.5$ the cosine series $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots$ alternates with terms decreasing to $0$. First check: $0.5$ is inside the interval of convergence (all reals).</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$P_2(0.5) = 1 - \frac{0.25}{2} = 0.875$$<p>The first omitted nonzero term is the $x^4$ term:</p>$$|\cos(0.5) - P_2(0.5)| \le \frac{(0.5)^4}{4!} = \frac{1}{384} \approx 0.0026$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$\cos(0.5) \approx 0.875$, with error at most $\dfrac{1}{384} \approx 0.0026$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>True value $\cos(0.5) \approx 0.87758$; the actual error is about $0.00258$, just under the bound. Since the $x^3$ coefficient is $0$, $P_2 = P_3$, and the same bound applies to both.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Approximate $e^{0.2}$ with $P_2(x) = 1 + x + \dfrac{x^2}{2}$ and give a Lagrange error bound.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Lagrange error bound; the series does not alternate for $x > 0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$n = 2$, so the bound uses $f'''(z) = e^z$ on $[0, 0.2]$. Its maximum is $e^{0.2}$, and $e^{0.2} < 1.25$, so $M = 1.25$ is a valid choice.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$P_2(0.2) = 1 + 0.2 + \frac{0.04}{2} = 1.22$$$$|e^{0.2} - P_2(0.2)| \le \frac{M}{3!}(0.2)^3 = \frac{1.25 \cdot 0.008}{6} \approx 0.00167$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$e^{0.2} \approx 1.22$, with error at most about $0.0017$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>True value $e^{0.2} \approx 1.22140$; the actual error is about $0.0014$, below the bound. Any $M \ge e^{0.2}$ works; a larger $M$ gives a looser but still correct bound.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Let $f(x) = \displaystyle\sum_{n=1}^{\infty}\frac{(x-3)^n}{n\,2^n}$, whose interval of convergence is $[1, 5)$. Can the degree-four polynomial approximate $f(6)$? Can it approximate $f(2)$? If so, give the estimate and an error bound.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Interval check first, then the alternating series error bound.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$6$ is outside $[1, 5)$, so the series diverges at $x = 6$ and no approximation is possible. $2$ is inside the interval.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>At $x = 2$ the terms are $\dfrac{(-1)^n}{n\,2^n}$: alternating, decreasing in size to $0$.</p>$$P_4(2) = -\frac12 + \frac18 - \frac{1}{24} + \frac{1}{64} = -\frac{77}{192} \approx -0.4010$$<p>First omitted term ($n = 5$):</p>$$|f(2) - P_4(2)| \le \frac{1}{5\cdot 2^5} = \frac{1}{160} = 0.00625$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$f(6)$: cannot be approximated; $6$ is outside the interval of convergence. $f(2) \approx -0.401$ with error at most $\dfrac{1}{160}$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$f(x) = -\ln\left(1 - \frac{x-3}{2}\right)$, so $f(2) = -\ln 1.5 \approx -0.4055$. The actual error is about $0.0044$, below the bound.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">4</div><h2>Choosing the bound</h2></div>
         <div class="table-wrap"><table class="lcc">
             <tr><th>Situation</th><th>Use</th><th>What to write</th></tr>
@@ -1693,7 +1963,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$f(x) = e^x$.</strong> Write the first five terms and the $n$th general term of the Maclaurin series.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct derivatives</span>
-                <p><strong>Setup.</strong> Every derivative of $e^x$ is $e^x$. <strong>Work.</strong> $f^{(n)}(0) = e^0 = 1$ for all $n$, so $a_n = \dfrac{1}{n!}$.</p>
+                <p><strong>Setup.</strong> Every derivative of $e^x$ is $e^x$.</p><p><strong>Work.</strong> $f^{(n)}(0) = e^0 = 1$ for all $n$, so $a_n = \dfrac{1}{n!}$.</p>
                 <div class="highlight-box">$$e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \cdots \qquad \text{general term: } \frac{x^n}{n!}$$</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Every power appears, and each denominator matches its exponent's factorial.</p>
             </div></div>
@@ -1703,7 +1973,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$f(x) = \cos x$.</strong> Write the first five <em>nonzero</em> terms and the general term.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct derivatives</span>
-                <p><strong>Setup.</strong> The derivative cycle at zero gives $1, 0, -1, 0$. <strong>Work.</strong> Only even powers have nonzero coefficients, with alternating signs.</p>
+                <p><strong>Setup.</strong> The derivative cycle at zero gives $1, 0, -1, 0$.</p><p><strong>Work.</strong> Only even powers have nonzero coefficients, with alternating signs.</p>
                 <div class="highlight-box">$$\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \frac{x^8}{8!} - \cdots \qquad \text{general term: } \frac{(-1)^n x^{2n}}{(2n)!}$$</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Five <em>nonzero</em> cosine terms end at $x^8$, since the odd-power coefficients are zero.</p>
             </div></div>
@@ -1713,7 +1983,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$f(x) = \dfrac{1}{1-x}$.</strong> Build the first five terms from derivatives, then write the general term.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct derivatives</span>
-                <p><strong>Setup.</strong> Write $f = (1-x)^{-1}$ and use the chain rule. <strong>Work.</strong> $f' = (1-x)^{-2}$, $f'' = 2(1-x)^{-3}$, $f''' = 6(1-x)^{-4}$, $f^{(4)} = 24(1-x)^{-5}$. At $0$: $1, 1, 2, 6, 24$, which is $n!$. So $a_n = n!/n! = 1$.</p>
+                <p><strong>Setup.</strong> Write $f = (1-x)^{-1}$ and use the chain rule.</p><p><strong>Work.</strong> $f' = (1-x)^{-2}$, $f'' = 2(1-x)^{-3}$, $f''' = 6(1-x)^{-4}$, $f^{(4)} = 24(1-x)^{-5}$. At $0$: $1, 1, 2, 6, 24$, which is $n!$. So $a_n = n!/n! = 1$.</p>
                 <div class="highlight-box">$$\frac{1}{1-x} = 1 + x + x^2 + x^3 + x^4 + \cdots \qquad \text{general term: } x^n$$</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> These are the geometric-series coefficients. Remember to state $|x| < 1$ when discussing the infinite sum.</p>
             </div></div>
@@ -1741,7 +2011,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$f(x) = \tan^{-1}x$.</strong> (a) Write the equation of the tangent line at $x = 0$. (b) Write the third-degree Maclaurin polynomial.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct derivatives</span>
-                <p><strong>Setup.</strong> The tangent line needs $f(0)$ and $f'(0)$; $P_3$ also needs $f''(0)$ and $f'''(0)$. <strong>Work.</strong> $f' = (1+x^2)^{-1}$, $f'' = -2x(1+x^2)^{-2}$, $f''' = -2(1+x^2)^{-2} + 8x^2(1+x^2)^{-3}$. At $0$: $f = 0$, $f' = 1$, $f'' = 0$, $f''' = -2$.</p>
+                <p><strong>Setup.</strong> The tangent line needs $f(0)$ and $f'(0)$; $P_3$ also needs $f''(0)$ and $f'''(0)$.</p><p><strong>Work.</strong> $f' = (1+x^2)^{-1}$, $f'' = -2x(1+x^2)^{-2}$, $f''' = -2(1+x^2)^{-2} + 8x^2(1+x^2)^{-3}$. At $0$: $f = 0$, $f' = 1$, $f'' = 0$, $f''' = -2$.</p>
                 <div class="highlight-box">
                     <p>(a) $y = 0 + 1\cdot x$, so $\boxed{y = x}$</p>
                     <p style="margin-bottom:0;">(b) $P_3(x) = 0 + x + 0 - \dfrac{2}{3!}x^3 = \boxed{x - \dfrac{x^3}{3}}$</p>
@@ -1754,7 +2024,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$f(x) = \sec x$.</strong> (a) Write the equation of the tangent line at $x = 0$. (b) Write the second-degree Maclaurin polynomial.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct derivatives</span>
-                <p><strong>Setup.</strong> $f' = \sec x\tan x$. <strong>Work.</strong> Product rule: $f'' = \sec x\tan x\cdot\tan x + \sec x\cdot\sec^2 x = \sec x\tan^2 x + \sec^3 x$. At $0$: $f = 1$, $f' = 0$, $f'' = 1$.</p>
+                <p><strong>Setup.</strong> $f' = \sec x\tan x$.</p><p><strong>Work.</strong> Product rule: $f'' = \sec x\tan x\cdot\tan x + \sec x\cdot\sec^2 x = \sec x\tan^2 x + \sec^3 x$. At $0$: $f = 1$, $f' = 0$, $f'' = 1$.</p>
                 <div class="highlight-box">
                     <p>(a) $\boxed{y = 1}$</p>
                     <p style="margin-bottom:0;">(b) $P_2(x) = \boxed{1 + \dfrac{x^2}{2}}$</p>
@@ -1834,7 +2104,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p>Write the first four nonzero terms of the Maclaurin series for $e^{-x^2}$ <em>without</em> taking a single derivative.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: substitution</span>
-                <p><strong>Setup.</strong> Put $u = -x^2$ into $e^u = 1 + u + \frac{u^2}{2!} + \frac{u^3}{3!} + \cdots$. <strong>Work.</strong> $u^2 = x^4$ and $u^3 = -x^6$.</p>
+                <p><strong>Setup.</strong> Put $u = -x^2$ into $e^u = 1 + u + \frac{u^2}{2!} + \frac{u^3}{3!} + \cdots$.</p><p><strong>Work.</strong> $u^2 = x^4$ and $u^3 = -x^6$.</p>
                 <div class="highlight-box">$$e^{-x^2} = 1 - x^2 + \frac{x^4}{2!} - \frac{x^6}{3!} + \cdots = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{n!}$$</div>
                 <p style="margin-bottom:0;"><strong>Why it works.</strong> The $e^u$ series holds for every real $u$, so it holds for $u = -x^2$. As a check on efficiency, the coefficient of $x^6$ gives $f^{(6)}(0) = 6!\cdot(-\tfrac16) = -120$, a value that would take six applications of the chain and product rules to find directly.</p>
             </div></div>
@@ -2194,9 +2464,15 @@ function nextTerm(fn, N) { for (var n = N + 1; n <= 20; n++) if (fn.coef(n) !== 
 /* ───────────────────────── Canvas plotting ───────────────────────── */
 function setupCanvas(id) {
     var c = document.getElementById(id); if (!c) return null;
-    var W = parseInt(c.getAttribute('width')), H = parseInt(c.getAttribute('height'));
     var dpr = window.devicePixelRatio || 1;
-    if (!c.__scaled) { c.width = W * dpr; c.height = H * dpr; c.style.width = W + 'px'; c.style.height = H + 'px'; c.__scaled = true; }
+    if (!c.__scaled) {
+        var W0 = parseInt(c.getAttribute('width')), H0 = parseInt(c.getAttribute('height'));
+        c.__W = W0; c.__H = H0;
+        c.width = W0 * dpr; c.height = H0 * dpr;
+        c.style.width = W0 + 'px'; c.style.height = 'auto'; c.style.aspectRatio = W0 + ' / ' + H0;
+        c.__scaled = true;
+    }
+    var W = c.__W, H = c.__H;
     var ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     return { c: c, ctx: ctx, W: W, H: H };
 }

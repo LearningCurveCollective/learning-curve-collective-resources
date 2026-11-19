@@ -296,6 +296,25 @@ table.lcc td.hi { background: rgba(221,162,94,0.22) !important; font-weight: 600
     .dtree .dt-empty { display: none; }
 }
 
+
+/* ─── Try it yourself blocks ─── */
+.try-box { background: rgba(66,38,13,0.05); border-left: 4px solid #8B5E3C; border-radius: 10px; padding: 16px 18px 14px; margin: 20px 0; }
+.try-box > .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.try-box .try-intro { font-size: 13.5px; color: var(--text-medium); margin: 0 0 6px; }
+.try-item { background: white; border: 1.5px solid var(--cream-dark); border-radius: 10px; padding: 12px 14px; margin-top: 12px; }
+.try-item .try-q { margin: 0 0 8px; display: flex; gap: 10px; align-items: flex-start; }
+.try-item .try-n { flex-shrink: 0; display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background: #8B5E3C; color: white; font-weight: 700; font-size: 12px; align-items: center; justify-content: center; margin-top: 1px; }
+.sol-vertical .sol-step { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 4px 12px; padding: 9px 0; border-top: 1px dashed rgba(66,38,13,0.2); align-items: start; }
+.sol-vertical .sol-step:first-child { border-top: none; padding-top: 0; }
+.sol-vertical .sol-step:last-child { padding-bottom: 0; }
+.sol-vertical .sol-k { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #8B5E3C; padding-top: 4px; }
+.sol-vertical .sol-v { min-width: 0; }
+.sol-vertical .sol-v p { margin: 0 0 6px; }
+.sol-vertical .sol-v p:last-child { margin-bottom: 0; }
+.sol-vertical .sol-v mjx-container[display="true"] { text-align: left !important; margin: 6px 0 !important; }
+.sol-vertical .sol-v .highlight-box { margin: 4px 0 0; }
+@media (max-width: 600px) { .sol-vertical .sol-step { grid-template-columns: 1fr; gap: 2px; } }
+
 .tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
 .tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
 .tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
@@ -601,6 +620,49 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
                 </div>
             </div>
         </div>
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Does $\displaystyle\sum_{n=1}^{\infty}\frac{2n+3}{5n-1}$ converge or diverge?</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>$n$th-term test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Find $\lim a_n$ before anything else.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\frac{2n+3}{5n-1} = \lim_{n\to\infty}\frac{2 + 3/n}{5 - 1/n} = \frac25$$<p>The limit is not $0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Diverges by the $n$th-term test.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Each term is close to $0.4$, so $S_N \approx 0.4N$ grows without bound.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Find the sum of $\displaystyle\sum_{n=0}^{\infty} 3\left(\tfrac15\right)^n$.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Geometric series.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>First term $a = 3$ (at $n = 0$), ratio $r = \tfrac15$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>$|r| = \tfrac15 < 1$, so the series converges.</p>$$\sum_{n=0}^{\infty} 3\left(\tfrac15\right)^n = \frac{a}{1-r} = \frac{3}{1 - 1/5} = \frac{3}{4/5} = \frac{15}{4}$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges, with sum $\dfrac{15}{4} = 3.75$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$S_2 = 3 + 0.6 + 0.12 = 3.72$, already close to $3.75$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Does $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^{4/3}}$ converge or diverge?</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>$p$-series.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>The term is $\dfrac{1}{n^p}$ with $p = \tfrac43$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>$p = \tfrac43 > 1$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges ($p$-series with $p > 1$).</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The terms are smaller than $\frac1n$ by a factor of $n^{1/3}$, which is enough; $p = 1$ is the exact boundary.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">4</span><span>Does $\displaystyle\sum_{n=1}^{\infty}(-1)^n\frac{2n}{3n+1}$ converge or diverge?</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>$n$th-term test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>The sign factor invites the alternating series test, but check $\lim a_n$ first.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\frac{2n}{3n+1} \longrightarrow \frac23, \qquad \text{so the terms approach } \pm\tfrac23$$<p>The terms have no limit, so $\lim a_n \ne 0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Diverges by the $n$th-term test.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The alternating series test needs $b_n \to 0$. Here $b_n \to \tfrac23$, so that test does not apply.</p></div></div>
+</div></div></div>
+</div>
         <div class="idea-box">
             <span class="box-label">Why these two matter beyond themselves</span>
             <p style="margin-bottom:0;">Every comparison test needs a series whose behavior you already know. Geometric series and $p$-series are that known series almost every time. When you look at a complicated term, the question to ask is "for large $n$, does this behave like $r^n$ or like $\frac{1}{n^p}$?"</p>
@@ -720,6 +782,49 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <tr><td>$\sum \dfrac{1}{2^n + n}$</td><td>denominator larger than $2^n$</td><td>direct comparison with $\frac{1}{2^n}$</td></tr>
         </table></div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>Which branch, and what is the verdict? $\displaystyle\sum_{n=1}^{\infty}\frac{n!}{10^n}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Branch 4: factorial, so the ratio test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_{n+1} = \dfrac{(n+1)!}{10^{n+1}}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{10^{n+1}}\cdot\frac{10^n}{n!} = \frac{n+1}{10} \longrightarrow \infty$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$L = \infty > 1$: diverges.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$n!$ eventually outgrows $10^n$; from $n = 10$ on, each term is at least as large as the one before.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>Which branch, and what is the verdict? $\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2+3}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Branch 6: algebraic in $n$, so limit comparison.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Dominant term $n^2$, so compare with $b_n = \dfrac{1}{n^2}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\frac{1/(n^2+3)}{1/n^2} = \lim_{n\to\infty}\frac{n^2}{n^2+3} = 1$$<p>$0 < 1 < \infty$, and $\sum\frac{1}{n^2}$ converges ($p = 2$).</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges by limit comparison.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Direct comparison also works: $\frac{1}{n^2+3} < \frac{1}{n^2}$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>Which branch, and what is the verdict? $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{2n+1}$ (absolute, conditional, or divergent?)</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Branch 5: alternating series test, then another branch for $\sum b_n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$b_n = \dfrac{1}{2n+1}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>$b_n$ is decreasing and $\lim b_n = 0$, so the series converges by the alternating series test.</p><p>For absolute convergence, test $\sum\frac{1}{2n+1}$ by limit comparison with $\frac1n$:</p>$$\lim_{n\to\infty}\frac{1/(2n+1)}{1/n} = \lim_{n\to\infty}\frac{n}{2n+1} = \frac12$$<p>$\sum\frac1n$ diverges, so $\sum\frac{1}{2n+1}$ diverges.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges conditionally.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>Compare with the alternating harmonic series: the same pattern, half as fast.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">4</span><span>Which branch, and what is the verdict? $\displaystyle\sum_{n=1}^{\infty}\left(\frac{n}{3n-1}\right)^n$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Branch 4, root form: the whole term is raised to the $n$th power, so the root test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$\sqrt[n]{a_n} = \dfrac{n}{3n-1}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\frac{n}{3n-1} = \frac13 < 1$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges by the root test.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$\frac{n}{3n-1} \le \frac12$ for $n \ge 1$, so $a_n \le \left(\frac12\right)^n$; direct comparison with a geometric series agrees.</p></div></div>
+</div></div></div>
+</div>
         <div class="warning-box">
             <span class="box-label">Common mistakes and what to check</span>
             <ol style="margin-bottom:0;">
@@ -804,6 +909,49 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>$\displaystyle\sum_{n=1}^{\infty}\frac{3^n}{n!}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_{n+1} = \dfrac{3^{n+1}}{(n+1)!}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{3^{n+1}}{(n+1)!}\cdot\frac{n!}{3^n} = \frac{3}{n+1}$$$$\lim_{n\to\infty}\frac{3}{n+1} = 0$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$L = 0 < 1$: converges.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>This is the $e^x$ series at $x = 3$ without its first term, so the sum is $e^3 - 1 \approx 19.09$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>$\displaystyle\sum_{n=1}^{\infty}\frac{n^2}{2^n}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_{n+1} = \dfrac{(n+1)^2}{2^{n+1}}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^2}{2^{n+1}}\cdot\frac{2^n}{n^2} = \frac12\left(\frac{n+1}{n}\right)^2$$$$\lim_{n\to\infty}\frac12\left(1 + \frac1n\right)^2 = \frac12$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$L = \tfrac12 < 1$: converges.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The $n^2$ contributes a factor tending to $1$; the $2^n$ in the denominator sets the limit. A power of $n$ over a geometric factor with base greater than $1$ converges.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>$\displaystyle\sum_{n=1}^{\infty}\frac{(2n)!}{(n!)^2}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_{n+1} = \dfrac{(2n+2)!}{((n+1)!)^2}$. Expand only two factors: $(2n+2)! = (2n+2)(2n+1)\,(2n)!$ and $(n+1)! = (n+1)\,n!$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(2n+2)(2n+1)\,(2n)!}{(n+1)^2 (n!)^2}\cdot\frac{(n!)^2}{(2n)!} = \frac{(2n+2)(2n+1)}{(n+1)^2}$$$$= \frac{2(n+1)(2n+1)}{(n+1)^2} = \frac{2(2n+1)}{n+1} \longrightarrow 4$$</div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>$L = 4 > 1$: diverges.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>$a_1 = 2$, $a_2 = 6$, $a_3 = 20$, $a_4 = 70$: the terms grow, so they cannot go to $0$.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">4</span><span>$\displaystyle\sum_{n=1}^{\infty}\frac{n}{n^2+1}$. Apply the ratio test; if it is inconclusive, finish with another test.</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Ratio test, then limit comparison.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$a_{n+1} = \dfrac{n+1}{(n+1)^2+1}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{n+1}{(n+1)^2+1}\cdot\frac{n^2+1}{n} = \frac{(n+1)(n^2+1)}{n\,(n^2+2n+2)} \longrightarrow 1$$<p>$L = 1$, so the ratio test is inconclusive, as it is for every rational term.</p><p>Limit comparison with $b_n = \dfrac1n$:</p>$$\lim_{n\to\infty}\frac{n/(n^2+1)}{1/n} = \lim_{n\to\infty}\frac{n^2}{n^2+1} = 1$$<p>$\sum\frac1n$ diverges.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>The ratio test is inconclusive; the series diverges by limit comparison with the harmonic series.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The terms do go to $0$, so the $n$th-term test could not have decided this either. For rational terms, go straight to the comparison branch.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">3</div><h2>Ratio Explorer</h2></div>
         <div class="viz-container">
             <div class="viz-title">Ratio Explorer <span class="viz-tag">Interactive</span></div>
@@ -969,6 +1117,49 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             </div>
         </div>
 
+<div class="try-box"><span class="step-label">Try it yourself</span>
+<p class="try-intro">Work each one on paper before opening the solution. Each solution is laid out step by step: Method, Setup, Work, Answer, Check.</p>
+<div class="try-item">
+<p class="try-q"><span class="try-n">1</span><span>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^3+n}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Direct comparison.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Expect convergence (it looks like $\frac{1}{n^3}$), so find a convergent series above it.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>$n^3 + n > n^3$, so</p>$$0 < \frac{1}{n^3+n} < \frac{1}{n^3}$$<p>$\sum\frac{1}{n^3}$ converges ($p = 3$).</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges by direct comparison with $\sum\frac{1}{n^3}$.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The inequality points the useful way: the given series sits below a convergent one.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">2</span><span>$\displaystyle\sum_{n=1}^{\infty}\frac{2n+1}{n^2+5}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Limit comparison.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>Dominant terms $\frac{2n}{n^2} = \frac{2}{n}$, so compare with $b_n = \dfrac1n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v">$$\lim_{n\to\infty}\frac{(2n+1)/(n^2+5)}{1/n} = \lim_{n\to\infty}\frac{2n^2+n}{n^2+5} = 2$$<p>$0 < 2 < \infty$, and $\sum\frac1n$ diverges.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Diverges by limit comparison with the harmonic series.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The terms go to $0$, so this needed a comparison; the $n$th-term test would have been silent.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">3</span><span>$\displaystyle\sum_{n=1}^{\infty} n\,e^{-n^2}$</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Integral test.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$f(x) = x e^{-x^2}$ is positive and continuous for $x \ge 1$. It is decreasing there because $f'(x) = e^{-x^2}(1 - 2x^2) < 0$ for $x > \tfrac{1}{\sqrt2}$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>With $u = -x^2$, $du = -2x\,dx$:</p>$$\int_1^\infty x e^{-x^2}\,dx = \lim_{b\to\infty}\left[-\tfrac12 e^{-x^2}\right]_1^{b} = 0 + \tfrac12 e^{-1} = \frac{1}{2e}$$<p>The integral converges.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges by the integral test.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The ratio test also works here: $\frac{a_{n+1}}{a_n} = \frac{n+1}{n}e^{-(2n+1)} \to 0$. The integral's value $\frac{1}{2e}$ is not the sum of the series.</p></div></div>
+</div></div></div>
+<div class="try-item">
+<p class="try-q"><span class="try-n">4</span><span>$\displaystyle\sum_{n=2}^{\infty}(-1)^n\frac{\ln n}{n}$. Absolutely convergent, conditionally convergent, or divergent?</span></p>
+<button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show worked solution</button>
+<div class="solution-body"><div class="sol-wrap sol-vertical">
+<div class="sol-step"><div class="sol-k">Method</div><div class="sol-v"><p>Alternating series test, then direct comparison for $\sum b_n$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Setup</div><div class="sol-v"><p>$b_n = \dfrac{\ln n}{n}$. For decreasing: $\dfrac{d}{dx}\dfrac{\ln x}{x} = \dfrac{1 - \ln x}{x^2} < 0$ for $x > e$, so $b_n$ decreases from $n = 3$ on. And $\lim\dfrac{\ln n}{n} = 0$.</p></div></div>
+<div class="sol-step"><div class="sol-k">Work</div><div class="sol-v"><p>Both conditions hold, so the series converges by the alternating series test.</p><p>For absolute convergence: for $n \ge 3$, $\ln n > 1$, so</p>$$\frac{\ln n}{n} > \frac{1}{n}$$<p>$\sum\frac1n$ diverges, so $\sum\frac{\ln n}{n}$ diverges by direct comparison.</p></div></div>
+<div class="sol-step"><div class="sol-k">Answer</div><div class="sol-v"><div class="highlight-box"><p>Converges conditionally.</p></div></div></div>
+<div class="sol-step"><div class="sol-k">Check</div><div class="sol-v"><p>The finitely many terms before $n = 3$ do not affect convergence; the tests only need the conditions eventually.</p></div></div>
+</div></div></div>
+</div>
         <div class="section-header"><div class="section-number">5</div><h2>The alternating series error bound</h2></div>
         <div class="card" style="border-left-color: var(--green-dark);">
             <p>When the alternating series test applies, the partial sum $S_N$ is within one term of the true sum:</p>
@@ -1007,7 +1198,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{4^n}{n}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{4^{n+1}}{n+1}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{4^{n+1}}{n+1}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{4^{n+1}}{n+1}\cdot\frac{n}{4^n} = 4\cdot\frac{n}{n+1} \longrightarrow 4$$
                 <div class="highlight-box">$L = 4 > 1$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $\frac{4^n}{n} \to \infty$, so the terms do not approach $0$ and the $n$th-term test agrees.</p>
@@ -1018,7 +1209,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{5^n}{n!}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{5^{n+1}}{(n+1)!}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{5^{n+1}}{(n+1)!}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{5^{n+1}}{(n+1)!}\cdot\frac{n!}{5^n} = \frac{5}{n+1} \longrightarrow 0$$
                 <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> This is the $e^x$ series at $x = 5$ without its first term, so the sum is $e^5 - 1 \approx 147.4$. The ratios $5, 2.5, 1.67, 1.25, 1, 0.83, \ldots$ start above $1$; only the limit matters.</p>
@@ -1029,7 +1220,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n\,2^n}{n!}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)\,2^{n+1}}{(n+1)!}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)\,2^{n+1}}{(n+1)!}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\,2^{n+1}}{(n+1)!}\cdot\frac{n!}{n\,2^n} = \frac{2(n+1)}{(n+1)\,n} = \frac{2}{n} \longrightarrow 0$$
                 <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Since $\frac{n}{n!} = \frac{1}{(n-1)!}$, the term is $\frac{2^n}{(n-1)!} = 2\cdot\frac{2^{n-1}}{(n-1)!}$, and the sum is $2e^2 \approx 14.8$.</p>
@@ -1040,7 +1231,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test, then p-series</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{1}{(n+1)^2}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{1}{(n+1)^2}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{1}{(n+1)^2}\cdot\frac{n^2}{1} = \left(\frac{n}{n+1}\right)^2 \longrightarrow 1$$
                 <div class="highlight-box">$L = 1$: the ratio test is <strong>inconclusive</strong>. As a $p$-series with $p = 2 > 1$, the series converges.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The same ratio computation on $\sum\frac1n$ also gives $L = 1$, and that series diverges, so $L = 1$ cannot decide.</p>
@@ -1051,7 +1242,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n^2\,3^n}{n!}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)^2\,3^{n+1}}{(n+1)!}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)^2\,3^{n+1}}{(n+1)!}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^2\,3^{n+1}}{(n+1)!}\cdot\frac{n!}{n^2\,3^n} = \frac{3(n+1)^2}{(n+1)\,n^2} = \frac{3(n+1)}{n^2} \longrightarrow 0$$
                 <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The $n^2$ contributes $\left(\frac{n+1}{n}\right)^2 \to 1$ to the ratio and the $3^n$ contributes $3$; the $\frac{1}{n+1}$ from the factorial drives the limit to $0$. Any factorial in the denominator beats any power times any exponential.</p>
@@ -1062,7 +1253,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n}{e^n}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{n+1}{e^{n+1}}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{n+1}{e^{n+1}}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{n+1}{e^{n+1}}\cdot\frac{e^n}{n} = \frac{1}{e}\cdot\frac{n+1}{n} \longrightarrow \frac1e \approx 0.368$$
                 <div class="highlight-box">$L = \frac1e < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The terms behave like $n\,r^n$ with $r = \frac1e$; a geometric factor with $|r| < 1$ beats any power of $n$.</p>
@@ -1073,7 +1264,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty} 2^{-n}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = 2^{-(n+1)}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = 2^{-(n+1)}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{2^{-(n+1)}}{2^{-n}} = 2^{-1} = \frac12$$
                 <div class="highlight-box">$L = \frac12 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> This is a geometric series with $r = \frac12$ and first term $\frac12$, so the sum is $\frac{1/2}{1 - 1/2} = 1$. The ratio is constant, which is what "geometric" means.</p>
@@ -1084,7 +1275,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n!}{e^n}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)!}{e^{n+1}}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)!}{e^{n+1}}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{e^{n+1}}\cdot\frac{e^n}{n!} = \frac{n+1}{e} \longrightarrow \infty$$
                 <div class="highlight-box">$L = \infty$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $n!$ outgrows $e^n$, so the terms themselves go to infinity; the $n$th-term test agrees.</p>
@@ -1095,7 +1286,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{e^n}{\pi^n}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{e^{n+1}}{\pi^{n+1}}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{e^{n+1}}{\pi^{n+1}}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{e^{n+1}}{\pi^{n+1}}\cdot\frac{\pi^n}{e^n} = \frac{e}{\pi} \approx 0.865$$
                 <div class="highlight-box">$L = \frac{e}{\pi} < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Geometric with $r = \frac{e}{\pi}$, so the sum is $\frac{1}{1 - e/\pi} = \frac{\pi}{\pi - e} \approx 7.42$. The test works because $e < \pi$; if the fraction were $\frac{\pi^n}{e^n}$ the series would diverge.</p>
@@ -1106,7 +1297,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=2}^{\infty}\frac{5^n}{\ln n}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> The index must start at $n = 2$, since $\ln 1 = 0$. $a_{n+1} = \dfrac{5^{n+1}}{\ln(n+1)}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> The index must start at $n = 2$, since $\ln 1 = 0$. $a_{n+1} = \dfrac{5^{n+1}}{\ln(n+1)}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{5^{n+1}}{\ln(n+1)}\cdot\frac{\ln n}{5^n} = 5\cdot\frac{\ln n}{\ln(n+1)} \longrightarrow 5$$
                 <p>The logarithm ratio tends to $1$: by L'Hôpital's rule on $\frac{\ln x}{\ln(x+1)}$, the limit is $\lim\frac{1/x}{1/(x+1)} = \lim\frac{x+1}{x} = 1$.</p>
                 <div class="highlight-box">$L = 5 > 1$: <strong>diverges</strong>.</div>
@@ -1118,7 +1309,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n n^3}{3^n}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> Inside the absolute value the $(-1)^n$ disappears: $|a_n| = \dfrac{n^3}{3^n}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> Inside the absolute value the $(-1)^n$ disappears: $|a_n| = \dfrac{n^3}{3^n}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^3}{3^{n+1}}\cdot\frac{3^n}{n^3} = \frac13\left(\frac{n+1}{n}\right)^3 \longrightarrow \frac13$$
                 <div class="highlight-box">$L = \frac13 < 1$: <strong>converges</strong> (absolutely).</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The ratio test proves absolute convergence, so no alternating series test is needed. The cube contributes $\left(1 + \frac1n\right)^3 \to 1$; the $3^n$ sets the limit.</p>
@@ -1129,7 +1320,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n n\,3^n}{n!}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $|a_n| = \dfrac{n\,3^n}{n!}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $|a_n| = \dfrac{n\,3^n}{n!}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\,3^{n+1}}{(n+1)!}\cdot\frac{n!}{n\,3^n} = \frac{3(n+1)}{(n+1)\,n} = \frac{3}{n} \longrightarrow 0$$
                 <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong> (absolutely).</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Compare with problem 3, which has $2^n$ in place of $3^n$ and no sign factor. The structure is identical and the factorial wins in both.</p>
@@ -1140,7 +1331,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n n!}{e^n}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $|a_n| = \dfrac{n!}{e^n}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $|a_n| = \dfrac{n!}{e^n}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{e^{n+1}}\cdot\frac{e^n}{n!} = \frac{n+1}{e} \longrightarrow \infty$$
                 <div class="highlight-box">$L = \infty$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The sign factor cannot rescue a series whose terms grow: $|a_n| \to \infty$, so the $n$th-term test also says diverges. The alternating series test does not apply because $b_n \to 0$ fails.</p>
@@ -1151,7 +1342,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n\left(\frac32\right)^n}{n^2}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> The index starts at $n = 1$ because of the $n^2$ in the denominator. $|a_n| = \dfrac{(3/2)^n}{n^2}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> The index starts at $n = 1$ because of the $n^2$ in the denominator. $|a_n| = \dfrac{(3/2)^n}{n^2}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(3/2)^{n+1}}{(n+1)^2}\cdot\frac{n^2}{(3/2)^n} = \frac32\left(\frac{n}{n+1}\right)^2 \longrightarrow \frac32$$
                 <div class="highlight-box">$L = \frac32 > 1$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $\left(\frac32\right)^n$ outgrows $n^2$, so $|a_n| \to \infty$ and the terms do not go to $0$.</p>
@@ -1162,7 +1353,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{8^n}{(n+2)\,4^{n+1}}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> Replace every $n$: $a_{n+1} = \dfrac{8^{n+1}}{(n+3)\,4^{n+2}}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> Replace every $n$: $a_{n+1} = \dfrac{8^{n+1}}{(n+3)\,4^{n+2}}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{8^{n+1}}{(n+3)\,4^{n+2}}\cdot\frac{(n+2)\,4^{n+1}}{8^n} = \frac84\cdot\frac{n+2}{n+3} \longrightarrow 2$$
                 <div class="highlight-box">$L = 2 > 1$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Simplify the term first: $\frac{8^n}{4^{n+1}} = \frac14\cdot 2^n$, so $a_n = \frac{2^n}{4(n+2)} \to \infty$.</p>
@@ -1173,7 +1364,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{n^2\,3^{n+1}}{4^n}$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)^2\,3^{n+2}}{4^{n+1}}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)^2\,3^{n+2}}{4^{n+1}}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^2\,3^{n+2}}{4^{n+1}}\cdot\frac{4^n}{n^2\,3^{n+1}} = \frac34\left(\frac{n+1}{n}\right)^2 \longrightarrow \frac34$$
                 <div class="highlight-box">$L = \frac34 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Rewrite the term as $3n^2\left(\frac34\right)^n$: a power of $n$ times a geometric factor with $|r| < 1$ always converges. The extra $3^{1}$ in the numerator only scales the series.</p>
@@ -1184,7 +1375,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{n!}{4^n}$</strong> <span class="pill">Column A</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)!}{4^{n+1}}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)!}{4^{n+1}}$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{4^{n+1}}\cdot\frac{4^n}{n!} = \frac{n+1}{4} \longrightarrow \infty$$
                 <div class="highlight-box">$L = \infty$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The ratios $\frac14, \frac24, \frac34, 1, \frac54, \ldots$ pass $1$ at $n = 3$ and keep growing, so from $n = 4$ on each term is larger than the one before.</p>
@@ -1195,7 +1386,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty} n\left(-\frac23\right)^n$</strong> <span class="pill">Column B</span></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $|a_n| = n\left(\frac23\right)^n$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $|a_n| = n\left(\frac23\right)^n$.</p><p><strong>Work.</strong></p>
                 $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\left(\frac23\right)^{n+1}}{n\left(\frac23\right)^n} = \frac23\cdot\frac{n+1}{n} \longrightarrow \frac23$$
                 <div class="highlight-box">$L = \frac23 < 1$: <strong>converges</strong> (absolutely).</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Differentiating the geometric series gives $\sum_{n\ge1} n x^n = \frac{x}{(1-x)^2}$ for $|x| < 1$; at $x = -\frac23$ the sum is $\frac{-2/3}{(5/3)^2} = -\frac{6}{25}$, a finite value.</p>
@@ -1212,7 +1403,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n}{3n+1}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: nth-term test</span>
-                <p><strong>Setup.</strong> Tree node 1: do the terms go to $0$? <strong>Work.</strong> $\lim\frac{n}{3n+1} = \frac13 \ne 0$.</p>
+                <p><strong>Setup.</strong> Tree node 1: do the terms go to $0$?</p><p><strong>Work.</strong> $\lim\frac{n}{3n+1} = \frac13 \ne 0$.</p>
                 <div class="highlight-box"><strong>Diverges</strong> by the $n$th-term test.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Each term is close to $\frac13$, so $S_N \approx \frac N3$ grows without bound.</p>
             </div></div>
@@ -1222,7 +1413,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{5}{4^n}$</strong>. Decide convergence, and find the sum if it converges.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: geometric series</span>
-                <p><strong>Setup.</strong> $\frac{5}{4^n} = 5\left(\frac14\right)^n$: ratio $r = \frac14$, first term $\frac54$. <strong>Work.</strong> $|r| < 1$, so the series converges, and the sum is $\dfrac{5/4}{1 - 1/4} = \dfrac{5/4}{3/4} = \dfrac53$.</p>
+                <p><strong>Setup.</strong> $\frac{5}{4^n} = 5\left(\frac14\right)^n$: ratio $r = \frac14$, first term $\frac54$.</p><p><strong>Work.</strong> $|r| < 1$, so the series converges, and the sum is $\dfrac{5/4}{1 - 1/4} = \dfrac{5/4}{3/4} = \dfrac53$.</p>
                 <div class="highlight-box"><strong>Converges</strong>, with sum $\frac53$.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $S_3 = \frac54 + \frac{5}{16} + \frac{5}{64} = \frac{105}{64} \approx 1.64$, already close to $\frac53 \approx 1.667$.</p>
             </div></div>
@@ -1232,7 +1423,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^{0.9}}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: p-series</span>
-                <p><strong>Setup.</strong> A $p$-series with $p = 0.9$. <strong>Work.</strong> $p \le 1$.</p>
+                <p><strong>Setup.</strong> A $p$-series with $p = 0.9$.</p><p><strong>Work.</strong> $p \le 1$.</p>
                 <div class="highlight-box"><strong>Diverges</strong> ($p$-series, $p = 0.9 \le 1$).</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $\frac{1}{n^{0.9}} > \frac1n$ for $n \ge 2$, and $\sum\frac1n$ diverges, so direct comparison agrees.</p>
             </div></div>
@@ -1242,7 +1433,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n+1}{n^3+2}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: limit comparison</span>
-                <p><strong>Setup.</strong> Algebraic, positive terms. Dominant terms: $\frac{n}{n^3} = \frac{1}{n^2}$, so $b_n = \frac{1}{n^2}$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> Algebraic, positive terms. Dominant terms: $\frac{n}{n^3} = \frac{1}{n^2}$, so $b_n = \frac{1}{n^2}$.</p><p><strong>Work.</strong></p>
                 $$\lim\frac{a_n}{b_n} = \lim\frac{(n+1)\,n^2}{n^3+2} = \lim\frac{n^3+n^2}{n^3+2} = 1$$
                 <div class="highlight-box">$0 < 1 < \infty$ and $\sum\frac{1}{n^2}$ converges: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Direct comparison also works: $\frac{n+1}{n^3+2} \le \frac{2n}{n^3} = \frac{2}{n^2}$ for $n \ge 1$.</p>
@@ -1253,7 +1444,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{\sqrt{n^2+1}}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: limit comparison</span>
-                <p><strong>Setup.</strong> $\sqrt{n^2+1}$ behaves like $n$, so $b_n = \frac1n$. <strong>Work.</strong> $\lim\dfrac{1/\sqrt{n^2+1}}{1/n} = \lim\dfrac{n}{\sqrt{n^2+1}} = \lim\dfrac{1}{\sqrt{1 + 1/n^2}} = 1$.</p>
+                <p><strong>Setup.</strong> $\sqrt{n^2+1}$ behaves like $n$, so $b_n = \frac1n$.</p><p><strong>Work.</strong> $\lim\dfrac{1/\sqrt{n^2+1}}{1/n} = \lim\dfrac{n}{\sqrt{n^2+1}} = \lim\dfrac{1}{\sqrt{1 + 1/n^2}} = 1$.</p>
                 <div class="highlight-box">$\sum\frac1n$ diverges: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The terms go to $0$, so the $n$th-term test could not have decided this. For a direct comparison, $\sqrt{n^2+1} \le \sqrt{2n^2} = n\sqrt2$, so $a_n \ge \frac{1}{n\sqrt2}$, above a divergent series.</p>
             </div></div>
@@ -1263,7 +1454,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln n}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: integral test</span>
-                <p><strong>Setup.</strong> $f(x) = \frac{1}{x\ln x}$ is positive, continuous, and decreasing for $x \ge 2$. <strong>Work.</strong> With $u = \ln x$, $du = \frac{dx}{x}$:</p>
+                <p><strong>Setup.</strong> $f(x) = \frac{1}{x\ln x}$ is positive, continuous, and decreasing for $x \ge 2$.</p><p><strong>Work.</strong> With $u = \ln x$, $du = \frac{dx}{x}$:</p>
                 $$\int_2^\infty\frac{dx}{x\ln x} = \lim_{b\to\infty}\Big[\ln(\ln x)\Big]_2^b = \infty$$
                 <div class="highlight-box">The integral diverges: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> This series diverges more slowly than the harmonic series. The partial sums pass $4$ only around $N \approx 5 \times 10^{10}$, so numerical evidence is misleading here; the test is what settles it.</p>
@@ -1274,7 +1465,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{\sqrt n}$</strong>. Absolutely convergent, conditionally convergent, or divergent?</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: alternating series test, then p-series</span>
-                <p><strong>Setup.</strong> $b_n = \frac{1}{\sqrt n}$. <strong>Work.</strong> $b_n$ is decreasing and $\lim b_n = 0$, so the series converges by the alternating series test. For absolute convergence, $\sum\frac{1}{\sqrt n}$ is a $p$-series with $p = \frac12 \le 1$, which diverges.</p>
+                <p><strong>Setup.</strong> $b_n = \frac{1}{\sqrt n}$.</p><p><strong>Work.</strong> $b_n$ is decreasing and $\lim b_n = 0$, so the series converges by the alternating series test. For absolute convergence, $\sum\frac{1}{\sqrt n}$ is a $p$-series with $p = \frac12 \le 1$, which diverges.</p>
                 <div class="highlight-box"><strong>Converges conditionally</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Both tests were needed. The alternating series test alone cannot distinguish absolute from conditional.</p>
             </div></div>
@@ -1284,7 +1475,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}$</strong>. Absolutely convergent, conditionally convergent, or divergent?</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: absolute convergence via p-series</span>
-                <p><strong>Setup.</strong> Test $\sum|a_n| = \sum\frac{1}{n^2}$ first. <strong>Work.</strong> $p = 2 > 1$, converges.</p>
+                <p><strong>Setup.</strong> Test $\sum|a_n| = \sum\frac{1}{n^2}$ first.</p><p><strong>Work.</strong> $p = 2 > 1$, converges.</p>
                 <div class="highlight-box"><strong>Converges absolutely</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Absolute convergence implies convergence, so the alternating series test is not needed. Starting with $\sum|a_n|$ is the efficient order when you expect absolute convergence.</p>
             </div></div>
@@ -1294,7 +1485,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{\sin^2 n}{n^2}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct comparison</span>
-                <p><strong>Setup.</strong> $0 \le \sin^2 n \le 1$, so $0 \le \frac{\sin^2 n}{n^2} \le \frac{1}{n^2}$. <strong>Work.</strong> $\sum\frac{1}{n^2}$ converges ($p = 2$), and the given series sits below it.</p>
+                <p><strong>Setup.</strong> $0 \le \sin^2 n \le 1$, so $0 \le \frac{\sin^2 n}{n^2} \le \frac{1}{n^2}$.</p><p><strong>Work.</strong> $\sum\frac{1}{n^2}$ converges ($p = 2$), and the given series sits below it.</p>
                 <div class="highlight-box"><strong>Converges</strong> by direct comparison.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Limit comparison would fail here: $\frac{a_n}{1/n^2} = \sin^2 n$ has no limit. The bounded-factor move is what makes direct comparison the right tool.</p>
             </div></div>
@@ -1304,7 +1495,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{2^n+n}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct comparison</span>
-                <p><strong>Setup.</strong> Dropping the $n$ makes the denominator smaller and the fraction larger: $\frac{1}{2^n+n} < \frac{1}{2^n}$. <strong>Work.</strong> $\sum\frac{1}{2^n}$ is geometric with $r = \frac12$, convergent.</p>
+                <p><strong>Setup.</strong> Dropping the $n$ makes the denominator smaller and the fraction larger: $\frac{1}{2^n+n} < \frac{1}{2^n}$.</p><p><strong>Work.</strong> $\sum\frac{1}{2^n}$ is geometric with $r = \frac12$, convergent.</p>
                 <div class="highlight-box"><strong>Converges</strong> by direct comparison.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Limit comparison with $\frac{1}{2^n}$ also works: $\lim\frac{2^n}{2^n+n} = 1$.</p>
             </div></div>
@@ -1314,7 +1505,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\left(\frac{n}{2n+1}\right)^n$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: root test</span>
-                <p><strong>Setup.</strong> The whole term is raised to the $n$th power. <strong>Work.</strong> $\sqrt[n]{a_n} = \frac{n}{2n+1} \to \frac12$.</p>
+                <p><strong>Setup.</strong> The whole term is raised to the $n$th power.</p><p><strong>Work.</strong> $\sqrt[n]{a_n} = \frac{n}{2n+1} \to \frac12$.</p>
                 <div class="highlight-box">$L = \frac12 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $\frac{n}{2n+1} < \frac12$ for every $n$, so $a_n < \left(\frac12\right)^n$ and direct comparison with a geometric series confirms it.</p>
             </div></div>
@@ -1324,7 +1515,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n^n}{n!}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> Factorial and $n$ in an exponent. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> Factorial and $n$ in an exponent.</p><p><strong>Work.</strong></p>
                 $$\frac{a_{n+1}}{a_n} = \frac{(n+1)^{n+1}}{(n+1)!}\cdot\frac{n!}{n^n} = \frac{(n+1)^{n+1}}{(n+1)\,n^n} = \left(\frac{n+1}{n}\right)^n = \left(1 + \frac1n\right)^n \longrightarrow e$$
                 <div class="highlight-box">$L = e > 1$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $n^n \ge n!$ for every $n$ (each of the $n$ factors in $n!$ is at most $n$), so $a_n \ge 1$ and the terms cannot go to $0$.</p>
@@ -1335,7 +1526,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(n!)^2}{(2n)!}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{((n+1)!)^2}{(2n+2)!}$. Expand only what is needed: $(n+1)! = (n+1)\,n!$ and $(2n+2)! = (2n+2)(2n+1)\,(2n)!$. <strong>Work.</strong></p>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{((n+1)!)^2}{(2n+2)!}$. Expand only what is needed: $(n+1)! = (n+1)\,n!$ and $(2n+2)! = (2n+2)(2n+1)\,(2n)!$.</p><p><strong>Work.</strong></p>
                 $$\frac{a_{n+1}}{a_n} = \frac{(n+1)^2\,(n!)^2}{(2n+2)(2n+1)\,(2n)!}\cdot\frac{(2n)!}{(n!)^2} = \frac{(n+1)^2}{(2n+2)(2n+1)} = \frac{n+1}{2(2n+1)} \longrightarrow \frac14$$
                 <div class="highlight-box">$L = \frac14 < 1$: <strong>converges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $a_1 = \frac12$, $a_2 = \frac{4}{24} = \frac16$, $a_3 = \frac{36}{720} = \frac1{20}$; successive ratios $\frac13, \frac{3}{10}$ are heading toward $\frac14$ from above.</p>
@@ -1346,7 +1537,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}(-1)^n\frac{n}{n+1}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: nth-term test</span>
-                <p><strong>Setup.</strong> The series alternates, which invites the alternating series test, but tree node 1 comes first. <strong>Work.</strong> $\frac{n}{n+1} \to 1$, so the terms approach $\pm 1$ and have no limit.</p>
+                <p><strong>Setup.</strong> The series alternates, which invites the alternating series test, but tree node 1 comes first.</p><p><strong>Work.</strong> $\frac{n}{n+1} \to 1$, so the terms approach $\pm 1$ and have no limit.</p>
                 <div class="highlight-box"><strong>Diverges</strong> by the $n$th-term test.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> The alternating series test requires $b_n \to 0$, which fails. A common mistake is to see $(-1)^n$ and conclude convergence without checking that condition.</p>
             </div></div>
@@ -1356,7 +1547,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{3^n}{n^3}$</strong></p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
-                <p><strong>Setup.</strong> $n$ in an exponent. <strong>Work.</strong> $\dfrac{a_{n+1}}{a_n} = \dfrac{3^{n+1}}{(n+1)^3}\cdot\dfrac{n^3}{3^n} = 3\left(\dfrac{n}{n+1}\right)^3 \to 3$.</p>
+                <p><strong>Setup.</strong> $n$ in an exponent.</p><p><strong>Work.</strong> $\dfrac{a_{n+1}}{a_n} = \dfrac{3^{n+1}}{(n+1)^3}\cdot\dfrac{n^3}{3^n} = 3\left(\dfrac{n}{n+1}\right)^3 \to 3$.</p>
                 <div class="highlight-box">$L = 3 > 1$: <strong>diverges</strong>.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> Compare with Ratio Test Practice problem 11, which had $\frac{n^3}{3^n}$ and converged. Flipping the fraction flips the verdict.</p>
             </div></div>
@@ -1366,7 +1557,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n(n+1)}$</strong>. Decide convergence, and find the sum if it converges.</p>
             <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
             <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: limit comparison, then telescoping for the sum</span>
-                <p><strong>Setup.</strong> Algebraic terms behaving like $\frac{1}{n^2}$. <strong>Work.</strong> $\lim\dfrac{1/(n(n+1))}{1/n^2} = \lim\dfrac{n^2}{n^2+n} = 1$, and $\sum\frac{1}{n^2}$ converges, so the series converges. For the sum, partial fractions give $\frac{1}{n(n+1)} = \frac1n - \frac{1}{n+1}$, so</p>
+                <p><strong>Setup.</strong> Algebraic terms behaving like $\frac{1}{n^2}$.</p><p><strong>Work.</strong> $\lim\dfrac{1/(n(n+1))}{1/n^2} = \lim\dfrac{n^2}{n^2+n} = 1$, and $\sum\frac{1}{n^2}$ converges, so the series converges. For the sum, partial fractions give $\frac{1}{n(n+1)} = \frac1n - \frac{1}{n+1}$, so</p>
                 $$S_N = \left(1 - \tfrac12\right) + \left(\tfrac12 - \tfrac13\right) + \cdots + \left(\tfrac1N - \tfrac{1}{N+1}\right) = 1 - \frac{1}{N+1} \longrightarrow 1$$
                 <div class="highlight-box"><strong>Converges</strong>, with sum $1$.</div>
                 <p style="margin-bottom:0;"><strong>Check.</strong> $S_4 = \frac12 + \frac16 + \frac1{12} + \frac1{20} = \frac45$, which matches $1 - \frac15$.</p>
@@ -1440,9 +1631,15 @@ function fmt(v, d) {
 }
 function setupCanvas(id) {
     var c = document.getElementById(id); if (!c) return null;
-    var W = parseInt(c.getAttribute('width')), H = parseInt(c.getAttribute('height'));
     var dpr = window.devicePixelRatio || 1;
-    if (!c.__scaled) { c.width = W * dpr; c.height = H * dpr; c.style.width = W + 'px'; c.style.height = H + 'px'; c.__scaled = true; }
+    if (!c.__scaled) {
+        var W0 = parseInt(c.getAttribute('width')), H0 = parseInt(c.getAttribute('height'));
+        c.__W = W0; c.__H = H0;
+        c.width = W0 * dpr; c.height = H0 * dpr;
+        c.style.width = W0 + 'px'; c.style.height = 'auto'; c.style.aspectRatio = W0 + ' / ' + H0;
+        c.__scaled = true;
+    }
+    var W = c.__W, H = c.__H;
     var ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     return { c: c, ctx: ctx, W: W, H: H };
 }
