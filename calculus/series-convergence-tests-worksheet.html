@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Series Convergence Tests | Learning Curve Collective</title>
+<meta name="description" content="An interactive Maclaurin and Taylor series worksheet: why polynomial approximations, deriving the coefficient formula, the essential series, approximation error, and Taylor series. Free from Learning Curve Collective.">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: { inlineMath: [["$","$"]], displayMath: [["$$","$$"]] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: true }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+    --green-dark: #21442B;
+    --green-medium: #5E6C39;
+    --green-light: #39864E;
+    --gold: #DDA25E;
+    --gold-light: #E6BC84;
+    --gold-pale: #F5E4CC;
+    --copper: #BC6C26;
+    --brown-dark: #42260D;
+    --brown-medium: #271404;
+    --cream: #F0F0F0;
+    --cream-dark: #E2E2E2;
+    --white: #FFFFFF;
+    --text-dark: #2D2D2D;
+    --text-medium: #4A4A4A;
+    --red: #C0504D;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--text-dark); line-height: 1.6; }
+
+/* ─── Header ─── */
+.header { background: var(--green-dark); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-logo { width: 64px; height: 64px; background: none; display: flex; align-items: center; justify-content: center; overflow: visible; flex-shrink: 0; }
+.header-logo img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.15s; }
+.header-logo a:hover img { opacity: 0.85; }
+.header-text h1 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+.header-right { text-align: right; }
+.subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 1px; }
+
+/* ─── Container ─── */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+/* ─── Tab System: three labeled rows ─── */
+.tab-buttons { display:flex; flex-direction:column; gap:6px; margin-bottom:30px; position:sticky; top:0; background:var(--cream); z-index:100; padding:12px 0 10px; border-bottom:2px solid #E8E0D0; }
+.tab-row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.tab-row-label { width:92px; flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-medium); opacity:0.75; }
+.tab-button { padding: 8px 13px; background-color: #E2E2E2; border: 2px solid #E0D5C0; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-medium); transition: all 0.25s ease; }
+.tab-button:hover { border-color: var(--gold); color: var(--brown-dark); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.tab-button.active { color: white; border-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transform: translateY(-1px); }
+.tab-button[data-group="core"] { border-color: #DDA25E; }
+.tab-button[data-group="core"].active { background: linear-gradient(135deg, #DDA25E, #E6BC84); color: var(--brown-dark); }
+.tab-button[data-group="core"]:hover { border-color: #DDA25E; background: rgba(221,162,94,0.15); }
+.tab-button[data-group="core"].active:hover { background: linear-gradient(135deg, #DDA25E, #E6BC84); }
+.tab-button[data-group="study"] { border-color: #21442B; }
+.tab-button[data-group="study"].active { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="study"]:hover { border-color: #21442B; background: rgba(33,68,43,0.1); }
+.tab-button[data-group="study"].active:hover { background: linear-gradient(135deg, #21442B, #5E6C39); }
+.tab-button[data-group="sprint"] { border-color: #BC6C26; }
+.tab-button[data-group="sprint"].active { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="sprint"]:hover { border-color: #BC6C26; background: rgba(188,108,38,0.12); }
+.tab-button[data-group="sprint"].active:hover { background: linear-gradient(135deg, #BC6C26, #DDA25E); }
+.tab-button[data-group="practice"] { border-color: #8B5E3C; }
+.tab-button[data-group="practice"].active { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-button[data-group="practice"]:hover { border-color: #8B5E3C; background: rgba(66,38,13,0.1); }
+.tab-button[data-group="practice"].active:hover { background: linear-gradient(135deg, #8B5E3C, #A0704D); }
+.tab-content { display: none; animation: fadeIn 0.35s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Section Headers ─── */
+.section-header { display: flex; align-items: center; gap: 15px; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid var(--gold-light); }
+.section-header:first-child { margin-top: 0; }
+.section-number { width: 40px; height: 40px; background-color: var(--gold); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.section-header h2 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 24px; color: var(--brown-dark); margin: 0; }
+h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--green-dark); font-size: 19px; margin: 18px 0 10px; }
+h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 15px; margin: 12px 0 6px; }
+
+/* ─── Cards & Boxes ─── */
+.card { background-color: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.highlight-box { background-color: var(--white); border-left: 5px solid var(--green-dark); border-radius: 6px; padding: 15px; margin: 15px 0; font-family: 'Inter', sans-serif; color: var(--green-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.highlight-box mjx-container { color: var(--green-dark); }
+.highlight-box p { color: var(--brown-dark); }
+.idea-box { background-color: #E8F5E9; border-left: 5px solid var(--green-light); border-radius: 6px; padding: 15px; margin: 15px 0; }
+.warning-box { background-color: #FFEBEE; border-left: 5px solid #E57373; border-radius: 6px; padding: 15px; margin: 15px 0; }
+.idea-box p:last-child, .warning-box p:last-child, .highlight-box p:last-child, .card p:last-child { margin-bottom: 0; }
+.box-label { display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.9px; text-transform:uppercase; padding:2px 9px; border-radius:4px; margin-bottom:6px; }
+.idea-box .box-label { background: rgba(57,134,78,0.18); color: var(--green-dark); }
+.warning-box .box-label { background: rgba(229,115,115,0.2); color: #9B2C2C; }
+
+/* ─── Concept List ─── */
+.concept-list { background-color: var(--cream-dark); border-radius: 8px; padding: 20px; margin: 15px 0; }
+.concept-item { margin-bottom: 12px; padding: 16px 18px; border-radius: 8px; display: flex; gap: 16px; align-items: flex-start; }
+.concept-item:last-child { margin-bottom: 0; }
+.concept-item:nth-child(3n+1) { background-color: rgba(59, 83, 35, 0.08); border-left: 4px solid #21442B; }
+.concept-item:nth-child(3n+2) { background-color: rgba(200, 168, 78, 0.10); border-left: 4px solid #DDA25E; }
+.concept-item:nth-child(3n+3) { background-color: rgba(139, 94, 60, 0.08); border-left: 4px solid #8B5E3C; }
+.concept-visual { flex-shrink: 0; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; }
+.concept-visual svg { width: 100%; height: 100%; }
+.concept-body { flex: 1; }
+.concept-body p:last-child { margin-bottom: 0; }
+.concept-label { font-weight: 600; color: var(--brown-dark); margin-bottom: 6px; }
+
+/* ─── Formula Tiles ─── */
+.formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.formula-tile { background: var(--white); border: 2px solid var(--green-dark); border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.formula-tile h4 { font-family: 'Switzer', 'Space Grotesk', sans-serif; color: var(--brown-dark); font-size: 14px; margin: 0 0 8px; }
+.formula-tile mjx-container { color: var(--green-dark); }
+.formula-tile .formula-note { font-size: 12.5px; color: var(--brown-medium); margin-top: 6px; line-height: 1.5; margin-bottom: 0; }
+.formula-tile p { margin-bottom: 6px; }
+
+/* ─── Collapsible Toggles ─── */
+.example-toggle, .solution-toggle { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 6px; padding: 7px 14px; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.example-toggle { background: var(--green-dark); color: white; }
+.example-toggle:hover { background: var(--green-medium); }
+.solution-toggle { background: var(--gold); color: var(--brown-dark); }
+.solution-toggle:hover { background: var(--gold-light); }
+.example-toggle .arrow, .solution-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.example-toggle.open .arrow, .solution-toggle.open .arrow { transform: rotate(90deg); }
+.example-body, .solution-body { display: none; margin-top: 10px; padding: 14px 18px; background: rgba(255,255,255,0.7); border-radius: 6px; border: 1px solid rgba(33,68,43,0.15); }
+.example-body.open, .solution-body.open { display: block; }
+.example-body .highlight-box, .solution-body .highlight-box { margin: 8px 0; }
+
+/* ─── Technique Sections ─── */
+.technique-section { border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; }
+.technique-section h3 { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 20px; margin: 0 0 10px; color: var(--green-dark); }
+.technique-section .step-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px; }
+.step-concept .step-label { background: rgba(33,68,43,0.12); color: var(--green-dark); }
+.step-example .step-label { background: rgba(221,162,94,0.15); color: #8B6914; }
+.step-practice .step-label { background: rgba(66,38,13,0.12); color: var(--brown-medium); }
+.step-concept, .step-example, .step-practice { margin-top: 12px; }
+.practice-box { background: rgba(66,38,13,0.06); border: 1.5px dashed rgba(66,38,13,0.3); border-radius: 8px; padding: 14px 18px; margin-top: 10px; }
+.tech-green { background: rgba(33,68,43,0.06); border-left: 4px solid #21442B; }
+.tech-gold { background: rgba(221,162,94,0.06); border-left: 4px solid #DDA25E; }
+.tech-brown { background: rgba(66,38,13,0.06); border-left: 4px solid #8B5E3C; }
+.beyond-badge { display: inline-block; font-size: 11px; font-weight: 600; background: rgba(221,162,94,0.18); color: #8B5E3C; padding: 2px 9px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+
+/* ─── Derivation steps ─── */
+.derivation-step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+.derivation-step .step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--green-dark); color: white; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.derivation-step .step-body { flex: 1; background: white; border-radius: 8px; padding: 12px 16px; border-left: 4px solid var(--gold-light); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.derivation-step .step-body p:last-child { margin-bottom: 0; }
+
+/* ─── Tables ─── */
+table.lcc { width: 100%; border-collapse: collapse; margin: 12px 0 18px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 14.5px; }
+table.lcc th { background: var(--green-dark); color: white; padding: 9px 12px; text-align: left; font-weight: 600; font-size: 13px; letter-spacing: 0.4px; }
+table.lcc td { padding: 8px 12px; border-bottom: 1px solid var(--cream-dark); vertical-align: middle; }
+table.lcc tr:nth-child(even) td { background: rgba(221,162,94,0.06); }
+table.lcc tr:last-child td { border-bottom: none; }
+table.lcc td.hi { background: rgba(221,162,94,0.22) !important; font-weight: 600; }
+.table-wrap { overflow-x: auto; }
+
+/* ─── Interactive Visualizer ─── */
+.viz-container { background: white; border-radius: 12px; padding: 24px; margin: 20px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.viz-title { font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 17px; color: var(--green-dark); font-weight: 700; margin-bottom: 4px; display:flex; align-items:center; gap:10px; }
+.viz-tag { font-size: 10.5px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 2px 8px; border-radius: 9px; }
+.viz-sub { font-size: 13.5px; color: var(--text-medium); margin-bottom: 14px; }
+.viz-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--cream-dark); }
+.control-group { display: flex; flex-direction: column; gap: 4px; }
+.control-group label, .slider-group label { font-size: 12px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; }
+.control-group select, .control-group input[type="number"] { padding: 8px 12px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background: var(--cream); color: var(--text-dark); outline: none; transition: border-color 0.2s; }
+.control-group select:focus, .control-group input[type="number"]:focus { border-color: var(--gold); }
+.slider-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 4px; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); height: 6px; }
+.slider-row .n-display { font-weight: 700; font-size: 20px; color: var(--gold); min-width: 54px; text-align: center; }
+.sum-type-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+.sum-type-btn { padding: 8px 14px; border: 2px solid var(--gold-light); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; background: var(--cream); color: var(--text-medium); transition: all 0.2s; }
+.sum-type-btn:hover { border-color: var(--gold); color: var(--copper); }
+.sum-type-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+.viz-canvas-wrap { text-align: center; margin-bottom: 12px; }
+.viz-canvas-wrap canvas { border-radius: 8px; border: 1px solid var(--cream-dark); max-width: 100%; height: auto; background: #FBFAF7; }
+.viz-formula { background: rgba(33,68,43,0.05); border-radius: 8px; padding: 10px 14px; margin: 8px 0 12px; min-height: 44px; font-size: 15px; overflow-x: auto; }
+.readout-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px; }
+.readout-item { background: var(--cream); border-radius: 8px; padding: 10px 14px; text-align: center; border: 1px solid var(--gold-pale); }
+.readout-item .readout-label { font-size: 11px; font-weight: 600; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.readout-item .readout-value { font-size: 19px; font-weight: 700; color: var(--gold); }
+.readout-item .readout-value.error-val { color: var(--red); }
+.readout-item .readout-value.exact-val { color: var(--green-dark); }
+.legend { display:flex; gap:18px; flex-wrap:wrap; font-size:13px; color:var(--text-medium); justify-content:center; margin-bottom:8px; }
+.legend span::before { content:""; display:inline-block; width:22px; height:4px; border-radius:2px; margin-right:7px; vertical-align:middle; }
+.legend .lg-f::before { background: var(--green-dark); }
+.legend .lg-p::before { background: var(--copper); }
+.legend .lg-e::before { background: rgba(192,80,77,0.35); height:10px; }
+
+/* ─── Coefficient extractor ─── */
+.extractor { background: white; border-radius: 12px; padding: 22px; margin: 18px 0; border: 2px solid var(--gold-light); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.ex-stage { background: #FBFAF7; border-radius: 8px; padding: 16px 18px; min-height: 90px; font-size: 17px; overflow-x: auto; border: 1px solid var(--cream-dark); }
+.ex-line { margin-bottom: 8px; white-space: nowrap; }
+.ex-term { display: inline-block; padding: 2px 4px; border-radius: 5px; transition: all 0.3s; position: relative; }
+.ex-term.dead { opacity: 0.3; }
+.ex-term.dead::after { content: ''; position: absolute; left: 1px; right: 1px; top: 50%; border-top: 2.5px solid var(--red); transform: rotate(-10deg); opacity: 1; }
+.ex-term.alive { background: rgba(221,162,94,0.28); box-shadow: 0 0 0 2px var(--gold); }
+.ex-buttons { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 10px; }
+.ex-btn { border: none; border-radius: 8px; padding: 10px 16px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.15s; }
+.ex-btn.diff { background: var(--green-dark); color: white; }
+.ex-btn.diff:hover { background: var(--green-medium); }
+.ex-btn.plug { background: var(--gold); color: var(--brown-dark); }
+.ex-btn.plug:hover { background: var(--gold-light); }
+.ex-btn.reset { background: var(--cream-dark); color: var(--text-medium); }
+.ex-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.ex-note { font-size: 14px; color: var(--text-medium); min-height: 24px; margin-bottom: 8px; }
+.ex-harvest { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.ex-chip { background: rgba(33,68,43,0.08); border: 1.5px solid var(--green-dark); border-radius: 8px; padding: 6px 12px; font-size: 15px; animation: fadeIn 0.4s ease; }
+
+/* ─── Flashcards ─── */
+.flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin: 16px 0; }
+.flash-card { perspective: 1000px; height: 190px; cursor: pointer; }
+.flash-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+.flash-card.flipped .flash-inner { transform: rotateY(180deg); }
+.flash-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; }
+.flash-front { background: white; border: 2px solid var(--gold); color: var(--brown-dark); font-weight: 600; font-size: 15px; }
+.flash-back { background: var(--green-dark); color: white; transform: rotateY(180deg); font-size: 14px; }
+.flash-back mjx-container { color: white !important; }
+.flash-back mjx-container svg { color: white; }
+.flash-face .flash-k { position: absolute; top: 8px; left: 12px; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.7; font-weight: 700; }
+.flash-face .flash-hint { position:absolute; bottom:8px; right:12px; font-size:10px; opacity:0.6; letter-spacing:0.5px; }
+.flash-tools { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0 4px; }
+
+/* ─── Sprint ─── */
+.sprint-item { background: white; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; border-left: 5px solid var(--copper); box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.sprint-item .sp-num { width: 30px; height: 30px; border-radius: 50%; background: var(--copper); color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+.sprint-item .sp-q { flex: 1; min-width: 220px; font-size: 15px; }
+.sprint-item input { width: 110px; padding: 7px 10px; border: 2px solid var(--gold-light); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; }
+.sprint-item input:focus { border-color: var(--gold); }
+.sprint-item .sp-check { border: none; background: var(--green-dark); color: white; border-radius: 6px; padding: 8px 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; }
+.sprint-item .sp-res { min-width: 120px; font-size: 13.5px; font-weight: 600; }
+.sprint-item.ok { border-left-color: var(--green-light); }
+.sprint-item.ok .sp-res { color: var(--green-light); }
+.sprint-item.bad { border-left-color: var(--red); }
+.sprint-item.bad .sp-res { color: var(--red); }
+.score-bar { display: flex; justify-content: space-between; align-items: center; background: var(--green-dark); color: white; border-radius: 8px; padding: 10px 16px; margin: 10px 0 16px; font-weight: 600; flex-wrap: wrap; gap: 8px; }
+.score-bar button { border: none; background: var(--gold); color: var(--brown-dark); border-radius: 6px; padding: 6px 12px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
+
+/* ─── Problem cards ─── */
+.prob-num { width: 32px; height: 32px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.prob-card { display: flex; align-items: flex-start; gap: 14px; }
+.prob-body { flex: 1; min-width: 0; }
+.tech-tag { background: var(--gold); color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display:inline-block; margin-bottom: 6px; }
+.sol-wrap { background: rgba(33,68,43,0.06); border-radius: 8px; padding: 14px 18px; }
+.sol-wrap p:last-child { margin-bottom: 0; }
+
+/* ─── Decision tree ─── */
+.tree-node { background: white; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; position: relative; border: 1.5px solid var(--cream-dark); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.tree-node::before { content: attr(data-n); position: absolute; left: -36px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: white; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+.tree-node p:last-child { margin-bottom: 0; }
+
+/* ─── Next / Back navigation ─── */
+.tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
+.tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
+.tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
+.tab-nav-k { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; background: var(--gold); color: var(--brown-dark); padding: 3px 8px; border-radius: 9px; }
+.tab-nav-prev { border: none; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--text-medium); padding: 8px 4px; }
+.tab-nav-prev:hover { color: var(--green-dark); text-decoration: underline; }
+
+/* ─── Footer ─── */
+.footer { background: var(--brown-dark); color: white; padding: 20px 40px; text-align: center; border-top: 4px solid var(--gold); margin-top: 40px; font-size: 14px; opacity: 0.9; }
+.footer a:hover { opacity: 0.85; }
+.footer p { margin: 0; }
+
+/* ─── Misc ─── */
+p { margin-bottom: 15px; line-height: 1.8; }
+strong { color: var(--text-dark); font-weight: 600; }
+em { font-style: italic; color: var(--green-dark); }
+ul, ol { margin-left: 20px; margin-bottom: 15px; }
+li { margin-bottom: 8px; }
+mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+@media (max-width: 768px) { mjx-container:not([display="true"]) { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; } }
+mjx-container[display="true"] { max-width: 100%; }
+.two-col > *, .formula-grid > *, .formula-tile [style*="flex:1"], .derivation-step .step-body, .prob-body, .concept-body, .step-example, .step-concept, .technique-section, .highlight-box, .card, .sol-wrap, .viz-container, .table-wrap { min-width: 0; max-width: 100%; }
+.table-wrap { overflow-x: auto; }
+mjx-container[display="true"] { margin: 10px 0 !important; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.svg-fig { background: white; border-radius: 10px; padding: 12px; border: 1px solid var(--cream-dark); text-align: center; }
+.svg-fig svg { max-width: 100%; height: auto; }
+.svg-fig .cap { font-size: 12.5px; color: var(--text-medium); margin-top: 6px; margin-bottom: 0; }
+.jump-btn { border: 1.5px solid var(--green-dark); background: white; color: var(--green-dark); border-radius: 6px; padding: 5px 11px; font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; margin-top: 6px; }
+.jump-btn:hover { background: rgba(33,68,43,0.08); }
+.pill { display:inline-block; background: rgba(33,68,43,0.1); color: var(--green-dark); border-radius: 10px; padding: 1px 9px; font-size: 12px; font-weight: 700; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+    .header { flex-direction: column; text-align: center; gap: 15px; }
+    .header-left { flex-direction: column; }
+    .header-right { text-align: center; }
+    .tab-row-label { width: 100%; }
+    .tab-button { font-size: 12px; padding: 6px 12px; }
+    .container { padding: 20px 10px; }
+    .formula-grid, .two-col { grid-template-columns: 1fr; }
+    .ex-stage { font-size: 15px; }
+}
+@media (max-width: 600px) { .tab-nav { flex-direction: column-reverse; align-items: stretch; } .tab-nav-next { justify-content: center; } .tab-nav-prev { text-align: center; } }
+@media print { .tab-nav { display: none !important; } .tab-content { display: block !important; } .tab-buttons { display: none; } }
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <div class="header-logo"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" aria-label="Learning Curve Collective home" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><img src="data:image/png;base64,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" alt="Learning Curve Collective logo"></a></div>
+        <div class="header-text">
+            <h1>Series Convergence Tests</h1>
+            <div class="subtitle">INTERACTIVE WORKSHEET &bull; DECIDING WHETHER AN INFINITE SERIES CONVERGES</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="font-family: 'Switzer', 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: white; text-decoration: none;">Learning Curve Collective</a>
+        <div class="subtitle" style="margin-top: 4px;">AP Calculus BC &bull; Infinite Series</div>
+    </div>
+</div>
+<div class="container">
+    <div class="tab-buttons">
+        <div class="tab-row"><span class="tab-row-label">Reference</span>
+            <button class="tab-button active" data-group="core" onclick="switchTab('cheat', this)">&#9733; Cheat Sheet</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Study guide</span>
+            <button class="tab-button" data-group="study" onclick="switchTab('t1', this)">1 What Convergence Means</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t2', this)">2 The Decision Tree</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t3', this)">3 The Ratio Test</button>
+            <button class="tab-button" data-group="study" onclick="switchTab('t4', this)">4 Comparison, Integral, and Alternating Tests</button>
+        </div>
+        <div class="tab-row"><span class="tab-row-label">Practice</span>
+            <button class="tab-button" data-group="sprint" onclick="switchTab('sprint', this)">&#9889; Quick Recall</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('seta', this)">Ratio Test Practice</button>
+            <button class="tab-button" data-group="practice" onclick="switchTab('setb', this)">Choose the Test</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ CHEAT SHEET ═══════════════════════════ -->
+    <div id="tab-cheat" class="tab-content active">
+
+        <div class="section-header"><div class="section-number">1</div><h2>The question every test answers</h2></div>
+        <div class="two-col">
+            <div class="highlight-box" style="margin:0;">
+                <p style="font-weight:600;">A series $\sum a_n$ converges when its partial sums approach a limit:</p>
+                $$S_N = a_1 + a_2 + \cdots + a_N, \qquad \sum_{n=1}^{\infty} a_n = \lim_{N\to\infty} S_N$$
+                <p style="margin-bottom:0;">If the limit exists, the series converges to that number. If not, it diverges. Every test below is a shortcut for deciding this without computing the limit directly.</p>
+            </div>
+            <div class="card" style="margin:0; border-left-color: var(--green-dark);">
+                <h4 style="margin-top:0;">The first check, every time</h4>
+                <p><strong>$n$th-term test for divergence.</strong> If $\lim a_n \ne 0$ (or does not exist), the series diverges.</p>
+                <p style="margin-bottom:0;">If $\lim a_n = 0$, the test says nothing. The harmonic series $\sum \frac1n$ has terms going to $0$ and still diverges. Terms going to $0$ is necessary for convergence, never sufficient.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>Benchmarks you compare against</h2></div>
+        <div class="formula-grid">
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Geometric series</h4>
+                <p>$$\sum_{n=0}^{\infty} a\,r^n = \frac{a}{1-r} \ \text{ if } |r| < 1; \quad \text{diverges if } |r| \ge 1$$</p>
+                <p class="formula-note">The only common series whose sum you can write down. $\sum_{n=1}^\infty r^n = \frac{r}{1-r}$: check where the index starts.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(221,162,94,0.10); border-color: #DDA25E;">
+                <h4>$p$-series</h4>
+                <p>$$\sum_{n=1}^{\infty} \frac{1}{n^p} \ \text{ converges if } p > 1, \ \text{diverges if } p \le 1$$</p>
+                <p class="formula-note">$p = 1$ is the harmonic series, which diverges. $\sum\frac{1}{n^2}$ converges ($p = 2$); $\sum\frac{1}{\sqrt n}$ diverges ($p = \tfrac12$).</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(66,38,13,0.08); border-color: #8B5E3C;">
+                <h4>Alternating harmonic series</h4>
+                <p>$$\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n} = 1 - \frac12 + \frac13 - \cdots = \ln 2$$</p>
+                <p class="formula-note">Converges by the alternating series test, but $\sum\frac1n$ diverges, so the convergence is conditional, not absolute.</p>
+            </div>
+            <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
+                <h4>Factorials beat exponentials beat powers</h4>
+                <p>$$\sum \frac{c^n}{n!} \text{ converges for every } c; \qquad \sum \frac{n^k}{c^n} \text{ converges for } c > 1$$</p>
+                <p class="formula-note">$n!$ eventually outgrows any $c^n$, and $c^n$ with $c > 1$ outgrows any power $n^k$. The ratio test proves both.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>The tests at a glance</h2></div>
+        <div class="table-wrap"><table class="lcc">
+            <tr><th>Test</th><th>Use it when</th><th>Converges if</th><th>Diverges if</th><th>Watch for</th></tr>
+            <tr><td><strong>$n$th-term</strong></td><td>Always, first</td><td>Never decides convergence</td><td>$\lim a_n \ne 0$</td><td>$\lim a_n = 0$ tells you nothing.</td></tr>
+            <tr><td><strong>Geometric</strong></td><td>$a_n = a\,r^n$</td><td>$|r| < 1$, sum $\frac{a}{1-r}$</td><td>$|r| \ge 1$</td><td>Rewrite $\frac{2^n}{3^{n+1}}$ as $\frac13\left(\frac23\right)^n$ first.</td></tr>
+            <tr><td><strong>$p$-series</strong></td><td>$a_n = \frac{1}{n^p}$</td><td>$p > 1$</td><td>$p \le 1$</td><td>$\frac{1}{n\sqrt n}$ is $p = \tfrac32$.</td></tr>
+            <tr><td><strong>Ratio</strong></td><td>Factorials, $c^n$, products of these with powers of $n$</td><td>$L = \lim\left|\frac{a_{n+1}}{a_n}\right| < 1$</td><td>$L > 1$ or $L = \infty$</td><td>$L = 1$: inconclusive, switch tests. Never conclusive for $p$-series or rational terms.</td></tr>
+            <tr><td><strong>Root</strong></td><td>$a_n = (b_n)^n$</td><td>$\lim \sqrt[n]{|a_n|} < 1$</td><td>limit $> 1$</td><td>Same three outcomes as the ratio test.</td></tr>
+            <tr><td><strong>Direct comparison</strong></td><td>$0 \le a_n \le b_n$ with $b_n$ known</td><td>$\sum b_n$ converges (bigger converges)</td><td>$a_n \ge b_n \ge 0$ and $\sum b_n$ diverges (smaller diverges)</td><td>The inequality must point the useful way. Terms must be nonnegative.</td></tr>
+            <tr><td><strong>Limit comparison</strong></td><td>$a_n$ looks like a $p$-series or geometric series for large $n$</td><td colspan="2">$\lim \frac{a_n}{b_n} = c$ with $0 < c < \infty$: both series do the same thing</td><td>Pick $b_n$ from the dominant terms. Terms must be positive.</td></tr>
+            <tr><td><strong>Integral</strong></td><td>$a_n = f(n)$ with $f$ positive, continuous, decreasing, and easy to integrate</td><td>$\int_1^\infty f(x)\,dx$ converges</td><td>the integral diverges</td><td>Terms with $\ln n$. The integral's value is not the sum.</td></tr>
+            <tr><td><strong>Alternating series</strong></td><td>$a_n = (-1)^n b_n$ with $b_n > 0$</td><td>$b_n$ decreasing and $\lim b_n = 0$</td><td>Never decides divergence on its own (use the $n$th-term test)</td><td>Then ask: absolute or conditional? Test $\sum b_n$ separately.</td></tr>
+        </table></div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Limits that come up in the ratio test</h2></div>
+        <div class="two-col">
+            <div class="table-wrap"><table class="lcc">
+                <tr><th>Piece of $a_n$</th><th>In $\dfrac{a_{n+1}}{a_n}$ it becomes</th><th>Limit</th></tr>
+                <tr><td>$c^n$</td><td>$\dfrac{c^{n+1}}{c^n} = c$</td><td>$c$</td></tr>
+                <tr><td>$n!$</td><td>$\dfrac{(n+1)!}{n!} = n + 1$</td><td>$\infty$</td></tr>
+                <tr><td>$n^k$ (any fixed power)</td><td>$\dfrac{(n+1)^k}{n^k} = \left(1 + \frac1n\right)^k$</td><td>$1$</td></tr>
+                <tr><td>$n^n$</td><td>$\dfrac{(n+1)^{n+1}}{n^n} = (n+1)\left(1 + \frac1n\right)^n$</td><td>$\infty$ (and $\left(1+\frac1n\right)^n \to e$)</td></tr>
+                <tr><td>$\ln n$</td><td>$\dfrac{\ln(n+1)}{\ln n}$</td><td>$1$</td></tr>
+            </table></div>
+            <div class="card" style="margin:0; border-left-color: var(--green-dark);">
+                <h4 style="margin-top:0;">Absolute and conditional convergence</h4>
+                <p><strong>Absolutely convergent:</strong> $\sum |a_n|$ converges. Then $\sum a_n$ converges too. The ratio and root tests, applied to $|a_n|$, prove absolute convergence.</p>
+                <p><strong>Conditionally convergent:</strong> $\sum a_n$ converges but $\sum |a_n|$ diverges. The alternating harmonic series is the standard example.</p>
+                <p style="margin-bottom:0;">When a question asks "absolutely, conditionally, or divergent," run two tests: one on $\sum |a_n|$, and if that diverges, the alternating series test on $\sum a_n$.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>The decision tree</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark); padding: 24px;">
+            <p>Work down the list and stop at the first node that fits. The interactive version in Tab 2 asks these questions one at a time.</p>
+            <div style="position: relative; padding-left: 28px;">
+                <div style="position: absolute; left: 13px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--green-dark));"></div>
+                <div class="tree-node" data-n="1"><p><strong>Do the terms go to $0$?</strong> If $\lim a_n \ne 0$, the series diverges by the $n$th-term test. Stop. If the limit is $0$, continue.</p></div>
+                <div class="tree-node" data-n="2"><p><strong>Geometric, $\sum a\,r^n$?</strong> Converges when $|r| < 1$, with sum $\frac{a}{1-r}$. Otherwise diverges.</p></div>
+                <div class="tree-node" data-n="3"><p><strong>$p$-series, $\sum \frac{1}{n^p}$?</strong> Converges when $p > 1$. Otherwise diverges.</p></div>
+                <div class="tree-node" data-n="4"><p><strong>Factorials or $n$ in an exponent?</strong> Ratio test. If the term has the form $(b_n)^n$, the root test is usually shorter.</p></div>
+                <div class="tree-node" data-n="5"><p><strong>Alternating, $\sum (-1)^n b_n$?</strong> Alternating series test: $b_n$ decreasing and $b_n \to 0$. Then test $\sum b_n$ with another branch to decide absolute versus conditional.</p></div>
+                <div class="tree-node" data-n="6"><p><strong>Algebraic in $n$ (polynomials, roots)?</strong> Limit comparison with the $p$-series built from the dominant terms. $\frac{n+1}{n^3+2}$ behaves like $\frac{1}{n^2}$.</p></div>
+                <div class="tree-node" data-n="7"><p><strong>Involves $\ln n$, or easy to integrate?</strong> Integral test, after checking that $f$ is positive, continuous, and decreasing.</p></div>
+                <div class="tree-node" data-n="8"><p><strong>None of the above?</strong> Direct comparison: bound the term above by something convergent or below by something divergent. Bounded factors such as $\sin^2 n$ or $\frac{1}{2 + \cos n}$ often point here.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 1: WHAT CONVERGENCE MEANS ═══════════════════════════ -->
+    <div id="tab-t1" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>A sequence and a series are different questions</h2></div>
+        <p>A <strong>sequence</strong> is a list of numbers $a_1, a_2, a_3, \ldots$ and asks one question: do the terms approach a limit? A <strong>series</strong> adds the terms and asks a different question: do the running totals approach a limit? The running totals are the partial sums.</p>
+        <div class="highlight-box">
+            $$S_1 = a_1, \quad S_2 = a_1 + a_2, \quad S_3 = a_1 + a_2 + a_3, \quad \ldots, \quad S_N = \sum_{n=1}^{N} a_n$$
+            <p style="margin-bottom:0;">The series $\sum a_n$ <strong>converges</strong> if $\lim_{N\to\infty} S_N$ exists, and that limit is the sum. Otherwise the series <strong>diverges</strong>. Nothing in this definition requires you to find the sum. Most tests only decide whether a sum exists.</p>
+        </div>
+        <p>Start with the example you can compute. For $\sum_{n=1}^\infty \frac{1}{2^n}$ the partial sums are $\frac12, \frac34, \frac78, \frac{15}{16}, \ldots$, which approach $1$. For $\sum_{n=1}^\infty (-1)^n$ they are $-1, 0, -1, 0, \ldots$, which never settle. For $\sum_{n=1}^\infty \frac1n$ they are $1, 1.5, 1.83, 2.08, \ldots$ and keep growing, slowly, without bound. This last one is the case to look at closely, because its terms go to $0$ and the series still diverges.</p>
+
+        <div class="viz-container">
+            <div class="viz-title">Partial Sums Explorer <span class="viz-tag">Interactive</span></div>
+            <div class="viz-sub">Choose a series. The left plot shows the terms $a_n$, the right plot shows the partial sums $S_N$. Convergence is a statement about the right plot.</div>
+            <div class="viz-controls">
+                <div class="control-group">
+                    <label>Series</label>
+                    <select id="psSel" onchange="psDraw()"></select>
+                </div>
+                <div class="slider-group">
+                    <label>terms N =</label>
+                    <div class="slider-row"><input type="range" id="psN" min="5" max="80" step="1" value="40" oninput="psDraw()"><span class="n-display" id="psNShow">40</span></div>
+                </div>
+            </div>
+            <div class="viz-formula" id="psFormula"></div>
+            <div class="two-col" style="margin-top:12px;">
+                <div>
+                    <div style="font-size:12.5px; font-weight:600; color:var(--text-medium); margin-bottom:4px;">Terms $a_n$</div>
+                    <div class="viz-canvas-wrap"><canvas id="psTerms" width="520" height="200"></canvas></div>
+                </div>
+                <div>
+                    <div style="font-size:12.5px; font-weight:600; color:var(--text-medium); margin-bottom:4px;">Partial sums $S_N$</div>
+                    <div class="viz-canvas-wrap"><canvas id="psSums" width="520" height="200"></canvas></div>
+                </div>
+            </div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">$a_N$</div><div class="readout-value" id="psA">–</div></div>
+                <div class="readout-item"><div class="readout-label">$S_N$</div><div class="readout-value" id="psS">–</div></div>
+                <div class="readout-item"><div class="readout-label">Terms go to 0?</div><div class="readout-value" id="psZero">–</div></div>
+                <div class="readout-item"><div class="readout-label">Series</div><div class="readout-value" id="psVerdict">–</div></div>
+            </div>
+            <div class="idea-box" style="margin-bottom:0;">
+                <span class="box-label">What to look for</span>
+                <ol style="margin-bottom:0;">
+                    <li>Compare $\sum\frac1n$ with $\sum\frac{1}{n^2}$. Both term plots go to $0$. One sum keeps climbing past every line you draw; the other levels off near $1.645$. The difference is how fast the terms shrink.</li>
+                    <li>For $\sum(-1)^n$ the terms never go to $0$, and the partial sums alternate between two values. This is what the $n$th-term test catches.</li>
+                    <li>For $\sum\frac{n}{n+1}$ the terms approach $1$, not $0$, so every partial sum adds almost $1$. Divergence here is immediate.</li>
+                    <li>For $\sum\frac{(-1)^{n+1}}{n}$ the sums bounce above and below $\ln 2 \approx 0.693$ with shrinking swings. This is the picture behind the alternating series test.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>The $n$th-term test: the check you run first</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    <p style="font-weight:600;">$n$th-term test for divergence</p>
+                    $$\text{If } \lim_{n\to\infty} a_n \ne 0 \text{ (or the limit does not exist), then } \sum a_n \text{ diverges.}$$
+                </div>
+                <p>The logic: if the partial sums approach a limit $S$, then $a_n = S_n - S_{n-1}$ approaches $S - S = 0$. So convergent series must have terms going to $0$. The test is the contrapositive.</p>
+                <p style="margin-bottom:0;">What the test cannot do is prove convergence. $\lim a_n = 0$ is consistent with both outcomes. When the limit is $0$, move on to another test.</p>
+            </div>
+            <div>
+                <div class="technique-section tech-green" style="margin-top:0;">
+                    <h3>Worked examples</h3>
+                    <div class="step-example"><span class="step-label">Worked example</span>
+                        <p><strong>$\displaystyle\sum_{n=1}^\infty \frac{n}{2n+1}$.</strong> $\lim \frac{n}{2n+1} = \frac12 \ne 0$. Diverges by the $n$th-term test.</p>
+                        <p><strong>$\displaystyle\sum_{n=1}^\infty (-1)^n\frac{n}{n+1}$.</strong> The terms approach $\pm 1$ and have no limit. Diverges by the $n$th-term test. The alternating series test does not apply, because its condition $b_n \to 0$ fails.</p>
+                        <p style="margin-bottom:0;"><strong>$\displaystyle\sum_{n=1}^\infty \frac{1}{n}$.</strong> $\lim\frac1n = 0$, so the test is silent. (The series diverges, but that needs the integral test or a comparison, not this one.)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Two families you can decide on sight</h2></div>
+        <div class="two-col">
+            <div class="technique-section tech-gold" style="margin-top:0;">
+                <h3>Geometric series</h3>
+                <div class="step-concept"><span class="step-label">Concept</span>
+                    <p>Each term is the previous term times a fixed ratio $r$. The partial sums have a closed form, $S_N = a\,\frac{1 - r^{N+1}}{1 - r}$, and $r^{N+1} \to 0$ exactly when $|r| < 1$.</p>
+                    $$\sum_{n=0}^{\infty} a\,r^n = \frac{a}{1-r} \quad (|r| < 1)$$
+                </div>
+                <div class="step-example"><span class="step-label">Worked example</span>
+                    <p>$\displaystyle\sum_{n=1}^\infty \frac{2^n}{3^{n+1}}$. Rewrite: $\frac{2^n}{3^{n+1}} = \frac13\left(\frac23\right)^n$. Ratio $\frac23$, first term (at $n = 1$) $\frac13\cdot\frac23 = \frac29$. Converges, and the sum is $\frac{2/9}{1 - 2/3} = \frac23$.</p>
+                    <p style="margin-bottom:0;">$\displaystyle\sum_{n=0}^\infty \left(-\frac{3}{2}\right)^n$. $|r| = \frac32 \ge 1$. Diverges; the terms do not go to $0$.</p>
+                </div>
+            </div>
+            <div class="technique-section tech-brown" style="margin-top:0;">
+                <h3>$p$-series</h3>
+                <div class="step-concept"><span class="step-label">Concept</span>
+                    <p>$\sum \frac{1}{n^p}$ converges exactly when $p > 1$. This comes from the integral test: $\int_1^\infty x^{-p}\,dx$ is finite exactly when $p > 1$.</p>
+                    $$\sum_{n=1}^{\infty}\frac{1}{n^p}: \quad p > 1 \text{ converges}, \quad p \le 1 \text{ diverges}$$
+                </div>
+                <div class="step-example"><span class="step-label">Worked example</span>
+                    <p>$\displaystyle\sum \frac{1}{n\sqrt n} = \sum \frac{1}{n^{3/2}}$: $p = \frac32 > 1$, converges.</p>
+                    <p>$\displaystyle\sum \frac{1}{\sqrt n}$: $p = \frac12 \le 1$, diverges.</p>
+                    <p style="margin-bottom:0;">$\displaystyle\sum \frac{1}{n^{1.01}}$: $p = 1.01 > 1$, converges. The boundary at $p = 1$ is exact, and slowly convergent series are still convergent.</p>
+                </div>
+            </div>
+        </div>
+        <div class="idea-box">
+            <span class="box-label">Why these two matter beyond themselves</span>
+            <p style="margin-bottom:0;">Every comparison test needs a series whose behavior you already know. Geometric series and $p$-series are that known series almost every time. When you look at a complicated term, the question to ask is "for large $n$, does this behave like $r^n$ or like $\frac{1}{n^p}$?"</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 2: THE DECISION TREE ═══════════════════════════ -->
+    <div id="tab-t2" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>A test is a tool with conditions</h2></div>
+        <p>Each convergence test is an if-then statement. It has hypotheses that must be checked and a conclusion that follows only when they hold. Choosing a test means matching the shape of the general term to a test whose hypotheses you can verify. The decision tree below turns that matching into a sequence of yes-or-no questions. Use it until the choices feel automatic, and then keep using the same order in your head.</p>
+        <div class="highlight-box">
+            <p style="margin-bottom:0;"><strong>Three outcomes to write down.</strong> A test can say <em>converges</em>, <em>diverges</em>, or <em>inconclusive</em>. Inconclusive is not a failure. It means this tool does not fit, and you move to a different branch. The ratio test on $\sum\frac1{n^2}$ gives $L = 1$; the $p$-series branch then settles it in one line.</p>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>Decision Tree Walker</h2></div>
+        <div class="viz-container">
+            <div class="viz-title">Decision Tree Walker <span class="viz-tag">Interactive</span></div>
+            <div class="viz-sub">Answer each question about the general term $a_n$. The walker recommends a test, states its conditions, and shows a matching example. Type a series into the box first if you want to keep it in view while you answer.</div>
+            <div class="viz-controls">
+                <div class="control-group" style="flex:1; min-width:240px;">
+                    <label>Series you are testing (optional)</label>
+                    <input type="text" id="dtSeries" placeholder="for example: n! / 4^n" style="width:100%; padding:8px 10px; border:1.5px solid var(--cream-dark); border-radius:8px; font-family:'Inter',sans-serif; font-size:14px;">
+                </div>
+                <div class="control-group">
+                    <label>&nbsp;</label>
+                    <button class="jump-btn" onclick="dtReset()">&#8635; Start over</button>
+                </div>
+            </div>
+            <div id="dtTrail" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;"></div>
+            <div id="dtCard" class="card" style="border-left-color: var(--gold); margin:0;"></div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>The same tree, written out</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark); padding: 24px;">
+            <div style="position: relative; padding-left: 28px;">
+                <div style="position: absolute; left: 13px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--green-dark));"></div>
+                <div class="tree-node" data-n="1"><p><strong>Do the terms go to $0$?</strong> Compute $\lim a_n$. If it is not $0$, stop: the series diverges by the $n$th-term test. Rational terms with equal degrees on top and bottom, and terms like $(-1)^n\frac{n}{n+1}$, fail here.</p></div>
+                <div class="tree-node" data-n="2"><p><strong>Is it geometric?</strong> A constant raised to the $n$th power, possibly with a constant factor. Converges when $|r| < 1$, and you can find the sum.</p></div>
+                <div class="tree-node" data-n="3"><p><strong>Is it a $p$-series?</strong> $\frac{1}{n^p}$ and nothing else. Converges when $p > 1$.</p></div>
+                <div class="tree-node" data-n="4"><p><strong>Factorials, or $n$ in an exponent?</strong> Ratio test. The ratio $\frac{a_{n+1}}{a_n}$ collapses factorials to $n + 1$ and exponentials to constants. If the whole term is raised to the $n$th power, use the root test instead. (Tab 3)</p></div>
+                <div class="tree-node" data-n="5"><p><strong>Alternating signs?</strong> Alternating series test on $b_n = |a_n|$: decreasing and $\to 0$. If asked about absolute convergence, also test $\sum b_n$ with another branch. (Tab 4)</p></div>
+                <div class="tree-node" data-n="6"><p><strong>Algebraic in $n$?</strong> Polynomials and roots, positive terms. Limit comparison with the $p$-series made from the highest powers. (Tab 4)</p></div>
+                <div class="tree-node" data-n="7"><p><strong>Logarithms, or an integrable $f(n)$?</strong> Integral test, after confirming $f$ is positive, continuous, and decreasing. (Tab 4)</p></div>
+                <div class="tree-node" data-n="8"><p><strong>Otherwise.</strong> Direct comparison. Replace a bounded factor by its bound, or drop a positive term from a denominator, to reach a known series. (Tab 4)</p></div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Shape recognition: twelve series, sorted</h2></div>
+        <p>Before computing anything, sort each series into a branch. Open the solution to compare your choice with the tree. Picking the branch is most of the work; the computation that follows is usually two or three lines.</p>
+        <div class="table-wrap"><table class="lcc">
+            <tr><th>Series</th><th>Feature that decides</th><th>Branch</th></tr>
+            <tr><td>$\sum \dfrac{n}{3n+1}$</td><td>terms approach $\frac13$</td><td>$n$th-term test: diverges</td></tr>
+            <tr><td>$\sum \dfrac{5}{4^n}$</td><td>constant to the $n$th power</td><td>geometric, $r = \frac14$: converges</td></tr>
+            <tr><td>$\sum \dfrac{1}{n^{0.9}}$</td><td>$\frac{1}{n^p}$ alone</td><td>$p$-series, $p = 0.9$: diverges</td></tr>
+            <tr><td>$\sum \dfrac{n!}{4^n}$</td><td>factorial</td><td>ratio test</td></tr>
+            <tr><td>$\sum \dfrac{n^2}{3^n}$</td><td>$n$ in an exponent with a power of $n$</td><td>ratio test</td></tr>
+            <tr><td>$\sum \left(\dfrac{n}{2n+1}\right)^n$</td><td>whole term to the $n$th power</td><td>root test</td></tr>
+            <tr><td>$\sum \dfrac{(-1)^n}{\sqrt n}$</td><td>alternating sign</td><td>alternating series test, then $p$-series for absolute</td></tr>
+            <tr><td>$\sum \dfrac{n+1}{n^3+2}$</td><td>polynomials, positive</td><td>limit comparison with $\frac{1}{n^2}$</td></tr>
+            <tr><td>$\sum \dfrac{1}{\sqrt{n^2+1}}$</td><td>roots of polynomials</td><td>limit comparison with $\frac1n$</td></tr>
+            <tr><td>$\sum \dfrac{1}{n\ln n}$</td><td>logarithm, easy antiderivative</td><td>integral test</td></tr>
+            <tr><td>$\sum \dfrac{\sin^2 n}{n^2}$</td><td>bounded factor $0 \le \sin^2 n \le 1$</td><td>direct comparison with $\frac{1}{n^2}$</td></tr>
+            <tr><td>$\sum \dfrac{1}{2^n + n}$</td><td>denominator larger than $2^n$</td><td>direct comparison with $\frac{1}{2^n}$</td></tr>
+        </table></div>
+
+        <div class="warning-box">
+            <span class="box-label">Common mistakes and what to check</span>
+            <ol style="margin-bottom:0;">
+                <li><strong>Skipping the $n$th-term check.</strong> It takes one line and ends many problems. Running a comparison test on $\sum\frac{n}{3n+1}$ wastes time on a series whose terms never shrink.</li>
+                <li><strong>Treating "$\lim a_n = 0$" as a conclusion.</strong> It is a prerequisite, not a verdict. Write "the $n$th-term test is inconclusive" and move on.</li>
+                <li><strong>Using the ratio test on rational terms.</strong> Polynomial ratios always give $L = 1$. Go to limit comparison instead.</li>
+                <li><strong>Forgetting the hypotheses.</strong> Comparison and integral tests need positive terms. The alternating series test needs $b_n$ decreasing. State the hypotheses you checked; that is part of a complete answer.</li>
+                <li><strong>Stopping after the alternating series test.</strong> If the question asks for absolute or conditional convergence, there is a second test to run on $\sum |a_n|$.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 3: THE RATIO TEST ═══════════════════════════ -->
+    <div id="tab-t3" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>The ratio test</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    <p style="font-weight:600;">For a series $\sum a_n$, let</p>
+                    $$L = \lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|.$$
+                    <ul style="margin-bottom:0;">
+                        <li>$L < 1$: the series converges (absolutely).</li>
+                        <li>$L > 1$ or $L = \infty$: the series diverges.</li>
+                        <li>$L = 1$: the test is inconclusive. Use a different test.</li>
+                    </ul>
+                    <p style="margin-top:10px; margin-bottom:0;">The ratio test decides <em>whether</em> a series converges. It does not find the sum. For $\sum\frac{5^n}{n!}$ the test says converges; knowing that the sum is $e^5 - 1$ comes from recognizing the $e^x$ series, not from the test.</p>
+                </div>
+                <p style="margin-bottom:0;"><strong>Why it works.</strong> A geometric series $\sum r^n$ has $\frac{a_{n+1}}{a_n} = r$ for every $n$. The ratio test asks whether a series is <em>eventually</em> geometric-like. If the ratios approach $L < 1$, then from some point on each term is at most, say, $\frac{L+1}{2}$ times the one before, and the tail is squeezed under a convergent geometric series. If $L > 1$, the terms eventually grow, so they cannot go to $0$. At $L = 1$ the comparison with a geometric series gives no information, which is why $p$-series and rational terms, where the ratio always tends to $1$, cannot be decided this way.</p>
+            </div>
+            <div>
+                <div class="card" style="margin-top:0; border-left-color: var(--green-dark);">
+                    <h4 style="margin-top:0;">Use it when the term contains</h4>
+                    <ul>
+                        <li>a factorial: $n!$, $(2n)!$, $(n+1)!$</li>
+                        <li>a constant raised to the $n$th power: $2^n$, $e^n$, $\left(\frac32\right)^n$</li>
+                        <li>products of those with powers of $n$: $\frac{n^2 3^n}{n!}$</li>
+                    </ul>
+                    <h4>Do not expect it to decide</h4>
+                    <ul style="margin-bottom:0;">
+                        <li>$p$-series and rational or algebraic terms: $\frac{1}{n^2}$, $\frac{n+1}{n^3+2}$, $\frac{1}{\sqrt n}$. The limit is $1$.</li>
+                        <li>terms with only logarithms: $\frac{1}{n\ln n}$. The limit is $1$.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>Setting up the ratio</h2></div>
+        <p>The ratio test is mostly algebra. The same four moves work in each problem, and the common mistakes all happen in moves 1 and 3.</p>
+        <div class="derivation-step"><div class="step-num">1</div><div class="step-body"><p><strong>Write $a_{n+1}$.</strong> Replace <em>every</em> $n$ in $a_n$ with $(n+1)$, in parentheses. $\frac{n\,2^n}{n!}$ becomes $\frac{(n+1)\,2^{n+1}}{(n+1)!}$.</p></div></div>
+        <div class="derivation-step"><div class="step-num">2</div><div class="step-body"><p><strong>Divide by $a_n$ by multiplying by its reciprocal.</strong> $\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{(n+1)\,2^{n+1}}{(n+1)!}\cdot\dfrac{n!}{n\,2^n}$. Absolute values remove any $(-1)^n$.</p></div></div>
+        <div class="derivation-step"><div class="step-num">3</div><div class="step-body"><p><strong>Simplify each kind of factor.</strong> $\dfrac{2^{n+1}}{2^n} = 2$. $\dfrac{n!}{(n+1)!} = \dfrac{1}{n+1}$, because $(n+1)! = (n+1)\cdot n!$. $\dfrac{n+1}{n} \to 1$. The example becomes $\dfrac{2(n+1)}{n(n+1)} = \dfrac{2}{n}$.</p></div></div>
+        <div class="derivation-step"><div class="step-num">4</div><div class="step-body"><p><strong>Take the limit and compare with $1$.</strong> $\lim \dfrac{2}{n} = 0 < 1$. The series converges. Write the conclusion with the test named: "by the ratio test, $\sum\frac{n2^n}{n!}$ converges."</p></div></div>
+
+        <div class="technique-section tech-green">
+            <h3>Worked example: $\displaystyle\sum_{n=1}^\infty \frac{4^n}{n}$</h3>
+            <div class="step-example"><span class="step-label">Worked example</span>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{4^{n+1}}{n+1}\cdot\frac{n}{4^n} = 4\cdot\frac{n}{n+1} \;\longrightarrow\; 4$$
+                <p style="margin-bottom:0;">$L = 4 > 1$: diverges by the ratio test. A faster route also exists: $\frac{4^n}{n} \to \infty$, so the $n$th-term test already says diverges. Both are correct; the ratio test is what the exercise asks for.</p>
+            </div>
+        </div>
+        <div class="technique-section tech-gold">
+            <h3>Worked example: $\displaystyle\sum_{n=0}^\infty \frac{8^n}{(n+2)\,4^{n+1}}$</h3>
+            <div class="step-example"><span class="step-label">Worked example</span>
+                <p>Replace every $n$: $a_{n+1} = \dfrac{8^{n+1}}{(n+3)\,4^{n+2}}$. Then</p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{8^{n+1}}{(n+3)\,4^{n+2}}\cdot\frac{(n+2)\,4^{n+1}}{8^n} = \frac{8}{4}\cdot\frac{n+2}{n+3} \;\longrightarrow\; 2$$
+                <p style="margin-bottom:0;">$L = 2 > 1$: diverges. Check: the term simplifies to $\frac14\cdot\frac{2^n}{n+2}$, and $2^n$ outgrows $n + 2$, so the terms do not go to $0$.</p>
+            </div>
+        </div>
+        <div class="technique-section tech-brown">
+            <h3>Worked example: $\displaystyle\sum_{n=1}^\infty n\left(-\frac23\right)^n$</h3>
+            <div class="step-example"><span class="step-label">Worked example</span>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\left(\frac23\right)^{n+1}}{n\left(\frac23\right)^n} = \frac23\cdot\frac{n+1}{n} \;\longrightarrow\; \frac23$$
+                <p style="margin-bottom:0;">$L = \frac23 < 1$: converges absolutely. The sign factor vanished inside the absolute value, so the test never needed the alternating series test. Check: the terms $n\left(\frac23\right)^n$ are $0.67, 0.89, 0.89, 0.79, 0.66, \ldots$, growing briefly and then shrinking geometrically.</p>
+            </div>
+        </div>
+        <div class="technique-section tech-green">
+            <h3>Worked example: $\displaystyle\sum_{n=1}^\infty \frac{1}{n^2}$, where the test is inconclusive</h3>
+            <div class="step-example"><span class="step-label">Worked example</span>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{1}{(n+1)^2}\cdot\frac{n^2}{1} = \left(\frac{n}{n+1}\right)^2 \;\longrightarrow\; 1$$
+                <p style="margin-bottom:0;">$L = 1$: the ratio test is inconclusive. State that, then switch branches: this is a $p$-series with $p = 2 > 1$, so it converges. The same ratio computation on $\sum\frac1n$ also gives $L = 1$, and that series diverges. Two series with the same $L$ and opposite behavior is exactly why $L = 1$ decides nothing.</p>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Ratio Explorer</h2></div>
+        <div class="viz-container">
+            <div class="viz-title">Ratio Explorer <span class="viz-tag">Interactive</span></div>
+            <div class="viz-sub">Choose a series. Each dot is the ratio $\left|\frac{a_{n+1}}{a_n}\right|$ at one value of $n$. The dashed line is $1$. Watch which side of the line the dots settle on, and how quickly.</div>
+            <div class="viz-controls">
+                <div class="control-group">
+                    <label>Series</label>
+                    <select id="rtSel" onchange="rtDraw()"></select>
+                </div>
+            </div>
+            <div class="viz-formula" id="rtFormula"></div>
+            <div class="viz-canvas-wrap" style="margin-top:12px;"><canvas id="rtCanvas" width="880" height="240"></canvas></div>
+            <div class="readout-panel">
+                <div class="readout-item"><div class="readout-label">Ratio at n = 5</div><div class="readout-value" id="rt5">–</div></div>
+                <div class="readout-item"><div class="readout-label">Ratio at n = 30</div><div class="readout-value" id="rt30">–</div></div>
+                <div class="readout-item"><div class="readout-label">Limit L</div><div class="readout-value" id="rtL">–</div></div>
+                <div class="readout-item"><div class="readout-label">Verdict</div><div class="readout-value" id="rtV">–</div></div>
+            </div>
+            <div class="idea-box" style="margin-bottom:0;">
+                <span class="box-label">What to look for</span>
+                <ol style="margin-bottom:0;">
+                    <li>For $\sum\frac{5^n}{n!}$ the ratios are $\frac{5}{n+1}$. They start above $1$ (the first few terms grow) and then fall toward $0$. Convergence is about the limit, not the first few ratios.</li>
+                    <li>For $\sum\frac{n^2 3^{n+1}}{4^n}$ the ratios approach $\frac34$ from above. Any limit below $1$ is enough.</li>
+                    <li>For $\sum\frac{1}{n^2}$ and $\sum\frac{4^n}{n}$ the ratios approach $1$ and $4$. The first is inconclusive; the second diverges.</li>
+                    <li>For $\sum\frac{n!}{e^n}$ the ratios are $\frac{n+1}{e}$ and climb without bound. $L = \infty$ counts as $L > 1$.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>The root test, for terms raised to the $n$th power</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    $$L = \lim_{n\to\infty}\sqrt[n]{|a_n|}: \qquad L < 1 \text{ converges}, \quad L > 1 \text{ diverges}, \quad L = 1 \text{ inconclusive}$$
+                </div>
+                <p style="margin-bottom:0;">Same three outcomes as the ratio test, same reasoning (eventually geometric). It is the natural choice when the whole term is something to the $n$th power, because the root undoes the power in one step. Useful facts: $\sqrt[n]{n} \to 1$, $\sqrt[n]{c} \to 1$ for any constant $c > 0$, and $\sqrt[n]{n^k} \to 1$.</p>
+            </div>
+            <div>
+                <div class="technique-section tech-gold" style="margin-top:0;">
+                    <h3>Worked example: $\displaystyle\sum_{n=1}^\infty \left(\frac{n}{2n+1}\right)^n$</h3>
+                    <div class="step-example"><span class="step-label">Worked example</span>
+                        $$\sqrt[n]{|a_n|} = \frac{n}{2n+1} \;\longrightarrow\; \frac12 < 1$$
+                        <p style="margin-bottom:0;">Converges by the root test. The ratio test would also work here but involves $\left(\frac{n+1}{2n+3}\right)^{n+1}\Big/\left(\frac{n}{2n+1}\right)^n$, which is much more algebra for the same answer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <span class="box-label">Common mistakes and what to check</span>
+            <ol style="margin-bottom:0;">
+                <li><strong>Replacing only some of the $n$'s.</strong> Every $n$ in $a_n$ becomes $(n+1)$, including the ones in exponents and inside factorials: $4^{n+1}$ becomes $4^{n+2}$, and $(n+2)$ becomes $(n+3)$.</li>
+                <li><strong>Simplifying factorials incorrectly.</strong> $\frac{(n+1)!}{n!} = n+1$ and $\frac{(2n+2)!}{(2n)!} = (2n+2)(2n+1)$. Expand one or two factors; never cancel $n!$ against $(2n)!$.</li>
+                <li><strong>Dropping the absolute value.</strong> With a $(-1)^n$ factor the ratio of $a_{n+1}$ to $a_n$ is negative. The test uses $|a_{n+1}/a_n|$, which is positive.</li>
+                <li><strong>Concluding anything at $L = 1$.</strong> Write "inconclusive" and move to another branch of the tree. $\sum\frac1n$ and $\sum\frac1{n^2}$ both have $L = 1$.</li>
+                <li><strong>Reading the first few ratios instead of the limit.</strong> $\sum\frac{5^n}{n!}$ has ratios $5, 2.5, 1.67, 1.25, 1, 0.83, \ldots$ The first five are at least $1$, and the series still converges.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ TAB 4: COMPARISON, INTEGRAL, ALTERNATING ═══════════════════════════ -->
+    <div id="tab-t4" class="tab-content">
+
+        <div class="section-header"><div class="section-number">1</div><h2>Direct comparison: squeeze against something you know</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    <p style="font-weight:600;">Suppose $0 \le a_n \le b_n$ for all $n$ (or all large $n$).</p>
+                    <ul style="margin-bottom:0;">
+                        <li>If $\sum b_n$ converges, then $\sum a_n$ converges. (Below a convergent series.)</li>
+                        <li>If $\sum a_n$ diverges, then $\sum b_n$ diverges. (Above a divergent series.)</li>
+                    </ul>
+                </div>
+                <p>The inequality has to point the useful way. Being <em>below a divergent</em> series or <em>above a convergent</em> series tells you nothing. Before writing a comparison, decide which outcome you expect, then check that your inequality can deliver it.</p>
+                <p style="margin-bottom:0;"><strong>Standard moves.</strong> Replace a bounded factor by its bound ($\sin^2 n \le 1$). Drop a positive term from a denominator to make the fraction bigger, or add one to make it smaller. Replace $\ln n$ by $1$ for $n \ge 3$, since $\ln n > 1$ there.</p>
+            </div>
+            <div>
+                <div class="technique-section tech-green" style="margin-top:0;">
+                    <h3>Worked examples</h3>
+                    <div class="step-example"><span class="step-label">Worked example</span>
+                        <p><strong>$\displaystyle\sum\frac{\sin^2 n}{n^2}$.</strong> $0 \le \frac{\sin^2 n}{n^2} \le \frac{1}{n^2}$, and $\sum\frac{1}{n^2}$ converges ($p = 2$). Converges by direct comparison.</p>
+                        <p><strong>$\displaystyle\sum\frac{1}{2^n + n}$.</strong> $2^n + n > 2^n$, so $\frac{1}{2^n+n} < \frac{1}{2^n}$, and $\sum\frac1{2^n}$ is geometric with $r = \frac12$. Converges.</p>
+                        <p style="margin-bottom:0;"><strong>$\displaystyle\sum_{n=2}^\infty\frac{\ln n}{n}$.</strong> For $n \ge 3$, $\ln n > 1$, so $\frac{\ln n}{n} > \frac1n$, and $\sum\frac1n$ diverges. Diverges by direct comparison. (The first term does not affect convergence.)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">2</div><h2>Limit comparison: the workhorse for algebraic terms</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    <p style="font-weight:600;">Suppose $a_n > 0$ and $b_n > 0$, and</p>
+                    $$\lim_{n\to\infty}\frac{a_n}{b_n} = c \quad \text{with } 0 < c < \infty.$$
+                    <p style="margin-bottom:0;">Then $\sum a_n$ and $\sum b_n$ either both converge or both diverge.</p>
+                </div>
+                <p>This test removes the need to get an inequality pointing the right way. You only need $a_n$ and $b_n$ to be the same size for large $n$. Choose $b_n$ by keeping the highest power of $n$ on top and on bottom and throwing everything else away.</p>
+                <p style="margin-bottom:0;">$\dfrac{n+1}{n^3+2}$ behaves like $\dfrac{n}{n^3} = \dfrac{1}{n^2}$. $\dfrac{1}{\sqrt{n^2+1}}$ behaves like $\dfrac{1}{n}$. $\dfrac{3^n}{5^n - n}$ behaves like $\left(\dfrac35\right)^n$.</p>
+            </div>
+            <div>
+                <div class="technique-section tech-gold" style="margin-top:0;">
+                    <h3>Worked examples</h3>
+                    <div class="step-example"><span class="step-label">Worked example</span>
+                        <p><strong>$\displaystyle\sum\frac{n+1}{n^3+2}$.</strong> Compare with $b_n = \frac{1}{n^2}$:</p>
+                        $$\lim\frac{(n+1)/(n^3+2)}{1/n^2} = \lim\frac{n^3 + n^2}{n^3 + 2} = 1$$
+                        <p>$0 < 1 < \infty$ and $\sum\frac1{n^2}$ converges, so the series converges.</p>
+                        <p><strong>$\displaystyle\sum\frac{1}{\sqrt{n^2+1}}$.</strong> Compare with $b_n = \frac1n$: $\lim\frac{n}{\sqrt{n^2+1}} = 1$. $\sum\frac1n$ diverges, so the series diverges.</p>
+                        <p style="margin-bottom:0;"><strong>$\displaystyle\sum\frac{n}{n^2+1}$.</strong> Looks like $\frac{1}{n}$; the limit of the ratio is $1$; diverges. Note the terms do go to $0$, so the $n$th-term test would not have caught this.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">3</div><h2>Integral test: when the term is a function you can integrate</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    <p style="font-weight:600;">Suppose $a_n = f(n)$ where $f$ is positive, continuous, and decreasing for $x \ge 1$ (or from some point on). Then</p>
+                    $$\sum_{n=1}^\infty a_n \text{ and } \int_1^\infty f(x)\,dx \text{ either both converge or both diverge.}$$
+                </div>
+                <p>The series is a sum of rectangles of width $1$ and the integral is the area under the curve; decreasing $f$ keeps each within a term of the other. Check all three conditions in writing. Decreasing is the one that is sometimes false: $f(x) = \frac{\ln x}{x}$ increases until $x = e$, so the test applies from $n = 3$ on.</p>
+                <p style="margin-bottom:0;">The value of the integral is <em>not</em> the sum of the series. $\int_1^\infty\frac{dx}{x^2} = 1$, while $\sum\frac{1}{n^2} = \frac{\pi^2}{6}$.</p>
+            </div>
+            <div>
+                <div class="technique-section tech-brown" style="margin-top:0;">
+                    <h3>Worked examples</h3>
+                    <div class="step-example"><span class="step-label">Worked example</span>
+                        <p><strong>$\displaystyle\sum_{n=2}^\infty\frac{1}{n\ln n}$.</strong> $f(x) = \frac{1}{x\ln x}$ is positive, continuous, and decreasing for $x \ge 2$. With $u = \ln x$:</p>
+                        $$\int_2^\infty\frac{dx}{x\ln x} = \lim_{b\to\infty}\Big[\ln(\ln x)\Big]_2^{b} = \infty$$
+                        <p>Diverges. (Compare: the ratio test gives $L = 1$ here, and limit comparison with $\frac1n$ gives $c = 0$, which is outside the allowed range. The integral test is the tool that fits.)</p>
+                        <p style="margin-bottom:0;"><strong>$\displaystyle\sum_{n=2}^\infty\frac{1}{n(\ln n)^2}$.</strong> Same substitution: $\int_2^\infty\frac{dx}{x(\ln x)^2} = \left[-\frac{1}{\ln x}\right]_2^\infty = \frac{1}{\ln 2}$, finite. Converges. One extra power of $\ln n$ in the denominator is the difference.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">4</div><h2>Alternating series test, and absolute versus conditional</h2></div>
+        <div class="two-col">
+            <div>
+                <div class="highlight-box" style="margin-top:0;">
+                    <p style="font-weight:600;">For $\sum (-1)^n b_n$ or $\sum (-1)^{n+1} b_n$ with $b_n > 0$: the series converges if</p>
+                    <ol style="margin-bottom:0;">
+                        <li>$b_{n+1} \le b_n$ for all large $n$ (the terms decrease), and</li>
+                        <li>$\lim b_n = 0$.</li>
+                    </ol>
+                </div>
+                <p>The partial sums bounce across the limit with shrinking swings (Tab 1 shows the picture). Both conditions must be stated. If condition 2 fails, the series diverges by the $n$th-term test. If condition 1 fails, the test does not apply, which is rare on exams but possible.</p>
+                <p><strong>Absolute versus conditional.</strong> After the alternating series test says converges, ask what $\sum b_n$ does, using another branch of the tree:</p>
+                <ul style="margin-bottom:0;">
+                    <li>$\sum b_n$ converges: the original series converges <strong>absolutely</strong>.</li>
+                    <li>$\sum b_n$ diverges: the original series converges <strong>conditionally</strong>.</li>
+                </ul>
+            </div>
+            <div>
+                <div class="technique-section tech-green" style="margin-top:0;">
+                    <h3>Worked examples</h3>
+                    <div class="step-example"><span class="step-label">Worked example</span>
+                        <p><strong>$\displaystyle\sum\frac{(-1)^n}{\sqrt n}$.</strong> $b_n = \frac{1}{\sqrt n}$ decreases and $\to 0$: converges by the alternating series test. $\sum\frac{1}{\sqrt n}$ is a $p$-series with $p = \frac12$: diverges. So the series converges <em>conditionally</em>.</p>
+                        <p><strong>$\displaystyle\sum\frac{(-1)^n}{n^2}$.</strong> $\sum\frac{1}{n^2}$ converges ($p = 2$), so the series converges <em>absolutely</em>. When the absolute series converges, you do not need the alternating series test at all.</p>
+                        <p style="margin-bottom:0;"><strong>$\displaystyle\sum\frac{\cos(n\pi)}{n}$.</strong> $\cos(n\pi) = (-1)^n$, so this is $\sum\frac{(-1)^n}{n}$, the alternating harmonic series: converges conditionally.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header"><div class="section-number">5</div><h2>The alternating series error bound</h2></div>
+        <div class="card" style="border-left-color: var(--green-dark);">
+            <p>When the alternating series test applies, the partial sum $S_N$ is within one term of the true sum:</p>
+            $$\left|S - S_N\right| \le b_{N+1}$$
+            <p>This is the same bound used for Taylor polynomial approximations in the <a href="maclaurin-series-worksheet.html" target="_blank" rel="noopener">Maclaurin and Taylor Series</a> sheet. Example: for the alternating harmonic series, $S_{10} \approx 0.6456$, and the bound says $|\ln 2 - S_{10}| \le \frac{1}{11} \approx 0.0909$. The actual error is about $0.0475$.</p>
+            <p style="margin-bottom:0;">To guarantee an error below $0.01$, choose $N$ with $b_{N+1} = \frac{1}{N+1} \le 0.01$, so $N \ge 99$. Slow, which is one reason conditionally convergent series are awkward to work with numerically.</p>
+        </div>
+
+        <div class="warning-box">
+            <span class="box-label">Common mistakes and what to check</span>
+            <ol style="margin-bottom:0;">
+                <li><strong>Comparing in the useless direction.</strong> "$\frac{1}{n^2+n} \le \frac1n$ and $\sum\frac1n$ diverges" proves nothing. Compare with $\frac{1}{n^2}$ instead, or use limit comparison, which has no inequality direction to check.</li>
+                <li><strong>Applying comparison tests to series with mixed signs.</strong> Both comparison tests and the integral test need nonnegative terms. For $\sum\frac{(-1)^n}{n}$, compare $\sum\frac1n$ to learn about <em>absolute</em> convergence, then use the alternating series test.</li>
+                <li><strong>Getting $c = 0$ or $c = \infty$ in limit comparison and drawing a conclusion.</strong> The test applies only for $0 < c < \infty$. If $c = 0$ and $\sum b_n$ converges, $\sum a_n$ does converge, but by direct comparison, and you should say so; otherwise choose a better $b_n$.</li>
+                <li><strong>Forgetting to check that $f$ is decreasing before the integral test.</strong> State all three conditions, and note the starting index if the function only decreases eventually.</li>
+                <li><strong>Reporting the value of the integral as the sum.</strong> The integral decides convergence; it does not compute the series.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════ QUICK RECALL ═══════════════════════════ -->
+    <div id="tab-sprint" class="tab-content">
+        <div class="section-header"><div class="section-number">&#9889;</div><h2>Quick Recall: Limits, Sums, and Boundaries</h2></div>
+        <p>These questions check the numbers that the tests depend on: ratio limits, geometric sums, and the $p$-series boundary. Enter an exact fraction when appropriate (for example, <code>3/4</code>). Focus on accuracy first, then repeat the set to improve speed.</p>
+        <div class="score-bar"><span>Score: <span id="spScore">0</span> / 16</span><span>Time: <span id="spTime">0:00</span></span><span><button onclick="sprintStart()">Start timer</button> <button onclick="sprintReset()">Reset</button></span></div>
+        <div id="sprintList"></div>
+    </div>
+
+    <!-- ═══════════════════════════ RATIO TEST PRACTICE ═══════════════════════════ -->
+    <div id="tab-seta" class="tab-content">
+        <div class="section-header"><div class="section-number">A</div><h2>Ratio Test Practice</h2></div>
+        <p>Use the ratio test to determine whether each series converges or diverges. If the test is inconclusive, say so, and then name the test that does decide it. The problems are arranged in two columns, as on the original exercise page. Work one column first, and come back to the other column later for a second pass. Each solution is organized as <strong>Method</strong>, <strong>Setup</strong>, <strong>Work</strong>, <strong>Answer</strong>, and <strong>Check</strong>.</p>
+        <div class="legend"><span class="lg-e">Column A: odd numbers</span><span class="lg-f">Column B: even numbers</span></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">1</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{4^n}{n}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{4^{n+1}}{n+1}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{4^{n+1}}{n+1}\cdot\frac{n}{4^n} = 4\cdot\frac{n}{n+1} \longrightarrow 4$$
+                <div class="highlight-box">$L = 4 > 1$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $\frac{4^n}{n} \to \infty$, so the terms do not approach $0$ and the $n$th-term test agrees.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">2</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{5^n}{n!}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{5^{n+1}}{(n+1)!}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{5^{n+1}}{(n+1)!}\cdot\frac{n!}{5^n} = \frac{5}{n+1} \longrightarrow 0$$
+                <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> This is the $e^x$ series at $x = 5$ without its first term, so the sum is $e^5 - 1 \approx 147.4$. The ratios $5, 2.5, 1.67, 1.25, 1, 0.83, \ldots$ start above $1$; only the limit matters.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">3</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n\,2^n}{n!}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)\,2^{n+1}}{(n+1)!}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\,2^{n+1}}{(n+1)!}\cdot\frac{n!}{n\,2^n} = \frac{2(n+1)}{(n+1)\,n} = \frac{2}{n} \longrightarrow 0$$
+                <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Since $\frac{n}{n!} = \frac{1}{(n-1)!}$, the term is $\frac{2^n}{(n-1)!} = 2\cdot\frac{2^{n-1}}{(n-1)!}$, and the sum is $2e^2 \approx 14.8$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">4</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^2}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test, then p-series</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{1}{(n+1)^2}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{1}{(n+1)^2}\cdot\frac{n^2}{1} = \left(\frac{n}{n+1}\right)^2 \longrightarrow 1$$
+                <div class="highlight-box">$L = 1$: the ratio test is <strong>inconclusive</strong>. As a $p$-series with $p = 2 > 1$, the series converges.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The same ratio computation on $\sum\frac1n$ also gives $L = 1$, and that series diverges, so $L = 1$ cannot decide.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">5</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n^2\,3^n}{n!}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)^2\,3^{n+1}}{(n+1)!}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^2\,3^{n+1}}{(n+1)!}\cdot\frac{n!}{n^2\,3^n} = \frac{3(n+1)^2}{(n+1)\,n^2} = \frac{3(n+1)}{n^2} \longrightarrow 0$$
+                <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The $n^2$ contributes $\left(\frac{n+1}{n}\right)^2 \to 1$ to the ratio and the $3^n$ contributes $3$; the $\frac{1}{n+1}$ from the factorial drives the limit to $0$. Any factorial in the denominator beats any power times any exponential.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">6</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n}{e^n}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{n+1}{e^{n+1}}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{n+1}{e^{n+1}}\cdot\frac{e^n}{n} = \frac{1}{e}\cdot\frac{n+1}{n} \longrightarrow \frac1e \approx 0.368$$
+                <div class="highlight-box">$L = \frac1e < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The terms behave like $n\,r^n$ with $r = \frac1e$; a geometric factor with $|r| < 1$ beats any power of $n$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">7</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty} 2^{-n}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = 2^{-(n+1)}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{2^{-(n+1)}}{2^{-n}} = 2^{-1} = \frac12$$
+                <div class="highlight-box">$L = \frac12 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> This is a geometric series with $r = \frac12$ and first term $\frac12$, so the sum is $\frac{1/2}{1 - 1/2} = 1$. The ratio is constant, which is what "geometric" means.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">8</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n!}{e^n}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)!}{e^{n+1}}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{e^{n+1}}\cdot\frac{e^n}{n!} = \frac{n+1}{e} \longrightarrow \infty$$
+                <div class="highlight-box">$L = \infty$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $n!$ outgrows $e^n$, so the terms themselves go to infinity; the $n$th-term test agrees.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">9</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{e^n}{\pi^n}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{e^{n+1}}{\pi^{n+1}}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{e^{n+1}}{\pi^{n+1}}\cdot\frac{\pi^n}{e^n} = \frac{e}{\pi} \approx 0.865$$
+                <div class="highlight-box">$L = \frac{e}{\pi} < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Geometric with $r = \frac{e}{\pi}$, so the sum is $\frac{1}{1 - e/\pi} = \frac{\pi}{\pi - e} \approx 7.42$. The test works because $e < \pi$; if the fraction were $\frac{\pi^n}{e^n}$ the series would diverge.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">10</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=2}^{\infty}\frac{5^n}{\ln n}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> The index must start at $n = 2$, since $\ln 1 = 0$. $a_{n+1} = \dfrac{5^{n+1}}{\ln(n+1)}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{5^{n+1}}{\ln(n+1)}\cdot\frac{\ln n}{5^n} = 5\cdot\frac{\ln n}{\ln(n+1)} \longrightarrow 5$$
+                <p>The logarithm ratio tends to $1$: by L'Hôpital's rule on $\frac{\ln x}{\ln(x+1)}$, the limit is $\lim\frac{1/x}{1/(x+1)} = \lim\frac{x+1}{x} = 1$.</p>
+                <div class="highlight-box">$L = 5 > 1$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $5^n$ grows much faster than $\ln n$, so the terms go to infinity.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">11</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n n^3}{3^n}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> Inside the absolute value the $(-1)^n$ disappears: $|a_n| = \dfrac{n^3}{3^n}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^3}{3^{n+1}}\cdot\frac{3^n}{n^3} = \frac13\left(\frac{n+1}{n}\right)^3 \longrightarrow \frac13$$
+                <div class="highlight-box">$L = \frac13 < 1$: <strong>converges</strong> (absolutely).</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The ratio test proves absolute convergence, so no alternating series test is needed. The cube contributes $\left(1 + \frac1n\right)^3 \to 1$; the $3^n$ sets the limit.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">12</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n n\,3^n}{n!}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $|a_n| = \dfrac{n\,3^n}{n!}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\,3^{n+1}}{(n+1)!}\cdot\frac{n!}{n\,3^n} = \frac{3(n+1)}{(n+1)\,n} = \frac{3}{n} \longrightarrow 0$$
+                <div class="highlight-box">$L = 0 < 1$: <strong>converges</strong> (absolutely).</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Compare with problem 3, which has $2^n$ in place of $3^n$ and no sign factor. The structure is identical and the factorial wins in both.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">13</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{(-1)^n n!}{e^n}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $|a_n| = \dfrac{n!}{e^n}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{e^{n+1}}\cdot\frac{e^n}{n!} = \frac{n+1}{e} \longrightarrow \infty$$
+                <div class="highlight-box">$L = \infty$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The sign factor cannot rescue a series whose terms grow: $|a_n| \to \infty$, so the $n$th-term test also says diverges. The alternating series test does not apply because $b_n \to 0$ fails.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">14</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n\left(\frac32\right)^n}{n^2}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> The index starts at $n = 1$ because of the $n^2$ in the denominator. $|a_n| = \dfrac{(3/2)^n}{n^2}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(3/2)^{n+1}}{(n+1)^2}\cdot\frac{n^2}{(3/2)^n} = \frac32\left(\frac{n}{n+1}\right)^2 \longrightarrow \frac32$$
+                <div class="highlight-box">$L = \frac32 > 1$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $\left(\frac32\right)^n$ outgrows $n^2$, so $|a_n| \to \infty$ and the terms do not go to $0$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">15</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{8^n}{(n+2)\,4^{n+1}}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> Replace every $n$: $a_{n+1} = \dfrac{8^{n+1}}{(n+3)\,4^{n+2}}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{8^{n+1}}{(n+3)\,4^{n+2}}\cdot\frac{(n+2)\,4^{n+1}}{8^n} = \frac84\cdot\frac{n+2}{n+3} \longrightarrow 2$$
+                <div class="highlight-box">$L = 2 > 1$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Simplify the term first: $\frac{8^n}{4^{n+1}} = \frac14\cdot 2^n$, so $a_n = \frac{2^n}{4(n+2)} \to \infty$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">16</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{n^2\,3^{n+1}}{4^n}$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)^2\,3^{n+2}}{4^{n+1}}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^2\,3^{n+2}}{4^{n+1}}\cdot\frac{4^n}{n^2\,3^{n+1}} = \frac34\left(\frac{n+1}{n}\right)^2 \longrightarrow \frac34$$
+                <div class="highlight-box">$L = \frac34 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Rewrite the term as $3n^2\left(\frac34\right)^n$: a power of $n$ times a geometric factor with $|r| < 1$ always converges. The extra $3^{1}$ in the numerator only scales the series.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">17</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=0}^{\infty}\frac{n!}{4^n}$</strong> <span class="pill">Column A</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{(n+1)!}{4^{n+1}}$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{4^{n+1}}\cdot\frac{4^n}{n!} = \frac{n+1}{4} \longrightarrow \infty$$
+                <div class="highlight-box">$L = \infty$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The ratios $\frac14, \frac24, \frac34, 1, \frac54, \ldots$ pass $1$ at $n = 3$ and keep growing, so from $n = 4$ on each term is larger than the one before.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">18</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty} n\left(-\frac23\right)^n$</strong> <span class="pill">Column B</span></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $|a_n| = n\left(\frac23\right)^n$. <strong>Work.</strong></p>
+                $$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)\left(\frac23\right)^{n+1}}{n\left(\frac23\right)^n} = \frac23\cdot\frac{n+1}{n} \longrightarrow \frac23$$
+                <div class="highlight-box">$L = \frac23 < 1$: <strong>converges</strong> (absolutely).</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Differentiating the geometric series gives $\sum_{n\ge1} n x^n = \frac{x}{(1-x)^2}$ for $|x| < 1$; at $x = -\frac23$ the sum is $\frac{-2/3}{(5/3)^2} = -\frac{6}{25}$, a finite value.</p>
+            </div></div>
+        </div></div></div>
+    </div>
+
+    <!-- ═══════════════════════════ CHOOSE THE TEST ═══════════════════════════ -->
+    <div id="tab-setb" class="tab-content">
+        <div class="section-header"><div class="section-number">B</div><h2>Choose the Test</h2></div>
+        <p>For each series, first decide which branch of the decision tree applies and write it down. Then carry out the test, stating its hypotheses, and give a conclusion. Where the series alternates, say whether the convergence is absolute or conditional. Each solution is organized as <strong>Method</strong>, <strong>Setup</strong>, <strong>Work</strong>, <strong>Answer</strong>, and <strong>Check</strong>.</p>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">1</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n}{3n+1}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: nth-term test</span>
+                <p><strong>Setup.</strong> Tree node 1: do the terms go to $0$? <strong>Work.</strong> $\lim\frac{n}{3n+1} = \frac13 \ne 0$.</p>
+                <div class="highlight-box"><strong>Diverges</strong> by the $n$th-term test.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Each term is close to $\frac13$, so $S_N \approx \frac N3$ grows without bound.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">2</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{5}{4^n}$</strong>. Decide convergence, and find the sum if it converges.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: geometric series</span>
+                <p><strong>Setup.</strong> $\frac{5}{4^n} = 5\left(\frac14\right)^n$: ratio $r = \frac14$, first term $\frac54$. <strong>Work.</strong> $|r| < 1$, so the series converges, and the sum is $\dfrac{5/4}{1 - 1/4} = \dfrac{5/4}{3/4} = \dfrac53$.</p>
+                <div class="highlight-box"><strong>Converges</strong>, with sum $\frac53$.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $S_3 = \frac54 + \frac{5}{16} + \frac{5}{64} = \frac{105}{64} \approx 1.64$, already close to $\frac53 \approx 1.667$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">3</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^{0.9}}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: p-series</span>
+                <p><strong>Setup.</strong> A $p$-series with $p = 0.9$. <strong>Work.</strong> $p \le 1$.</p>
+                <div class="highlight-box"><strong>Diverges</strong> ($p$-series, $p = 0.9 \le 1$).</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $\frac{1}{n^{0.9}} > \frac1n$ for $n \ge 2$, and $\sum\frac1n$ diverges, so direct comparison agrees.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">4</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n+1}{n^3+2}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: limit comparison</span>
+                <p><strong>Setup.</strong> Algebraic, positive terms. Dominant terms: $\frac{n}{n^3} = \frac{1}{n^2}$, so $b_n = \frac{1}{n^2}$. <strong>Work.</strong></p>
+                $$\lim\frac{a_n}{b_n} = \lim\frac{(n+1)\,n^2}{n^3+2} = \lim\frac{n^3+n^2}{n^3+2} = 1$$
+                <div class="highlight-box">$0 < 1 < \infty$ and $\sum\frac{1}{n^2}$ converges: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Direct comparison also works: $\frac{n+1}{n^3+2} \le \frac{2n}{n^3} = \frac{2}{n^2}$ for $n \ge 1$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">5</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{\sqrt{n^2+1}}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: limit comparison</span>
+                <p><strong>Setup.</strong> $\sqrt{n^2+1}$ behaves like $n$, so $b_n = \frac1n$. <strong>Work.</strong> $\lim\dfrac{1/\sqrt{n^2+1}}{1/n} = \lim\dfrac{n}{\sqrt{n^2+1}} = \lim\dfrac{1}{\sqrt{1 + 1/n^2}} = 1$.</p>
+                <div class="highlight-box">$\sum\frac1n$ diverges: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The terms go to $0$, so the $n$th-term test could not have decided this. For a direct comparison, $\sqrt{n^2+1} \le \sqrt{2n^2} = n\sqrt2$, so $a_n \ge \frac{1}{n\sqrt2}$, above a divergent series.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">6</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=2}^{\infty}\frac{1}{n\ln n}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: integral test</span>
+                <p><strong>Setup.</strong> $f(x) = \frac{1}{x\ln x}$ is positive, continuous, and decreasing for $x \ge 2$. <strong>Work.</strong> With $u = \ln x$, $du = \frac{dx}{x}$:</p>
+                $$\int_2^\infty\frac{dx}{x\ln x} = \lim_{b\to\infty}\Big[\ln(\ln x)\Big]_2^b = \infty$$
+                <div class="highlight-box">The integral diverges: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> This series diverges more slowly than the harmonic series. The partial sums pass $4$ only around $N \approx 5 \times 10^{10}$, so numerical evidence is misleading here; the test is what settles it.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">7</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{\sqrt n}$</strong>. Absolutely convergent, conditionally convergent, or divergent?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: alternating series test, then p-series</span>
+                <p><strong>Setup.</strong> $b_n = \frac{1}{\sqrt n}$. <strong>Work.</strong> $b_n$ is decreasing and $\lim b_n = 0$, so the series converges by the alternating series test. For absolute convergence, $\sum\frac{1}{\sqrt n}$ is a $p$-series with $p = \frac12 \le 1$, which diverges.</p>
+                <div class="highlight-box"><strong>Converges conditionally</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Both tests were needed. The alternating series test alone cannot distinguish absolute from conditional.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">8</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}$</strong>. Absolutely convergent, conditionally convergent, or divergent?</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: absolute convergence via p-series</span>
+                <p><strong>Setup.</strong> Test $\sum|a_n| = \sum\frac{1}{n^2}$ first. <strong>Work.</strong> $p = 2 > 1$, converges.</p>
+                <div class="highlight-box"><strong>Converges absolutely</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Absolute convergence implies convergence, so the alternating series test is not needed. Starting with $\sum|a_n|$ is the efficient order when you expect absolute convergence.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">9</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{\sin^2 n}{n^2}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct comparison</span>
+                <p><strong>Setup.</strong> $0 \le \sin^2 n \le 1$, so $0 \le \frac{\sin^2 n}{n^2} \le \frac{1}{n^2}$. <strong>Work.</strong> $\sum\frac{1}{n^2}$ converges ($p = 2$), and the given series sits below it.</p>
+                <div class="highlight-box"><strong>Converges</strong> by direct comparison.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Limit comparison would fail here: $\frac{a_n}{1/n^2} = \sin^2 n$ has no limit. The bounded-factor move is what makes direct comparison the right tool.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">10</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{2^n+n}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: direct comparison</span>
+                <p><strong>Setup.</strong> Dropping the $n$ makes the denominator smaller and the fraction larger: $\frac{1}{2^n+n} < \frac{1}{2^n}$. <strong>Work.</strong> $\sum\frac{1}{2^n}$ is geometric with $r = \frac12$, convergent.</p>
+                <div class="highlight-box"><strong>Converges</strong> by direct comparison.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Limit comparison with $\frac{1}{2^n}$ also works: $\lim\frac{2^n}{2^n+n} = 1$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">11</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\left(\frac{n}{2n+1}\right)^n$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: root test</span>
+                <p><strong>Setup.</strong> The whole term is raised to the $n$th power. <strong>Work.</strong> $\sqrt[n]{a_n} = \frac{n}{2n+1} \to \frac12$.</p>
+                <div class="highlight-box">$L = \frac12 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $\frac{n}{2n+1} < \frac12$ for every $n$, so $a_n < \left(\frac12\right)^n$ and direct comparison with a geometric series confirms it.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">12</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{n^n}{n!}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> Factorial and $n$ in an exponent. <strong>Work.</strong></p>
+                $$\frac{a_{n+1}}{a_n} = \frac{(n+1)^{n+1}}{(n+1)!}\cdot\frac{n!}{n^n} = \frac{(n+1)^{n+1}}{(n+1)\,n^n} = \left(\frac{n+1}{n}\right)^n = \left(1 + \frac1n\right)^n \longrightarrow e$$
+                <div class="highlight-box">$L = e > 1$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $n^n \ge n!$ for every $n$ (each of the $n$ factors in $n!$ is at most $n$), so $a_n \ge 1$ and the terms cannot go to $0$.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">13</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{(n!)^2}{(2n)!}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $a_{n+1} = \dfrac{((n+1)!)^2}{(2n+2)!}$. Expand only what is needed: $(n+1)! = (n+1)\,n!$ and $(2n+2)! = (2n+2)(2n+1)\,(2n)!$. <strong>Work.</strong></p>
+                $$\frac{a_{n+1}}{a_n} = \frac{(n+1)^2\,(n!)^2}{(2n+2)(2n+1)\,(2n)!}\cdot\frac{(2n)!}{(n!)^2} = \frac{(n+1)^2}{(2n+2)(2n+1)} = \frac{n+1}{2(2n+1)} \longrightarrow \frac14$$
+                <div class="highlight-box">$L = \frac14 < 1$: <strong>converges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $a_1 = \frac12$, $a_2 = \frac{4}{24} = \frac16$, $a_3 = \frac{36}{720} = \frac1{20}$; successive ratios $\frac13, \frac{3}{10}$ are heading toward $\frac14$ from above.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">14</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}(-1)^n\frac{n}{n+1}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: nth-term test</span>
+                <p><strong>Setup.</strong> The series alternates, which invites the alternating series test, but tree node 1 comes first. <strong>Work.</strong> $\frac{n}{n+1} \to 1$, so the terms approach $\pm 1$ and have no limit.</p>
+                <div class="highlight-box"><strong>Diverges</strong> by the $n$th-term test.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> The alternating series test requires $b_n \to 0$, which fails. A common mistake is to see $(-1)^n$ and conclude convergence without checking that condition.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">15</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{3^n}{n^3}$</strong></p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: ratio test</span>
+                <p><strong>Setup.</strong> $n$ in an exponent. <strong>Work.</strong> $\dfrac{a_{n+1}}{a_n} = \dfrac{3^{n+1}}{(n+1)^3}\cdot\dfrac{n^3}{3^n} = 3\left(\dfrac{n}{n+1}\right)^3 \to 3$.</p>
+                <div class="highlight-box">$L = 3 > 1$: <strong>diverges</strong>.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> Compare with Ratio Test Practice problem 11, which had $\frac{n^3}{3^n}$ and converged. Flipping the fraction flips the verdict.</p>
+            </div></div>
+        </div></div></div>
+
+        <div class="card"><div class="prob-card"><div class="prob-num">16</div><div class="prob-body">
+            <p><strong>$\displaystyle\sum_{n=1}^{\infty}\frac{1}{n(n+1)}$</strong>. Decide convergence, and find the sum if it converges.</p>
+            <button class="solution-toggle" onclick="toggleSolution(this)"><span class="arrow">&#9654;</span> Show solution</button>
+            <div class="solution-body"><div class="sol-wrap"><span class="tech-tag">Method: limit comparison, then telescoping for the sum</span>
+                <p><strong>Setup.</strong> Algebraic terms behaving like $\frac{1}{n^2}$. <strong>Work.</strong> $\lim\dfrac{1/(n(n+1))}{1/n^2} = \lim\dfrac{n^2}{n^2+n} = 1$, and $\sum\frac{1}{n^2}$ converges, so the series converges. For the sum, partial fractions give $\frac{1}{n(n+1)} = \frac1n - \frac{1}{n+1}$, so</p>
+                $$S_N = \left(1 - \tfrac12\right) + \left(\tfrac12 - \tfrac13\right) + \cdots + \left(\tfrac1N - \tfrac{1}{N+1}\right) = 1 - \frac{1}{N+1} \longrightarrow 1$$
+                <div class="highlight-box"><strong>Converges</strong>, with sum $1$.</div>
+                <p style="margin-bottom:0;"><strong>Check.</strong> $S_4 = \frac12 + \frac16 + \frac1{12} + \frac1{20} = \frac45$, which matches $1 - \frac15$.</p>
+            </div></div>
+        </div></div></div>
+    </div>
+</div>
+<div class="footer">
+    <p><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: white; text-decoration: none; font-family: 'Switzer', 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Learning Curve Collective</a>: Series Convergence Tests</p>
+    <p style="font-size: 12px; margin-top: 10px;"><a href="https://learningcurvecollective.com" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">learningcurvecollective.com</a></p>
+</div>
+<script>
+/* ───────────────────────── Core UI ───────────────────────── */
+function typesetSoon(delay) {
+    setTimeout(function() { if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise().catch(function(){}); } }, delay || 60);
+}
+function typesetEl(el) {
+    if (!el) return;
+    if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise([el]).catch(function(){}); }
+}
+function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); });
+    var pane = document.getElementById('tab-' + name);
+    if (pane) pane.classList.add('active');
+    if (btn) btn.classList.add('active');
+    else { document.querySelectorAll('.tab-buttons .tab-button').forEach(function(b){ var oc = b.getAttribute('onclick') || ''; if (oc.indexOf("'" + name + "'") >= 0) b.classList.add('active'); }); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    typesetSoon(100);
+    if (name === 't1') psDraw();
+    if (name === 't2') dtRender();
+    if (name === 't3') rtDraw();
+}
+function goTab(name) { switchTab(name, null); }
+function toggleExample(btn) {
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open'); btn.classList.toggle('open');
+    if (body.classList.contains('open')) typesetEl(body);
+}
+function toggleSolution(btn) { toggleExample(btn); }
+function addTabNav() {
+    var btns = Array.from(document.querySelectorAll('.tab-buttons .tab-button'));
+    var names = btns.map(function(b){ var m = (b.getAttribute('onclick')||'').match(/switchTab\('([^']+)'/); return m ? m[1] : null; });
+    var labels = btns.map(function(b){ return b.textContent.trim(); });
+    function go(i){ switchTab(names[i], btns[i]); }
+    window.__tabNavGo = go;
+    names.forEach(function(name, i) {
+        if (!name) return;
+        var pane = document.getElementById('tab-' + name); if (!pane || pane.querySelector('.tab-nav')) return;
+        var nav = document.createElement('div'); nav.className = 'tab-nav';
+        var html = '';
+        if (i > 0) html += '<button class="tab-nav-prev" onclick="__tabNavGo(' + (i-1) + ')">&larr; ' + labels[i-1] + '</button>';
+        else html += '<span></span>';
+        if (i < names.length - 1) html += '<button class="tab-nav-next" onclick="__tabNavGo(' + (i+1) + ')"><span class="tab-nav-k">Next</span>' + labels[i+1] + ' &rarr;</button>';
+        else html += '<button class="tab-nav-next" onclick="__tabNavGo(0)"><span class="tab-nav-k">Done</span>Back to ' + labels[0] + ' &rarr;</button>';
+        nav.innerHTML = html;
+        pane.appendChild(nav);
+    });
+}
+
+/* ───────────────────────── Math and canvas helpers ───────────────────────── */
+var FACT = [1];
+for (var fi = 1; fi <= 25; fi++) FACT[fi] = FACT[fi-1] * fi;
+function fact(n) { return n <= 25 ? FACT[n] : Infinity; }
+function fmt(v, d) {
+    if (v === null || v === undefined || isNaN(v)) return 'undefined';
+    if (!isFinite(v)) return v > 0 ? '+∞' : '−∞';
+    if (Math.abs(v) >= 1e6) return v.toExponential(2);
+    var s = v.toFixed(d === undefined ? 4 : d);
+    return s.replace('-', '−');
+}
+function setupCanvas(id) {
+    var c = document.getElementById(id); if (!c) return null;
+    var W = parseInt(c.getAttribute('width')), H = parseInt(c.getAttribute('height'));
+    var dpr = window.devicePixelRatio || 1;
+    if (!c.__scaled) { c.width = W * dpr; c.height = H * dpr; c.style.width = W + 'px'; c.style.height = H + 'px'; c.__scaled = true; }
+    var ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { c: c, ctx: ctx, W: W, H: H };
+}
+/* Discrete plot: points (n, y) in a box with margins; draws grid, axes, optional reference line */
+function dotPlot(id, pts, opts) {
+    var C = setupCanvas(id); if (!C) return;
+    var ctx = C.ctx, W = C.W, H = C.H, ml = 46, mr = 12, mt = 10, mb = 26;
+    ctx.fillStyle = '#FBFAF7'; ctx.fillRect(0, 0, W, H);
+    var xs = pts.map(function(p){ return p[0]; }), ys = pts.map(function(p){ return p[1]; }).filter(function(v){ return isFinite(v); });
+    if (opts.ref !== undefined && isFinite(opts.ref)) ys.push(opts.ref);
+    if (opts.y0 !== undefined) ys.push(opts.y0);
+    var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs), lo = Math.min.apply(null, ys), hi = Math.max.apply(null, ys);
+    if (!isFinite(lo) || !isFinite(hi)) { lo = -1; hi = 1; }
+    if (hi - lo < 1e-9) { lo -= 0.5; hi += 0.5; }
+    var pad = (hi - lo) * 0.12; lo -= pad; hi += pad;
+    var px = function(x){ return ml + (x - x0) / Math.max(1e-9, x1 - x0) * (W - ml - mr); }, py = function(y){ return mt + (H - mt - mb) - (y - lo) / (hi - lo) * (H - mt - mb); };
+    ctx.strokeStyle = '#ECE9E2'; ctx.lineWidth = 1; ctx.font = '11px Inter, sans-serif'; ctx.fillStyle = '#8A8A8A'; ctx.textAlign = 'right';
+    for (var k = 0; k <= 4; k++) { var yv = lo + k * (hi - lo) / 4; ctx.beginPath(); ctx.moveTo(ml, py(yv)); ctx.lineTo(W - mr, py(yv)); ctx.stroke(); ctx.fillText(fmt(yv, Math.abs(hi - lo) > 20 ? 0 : 2), ml - 5, py(yv) + 4); }
+    ctx.textAlign = 'center';
+    var step = Math.max(1, Math.round((x1 - x0) / 8));
+    for (var xv = x0; xv <= x1; xv += step) { ctx.fillText(xv, px(xv), H - 8); }
+    ctx.strokeStyle = '#8A8A8A'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(ml, mt); ctx.lineTo(ml, H - mb); ctx.lineTo(W - mr, H - mb); ctx.stroke();
+    if (lo < 0 && hi > 0) { ctx.strokeStyle = '#B5B5B5'; ctx.beginPath(); ctx.moveTo(ml, py(0)); ctx.lineTo(W - mr, py(0)); ctx.stroke(); }
+    if (opts.ref !== undefined && isFinite(opts.ref)) { ctx.strokeStyle = opts.refColor || '#DDA25E'; ctx.lineWidth = 1.6; ctx.setLineDash([6, 4]); ctx.beginPath(); ctx.moveTo(ml, py(opts.ref)); ctx.lineTo(W - mr, py(opts.ref)); ctx.stroke(); ctx.setLineDash([]); if (opts.refLabel) { ctx.fillStyle = opts.refColor || '#8B5E3C'; ctx.textAlign = 'right'; ctx.fillText(opts.refLabel, W - mr - 6, py(opts.ref) - 5); } }
+    ctx.strokeStyle = opts.color || '#21442B'; ctx.lineWidth = 1.4; ctx.beginPath();
+    var started = false;
+    pts.forEach(function(p){ if (!isFinite(p[1])) return; var X = px(p[0]), Y = py(p[1]); if (!started) { ctx.moveTo(X, Y); started = true; } else ctx.lineTo(X, Y); });
+    if (opts.line !== false) ctx.stroke();
+    ctx.fillStyle = opts.color || '#21442B';
+    pts.forEach(function(p){ if (!isFinite(p[1])) return; ctx.beginPath(); ctx.arc(px(p[0]), py(p[1]), 2.6, 0, 2 * Math.PI); ctx.fill(); });
+    ctx.textAlign = 'left';
+}
+
+/* ───────────────────────── Partial Sums Explorer (Tab 1) ───────────────────────── */
+var PS = [
+    { label: 'Σ 1/n  (harmonic)', tex: '\\sum_{n=1}^{\\infty}\\frac{1}{n}', n0: 1, term: function(n){ return 1 / n; }, zero: true, conv: false, sum: null, note: 'terms go to $0$, yet the sums grow without bound: $S_N \\approx \\ln N + 0.577$' },
+    { label: 'Σ 1/n²', tex: '\\sum_{n=1}^{\\infty}\\frac{1}{n^2}', n0: 1, term: function(n){ return 1 / (n * n); }, zero: true, conv: true, sum: Math.PI * Math.PI / 6, note: 'a $p$-series with $p = 2$; the sum is $\\pi^2/6 \\approx 1.6449$' },
+    { label: 'Σ (−1)^(n+1)/n  (alternating harmonic)', tex: '\\sum_{n=1}^{\\infty}\\frac{(-1)^{n+1}}{n}', n0: 1, term: function(n){ return (n % 2 === 1 ? 1 : -1) / n; }, zero: true, conv: true, sum: Math.LN2, note: 'the sums bounce across $\\ln 2 \\approx 0.6931$ with shrinking swings' },
+    { label: 'Σ 1/2^n', tex: '\\sum_{n=1}^{\\infty}\\frac{1}{2^n}', n0: 1, term: function(n){ return Math.pow(0.5, n); }, zero: true, conv: true, sum: 1, note: 'geometric with $r = \\tfrac12$; the sum is $1$' },
+    { label: 'Σ (−1)^n', tex: '\\sum_{n=1}^{\\infty}(-1)^n', n0: 1, term: function(n){ return n % 2 === 0 ? 1 : -1; }, zero: false, conv: false, sum: null, note: 'terms do not go to $0$; the sums alternate between $-1$ and $0$' },
+    { label: 'Σ n/(n+1)', tex: '\\sum_{n=1}^{\\infty}\\frac{n}{n+1}', n0: 1, term: function(n){ return n / (n + 1); }, zero: false, conv: false, sum: null, note: 'terms approach $1$, so each partial sum adds almost $1$' },
+    { label: 'Σ 5^n/n!', tex: '\\sum_{n=1}^{\\infty}\\frac{5^n}{n!}', n0: 1, term: function(n){ return Math.pow(5, n) / fact(n); }, zero: true, conv: true, sum: Math.exp(5) - 1, note: 'the terms grow until $n = 5$ and then collapse; the sum is $e^5 - 1 \\approx 147.41$' },
+    { label: 'Σ 1/(n ln n)', tex: '\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}', n0: 2, term: function(n){ return 1 / (n * Math.log(n)); }, zero: true, conv: false, sum: null, note: 'diverges, but so slowly that $80$ terms look almost flat; the integral test is what settles it' }
+];
+function psInit() {
+    var sel = document.getElementById('psSel'); if (!sel) return;
+    sel.innerHTML = PS.map(function(s, i){ return '<option value="' + i + '">' + s.label + '</option>'; }).join('');
+    psDraw();
+}
+function psDraw() {
+    var sel = document.getElementById('psSel'); if (!sel) return;
+    var s = PS[parseInt(sel.value) || 0], N = parseInt(document.getElementById('psN').value);
+    document.getElementById('psNShow').textContent = N;
+    var terms = [], sums = [], S = 0, last = 0;
+    for (var n = s.n0; n <= N; n++) { var t = s.term(n); S += t; terms.push([n, t]); sums.push([n, S]); last = t; }
+    dotPlot('psTerms', terms, { color: '#BC6C26', ref: 0, refColor: '#B5B5B5' });
+    dotPlot('psSums', sums, { color: s.conv ? '#21442B' : '#C0504D', ref: s.sum === null ? undefined : s.sum, refLabel: s.sum === null ? '' : 'sum ≈ ' + fmt(s.sum, 4) });
+    var fo = document.getElementById('psFormula'); fo.innerHTML = '$\\displaystyle ' + s.tex + '$ &nbsp;&nbsp; <span style="color:var(--text-medium);">' + s.note + '</span>'; typesetEl(fo);
+    document.getElementById('psA').textContent = fmt(last, 5);
+    document.getElementById('psS').textContent = fmt(S, 5);
+    var z = document.getElementById('psZero'); z.textContent = s.zero ? 'yes' : 'no'; z.className = 'readout-value ' + (s.zero ? 'exact-val' : 'error-val');
+    var v = document.getElementById('psVerdict'); v.textContent = s.conv ? 'converges' : 'diverges'; v.className = 'readout-value ' + (s.conv ? 'exact-val' : 'error-val');
+}
+
+/* ───────────────────────── Decision Tree Walker (Tab 2) ───────────────────────── */
+var DT = {
+    q0: { q: 'Do the terms $a_n$ approach $0$ as $n \\to \\infty$?', hint: 'Compute $\\lim a_n$. Rational terms with equal degrees, and anything with a $(-1)^n$ times a term that does not shrink, fail here.', yes: 'q1', no: 'r_nth' },
+    q1: { q: 'Is the series geometric, $\\sum a\\,r^n$ with a constant ratio?', hint: 'A constant raised to the $n$th power, possibly times a constant. $\\frac{2^n}{3^{n+1}} = \\frac13\\left(\\frac23\\right)^n$ counts.', yes: 'r_geo', no: 'q2' },
+    q2: { q: 'Is it a $p$-series, $\\sum \\dfrac{1}{n^p}$ and nothing else?', hint: '$\\frac{1}{n\\sqrt n}$ is $p = \\frac32$; $\\frac{1}{\\sqrt n}$ is $p = \\frac12$.', yes: 'r_p', no: 'q3' },
+    q3: { q: 'Does the term contain a factorial, or $n$ in an exponent ($c^n$, $n^n$)?', hint: '$n!$, $(2n)!$, $3^n$, $e^n$, $\\left(\\frac32\\right)^n$, $n^n$.', yes: 'q3b', no: 'q4' },
+    q3b: { q: 'Is the whole term something raised to the $n$th power, like $\\left(\\dfrac{n}{2n+1}\\right)^n$?', hint: 'If yes, the $n$th root undoes the power in one step.', yes: 'r_root', no: 'r_ratio' },
+    q4: { q: 'Does the series alternate in sign, with a $(-1)^n$ or $\\cos(n\\pi)$ factor?', hint: 'Look for a factor that flips sign every term.', yes: 'r_alt', no: 'q5' },
+    q5: { q: 'Is the term algebraic in $n$: polynomials and roots only, positive terms?', hint: '$\\frac{n+1}{n^3+2}$, $\\frac{1}{\\sqrt{n^2+1}}$, $\\frac{n}{n^2+1}$.', yes: 'r_lct', no: 'q6' },
+    q6: { q: 'Does the term involve $\\ln n$, or is $a_n = f(n)$ for a function that is easy to integrate?', hint: '$\\frac{1}{n\\ln n}$, $\\frac{\\ln n}{n^2}$, $n e^{-n^2}$.', yes: 'r_int', no: 'r_dct' },
+    r_nth: { name: 'Diverges by the $n$th-term test', body: 'If $\\lim a_n \\ne 0$ (or does not exist), the series diverges. No other test is needed. Write the limit and the conclusion.', ex: '$\\sum \\frac{n}{3n+1}$: $\\lim a_n = \\frac13 \\ne 0$, diverges.', tab: 't1' },
+    r_geo: { name: 'Geometric series', body: 'Converges when $|r| < 1$, with sum $\\frac{\\text{first term}}{1 - r}$. Diverges when $|r| \\ge 1$. Identify $r$ and the first term from the starting index.', ex: '$\\sum_{n=1}^\\infty \\frac{5}{4^n}$: $r = \\frac14$, first term $\\frac54$, sum $\\frac53$.', tab: 't1' },
+    r_p: { name: '$p$-series', body: 'Converges when $p > 1$, diverges when $p \\le 1$. State $p$ explicitly.', ex: '$\\sum \\frac{1}{n^{0.9}}$: $p = 0.9 \\le 1$, diverges.', tab: 't1' },
+    r_ratio: { name: 'Ratio test', body: 'Compute $L = \\lim\\left|\\frac{a_{n+1}}{a_n}\\right|$. $L < 1$ converges (absolutely), $L > 1$ diverges, $L = 1$ inconclusive. Factorials collapse to $n+1$; exponentials to constants; powers of $n$ to $1$.', ex: '$\\sum \\frac{n!}{4^n}$: $\\frac{a_{n+1}}{a_n} = \\frac{n+1}{4} \\to \\infty$, diverges.', tab: 't3' },
+    r_root: { name: 'Root test', body: 'Compute $L = \\lim \\sqrt[n]{|a_n|}$. Same three outcomes as the ratio test.', ex: '$\\sum \\left(\\frac{n}{2n+1}\\right)^n$: $\\sqrt[n]{a_n} = \\frac{n}{2n+1} \\to \\frac12$, converges.', tab: 't3' },
+    r_alt: { name: 'Alternating series test', body: 'Write $a_n = (-1)^n b_n$ with $b_n > 0$. If $b_n$ is decreasing and $b_n \\to 0$, the series converges. Then test $\\sum b_n$ with another branch to decide absolute versus conditional convergence.', ex: '$\\sum \\frac{(-1)^n}{\\sqrt n}$: converges by the alternating series test; $\\sum\\frac{1}{\\sqrt n}$ diverges ($p = \\frac12$), so conditionally convergent.', tab: 't4' },
+    r_lct: { name: 'Limit comparison test', body: 'Choose $b_n$ from the dominant powers of $n$. If $\\lim\\frac{a_n}{b_n} = c$ with $0 < c < \\infty$, both series behave the same way. $\\sum b_n$ is a $p$-series you can decide on sight.', ex: '$\\sum \\frac{n+1}{n^3+2}$: compare with $\\frac{1}{n^2}$, limit $1$, converges.', tab: 't4' },
+    r_int: { name: 'Integral test', body: 'Check that $f$ is positive, continuous, and decreasing. Then $\\sum f(n)$ and $\\int_1^\\infty f(x)\\,dx$ converge or diverge together. The integral is not the sum.', ex: '$\\sum_{n\\ge2} \\frac{1}{n\\ln n}$: $\\int \\frac{dx}{x\\ln x} = \\ln(\\ln x) \\to \\infty$, diverges.', tab: 't4' },
+    r_dct: { name: 'Direct comparison test', body: 'Bound the term: below a convergent series proves convergence, above a divergent series proves divergence. Replace bounded factors by their bounds and simplify denominators. Terms must be nonnegative.', ex: '$\\sum \\frac{\\sin^2 n}{n^2} \\le \\sum \\frac{1}{n^2}$, converges.', tab: 't4' }
+};
+var dtNode = 'q0', dtTrail = [];
+function dtReset() { dtNode = 'q0'; dtTrail = []; dtRender(); }
+function dtAnswer(ans) { var n = DT[dtNode]; dtTrail.push({ q: n.q, a: ans }); dtNode = ans === 'yes' ? n.yes : n.no; dtRender(); }
+function dtRender() {
+    var card = document.getElementById('dtCard'), trail = document.getElementById('dtTrail'); if (!card) return;
+    var series = (document.getElementById('dtSeries').value || '').trim();
+    trail.innerHTML = dtTrail.map(function(t, i){ return '<span class="pill" style="cursor:default;">' + (i + 1) + '. ' + t.q.replace(/\$[^$]*\$/g, function(m){ return m; }) + ' <strong>' + (t.a === 'yes' ? 'Yes' : 'No') + '</strong></span>'; }).join('');
+    var n = DT[dtNode], html = '';
+    if (series) html += '<p style="margin-bottom:8px; color:var(--text-medium); font-size:13.5px;">Testing: <strong>' + series.replace(/</g, '&lt;') + '</strong></p>';
+    if (n.q) {
+        html += '<p style="font-size:17px; font-weight:600; color:var(--green-dark);">' + n.q + '</p>';
+        html += '<p style="font-size:13.5px; color:var(--text-medium);">' + n.hint + '</p>';
+        html += '<div style="display:flex; gap:10px; flex-wrap:wrap;"><button class="jump-btn" style="background:var(--green-dark); color:white; border-color:var(--green-dark);" onclick="dtAnswer(\'yes\')">Yes</button><button class="jump-btn" onclick="dtAnswer(\'no\')">No</button></div>';
+    } else {
+        html += '<p style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#8B5E3C; margin-bottom:4px;">Recommended</p>';
+        html += '<p style="font-size:19px; font-weight:700; color:var(--green-dark); margin-bottom:8px;">' + n.name + '</p>';
+        html += '<p>' + n.body + '</p>';
+        html += '<div class="highlight-box"><p style="margin-bottom:0;"><strong>Example.</strong> ' + n.ex + '</p></div>';
+        html += '<div style="display:flex; gap:10px; flex-wrap:wrap;"><button class="jump-btn" onclick="goTab(\'' + n.tab + '\')">Read about this test</button><button class="jump-btn" onclick="dtReset()">&#8635; Try another series</button></div>';
+    }
+    card.innerHTML = html; typesetEl(card); typesetEl(trail);
+}
+
+/* ───────────────────────── Ratio Explorer (Tab 3) ───────────────────────── */
+var RT = [
+    { label: '5^n / n!', tex: '\\sum \\frac{5^n}{n!}', ratioTex: '\\frac{5}{n+1}', r: function(n){ return 5 / (n + 1); }, L: 0, Ltex: '0' },
+    { label: '4^n / n', tex: '\\sum \\frac{4^n}{n}', ratioTex: '4\\cdot\\frac{n}{n+1}', r: function(n){ return 4 * n / (n + 1); }, L: 4, Ltex: '4' },
+    { label: 'n 2^n / n!', tex: '\\sum \\frac{n\\,2^n}{n!}', ratioTex: '\\frac{2}{n}', r: function(n){ return 2 / n; }, L: 0, Ltex: '0' },
+    { label: '1 / n²', tex: '\\sum \\frac{1}{n^2}', ratioTex: '\\left(\\frac{n}{n+1}\\right)^2', r: function(n){ return Math.pow(n / (n + 1), 2); }, L: 1, Ltex: '1' },
+    { label: 'n / e^n', tex: '\\sum \\frac{n}{e^n}', ratioTex: '\\frac1e\\cdot\\frac{n+1}{n}', r: function(n){ return (n + 1) / (n * Math.E); }, L: 1 / Math.E, Ltex: '1/e \\approx 0.368' },
+    { label: 'n! / e^n', tex: '\\sum \\frac{n!}{e^n}', ratioTex: '\\frac{n+1}{e}', r: function(n){ return (n + 1) / Math.E; }, L: Infinity, Ltex: '\\infty' },
+    { label: 'n³ / 3^n', tex: '\\sum \\frac{n^3}{3^n}', ratioTex: '\\frac13\\left(\\frac{n+1}{n}\\right)^3', r: function(n){ return Math.pow((n + 1) / n, 3) / 3; }, L: 1 / 3, Ltex: '1/3' },
+    { label: '(3/2)^n / n²', tex: '\\sum \\frac{(3/2)^n}{n^2}', ratioTex: '\\frac32\\left(\\frac{n}{n+1}\\right)^2', r: function(n){ return 1.5 * Math.pow(n / (n + 1), 2); }, L: 1.5, Ltex: '3/2' },
+    { label: '8^n / ((n+2) 4^(n+1))', tex: '\\sum \\frac{8^n}{(n+2)\\,4^{n+1}}', ratioTex: '2\\cdot\\frac{n+2}{n+3}', r: function(n){ return 2 * (n + 2) / (n + 3); }, L: 2, Ltex: '2' },
+    { label: 'n² 3^(n+1) / 4^n', tex: '\\sum \\frac{n^2\\,3^{n+1}}{4^n}', ratioTex: '\\frac34\\left(\\frac{n+1}{n}\\right)^2', r: function(n){ return 0.75 * Math.pow((n + 1) / n, 2); }, L: 0.75, Ltex: '3/4' },
+    { label: 'n (−2/3)^n', tex: '\\sum n\\left(-\\tfrac23\\right)^n', ratioTex: '\\frac23\\cdot\\frac{n+1}{n}', r: function(n){ return (2 / 3) * (n + 1) / n; }, L: 2 / 3, Ltex: '2/3' },
+    { label: '1 / (n ln n)', tex: '\\sum \\frac{1}{n\\ln n}', ratioTex: '\\frac{n\\ln n}{(n+1)\\ln(n+1)}', r: function(n){ return n * Math.log(n) / ((n + 1) * Math.log(n + 1)); }, L: 1, Ltex: '1', n0: 2 }
+];
+function rtInit() {
+    var sel = document.getElementById('rtSel'); if (!sel) return;
+    sel.innerHTML = RT.map(function(s, i){ return '<option value="' + i + '">Σ ' + s.label + '</option>'; }).join('');
+    rtDraw();
+}
+function rtDraw() {
+    var sel = document.getElementById('rtSel'); if (!sel) return;
+    var s = RT[parseInt(sel.value) || 0], pts = [], n0 = s.n0 || 1;
+    for (var n = n0; n <= 30; n++) pts.push([n, s.r(n)]);
+    var ys = pts.map(function(p){ return p[1]; }), cap = Math.max(1.5, Math.min(Math.max.apply(null, ys), 12));
+    var shown = pts.map(function(p){ return [p[0], Math.min(p[1], cap)]; });
+    dotPlot('rtCanvas', shown, { color: s.L < 1 ? '#21442B' : s.L > 1 ? '#C0504D' : '#BC6C26', ref: 1, refColor: '#8B5E3C', refLabel: 'ratio = 1', y0: 0 });
+    var fo = document.getElementById('rtFormula');
+    fo.innerHTML = '$\\displaystyle ' + s.tex + '$ &nbsp;&nbsp; <span style="color:var(--text-medium);">ratio: $\\left|\\dfrac{a_{n+1}}{a_n}\\right| = ' + s.ratioTex + '$</span>' + (Math.max.apply(null, ys) > cap ? ' <span style="color:var(--text-medium);">(plot capped at ' + fmt(cap, 0) + ')</span>' : '');
+    typesetEl(fo);
+    document.getElementById('rt5').textContent = fmt(s.r(Math.max(5, n0)), 4);
+    document.getElementById('rt30').textContent = fmt(s.r(30), 4);
+    var L = document.getElementById('rtL'); L.innerHTML = '$' + s.Ltex + '$'; typesetEl(L);
+    var V = document.getElementById('rtV'); V.textContent = s.L < 1 ? 'converges' : s.L > 1 ? 'diverges' : 'inconclusive'; V.className = 'readout-value ' + (s.L < 1 ? 'exact-val' : s.L > 1 ? 'error-val' : '');
+}
+
+/* ───────────────────────── Sprint ───────────────────────── */
+var SPRINT = [
+    { q: 'For $\\sum \\dfrac{5^n}{n!}$ the ratio simplifies to $\\dfrac{5}{n+1}$. Its limit $L = $', a: 0, show: '0' },
+    { q: 'Ratio test limit $L$ for $\\sum \\dfrac{4^n}{n}$', a: 4, show: '4' },
+    { q: 'Ratio test limit $L$ for $\\sum \\dfrac{n^2\\,3^{n+1}}{4^n}$', a: 0.75, show: '3/4' },
+    { q: 'Ratio test limit $L$ for $\\sum n\\left(-\\tfrac23\\right)^n$', a: 2/3, show: '2/3' },
+    { q: 'Ratio test limit $L$ for $\\sum \\dfrac{1}{n^2}$', a: 1, show: '1' },
+    { q: '$\\displaystyle\\sum_{n=0}^{\\infty}\\left(\\tfrac13\\right)^n = $', a: 1.5, show: '3/2' },
+    { q: '$\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{2^n} = $', a: 1, show: '1' },
+    { q: '$\\sum \\dfrac{1}{n^p}$ converges exactly when $p$ is greater than', a: 1, show: '1' },
+    { q: 'For $\\sum \\dfrac{n}{2n+1}$, $\\lim a_n = $', a: 0.5, show: '1/2' },
+    { q: '$\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{1}{n(n+1)} = $', a: 1, show: '1' },
+    { q: '$\\dfrac{(n+1)!}{n!}$ at $n = 9$', a: 10, show: '10' },
+    { q: 'Alternating series error bound for $S_{10}$ of $\\sum \\dfrac{(-1)^{n+1}}{n}$: $\\ b_{11} = $', a: 1/11, show: '1/11' },
+    { q: '$\\displaystyle\\sum_{n=1}^{\\infty}\\left(\\tfrac23\\right)^n = $', a: 2, show: '2' },
+    { q: 'Ratio test limit $L$ for $\\sum \\dfrac{1}{n\\ln n}$', a: 1, show: '1' },
+    { q: '$\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{2^n}{3^{n+1}} = $', a: 2/3, show: '2/3' },
+    { q: 'Root test limit for $\\sum \\left(\\dfrac{n}{2n+1}\\right)^n$', a: 0.5, show: '1/2' }
+];
+var sprintTimer = null, sprintSec = 0;
+function parseNum(s) {
+    s = (s || '').trim().replace(/−/g, '-').replace(/\s+/g, '');
+    if (!s) return NaN;
+    var m = s.match(/^(-?)(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/);
+    if (m) { var v = parseFloat(m[2]) / parseFloat(m[3]); return m[1] === '-' ? -v : v; }
+    if (/^-?\d*\.?\d+$/.test(s)) return parseFloat(s);
+    return NaN;
+}
+function sprintRender() {
+    var L = document.getElementById('sprintList'); if (!L) return; L.innerHTML = '';
+    SPRINT.forEach(function(it, i){
+        var d = document.createElement('div'); d.className = 'sprint-item';
+        d.innerHTML = '<div class="sp-num">' + (i+1) + '</div><div class="sp-q">' + it.q + '</div><input type="text" placeholder="answer" aria-label="answer ' + (i+1) + '"><button class="sp-check">Check</button><span class="sp-res"></span>';
+        var inp = d.querySelector('input'), btn = d.querySelector('button'), res = d.querySelector('.sp-res');
+        function check() {
+            var v = parseNum(inp.value); d.classList.remove('ok', 'bad');
+            if (isNaN(v)) { res.textContent = 'Enter a number or fraction'; d.dataset.ok = '0'; }
+            else if (Math.abs(v - it.a) <= 1e-3 * Math.max(1, Math.abs(it.a)) + 1e-9) { d.classList.add('ok'); res.textContent = '✓ Correct'; d.dataset.ok = '1'; }
+            else { d.classList.add('bad'); res.textContent = '✗ Answer: ' + it.show; d.dataset.ok = '0'; }
+            sprintScore();
+        }
+        btn.onclick = check; inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') check(); });
+        L.appendChild(d);
+    });
+    typesetEl(L);
+}
+function sprintScore() {
+    var n = 0, items = document.querySelectorAll('#sprintList .sprint-item');
+    items.forEach(function(d){ if (d.dataset.ok === '1') n++; });
+    document.getElementById('spScore').textContent = n;
+    if (n === SPRINT.length && sprintTimer) { clearInterval(sprintTimer); sprintTimer = null; }
+}
+function sprintStart() {
+    if (sprintTimer) return;
+    sprintSec = 0; document.getElementById('spTime').textContent = '0:00';
+    sprintTimer = setInterval(function(){ sprintSec++; var mm = Math.floor(sprintSec / 60), ss = sprintSec % 60; document.getElementById('spTime').textContent = mm + ':' + (ss < 10 ? '0' : '') + ss; }, 1000);
+}
+function sprintReset() { if (sprintTimer) { clearInterval(sprintTimer); sprintTimer = null; } sprintSec = 0; document.getElementById('spTime').textContent = '0:00'; document.getElementById('spScore').textContent = '0'; sprintRender(); }
+
+/* ───────────────────────── Init ───────────────────────── */
+window.addEventListener('DOMContentLoaded', function() {
+    sprintRender();
+    psInit();
+    dtRender();
+    rtInit();
+    addTabNav();   // always last
+});
+</script>
+</body>
+</html>

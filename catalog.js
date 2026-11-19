@@ -1146,13 +1146,45 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
-   "id": "calculus--maclaurin-series-worksheet",
-   "path": "calculus/maclaurin-series-worksheet.html",
-   "title": "Maclaurin Series",
-   "description": "Derive the Maclaurin coefficient formula, learn the six essential series, and compare polynomial approximations with the original functions in an interactive builder, with error and Taylor-center explorers, flashcards, quick recall, and two problem sets.",
+   "id": "calculus--series-convergence-tests-worksheet",
+   "path": "calculus/series-convergence-tests-worksheet.html",
+   "title": "Series Convergence Tests",
+   "description": "Decide whether an infinite series converges with a decision tree: nth-term test, geometric and p-series, ratio and root tests, direct and limit comparison, integral test, and the alternating series test, with absolute versus conditional convergence. Interactive decision tree walker, partial sums and ratio explorers, quick recall, eighteen worked ratio-test exercises, and a mixed choose-the-test set.",
    "subject": "calculus",
    "topic": "Series",
    "order": 18,
+   "levels": [
+    "Advanced High School",
+    "College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "infinite series",
+    "convergence tests",
+    "ratio test",
+    "root test",
+    "comparison test",
+    "limit comparison test",
+    "integral test",
+    "alternating series test",
+    "p-series",
+    "geometric series",
+    "ap calculus bc"
+   ],
+   "content": "theory+practice",
+   "builds_on": [
+    "precalc--sequences-series-worksheet",
+    "calculus--integration-methods-and-practice"
+   ]
+  },
+  {
+   "id": "calculus--maclaurin-series-worksheet",
+   "path": "calculus/maclaurin-series-worksheet.html",
+   "title": "Maclaurin and Taylor Series",
+   "description": "Derive the Maclaurin coefficient formula, learn the six essential series, operate on power series term by term, find radius and interval of convergence with the ratio test, and bound approximation error with the alternating series and Lagrange bounds. Interactive builders and explorers, flashcards, quick recall, two problem sets, and a set of AP-style free-response problems.",
+   "subject": "calculus",
+   "topic": "Series",
+   "order": 19,
    "levels": [
     "Advanced High School",
     "College"
@@ -1163,12 +1195,18 @@ window.OPEN_LEARNING_CATALOG = {
     "taylor series",
     "power series",
     "polynomial approximation",
+    "interval of convergence",
+    "radius of convergence",
+    "lagrange error bound",
+    "alternating series error bound",
     "error estimation",
-    "euler's formula"
+    "euler's formula",
+    "ap calculus bc"
    ],
    "content": "theory+practice",
    "builds_on": [
     "calculus--differentiation-rules-study-sheet",
+    "calculus--series-convergence-tests-worksheet",
     "precalc--sequences-series-worksheet"
    ]
   },
@@ -1179,7 +1217,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Learn the gradient, directional derivatives, and constrained optimization from core formulas, with interactive graphs, drag activities, and practice problems.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 19,
+   "order": 20,
    "levels": [
     "College"
    ],
@@ -1203,7 +1241,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Learn constrained optimization with theory and geometry, a step-by-step algorithm, solved problems, Desmos graphs, and cases where the method fails.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 20,
+   "order": 21,
    "levels": [
     "College"
    ],
@@ -1228,7 +1266,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Understand double integrals through visuals, theory, and integration techniques, then practice problems including the Gaussian integral.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 21,
+   "order": 22,
    "levels": [
     "College"
    ],
@@ -1253,7 +1291,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Work through line integrals with respect to arc length, coordinates, and vector fields, with practice for each type and a unifying summary.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 22,
+   "order": 23,
    "levels": [
     "College"
    ],
@@ -1278,7 +1316,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Follow a step-by-step chain from scalar components and directional derivatives to surface normals and the gradient descent algorithm used in machine learning.",
    "subject": "calculus",
    "topic": "Multivariable",
-   "order": 23,
+   "order": 24,
    "levels": [
     "College",
     "Advanced College"
