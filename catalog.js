@@ -68,7 +68,7 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "science",
    "name": "Science",
    "page": "science.html",
-   "blurb": "Interactive physics labs, biology foundations, and clinical study sheets.",
+   "blurb": "Interactive physics labs, chemistry and biology foundations, and clinical study sheets.",
    "layout": "guided",
    "prompt": "Which subject are you studying?"
   },
@@ -347,6 +347,23 @@ window.OPEN_LEARNING_CATALOG = {
     {
      "name": "Foundations",
      "blurb": "The chemistry of life: atoms, bonds, and water, with an atom builder, flashcards, and a self-quiz."
+    }
+   ]
+  },
+  {
+   "key": "chemistry",
+   "name": "Chemistry",
+   "area": "science",
+   "blurb": "The mole, isotopes, electron configuration and the periodic trends.",
+   "tag": "Chem",
+   "steps": [
+    {
+     "name": "Moles and isotopes",
+     "blurb": "What a mole is, abundance and average atomic mass, molar mass, and the conversions between atoms, moles and grams."
+    },
+    {
+     "name": "Electrons and periodic trends",
+     "blurb": "Shells and the snake through the periodic table, orbital boxes and magnetism, quantum numbers, and why the trends point the way they do."
     }
    ]
   },
@@ -1368,6 +1385,55 @@ window.OPEN_LEARNING_CATALOG = {
     "water",
     "biochemistry",
     "intro biology"
+   ],
+   "content": "theory+practice",
+   "builds_on": []
+  },
+  {
+   "id": "chemistry--chemistry-1-abundance-and-the-mole",
+   "path": "chemistry/Chemistry-1-Abundance-and-the-Mole.html",
+   "title": "Chemistry 1: Abundance and the Mole",
+   "description": "The mole as a counting number, abundance and average atomic mass in three steps, molar mass, and the atoms-moles-grams conversions, with calculators, flashcards, a drill and two quizzes.",
+   "subject": "chemistry",
+   "topic": "Moles and isotopes",
+   "order": 1,
+   "levels": [
+    "High School"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "mole",
+    "avogadro's number",
+    "isotopes",
+    "abundance",
+    "average atomic mass",
+    "molar mass",
+    "conversions"
+   ],
+   "content": "theory+practice",
+   "builds_on": []
+  },
+  {
+   "id": "chemistry--chemistry-2-periodic-trends-and-electrons",
+   "path": "chemistry/Chemistry-2-Periodic-Trends-and-Electrons.html",
+   "title": "Chemistry 2: Periodic Trends and Electrons",
+   "description": "Shells and the snake through the periodic table, electron configuration, orbital boxes and magnetism, quantum numbers, and why atomic radius, ionization energy and electronegativity trend the way they do, with an interactive table, a Bohr builder, flashcards, a drill and two quizzes.",
+   "subject": "chemistry",
+   "topic": "Electrons and periodic trends",
+   "order": 2,
+   "levels": [
+    "High School"
+   ],
+   "format": "Study sheet",
+   "tags": [
+    "electron configuration",
+    "periodic table",
+    "quantum numbers",
+    "hund's rule",
+    "paramagnetic",
+    "atomic radius",
+    "ionization energy",
+    "electronegativity"
    ],
    "content": "theory+practice",
    "builds_on": []
