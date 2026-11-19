@@ -273,6 +273,50 @@ table.lcc td.hi { background: rgba(221,162,94,0.22) !important; font-weight: 600
 .sol-vertical .sol-v .highlight-box { margin: 4px 0 0; }
 @media (max-width: 600px) { .sol-vertical .sol-step { grid-template-columns: 1fr; gap: 2px; } }
 
+
+/* ─── Decision tree flowchart ─── */
+.dt-wrap .dt-switch { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.dt-wrap .dt-switch .dt-switch-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-medium); opacity: 0.8; }
+.dtree { margin: 6px 0 4px; }
+.dtree .dt-grid { display: grid; grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1.25fr); align-items: center; column-gap: 0; }
+.dtree .dt-start { display: flex; justify-content: center; }
+.dtree .dt-grid .dt-start { grid-column: 1; }
+.dtree .dt-start span { display: inline-block; background: var(--green-dark); color: white; border-radius: 22px; padding: 8px 20px; font-weight: 700; font-size: 14px; }
+.dtree .dt-q { position: relative; background: #FFFBF2; border: 2px solid var(--gold); border-radius: 14px; padding: 12px 16px 12px 46px; font-size: 14.5px; line-height: 1.45; min-height: 56px; display: flex; align-items: center; }
+.dtree .dt-q .dt-n { position: absolute; left: 14px; top: 50%; width: 22px; height: 22px; transform: translateY(-50%) rotate(45deg); background: var(--gold); border-radius: 4px; }
+.dtree .dt-q .dt-n i { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: rotate(-45deg); font-style: normal; font-weight: 700; font-size: 11.5px; color: white; }
+.dtree .dt-branch { position: relative; height: 100%; min-height: 48px; }
+.dtree .dt-branch::before { content: ""; position: absolute; left: 0; right: 9px; top: 50%; height: 2px; background: var(--gold); }
+.dtree .dt-branch::after { content: ""; position: absolute; right: 0; top: 50%; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid var(--gold); transform: translateY(-50%); }
+.dtree .dt-lbl { position: absolute; left: 50%; top: 50%; transform: translate(-50%, calc(-50% - 13px)); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 1px 7px; border-radius: 8px; background: #FBFAF7; }
+.dtree .dt-lbl.yes { color: var(--green-dark); border: 1px solid rgba(33,68,43,0.35); }
+.dtree .dt-lbl.no { color: #C0504D; border: 1px solid rgba(192,80,77,0.4); }
+.dtree .dt-leaf { background: white; border: 2px solid var(--green-dark); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; line-height: 1.45; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+.dtree .dt-leaf strong { color: var(--green-dark); display: block; margin-bottom: 2px; font-size: 14px; }
+.dtree .dt-leaf.stop { border-color: #C0504D; }
+.dtree .dt-leaf.stop strong { color: #C0504D; }
+.dtree .dt-down { position: relative; height: 46px; }
+.dtree .dt-down::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 9px; width: 2px; background: var(--gold); transform: translateX(-50%); }
+.dtree .dt-down::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 10px solid var(--gold); transform: translateX(-50%); }
+.dtree .dt-down .dt-lbl { top: 50%; left: 50%; transform: translate(14px, -50%); }
+.dtree .dt-empty { min-height: 1px; }
+@media (max-width: 700px) {
+    .dtree .dt-grid { grid-template-columns: 48px minmax(0, 1fr); }
+    .dtree .dt-q { grid-column: 1 / -1; }
+    .dtree .dt-branch { grid-column: 1; min-height: 100%; }
+    .dtree .dt-branch::before { left: 23px; right: 9px; top: 0; height: 50%; width: auto; background: none; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+    .dtree .dt-lbl { left: auto; right: 2px; top: 25%; transform: translateY(-50%); }
+    .dtree .dt-leaf { grid-column: 2; }
+    .dtree .dt-down { height: 40px; }
+    .dtree .dt-down::before { left: 24px; transform: none; }
+    .dtree .dt-down::after { left: 24px; }
+    .dtree .dt-down .dt-lbl { left: 24px; right: auto; top: 50%; transform: translate(12px, -50%); }
+    .dtree .dt-grid .dt-start { grid-column: 1 / -1; justify-content: flex-start; }
+    .dtree .dt-start span { white-space: nowrap; }
+    .dtree .dt-final .dt-leaf { grid-column: 1 / -1; }
+    .dtree .dt-empty { display: none; }
+}
+
 .tab-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px dashed var(--cream-dark); }
 .tab-nav-next { border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: white; background: var(--green-dark); padding: 13px 22px 13px 18px; border-radius: 14px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 3px 10px rgba(33,68,43,0.22); transition: transform 0.12s, background 0.15s; }
 .tab-nav-next:hover { background: #2F5A3C; transform: translateY(-1px); }
@@ -420,7 +464,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <div class="formula-tile" style="background: rgba(33,68,43,0.08); border-color: #21442B;">
                 <div style="display:flex; gap:14px; align-items:flex-start;">
                     <div style="flex-shrink:0; width:72px; height:72px; border-radius:6px; overflow:hidden; background:white;">
-                        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;"><line x1="6" y1="50" x2="66" y2="50" stroke="#E2E2E2" stroke-width="1.5"/><line x1="30" y1="6" x2="30" y2="66" stroke="#E2E2E2" stroke-width="1.5"/><line x1="52" y1="6" x2="52" y2="66" stroke="#E57373" stroke-width="1" stroke-dasharray="3 3"/><path d="M6 44 C 20 42, 36 38, 44 24 S 50 10, 51 6" fill="none" stroke="#21442B" stroke-width="2.5"/><circle cx="30" cy="40" r="2.6" fill="#DDA25E"/></svg>
+                        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;"><line x1="6" y1="50" x2="66" y2="50" stroke="#E2E2E2" stroke-width="1.5"/><line x1="30" y1="6" x2="30" y2="66" stroke="#E2E2E2" stroke-width="1.5"/><line x1="52" y1="6" x2="52" y2="66" stroke="#E57373" stroke-width="1" stroke-dasharray="3 3"/><path d="M6.0 45.2 L7.0 45.1 L8.0 45.0 L9.0 44.9 L10.0 44.8 L11.0 44.6 L12.0 44.5 L13.0 44.4 L14.0 44.2 L15.0 44.1 L16.0 43.9 L17.0 43.7 L18.0 43.5 L19.0 43.3 L20.0 43.1 L21.0 42.9 L22.0 42.7 L23.0 42.4 L24.0 42.1 L25.0 41.9 L26.0 41.5 L27.0 41.2 L28.0 40.8 L29.0 40.4 L30.0 40.0 L31.0 39.5 L32.0 39.0 L33.0 38.4 L34.0 37.8 L35.0 37.1 L36.0 36.2 L37.0 35.3 L38.0 34.3 L39.0 33.1 L40.0 31.7 L41.0 30.0 L42.0 28.0 L43.0 25.6 L44.0 22.5 L45.0 18.6 L46.0 13.3 L47.0 6.0" fill="none" stroke="#21442B" stroke-width="2.5" stroke-linejoin="round"/><circle cx="30" cy="40" r="2.6" fill="#DDA25E"/></svg>
                     </div>
                     <div style="flex:1;">
                         <h4>$\dfrac{1}{1-x}$</h4>
@@ -564,7 +608,54 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
 
         <div class="section-header"><div class="section-number">8</div><h2>Choosing a method</h2></div>
         <div class="card" style="border-left-color: var(--green-dark); padding: 24px;">
-            <div style="position: relative; padding-left: 28px;">
+            <p>Start at the top and follow the arrows. Each question sends you either to a method on the right or down to the next question.</p>
+<div class="dt-wrap"><div class="dt-switch"><span class="dt-switch-label">View</span><div class="sum-type-buttons"><button class="sum-type-btn active" onclick="dtView(this, 'tree')">Flowchart</button><button class="sum-type-btn" onclick="dtView(this, 'list')">Numbered list</button></div></div><div class="dt-view-tree"><div class="dtree">
+<div class="dt-grid"><div class="dt-start"><span>What does the question ask for?</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid"><div class="dt-down"></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>1</i></span><span>Asked how accurate an approximation is, or whether $f(x)$ can be approximated at all?</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Error bounds (Tab 7)</strong>First check that $x$ is inside the interval of convergence. Then the alternating series bound if the series alternates at $x$; otherwise the Lagrange bound with a justified $M$.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>2</i></span><span>Asked for the radius or interval of convergence?</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Interval of convergence (Tab 6)</strong>Geometric: $|r| < 1$. Otherwise the ratio test with $x$ left in, solve for $|x - c| < R$, then test both endpoints separately.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>3</i></span><span>Asked about increasing, concavity, or a relative extremum at the center?</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Coefficients to derivatives</strong>$f^{(n)}(0) = n!\,a_n$. Quote $f'(0)$ for increasing or decreasing, $f''(0)$ for concavity, and both for the second derivative test.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>4</i></span><span>Given the series or polynomial, and asked for a derivative value at the center?</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Read the coefficient</strong>$f^{(n)}(0) = n!\cdot a_n$. No differentiation needed. For a Taylor series about $a$, the same rule gives $f^{(n)}(a)$.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>5</i></span><span>Asked for the series of $f'$, $\int_0^x f$, $f(x^2)$, $f(2x)$, or $f(x - c)$?</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Operate term by term (Tab 5)</strong>Differentiate, integrate, substitute, or shift each term, and apply the same operation to the general term. $R$ is unchanged except under substitution.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>6</i></span><span>Given derivative values at the center?</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Put them in the formula (Tab 2)</strong>$f(a) + f'(a)(x-a) + \dfrac{f''(a)}{2!}(x-a)^2 + \cdots$ There is nothing to differentiate; divide each value by its factorial.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid">
+<div class="dt-q"><span class="dt-n"><i>7</i></span><span>Can you recognize a familiar series? ($e^{-x^2}$, $\cos 2x$, $x\sin x$, $\frac{1}{1+x^2}$)</span></div>
+<div class="dt-branch"><span class="dt-lbl yes">Yes</span></div>
+<div class="dt-leaf "><strong>Start from the toolkit (Tab 3)</strong>Take the known series and substitute, multiply by a power of $x$, differentiate, or integrate. Keep parentheses until you simplify.</div>
+</div>
+<div class="dt-grid"><div class="dt-down"><span class="dt-lbl no">No</span></div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+<div class="dt-grid dt-final"><div class="dt-leaf"><strong>Build it directly (Tab 2)</strong>Differentiate, evaluate at the center, divide by factorials. ($\sec x$, $\sqrt{1+x}$, $e^{2x}$) Keep factorials visible while you set up the series.</div><div class="dt-empty"></div><div class="dt-empty"></div></div>
+</div></div><div class="dt-view-list" style="display:none;"><div style="position: relative; padding-left: 28px;">
                 <div style="position: absolute; left: 13px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--green-dark));"></div>
                 <div class="tree-node" data-n="1"><p><strong>Recognize a familiar series?</strong> ($e^{-x^2}$, $\cos 2x$, $x\sin x$, $\frac{1}{1+x^2}$) Start with the known series and try substitution, multiplication, differentiation, or integration.</p></div>
                 <div class="tree-node" data-n="2"><p><strong>Asked to build a polynomial directly?</strong> ($\sec x$, $\sqrt{1+x}$, $e^{2x}$) Differentiate, evaluate at the center, and divide by factorials.</p></div>
@@ -574,7 +665,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
                 <div class="tree-node" data-n="6"><p><strong>Asked for the radius or interval of convergence?</strong> Geometric: $|r| < 1$. Otherwise the ratio test with $x$ left in, then test both endpoints separately. (Tab 6)</p></div>
                 <div class="tree-node" data-n="7"><p><strong>Asked how accurate an approximation is?</strong> First check that $x$ is inside the interval. Then alternating series bound if the series alternates at $x$, otherwise the Lagrange bound with a justified $M$. (Tab 7)</p></div>
                 <div class="tree-node" data-n="8"><p><strong>Asked about increasing, concavity, or an extremum at the center?</strong> Convert the coefficient to a derivative value, $f^{(n)}(0) = n!\,a_n$, and quote that value in the justification.</p></div>
-            </div>
+            </div></div></div>
         </div>
     </div>
 
@@ -616,19 +707,19 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
                 <svg viewBox="0 0 340 230" xmlns="http://www.w3.org/2000/svg">
                     <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4A4A4A"/></marker></defs>
                     <line x1="20" y1="190" x2="325" y2="190" stroke="#4A4A4A" stroke-width="1.5" marker-end="url(#arr)"/>
-                    <line x1="60" y1="215" x2="60" y2="15" stroke="#4A4A4A" stroke-width="1.5" marker-end="url(#arr)"/>
-                    <path d="M20 215 C 60 190, 110 140, 160 110 S 260 80, 320 76" fill="none" stroke="#21442B" stroke-width="3"/>
-                    <line x1="20" y1="222" x2="300" y2="0" stroke="#BC6C26" stroke-width="2.2" stroke-dasharray="7 5"/>
+                    <line x1="60" y1="222" x2="60" y2="12" stroke="#4A4A4A" stroke-width="1.5" marker-end="url(#arr)"/>
+                    <line x1="28.1" y1="221.9" x2="239.8" y2="10.2" stroke="#BC6C26" stroke-width="2.2" stroke-dasharray="7 5"/>
+                    <path d="M28.1 227.0 L31.4 222.7 L34.7 218.4 L38.0 214.4 L41.3 210.4 L44.6 206.5 L47.9 202.8 L51.2 199.2 L54.5 195.6 L57.8 192.2 L61.1 188.9 L64.4 185.7 L67.7 182.6 L71.0 179.5 L74.3 176.6 L77.6 173.7 L80.9 171.0 L84.2 168.3 L87.5 165.7 L90.8 163.1 L94.1 160.7 L97.4 158.3 L100.7 156.0 L104.0 153.7 L107.3 151.6 L110.6 149.4 L113.9 147.4 L117.2 145.4 L120.5 143.5 L123.8 141.6 L127.1 139.8 L130.4 138.0 L133.7 136.3 L137.0 134.6 L140.3 133.0 L143.6 131.4 L146.9 129.9 L150.2 128.4 L153.5 127.0 L156.8 125.6 L160.1 124.3 L163.4 123.0 L166.7 121.7 L170.0 120.5 L173.3 119.3 L176.6 118.1 L179.9 117.0 L183.2 115.9 L186.5 114.8 L189.8 113.8 L193.1 112.8 L196.4 111.8 L199.7 110.9 L203.0 110.0 L206.3 109.1 L209.6 108.2 L212.9 107.4 L216.2 106.6 L219.5 105.8 L222.8 105.0 L226.1 104.3 L229.4 103.6 L232.7 102.9 L236.0 102.2 L239.3 101.6 L242.6 100.9 L245.9 100.3 L249.2 99.7 L252.5 99.1 L255.8 98.6 L259.1 98.0 L262.4 97.5 L265.7 97.0 L269.0 96.5 L272.3 96.0 L275.6 95.5 L278.9 95.0 L282.2 94.6 L285.5 94.2 L288.8 93.7 L292.1 93.3 L295.4 92.9 L298.7 92.6 L302.0 92.2 L305.3 91.8 L308.6 91.5 L311.9 91.1 L315.2 90.8 L318.5 90.5 L321.8 90.2" fill="none" stroke="#21442B" stroke-width="3" stroke-linejoin="round"/>
+                    <line x1="203.0" y1="190" x2="203.0" y2="47.0" stroke="#C0504D" stroke-width="1.2" stroke-dasharray="3 3"/>
+                    <path d="M212.0 47.0 L212.0 110.0" stroke="#C0504D" stroke-width="2"/>
+                    <circle cx="203.0" cy="110.0" r="4" fill="#21442B"/>
+                    <circle cx="203.0" cy="47.0" r="4" fill="#BC6C26"/>
                     <circle cx="60" cy="190" r="4.5" fill="#DDA25E" stroke="#42260D" stroke-width="1.5"/>
-                    <line x1="230" y1="190" x2="230" y2="55" stroke="#C0504D" stroke-width="1.2" stroke-dasharray="3 3"/>
-                    <circle cx="230" cy="88" r="4" fill="#21442B"/>
-                    <circle cx="230" cy="55" r="4" fill="#BC6C26"/>
-                    <path d="M238 60 L238 85" stroke="#C0504D" stroke-width="2"/>
-                    <text x="243" y="76" font-family="Inter, sans-serif" font-size="11" fill="#C0504D" font-weight="700">error</text>
-                    <text x="226" y="206" font-family="Inter, sans-serif" font-size="12" fill="#4A4A4A">a</text>
-                    <text x="48" y="206" font-family="Inter, sans-serif" font-size="12" fill="#4A4A4A">0</text>
-                    <text x="270" y="68" font-family="Inter, sans-serif" font-size="12" fill="#21442B" font-weight="600">f(x)</text>
-                    <text x="255" y="30" font-family="Inter, sans-serif" font-size="12" fill="#BC6C26" font-weight="600">tangent line</text>
+                    <text x="217.0" y="82.5" font-family="Inter, sans-serif" font-size="11" fill="#C0504D" font-weight="700">error</text>
+                    <text x="199.0" y="206" font-family="Inter, sans-serif" font-size="12" fill="#4A4A4A">a</text>
+                    <text x="66" y="206" font-family="Inter, sans-serif" font-size="12" fill="#4A4A4A">0</text>
+                    <text x="286" y="78" font-family="Inter, sans-serif" font-size="12" fill="#21442B" font-weight="600">f(x)</text>
+                    <text x="236" y="34" font-family="Inter, sans-serif" font-size="12" fill="#BC6C26" font-weight="600">tangent line</text>
                 </svg>
                 <p class="cap">The tangent line at $0$ matches the function closely nearby and differs more as $x$ moves away.</p>
             </div>
@@ -1199,7 +1290,7 @@ mjx-container[display="true"] { margin: 10px 0 !important; }
             <div>
                 <p>Maclaurin series are centered at zero. But sometimes we want an approximation near another point, $a$. Perhaps the function's derivatives are only known at $a$, or the function is not defined at zero, as with $\ln x$.</p>
                 <p>A Taylor series uses the same idea, with derivatives evaluated at $a$ and powers of $(x - a)$, so that substituting $x = a$ still isolates one coefficient at a time:</p>
-                <div class="highlight-box">$$f(x) = \sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots$$</div>
+                <div class="highlight-box">$$f(x) = \sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n$$ $$= f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots$$</div>
                 <p style="margin-bottom:0;">The first two terms form the tangent line at $x = a$, written in point-slope form. Additional terms account for curvature and higher-order behavior near that point. The Maclaurin series is the special case $a = 0$.</p>
             </div>
             <div>
@@ -2384,6 +2475,14 @@ function switchTab(name, btn) {
     if (name === 't7') ebDraw();
 }
 function goTab(name) { switchTab(name, null); }
+function dtView(btn, mode) {
+    var wrap = btn.closest('.dt-wrap'); if (!wrap) return;
+    wrap.querySelectorAll('.dt-switch .sum-type-btn').forEach(function(b){ b.classList.toggle('active', b === btn); });
+    wrap.querySelector('.dt-view-tree').style.display = mode === 'tree' ? '' : 'none';
+    wrap.querySelector('.dt-view-list').style.display = mode === 'list' ? '' : 'none';
+    typesetEl(wrap);
+}
+
 function toggleExample(btn) {
     var body = btn.nextElementSibling;
     body.classList.toggle('open'); btn.classList.toggle('open');
