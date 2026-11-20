@@ -15,7 +15,7 @@ window.OPEN_LEARNING_CATALOG = {
   "base": "https://learningcurvecollective.github.io/learning-curve-collective-resources/",
   "home": "https://learningcurvecollective.com",
   "description": "A growing collection of free, interactive learning resources informed by rigorous academic curricula and designed to make challenging concepts accessible to every learner.",
-  "updated": "2026-11-18"
+  "updated": "2026-11-20"
  },
  "levels": [
   "Foundations",
@@ -270,7 +270,7 @@ window.OPEN_LEARNING_CATALOG = {
    "key": "gre",
    "name": "GRE",
    "area": "test-prep",
-   "blurb": "Quant topic sheets, a full practice test, and the Issue essay.",
+   "blurb": "Quant topic sheets, targeted practice sets, a full practice test, and the Issue essay.",
    "tag": "GRE",
    "steps": [
     {
@@ -280,6 +280,10 @@ window.OPEN_LEARNING_CATALOG = {
     {
      "name": "Quant topic sheets",
      "blurb": "Worked examples, fluency drills, GRE-style questions, and an exit ticket for each topic."
+    },
+    {
+     "name": "Targeted practice",
+     "blurb": "A formula sheet, 12 GRE-style questions with answer checking, and step-by-step solutions for one skill area at a time."
     },
     {
      "name": "Writing",
@@ -3570,13 +3574,103 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "gre--gre-targeted-practice-overlap-or",
+   "path": "gre/gre-targeted-practice-overlap-or.html",
+   "title": "GRE Targeted Practice: Overlap and “Or”",
+   "description": "Practice two-group and three-group overlap, “or” probabilities from formulas and tables, and independent events with a formula sheet, 12 GRE-style questions with answer checking, and step-by-step solutions.",
+   "subject": "gre",
+   "topic": "Targeted practice",
+   "order": 7,
+   "levels": [
+    "College"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "gre quant",
+    "overlapping groups",
+    "venn diagrams",
+    "probability",
+    "or probability",
+    "two-way tables",
+    "independent events"
+   ],
+   "exams": [
+    "GRE"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "gre--gre-quant-formula-cards"
+   ]
+  },
+  {
+   "id": "gre--gre-targeted-practice-counting-probability",
+   "path": "gre/gre-targeted-practice-counting-probability.html",
+   "title": "GRE Targeted Practice: Counting and Probability",
+   "description": "Practice ordered and unordered counting, teams with no names, at-least-one counts, probability with and without replacement, and divisors with a formula sheet, 12 GRE-style questions with answer checking, and step-by-step solutions.",
+   "subject": "gre",
+   "topic": "Targeted practice",
+   "order": 8,
+   "levels": [
+    "College"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "gre quant",
+    "counting",
+    "combinations",
+    "permutations",
+    "probability",
+    "without replacement",
+    "divisors"
+   ],
+   "exams": [
+    "GRE"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "gre--gre-quant-formula-cards"
+   ]
+  },
+  {
+   "id": "gre--gre-targeted-practice-geometry",
+   "path": "gre/gre-targeted-practice-geometry.html",
+   "title": "GRE Targeted Practice: Geometry Essentials",
+   "description": "Practice special right triangles, parallelogram area, tangent lines, arc length, circles in the coordinate plane, and water-level volume with a formula sheet, 12 GRE-style questions with answer checking, and step-by-step solutions.",
+   "subject": "gre",
+   "topic": "Targeted practice",
+   "order": 9,
+   "levels": [
+    "College"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "gre quant",
+    "geometry",
+    "special right triangles",
+    "parallelograms",
+    "tangent lines",
+    "circles",
+    "coordinate geometry",
+    "volume"
+   ],
+   "exams": [
+    "GRE"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "gre--gre-quant-formula-cards",
+    "gre--gre-circles-sheet",
+    "gre--gre-triangles-sheet"
+   ]
+  },
+  {
    "id": "gre--gre-essay-sheet",
    "path": "gre/GRE-Essay-Sheet.html",
    "title": "GRE Essay: The Issue Essay Roadmap",
    "description": "Learn what separates each Issue essay score, then use the architecture, prompt types, example and prompt banks, model essays, and drills to improve.",
    "subject": "gre",
    "topic": "Writing",
-   "order": 7,
+   "order": 10,
    "levels": [
     "College"
    ],
@@ -3602,7 +3696,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "Take a timed 54-question practice test covering Quantitative and Verbal Reasoning, then review your results.",
    "subject": "gre",
    "topic": "Full-length practice",
-   "order": 8,
+   "order": 11,
    "levels": [
     "College"
    ],
