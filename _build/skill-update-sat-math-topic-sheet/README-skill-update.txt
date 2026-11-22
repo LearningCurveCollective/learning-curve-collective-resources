@@ -19,10 +19,15 @@ scripts/   Builder files for the SAT Desmos series and the SAT Math topic sheets
            recomputations; needs sympy). build_functions.py gained the forward link from SAT Math 3 to SAT Math 4.
            Run python3 _build/skill-update-sat-math-topic-sheet/scripts/build_triangles.py to rebuild the sheet.
 
+           build_special_right_triangles.py is the SAT Math 4B builder (2026-11-22), with
+           verify_special_right_triangles.py (350 checks; needs sympy). build_triangles.py gained the link from
+           sheet 4's Rule 4 note to sheet 4B. Run
+           python3 _build/skill-update-sat-math-topic-sheet/scripts/build_special_right_triangles.py to rebuild it.
+
 SKILL.md   The skill file updated on 2026-11-12: adds the three Desmos sheets to the series table, notes that
            the older Desmos sheet is retired, points all wording at the lcc-style-guide skill, and adds a
            language step to verification. On 2026-11-18 it gained the SAT Math 4 row and a note on the geometry
-           figure renderer.
+           figure renderer. On 2026-11-22 it gained the SAT Math 4B row and a note on companion sheets.
 
 To move everything in, one Terminal line:
 

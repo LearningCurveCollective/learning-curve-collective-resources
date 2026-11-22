@@ -30,6 +30,7 @@ LINEAR_URL = SITE + 'test-prep/sat/SAT-Math-1-Linear-Equations.html'
 QUAD_URL = SITE + 'test-prep/sat/SAT-Math-2-Quadratics.html'
 FUNC_URL = SITE + 'test-prep/sat/SAT-Math-3-Functions.html'
 DESMOS1_URL = SITE + 'test-prep/sat/SAT-Desmos-1-Core-Moves.html'
+SRT_URL = SITE + 'test-prep/sat/SAT-Math-4B-Special-Right-Triangles.html'
 A_STYLE = 'target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;"'
 
 # ---------------------------------------------------------------- text helpers
@@ -153,7 +154,7 @@ rule(4, 'Special right triangles', True, r'''
     ex('B', r'A $30$-$60$-$90$ triangle with hypotenuse $18$: the short leg is $9$ and the long leg is $9\sqrt{3}$.') +
     ex('C', r'A $30$-$60$-$90$ triangle with long leg $12$: the short leg is $\dfrac{12}{\sqrt{3}} = 4\sqrt{3}$ and the hypotenuse is $8\sqrt{3}$.') +
     ex('D', r'An equilateral triangle with side $10$: the height is $5\sqrt{3}$ and the area is $\tfrac{1}{2}(10)(5\sqrt{3}) = 25\sqrt{3}$.') +
-    note(r'A question may not name the triangle for you. Look for $30^\circ$, $45^\circ$ or $60^\circ$ angles, squares, and equilateral triangles. The Bluebook Tools tab of <a href="' + DESMOS1_URL + r'" target="_blank" rel="noopener" style="color:var(--copper); font-weight:600;">SAT Desmos 1: Core Moves</a> has a copy of the reference sheet, which lists both of these triangles and the Pythagorean theorem.')) + \
+    note(r'A question may not name the triangle for you. Look for $30^\circ$, $45^\circ$ or $60^\circ$ angles, squares, and equilateral triangles. The Bluebook Tools tab of <a href="' + DESMOS1_URL + r'" target="_blank" rel="noopener" style="color:var(--copper); font-weight:600;">SAT Desmos 1: Core Moves</a> has a copy of the reference sheet, which lists both of these triangles and the Pythagorean theorem. Want more practice with these two triangles? <a href="' + SRT_URL + r'" target="_blank" rel="noopener" style="color:var(--copper); font-weight:600;">SAT Math 4B: Special Right Triangles</a> covers both patterns in depth, with quick reps and the figures where they appear.')) + \
 rule(5, 'The triangle inequality', False, r'''
 <p class="ref-lead">Three lengths form a triangle only when the two shorter ones add up to more than the longest. With two sides known, that limits the third side to a range. Inside a triangle, the longest side is across from the largest angle.</p>
 ''' + figslot('r_ineq') + r'''<div class="fbox">

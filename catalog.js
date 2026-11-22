@@ -3120,13 +3120,47 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-math-4b-special-right-triangles",
+   "path": "test-prep/sat/SAT-Math-4B-Special-Right-Triangles.html",
+   "title": "SAT Math 4B: Special Right Triangles",
+   "description": "A closer look at the 45-45-90 and 30-60-90 triangles on the SAT: both side patterns from memory, finding x from any given side, and the figures where these triangles appear (squares, circles, equilateral triangles, hexagons), with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 16,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "geometry",
+    "triangles",
+    "special right triangles",
+    "45-45-90",
+    "30-60-90",
+    "equilateral triangles",
+    "squares and circles",
+    "regular hexagons"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-4-triangles"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Full-length practice",
-   "order": 16,
+   "order": 17,
    "levels": [
     "High School"
    ],
@@ -3154,7 +3188,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "A checklist for the two days before the SAT, PSAT, or ACT, with a clickable timeline: sleep, a final review of your revision bank, what to bring (ID first), test morning, your strategy during the test, and the two personal reminders you'll carry into the room. Pick your test and every section updates.",
    "subject": "sat",
    "topic": "The final 48 hours",
-   "order": 17,
+   "order": 18,
    "levels": [
     "High School"
    ],
@@ -3198,7 +3232,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "Test day",
-   "order": 17,
+   "order": 18,
    "levels": [
     "High School"
    ],
@@ -3393,7 +3427,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "For tutors",
-   "order": 19,
+   "order": 20,
    "levels": [
     "High School"
    ],

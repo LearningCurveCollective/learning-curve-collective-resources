@@ -18,6 +18,7 @@ of auditing. Read this whole file before building; the conventions below are the
 | 2 | `SAT-Math-2-Quadratics.html` | Quadratics | `scripts/build_quadratics.py` |
 | 3 | `SAT-Math-3-Functions.html` | Functions: notation, domain, composition, identities, translations, range | `scripts/build_functions.py` |
 | 4 | `SAT-Math-4-Triangles.html` | Triangles: parallel lines, triangle angles, Pythagorean theorem, special right triangles, triangle inequality, shared height, altitude to the hypotenuse | `scripts/build_triangles.py` |
+| 4B | `SAT-Math-4B-Special-Right-Triangles.html` | Companion to sheet 4, on one of its rules: the 45-45-90 and 30-60-90 patterns from memory, finding x from any side, and the figures where they appear (squares, circles, equilateral triangles, hexagons, trig values) | `scripts/build_special_right_triangles.py` |
 | D1 | `SAT-Desmos-1-Core-Moves.html` | Desmos, part 1: what a graph shows (9 moves, plus a Bluebook Tools tab) | `scripts/build_desmos1.py` |
 | D2 | `SAT-Desmos-2-Next-Steps.html` | Desmos, part 2: the tilde (8 moves) | `scripts/build_desmos2.py` |
 | D3 | `SAT-Desmos-3-Mixed-Practice.html` | Desmos, part 3: drills only for the 17 moves (quick skill practice, practice by move, a timed set) | `scripts/build_desmos3.py` |
@@ -96,6 +97,14 @@ left of a to b), `pts` (vertex letters by direction), `texts`, and `note` (the "
 scale" line). Copy that builder for the next geometry sheet. It also carries each question's
 figure into the tutor report, since most geometry questions depend on one, and it applies the
 voice table as its last step.
+
+**A companion sheet (4B).** A sheet that goes deeper on one rule of a numbered sheet takes that sheet's number plus a letter
+(4B after 4), sits right after it in the catalog, and is linked from the rule it expands ("Want more practice with these two
+triangles? ..." in sheet 4's Rule 4 note). It is built for memory and speed, so it carries more Skill Practice than a topic
+sheet (39 items in six lettered sections, the first one answered from memory). `build_special_right_triangles.py` adds two
+things to the triangles builder: a FLUENCY item can carry a `fig` key (drawn between the question and the answer row, and
+carried into the tutor report), and `tri_fig()` draws a labeled 30-60-90 or 45-45-90 triangle at any rotation, sized to the
+triangle, for reps on matching each side to the angle across from it.
 
 ## Content conventions (the audit checklist)
 
@@ -290,6 +299,7 @@ backup flow), the playbooks (no graded practice set), and the Tutor Evaluation.
   there and rebuild, never hand-edit the generated HTML).
 - `scripts/build_quadratics.py` - the same for sheet 2 (carries the forward link to 3).
 - `scripts/build_triangles.py` - sheet 4 (source of truth), with the geometry figure renderer; `scripts/verify_triangles.py` - 90 answer-key recomputations for it (needs sympy).
+- `scripts/build_special_right_triangles.py` - sheet 4B (source of truth); `scripts/verify_special_right_triangles.py` - 350 checks for it: every answer recomputed, every angle mark against the angle drawn, and the to-scale Skill Practice figures against their answers (needs sympy).
 - `scripts/results_kit.py` - the autosave + tutor-report kit; patches the shell.
 - `scripts/results_kit_generic.py` - the same kit for the verbal, Words in Context and Desmos sheets.
 - `scripts/build_desmos1.py`, `scripts/build_desmos2.py`, `scripts/build_desmos3.py` - content for the three Desmos sheets (source of truth).
