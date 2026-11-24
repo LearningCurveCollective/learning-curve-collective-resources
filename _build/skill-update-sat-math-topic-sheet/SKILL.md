@@ -19,6 +19,11 @@ of auditing. Read this whole file before building; the conventions below are the
 | 3 | `SAT-Math-3-Functions.html` | Functions: notation, domain, composition, identities, translations, range | `scripts/build_functions.py` |
 | 4 | `SAT-Math-4-Triangles.html` | Triangles: parallel lines, triangle angles, Pythagorean theorem, special right triangles, triangle inequality, shared height, altitude to the hypotenuse | `scripts/build_triangles.py` |
 | 4B | `SAT-Math-4B-Special-Right-Triangles.html` | Companion to sheet 4, on one of its rules: the 45-45-90 and 30-60-90 patterns from memory, finding x from any side, and the figures where they appear (squares, circles, equilateral triangles, hexagons, trig values) | `scripts/build_special_right_triangles.py` |
+| 4C | `SAT-Math-4C-Similar-Figures.html` | Companion to sheet 4 on similar figures: matching sides and the scale factor, similar triangles from parallel lines (nested and bowtie), lengths scale by k, areas by k squared, regions between similar figures, volumes by k cubed | `scripts/build_similar_figures.py` |
+| 5 | `SAT-Math-5-Ratios-Rates-Proportions.html` | Ratios, rates and proportions: part to part and part to whole, proportions and unit rates, direct variation, average speed with unit conversion, inverse variation, combined work | `scripts/build_ratios.py` |
+| 6 | `SAT-Math-6-Percentages.html` | Percentages: percent of, percent change, the multiplier, changes in a row, working backward to the original, percent sentences with letters, mixtures | `scripts/build_percentages.py` |
+| 7 | `SAT-Math-7-Exponents-and-Exponential-Models.html` | Exponents and exponential models: the exponent laws, negative and zero exponents, fractional exponents, one base, growth and decay factors, reading a model, a constant to find and average rate of change | `scripts/build_exponents.py` |
+| 8 | `SAT-Math-8-Circle-Equations.html` | Circle equations in the xy-plane: standard form, completing the square, area and circumference from the equation, writing the equation from a center or a diameter, circles tangent to an axis, symmetry and semicircles | `scripts/build_circles.py` |
 | D1 | `SAT-Desmos-1-Core-Moves.html` | Desmos, part 1: what a graph shows (9 moves, plus a Bluebook Tools tab) | `scripts/build_desmos1.py` |
 | D2 | `SAT-Desmos-2-Next-Steps.html` | Desmos, part 2: the tilde (8 moves) | `scripts/build_desmos2.py` |
 | D3 | `SAT-Desmos-3-Mixed-Practice.html` | Desmos, part 3: drills only for the 17 moves (quick skill practice, practice by move, a timed set) | `scripts/build_desmos3.py` |
@@ -33,7 +38,7 @@ Timed Practice Set, and relabels the results kit. It carries the practice questi
 sheet 0, the older calculator sheet the series replaces (snapshot: `scripts/desmos3_source.json`).
 
 Source material so far: Dr. Chung's "DSAT Math 63 Tips" (sheet 2 from the quadratics
-tips; sheet 3 from Tips 13, 14, 15, 16 and 43; sheet 4 from Tips 37 to 42). Torin assigns the book itself as the second
+tips; sheet 3 from Tips 13, 14, 15, 16 and 43; sheet 4 from Tips 37 to 42; sheet 5 from Tips 19, 20, 25, 27 and 34; sheet 6 from Tips 26 and 29; sheet 7 from Tips 30, 31 and 33; sheet 4C from Tip 28; sheet 8 from Tip 24). Torin assigns the book itself as the second
 rep, so the sheets use the book's question TYPES with new numbers, never its questions.
 
 Live URLs follow `https://learningcurvecollective.github.io/learning-curve-collective-resources/<path>`.
@@ -105,6 +110,20 @@ sheet (39 items in six lettered sections, the first one answered from memory). `
 things to the triangles builder: a FLUENCY item can carry a `fig` key (drawn between the question and the answer row, and
 carried into the tutor report), and `tri_fig()` draws a labeled 30-60-90 or 45-45-90 triangle at any rotation, sized to the
 triangle, for reps on matching each side to the angle across from it.
+
+**Sheets 5 to 7, built in parallel (2026-11-23).** Three agents built these at the same time, one sheet each, from a shared brief that fixed every
+sheet's scope, file names, storage key and links before they started. Each agent wrote only its own builder, verify script and sheet; the catalog,
+the links between sheets and this file were done afterward in one place. Each builder is a copy of `build_special_right_triangles.py`.
+`build_ratios.py` adds a `panels` figure type (one figure holding four small labelled graphs, for "which graph" questions), the curve and grid
+extensions with `inv` for $y = k/x$, an `ox`/`oy` nudge for the origin label, and captions under rules-tab figures. `build_exponents.py` ports the
+curve and grid code from `build_functions.py`, adds `xl`/`yl` to rename a graph's axes, and drops the geometry renderer. `build_percentages.py`
+draws its figures (bar models, a multiplier chain, mixing containers, a bar graph) as plain SVG. Scope between the three: sheet 5 has no percent
+content; sheet 6 owns "the multiplier" and points ahead to sheet 7; sheet 7 calls the same number the growth or decay factor and links back.
+Sheets 4C and 8 were built the same way later that day by two agents. `build_similar_figures.py` (a copy of the 4B builder) adds a `regions` key to `geoSVG`
+(a shaded circle with circular holes) and `nested()` and `bowtie()` figure helpers. 4C is a companion to sheet 4: it has no next-topic link, and sheet 4 links to
+it from Rule 7's note and from its exit card. `build_circles.py` (a copy of `build_ratios.py`) adds a `circles` key for coordinate graphs (a full circle or an
+upper semicircle) and a `G()` helper that sizes each figure so both axes share one scale and circles stay round. Still planned: a second circles sheet on arcs,
+sectors and angles.
 
 ## Content conventions (the audit checklist)
 
@@ -187,8 +206,8 @@ The grader also matches numerically, but be generous. A question with two valid 
 
 **Links.** Deep-dive worksheets (e.g. the algebra factoring worksheet) are linked at
 the point of need inside a rule note: "Want deeper reps on these patterns? ...". The
-exit card links Bluebook, Khan Academy (name the topic's actual unit names), SAT Desmos 1,
-and the previous sheet(s) in the series.
+exit card links Bluebook, SAT Desmos 1,
+and the previous sheet(s) in the series. No Khan Academy line on new sheets: Torin had it removed from sheets 5 to 7 on 2026-11-23, and 4C and 8 were built without one (sheets 1 to 4B still carry theirs).
 
 ## The results kit (autosave + "Results for your tutor")
 
@@ -300,6 +319,8 @@ backup flow), the playbooks (no graded practice set), and the Tutor Evaluation.
 - `scripts/build_quadratics.py` - the same for sheet 2 (carries the forward link to 3).
 - `scripts/build_triangles.py` - sheet 4 (source of truth), with the geometry figure renderer; `scripts/verify_triangles.py` - 90 answer-key recomputations for it (needs sympy).
 - `scripts/build_special_right_triangles.py` - sheet 4B (source of truth); `scripts/verify_special_right_triangles.py` - 350 checks for it: every answer recomputed, every angle mark against the angle drawn, and the to-scale Skill Practice figures against their answers (needs sympy).
+- `scripts/build_ratios.py`, `scripts/build_percentages.py`, `scripts/build_exponents.py` - sheets 5, 6 and 7 (source of truth); `scripts/verify_ratios.py` (215 checks), `scripts/verify_percentages.py` (344) and `scripts/verify_exponents.py` (217) recompute their answer keys (need sympy; `verify_exponents.py` imports its builder, so keep the two together).
+- `scripts/build_similar_figures.py` and `scripts/build_circles.py` - sheets 4C and 8 (source of truth); `scripts/verify_similar_figures.py` (508 checks, including figure labels against each question) and `scripts/verify_circles.py` (234) recompute their answer keys (need sympy; each imports its builder, so keep the pairs together).
 - `scripts/results_kit.py` - the autosave + tutor-report kit; patches the shell.
 - `scripts/results_kit_generic.py` - the same kit for the verbal, Words in Context and Desmos sheets.
 - `scripts/build_desmos1.py`, `scripts/build_desmos2.py`, `scripts/build_desmos3.py` - content for the three Desmos sheets (source of truth).

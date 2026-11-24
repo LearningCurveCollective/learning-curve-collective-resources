@@ -24,10 +24,21 @@ scripts/   Builder files for the SAT Desmos series and the SAT Math topic sheets
            sheet 4's Rule 4 note to sheet 4B. Run
            python3 _build/skill-update-sat-math-topic-sheet/scripts/build_special_right_triangles.py to rebuild it.
 
+           build_ratios.py, build_percentages.py and build_exponents.py are the SAT Math 5, 6 and 7 builders (2026-11-23), with
+           verify_ratios.py (215 checks), verify_percentages.py (344) and verify_exponents.py (217); all need sympy.
+           build_triangles.py gained the forward link from SAT Math 4 to SAT Math 5. Run each build_*.py to rebuild its sheet.
+
+           build_similar_figures.py and build_circles.py are the SAT Math 4C and SAT Math 8 builders (2026-11-23), with
+           verify_similar_figures.py (508 checks) and verify_circles.py (234); both need sympy. build_exponents.py gained the forward
+           link from SAT Math 7 to SAT Math 8, and build_triangles.py two links from SAT Math 4 to SAT Math 4C. The Khan Academy line
+           was removed from the SAT Math 5, 6 and 7 builders the same day.
+
 SKILL.md   The skill file updated on 2026-11-12: adds the three Desmos sheets to the series table, notes that
            the older Desmos sheet is retired, points all wording at the lcc-style-guide skill, and adds a
            language step to verification. On 2026-11-18 it gained the SAT Math 4 row and a note on the geometry
-           figure renderer. On 2026-11-22 it gained the SAT Math 4B row and a note on companion sheets.
+           figure renderer. On 2026-11-22 it gained the SAT Math 4B row and a note on companion sheets. On 2026-11-23 it gained
+           the SAT Math 5, 6 and 7 rows and a note on building sheets in parallel, then the 4C and 8 rows
+           and the rule that new sheets carry no Khan Academy line.
 
 To move everything in, one Terminal line:
 

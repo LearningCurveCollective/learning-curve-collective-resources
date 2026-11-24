@@ -31,6 +31,8 @@ QUAD_URL = SITE + 'test-prep/sat/SAT-Math-2-Quadratics.html'
 FUNC_URL = SITE + 'test-prep/sat/SAT-Math-3-Functions.html'
 DESMOS1_URL = SITE + 'test-prep/sat/SAT-Desmos-1-Core-Moves.html'
 SRT_URL = SITE + 'test-prep/sat/SAT-Math-4B-Special-Right-Triangles.html'
+RATIOS_URL = SITE + 'test-prep/sat/SAT-Math-5-Ratios-Rates-Proportions.html'
+SIM_URL = SITE + 'test-prep/sat/SAT-Math-4C-Similar-Figures.html'
 A_STYLE = 'target="_blank" rel="noopener" style="color:var(--copper); font-weight:700;"'
 
 # ---------------------------------------------------------------- text helpers
@@ -186,7 +188,7 @@ rule(7, 'The altitude to the hypotenuse', False, r'''
 ''' + ex('A', r'The altitude splits the hypotenuse into pieces of $4$ and $9$: $h^2 = 36$, so $h = 6$.') +
     ex('B', r'Pieces of $2$ and $6$: the leg beside the $2$ has $a^2 = 2 \cdot 8 = 16$, so $a = 4$. The other leg has $b^2 = 6 \cdot 8 = 48$, so $b = 4\sqrt{3}$.') +
     ex('C', r'Legs $14$ and $48$: the hypotenuse is $50$, and the altitude to it is $\dfrac{14 \cdot 48}{50} = 13.44$.') +
-    note(r'If you forget one of these, the Pythagorean theorem still works in each of the three right triangles. These relationships are a shorter path to the same result.')) + r'''
+    note(r'If you forget one of these, the Pythagorean theorem still works in each of the three right triangles. These relationships are a shorter path to the same result. Similar triangles have their own sheet, which covers the scale factor and how lengths and areas grow: <a href="' + SIM_URL + r'" ' + A_STYLE + r'>SAT Math 4C: Similar Figures &#8594;</a>')) + r'''
 <hr class="ref-divider"><div class="ref-h">Common mistakes and what to check</div>
 <p>These are common setup and interpretation mistakes. Review them so you know what to check when an answer seems off.</p>
 ''' + mistake(1, 'using a parallel-line pair when the lines are not parallel', r'Corresponding and alternate interior angles are equal only when the two lines are parallel. Look for $\ell \parallel m$ in the question before you set two angles equal.') + \
@@ -871,7 +873,9 @@ def build(out=OUT):
         r'<p style="font-size:14px; margin-top:10px;">For skill-by-skill reps.*?</p>\s*<p style="font-size:14px; margin-top:10px;">For the calculator side.*?</p>',
         '<p style="font-size:14px; margin-top:10px;">For skill-by-skill practice, <strong>Khan Academy\'s Official Digital SAT Prep</strong> sorts questions by topic: the lessons on <em>congruence, similarity, and angle relationships</em> and on <em>right triangle trigonometry</em> are good places to practice this sheet\'s starred rules. <a href="https://www.khanacademy.org/digital-sat" ' + A_STYLE + '>Open Khan Academy &#8594;</a></p>\n'
         '            <p style="font-size:14px; margin-top:10px;">The equations these figures lead to are usually linear. The earlier sheets in the series cover that algebra: <a href="' + LINEAR_URL + '" ' + A_STYLE + '>SAT Math 1: Linear Equations &#8594;</a>, <a href="' + QUAD_URL + '" ' + A_STYLE + '>SAT Math 2: Quadratics &#8594;</a> and <a href="' + FUNC_URL + '" ' + A_STYLE + '>SAT Math 3: Functions &#8594;</a></p>\n'
-        '            <p style="font-size:14px; margin-top:10px;">For calculator practice, and for a copy of the Bluebook reference sheet with the triangle formulas, see <a href="' + DESMOS1_URL + '" ' + A_STYLE + '>SAT Desmos 1: Core Moves &#8594;</a></p>',
+        '            <p style="font-size:14px; margin-top:10px;">For calculator practice, and for a copy of the Bluebook reference sheet with the triangle formulas, see <a href="' + DESMOS1_URL + '" ' + A_STYLE + '>SAT Desmos 1: Core Moves &#8594;</a></p>\n'
+        '            <p style="font-size:14px; margin-top:10px;">For similar triangles, and how lengths and areas scale, see the companion sheet <a href="' + SIM_URL + '" ' + A_STYLE + '>SAT Math 4C: Similar Figures &#8594;</a></p>\n'
+        '            <p style="font-size:14px; margin-top:10px;">Ready for the next topic? Continue the series with <a href="' + RATIOS_URL + '" ' + A_STYLE + '>SAT Math 5: Ratios, Rates and Proportions &#8594;</a></p>',
         flags=re.S)
 
     # --- data arrays

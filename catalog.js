@@ -3154,13 +3154,180 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "test-prep--sat--sat-math-4c-similar-figures",
+   "path": "test-prep/sat/SAT-Math-4C-Similar-Figures.html",
+   "title": "SAT Math 4C: Similar Figures",
+   "description": "A companion to SAT Math 4 on similar figures: matching sides and the scale factor, similar triangles made by parallel lines, how lengths, areas and volumes scale, and regions between similar figures on the SAT, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 17,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "geometry",
+    "similar triangles",
+    "similar figures",
+    "scale factor",
+    "area ratios",
+    "volume ratios",
+    "parallel lines"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-4-triangles",
+    "test-prep--sat--sat-math-5-ratios-rates-proportions"
+   ]
+  },
+  {
+   "id": "test-prep--sat--sat-math-5-ratios-rates-proportions",
+   "path": "test-prep/sat/SAT-Math-5-Ratios-Rates-Proportions.html",
+   "title": "SAT Math 5: Ratios, Rates and Proportions",
+   "description": "Reviews ratios, proportions and unit rates, direct variation, average speed and unit conversion, inverse variation, and combined work on the SAT, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 18,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "ratios",
+    "proportions",
+    "unit rates",
+    "direct variation",
+    "inverse variation",
+    "average speed",
+    "unit conversion",
+    "work rate"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-4-triangles"
+   ]
+  },
+  {
+   "id": "test-prep--sat--sat-math-6-percentages",
+   "path": "test-prep/sat/SAT-Math-6-Percentages.html",
+   "title": "SAT Math 6: Percentages",
+   "description": "Reviews percent of a number, percent change, the multiplier, changes in a row, working backward to an original value, percent sentences with letters, and mixtures on the SAT, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 19,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "percentages",
+    "percent change",
+    "percent increase and decrease",
+    "multiplier",
+    "mixtures"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-5-ratios-rates-proportions"
+   ]
+  },
+  {
+   "id": "test-prep--sat--sat-math-7-exponents-and-exponential-models",
+   "path": "test-prep/sat/SAT-Math-7-Exponents-and-Exponential-Models.html",
+   "title": "SAT Math 7: Exponents and Exponential Models",
+   "description": "Reviews the exponent laws, negative and zero exponents, fractional exponents and roots, matching bases, growth and decay factors, reading an exponential model, and finding a constant in a model on the SAT, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 20,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "exponents",
+    "radicals",
+    "rational exponents",
+    "exponential growth and decay",
+    "exponential models",
+    "average rate of change",
+    "Desmos"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-6-percentages",
+    "test-prep--sat--sat-math-3-functions"
+   ]
+  },
+  {
+   "id": "test-prep--sat--sat-math-8-circle-equations",
+   "path": "test-prep/sat/SAT-Math-8-Circle-Equations.html",
+   "title": "SAT Math 8: Circle Equations",
+   "description": "Reviews circles in the xy-plane on the SAT: standard form, completing the square, area and circumference from the equation, writing the equation from a center or a diameter, circles tangent to an axis, and semicircle symmetry, with worked examples, skill practice, an SAT-style practice set, challenge questions, and an exit ticket.",
+   "subject": "sat",
+   "topic": "Math",
+   "group": "Topic sheets",
+   "order": 21,
+   "levels": [
+    "High School"
+   ],
+   "format": "Practice set",
+   "tags": [
+    "SAT",
+    "math",
+    "geometry",
+    "circles",
+    "circle equations",
+    "completing the square",
+    "center and radius",
+    "coordinate geometry",
+    "Desmos"
+   ],
+   "difficulty": "Core",
+   "exams": [
+    "SAT"
+   ],
+   "content": "practice",
+   "builds_on": [
+    "test-prep--sat--sat-math-7-exponents-and-exponential-models",
+    "test-prep--sat--sat-math-2-quadratics"
+   ]
+  },
+  {
    "id": "test-prep--sat--practice-sat-full-test",
    "path": "test-prep/sat/Practice-SAT-Full-Test.html",
    "title": "Full-Length Practice SAT",
    "description": "Full-length digital SAT practice test with two Reading & Writing modules and two Math modules, built-in Desmos, and an option to export all sections.",
    "subject": "sat",
    "topic": "Full-length practice",
-   "order": 17,
+   "order": 22,
    "levels": [
     "High School"
    ],
@@ -3188,7 +3355,7 @@ window.OPEN_LEARNING_CATALOG = {
    "description": "A checklist for the two days before the SAT, PSAT, or ACT, with a clickable timeline: sleep, a final review of your revision bank, what to bring (ID first), test morning, your strategy during the test, and the two personal reminders you'll carry into the room. Pick your test and every section updates.",
    "subject": "sat",
    "topic": "The final 48 hours",
-   "order": 18,
+   "order": 23,
    "levels": [
     "High School"
    ],
@@ -3232,7 +3399,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "Test day",
-   "order": 18,
+   "order": 23,
    "levels": [
     "High School"
    ],
@@ -3427,7 +3594,7 @@ window.OPEN_LEARNING_CATALOG = {
    "subject": "sat",
    "hidden": true,
    "topic": "For tutors",
-   "order": 20,
+   "order": 25,
    "levels": [
     "High School"
    ],
