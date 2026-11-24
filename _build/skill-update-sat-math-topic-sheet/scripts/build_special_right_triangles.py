@@ -72,6 +72,20 @@ def rule(n, name, ess, body):
             '</span><span class="rname">' + name + '</span></div>\n' + body.strip('\n') + '\n</div>\n')
 
 
+def memo(tag, name, body):
+    """A starred block that is not a numbered rule: a memory aid that covers more than one rule."""
+    return ('<div class="ref-rule ess"><div class="ref-rule-line"><span class="rtag">' + STAR + tag +
+            '</span><span class="rname">' + name + '</span></div>\n' + body.strip('\n') + '\n</div>\n')
+
+
+def memo_table(name, angles, roots, sides):
+    """Angles, roots and sides in matching columns, so each side sits under the angle it is across from."""
+    def row(label, cells):
+        return '<tr><td class="fname">' + label + '</td>' + ''.join('<td>' + c + '</td>' for c in cells) + '</tr>\n'
+    return ('<div class="tbl-wrap"><table class="cases memo"><thead><tr><th>' + name + '</th><th colspan="3">small to tall</th></tr></thead><tbody>\n' +
+            row('Angles', angles) + row('Root them all', roots) + row('Simplify, times $x$', sides) + '</tbody></table></div>\n')
+
+
 def frow(label, math_):
     return '<div class="frow"><div class="flabel">' + label + '</div><div class="fmath">' + math_ + '</div></div>\n'
 
@@ -104,7 +118,8 @@ RULES = r'''
       frow('leg to hypotenuse', r'multiply by $\sqrt{2}$') +
       frow('hypotenuse to leg', r'divide by $\sqrt{2}$') +
       frow('why it works', r'$x^2 + x^2 = 2x^2$, and $\sqrt{2x^2} = x\sqrt{2}$') +
-      frow('how to remember it', r'two equal sides, so the root is $\sqrt{2}$. Since $\sqrt{2}$ is about $1.41$, the side $x\sqrt{2}$ is longer than $x$, so it is the hypotenuse') + r'''</div>
+      frow('the order of the sides', r'$\sqrt{2}$ is about $1.41$, which is between $1$ and $2$, so $x < x\sqrt{2} < 2x$. The hypotenuse is longer than a leg, but it is not double a leg') +
+      frow('how to remember it', r'<strong>Small to tall, root them all.</strong> List the angles from smallest to largest: $45^\circ$, $45^\circ$, $90^\circ$. Across from them, the sides are $x$ times $\sqrt{1}$, $\sqrt{1}$, $\sqrt{2}$. Since $\sqrt{1} = 1$, that is $x$, $x$, $x\sqrt{2}$') + r'''</div>
 ''' + ex('A', r'Each leg is $8$: the hypotenuse is $8\sqrt{2}$.') +
     ex('B', r'The hypotenuse is $9\sqrt{2}$: each leg is $9$.') +
     ex('C', r'The hypotenuse is $20$: each leg is $\dfrac{20}{\sqrt{2}} = 10\sqrt{2}$. Rule 3 shows that division one step at a time.') +
@@ -121,11 +136,22 @@ rule(2, r'The $30$-$60$-$90$ triangle', True, r'''
       frow('sides follow angles', r'the smallest angle is across from the shortest side, and the largest angle is across from the longest side') +
       frow('the order of the sides', r'$\sqrt{3}$ is about $1.73$, which is between $1$ and $2$, so $x < x\sqrt{3} < 2x$') +
       frow('why it works', r'$(2x)^2 - x^2 = 3x^2$, and $\sqrt{3x^2} = x\sqrt{3}$') +
-      frow('how to remember it', r'three different sides, so the root is $\sqrt{3}$. The side that doubles is the hypotenuse') + r'''</div>
+      frow('how to remember it', r'<strong>Small to tall, root them all.</strong> List the angles from smallest to largest: $30^\circ$, $60^\circ$, $90^\circ$. Across from them, the sides are $x$ times $\sqrt{1}$, $\sqrt{3}$, $\sqrt{4}$. Since $\sqrt{4} = 2$, that is $x$, $x\sqrt{3}$, $2x$') + r'''</div>
 ''' + ex('A', r'The short leg is $3$: the long leg is $3\sqrt{3}$ and the hypotenuse is $6$.') +
     ex('B', r'The hypotenuse is $50$: the short leg is $25$ and the long leg is $25\sqrt{3}$.') +
     ex('C', r'A right triangle has a $60^\circ$ angle, and the leg that touches that angle has length $13$. The third angle is $30^\circ$, and this leg is across from it, so it is the short leg. The other leg is $13\sqrt{3}$ and the hypotenuse is $26$.') +
     note(r'Before you write $x$ on a side, find the $30^\circ$ angle. If the figure marks only the $60^\circ$ angle, the third angle is $30^\circ$. The side across from the $30^\circ$ angle is $x$.')) + \
+memo('Memory aid', 'Small to tall, root them all', r'''
+<p class="ref-lead">One rhyme holds both patterns. List the angles from smallest to largest, write a square root across from each one, then simplify. The numbers under the roots are $1$, $1$, $2$ for the <span class="nw">$45$-$45$-$90$</span> triangle and $1$, $3$, $4$ for the <span class="nw">$30$-$60$-$90$</span> triangle.</p>
+<div class="memo-pair">
+''' + memo_table('45-45-90', [r'$45^\circ$', r'$45^\circ$', r'$90^\circ$'], [r'$\sqrt{1}$', r'$\sqrt{1}$', r'$\sqrt{2}$'], ['$x$', '$x$', r'$x\sqrt{2}$']) +
+      memo_table('30-60-90', [r'$30^\circ$', r'$60^\circ$', r'$90^\circ$'], [r'$\sqrt{1}$', r'$\sqrt{3}$', r'$\sqrt{4}$'], ['$x$', r'$x\sqrt{3}$', '$2x$']) + r'''</div>
+<div class="fbox">
+''' + frow('say it', r'&ldquo;one, one, two&rdquo; for the <span class="nw">$45$-$45$-$90$</span> triangle, and &ldquo;one, three, four&rdquo; for the <span class="nw">$30$-$60$-$90$</span> triangle') +
+      frow('recall the numbers', r'both lists start at $1$. Two equal angles repeat the $1$, and three different angles skip to $3$. The last number is the first two added: $1 + 1 = 2$ and $1 + 3 = 4$') +
+      frow('why adding works', r'squaring a square root gives the number under it, so $1 + 1 = 2$ and $1 + 3 = 4$ are the Pythagorean theorem for these two triangles. If your three numbers do not add up, check the pattern') +
+      frow('where each side goes', r'each side is across from the angle above it. The smallest angle is across from the shortest side, however the triangle is turned') + r'''</div>
+''' + note(r'The roots belong to the pattern, not to the lengths in the question. If the hypotenuse of a <span class="nw">$30$-$60$-$90$</span> triangle is $10$, it stays $10$. It matches $2x$, so $x = 5$. Rule 3 shows how to find $x$ from any side.')) + \
 rule(3, r'Find $x$ first', True, r'''
 <p class="ref-lead">Each side of a special right triangle is $x$ times a fixed number. Write the pattern on the figure, set the side you know equal to its piece of the pattern, and solve for $x$. Then build the side the question asks for.</p>
 <div class="tbl-wrap"><table class="forms"><thead><tr><th>Triangle</th><th>You are given</th><th>Write</th><th>Then</th></tr></thead><tbody>
@@ -196,6 +222,7 @@ rule(7, r'Sine, cosine and tangent of $30^\circ$, $45^\circ$ and $60^\circ$', Fa
 <div class="fbox">
 ''' + frow('the three ratios', r'$\sin = \dfrac{\text{opposite}}{\text{hypotenuse}}$, &nbsp; $\cos = \dfrac{\text{adjacent}}{\text{hypotenuse}}$, &nbsp; $\tan = \dfrac{\text{opposite}}{\text{adjacent}}$') +
       frow('a pattern to notice', r'$\sin 30^\circ = \cos 60^\circ$ and $\sin 60^\circ = \cos 30^\circ$, because the two angles belong to the same triangle') +
+      frow('small to tall again', r'for $30^\circ$, $45^\circ$, $60^\circ$, sine is $\dfrac{\sqrt{1}}{2}$, $\dfrac{\sqrt{2}}{2}$, $\dfrac{\sqrt{3}}{2}$. Cosine is the same list in reverse') +
       frow('in radians', r'$30^\circ = \dfrac{\pi}{6}$, &nbsp; $45^\circ = \dfrac{\pi}{4}$, &nbsp; $60^\circ = \dfrac{\pi}{3}$') + r'''</div>
 ''' + ex('A', r'In a $30$-$60$-$90$ triangle with sides $1$, $\sqrt{3}$ and $2$, the side opposite the $30^\circ$ angle is $1$ and the hypotenuse is $2$, so $\sin 30^\circ = \dfrac{1}{2}$.') +
     ex('B', r'A right triangle has a hypotenuse of $10$ and a $30^\circ$ angle. The side opposite that angle is $10 \cdot \sin 30^\circ = 5$. That is the short leg, half of the hypotenuse, as the pattern says.') +
@@ -282,8 +309,8 @@ LAST_STARRED_STEP_INDEX = 4  # 0-based index of the last starred step (Rule 5)
 RATIOS = [r"$\sqrt{2}$", r"$\sqrt{3}$", "$2$", "$3$"]
 FLUENCY = [
  {"sec": "A. The two patterns, from memory", "items": [
-   {"mc": True, "q": r"The side lengths of a $45$-$45$-$90$ triangle, from shortest to longest, are in the ratio", "opts": [r"$x : x : x\sqrt{2}$", r"$x : x\sqrt{3} : 2x$", r"$x : x : 2x$", r"$x : x\sqrt{2} : 2x$"], "correct": 0, "exp": r"Two equal legs, and a hypotenuse of a leg times $\sqrt{2}$. Two equal sides go with $\sqrt{2}$."},
-   {"mc": True, "q": r"The side lengths of a $30$-$60$-$90$ triangle, from shortest to longest, are in the ratio", "opts": [r"$x : x : x\sqrt{2}$", r"$x : 2x : x\sqrt{3}$", r"$x : x\sqrt{3} : 2x$", r"$x : x\sqrt{2} : x\sqrt{3}$"], "correct": 2, "exp": r"Short leg $x$, long leg $x\sqrt{3}$, hypotenuse $2x$. Since $\sqrt{3}$ is about $1.73$, the long leg is shorter than the hypotenuse."},
+   {"mc": True, "q": r"The side lengths of a $45$-$45$-$90$ triangle, from shortest to longest, are in the ratio", "opts": [r"$x : x : x\sqrt{2}$", r"$x : x\sqrt{3} : 2x$", r"$x : x : 2x$", r"$x : x\sqrt{2} : 2x$"], "correct": 0, "exp": r"Small to tall, root them all: $\sqrt{1}$, $\sqrt{1}$, $\sqrt{2}$. That is two equal legs of $x$ and a hypotenuse of $x\sqrt{2}$."},
+   {"mc": True, "q": r"The side lengths of a $30$-$60$-$90$ triangle, from shortest to longest, are in the ratio", "opts": [r"$x : x : x\sqrt{2}$", r"$x : 2x : x\sqrt{3}$", r"$x : x\sqrt{3} : 2x$", r"$x : x\sqrt{2} : x\sqrt{3}$"], "correct": 2, "exp": r"Small to tall, root them all: $\sqrt{1}$, $\sqrt{3}$, $\sqrt{4}$. That is short leg $x$, long leg $x\sqrt{3}$, hypotenuse $2x$. Since $\sqrt{3}$ is less than $\sqrt{4}$, the long leg is shorter than the hypotenuse."},
    {"mc": True, "q": r"In a $30$-$60$-$90$ triangle, the side across from the $30^\circ$ angle is", "opts": [r"the long leg, $x\sqrt{3}$", "the short leg, $x$", "the hypotenuse, $2x$", "either leg, depending on the figure"], "correct": 1, "exp": r"The smallest angle is across from the shortest side, however the triangle is turned."},
    {"mc": True, "q": r"In a $30$-$60$-$90$ triangle with short leg $x$, the side across from the $60^\circ$ angle has length", "opts": ["$x$", r"$x\sqrt{2}$", r"$x\sqrt{3}$", "$2x$"], "correct": 2, "exp": r"The $60^\circ$ angle is the middle angle, so it is across from the middle side: the long leg, $x\sqrt{3}$."},
    {"mc": True, "q": r"In a $30$-$60$-$90$ triangle, the hypotenuse is how many times as long as the short leg?", "opts": RATIOS, "correct": 2, "exp": r"The hypotenuse is $2x$ and the short leg is $x$."},
@@ -340,7 +367,7 @@ GAUNTLET = [
   "stem": r"The two legs of a right triangle each have length $25$. What is the length of the hypotenuse?",
   "options": ["$25$", r"$25\sqrt{2}$", r"$25\sqrt{3}$", "$50$"], "correct": 1,
   "sol": r"<strong>Given:</strong> a right triangle with two equal legs.<br><br>Equal legs are across from equal angles, so each acute angle measures $45^\circ$. In a $45$-$45$-$90$ triangle the hypotenuse is a leg times $\sqrt{2}$: $25\sqrt{2}$.",
-  "trap": r"Choice D doubles the leg, which is the $30$-$60$-$90$ pattern. Choice C uses $\sqrt{3}$, which also belongs to that triangle. Two equal sides go with $\sqrt{2}$."},
+  "trap": r"Choice D doubles the leg, which is the $30$-$60$-$90$ pattern. Choice C uses $\sqrt{3}$, which also belongs to that triangle. The $45$-$45$-$90$ roots are $\sqrt{1}$, $\sqrt{1}$, $\sqrt{2}$."},
  {"ess": True, "type": "ne", "diff": "Easy",
   "stem": r"In a right triangle, one angle measures $30^\circ$ and the hypotenuse has length $38$. What is the length of the side across from the $30^\circ$ angle?",
   "label": "Length $=$", "accept": ["19"],
@@ -828,7 +855,13 @@ FIG_CSS = '\n'.join(FIG_RULES) + r'''
 .fig-row { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: flex-start; justify-content: center; margin: 4px 0 10px; }
 .fig-row .fig { margin: 4px 0; }
 .ref-page .fig-row { margin-left: 24px; }
-@media (max-width: 768px) { .ref-page .fig-row { margin-left: 0; } }'''
+@media (max-width: 768px) { .ref-page .fig-row { margin-left: 0; } }
+.memo-pair { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.memo-pair .tbl-wrap { flex: 1 1 290px; }
+table.cases.memo td, table.cases.memo th[colspan] { text-align: center; }
+table.cases.memo td.fname { text-align: left; }
+table.cases.memo td:not(.fname) { font-size: 18px; }
+@media (max-width: 768px) { table.cases.memo td:not(.fname) { font-size: 16px; } }'''
 # the same figure styles, on one line, for the downloaded results report (which has its own style block)
 REPORT_FIG_CSS = (".fig{display:block;margin:4px 0 10px;max-width:100%;height:auto}.fig .ln{stroke:#21442B;stroke-width:2;fill:none}"
                   ".fig .dash{stroke:#8B6914;stroke-width:1.4;stroke-dasharray:5 4;fill:none}.fig .pt{fill:#21442B}.fig .shade{fill:rgba(221,162,94,0.25);stroke:none}"
