@@ -304,7 +304,7 @@ window.OPEN_LEARNING_CATALOG = {
    "steps": [
     {
      "name": "Reference sheets",
-     "blurb": "Every graph from micro and macro in one place, the four market structures side by side, and a translation sheet that turns economics questions into calculus. Keep these open while you work."
+     "blurb": "Every graph from micro and macro in one place, the four market structures side by side, derivative rules and partial derivatives taught step by step, and a translation sheet that turns economics questions into calculus. Keep these open while you work."
     },
     {
      "name": "Principles of economics",
@@ -1531,6 +1531,31 @@ window.OPEN_LEARNING_CATALOG = {
    ]
   },
   {
+   "id": "econ--calculus-for-econ-derivative-rules",
+   "path": "econ/calculus-for-econ-derivative-rules.html",
+   "title": "Calculus for Econ: Derivative Rules",
+   "description": "The derivative rules for economics, taught from the start: the power rule, e and ln, and step-by-step methods for the chain, product, and quotient rules, with worked examples you can step through, a which-rule sorter, and practice with full solutions.",
+   "subject": "econ",
+   "topic": "Reference sheets",
+   "order": 2.25,
+   "levels": [
+    "Advanced High School",
+    "College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "calculus for economics",
+    "derivative rules",
+    "chain rule",
+    "product rule",
+    "quotient rule",
+    "marginal cost"
+   ],
+   "difficulty": "Intro",
+   "content": "theory+practice",
+   "builds_on": []
+  },
+  {
    "id": "econ--econ-to-calc-translation-sheet",
    "path": "econ/econ-to-calc-translation-sheet.html",
    "title": "Econ to Calculus Translation Sheet",
@@ -1554,6 +1579,32 @@ window.OPEN_LEARNING_CATALOG = {
    "content": "theory+practice",
    "builds_on": [
     "calculus--differentiation-part-1"
+   ]
+  },
+  {
+   "id": "econ--calculus-for-econ-partial-derivatives",
+   "path": "econ/calculus-for-econ-partial-derivatives.html",
+   "title": "Calculus for Econ: Partial Derivatives",
+   "description": "Partial derivatives for economics, one variable at a time: a four-step method for holding the other variable constant, a nudge tool and a surface picture for the idea, the chain, product, and quotient rules with two variables, second-order partials, and marginal products and utilities, with practice and full solutions.",
+   "subject": "econ",
+   "topic": "Reference sheets",
+   "order": 2.75,
+   "levels": [
+    "College"
+   ],
+   "format": "Interactive worksheet",
+   "tags": [
+    "calculus for economics",
+    "partial derivatives",
+    "second-order partials",
+    "marginal product",
+    "marginal utility",
+    "multivariable"
+   ],
+   "difficulty": "Core",
+   "content": "theory+practice",
+   "builds_on": [
+    "econ--calculus-for-econ-derivative-rules"
    ]
   },
   {
